@@ -1,5 +1,6 @@
-import { NextSeo } from 'next-seo'
-import Link from 'next/link'
+import React from 'react';
+import Link from 'next/link';
+import { NextSeo } from 'next-seo';
 
 export default function Home() {
   return (
@@ -32,13 +33,7 @@ export default function Home() {
       />
       <h1>SEO Added to Page</h1>
       <p>Take a look at the head to see what has been added.</p>
-      <p>
-        Or checkout how{' '}
-        <Link href="/jsonld">
-          <a>JSON-LD</a>
-        </Link>{' '}
-        (Structured Data) is added
-      </p>
+
     </div>
-  )
+  );
 }
