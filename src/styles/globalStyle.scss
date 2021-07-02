@@ -1,1 +1,30 @@
-@import './modal.scss'
+@import './modal.scss';
+@import "~styles/variables.scss";
+@import "~styles/app.scss";
+@import "~styles/normalize.scss";
+
+@import "~styles/mixins/mixins.scss";
+
+
+body {
+    [class*='MuiButton-root'] {
+        text-transform: none;
+        box-shadow: 0px 3px 6px #00000029;
+        border-radius: 5px;
+        width: 259px;
+        height: 56px;
+    }
+    
+    [class*='MuiPaper-root'] {
+        box-shadow: 0 3px 6px rgb(0 0 0 / 16%);
+        border-radius: 5px;
+    }
+
+    [class*='MuiCardMedia-root'] {
+        background-size: auto;
+    }
+
+    [class*='MuiRating-root'] {
+        color: $yellow;
+    }
+}

@@ -1,0 +1,37 @@
+@import "~styles/variables.scss";
+@import "~styles/mixins/mixins.scss";
+
+.card {
+    width: 276px;
+    min-height: 134px;
+
+    &__avatar {
+        height: 58px;
+        width: 58px;
+        border-radius: 50%;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 7px;
+    }
+
+    &__column {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__raiting {
+        margin: 8px 0 17px 0;
+    }
+
+    p, a {
+        font-weight: 600;
+    }
+
+    a {
+        color: $yellow;
+    }
+}

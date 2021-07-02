@@ -1,0 +1,17 @@
+@import "~styles/variables.scss";
+@import "~styles/mixins/mixins.scss";
+
+.raiting {
+    background: $gray4 0% 0% no-repeat padding-box;
+    border-radius: 5px;
+    width: max-content;
+    height: max-content;
+    padding: 0 5px;
+    font-weight: 600;
+}
+
+.raitingStar {
+    color: $yellow;
+    font-size: 20px;
+    padding: 0 3px 0 0;
+}

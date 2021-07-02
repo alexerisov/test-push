@@ -1,0 +1,52 @@
+@import "../variables";
+@import "function";
+
+@mixin font-face($font-folder, $font-family, $font-name) {
+  font-family: $font-family;
+  src: url("/fonts/" + $font-folder + "/" + $font-name + ".woff2") format("woff2"),
+    url("/fonts/" + $font-folder + "/" + $font-name + ".woff") format("woff");
+}
+
+@mixin fontMontserratSemiBold() {
+    @include font-face("Montserrat", "Montserrat-SemiBold", "Montserrat-SemiBold");
+    font-weight: 600;
+}
+
+@mixin fontMontserratMedium() {
+  @include font-face("Montserrat", "Montserrat-Medium", "Montserrat-Medium");
+  font-weight: 500;
+}
+
+@mixin fontMontserratRegular() {
+  @include font-face("Montserrat", "Montserrat", "Montserrat-Regular");
+  font-weight: 400;
+}
+
+@mixin fontMontserratLight() {
+  @include font-face("Montserrat", "Montserrat-Light", "Montserrat-Light");
+  font-weight: 300;
+}
+
+@mixin fontLight() {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 300;
+}
+
+@mixin fontRegular() {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 400;
+}
+
+@mixin fontMedium() {
+  font-family: Montserrat-Medium;
+  font-style: normal;
+  font-weight: 500;
+}
+
+@mixin fontSemiBold() {
+  font-family: Montserrat-SemiBold;
+  font-style: normal;
+  font-weight: 600;
+}

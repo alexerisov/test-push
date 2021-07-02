@@ -1,0 +1,41 @@
+@import "~styles/variables.scss";
+@import "~styles/mixins/mixins.scss";
+
+.card {
+    width: 338px;
+    min-height: 354px;
+
+    &__content {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        font-size: 18px;
+        @include fontMedium();
+    }
+
+    &__media {
+        height: 173px;
+    }
+
+    a {
+        color: $yellow;
+    }
+
+    p {
+        font-weight: 600;
+    }
+
+    &__name {
+        margin: 0 0 10px 0;
+    }
+
+    &__location {
+        color: $gray5;
+        margin: 0 0 17px 0;
+        font-size: 14px;
+    }
+
+    &__likeIcon {
+        margin: 10px 0 0 0;
+    }
+}
