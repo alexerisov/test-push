@@ -23,7 +23,7 @@ const LayoutModal = (props) => {
       <div className={`LayoutModal LayoutModal_theme_default`}>
         {toolClose ? (
           <a className='LayoutModal__close' href='#' onClick={onClose}>
-            Close
+            &#128473;
           </a>
         ) : null}
 

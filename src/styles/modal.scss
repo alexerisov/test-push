@@ -22,14 +22,15 @@
 
 .LayoutModal {
   position: relative;
-  top: 50%;
+  top: 55%;
   z-index: 102;
   transform: translateY(-50%);
-  background: #fff;
+  background: #000;
   margin: 0 auto;
-  border-radius: rem(20);
+  border-radius: 10px;
   padding: rem(24);
-  max-width: 710px;
+  max-width: 800px;
+  height: 600px;
 
   @media (max-width: $--md) {
     max-width: 90vw;
@@ -37,15 +38,14 @@
 
   &__close {
     position: absolute;
-    right: 26px;
-    top: 26px;
-    width: 15px;
-    height: 15px;
-    background-image: url('/images/icons/cross-blue.svg');
-    background-size: 15px 15px;
-    background-repeat: no-repeat;
-    background-position: center center;
+    right: 33px;
+    top: 24px;
+    width: 24px;
+    height: 24px;
     z-index: 999;
+    text-decoration: none;
+    color: $--color-white;
+    font-size: 24px;
   }
 
   &__inner {

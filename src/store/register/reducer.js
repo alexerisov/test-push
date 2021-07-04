@@ -4,8 +4,10 @@ import {types} from './actions.js';
 const initState = {
   data: {
     email: '',
+    phone_number: '',
     password: '',
-    checkboxRemember: false,
+    user_type: '',
+    checkboxAcceptTerms: false,
   },
   isLoading: false,
   error: null,
@@ -31,15 +33,22 @@ export default reducer(initState, {
     };
   },
 
-  [types.SEND_SUCCESS]: (state) => {
+  [types.CLEAR]: (state) => {
+    return {
+      ...initState,
+    };
+  },
+
+  [types.SEND_SUCCESS]: (state, action) => {
     return {
       ...state,
       data: {
         email: '',
+        phone_number: '',
         password: '',
+        user_type: ''
       },
       isLoading: false,
-      error: null,
     };
   },
 
@@ -48,6 +57,13 @@ export default reducer(initState, {
       ...state,
       isLoading: false,
       error: action.error,
+    };
+  },
+
+  [types.CLEAR_FAILURE]: (state) => {
+    return {
+      ...state,
+      error: null,
     };
   },
 
