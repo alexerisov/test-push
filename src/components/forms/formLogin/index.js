@@ -4,23 +4,7 @@ import { ButtonLogin } from '@/components/elements/button';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { InputLogin } from '@/components/elements/input';
 import FieldError from '../../elements/field-error';
-import { FormControlLabel, Checkbox } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
 import classes from "./formLogin.module.scss";
-
-const colorGray = '#707070';
-
-const FormControlLabelLogin = withStyles({
-    root: {
-      color: colorGray,
-    }
-  })((props) => <FormControlLabel color="default" {...props} />);
-
-  const CheckboxLogin = withStyles({
-    root: {
-      color: colorGray,
-    }
-  })((props) => <Checkbox color="default" {...props} />);
 
 function FormLogin (props) {
   const { data, errors } = props;
@@ -28,15 +12,6 @@ function FormLogin (props) {
   function onChangeField(name) {
     return (event) => {
       const data = { ...props.data, [name]: event.target.value };
-      if (props.onChange) {
-        props.onChange(data);
-      }
-    };
-  }
-
-  function onChangeCheckbox(name) {
-    return (event) => {
-      const data = { ...props.data, [name]: event.target.checked };
       if (props.onChange) {
         props.onChange(data);
       }
@@ -78,12 +53,6 @@ function FormLogin (props) {
         />
         <FieldError errors={errors} path="password" />
         <div className={classes.registerSection}>
-          <FormControlLabelLogin
-            checked={data.checkboxRemember}
-            onChange={onChangeCheckbox('checkboxRemember')}
-            control={<CheckboxLogin name="checkboxRemember" />}
-            label="Remember me"
-          />
           <a className={classes.registerLink} href='#'>Forgot Password?</a>
         </div>
         <FieldError errors={errors} path="detail" />

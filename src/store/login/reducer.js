@@ -5,7 +5,6 @@ const initState = {
   data: {
     email: '',
     password: '',
-    checkboxRemember: false,
   },
   isLoading: false,
   error: null,
