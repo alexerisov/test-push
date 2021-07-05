@@ -4,13 +4,13 @@ import CONFIG from '@/config.js';
 const params = 'scrollbars=yes,resizable=no,status=no,location=no,toolbar=no,menubar=no,width=500,height=600,left=-1000,top=-1000';
 
 const openOAuth = (url, register, user_type) => {
-  const userType = user_type ? user_type : 0;
+  // to do: add check for null of user_type
   const oauthWindow = window.open(url, 'auth', params);
   let timer = setInterval(function () {
     if (oauthWindow.closed) {
       clearInterval(timer);
       if (register) {
-        window.location.replace(`${CONFIG.currentUrl}/oauth2-complete/${userType}`);
+        window.location.replace(`${CONFIG.currentUrl}/oauth2-complete/${user_type}`);
       } else {
         window.location.reload();
       }

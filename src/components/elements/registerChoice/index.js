@@ -7,7 +7,7 @@ import classes from "./registerChoice.module.scss";
 function RegisterChoice (props) {
   
   return (
-    <div style={props.pageSelected === props.pageName ? null : {display: 'none'}}>
+    <div>
       <ArrowBackIcon
         style={{
           color: '#fff',

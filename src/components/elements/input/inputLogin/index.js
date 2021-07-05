@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 
-const InputLogin1 = withStyles({
+const InputWithStyle = withStyles({
     root: {
       color: '#bcbcbc',
       marginBottom: '10px',
@@ -24,7 +24,7 @@ const InputLogin1 = withStyles({
 
 function InputLogin (props) {
   
-  return <InputLogin1
+  return <InputWithStyle
           id={props.id}
           label={props.label}
           type={props.type}

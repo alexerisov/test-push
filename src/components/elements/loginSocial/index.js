@@ -12,7 +12,7 @@ import classes from "./loginSocial.module.scss";
 function LoginSocial (props) {
   
   return (
-    <div style={props.pageSelected === props.pageName ? null : {display: 'none'}}>
+    <div>
       <ArrowBackIcon
         style={{
           color: '#fff',

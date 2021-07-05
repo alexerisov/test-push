@@ -12,13 +12,14 @@ import { connect } from 'react-redux';
 import classes from "./register.module.scss";
 
 function Register (props) {
-  const viewerType = {
-    user_type: 0,
+  
+  const USER_TYPE = {
+    viewerType: 0,
+    chefType: 1
   };
-  const chefType = {
-    user_type: 1,
-  };
-
+  
+  const viewerType = USER_TYPE.viewerType;
+  const chefType = USER_TYPE.chefType;
   const PAGE_SELECTED_TYPES = {
     loginChoice: 'LOGIN_CHOICE',
     loginEmail: 'LOGIN_EMAIL',
@@ -54,15 +55,17 @@ function Register (props) {
   };
 
   const switchToPageRegisterViewer = () => {
+    const data = { ...registerData, user_type: viewerType };
     props.dispatch(
-        registerActions.update(viewerType),
+        registerActions.update(data),
     );
     setPageSelected(PAGE_SELECTED_TYPES.registerPage);
   };
 
   const switchToPageRegisterChef = () => {
+    const data = { ...registerData, user_type: chefType };
     props.dispatch(
-        registerActions.update(chefType),
+        registerActions.update(data),
     );
     setPageSelected(PAGE_SELECTED_TYPES.registerPage);
   };
