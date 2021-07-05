@@ -20,15 +20,15 @@ export default {
 
   register: ({
     email,
-    first_name,
-    password
+    phone_number,
+    password,
+    user_type
   }) => {
-    return http.post(`account/registration`, {
+    return http.post(`account/register`, {
       email,
-      first_name,
-      password
+      phone_number,
+      password,
+      user_type
     });
   },
-
-
 };

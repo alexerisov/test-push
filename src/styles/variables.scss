@@ -26,3 +26,12 @@ $--breakpoints-spec: (
   'lg-and-down': (max-width: $--xl - 1),
   'xl-only' : (min-width: $--xl),
 );
+
+//colors
+$--color-white: #FFFFFF !default;
+$--color-black: #000000 !default;
+$--color-orange: #ffaa00 !default;
+$--color-blue: #61ACD6 !default;
+$--color-gray: #707070 !default;
+$--color-green: #9FCC29 !default;
+$--color-red: #FA0926 !default;

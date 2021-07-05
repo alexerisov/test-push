@@ -24,6 +24,9 @@ if (process.env.NODE_ENV === 'production') {
   };
 } else {
   envs = {
+    fbClientId: '3044235379228131',
+    googleClientId: '655496569198-f4akmc86kndanpb2p10uk80h5al1sg4l.apps.googleusercontent.com',
+    instagramClientId: '282462186958896',
     NODE_ENV: 'local',
     BASE_URL: 'http://localhost:4096',
     DEBUG: JSON.stringify(process.env.DEBUG ?? true),
