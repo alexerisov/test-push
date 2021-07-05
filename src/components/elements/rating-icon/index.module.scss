@@ -2,7 +2,7 @@
 @import "~styles/mixins/mixins.scss";
 
 .raiting {
-    background: $gray4 0% 0% no-repeat padding-box;
+    background: $--color-gray4 0% 0% no-repeat padding-box;
     border-radius: 5px;
     width: max-content;
     height: max-content;
@@ -11,7 +11,7 @@
 }
 
 .raitingStar {
-    color: $yellow;
+    color: $--color-orange;
     font-size: 20px;
     padding: 0 3px 0 0;
 }

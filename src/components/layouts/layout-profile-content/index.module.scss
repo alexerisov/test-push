@@ -1,0 +1,64 @@
+@import "~styles/variables.scss";
+
+.dashboard {
+    padding: 40px 139px 100px 139px;
+    display: flex;
+    height: 100%;
+
+    &__navbar {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+        width: 328.25px;
+        font-size: 20px;
+
+        span {
+            color: $--color-orange;
+        }
+    }
+
+    &__itemContainer {
+        margin: 40px 0 0 0;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 328px;
+    }
+
+    &__item {
+        padding: 0 0 0 30px;
+        display: flex;
+        align-items: center;
+        height: 92px;
+        border-radius: 3px;
+        background-color: $gray7;
+
+        a {
+            color: $--color-black;
+        }
+
+        &_active, &:hover {
+            background-color: $--color-orange;
+
+            a {
+                color: $--color-white;
+            }
+        }
+    }
+
+    &__title {
+        font-size: 20px;
+        font-weight: 300;
+        line-height: 45px;
+        color: $gray6;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+        margin: 85px 0 0 33px;
+    }
+}

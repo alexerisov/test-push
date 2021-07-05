@@ -10,13 +10,13 @@
     font-family: "Montserrat";
     font-size: 16px;
     max-width: 100%;
-    background: $white 0% 0% no-repeat padding-box;
+    background: $--color-white 0% 0% no-repeat padding-box;
     min-height: 122px;
     margin: 0;
     padding: 0 144px 6px 144px;
     display: flex;
     flex-direction: column;
-    box-shadow: 0px 3px 6px #00000026;
+    box-shadow: 0px 3px 6px #00000029;
 
     &__container {
         display: flex;
@@ -26,7 +26,7 @@
 
     &__phone {
         align-self: flex-end;
-        color: $yellow;
+        color: $--color-orange;
         position: relative;
         bottom: -15px;
     }
@@ -41,7 +41,7 @@
     }
 
     &__link {
-        color: $gray1;
+        color: $--color-gray1;
         font-size: 16px;
         text-decoration: none;
     }
@@ -49,10 +49,11 @@
     &__button {
         font-family: "Montserrat";
         font-size: 16px;
-        color: $gray1;
+        color: $--color-gray1;
         border: none;
         background-color: rgba(0, 0, 0, 0);
         margin: 0;
         padding: 0;
+        cursor: pointer;
     }
 }

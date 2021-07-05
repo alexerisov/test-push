@@ -12,7 +12,7 @@
         align-self: center;
         width: 100%;
         max-width: 670px;
-        border: 1px solid $gray2;
+        border: 1px solid $--color-gray2;
         border-radius: 28px;
         min-height: 56px;
         padding: 0 19px;
@@ -25,10 +25,10 @@
     
     &__titleContainer::before {
         content: "";
-        border: 1px solid $gray3;
+        border: 1px solid $--color-gray;
         border-radius: 7px;
         width: 8px;
-        background: $deep-gray 0% 0% no-repeat padding-box;
+        background: $--color-gray3 0% 0% no-repeat padding-box;
     }
     
     &__titleTextContainer {
@@ -43,15 +43,15 @@
     &__titleText {
         font-size: 30px;
         line-height: 37px;
-        color: $gray3;
+        color: $--color-gray;
     }
     
     &__title {
-        color: $yellow;
+        color: $--color-orange;
     }
     
     &__subtitle {
-        color: $black;
+        color: $--color-black;
     }
     
     &__slide {
@@ -69,14 +69,14 @@
     }
     
     &__slideButton:last-of-type {
-        color: $white;
-        background: $yellow 0% 0% no-repeat padding-box;
+        color: $--color-white;
+        background: $--color-orange 0% 0% no-repeat padding-box;
         border: none;
     }
     
     &__slideButton:first-of-type {
-        border: 2px solid $yellow;
-        color: $yellow;
+        border: 2px solid $--color-orange;
+        color: $--color-orange;
         background-color: rgba(0, 0, 0, 0);
     }
 }

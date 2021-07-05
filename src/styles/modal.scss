@@ -25,7 +25,7 @@
   top: 50%;
   z-index: 102;
   transform: translateY(-50%);
-  background: $white;
+  background: $--color-white;
   margin: 0 auto;
   border-radius: rem(20);
   padding: rem(24);
@@ -53,7 +53,7 @@
   }
 
   &__header {
-    border-bottom: 1px solid $white;
+    border-bottom: 1px solid $--color-white;
     padding-bottom: 20px;
     letter-spacing: 0;
 
@@ -74,13 +74,13 @@
 
   &__text-muted {
     font-size: 18px;
-    color: $white;
+    color: $--color-white;
     line-height: 1.5;
   }
 
   &__footer {
     flex: 0;
-    border-top: 1px solid $white;
+    border-top: 1px solid $--color-white;
     padding: 5px;
     display: flex;
     flex-direction: row;

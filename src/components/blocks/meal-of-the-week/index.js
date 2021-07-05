@@ -7,7 +7,10 @@ const MealOfWeekBlock = () => {
         <div className={classes.meal__special}>Special</div>
         <div className={classes.meal__title}>
           <h2>Meal of the week</h2>
-          <span className={classes.meal__yellowLine}></span>
+          <span className={classes.meal__lineContainer}>
+            <span className={classes.meal__yellowLine} />
+            <span className={classes.meal__blueСircle} />
+          </span>
         </div>
         <div className={classes.meal__content}>
           <img src="/images/index/meal pic.png" className={classes.meal__images}/>

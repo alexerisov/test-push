@@ -3,13 +3,13 @@
 .footer {
     width: 100%;
     min-height: 447px;
-    background-color: $deep-gray;
+    background-color: $--color-gray3;
     margin: 0;
     padding: 65px 142px 40px 142px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    color: $white;
+    color: $--color-white;
     font-size: 16px;
     @include fontMontserratLight();
 
@@ -60,6 +60,6 @@
 
     &__copyright {
         text-align: center;
-        color: $gray2;
+        color: $--color-gray2;
     }
 }

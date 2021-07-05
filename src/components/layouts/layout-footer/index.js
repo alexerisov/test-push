@@ -50,7 +50,7 @@ const LayoutFooter = (props) => {
             </div>
             <div>
                 <p className={classes.footer__termsOfUse}>Terms of use | Privacy policy</p>
-                <p className={classes.footer__copyright}>C Copyright 2021. All right reserved</p>
+                <p className={classes.footer__copyright}>Copyright 2021. All right reserved</p>
             </div>
             
         </div>

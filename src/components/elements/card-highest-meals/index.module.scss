@@ -18,7 +18,7 @@
     }
 
     a {
-        color: $yellow;
+        color: $--color-orange;
     }
 
     p {
@@ -30,7 +30,7 @@
     }
 
     &__location {
-        color: $gray5;
+        color: $--color-gray5;
         margin: 0 0 17px 0;
         font-size: 14px;
     }
