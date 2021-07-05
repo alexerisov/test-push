@@ -1,0 +1,122 @@
+@import "~styles/mixins/mixins.scss";
+
+.home {
+    @include fontRegular();
+    min-height: calc(100vh - 113px);
+    padding: 38px 143px 0 143px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    &__inputSearch {
+        align-self: center;
+        width: 100%;
+        max-width: 670px;
+        border: 1px solid $--color-gray2;
+        border-radius: 28px;
+        min-height: 56px;
+        padding: 0 19px;
+    }
+    
+    &__titleContainer {
+        display: flex;
+        margin: 67px 0 38px 0;
+    }
+    
+    &__titleContainer::before {
+        content: "";
+        border: 1px solid $--color-gray;
+        border-radius: 7px;
+        width: 8px;
+        background: $--color-gray3 0% 0% no-repeat padding-box;
+    }
+    
+    &__titleTextContainer {
+        display: flex;
+        flex-direction: column;
+        margin: 0 0 0 16px;
+        @include fontSemiBold();
+        font-size: 50px;
+        line-height: 58px;
+    }
+    
+    &__titleText {
+        font-size: 30px;
+        line-height: 37px;
+        color: $--color-gray;
+    }
+    
+    &__title {
+        color: $--color-orange;
+    }
+    
+    &__subtitle {
+        color: $--color-black;
+    }
+    
+    &__slide {
+        position: absolute;
+        bottom: 5px;
+        right: 170px;
+    }
+    
+    &__slideButton {
+        font-size: 20px;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        margin: 17px;
+    }
+    
+    &__slideButton:last-of-type {
+        color: $--color-white;
+        background: $--color-orange 0% 0% no-repeat padding-box;
+        border: none;
+    }
+    
+    &__slideButton:first-of-type {
+        border: 2px solid $--color-orange;
+        color: $--color-orange;
+        background-color: rgba(0, 0, 0, 0);
+    }
+}
+
+.imgMint1 {
+    position: absolute;
+    width: 170px;
+    left: -60px;
+    top: 20px;
+    z-index: -1;
+}
+
+.imgBroccoli {
+    position: absolute;
+    width: 140px;
+    bottom: 0;
+    left: -40px;
+}
+
+.imgMint2 {
+    position: absolute;
+    width: 120px;
+    right: 0;
+    bottom: 50px;
+    z-index: -1;
+}
+
+.imgCarrot {
+    position: absolute;
+    width: 171px;
+    right: 0;
+    bottom: 0;
+    z-index: -2;
+}
+
+.imgBanner {
+    width: 100%;
+    max-width: 550px;
+    position: absolute;
+    top: 121px;
+    right: 133px;
+    z-index: -1;
+}

@@ -1,0 +1,25 @@
+@import "~styles/variables.scss";
+@import "~styles/mixins/mixins.scss";
+
+.card {
+    width: 338px;
+    min-height: 286px;
+
+    &__media {
+        height: 173px;
+    }
+
+    &__title {
+        font-size: 18px;
+        @include fontMedium();
+        font-weight: 600;
+        opacity: 1;
+        margin: 0 0 38px 0;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+}

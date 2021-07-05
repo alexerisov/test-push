@@ -3,15 +3,15 @@ import { createMuiTheme } from '@material-ui/core/styles';
 
 export const theme = createMuiTheme({
   typography: {
-    'fontFamily': `"Circe", "Roboto", "Helvetica", "Arial", sans-serif`,
-    'fontSize': 14,
+    'fontFamily': `"Montserrat", "Roboto", "Helvetica", "Arial", sans-serif`,
+    'fontSize': 16,
     'fontWeightLight': 300,
     'fontWeightRegular': 400,
     'fontWeightMedium': 500,
   },
   palette: {
     primary: {
-      main: '#FA4A0C',
+      main: '#FFAA00',
       // light: will be calculated from palette.primary.main,
       // dark: will be calculated from palette.primary.main,
       // contrastText: will be calculated to contrast with palette.primary.main

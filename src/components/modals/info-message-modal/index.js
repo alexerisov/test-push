@@ -1,5 +1,5 @@
 import React from 'react';
-import { LayoutModal } from '@/components/layouts/modal';
+import LayoutModal from '@/components/layouts/modal';
 import { modalActions } from '@/store/actions';
 import { connect } from 'react-redux';
 import { Alert, AlertTitle } from '@material-ui/lab';

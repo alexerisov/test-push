@@ -1,0 +1,10 @@
+@import "~styles/variables.scss";
+@import "~styles/mixins/mixins.scss";
+
+.container {
+    @include fontRegular();
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 143px;
+    gap: 18px;
+}
