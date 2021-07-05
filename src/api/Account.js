@@ -31,4 +31,20 @@ export default {
       user_type
     });
   },
+  
+  updateProfile: (data) => { 
+    console.log(data);
+    const formData = new FormData();
+    formData.append('data', data);
+    return http.patch(
+      `account/me`,
+      data,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      },
+    );
+  },
+  
 };

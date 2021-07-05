@@ -7,15 +7,15 @@ import { connect } from 'react-redux';
 
 const HeaderDefault = (props) => {
 
-    const handleClickLogin = () => {
-      return () => {
-        props.dispatch(
-          modalActions.open('register'),
-        ).then(result => {
-          // result when modal return promise and close
-        });
-      };
-    }
+  const handleClickLogin = (name) => {
+    return () => {
+      props.dispatch(
+        modalActions.open(name),
+      ).then(result => {
+        // result when modal return promise and close
+      });
+    };
+  }
 
     return (
       <div className={classes.header}>
@@ -37,7 +37,7 @@ const HeaderDefault = (props) => {
               <a className={classes.header__link}>Menu</a>
             </Link>
           </nav>
-          <button className={classes.header__button} onClick={handleClickLogin}>Login</button>
+          <button className={classes.header__button} onClick={handleClickLogin('register')}>Login</button>
         </div>
       </div>
     );

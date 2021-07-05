@@ -1,0 +1,70 @@
+@import "~styles/mixins/mixins.scss";
+@import "~styles/variables.scss";
+
+.profile {
+    &__title {
+        font-size: 18px;
+        font-weight: 600;
+        margin: 0 0 25px 0;
+    }
+
+    &__formAvatar {
+        display: grid;
+        grid-template-columns: 90px auto auto;
+        gap: 26px;
+        align-items: center;
+        padding: 0 0 50px 0;
+        margin: 0 0 50px 0;
+        border-bottom: 1px solid #DFDFDF;
+
+        p {
+            color: #B1B1B1;
+        }
+    }
+
+    &__avatar {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+    }
+
+    &__input {
+        width: 525px;
+        height: 56px;
+        padding: 0 0 0 30px;
+        border: 1px solid #DEDEDE;
+        border-radius: 4px;
+    }
+
+    &__buttonUpdate {
+        @include fontMedium();
+        font-size: 20px;
+        justify-self: end;
+        color: $--color-blue;
+        width: 140px;
+        height: 56px;
+        border: 1px solid $--color-blue;
+        border-radius: 3px;
+
+        &:hover {
+            opacity: 0.5;
+        }
+
+        &:active {
+            background-color: $--color-blue;
+            color: $--color-white;
+        }
+    }
+
+    &__data {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        &__title {
+            @include fontSemiBold();
+            font-size: 16px;
+            margin: 0 0 10px 0;
+        }
+    }
+}

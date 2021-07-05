@@ -27,4 +27,24 @@ body {
     [class*='MuiRating-root'] {
         color: $--color-orange;
     }
+
+    [class*='MuiInputBase-input'] {
+        color: #6A6A6A;
+        width: 525px;
+        height: 56px;
+    }
+
+    [class*='MuiFormLabel-root'] {
+        @include fontSemiBold();
+        font-size: 16px;
+        color: $--color-black;
+    }
+    
+    [class*='MuiInputLabel-formControl'] {
+        transform: translate(0, 0) scale(1);
+    }
+
+    [class*='MuiInput-underline'] {
+        border: 0;
+    }
 }
