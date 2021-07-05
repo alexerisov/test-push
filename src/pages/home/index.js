@@ -21,7 +21,6 @@ const HomeLanding = () => {
         </div>
         <Button
           variant='contained'
-          className={classes.home__button}
           color='primary'
           href={`/`}
         >
