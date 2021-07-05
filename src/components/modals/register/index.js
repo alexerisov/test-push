@@ -2,9 +2,9 @@ import React from 'react';
 import {LayoutModal} from '@/components/layouts';
 import {loginActions, modalActions, registerActions} from '@/store/actions';
 import {
-  LoginChoise,
+  LoginChoice,
   LoginSocial,
-  RegisterChoise,
+  RegisterChoice,
   RegisterSuccess,
 } from '@/components/elements';
 import {FormLogin, FormRegister} from '@/components/forms';
@@ -12,12 +12,12 @@ import { connect } from 'react-redux';
 import classes from "./register.module.scss";
 
 function Register (props) {
-  
+
   const USER_TYPE = {
     viewerType: 0,
     chefType: 1
   };
-  
+
   const viewerType = USER_TYPE.viewerType;
   const chefType = USER_TYPE.chefType;
   const PAGE_SELECTED_TYPES = {
@@ -105,7 +105,7 @@ function Register (props) {
   const renderContent = () => {
     switch (pageSelected) {
       case PAGE_SELECTED_TYPES.loginChoice:
-        return <LoginChoise
+        return <LoginChoice
               loginEmail={switchToPageEmail}
               loginSocial={switchToPageSocial}
               register={switchToPageRegisterChoice}
@@ -123,7 +123,7 @@ function Register (props) {
               onClickReturn={switchToPageChoise}
           />;
       case PAGE_SELECTED_TYPES.registerChoice:
-        return <RegisterChoise
+        return <RegisterChoice
               registerViewer={switchToPageRegisterViewer}
               registerChef={switchToPageRegisterChef}
               onClickReturn={switchToPageChoise}
