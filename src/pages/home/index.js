@@ -6,12 +6,24 @@ import FavoriteCuisinesBlock from '@/components/blocks/favorite-cuisines';
 import LiveVideoCardsBlock from '@/components/blocks/live-video-cards';
 import HighestRatedMealsBlock from '@/components/blocks/highest-rated-meals';
 import { Button } from '@material-ui/core';
+import { connect } from 'react-redux';
+import { modalActions } from '@/store/actions';
 
-const HomeLanding = () => {
+const HomeLanding = (props) => {
+
+  const handleClickLogin = (name) => {
+    return () => {
+      props.dispatch(
+        modalActions.open(name),
+      ).then(result => {
+        // result when modal return promise and close
+      });
+    };
+  }
 
   const content = <>
       <section className={classes.home}>
-        <button className={classes.home__inputSearch}>
+        <button className={classes.home__inputSearch} onClick={handleClickLogin('search')}>
           <img src="/images/index/icon_search.svg" className={classes.home__iconSearch}/>
           Search for dish name
         </button>
@@ -49,5 +61,5 @@ const HomeLanding = () => {
     <LayoutPage content={content} />
   );
 };
-  
-export default HomeLanding;
+
+export default connect()(HomeLanding);

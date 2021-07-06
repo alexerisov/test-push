@@ -36,7 +36,8 @@ const StyledTab = styled(Tab)`
     font-weight: 600;
     font-size: 20px;
     line-height: 58px;
-    padding: 35px 0 35px 0;
+    padding: 15px 0 15px 0;
+    text-transform: none;
   }
 `;
 

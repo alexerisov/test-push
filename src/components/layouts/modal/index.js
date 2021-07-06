@@ -12,7 +12,7 @@ const LayoutModal = (props) => {
     }
   };
 
-  const { children, header, footer, overflowTransparent, toolClose } = props;
+  const { children, header, footer, overflowTransparent, toolClose, themeName = "default" } = props;
 
   return (
     <div
@@ -20,7 +20,7 @@ const LayoutModal = (props) => {
       className={`LayoutModalOverflow
       ${overflowTransparent ? 'LayoutModalOverflow_transparent' : ''}`}
       onClick={(e) => onCloseOverflow(e)}>
-      <div className={`LayoutModal LayoutModal_theme_default`}>
+      <div className={`LayoutModal LayoutModal_theme_${themeName}`}>
         {toolClose ? (
           <a className='LayoutModal__close' href='#' onClick={onClose}>
             &#128473;

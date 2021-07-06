@@ -15,6 +15,9 @@ const StyledMenu = styled(Menu)`
 
 const HeaderDefault = (props) => {
 
+  const viewerType = 0;
+  const chefType = 1;
+
   const handleClickLogin = (name) => {
     return () => {
       props.dispatch(
@@ -59,7 +62,7 @@ const HeaderDefault = (props) => {
         ? <button className={classes.header__button} onClick={handleClickLogin('register')}>Login</button>
         : <>
           <button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick} className={classes.header__button}>
-            {props?.account?.profile?.user_type === 0 ? "Hi, user!" : "Hi, chef!" }
+            {props?.account?.profile?.user_type === viewerType ? "Hi, user!" : "Hi, chef!" }
           </button>
           <NoSsr>
             <StyledMenu
