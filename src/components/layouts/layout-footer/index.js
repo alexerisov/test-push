@@ -6,7 +6,7 @@ const LayoutFooter = (props) => {
         <div className={classes.footer}>
             <div className={classes.footer__container}>
                 <div>
-                    <img src="/images/index/logo.png" className={classes.footer__logo} alt="" />
+                    <img src="/images/index/footer_logo.png" className={classes.footer__logo} alt="" />
                     <p className={classes.footer__aboutCompanyText}>
                         Make people Happy with HOME COOKED FOOD.
                         Eatchefs helps home chefs to produce, distribute
@@ -52,7 +52,7 @@ const LayoutFooter = (props) => {
                 <p className={classes.footer__termsOfUse}>Terms of use | Privacy policy</p>
                 <p className={classes.footer__copyright}>Copyright 2021. All right reserved</p>
             </div>
-            
+            <img src="/images/index/footer_img.png" className={classes.footer__foodImg}/>
         </div>
     );
 };

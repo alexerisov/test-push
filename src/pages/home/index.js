@@ -11,7 +11,10 @@ const HomeLanding = () => {
 
   const content = <>
       <section className={classes.home}>
-        <input placeholder="Search for dish name" className={classes.home__inputSearch}/>
+        <button className={classes.home__inputSearch}>
+          <img src="/images/index/icon_search.svg" className={classes.home__iconSearch}/>
+          Search for dish name
+        </button>
         <div className={classes.home__titleContainer}>
           <div className={classes.home__titleTextContainer}>
             <p className={classes.home__titleText}>Hungry?</p>

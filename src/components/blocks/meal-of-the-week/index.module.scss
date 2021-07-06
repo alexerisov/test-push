@@ -139,4 +139,11 @@
             color: $--color-gray7;
         }
     }
+
+    &__ear {
+        position: absolute;
+        left: 0;
+        top: -40px;
+        z-index: -4;
+    }
 }

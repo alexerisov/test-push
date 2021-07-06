@@ -16,6 +16,18 @@
         border-radius: 28px;
         min-height: 56px;
         padding: 0 19px;
+        text-align: left;
+        font-size: 18px;
+        line-height: 45px;
+        letter-spacing: 0px;
+        color: #B1B1B1;
+        @include fontRegular();
+    }
+
+    &__iconSearch {
+        position: relative;
+        bottom: -4px;
+        padding: 0 10px 0 0;
     }
     
     &__titleContainer {
