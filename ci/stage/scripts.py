@@ -6,11 +6,8 @@ ENV_FILE = '.client.env'
 
 
 def build():
-    BASE_URL = os.environ.get("BASE_URL")
-    DOMAIN = os.environ.get("DOMAIN")
     cmd = f'docker build ' \
-          f'--build-arg BASE_URL={BASE_URL} ' \
-          f'--build-arg DOMAIN={DOMAIN} ' \
+          f'--build-arg NODE_ENV=stage ' \
           f'-t {os.environ.get("MAIN_CLIENT_IMAGE")} ../../'
     os.system(cmd)
     return
