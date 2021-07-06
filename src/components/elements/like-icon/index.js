@@ -4,7 +4,7 @@ import classes from "./index.module.scss";
 const LikeIcon = () => {
     return (
       <div className={classes.icon}>
-        <span>&#9829;</span>
+        <img src="/images/index/Icon awesome-heart.svg" className={classes.icon__like}/>
         <span className={classes.icon__text}>1,000 votes</span>
       </div>
     );

@@ -16,7 +16,7 @@ const CardFavoriteCuisines = () => {
         <CardContent className={classes.card__content}>
           <div className={classes.card__title}>Beef Stroganoff</div>
           <MaterialRating
-            value="5"
+            value={5}
             name="rating"
             size="medium"
           />

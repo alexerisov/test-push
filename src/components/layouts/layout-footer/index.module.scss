@@ -2,7 +2,7 @@
 
 .footer {
     width: 100%;
-    min-height: 447px;
+    min-height: 460px;
     background-color: $--color-gray3;
     margin: 0;
     padding: 65px 142px 40px 142px;
@@ -12,6 +12,8 @@
     color: $--color-white;
     font-size: 16px;
     @include fontMontserratLight();
+    position: relative;
+    overflow: hidden;
 
     &__container {
         display: flex;
@@ -61,5 +63,11 @@
     &__copyright {
         text-align: center;
         color: $--color-gray2;
+    }
+
+    &__foodImg {
+        position: absolute;
+        right: 40px;
+        top: 120px;
     }
 }
