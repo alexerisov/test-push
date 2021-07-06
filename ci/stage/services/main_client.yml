@@ -2,7 +2,6 @@ version: "3.8"
 
 networks:
   proxy: # docker network create --driver=overlay --internal=false --attachable proxy
-    driver: overlay
     attachable: true
     internal: false
     name: proxy
