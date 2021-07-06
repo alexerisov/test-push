@@ -42,19 +42,19 @@ const HeaderDefault = (props) => {
     <div className={classes.header}>
       <div className={classes.header__phone}>Customer support: 1800 234 356 79</div>
       <div className={classes.header__container}>
-        <Link href="/home">
+        <Link href="/">
           <a>
             <img src="/images/index/logo.png" className={classes.header__logo} alt="" />
           </a>
         </Link>
         <nav className={classes.header__links}>
-          <Link href="/home">
+          <Link href="/">
             <a className={classes.header__link}>Recipes</a>
           </Link>
-          <Link href="/home">
+          <Link href="/">
             <a className={classes.header__link}>Videos</a>
           </Link>
-          <Link href="/home">
+          <Link href="/">
             <a className={classes.header__link}>Menu</a>
           </Link>
         </nav>
@@ -78,17 +78,17 @@ const HeaderDefault = (props) => {
                 </Link>
               </MenuItem>
               <MenuItem onClick={handleClose}>
-                <Link href="/home">
+                <Link href="/">
                   <a className={classes.header__link}>Saved Recipes</a>
                 </Link>
               </MenuItem>
               <MenuItem onClick={handleClose}>
-                <Link href="/home">
+                <Link href="/">
                   <a className={classes.header__link}>History</a>
                 </Link>
               </MenuItem>
               <MenuItem onClick={handleClose}>
-                <Link href="/home">
+                <Link href="/">
                   <a className={classes.header__link}>Logout</a>
                 </Link>
               </MenuItem>
