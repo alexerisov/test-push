@@ -51,6 +51,9 @@ const StyledTabPanel = styled(TabPanel)`
 
 const FavoriteCuisinesBlock = () => {
 
+  const lengthFavoriteCuisinesMenu = 6;
+  const NULL = 0;
+
   StyledTabPanel.propTypes = {
     children: PropTypes.node,
     index: PropTypes.any.isRequired,
@@ -64,18 +67,18 @@ const FavoriteCuisinesBlock = () => {
     };
   }
 
-  const [valueTab, setValueTab] = React.useState(0);
+  const [valueTab, setValueTab] = React.useState(NULL);
 
   const handleChange = (event, newValue) => {
     setValueTab(newValue);
   };
 
   const slideTabRight = () => {
-    (valueTab < 6 ) && setValueTab(valueTab + 1);
+    (valueTab < lengthFavoriteCuisinesMenu ) && setValueTab(valueTab + 1);
   }
 
   const slideTabLeft = () => {
-    (valueTab > 0 ) && setValueTab(valueTab - 1);
+    (valueTab > NULL ) && setValueTab(valueTab - 1);
   }
 
   return (

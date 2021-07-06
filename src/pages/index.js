@@ -62,8 +62,8 @@ const Home = (props) => {
   return (
     <div>
       <NextSeo
-        title="Page Meta Title"
-        description="This will be the page meta description"
+        title="EatChef"
+        description="EatChef"
         canonical="https://www.canonicalurl.ie/"
         openGraph={{
           url: 'https://www.canonicalurl.ie/',
