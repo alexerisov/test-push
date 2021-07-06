@@ -16,7 +16,7 @@ if (process.env.NODE_ENV === 'production') {
     googleClientId: '',
     instagramClientId: '',
     NODE_ENV: 'production',
-    BASE_URL: 'https://eatchefs.com',
+    BASE_URL: 'https://api.eatchefs.com',
     DEBUG: JSON.stringify(process.env.DEBUG ?? false),
   };
 } else if (process.env.NODE_ENV === 'stage') {
@@ -25,7 +25,7 @@ if (process.env.NODE_ENV === 'production') {
     googleClientId: '',
     instagramClientId: '',
     NODE_ENV: 'production',
-    BASE_URL: 'https://eatchefs.goodbit.dev',
+    BASE_URL: 'https://api.eatchefs.goodbit.dev',
     DEBUG: true,
   };
 } else {
