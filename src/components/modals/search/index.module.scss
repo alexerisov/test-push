@@ -1,0 +1,17 @@
+@import "~styles/variables.scss";
+
+.search {
+  padding: 20px 235px 0 235px;
+  color: $--color-gray7;
+
+  &__grid {
+    margin: 25px 0 0 0;
+    display: grid;
+    grid-template-columns: auto auto;
+
+    p:last-of-type {
+      color: $--color-orange;
+      margin: 0 0 0 6px;
+    }
+  }
+}

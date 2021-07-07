@@ -1,6 +1,8 @@
 # pull official base image
 FROM node:14.15
 
+ARG NODE_ENV=production
+
 # set working directory
 WORKDIR /app
 

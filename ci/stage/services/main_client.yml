@@ -1,0 +1,30 @@
+version: "3.8"
+
+networks:
+  proxy: # docker network create --driver=overlay --internal=false --attachable proxy
+    attachable: true
+    internal: false
+    name: proxy
+
+services:
+  main_client:
+    image: ${MAIN_CLIENT_IMAGE}
+    restart: always
+    healthcheck:
+      disable: true
+    networks:
+      - proxy
+    environment:
+      - NODE_ENV=${NODE_ENV:-production}
+    expose:
+      - 3000
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.main_client.entrypoints=websecure
+      - traefik.http.routers.main_client.rule=Host(`${DOMAIN}`)
+      - traefik.http.routers.main_client.tls=true
+      - traefik.http.routers.main_client.tls.certresolver=letsencrypt
+      - traefik.http.routers.main_client.middlewares=auth
+      - traefik.http.routers.main_client.service=main_client_service
+      - traefik.http.services.main_client_service.loadbalancer.server.port=3000

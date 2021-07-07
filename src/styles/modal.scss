@@ -86,6 +86,22 @@
     flex-direction: row;
     justify-content: center;
   }
+
+  &_theme_white {
+    background: $--color-white;
+    width: 1090px;
+    min-height: 279px;
+    box-shadow: 0px 10px 25px #00000040;
+    border-radius: 0;
+    height: auto;
+    max-width: 95vw;
+    top: 30%;
+    color: #000;
+
+    .LayoutModal__close {
+      color: $--color-gray3;
+    }
+  }
 }
 
 .modal-anim-enter {

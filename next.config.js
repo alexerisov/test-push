@@ -12,24 +12,30 @@ if (typeof process.env.NODE_ENV === 'undefined') {
 let envs = {};
 if (process.env.NODE_ENV === 'production') {
   envs = {
+    fbClientId: '',
+    googleClientId: '',
+    instagramClientId: '',
     NODE_ENV: 'production',
-    BASE_URL: '',
+    BASE_URL: 'https://api.eatchefs.com',
     DEBUG: JSON.stringify(process.env.DEBUG ?? false),
   };
 } else if (process.env.NODE_ENV === 'stage') {
   envs = {
-    NODE_ENV: 'stage',
-    BASE_URL: '',
-    DEBUG: JSON.stringify(process.env.DEBUG ?? true),
+    fbClientId: '',
+    googleClientId: '',
+    instagramClientId: '',
+    NODE_ENV: 'production',
+    BASE_URL: 'https://api.eatchefs.goodbit.dev',
+    DEBUG: true,
   };
 } else {
   envs = {
     fbClientId: '3044235379228131',
     googleClientId: '655496569198-f4akmc86kndanpb2p10uk80h5al1sg4l.apps.googleusercontent.com',
     instagramClientId: '282462186958896',
-    NODE_ENV: 'local',
+    NODE_ENV: 'development',
     BASE_URL: 'http://localhost:4096',
-    DEBUG: JSON.stringify(process.env.DEBUG ?? true),
+    DEBUG: true,
   };
 }
 
