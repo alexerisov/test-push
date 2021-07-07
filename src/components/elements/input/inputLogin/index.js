@@ -7,6 +7,7 @@ const InputWithStyle = withStyles({
     root: {
       color: '#bcbcbc',
       marginBottom: '10px',
+      height: 'auto',
       '& .MuiInput-underline:before': {
         borderBottomColor: '#bcbcbc',
       },
@@ -18,6 +19,9 @@ const InputWithStyle = withStyles({
       },
       '& .MuiInputLabel-root': {
         color: '#bcbcbc',
+      },
+      '& .MuiInputBase-input': {
+        height: 'auto',
       },
     },
   })(TextField);

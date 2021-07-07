@@ -10,20 +10,48 @@ export const types = {
 };
 
 export default {
+
+  init: (data) => {
+    const profile = { ...data };
+    return dispatch => {
+      dispatch({
+        type: types.UPDATE,
+        payload: {
+          city: profile?.city,
+          full_name: profile?.full_name,
+          phone_number: profile?.phone_number,
+          email: profile.email,
+          language: profile?.language,
+          user_type: profile.user_type,
+        },
+      });
+    };
+  },
+
+  update: (data) => {
+    return dispatch => {
+      dispatch({
+        type: types.UPDATE,
+        payload: data,
+      });
+    };
+  },
+
   updateProfile: (data) => {
     return async dispatch => {
       dispatch({ type: types.SEND });
 
       try {
         const sendData = camelcaseToUnderscore(data);
-        await Account.updateBooker(
+        await Account.updateProfile(
           {
             ...sendData,
             city: sendData.city,
             full_name: sendData.full_name,
-            avatar: sendData?.avatar,
             phone_number: sendData?.phone_number,
             email: sendData?.email,
+            language: sendData?.language,
+            user_type: +sendData?.user_type,
           },
           sendData?.avatar ?? null,
         );
@@ -34,4 +62,4 @@ export default {
       }
     };
   },
-}
+};

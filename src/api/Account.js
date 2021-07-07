@@ -32,13 +32,29 @@ export default {
     });
   },
   
-  updateProfile: (data) => { 
-    console.log(data);
+  updateProfile: ({
+    full_name,
+    user_type,
+    phone_number,
+    email,
+    city,
+    language,
+  }, avatar) => {
     const formData = new FormData();
-    formData.append('data', data);
+    if (avatar instanceof File) {
+      formData.append('avatar', avatar);
+    }
+    formData.append('data', JSON.stringify({
+      full_name,
+      user_type,
+      phone_number,
+      email,
+      city,
+      language,
+    }));
     return http.patch(
       `account/me`,
-      data,
+      formData,
       {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -46,5 +62,4 @@ export default {
       },
     );
   },
-  
 };
