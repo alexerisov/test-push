@@ -31,14 +31,39 @@ export default {
       user_type
     });
   },
-  
-  updateProfile: (data) => { 
-    console.log(data);
+
+  /**
+   * Registration method for Booker account
+   * @param email
+   * @param full_name
+   * @param phone_number
+   * @param city
+   */
+
+  updateProfile: ({
+    city,
+    full_name,
+    phone_number,
+    email,
+    user_type,
+    avatar,
+    language
+  }) => {
     const formData = new FormData();
-    formData.append('data', data);
+    if (avatar instanceof File) {
+      formData.append('avatar', avatar);
+    }
+    formData.append('data', JSON.stringify({
+      city,
+      full_name,
+      phone_number,
+      email,
+      user_type,
+      language
+    }));
     return http.patch(
       `account/me`,
-      data,
+      formData,
       {
         headers: {
           'Content-Type': 'multipart/form-data',

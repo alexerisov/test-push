@@ -37,11 +37,6 @@ const ContentLayout = (props) => {
             <a>Password</a>
           </Link>
         </li>
-        <li className={`${classes.dashboard__item} ${(router.asPath === data.notificationSettings.path) && classes.dashboard__item_active}`}>
-          <Link href={data.notificationSettings.path}>
-            <a>Notification Settings</a>
-          </Link>
-        </li>
       </ul>
     </div>
   );
