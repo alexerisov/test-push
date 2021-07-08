@@ -38,9 +38,8 @@ export default {
     phone_number,
     email,
     user_type,
-    avatar,
     language
-  }) => {
+  }, avatar) => {
     const formData = new FormData();
     if (avatar instanceof File) {
       formData.append('avatar', avatar);
