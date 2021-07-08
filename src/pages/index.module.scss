@@ -3,10 +3,14 @@
 .home {
     @include fontRegular();
     min-height: calc(100vh - 113px);
-    padding: 38px 143px 0 143px;
+    padding: 38px 100px 0 100px;
     display: flex;
     flex-direction: column;
     position: relative;
+
+    @media (min-width: 991.98px) {
+        padding: 38px 90px 0 90px;
+    }
 
     &__inputSearch {
         align-self: center;
@@ -129,6 +133,6 @@
     max-width: 550px;
     position: absolute;
     top: 121px;
-    right: 133px;
+    right: 0;
     z-index: -1;
 }

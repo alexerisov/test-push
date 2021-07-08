@@ -44,9 +44,10 @@ const StyledTab = styled(Tab)`
 const StyledTabPanel = styled(TabPanel)`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
-  padding: 0 143px 0 143px;
-  gap: 34px;
+  justify-content: flex-start;
+  max-width: 1054px;
+  gap: 20px;
+  margin: 0 auto;
 `;
 
 const FavoriteCuisinesBlock = () => {
@@ -101,12 +102,12 @@ const FavoriteCuisinesBlock = () => {
           <StyledTab label="Moroccan" {...a11yProps(5)} />
           <StyledTab label="Japanese" {...a11yProps(6)} />
         </StyledTabs>
-        </NoSsr>
+      </NoSsr>
         <button className={classes.cuisines__slideButton} onClick={slideTabLeft}>
-          <img className={classes.cuisines__slideLeft} src="/images/index/slider-gray.svg"/>
+          <div className={classes.cuisines__slideButtonArrow_left} />
         </button>
         <button className={classes.cuisines__slideButton} onClick={slideTabRight}>
-          <img className={classes.cuisines__slideRight} src="/images/index/slider-yellow.svg"/>
+          <div className={classes.cuisines__slideButtonArrow_right} />
         </button>
       </div>
       <NoSsr>
