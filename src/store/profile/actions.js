@@ -16,14 +16,14 @@ export default {
 
       try {
         const sendData = camelcaseToUnderscore(data);
-        await Account.updateBooker(
+        await Account.updateProfile(
           {
             ...sendData,
             city: sendData.city,
             full_name: sendData.full_name,
-            avatar: sendData?.avatar,
             phone_number: sendData?.phone_number,
             email: sendData?.email,
+            language: sendData?.language,
           },
           sendData?.avatar ?? null,
         );
@@ -34,4 +34,4 @@ export default {
       }
     };
   },
-}
+};
