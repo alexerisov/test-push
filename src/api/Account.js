@@ -32,14 +32,6 @@ export default {
     });
   },
 
-  /**
-   * Registration method for Booker account
-   * @param email
-   * @param full_name
-   * @param phone_number
-   * @param city
-   */
-
   updateProfile: ({
     city,
     full_name,

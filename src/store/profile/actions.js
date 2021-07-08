@@ -24,8 +24,8 @@ export default {
             phone_number: sendData?.phone_number,
             email: sendData?.email,
             language: sendData?.language,
-            avatar: sendData?.avatar,
           },
+          sendData?.avatar ?? null,
         );
         dispatch({ type: types.SEND_SUCCESS });
       } catch (e) {

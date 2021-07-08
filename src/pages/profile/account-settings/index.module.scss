@@ -15,8 +15,10 @@
         margin: 0 0 10px 0;
         display: block;
     }
+
     &__upload {
         position: relative;
+        height: 90px;
     }
 
     &__avatarBack:before {
@@ -62,6 +64,7 @@
         height: 90px;
         object-fit: cover;
         border-radius: 50%;
+        background-color: #fff;
     }
 
     &__input {

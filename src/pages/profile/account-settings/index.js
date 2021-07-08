@@ -76,7 +76,8 @@ const ProfileAccountSettings = (props) => {
       <form onSubmit={formik.handleSubmit} className={classes.profile__data}>
         <div className={classes.profile__formAvatar}>
           <div className={classes.profile__upload} onClick={onClickUpload}>
-            <img src={avatar} alt="avatar" className={classes.profile__avatar}/>
+            { !avatar && <img src="/images/index/default-avatar.png" alt="avatar" className={classes.profile__avatar}/>}
+            { avatar && <img src={avatar} alt="avatar" className={classes.profile__avatar}/>}
             <div className={classes.profile__avatarBack} />
           </div>
           <input
