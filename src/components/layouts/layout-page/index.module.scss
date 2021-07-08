@@ -2,4 +2,31 @@
     &__content {
         margin: 122px 0 0 0;
     }
+
+    @media (min-width: 767.98px) {
+        main, header {
+          padding: 0 calc(50vw - 360px);
+        }
+    }
+
+    @media (min-width: 991.98px) {
+      main, header {
+        padding: 0 calc(50vw - 550px);
+      }
+    }
+
+    @media (min-width: 1199.98px) {
+      main, header {
+        padding: 0 calc(50vw - 600px);
+      }
+    }
+
+    @media (min-width: 1439.98px) {
+      main {
+        padding: 0 calc(50vw - 670px);
+      }
+      header {
+        padding: 0 calc(70vw - 696px);
+      }
+    }
 }

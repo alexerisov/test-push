@@ -7,7 +7,7 @@ const ProfilePassword = () => {
 
   const content = <>
       <ContentLayout>
-        <p>тут текст настроек и бла бла бла</p>
+        <p></p>
       </ContentLayout>
     </>;
 

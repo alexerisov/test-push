@@ -6,7 +6,7 @@
     margin: 100px 0 80px 0;
 
     &__title {
-        padding: 38px 143px 0 143px;
+        padding: 38px 0 0 0;
         font-size: 47px;
         line-height: 44px;
         @include fontMedium();
@@ -41,7 +41,7 @@
 .container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
-    padding: 0 143px;
-    gap: 18px;
+    justify-content: space-between;
+    max-width: 1070px;
+    margin: 0 auto;
 }
