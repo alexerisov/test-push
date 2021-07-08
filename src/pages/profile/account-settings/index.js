@@ -56,7 +56,6 @@ const ProfileAccountSettings = (props) => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log(values)
       props.dispatch(profileActions.updateProfile(values))
       .then((res) => {
         props.dispatch(accountActions.remind());
