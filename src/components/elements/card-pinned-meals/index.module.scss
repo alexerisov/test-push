@@ -5,16 +5,20 @@
     width: 276px;
     min-height: 134px;
 
-    &__avatar {
+    &__avatarContainer {
         height: 58px;
-        width: 58px;
+    }
+
+    &__avatar {
+        height: 100%;
         border-radius: 50%;
+        width: 100%;
+        object-fit: cover;
     }
 
     &__content {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
+        display: grid;
+        grid-template-columns: 58px auto;
         gap: 7px;
     }
 
@@ -33,5 +37,6 @@
 
     a {
         color: $--color-orange;
+        margin-top: auto;
     }
 }
