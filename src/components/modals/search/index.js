@@ -27,8 +27,9 @@ function Search (props) {
     onSubmit: (values) => {
       Recipe.getQueryResult(values.search)
         .then((res) => setResult(res.data))
-        .then(() => console.log(result))
-        .then(() => console.log(values))
+        .catch(e => {
+          console.log('error', e);
+        });
     },
   });
 
@@ -38,7 +39,7 @@ function Search (props) {
 
   const renderContent = () => {
     return <div className={classes.search}>
-      {/* <form className={classes.search__form}>
+      <form className={classes.search__form}>
         <TextField
             id="search"
             name="search"
@@ -59,7 +60,7 @@ function Search (props) {
           return <span key={index}>{item.result}</span>
         })}
         </p>
-      </div> */}
+      </div>
     </div>
   }
 
