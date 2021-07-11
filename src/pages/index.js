@@ -1,5 +1,6 @@
 import React from 'react';
 import { NextSeo } from 'next-seo';
+import { useRouter } from 'next/router';
 import classes from "./index.module.scss";
 import LayoutPage from '@/components/layouts/layout-page';
 import MealOfWeekBlock from '@/components/blocks/meal-of-the-week';
@@ -11,26 +12,25 @@ import { connect } from 'react-redux';
 import { modalActions, profileActions, accountActions } from '@/store/actions';
 
 const Home = (props) => {
-  
+  const router = useRouter();
   const USER_TYPE = {
     viewerType: 0,
     chefType: 1
   };
 
   const chefType = USER_TYPE.chefType;
+  const viewerType = USER_TYPE.viewerType;
 
   React.useEffect(() => {
     props.dispatch(profileActions.init(props.account.profile));
   }, [props.account.profile]);
 
   const handleChangeStatus = () => {
-    console.log(props.profile.data);
-    const data = { ...props.profile.data, user_type: chefType };
-    props.dispatch(
-      profileActions.updateProfile(data)
-  ).then(() => {
-    props.dispatch(accountActions.remind());
-  });
+    if (props?.profile?.data?.user_type === viewerType) {
+      return router.push('/profile/account-settings');
+    } else {
+      props.dispatch(modalActions.open('register'));
+    }
   };
 
   const handleClickSearch = (name) => {
