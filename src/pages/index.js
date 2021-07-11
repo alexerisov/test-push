@@ -8,11 +8,32 @@ import PinnedMeals from '@/components/blocks/pinned-meals';
 import HighestRatedMealsBlock from '@/components/blocks/highest-rated-meals';
 import { Button } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { modalActions } from '@/store/actions';
+import { modalActions, profileActions, accountActions } from '@/store/actions';
 
 const Home = (props) => {
+  
+  const USER_TYPE = {
+    viewerType: 0,
+    chefType: 1
+  };
 
-  const handleClickLogin = (name) => {
+  const chefType = USER_TYPE.chefType;
+
+  React.useEffect(() => {
+    props.dispatch(profileActions.init(props.account.profile));
+  }, [props.account.profile]);
+
+  const handleChangeStatus = () => {
+    console.log(props.profile.data);
+    const data = { ...props.profile.data, user_type: chefType };
+    props.dispatch(
+      profileActions.updateProfile(data)
+  ).then(() => {
+    props.dispatch(accountActions.remind());
+  });
+  };
+
+  const handleClickSearch = (name) => {
     return () => {
       props.dispatch(
         modalActions.open(name),
@@ -20,11 +41,11 @@ const Home = (props) => {
         // result when modal return promise and close
       });
     };
-  }
+  };
 
   const content = <>
     <section className={classes.home}>
-      <button className={classes.home__inputSearch} onClick={handleClickLogin('search')}>
+      <button className={classes.home__inputSearch} onClick={handleClickSearch('search')}>
         <img src="/images/index/icon_search.svg" className={classes.home__iconSearch}/>
         Search for dish name
       </button>
@@ -35,13 +56,23 @@ const Home = (props) => {
           <p className={classes.home__subtitle}>delivered doorstep</p>
         </div>
       </div>
-      <Button
-        variant='contained'
-        color='primary'
-        href={`/`}
-      >
-        Become a home chef
-      </Button>
+      {
+        props?.profile?.data?.user_type === chefType
+        ? <Button
+            variant='contained'
+            color='primary'
+            href="/recipe/upload"
+          >
+            Upload your recipe
+          </Button>
+        : <Button
+            variant='contained'
+            color='primary'
+            onClick={handleChangeStatus}
+          >
+            Become a home chef
+          </Button>
+      }
       <div className={classes.home__slide}>
         <button className={classes.home__slideButton}>&#5176;</button>
         <button className={classes.home__slideButton}>&#5171;</button>
@@ -90,6 +121,9 @@ const Home = (props) => {
       <LayoutPage content={content} />
     </div>
   );
-}
+};
 
-export default connect()(Home);
+export default connect((state) => ({
+  account: state.account,
+  profile: state.profile,
+}))(Home);
