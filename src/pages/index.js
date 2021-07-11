@@ -10,6 +10,7 @@ import HighestRatedMealsBlock from '@/components/blocks/highest-rated-meals';
 import { Button } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { modalActions, profileActions, accountActions } from '@/store/actions';
+import Recipe from '@/api/Recipe';
 
 const Home = (props) => {
   const router = useRouter();
@@ -20,6 +21,12 @@ const Home = (props) => {
 
   const chefType = USER_TYPE.chefType;
   const viewerType = USER_TYPE.viewerType;
+
+  React.useEffect(() => {
+    Recipe.getTopRatedMeals()
+    .then((data) => console.log(data))
+    .catch((error) => console.log(error));
+  }, []);
 
   React.useEffect(() => {
     props.dispatch(profileActions.init(props.account.profile));

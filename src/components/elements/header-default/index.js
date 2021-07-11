@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from "./index.module.scss";
 import Link from "next/link";
-import { modalActions } from '@/store/actions';
+import { modalActions, accountActions } from '@/store/actions';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
@@ -26,7 +26,11 @@ const HeaderDefault = (props) => {
         // result when modal return promise and close
       });
     };
-  }
+  };
+
+  const handleLogout = () => {
+    props.dispatch(accountActions.logout());
+  };
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -87,8 +91,8 @@ const HeaderDefault = (props) => {
               </Link>
             </MenuItem>
             <MenuItem onClick={handleClose}>
-              <Link href="/">
-                <a className={classes.header__link}>Logout</a>
+              <Link href="#" >
+                <a className={classes.header__link} onClick={handleLogout}>Logout</a>
               </Link>
             </MenuItem>
           </StyledMenu>

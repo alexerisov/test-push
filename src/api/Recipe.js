@@ -71,6 +71,22 @@ export default {
   },
 
   getQueryResult: (search) => {
-    return http.get(`/recipe/search_suggestions?search=${search}`)
-  }
+    return http.get(`/recipe/search_suggestions?search=${search}`);
+  },
+
+  getTopRatedMeals: () => {
+    return http.get(`/recipe/meal_of_the_week`);
+  },
+
+  getFavoriteCuisines: () => {
+    return http.get(`/recipe/favorite_cuisines`);
+  },
+
+  getHomepageBanners: () => {
+    return http.get(`/recipe/homepage_banners`);
+  },
+
+  getMealOfWeek: () => {
+    return http.get(`/recipe/meal_of_the_week`);
+  },
 };

@@ -62,4 +62,33 @@ export default {
       },
     );
   },
+
+  resetPassword: (email) => {
+    return http.post(`account/password/reset`, {
+      email,
+    });
+  },
+
+  resetPasswordCheckCode: ({ code }) => {
+    return http.post(`account/password/reset/check`, {
+      code,
+    });
+  },
+
+  resetPasswordSetNew: ({ code, password }) => {
+    return http.post(`account/password/new`, {
+      code,
+      password,
+    });
+  },
+
+  confirmEmail: (code) => {
+    return http.post(`/account/confirm/email`, {
+      code,
+    });
+  },
+
+  sendConfirmEmail: () => {
+    return http.post(`/account/send_confirm_email`);
+  },
 };
