@@ -4,7 +4,10 @@
 .container {
     @include fontRegular();
     display: flex;
-    flex-wrap: wrap;
-    padding: 0 143px;
     gap: 18px;
+    padding: 38px 100px 0 100px;
+
+    @media (min-width: 991.98px) {
+        padding: 38px 90px 0 90px;
+    }
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {LayoutModal} from '@/components/layouts';
 import { modalActions } from '@/store/actions';
 import { connect } from 'react-redux';
@@ -7,15 +7,29 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import TextField from '@material-ui/core/TextField';
 import { profileActions } from '@/store/actions';
+import Recipe from '@/api/Recipe.js';
 
 function Search (props) {
+
+  const [result, setResult] = useState([]);
+
+  const validationSchema = yup.object({
+    search: yup
+      .string('Search for dish name')
+      .min(2, '')
+  });
 
   const formik = useFormik({
     initialValues: {
       search: "",
     },
+    validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log(values);
+      Recipe.getQueryResult(values.search)
+        .then((res) => setResult(res.data))
+        .catch(e => {
+          console.log('error', e);
+        });
     },
   });
 
@@ -32,12 +46,20 @@ function Search (props) {
             value={formik.values.search}
             placeholder="Search for dish name"
             onChange={formik.handleChange}
+            onChange={(e) => {
+              formik.handleChange(e);
+              formik.handleSubmit();
+          }}
             fullWidth
           />
       </form>
       <div className={classes.search__grid}>
         <p>Suggestions :</p>
-        <p>Lemon Rice  Lemon Rice  Lemon Rice  Lemon Rice  Lemon Rice  Lemon Rice</p>
+        <p>
+        {result.map((item, index) => {
+          return <span key={index}>{item.result}</span>
+        })}
+        </p>
       </div>
     </div>
   }

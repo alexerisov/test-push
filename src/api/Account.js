@@ -31,26 +31,26 @@ export default {
       user_type
     });
   },
-  
+
   updateProfile: ({
+    city,
     full_name,
-    user_type,
     phone_number,
     email,
-    city,
-    language,
+    user_type,
+    language
   }, avatar) => {
     const formData = new FormData();
     if (avatar instanceof File) {
       formData.append('avatar', avatar);
     }
     formData.append('data', JSON.stringify({
+      city,
       full_name,
-      user_type,
       phone_number,
       email,
-      city,
-      language,
+      user_type,
+      language
     }));
     return http.patch(
       `account/me`,

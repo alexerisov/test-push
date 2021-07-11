@@ -20,7 +20,7 @@
 
     &__title {
         @include fontMedium();
-        padding: 38px 143px 0 143px;
+        padding: 38px 0 0 0;
         font-size: 47px;
         line-height: 44px;
         color: $--color-gray6;
@@ -51,20 +51,42 @@
     }
 
     &__slideButton {
-        background: $--color-white 0% 0% no-repeat padding-box;
         box-shadow: 0px 3px 6px #00000029;
         border-radius: 13px;
         width: 80px;
         border: none;
         max-height: 100px;
+
+        &:active {
+            opacity: 0.6;
+        }
+
+        &:active, &:hover {
+            .cuisines__slideButtonArrow_right, .cuisines__slideButtonArrow_left {
+                background-image: url('/images/index/slider-yellow.svg');
+            }
+        }        
     }
 
-    &__slideLeft:first-of-type {
-        transform: rotate(90deg);
-    }
+    &__slideButtonArrow {
 
-    &__slideRight:last-of-type {
-        transform: rotate(-90deg);
+        &_left, &_right {
+            background-image: url('/images/index/slider-gray.svg');
+            background-position: center;
+            background-size: 20px 20px;
+            margin: 0 auto;
+            width: 20px;
+            height: 20px;
+            background-repeat: no-repeat;
+        }
+
+        &_left {
+            transform: rotate(90deg);
+        }
+    
+        &_right {
+            transform: rotate(-90deg);
+        }
     }
 
     &__menu {
@@ -77,6 +99,6 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
-    padding: 51px 143px 0 143px;
+    padding: 51px 0 0 0;
     gap: 34px;
 }

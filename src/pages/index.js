@@ -4,7 +4,7 @@ import classes from "./index.module.scss";
 import LayoutPage from '@/components/layouts/layout-page';
 import MealOfWeekBlock from '@/components/blocks/meal-of-the-week';
 import FavoriteCuisinesBlock from '@/components/blocks/favorite-cuisines';
-import LiveVideoCardsBlock from '@/components/blocks/live-video-cards';
+import PinnedMeals from '@/components/blocks/pinned-meals';
 import HighestRatedMealsBlock from '@/components/blocks/highest-rated-meals';
 import { Button } from '@material-ui/core';
 import { connect } from 'react-redux';
@@ -83,7 +83,7 @@ const Home = (props) => {
       <img src="/images/index/carrot.png" className={classes.imgCarrot}/>
       <img src="/images/index/banner.png" className={classes.imgBanner}/>
     </section>
-    <LiveVideoCardsBlock />
+    <PinnedMeals />
     <HighestRatedMealsBlock />
     <MealOfWeekBlock />
     <FavoriteCuisinesBlock />

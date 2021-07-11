@@ -58,44 +58,43 @@ const HeaderDefault = (props) => {
             <a className={classes.header__link}>Menu</a>
           </Link>
         </nav>
+        <NoSsr>
         {!props.account.hasToken
-        ? <button className={classes.header__button} onClick={handleClickLogin('register')}>Login</button>
-        : <>
-          <button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick} className={classes.header__button}>
+          ? <button className={classes.header__button} onClick={handleClickLogin('register')}>Login</button>
+          : <>
+          <button onClick={handleClick} className={classes.header__button}>
             {props?.account?.profile?.user_type === viewerType ? "Hi, user!" : "Hi, chef!" }
           </button>
-          <NoSsr>
-            <StyledMenu
-              id="simple-menu"
-              anchorEl={anchorEl}
-              keepMounted
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-            >
-              <MenuItem onClick={handleClose}>
-                <Link href="/profile/account-settings">
-                  <a className={classes.header__link}>My Profile</a>
-                </Link>
-              </MenuItem>
-              <MenuItem onClick={handleClose}>
-                <Link href="/">
-                  <a className={classes.header__link}>Saved Recipes</a>
-                </Link>
-              </MenuItem>
-              <MenuItem onClick={handleClose}>
-                <Link href="/">
-                  <a className={classes.header__link}>History</a>
-                </Link>
-              </MenuItem>
-              <MenuItem onClick={handleClose}>
-                <Link href="/">
-                  <a className={classes.header__link}>Logout</a>
-                </Link>
-              </MenuItem>
-            </StyledMenu>
-          </NoSsr>
-        </>
+          <StyledMenu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={handleClose}>
+              <Link href="/profile/account-settings">
+                <a className={classes.header__link}>My Profile</a>
+              </Link>
+            </MenuItem>
+            <MenuItem onClick={handleClose}>
+              <Link href="/">
+                <a className={classes.header__link}>Saved Recipes</a>
+              </Link>
+            </MenuItem>
+            <MenuItem onClick={handleClose}>
+              <Link href="/">
+                <a className={classes.header__link}>History</a>
+              </Link>
+            </MenuItem>
+            <MenuItem onClick={handleClose}>
+              <Link href="/">
+                <a className={classes.header__link}>Logout</a>
+              </Link>
+            </MenuItem>
+          </StyledMenu>
+          </>
         }
+        </NoSsr>
       </div>
     </div>
   );
