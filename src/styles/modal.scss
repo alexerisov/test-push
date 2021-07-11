@@ -102,6 +102,22 @@
       color: $--color-gray3;
     }
   }
+
+  &_theme_white_small {
+    background: $--color-white;
+    width: 461px;
+    min-height: 279px;
+    box-shadow: 0px 10px 25px #00000040;
+    border-radius: 10px;
+    height: auto;
+    max-width: 95vw;
+    top: 50%;
+    color: #000;
+
+    .LayoutModal__close {
+      color: $--color-gray3;
+    }
+  }
 }
 
 .modal-anim-enter {

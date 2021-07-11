@@ -2,6 +2,7 @@ import React from 'react';
 import { FormCreateRecipe } from '@/components/forms';
 import { connect } from 'react-redux';
 import HeaderDefault from '@/components/elements/header-default';
+import { LayoutFooter } from '@/components/layouts/';
 import classes from "./create-recipe.module.scss";
 import Head from 'next/head';
 
@@ -15,6 +16,7 @@ function CreateRecipe (props) {
       </Head>
       <HeaderDefault />
       <FormCreateRecipe />
+      <LayoutFooter />
     </div>
   );
 }

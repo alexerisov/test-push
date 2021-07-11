@@ -7,7 +7,7 @@ const LayoutModal = (props) => {
   };
 
   const onCloseOverflow = (event) => {
-    if (props.overflowClose && event.target.dataset.modal === 'overflow') {
+    if (props.overflowClose && event.target?.dataset?.modal === 'overflow') {
       onClose(event);
     }
   };

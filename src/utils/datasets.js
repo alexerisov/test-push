@@ -67,3 +67,10 @@ export const dietaryrestrictions = {
   13: 'FODMAP',
   14: 'Whole 30',
 };
+
+export const nutritions = {
+  calories: 'Calories',
+  proteins: 'Protein',
+  carbohydrates: 'Carbs',
+  fats: 'Fat',
+};
