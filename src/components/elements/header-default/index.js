@@ -11,6 +11,10 @@ import { NoSsr } from '@material-ui/core';
 
 const StyledMenu = styled(Menu)`
   margin: 40px 0 0 0;
+
+  li {
+    padding: 0;
+  }
 `;
 
 const HeaderDefault = (props) => {
@@ -32,6 +36,10 @@ const HeaderDefault = (props) => {
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
+  };
+  
+  const logout = () => {
+    props.dispatch(accountActions.logout());
   };
 
   const handleClose = () => {
@@ -73,22 +81,22 @@ const HeaderDefault = (props) => {
           >
             <MenuItem onClick={handleClose}>
               <Link href="/profile/account-settings">
-                <a className={classes.header__link}>My Profile</a>
+                <a className={classes.header__link_place_menu}>My Profile</a>
               </Link>
             </MenuItem>
             <MenuItem onClick={handleClose}>
               <Link href="/">
-                <a className={classes.header__link}>Saved Recipes</a>
+                <a className={classes.header__link_place_menu}>Saved Recipes</a>
               </Link>
             </MenuItem>
             <MenuItem onClick={handleClose}>
               <Link href="/">
-                <a className={classes.header__link}>History</a>
+                <a className={classes.header__link_place_menu}>History</a>
               </Link>
             </MenuItem>
             <MenuItem onClick={handleClose}>
-              <Link href="/">
-                <a className={classes.header__link}>Logout</a>
+              <Link href="/logout">
+                <a className={classes.header__link_place_menu}>Logout</a>
               </Link>
             </MenuItem>
           </StyledMenu>
