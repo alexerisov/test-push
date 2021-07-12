@@ -16,7 +16,7 @@ const MealOfWeekBlock = (props) => {
           <div className={classes.meal__images}>
             <div
               className={classes.meal__images__circle}
-              style={{backgroundImage: `url(${props?.meal?.images[0].url})`}}
+              style={{backgroundImage: `url(${props?.meal?.images[0].tag})`}}
             ></div>
             <div className={classes.meal__images__square}></div>
           </div>

@@ -29,7 +29,10 @@ const HighestRatedMealsBlock = () => {
               return <CardHighestMeals
                         key={`${recipe.pk}-${index}`}
                         title={recipe?.title}
-                        image={recipe?.images[0]?.url}
+                        image={recipe?.images[0]?.tag}
+                        name={recipe?.user?.full_name}
+                        city={recipe?.user?.city}
+                        id={recipe.pk}
                       />;
             })
           }

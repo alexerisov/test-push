@@ -135,7 +135,7 @@ const FavoriteCuisinesBlock = () => {
           cards.map((card) => {
             return <CardFavoriteCuisines
                       key={card.pk}
-                      image={card?.images[0]?.url}
+                      image={card?.images[0]?.tag}
                       title={card?.title}
                       rating={card.avg_rating}/>;
           })
@@ -146,7 +146,7 @@ const FavoriteCuisinesBlock = () => {
           cards.map((card) => {
             return <CardFavoriteCuisines
                       key={card.pk}
-                      image={card?.images[0]?.url}
+                      image={card?.images[0]?.tag}
                       title={card?.title}
                       rating={card.avg_rating}/>;
           })
@@ -157,7 +157,7 @@ const FavoriteCuisinesBlock = () => {
           cards.map((card) => {
             return <CardFavoriteCuisines
                       key={card.pk}
-                      image={card?.images[0]?.url}
+                      image={card?.images[0]?.tag}
                       title={card?.title}
                       rating={card.avg_rating}/>;
           })
@@ -168,7 +168,7 @@ const FavoriteCuisinesBlock = () => {
           cards.map((card) => {
             return <CardFavoriteCuisines
                       key={card.pk}
-                      image={card?.images[0]?.url}
+                      image={card?.images[0]?.tag}
                       title={card?.title}
                       rating={card.avg_rating}/>;
           })
@@ -179,7 +179,7 @@ const FavoriteCuisinesBlock = () => {
           cards.map((card) => {
             return <CardFavoriteCuisines
                       key={card.pk}
-                      image={card?.images[0]?.url}
+                      image={card?.images[0]?.tag}
                       title={card?.title}
                       rating={card.avg_rating}/>;
           })
@@ -190,7 +190,7 @@ const FavoriteCuisinesBlock = () => {
           cards.map((card) => {
             return <CardFavoriteCuisines
                       key={card.pk}
-                      image={card?.images[0]?.url}
+                      image={card?.images[0]?.tag}
                       title={card?.title}
                       rating={card.avg_rating}/>;
           })
@@ -201,7 +201,7 @@ const FavoriteCuisinesBlock = () => {
           cards.map((card) => {
             return <CardFavoriteCuisines
                       key={card.pk}
-                      image={card?.images[0]?.url}
+                      image={card?.images[0]?.tag}
                       title={card?.title}
                       rating={card.avg_rating}/>;
           })
