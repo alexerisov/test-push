@@ -21,12 +21,14 @@ const Home = (props) => {
 
   const chefType = USER_TYPE.chefType;
   const viewerType = USER_TYPE.viewerType;
+  const [meal, setMeal] = React.useState(null);
 
   React.useEffect(() => {
-    Recipe.getTopRatedMeals()
-    .then((data) => console.log(data))
-    .catch((error) => console.log(error));
-  }, []);
+    Recipe.getMealOfWeek()
+    .then((data) => {
+      setMeal(data?.data[0]);
+    });
+  },[]);
 
   React.useEffect(() => {
     props.dispatch(profileActions.init(props.account.profile));
@@ -34,7 +36,13 @@ const Home = (props) => {
 
   const handleChangeStatus = () => {
     if (props?.profile?.data?.user_type === viewerType) {
-      return router.push('/profile/account-settings');
+      const data = { ...props.profile.data, user_type: chefType };
+      props.dispatch(
+        profileActions.updateProfile(data)
+    ).then(() => {
+      props.dispatch(accountActions.remind());
+      props.dispatch(modalActions.open('changeStatusSuccess'));
+    });
     } else {
       props.dispatch(modalActions.open('register'));
     }
@@ -92,7 +100,7 @@ const Home = (props) => {
     </section>
     <PinnedMeals />
     <HighestRatedMealsBlock />
-    <MealOfWeekBlock />
+    <MealOfWeekBlock meal={meal}/>
     <FavoriteCuisinesBlock />
   </>;
 

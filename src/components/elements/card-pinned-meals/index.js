@@ -15,8 +15,8 @@ const CardPinnedMeals = ({ title, raitingValue, avatar, pk }) => {
       <Card className={classes.card}>
         <StyledCardContent className={classes.card__content}>
           <div className={classes.card__avatarContainer}>
-          { !avatar[0][pk] ? <img src="/images/index/default-avatar.png" alt="avatar" className={classes.card__avatar}/>
-            : <img src={avatar[0][pk]} alt="avatar" className={classes.card__avatar} />
+          { !avatar ? <img src="/images/index/default-avatar.png" alt="avatar" className={classes.card__avatar}/>
+            : <img src={avatar} alt="avatar" className={classes.card__avatar} />
           }
           </div>
           <div className={classes.card__column}>

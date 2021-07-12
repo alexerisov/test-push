@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import { NoSsr } from '@material-ui/core';
 
 import PropTypes from 'prop-types';
+import Recipe from '@/api/Recipe.js';
 
 const StyledTabs = styled(Tabs)`   
     width: max-content;
@@ -54,12 +55,22 @@ const FavoriteCuisinesBlock = () => {
 
   const lengthFavoriteCuisinesMenu = 6;
   const DEFAULT_VALUE_TAB_STATE = 0;
+  // To do change method indentifing coisines ID
+  const cousineID = {
+    0: 7,
+    1: 8,
+    2: 18,
+    3: 16,
+    4: 15,
+    5: 17,
+    6: 10
+  };
 
   StyledTabPanel.propTypes = {
     children: PropTypes.node,
     index: PropTypes.any.isRequired,
     value: PropTypes.any.isRequired,
-  }
+  };
 
   function a11yProps(index) {
     return {
@@ -69,6 +80,7 @@ const FavoriteCuisinesBlock = () => {
   }
 
   const [valueTab, setValueTab] = React.useState(DEFAULT_VALUE_TAB_STATE);
+  const [cards, setCards] = React.useState([]);
 
   const handleChange = (event, newValue) => {
     setValueTab(newValue);
@@ -76,11 +88,18 @@ const FavoriteCuisinesBlock = () => {
 
   const slideTabRight = () => {
     (valueTab < lengthFavoriteCuisinesMenu ) && setValueTab(valueTab + 1);
-  }
+  };
 
   const slideTabLeft = () => {
     (valueTab > DEFAULT_VALUE_TAB_STATE ) && setValueTab(valueTab - 1);
-  }
+  };
+
+  React.useEffect(() => {
+    Recipe.getFavoriteCuisines(cousineID[valueTab])
+    .then((data) => {
+      setCards(data.data);
+    });
+  }, [valueTab]);
 
   return (
     <section className={classes.cuisines}>
@@ -112,34 +131,81 @@ const FavoriteCuisinesBlock = () => {
       </div>
       <NoSsr>
       <StyledTabPanel value={valueTab} index={0}>
-        <CardFavoriteCuisines />
-        <CardFavoriteCuisines />
-        <CardFavoriteCuisines />
+        {
+          cards.map((card) => {
+            return <CardFavoriteCuisines
+                      key={card.pk}
+                      image={card?.images[0]?.url}
+                      title={card?.title}
+                      rating={card.avg_rating}/>;
+          })
+        }
       </StyledTabPanel>
       <StyledTabPanel value={valueTab} index={1}>
-        <CardFavoriteCuisines />
-        <CardFavoriteCuisines />
+        {
+          cards.map((card) => {
+            return <CardFavoriteCuisines
+                      key={card.pk}
+                      image={card?.images[0]?.url}
+                      title={card?.title}
+                      rating={card.avg_rating}/>;
+          })
+        }
       </StyledTabPanel>
       <StyledTabPanel value={valueTab} index={2}>
-        <CardFavoriteCuisines />
+        {
+          cards.map((card) => {
+            return <CardFavoriteCuisines
+                      key={card.pk}
+                      image={card?.images[0]?.url}
+                      title={card?.title}
+                      rating={card.avg_rating}/>;
+          })
+        }
       </StyledTabPanel>
       <StyledTabPanel value={valueTab} index={3}>
-        <CardFavoriteCuisines />
-        <CardFavoriteCuisines />
-        <CardFavoriteCuisines />
+        {
+          cards.map((card) => {
+            return <CardFavoriteCuisines
+                      key={card.pk}
+                      image={card?.images[0]?.url}
+                      title={card?.title}
+                      rating={card.avg_rating}/>;
+          })
+        }
       </StyledTabPanel>
       <StyledTabPanel value={valueTab} index={4}>
-        <CardFavoriteCuisines />
+        {
+          cards.map((card) => {
+            return <CardFavoriteCuisines
+                      key={card.pk}
+                      image={card?.images[0]?.url}
+                      title={card?.title}
+                      rating={card.avg_rating}/>;
+          })
+        }
       </StyledTabPanel>
       <StyledTabPanel value={valueTab} index={5}>
-        <CardFavoriteCuisines />
-        <CardFavoriteCuisines />
+        {
+          cards.map((card) => {
+            return <CardFavoriteCuisines
+                      key={card.pk}
+                      image={card?.images[0]?.url}
+                      title={card?.title}
+                      rating={card.avg_rating}/>;
+          })
+        }
       </StyledTabPanel>
       <StyledTabPanel value={valueTab} index={6}>
-        <CardFavoriteCuisines />
-        <CardFavoriteCuisines />
-        <CardFavoriteCuisines />
-        <CardFavoriteCuisines />
+        {
+          cards.map((card) => {
+            return <CardFavoriteCuisines
+                      key={card.pk}
+                      image={card?.images[0]?.url}
+                      title={card?.title}
+                      rating={card.avg_rating}/>;
+          })
+        }
       </StyledTabPanel>
       </NoSsr>
     </section>

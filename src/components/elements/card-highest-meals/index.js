@@ -7,21 +7,21 @@ import RaitingIcon from "@/components/elements/rating-icon";
 import LikeIcon from "@/components/elements/like-icon";
 import Link from "next/link";
 
-const CardHighestMeals = () => {
+const CardHighestMeals = (props) => {
     return (
       <Card className={classes.card}>
         <CardMedia
           className={classes.card__media}
-          image="/images/index/food.png"
+          image={props.image}
           title=""
         />
         <CardContent className={classes.card__content}>
           <div>
-            <p className={classes.card__name}>Poached egg</p>
+            <p className={classes.card__name}>{props.title}</p>
             <p className={classes.card__author}>by Chef Mohini Rana,</p>
             <p className={classes.card__location}>Mukherjee Nagar, Delhi</p>
-            <Link href="/"><a>View recipe</a></Link>
-            <div className={classes.card__likeIcon}><LikeIcon /></div>
+            <Link href="#"><a>View recipe</a></Link>
+            {/* <div className={classes.card__likeIcon}><LikeIcon /></div> */}
           </div>
           <RaitingIcon />
         </CardContent>

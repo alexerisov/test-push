@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from "./index.module.scss";
 
-const MealOfWeekBlock = () => {
+const MealOfWeekBlock = (props) => {
     return (
       <section className={classes.meal}>
         <div className={classes.meal__special}>Special</div>
@@ -13,50 +13,58 @@ const MealOfWeekBlock = () => {
           </span>
         </div>
         <div className={classes.meal__content}>
-          <img src="/images/index/meal pic.png" className={classes.meal__images}/>
+          <div className={classes.meal__images}>
+            <div
+              className={classes.meal__images__circle}
+              style={{backgroundImage: `url(${props?.meal?.images[0].url})`}}
+            ></div>
+            <div className={classes.meal__images__square}></div>
+          </div>
           <div className={classes.meal__recipe}>
-            <h3 className={classes.meal__recipe__tltle}>Chicken Griller</h3>
-            <p className={classes.meal__recipe__subtitle}>
-              These popular bacon-wrapped chicken entrees are fantastic on grill,
-              but they can also be baked on the griller. look for them in the meat section.
-            </p>
+            <h3 className={classes.meal__recipe__tltle}>{props?.meal?.title}</h3>
+            <p className={classes.meal__recipe__subtitle}>{props?.meal?.description}</p>
 
             <h4 className={classes.meal__recipe__ingredientsTitle}>Ingredients</h4>
             <div className={classes.meal__recipe__ingredientsContainer}>
-              <div className={classes.meal__recipe__ingredientsItem}>
-                <p className={classes.meal__recipe__ingredientsName}>Chicken</p>
-                <p className={classes.meal__recipe__ingredientsQuantity}>4 chicken breast</p>
-              </div>
-              <div className={classes.meal__recipe__ingredientsItem}>
-                <p className={classes.meal__recipe__ingredientsName}>Chicken</p>
-                <p className={classes.meal__recipe__ingredientsQuantity}>4 chicken breast</p>
-              </div>
-              <div className={classes.meal__recipe__ingredientsItem}>
-                <p className={classes.meal__recipe__ingredientsName}>Chicken</p>
-                <p className={classes.meal__recipe__ingredientsQuantity}>4 chicken breast</p>
-              </div>
-              <div className={classes.meal__recipe__ingredientsItem}>
-                <p className={classes.meal__recipe__ingredientsName}>Chicken</p>
-                <p className={classes.meal__recipe__ingredientsQuantity}>4 chicken breast</p>
-              </div>
+              {
+                props?.meal?.ingredients.length !== 0
+                ?
+                props?.meal?.ingredients.map((ingredient, index) => {
+                  return <div className={classes.meal__recipe__ingredientsItem} key={`${ingredient.recipe}-${index}`}>
+                          <p className={classes.meal__recipe__ingredientsName}>{ingredient.title}</p>
+                          <p className={classes.meal__recipe__ingredientsQuantity}>{ingredient.quantity}</p>
+                        </div>;
+                })
+                : 'no Ingredients'
+              }
+              
+              
             </div>
 
             <h4 className={classes.meal__recipe__ingredientsTitle}>Nutrition value</h4>
             <div className={classes.meal__recipe__nutritionContainer}>
               <div className={classes.meal__recipe__nutritionItem}>
-                <p className={classes.meal__recipe__nutritionsQuantity}>20</p>
+                <p className={classes.meal__recipe__nutritionsQuantity}>
+                  {props?.meal?.calories ? props?.meal?.calories : 'none'}
+                </p>
                 <p className={classes.meal__recipe__nutritionsName}>Calories</p>
               </div>
               <div className={classes.meal__recipe__nutritionItem}>
-                <p className={classes.meal__recipe__nutritionsQuantity}>16%</p>
+                <p className={classes.meal__recipe__nutritionsQuantity}>
+                  {props?.meal?.proteins ? `${props?.meal?.proteins}%` : 'none'}
+                </p>
                 <p className={classes.meal__recipe__nutritionsName}>Protein</p>
               </div>
               <div className={classes.meal__recipe__nutritionItem}>
-                <p className={classes.meal__recipe__nutritionsQuantity}>25%</p>
+                <p className={classes.meal__recipe__nutritionsQuantity}>
+                  {props?.meal?.fats ? `${props?.meal?.fats}%` : 'none'}
+                </p>
                 <p className={classes.meal__recipe__nutritionsName}>Fat</p>
               </div>
               <div className={classes.meal__recipe__nutritionItem}>
-                <p className={classes.meal__recipe__nutritionsQuantity}>20</p>
+                <p className={classes.meal__recipe__nutritionsQuantity}>
+                  {props?.meal?.carbohydrates ? props?.meal?.carbohydrates : 'none'}
+                </p>
                 <p className={classes.meal__recipe__nutritionsName}>Carbs</p>
               </div>
             </div>

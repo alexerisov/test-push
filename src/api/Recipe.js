@@ -75,11 +75,11 @@ export default {
   },
 
   getTopRatedMeals: () => {
-    return http.get(`/recipe/meal_of_the_week`);
+    return http.get(`/recipe/top_rated_meals`);
   },
 
-  getFavoriteCuisines: () => {
-    return http.get(`/recipe/favorite_cuisines`);
+  getFavoriteCuisines: (id) => {
+    return http.get(`/recipe/favorite_cuisines?cuisine=${id}`);
   },
 
   getHomepageBanners: () => {
