@@ -89,4 +89,8 @@ export default {
   getMealOfWeek: () => {
     return http.get(`/recipe/meal_of_the_week`);
   },
+
+  getRecipe: (id) => {
+    return http.get(`/recipe/${id}`);
+  },
 };
