@@ -1,16 +1,21 @@
 import React from 'react';
 import classes from "./index.module.scss";
 import Link from "next/link";
-import { modalActions } from '@/store/actions';
+import { modalActions, accountActions } from '@/store/actions';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import styled from 'styled-components';
 import { NoSsr } from '@material-ui/core';
+import { useRouter } from 'next/router';
 
 const StyledMenu = styled(Menu)`
   margin: 40px 0 0 0;
+
+  li {
+    padding: 0;
+  }
 `;
 
 const HeaderDefault = (props) => {
@@ -32,6 +37,12 @@ const HeaderDefault = (props) => {
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
+  };
+  
+  const router = useRouter();
+  const handleLogout = () => {
+    props.dispatch(accountActions.logout());
+    router.push('/');
   };
 
   const handleClose = () => {
@@ -73,22 +84,22 @@ const HeaderDefault = (props) => {
           >
             <MenuItem onClick={handleClose}>
               <Link href="/profile/account-settings">
-                <a className={classes.header__link}>My Profile</a>
+                <a className={classes.header__link_place_menu}>My Profile</a>
               </Link>
             </MenuItem>
             <MenuItem onClick={handleClose}>
               <Link href="/">
-                <a className={classes.header__link}>Saved Recipes</a>
+                <a className={classes.header__link_place_menu}>Saved Recipes</a>
               </Link>
             </MenuItem>
             <MenuItem onClick={handleClose}>
               <Link href="/">
-                <a className={classes.header__link}>History</a>
+                <a className={classes.header__link_place_menu}>History</a>
               </Link>
             </MenuItem>
             <MenuItem onClick={handleClose}>
-              <Link href="/">
-                <a className={classes.header__link}>Logout</a>
+              <Link href="#">
+                <a className={classes.header__link_place_menu} onClick={handleLogout}>Logout</a>
               </Link>
             </MenuItem>
           </StyledMenu>

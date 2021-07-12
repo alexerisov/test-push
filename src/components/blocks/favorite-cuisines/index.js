@@ -22,7 +22,7 @@ const StyledTabs = styled(Tabs)`
     gap: 40px;
     margin: 0 0 51px 0;
 
-    .PrivateTabIndicator-colorSecondary-3 {
+    .PrivateTabIndicator-root-1 {
       background-color: #FFAA00;
       height: 6px;
       border-radius: 13px;
