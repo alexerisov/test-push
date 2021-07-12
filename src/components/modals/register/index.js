@@ -6,6 +6,7 @@ import {
   LoginSocial,
   RegisterChoice,
   RegisterSuccess,
+  ResetPasswordSuccess
 } from '@/components/elements';
 import {FormLogin, FormRegister, FormResetPassword} from '@/components/forms';
 import { connect } from 'react-redux';
@@ -27,7 +28,8 @@ function Register (props) {
     registerChoice: 'REGISTER_CHOICE',
     registerPage: 'REGISTER_PAGE',
     registerSuccess: 'REGISTER_SUCCESS',
-    resetPassword: 'RESET_PASSWORD'
+    resetPassword: 'RESET_PASSWORD',
+    resetPasswordSuccess: 'RESET_PASSWORD_SUCCESS'
   };
 
   const [pageSelected, setPageSelected] = React.useState(PAGE_SELECTED_TYPES.loginChoice);
@@ -62,6 +64,10 @@ function Register (props) {
 
   const switchToPageForgot = () => {
     setPageSelected(PAGE_SELECTED_TYPES.resetPassword);
+  };
+
+  const switchToPageResetSuccess = () => {
+    setPageSelected(PAGE_SELECTED_TYPES.resetPasswordSuccess);
   };
 
   const switchToPageRegisterViewer = () => {
@@ -120,7 +126,7 @@ function Register (props) {
 
   const restorePassword = (data) => {
     props.dispatch(restorePasswordActions.resetPassword(data)).then((res) => {
-      switchToPageSuccess();
+      switchToPageResetSuccess();
     }).catch(e => {
       console.log('error', e);
     });
@@ -174,10 +180,11 @@ function Register (props) {
               errors={restorePasswordError}
               onResetPassword={restorePassword}
           />;
+      case PAGE_SELECTED_TYPES.resetPasswordSuccess:
+        return <ResetPasswordSuccess />;
       default:
         return null;
     }
-
   };
 
   return (
