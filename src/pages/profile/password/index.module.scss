@@ -1,122 +1,115 @@
 @import "~styles/mixins/mixins.scss";
+@import "~styles/variables.scss";
 
-.home {
-    @include fontRegular();
-    min-height: calc(100vh - 113px);
-    padding: 38px 143px 0 143px;
-    display: flex;
-    flex-direction: column;
-    position: relative;
+.profile {
+    &__title {
+        font-size: 18px;
+        font-weight: 600;
+        margin: 0 0 25px 0;
+    }
 
-    &__inputSearch {
-        align-self: center;
+    &__label {
+        @include fontSemiBold();
+        font-size: 16px;
+        color: #000000;
+        margin: 10px 0 10px 0;
+        display: block;
+    }
+
+    &__upload {
+        position: relative;
+        height: 90px;
+    }
+
+    &__avatarBack:before {
+        background-image: url('/images/index/pencil.svg');
+        background-position: center;
+        background-size: 26px 26px;
+        background-repeat: no-repeat;
+        content: '';
+        position: absolute;
+        background-color: #000000;
+        opacity: 0;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        border-radius: 50%;
+    }
+    
+    &__avatarBack:hover:before {
+        opacity: 0.5;
+    }
+    
+    &__avatarBack:hover {
+        cursor:  pointer;
+    }
+
+    &__formAvatar {
+        display: grid;
+        grid-template-columns: 90px auto auto;
+        gap: 26px;
+        align-items: center;
+        padding: 0 0 50px 0;
+        margin: 0 0 50px 0;
+        border-bottom: 1px solid #DFDFDF;
+
+        p {
+            color: #B1B1B1;
+        }
+    }
+
+    &__avatar {
         width: 100%;
-        max-width: 670px;
-        border: 1px solid $--color-gray2;
-        border-radius: 28px;
-        min-height: 56px;
-        padding: 0 19px;
+        height: 90px;
+        object-fit: cover;
+        border-radius: 50%;
+        background-color: #fff;
     }
-    
-    &__titleContainer {
-        display: flex;
-        margin: 67px 0 38px 0;
+
+    &__input {
+        width: 525px;
+        height: 56px;
+        padding: 0 0 0 30px;
+        border: 1px solid #DEDEDE;
+        border-radius: 4px;
     }
-    
-    &__titleContainer::before {
-        content: "";
-        border: 1px solid $--color-gray3;
-        border-radius: 7px;
-        width: 8px;
-        background: $--color-gray3 0% 0% no-repeat padding-box;
+
+    &__buttonUpdate {
+        @include fontMedium();
+        font-size: 20px;
+        justify-self: end;
+        color: $--color-blue;
+        width: 140px;
+        height: 56px;
+        border: 1px solid $--color-blue;
+        border-radius: 3px;
+
+        &:hover {
+            opacity: 0.5;
+        }
+
+        &:active {
+            background-color: $--color-blue;
+            color: $--color-white;
+        }
     }
-    
-    &__titleTextContainer {
+
+    &__data {
         display: flex;
         flex-direction: column;
-        margin: 0 0 0 16px;
-        @include fontSemiBold();
-        font-size: 50px;
-        line-height: 58px;
+        gap: 20px;
+
+        &__title {
+            @include fontSemiBold();
+            font-size: 16px;
+            margin: 0 0 10px 0;
+        }
     }
-    
-    &__titleText {
-        font-size: 30px;
-        line-height: 37px;
-        color: $--color-gray3;
-    }
-    
-    &__title {
-        color: $--color-orange;
-    }
-    
-    &__subtitle {
-        color: $--color-black;
-    }
-    
-    &__slide {
-        position: absolute;
-        bottom: 5px;
-        right: 170px;
-    }
-    
-    &__slideButton {
+
+    &__errorForm {
+        color: red;
+        margin: 20px 0 0 0;
         font-size: 20px;
-        width: 38px;
-        height: 38px;
-        border-radius: 50%;
-        margin: 17px;
     }
-    
-    &__slideButton:last-of-type {
-        color: $--color-white;
-        background: $--color-orange 0% 0% no-repeat padding-box;
-        border: none;
-    }
-    
-    &__slideButton:first-of-type {
-        border: 2px solid $--color-orange;
-        color: $--color-orange;
-        background-color: rgba(0, 0, 0, 0);
-    }
-}
-
-.imgMint1 {
-    position: absolute;
-    width: 170px;
-    left: -60px;
-    top: 20px;
-    z-index: -1;
-}
-
-.imgBroccoli {
-    position: absolute;
-    width: 140px;
-    bottom: 0;
-    left: -40px;
-}
-
-.imgMint2 {
-    position: absolute;
-    width: 120px;
-    right: 0;
-    bottom: 50px;
-    z-index: -1;
-}
-
-.imgCarrot {
-    position: absolute;
-    width: 171px;
-    right: 0;
-    bottom: 0;
-    z-index: -2;
-}
-
-.imgBanner {
-    width: 100%;
-    max-width: 550px;
-    position: absolute;
-    top: 121px;
-    right: 133px;
-    z-index: -1;
 }

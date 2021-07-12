@@ -91,4 +91,8 @@ export default {
   sendConfirmEmail: () => {
     return http.post(`/account/send_confirm_email`);
   },
+
+  changePassword: (password, new_password) => {
+    return http.post(`/account/password/change`, { password, new_password });
+  },
 };
