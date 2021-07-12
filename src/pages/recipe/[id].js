@@ -8,7 +8,7 @@ import RaitingIcon from "@/components/elements/rating-icon";
 import Recipe from '@/api/Recipe.js';
 import { useRouter } from 'next/router';
 
-function Recipe (props) {
+function CreateRecipe (props) {
 
     const router = useRouter();
     const [recipeId, setRecipeId] = useState();
@@ -64,4 +64,4 @@ function Recipe (props) {
     );
 }
 
-export default connect()(Recipe);
+export default connect()(CreateRecipe);
