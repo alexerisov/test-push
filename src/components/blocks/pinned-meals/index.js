@@ -8,8 +8,8 @@ const PinnedMeals = () => {
   const [meals, setMeals] = useState([]);
 
   useEffect(() => {
-    getArrayPinnedMeals()
-  }, [])
+    getArrayPinnedMeals();
+  }, []);
 
   const getArrayPinnedMeals = async () => {
     try {
@@ -29,8 +29,8 @@ const PinnedMeals = () => {
             pk={item.pk}
             title={item.title}
             raitingValue={item.avg_rating}
-            avatar={item.images}
-          /> 
+            avatar={item?.images[0]?.tag}
+          />
         )}
       </section>
     );

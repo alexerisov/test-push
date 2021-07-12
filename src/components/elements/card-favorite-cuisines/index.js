@@ -5,18 +5,18 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import { Rating as MaterialRating } from '@material-ui/lab';
 
-const CardFavoriteCuisines = () => {
+const CardFavoriteCuisines = (props) => {
     return (
       <Card className={classes.card}>
         <CardMedia
           className={classes.card__media}
-          image="/images/index/food.png"
+          image={props.image}
           title=""
         />
         <CardContent className={classes.card__content}>
-          <div className={classes.card__title}>Beef Stroganoff</div>
+          <div className={classes.card__title}>{props.title}</div>
           <MaterialRating
-            value={5}
+            value={props.rating ? props.rating : 0}
             name="rating"
             size="medium"
           />

@@ -11,6 +11,30 @@
         position: relative;
         left: 0;
         z-index: -3;
+
+        &__circle {
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            border: 10px $--color-white solid;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            left: 360px;
+            bottom: 255px;
+            position: absolute;
+        }
+
+        &__square {
+            width: 600px;
+            height: 671px;
+            border-radius: 0 130px 130px 0;
+            background-color: $--color-orange;
+            bottom: 100px;
+            left: 0;
+            position: absolute;
+            z-index: -1;
+        }
     }
 
     &__special {
@@ -65,13 +89,13 @@
         display: flex;
         flex-direction: column;
         position: relative;
-        left: -250px;
+        left: 800px;
         margin: 20px 0 0 0;
 
         &__tltle {
             @include fontSemiBold();
             font-size: 30px;
-            line-height: 20px;
+            line-height: 26px;
         }
 
         &__subtitle {
@@ -143,7 +167,7 @@
     &__ear {
         position: absolute;
         left: 0;
-        top: -40px;
+        top: 0px;
         z-index: -4;
     }
 }
