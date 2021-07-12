@@ -1,0 +1,54 @@
+@import "~styles/mixins/mixins.scss";
+
+.recipe {
+    padding: 40px 0;
+
+    &__navbar {
+        font-size: 20px;
+        font-weight: 300;
+        line-height: 45px;
+        color: $--color-gray6;
+
+        span {
+            color: $--color-orange;
+        }
+    }
+
+    &__title {
+        font-size: 30px;
+        @include fontMedium();
+        margin: 0 0 20px 0;
+    }
+
+    &__content {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        margin: 50px 0;
+        gap: 0 35px;
+    }
+
+    &__cards {
+        display: flex;
+        flex-direction: column;
+        gap: 30px 0;
+        width: 250px;
+    }
+
+    &__author {
+        font-size: 18px;
+        @include fontMedium();
+    }
+
+    &__location {
+        color: $--color-gray5;
+        margin: 0 0 17px 0;
+        font-size: 14px;
+        @include fontMedium();
+    }
+
+    &__recipeContent {
+        display: flex;
+        flex-direction: column;
+        gap: 30px 0;
+    }
+}
