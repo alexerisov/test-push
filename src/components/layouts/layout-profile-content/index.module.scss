@@ -27,7 +27,6 @@
     }
 
     &__item {
-        padding: 0 0 0 30px;
         display: flex;
         align-items: center;
         height: 92px;
@@ -35,7 +34,10 @@
         background-color: $--color-gray8;
 
         a {
+            padding: 34px 0 0 30px;
             color: $--color-black;
+            height: 100%;
+            width: 100%;
         }
 
         &_active, &:hover {
