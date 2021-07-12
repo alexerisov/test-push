@@ -27,8 +27,8 @@ export default {
     images) => {
     const formData = new FormData();
     if (images.length !== 0) {
-      images.forEach(image => {
-        formData.append('images', image);
+      images.forEach((image, index) => {
+        formData.append(`images[${index}]`, image);
       });
     }
     formData.append('data', JSON.stringify({
