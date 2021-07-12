@@ -69,4 +69,17 @@ export default {
     };
   },
 
+  changePassword: ({ password, new_password }) => {
+    return async dispatch => {
+      dispatch({ type: types.SEND });
+      try {
+        const response = await Account.changePassword(password, new_password);
+        dispatch({ type: types.SEND_SUCCESS });
+      } catch (e) {
+        dispatch({ type: types.SEND_FAILURE, error: e.response.data });
+        throw e;
+      }
+    };
+  },
+
 };
