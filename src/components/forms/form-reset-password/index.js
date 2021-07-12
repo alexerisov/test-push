@@ -4,9 +4,9 @@ import { ButtonLogin } from '@/components/elements/button';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { InputLogin } from '@/components/elements/input';
 import FieldError from '../../elements/field-error';
-import classes from "./formLogin.module.scss";
+import classes from "./form-reset-password.module.scss";
 
-function FormLogin (props) {
+function FormResetPassword (props) {
   const { data, errors } = props;
 
   function onChangeField(name) {
@@ -18,9 +18,9 @@ function FormLogin (props) {
     };
   }
 
-  const onLogin = () => {
-    if (props.onLogin) {
-      props.onLogin(data);
+  const onResetPassword = () => {
+    if (props.onResetPassword) {
+      props.onResetPassword(data);
     }
   };
 
@@ -34,36 +34,28 @@ function FormLogin (props) {
           marginLeft: '33px'
         }}
         onClick={props.onClickReturn}/>
-      <h2 className={classes.registerTitle}>LOGIN</h2>
+      <h2 className={classes.registerTitle}>RESET PASSWORD</h2>
       <form className={classes.loginForm}>
         <InputLogin
-          id="login-email"
+          id="reset-email"
           label="Email"
           type="email"
           onChange={onChangeField('email')}
           value={data.email}
         />
         <FieldError errors={errors} path="email" />
-        <InputLogin
-          id="login-password"
-          label="Password"
-          type="password"
-          onChange={onChangeField('password')}
-          value={data.password}
-        />
-        <FieldError errors={errors} path="password" />
         <div className={classes.registerSection}>
-          <a className={classes.registerLink} href='#' onClick={props.onClickForgot}>Forgot Password?</a>
+          <a className={classes.registerLink} href='#' onClick={props.onClickReturn}>Remembered your password?</a>
         </div>
         <FieldError errors={errors} path="detail" />
       </form>
       <ButtonLogin
-        onClick={onLogin}
-        disabled={!data.email || !data.password}>
-        LOGIN
+        onClick={onResetPassword}
+        disabled={!data.email}>
+        RESET PASSWORD
       </ButtonLogin>
     </div>
   );
 }
 
-export default connect()(FormLogin);
+export default connect()(FormResetPassword);

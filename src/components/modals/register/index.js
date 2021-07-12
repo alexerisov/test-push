@@ -1,13 +1,14 @@
 import React from 'react';
 import {LayoutModal} from '@/components/layouts';
-import {loginActions, modalActions, registerActions} from '@/store/actions';
+import {loginActions, modalActions, registerActions, restorePasswordActions} from '@/store/actions';
 import {
   LoginChoice,
   LoginSocial,
   RegisterChoice,
   RegisterSuccess,
+  ResetPasswordSuccess
 } from '@/components/elements';
-import {FormLogin, FormRegister} from '@/components/forms';
+import {FormLogin, FormRegister, FormResetPassword} from '@/components/forms';
 import { connect } from 'react-redux';
 import classes from "./register.module.scss";
 
@@ -27,12 +28,19 @@ function Register (props) {
     registerChoice: 'REGISTER_CHOICE',
     registerPage: 'REGISTER_PAGE',
     registerSuccess: 'REGISTER_SUCCESS',
+    resetPassword: 'RESET_PASSWORD',
+    resetPasswordSuccess: 'RESET_PASSWORD_SUCCESS'
   };
 
   const [pageSelected, setPageSelected] = React.useState(PAGE_SELECTED_TYPES.loginChoice);
 
   const {data: loginData, isLoading: loginIsLoading, error: loginError} = props.login;
   const {data: registerData, isLoading: registerIsLoading, error: registerError} = props.register;
+  const {
+    data: restorePasswordData,
+    isLoading: restorePasswordIsLoading,
+    error: restorePasswordError
+  } = props.restorePassword;
 
   const onCancel = () => {
     props.dispatch(modalActions.close());
@@ -52,6 +60,14 @@ function Register (props) {
 
   const switchToPageRegisterChoice = () => {
     setPageSelected(PAGE_SELECTED_TYPES.registerChoice);
+  };
+
+  const switchToPageForgot = () => {
+    setPageSelected(PAGE_SELECTED_TYPES.resetPassword);
+  };
+
+  const switchToPageResetSuccess = () => {
+    setPageSelected(PAGE_SELECTED_TYPES.resetPasswordSuccess);
   };
 
   const switchToPageRegisterViewer = () => {
@@ -86,6 +102,12 @@ function Register (props) {
     );
   };
 
+  const onChangeRestorePassword = (data) => {
+    props.dispatch(
+      restorePasswordActions.update(data),
+    );
+  };
+
   const login = (data) => {
     props.dispatch(loginActions.login(data)).then((res) => {
       onCancel();
@@ -97,6 +119,14 @@ function Register (props) {
   const register = (data) => {
     props.dispatch(registerActions.register(data)).then((res) => {
       switchToPageSuccess();
+    }).catch(e => {
+      console.log('error', e);
+    });
+  };
+
+  const restorePassword = (data) => {
+    props.dispatch(restorePasswordActions.resetPassword(data)).then((res) => {
+      switchToPageResetSuccess();
     }).catch(e => {
       console.log('error', e);
     });
@@ -117,6 +147,7 @@ function Register (props) {
               data={loginData}
               errors={loginError}
               onLogin={login}
+              onClickForgot={switchToPageForgot}
           />;
       case PAGE_SELECTED_TYPES.loginSocial:
         return <LoginSocial
@@ -141,10 +172,19 @@ function Register (props) {
         return <RegisterSuccess
               onClose={onCancel}
           />;
+      case PAGE_SELECTED_TYPES.resetPassword:
+        return <FormResetPassword
+              onClickReturn={switchToPageEmail}
+              onChange={onChangeRestorePassword}
+              data={restorePasswordData}
+              errors={restorePasswordError}
+              onResetPassword={restorePassword}
+          />;
+      case PAGE_SELECTED_TYPES.resetPasswordSuccess:
+        return <ResetPasswordSuccess />;
       default:
         return null;
     }
-
   };
 
   return (
@@ -165,4 +205,5 @@ export default connect((state => ({
   account: state.account,
   login: state.login,
   register: state.register,
+  restorePassword: state.restorePassword,
 })))(Register);

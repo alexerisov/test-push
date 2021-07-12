@@ -31,7 +31,7 @@ const HeaderDefault = (props) => {
         // result when modal return promise and close
       });
     };
-  }
+  };
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
