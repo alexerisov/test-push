@@ -2,6 +2,8 @@ import React from 'react';
 import classes from "./index.module.scss";
 
 const MealOfWeekBlock = (props) => {
+
+  const image = props.meal ? props?.meal?.images[0].tag : '';
     return (
       <section className={classes.meal}>
         <div className={classes.meal__special}>Special</div>
@@ -16,7 +18,7 @@ const MealOfWeekBlock = (props) => {
           <div className={classes.meal__images}>
             <div
               className={classes.meal__images__circle}
-              style={{backgroundImage: `url(${props?.meal?.images[0].tag})`}}
+              style={{backgroundImage: `url(${image})`}}
             ></div>
             <div className={classes.meal__images__square}></div>
           </div>
