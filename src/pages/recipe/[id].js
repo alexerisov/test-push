@@ -118,25 +118,25 @@ function CreateRecipe (props) {
                     <div className={classes.recipe__nutritionContainer}>
                       <div className={classes.recipe__nutritionItem}>
                         <p className={classes.recipe__nutritionsQuantity}>
-                          {recipe.calories ? recipe.calories : 'none'}
+                          {recipe.calories ? recipe.calories : '-'}
                         </p>
                         <p className={classes.recipe__nutritionsName}>Calories</p>
                       </div>
                       <div className={classes.recipe__nutritionItem}>
                         <p className={classes.recipe__nutritionsQuantity}>
-                          {recipe.proteins ? `${recipe.proteins}%` : 'none'}
+                          {recipe.proteins ? `${recipe.proteins}%` : '-'}
                         </p>
                         <p className={classes.recipe__nutritionsName}>Protein</p>
                       </div>
                       <div className={classes.recipe__nutritionItem}>
                         <p className={classes.recipe__nutritionsQuantity}>
-                          {recipe.fats ? `${recipe.fats}%` : 'none'}
+                          {recipe.fats ? `${recipe.fats}%` : '-'}
                         </p>
                         <p className={classes.recipe__nutritionsName}>Fat</p>
                       </div>
                       <div className={classes.recipe__nutritionItem}>
                         <p className={classes.recipe__nutritionsQuantity}>
-                          {recipe.carbohydrates ? recipe.carbohydrates : 'none'}
+                          {recipe.carbohydrates ? recipe.carbohydrates : '-'}
                         </p>
                         <p className={classes.recipe__nutritionsName}>Carbs</p>
                       </div>

@@ -1,7 +1,7 @@
 @import "~styles/mixins/mixins.scss";
 
 .recipe {
-    padding: 40px 40px;
+    padding: 40px 40px 0 40px;
 
     &__navbar {
         font-size: 20px;
@@ -154,7 +154,7 @@
         &__title {
             font-size: 30px;
             line-height: 46px;
-            margin: 0 0 15px 0;
+            padding: 0 0 30px 0;
             max-width: 420px;
 
             span {
@@ -188,6 +188,19 @@
             position: absolute;
             right: 0;
             bottom: 0;
+        }
+
+        &:before {
+            z-index: -2;
+            content: "";
+            width: calc(200vw);
+            left: -100vw;
+            top: 0;
+            bottom: 0;
+            position: absolute;
+            background: #f3f4f7;
+            -webkit-transform: matrix(1,0,0,-1,0,0);
+            transform: matrix(1,0,0,-1,0,0);
         }
     }
 }
