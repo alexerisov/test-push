@@ -146,7 +146,7 @@
     &__banner {
         display: flex;
         flex-direction: column;
-        padding: 87px 0 50px 0;
+        padding: 87px 0 90px 0;
         color: $--color-gray7;
         @include fontMedium();
         position: relative;
@@ -187,7 +187,7 @@
         &__photo {
             position: absolute;
             right: 0;
-            bottom: 0;
+            bottom: 30px;
         }
 
         &:before {
