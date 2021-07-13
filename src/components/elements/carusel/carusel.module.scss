@@ -80,6 +80,21 @@ $slide-width: 32rem;
     width: 34px;
     height: 34px;
     z-index: 100;
+    border: 2px solid $--color-orange
+}
+
+.carousel__btn__prev:hover {
+    background:$--color-white;
+
+    i {
+        border: solid $--color-orange;
+        border-width: 0 0.2rem 0.2rem 0;
+        height: 1rem;
+        padding: 3px;
+        width: 1rem;
+        z-index: 10;
+        transform: rotate(135deg);
+    }
 }
 
 .carousel__btn__next {
@@ -97,6 +112,21 @@ $slide-width: 32rem;
   width: 34px;
   height: 34px;
   z-index: 100;
+  border: 2px solid $--color-orange
+}
+
+.carousel__btn__next:hover {
+    background:$--color-white;
+
+    i {
+        border: solid $--color-orange;
+        border-width: 0 0.2rem 0.2rem 0;
+        height: 1rem;
+        padding: 3px;
+        width: 1rem;
+        z-index: 10;
+        transform: rotate(-45deg);
+    }
 }
 
 .carousel__btn_arrow__left {

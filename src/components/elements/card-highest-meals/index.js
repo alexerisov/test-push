@@ -17,7 +17,7 @@ const CardHighestMeals = (props) => {
         />
         <CardContent className={classes.card__content}>
           <div>
-            <p className={classes.card__name}>{props.title}</p>
+            <p className={classes.card__name} title={props.title}>{props.title}</p>
             <p className={classes.card__author}>{`by Chef ${props.name},`}</p>
             <p className={classes.card__location}>{props.city}</p>
             <Link href={`/recipe/${props.id}`}><a>View recipe</a></Link>

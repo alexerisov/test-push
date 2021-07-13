@@ -22,8 +22,10 @@ const MealOfWeekBlock = (props) => {
             <div className={classes.meal__images__square}></div>
           <div className={classes.meal__recipe}>
             <h3 className={classes.meal__recipe__tltle}>{props?.meal?.title}</h3>
-            <p className={classes.meal__recipe__subtitle}>{props?.meal?.description}</p>
-
+            <p
+              className={classes.meal__recipe__subtitle}
+              dangerouslySetInnerHTML={{__html: props?.meal?.description}}>
+            </p>
             <h4 className={classes.meal__recipe__ingredientsTitle}>Ingredients</h4>
             <div className={classes.meal__recipe__ingredientsContainer}>
               {
@@ -45,25 +47,25 @@ const MealOfWeekBlock = (props) => {
             <div className={classes.meal__recipe__nutritionContainer}>
               <div className={classes.meal__recipe__nutritionItem}>
                 <p className={classes.meal__recipe__nutritionsQuantity}>
-                  {props?.meal?.calories ? props?.meal?.calories : 'none'}
+                  {props?.meal?.calories ? props?.meal?.calories : '-'}
                 </p>
                 <p className={classes.meal__recipe__nutritionsName}>Calories</p>
               </div>
               <div className={classes.meal__recipe__nutritionItem}>
                 <p className={classes.meal__recipe__nutritionsQuantity}>
-                  {props?.meal?.proteins ? `${props?.meal?.proteins}%` : 'none'}
+                  {props?.meal?.proteins ? `${props?.meal?.proteins}%` : '-'}
                 </p>
                 <p className={classes.meal__recipe__nutritionsName}>Protein</p>
               </div>
               <div className={classes.meal__recipe__nutritionItem}>
                 <p className={classes.meal__recipe__nutritionsQuantity}>
-                  {props?.meal?.fats ? `${props?.meal?.fats}%` : 'none'}
+                  {props?.meal?.fats ? `${props?.meal?.fats}%` : '-'}
                 </p>
                 <p className={classes.meal__recipe__nutritionsName}>Fat</p>
               </div>
               <div className={classes.meal__recipe__nutritionItem}>
                 <p className={classes.meal__recipe__nutritionsQuantity}>
-                  {props?.meal?.carbohydrates ? props?.meal?.carbohydrates : 'none'}
+                  {props?.meal?.carbohydrates ? props?.meal?.carbohydrates : '-'}
                 </p>
                 <p className={classes.meal__recipe__nutritionsName}>Carbs</p>
               </div>
