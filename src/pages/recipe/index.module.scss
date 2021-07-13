@@ -7,10 +7,16 @@
         font-size: 20px;
         font-weight: 300;
         line-height: 45px;
-        color: $--color-gray6;
 
         span {
             color: $--color-orange;
+        }
+
+        a, a:active, a:visited {
+            font-size: 20px;
+            font-weight: 300;
+            line-height: 45px;
+            color: $--color-gray6;
         }
     }
 
@@ -140,7 +146,7 @@
     &__banner {
         display: flex;
         flex-direction: column;
-        padding: 87px 0 40px 0;
+        padding: 87px 0 50px 0;
         color: $--color-gray7;
         @include fontMedium();
         position: relative;
@@ -164,7 +170,18 @@
 
         &__inputEmail {
             margin: 0 0 70px 10px;
-            opacity: 0.7;
+            max-width: 250px;
+            border: 0;
+            @include fontMedium();
+            font-size: 18px;
+            line-height: 20px;
+
+            &::placeholder {
+                color: #CECECE;
+                @include fontMedium();
+                font-size: 18px;
+                line-height: 20px;
+            }
         }
 
         &__photo {

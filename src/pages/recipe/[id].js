@@ -7,6 +7,7 @@ import Recipe from '@/api/Recipe.js';
 import { useRouter } from 'next/router';
 import {cuisineList, recipeTypes, cookingMethods, dietaryrestrictions} from '@/utils/datasets';
 import { Button } from '@material-ui/core';
+import Link from "next/link";
 
 function CreateRecipe (props) {
 
@@ -39,7 +40,10 @@ function CreateRecipe (props) {
     const content = <div className={classes.recipe}>
         {recipe &&
             <>
-            <h2 className={classes.recipe__navbar}>Home / Recipes / <span>{recipe.title}</span></h2>
+            <h2 className={classes.recipe__navbar}>
+                <Link href="/"><a>Home /</a></Link>
+                <Link href="/recipe/recipes"><a> Recipes /</a></Link>
+                <span> {recipe.title}</span></h2>
             <div className={classes.recipe__content}>    
                 <div className={classes.recipe__recipeContent}>
                     <div className={classes.recipe__header}>
@@ -165,11 +169,10 @@ function CreateRecipe (props) {
             <div className={classes.recipe__banner}>
                 <p className={classes.recipe__banner__title}>Do you <span>have any question</span> or ready <span>to cook?</span></p>
                 <p className={classes.recipe__banner__subtitle}>share your mail id and we will shortly connect you</p>
-                <p className={classes.recipe__banner__inputEmail}>example@gmail.com</p>
+                <input className={classes.recipe__banner__inputEmail} placeholder="example@gmail.com"></input>
                 <Button
                   variant='contained'
                   color='primary'
-                  href="/"
                 >
                   Share
                 </Button>
