@@ -1,16 +1,22 @@
 @import "~styles/mixins/mixins.scss";
 
 .recipe {
-    padding: 40px 40px;
+    padding: 40px 40px 0 40px;
 
     &__navbar {
         font-size: 20px;
         font-weight: 300;
         line-height: 45px;
-        color: $--color-gray6;
 
         span {
             color: $--color-orange;
+        }
+
+        a, a:active, a:visited {
+            font-size: 20px;
+            font-weight: 300;
+            line-height: 45px;
+            color: $--color-gray6;
         }
     }
 
@@ -140,7 +146,7 @@
     &__banner {
         display: flex;
         flex-direction: column;
-        padding: 87px 0 40px 0;
+        padding: 87px 0 90px 0;
         color: $--color-gray7;
         @include fontMedium();
         position: relative;
@@ -148,7 +154,7 @@
         &__title {
             font-size: 30px;
             line-height: 46px;
-            margin: 0 0 15px 0;
+            padding: 0 0 30px 0;
             max-width: 420px;
 
             span {
@@ -164,13 +170,37 @@
 
         &__inputEmail {
             margin: 0 0 70px 10px;
-            opacity: 0.7;
+            max-width: 250px;
+            border: 0;
+            @include fontMedium();
+            font-size: 18px;
+            line-height: 20px;
+
+            &::placeholder {
+                color: #CECECE;
+                @include fontMedium();
+                font-size: 18px;
+                line-height: 20px;
+            }
         }
 
         &__photo {
             position: absolute;
             right: 0;
+            bottom: 30px;
+        }
+
+        &:before {
+            z-index: -2;
+            content: "";
+            width: calc(200vw);
+            left: -100vw;
+            top: 0;
             bottom: 0;
+            position: absolute;
+            background: #f3f4f7;
+            -webkit-transform: matrix(1,0,0,-1,0,0);
+            transform: matrix(1,0,0,-1,0,0);
         }
     }
 }
