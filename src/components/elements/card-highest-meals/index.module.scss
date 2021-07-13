@@ -4,6 +4,11 @@
 .card {
     width: 338px;
     min-height: 354px;
+    opacity: 1;
+	animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: 0.5s;
 
     &__content {
         display: flex;
@@ -27,6 +32,10 @@
 
     &__name {
         margin: 0 0 10px 0;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        max-width: 265px;
     }
 
     &__location {
@@ -38,4 +47,13 @@
     &__likeIcon {
         margin: 10px 0 0 0;
     }
+}
+
+@keyframes fadeInOpacity {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
 }

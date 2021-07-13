@@ -1,0 +1,150 @@
+@import "~styles/variables.scss";
+$slide-count: 3;
+$slide-width: 32rem;
+
+.carousel__wrap {
+    align-items: center;
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    position: absolute;
+    bottom: -14px;
+    width: 64%;
+    left: 76%;
+    transform: translateX(-50%);
+}
+
+.carousel__inner {
+    height: 34rem;
+    position: relative;
+    width: calc(#{$slide-width});
+}
+
+.carousel__container {
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    width: 112%;
+}
+
+.carousel__slide_list {
+    list-style-type: none;
+    padding: 0;
+    height: 100%;
+    left: 50%;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    transform: translateX(-50%);
+    width: 156rem;
+}
+
+.carousel__slideItem {
+    display: inline-block;
+    height: $slide-width;
+    margin: 0;
+    // padding: 1rem;
+    position: absolute;
+    transition: all 0.3s;
+    width: $slide-width;
+}
+
+.carousel__slideItemImgLink {
+    display: flex;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+
+    img {
+        height: 90%;
+        object-fit: cover;
+        transition: all 0.5s ease;
+        width: 97%;
+    }
+}
+
+.carousel__btn__prev {
+    align-items: center;
+    background: $--color-orange;
+    border: 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: 91%;
+    transform: translateY(-50%);
+    left: 17rem;
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    z-index: 100;
+    border: 2px solid $--color-orange
+}
+
+.carousel__btn__prev:hover {
+    background:$--color-white;
+
+    i {
+        border: solid $--color-orange;
+        border-width: 0 0.2rem 0.2rem 0;
+        height: 1rem;
+        padding: 3px;
+        width: 1rem;
+        z-index: 10;
+        transform: rotate(135deg);
+    }
+}
+
+.carousel__btn__next {
+  align-items: center;
+  background: $--color-orange;
+  border: 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 91%;
+  transform: translateY(-50%);
+  right: 150px;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  z-index: 100;
+  border: 2px solid $--color-orange
+}
+
+.carousel__btn__next:hover {
+    background:$--color-white;
+
+    i {
+        border: solid $--color-orange;
+        border-width: 0 0.2rem 0.2rem 0;
+        height: 1rem;
+        padding: 3px;
+        width: 1rem;
+        z-index: 10;
+        transform: rotate(-45deg);
+    }
+}
+
+.carousel__btn_arrow__left {
+  border: solid $--color-white;
+  border-width: 0 0.2rem 0.2rem 0;
+  height: 1rem;
+  padding: 3px;
+  width: 1rem;
+  z-index: 10;
+  transform: rotate(135deg);
+}
+
+.carousel__btn_arrow__right {
+  border: solid $--color-white;
+  border-width: 0 0.2rem 0.2rem 0;
+  height: 1rem;
+  padding: 3px;
+  width: 1rem;
+  z-index: 10;
+  transform: rotate(-45deg);
+}

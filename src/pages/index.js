@@ -7,6 +7,7 @@ import MealOfWeekBlock from '@/components/blocks/meal-of-the-week';
 import FavoriteCuisinesBlock from '@/components/blocks/favorite-cuisines';
 import PinnedMeals from '@/components/blocks/pinned-meals';
 import HighestRatedMealsBlock from '@/components/blocks/highest-rated-meals';
+import Carousel from '@/components/elements/carusel';
 import { Button } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { modalActions, profileActions, accountActions } from '@/store/actions';
@@ -28,6 +29,7 @@ const Home = (props) => {
     .then((data) => {
       setMeal(data?.data[0]);
     });
+    Recipe.getHomepageBanners();
   },[]);
 
   React.useEffect(() => {
@@ -88,15 +90,11 @@ const Home = (props) => {
             Become a home chef
           </Button>
       }
-      <div className={classes.home__slide}>
-        <button className={classes.home__slideButton}>&#5176;</button>
-        <button className={classes.home__slideButton}>&#5171;</button>
-      </div>
       <img src="/images/index/mint.png" className={classes.imgMint1}/>
       <img src="/images/index/mint.png" className={classes.imgMint2}/>
       <img src="/images/index/broccoli.png" className={classes.imgBroccoli}/>
       <img src="/images/index/carrot.png" className={classes.imgCarrot}/>
-      <img src="/images/index/banner.png" className={classes.imgBanner}/>
+      <Carousel />
     </section>
     <PinnedMeals />
     <HighestRatedMealsBlock />
