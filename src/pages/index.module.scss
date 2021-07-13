@@ -2,7 +2,7 @@
 
 .home {
     @include fontRegular();
-    min-height: calc(100vh - 113px);
+    min-height: 670px;
     padding: 38px 100px 0 100px;
     display: flex;
     flex-direction: column;
