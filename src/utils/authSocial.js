@@ -11,9 +11,10 @@ const openOAuth = (url, register, user_type) => {
       clearInterval(timer);
       if (register) {
         window.location.replace(`${CONFIG.currentUrl}/oauth2-complete/${user_type}`);
-      } else {
-        window.location.reload();
       }
+      // else {
+      //   window.location.reload();
+      // }
     }
   }, 1000);
 };

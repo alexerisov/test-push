@@ -10,7 +10,7 @@ const StyledCardContent = styled(CardContent)`
   height: 100%;
 `;
 
-const CardPinnedMeals = ({ title, raitingValue, avatar, pk }) => {
+const CardPinnedMeals = ({ title, raitingValue, avatar, id }) => {
     return (
       <Card className={classes.card}>
         <StyledCardContent className={classes.card__content}>
@@ -24,7 +24,7 @@ const CardPinnedMeals = ({ title, raitingValue, avatar, pk }) => {
             <span className={classes.card__raiting}>
               <RaitingIcon value={raitingValue} />
             </span>
-            <Link href="/"><a>Watch Live video</a></Link>
+            <Link href={`/recipe/${id}`}><a>Watch Live video</a></Link>
           </div>
         </StyledCardContent>
       </Card>

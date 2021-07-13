@@ -96,6 +96,8 @@
             @include fontSemiBold();
             font-size: 30px;
             line-height: 26px;
+            color: $--color-orange;
+            text-decoration: none;
         }
 
         &__subtitle {

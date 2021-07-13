@@ -21,7 +21,9 @@ const MealOfWeekBlock = (props) => {
             ></div>
             <div className={classes.meal__images__square}></div>
           <div className={classes.meal__recipe}>
-            <h3 className={classes.meal__recipe__tltle}>{props?.meal?.title}</h3>
+            <a href={`/recipe/${props?.meal?.pk}`}>
+              <h3 className={classes.meal__recipe__tltle}>{props?.meal?.title}</h3>
+            </a>
             <p
               className={classes.meal__recipe__subtitle}
               dangerouslySetInnerHTML={{__html: props?.meal?.description}}>

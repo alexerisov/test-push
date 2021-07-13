@@ -30,6 +30,7 @@ const PinnedMeals = () => {
             title={item.title}
             raitingValue={item.avg_rating}
             avatar={item?.images[0]?.url}
+            id={item?.pk}
           />
         )}
       </section>

@@ -37,12 +37,10 @@ const useStyles = makeStyles((theme) => ({
   },
   textField: {
     '& .MuiOutlinedInput-root': {
-      // width: '400px',
       borderRadius: '10px',
     },
     '& .MuiInputBase-input': {
       height: 'auto',
-      width: 'auto',
     },
   },
   svgIcon: {

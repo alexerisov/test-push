@@ -1,6 +1,6 @@
 import React from 'react';
 import classes from "./index.module.scss";
-import CardFavoriteCuisines from "@/components/elements/card-favorite-cuisines";
+import CardHighestMeals from "@/components/elements/card-highest-meals";
 
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -133,77 +133,98 @@ const FavoriteCuisinesBlock = () => {
       <StyledTabPanel value={valueTab} index={0}>
         {
           cards.map((card) => {
-            return <CardFavoriteCuisines
+            return <CardHighestMeals
                       key={card.pk}
                       image={card?.images[0]?.url}
                       title={card?.title}
-                      rating={card.avg_rating}/>;
+                      rating={card?.avg_rating}
+                      name={card?.user?.full_name}
+                      city={card?.user?.city}
+                      id={card.pk}/>;
           })
         }
       </StyledTabPanel>
       <StyledTabPanel value={valueTab} index={1}>
         {
           cards.map((card) => {
-            return <CardFavoriteCuisines
-                      key={card.pk}
-                      image={card?.images[0]?.url}
-                      title={card?.title}
-                      rating={card.avg_rating}/>;
+            return <CardHighestMeals
+                    key={card.pk}
+                    image={card?.images[0]?.url}
+                    title={card?.title}
+                    rating={card?.avg_rating}
+                    name={card?.user?.full_name}
+                    city={card?.user?.city}
+                    id={card.pk}/>;
           })
         }
       </StyledTabPanel>
       <StyledTabPanel value={valueTab} index={2}>
         {
           cards.map((card) => {
-            return <CardFavoriteCuisines
-                      key={card.pk}
-                      image={card?.images[0]?.url}
-                      title={card?.title}
-                      rating={card.avg_rating}/>;
+            return <CardHighestMeals
+                    key={card.pk}
+                    image={card?.images[0]?.url}
+                    title={card?.title}
+                    rating={card?.avg_rating}
+                    name={card?.user?.full_name}
+                    city={card?.user?.city}
+                    id={card.pk}/>;
           })
         }
       </StyledTabPanel>
       <StyledTabPanel value={valueTab} index={3}>
         {
           cards.map((card) => {
-            return <CardFavoriteCuisines
-                      key={card.pk}
-                      image={card?.images[0]?.url}
-                      title={card?.title}
-                      rating={card.avg_rating}/>;
+            return <CardHighestMeals
+                    key={card.pk}
+                    image={card?.images[0]?.url}
+                    title={card?.title}
+                    rating={card?.avg_rating}
+                    name={card?.user?.full_name}
+                    city={card?.user?.city}
+                    id={card.pk}/>;
           })
         }
       </StyledTabPanel>
       <StyledTabPanel value={valueTab} index={4}>
         {
           cards.map((card) => {
-            return <CardFavoriteCuisines
+            return <CardHighestMeals
                       key={card.pk}
                       image={card?.images[0]?.url}
                       title={card?.title}
-                      rating={card.avg_rating}/>;
+                      rating={card?.avg_rating}
+                      name={card?.user?.full_name}
+                      city={card?.user?.city}
+                      id={card.pk}/>;
           })
         }
       </StyledTabPanel>
       <StyledTabPanel value={valueTab} index={5}>
         {
           cards.map((card) => {
-            return <CardFavoriteCuisines
+            return <CardHighestMeals
                       key={card.pk}
                       image={card?.images[0]?.url}
                       title={card?.title}
-                      rating={card.avg_rating}/>;
+                      rating={card?.avg_rating}
+                      name={card?.user?.full_name}
+                      city={card?.user?.city}
+                      id={card.pk}/>;
           })
         }
       </StyledTabPanel>
       <StyledTabPanel value={valueTab} index={6}>
         {
           cards.map((card) => {
-            return <CardFavoriteCuisines
+            return <CardHighestMeals
                       key={card.pk}
                       image={card?.images[0]?.url}
                       title={card?.title}
-                      rating={card.avg_rating}/>;
+                      rating={card?.avg_rating}
+                      name={card?.user?.full_name}
+                      city={card?.user?.city}
+                      id={card.pk}/>;
           })
         }
       </StyledTabPanel>
