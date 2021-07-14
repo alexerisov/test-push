@@ -58,6 +58,10 @@ function CreateRecipe (props) {
                             <p>{recipe.cooking_time.slice(3, 5)} MIN</p>
                         </div>
                     </div>
+
+                    <video width="1000" controls>
+                      <source src={recipe.preview_mp4_url} type="video/mp4" />
+                    </video>
                     
                     <div>
                         <h2 className={classes.recipe__title}>Description</h2>
