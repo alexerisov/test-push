@@ -47,21 +47,33 @@ const ProfileAccountSettings = (props) => {
 
   const { email, full_name, phone_number, city, language, avatar, user_type } = props.account.profile;
 
+  const [avatarFile, setAvatarFile] = useState(avatar);
+  const [formStatus, setFormStatus] = useState('');
+  const [statusSubmit, setStatusSubmit] = useState('Update');
+
   const formik = useFormik({
     initialValues: {
       email: email,
-      full_name: full_name,
-      phone_number: phone_number,
-      city: city,
-      language: language,
+      full_name: full_name ? full_name : "",
+      phone_number: phone_number ? phone_number : "",
+      city: city ? city : "",
+      language: language ? language : "",
       avatar: avatar
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
+      setStatusSubmit('Loading...')
+      setFormStatus('')
       values.user_type = user_type;
       props.dispatch(profileActions.updateProfile(values))
       .then((res) => {
+        setStatusSubmit('Update')
+        setFormStatus(<span className={classes.profile__formStatus_true}>Successfully sent</span>)
         props.dispatch(accountActions.remind());
+      })
+      .catch((error) => {
+        setFormStatus(<span className={classes.profile__formStatus_error}>Error</span>)
+        console.log(error);
       })
     },
   });
@@ -79,7 +91,7 @@ const ProfileAccountSettings = (props) => {
         <div className={classes.profile__formAvatar}>
           <div className={classes.profile__upload} onClick={onClickUpload}>
             { !avatar ? <img src="/images/index/default-avatar.png" alt="avatar" className={classes.profile__avatar}/>
-            : avatar && <img src={avatar} alt="avatar" className={classes.profile__avatar}/>}
+            : avatar && <img src={avatarFile} alt="avatar" className={classes.profile__avatar}/>}
             <div className={classes.profile__avatarBack} />
           </div>
           <input
@@ -89,11 +101,15 @@ const ProfileAccountSettings = (props) => {
               value={formik.avatar}
               hidden
               onChange = {(event) => {
+                setAvatarFile(URL.createObjectURL(event.currentTarget.files[0]));
                 formik.setFieldValue("avatar", event.currentTarget.files[0]);
               }}
           />
           <label>Profile-pic.jpg</label>
-          <button type="submit" className={classes.profile__buttonUpdate}>Update</button>
+          <div>
+            <button type="submit" className={classes.profile__buttonUpdate}>{statusSubmit}</button>
+            <p className={classes.profile__formStatus}>{formStatus}</p>
+          </div>
         </div>
         <h2 className={classes.profile__title}>Update User Information</h2>
         <div>
@@ -111,6 +127,7 @@ const ProfileAccountSettings = (props) => {
         <div>
           <label className={classes.profile__label}>Email</label>
           <StyledTextField
+            disabled
             id="email"
             name="email"
             variant="outlined"
@@ -156,7 +173,10 @@ const ProfileAccountSettings = (props) => {
             helperText={formik.touched.language && formik.errors.language}
           />
         </div>
-        <button type="submit" className={classes.profile__buttonUpdate}>Update</button>
+        <div>
+          <button type="submit" className={classes.profile__buttonUpdate}>{statusSubmit}</button>
+          <p className={classes.profile__formStatus}>{formStatus}</p>
+        </div>
       </form>
     </ContentLayout>
   </>
