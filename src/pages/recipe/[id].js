@@ -51,7 +51,7 @@ function CreateRecipe (props) {
                             <h2 className={classes.recipe__title}>{recipe.title}</h2>
                             <p className={classes.recipe__author}>by Chef {recipe.user.full_name}</p>
                             <p className={classes.recipe__location}>{recipe.user.city}</p>
-                            <RaitingIcon />
+                            <RaitingIcon value={recipe.avg_rating} />
                         </div>
                         <div className={classes.recipe__time}>
                             <img src="/images/index/timer.svg" />
