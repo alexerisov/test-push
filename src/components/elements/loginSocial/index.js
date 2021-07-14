@@ -10,7 +10,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import classes from "./loginSocial.module.scss";
 
 function LoginSocial (props) {
-  
+
   return (
     <div>
       <ArrowBackIcon
@@ -23,9 +23,9 @@ function LoginSocial (props) {
         onClick={props.onClickReturn}
       />
       <h2 className={classes.registerTitle}>LOGIN</h2>
-      <ButtonLogin onClick={loginViaFacebook(null, false)}>LOGIN WITH FACEBOOK</ButtonLogin>
-      <ButtonLogin onClick={loginViaGoogle(null, false)}>LOGIN WITH GOOGLE</ButtonLogin>
-      <ButtonLogin onClick={loginViaInstagram(null, false)}>LOGIN WITH INSTAGRAM</ButtonLogin>
+      <ButtonLogin onClick={loginViaFacebook()}>LOGIN WITH FACEBOOK</ButtonLogin>
+      <ButtonLogin onClick={loginViaGoogle()}>LOGIN WITH GOOGLE</ButtonLogin>
+      <ButtonLogin onClick={loginViaInstagram()}>LOGIN WITH INSTAGRAM</ButtonLogin>
     </div>
   );
 }
