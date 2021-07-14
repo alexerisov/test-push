@@ -34,7 +34,6 @@ const ProfileAccountSettings = (props) => {
   const validationSchema = yup.object({
     email: yup
       .string('Enter your email')
-      .email('Enter a valid email')
       .required('Email is required'),
     full_name: yup
       .string('Enter your Full Name')
@@ -54,10 +53,10 @@ const ProfileAccountSettings = (props) => {
   const formik = useFormik({
     initialValues: {
       email: email,
-      full_name: full_name ? full_name : "",
-      phone_number: phone_number ? phone_number : "",
-      city: city ? city : "",
-      language: language ? language : "",
+      full_name: full_name ?? "",
+      phone_number: phone_number ?? "",
+      city: city ?? "",
+      language: language ?? "",
       avatar: avatar
     },
     validationSchema: validationSchema,
@@ -72,6 +71,7 @@ const ProfileAccountSettings = (props) => {
         props.dispatch(accountActions.remind());
       })
       .catch((error) => {
+        setStatusSubmit('Update')
         setFormStatus(<span className={classes.profile__formStatus_error}>Error</span>)
         console.log(error);
       })
@@ -90,8 +90,8 @@ const ProfileAccountSettings = (props) => {
       <form onSubmit={formik.handleSubmit} className={classes.profile__data}>
         <div className={classes.profile__formAvatar}>
           <div className={classes.profile__upload} onClick={onClickUpload}>
-            { !avatar ? <img src="/images/index/default-avatar.png" alt="avatar" className={classes.profile__avatar}/>
-            : avatar && <img src={avatarFile} alt="avatar" className={classes.profile__avatar}/>}
+            { !avatarFile ? <img src="/images/index/default-avatar.png" alt="avatar" className={classes.profile__avatar}/>
+            : avatarFile && <img src={avatarFile} alt="avatar" className={classes.profile__avatar}/>}
             <div className={classes.profile__avatarBack} />
           </div>
           <input
