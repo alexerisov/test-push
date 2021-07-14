@@ -54,8 +54,8 @@ const useStyles = makeStyles((theme) => ({
 function FormCreateRecipe (props) {
   const router = useRouter();
   const classMarerialUi = useStyles();
-  const { data, errors } = props.recipeUpload;
-  
+  const { data, error } = props.recipeUpload;
+
   function onChangeField(name) {
     return (event) => {
       const newData = { ...data, [name]: event.target.value };
@@ -127,13 +127,21 @@ function FormCreateRecipe (props) {
     return itemList;
   };
 
-  function uploadRecipe (e) {
-    e.preventDefault();
-    if(document.getElementById("DemoCamera_720p") && document.getElementById("DemoCamera_720p").value !== '') {
-      const thumbnail = `https:${document.getElementById("DemoCamera_vga_thumb").value}`;
-      const full_thumbnail = `https:${document.getElementById("DemoCamera_vga_filmstrip").value}`;
-      const mp4 = `https:${document.getElementById("DemoCamera_720p").value}`;
-      const webm = `https:${document.getElementById("DemoCamera_vertical").value}`;
+  React.useEffect(() => {
+    if (isWindowExist()) {
+      CameraTag.setup();
+    }
+  }, []);
+
+  if (isWindowExist()) {
+    CameraTag.observe("DemoCamera", "published", function(){
+      const myCamera = CameraTag.cameras["DemoCamera"];
+      const myVideo = myCamera.getVideo();
+      console.log(myVideo);
+      const thumbnail = `https:${myVideo.medias.vga_thumb}`;
+      const full_thumbnail = `https:${myVideo.medias.vga_filmstrip}`;
+      const mp4 = `https:${myVideo.medias['720p']}`;
+      const webm = `https:${myVideo.medias.vertical}`;
       const newData = {
         ...data,
         preview_thumbnail_url: thumbnail,
@@ -141,13 +149,32 @@ function FormCreateRecipe (props) {
         preview_mp4_url: mp4,
         preview_webm_url: webm,
       };
-      props.dispatch(recipeUploadActions.uploadRecipe(newData))
+        if (!props.recipeUpload.data.preview_mp4_url) {
+        props.dispatch(recipeUploadActions.update(newData));
+      }
+    });
+  }
+  
+  function uploadRecipe (e) {
+    e.preventDefault();
+    // if(document.getElementById("DemoCamera_720p") && document.getElementById("DemoCamera_720p").value !== '') {
+    //   const thumbnail = `https:${document.getElementById("DemoCamera_vga_thumb").value}`;
+    //   const full_thumbnail = `https:${document.getElementById("DemoCamera_vga_filmstrip").value}`;
+    //   const mp4 = `https:${document.getElementById("DemoCamera_720p").value}`;
+    //   const webm = `https:${document.getElementById("DemoCamera_vertical").value}`;
+    //   const newData = {
+    //     ...data,
+    //     preview_thumbnail_url: thumbnail,
+    //     preview_full_thumbnail_url: full_thumbnail,
+    //     preview_mp4_url: mp4,
+    //     preview_webm_url: webm,
+    //   };
+      props.dispatch(recipeUploadActions.uploadRecipe(data))
       .then(() => props.dispatch(modalActions.open('uploadSuccessful')))
       .catch((error) => {
         console.log(error);
-      })
-    ;
-    }
+      });
+    // }
   }
 
   return (
@@ -165,6 +192,8 @@ function FormCreateRecipe (props) {
               variant="outlined"
               fullWidth
               className={classMarerialUi.textField}
+              error={error?.title}
+              helperText={error?.title ? "This field is required" : ""}
             />
           </div>
           <div>
@@ -338,6 +367,7 @@ function FormCreateRecipe (props) {
             >
             </input>
           </div>
+          <FieldError errors={error} path="images" />
         </div>
         <div className={classes.createRecipeSection}>
           <h2 className={classes.createRecipeSubtitle_withoutInput}>Cooking Video</h2>
@@ -351,6 +381,7 @@ function FormCreateRecipe (props) {
           >
           </camera> */}
           <camera id='DemoCamera' data-app-id='63f9c870-72c4-0130-04c5-123139045d73' data-sources='upload'></camera>
+          <FieldError errors={error} path="preview_mp4_url" />
         </div>
         <div className={classes.createRecipeSection}>
           <h2 className={classes.createRecipeSubtitle_withoutInput}>Video Elements</h2>
@@ -478,7 +509,7 @@ function FormCreateRecipe (props) {
             </FormControl>
           </div>
         </div>
-        {/* <FieldError errors={errors} path="detail" /> */}
+        {/* <FieldError errors={error} path="detail" /> */}
       </form>
       <div className={classes.createRecipebuttonContainer}>
         <button

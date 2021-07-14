@@ -19,6 +19,15 @@ export default {
     };
   },
 
+  updateError: (error) => {
+    return dispatch => {
+      dispatch({
+        type: types.UPDATE_ERROR,
+        payload: error,
+      });
+    };
+  },
+
   uploadRecipe: (data) => {
     return async dispatch => {
       dispatch({ type: types.SEND });

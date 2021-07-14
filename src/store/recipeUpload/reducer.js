@@ -43,6 +43,16 @@ export default reducer(initState, {
     };
   },
 
+  [types.UPDATE_ERROR]: (state, action) => {
+    return {
+      ...state,
+      error: {
+        ...state.error,
+        ...action.payload,
+      },
+    };
+  },
+
   [types.SEND]: (state) => {
     return {
       ...state,
