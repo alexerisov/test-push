@@ -29,6 +29,8 @@ const ProfileAccountSettings = (props) => {
     return (<div>loading...</div>);
   }
 
+  const phoneRegExp = /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){5,18}(\s*)?$/;
+
   const validationSchema = yup.object({
     email: yup
       .string('Enter your email')
@@ -40,10 +42,10 @@ const ProfileAccountSettings = (props) => {
       .max(80, 'Full Name should be of maximum 80 characters length'),
     phone_number: yup
       .string('Enter your Phone number')
-      .required('Phone number is required'),
+      .matches(phoneRegExp, 'Phone number is not valid')
   });
 
-  const { email, full_name, phone_number, city, language, avatar } = props.account.profile;
+  const { email, full_name, phone_number, city, language, avatar, user_type } = props.account.profile;
 
   const formik = useFormik({
     initialValues: {
@@ -56,6 +58,7 @@ const ProfileAccountSettings = (props) => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
+      values.user_type = user_type;
       props.dispatch(profileActions.updateProfile(values))
       .then((res) => {
         props.dispatch(accountActions.remind());
@@ -98,7 +101,7 @@ const ProfileAccountSettings = (props) => {
           <StyledTextField
             id="full_name"
             name="full_name"
-            value={formik.values.full_name}
+            value={formik.values.full_name ? formik.values.full_name : ""}
             onChange={formik.handleChange}
             variant="outlined"
             error={formik.touched.full_name && Boolean(formik.errors.full_name)}
@@ -123,7 +126,7 @@ const ProfileAccountSettings = (props) => {
             id="phone_number"
             name="phone_number"
             variant="outlined"
-            value={formik.values.phone_number}
+            value={formik.values.phone_number ? formik.values.phone_number : ""}
             onChange={formik.handleChange}
             error={formik.touched.phone_number && Boolean(formik.errors.phone_number)}
             helperText={formik.touched.phone_number && formik.errors.phone_number}
@@ -135,7 +138,7 @@ const ProfileAccountSettings = (props) => {
             id="city"
             name="city"
             variant="outlined"
-            value={formik.values.city}
+            value={formik.values.city ? formik.values.city : ""}
             onChange={formik.handleChange}
             error={formik.touched.city && Boolean(formik.errors.city)}
             helperText={formik.touched.city && formik.errors.city}
@@ -147,7 +150,7 @@ const ProfileAccountSettings = (props) => {
             id="language"
             name="language"
             variant="outlined"
-            value={formik.values.language}
+            value={formik.values.language ? formik.values.language : ""}
             onChange={formik.handleChange}
             error={formik.touched.language && Boolean(formik.errors.language)}
             helperText={formik.touched.language && formik.errors.language}
