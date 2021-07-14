@@ -2,7 +2,7 @@ import Recipe from '@/api/Recipe';
 
 export const types = {
   UPDATE: Symbol('UPDATE'),
-
+  UPDATE_ERROR: Symbol('UPDATE_ERROR'),
   SEND: Symbol('SEND'),
   SEND_SUCCESS: Symbol('SEND_SUCCESS'),
   SEND_FAILURE: Symbol('SEND_FAILURE'),
@@ -33,7 +33,7 @@ export default {
       dispatch({ type: types.SEND });
 
       try {
-        await Recipe.upload(
+        const response = await Recipe.upload(
           {
             title: data?.title,
             cooking_time: data?.cooking_time,
@@ -60,7 +60,7 @@ export default {
           },
           data?.images ?? null,
         );
-        dispatch({ type: types.SEND_SUCCESS });
+        dispatch({ type: types.SEND_SUCCESS, data: response.data });
       } catch (e) {
         dispatch({ type: types.SEND_FAILURE, error: e.response.data });
         throw e;
