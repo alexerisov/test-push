@@ -65,6 +65,7 @@ export default reducer(initState, {
     return {
       ...state,
       isLoading: false,
+      data: action.payload
     };
   },
 
