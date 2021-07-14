@@ -16,7 +16,7 @@ const CONFIG = {
   googleClientId: process.env.googleClientId,
   instagramClientId: process.env.instagramClientId,
   currentUrl,
-  oauthRedirectUrl: `${currentUrl} /token/social/ `,
+  oauthRedirectUrl: `${currentUrl} /login/social/ `,
   STRIPE_PUBLISH_KEY: process.env.STRIPE_PUBLISH_KEY,
 };
 

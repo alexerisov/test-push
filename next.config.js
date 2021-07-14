@@ -22,7 +22,7 @@ if (process.env.NODE_ENV === 'production') {
 } else if (process.env.NODE_ENV === 'stage') {
   envs = {
     fbClientId: '',
-    googleClientId: '',
+    googleClientId: '245264013276-sbkrl06fu1e7d6m0d3724or58hvdmpej.apps.googleusercontent.com',
     instagramClientId: '',
     NODE_ENV: 'production',
     BASE_URL: 'https://api.eatchefs.goodbit.dev',
