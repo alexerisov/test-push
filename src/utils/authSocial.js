@@ -28,7 +28,7 @@ const openOAuth = (url, register, user_type) => {
  * @param {boolean} register
  * @return {function(): Promise<void>}
  */
-export const loginViaFacebook = (userType = USER_TYPE.viewerType, register = false) => {
+export const loginViaFacebook = (userType = USER_TYPE.viewerType, register = true) => {
   return async () => {
     openOAuth(
       `https://www.facebook.com/v10.0/dialog/oauth?scope=public_profile email&client_id=${CONFIG.fbClientId}&response_type=token&redirect_uri=${CONFIG.oauthRedirectUrl}&state=${JSON.stringify(
@@ -43,7 +43,7 @@ export const loginViaFacebook = (userType = USER_TYPE.viewerType, register = fal
  * @param {boolean} register
  * @return {function(): Promise<void>}
  */
-export const loginViaGoogle = (userType = USER_TYPE.viewerType, register = false) => {
+export const loginViaGoogle = (userType = USER_TYPE.viewerType, register = true) => {
   return async () => {
     openOAuth(
       `https://accounts.google.com/o/oauth2/v2/auth?scope=openid email profile&client_id=${CONFIG.googleClientId}&response_type=token&redirect_uri=${CONFIG.oauthRedirectUrl}&state=${JSON.stringify(
@@ -58,7 +58,7 @@ export const loginViaGoogle = (userType = USER_TYPE.viewerType, register = false
  * @param {boolean} register
  * @return {function(): Promise<void>}
  */
-export const loginViaInstagram = (userType = USER_TYPE.viewerType, register = false) => {
+export const loginViaInstagram = (userType = USER_TYPE.viewerType, register = true) => {
   return async () => {
     openOAuth(
       `https://api.instagram.com/oauth/authorize?scope=user_profile,user_media&response_type=code&client_id=${CONFIG.instagramClientId}&redirect_uri=${CONFIG.oauthRedirectUrl}&state=${JSON.stringify(
