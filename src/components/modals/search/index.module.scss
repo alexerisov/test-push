@@ -1,4 +1,5 @@
 @import "~styles/variables.scss";
+@import "~styles/mixins/mixins.scss";
 
 .search {
   padding: 20px 235px 0 235px;
@@ -8,6 +9,18 @@
     margin: 25px 0 0 0;
     display: grid;
     grid-template-columns: auto auto;
+
+    button {
+      border: none;
+      color: $--color-orange;
+      @include fontRegular();
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    a {
+      margin: 0 15px 0 0;
+    }
 
     p:last-of-type {
       color: $--color-orange;
