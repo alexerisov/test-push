@@ -17,7 +17,7 @@ const openOAuth = (url, register, user_type) => {
       const {token} = AuthCookieStorage.auth;
       if (token) {
         window.location.replace(
-            `${CONFIG.currentUrl}/oauth2-complete/${user_type}`);
+            `${CONFIG.currentUrl}/oauth2-complete`);
       }
     }
   }, 1000);
