@@ -13,7 +13,6 @@ import Link from "next/link";
 function Search (props) {
 
   const [result, setResult] = useState([]);
-  const [textResponseField, setTextResponseField] = useState('Suggestions :');
 
   const validationSchema = yup.object({
     search: yup
@@ -27,7 +26,6 @@ function Search (props) {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      setTextResponseField('Search results for :')
       Recipe.getQueryResult(values.search)
         .then((res) => setResult(res.data))
         .catch(e => {
@@ -52,15 +50,12 @@ function Search (props) {
             onChange={(e) => {
               formik.handleChange(e);
               formik.handleSubmit();  
-              if (formik.values.search.length === 0) {
-                setTextResponseField('Search results for :')
-              }
           }}
             fullWidth
           />
       </form>
       <div className={classes.search__grid}>
-        <p>{textResponseField}</p>
+        <p>Suggestions :</p>
         <p>
         {result.map((item, index) => {
           return <Link key={index} href="/recipe/recipes">
