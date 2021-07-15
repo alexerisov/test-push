@@ -188,7 +188,9 @@ function FormCreateRecipe (props) {
       props.dispatch(recipeUploadActions.uploadRecipe(data))
       .then((data) => {
         console.log(data);
-        return props.dispatch(modalActions.open('uploadSuccessful'));
+        return props.dispatch(modalActions.open('uploadSuccessful',{
+          pk: data.pk,
+        }));
       })
       .catch((error) => {
         console.log(error);

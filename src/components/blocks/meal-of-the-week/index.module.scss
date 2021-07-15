@@ -20,19 +20,19 @@
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
-            left: 360px;
-            bottom: 255px;
+            left: 237px;
+            bottom: 155px;
             position: absolute;
         }
 
         &__square {
-            width: 600px;
-            height: 671px;
+            width: 500px;
+            height: 663px;
             border-radius: 0 130px 130px 0;
             background-color: $--color-orange;
-            bottom: 100px;
+            bottom: 0;
             left: 0;
-            position: absolute;
+            position: relative;
             z-index: -1;
         }
     }
@@ -40,7 +40,7 @@
     &__special {
         position: absolute;
         left: -260px;
-        top: 465px;
+        top: 212px;
         font-size: 190px;
         line-height: 232px;
         transform: rotate(-90deg);
@@ -89,7 +89,7 @@
         display: flex;
         flex-direction: column;
         position: relative;
-        left: 800px;
+        left: 200px;
         margin: 20px 0 0 0;
 
         &__tltle {

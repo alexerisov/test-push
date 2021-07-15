@@ -61,11 +61,11 @@ export default reducer(initState, {
     };
   },
 
-  [types.SEND_SUCCESS]: (state, action) => {
+  [types.SEND_SUCCESS]: (state) => {
     return {
       ...state,
       isLoading: false,
-      data: action.payload
+      error: null,
     };
   },
 

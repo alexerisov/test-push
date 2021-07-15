@@ -7,10 +7,11 @@ import classes from "./upload-successful.module.scss";
 
 function UploadSuccessful (props) {
   const router = useRouter();
+  console.log(props);
 
   function handleClick (e) {
     e.preventDefault();
-    router.push('/profile/account-settings');
+    router.push(`/recipe/${props?.pk}`);
     props.dispatch(modalActions.close());
   }
 
