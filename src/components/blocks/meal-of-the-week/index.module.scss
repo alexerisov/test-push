@@ -95,9 +95,7 @@
         &__tltle {
             @include fontSemiBold();
             font-size: 30px;
-            line-height: 26px;
-            color: $--color-orange;
-            text-decoration: none;
+            line-height: 26px; 
         }
 
         &__subtitle {
@@ -106,10 +104,23 @@
             margin: 16px 0 50px 0;
         }
 
+        &__ingredientsTitleContainer {
+            display: flex;
+            justify-content: space-between;
+            padding: 0;
+        }
+
         &__ingredientsTitle {
             @include fontSemiBold();
             font-size: 20px;
             line-height: 20px;
+        }
+
+        &__link {
+            font-size: 20px;
+            line-height: 20px;
+            color: $--color-orange;
+            text-decoration: none;
         }
 
         &__ingredientsContainer {
