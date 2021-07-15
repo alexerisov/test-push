@@ -60,7 +60,8 @@ export default {
           },
           data?.images ?? null,
         );
-        dispatch({ type: types.SEND_SUCCESS, data: response.data });
+        dispatch({ type: types.SEND_SUCCESS});
+        return response.data;
       } catch (e) {
         dispatch({ type: types.SEND_FAILURE, error: e.response.data });
         throw e;

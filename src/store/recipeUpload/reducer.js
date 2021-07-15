@@ -5,16 +5,16 @@ const initState = {
   data: {
     title: "",
     cooking_time: "",
-    cuisines: "",
+    cuisines: [],
     // cooking_skill: "",
-    cooking_methods: "",
-    diet_restrictions: "",
+    cooking_methods: [],
+    diet_restrictions: [],
     description: "",
     preview_thumbnail_url: "",
     preview_full_thumbnail_url: "",
     preview_mp4_url: "",
     preview_webm_url: "",
-    types: "",
+    types: [],
     // tags: null,
     language: "",
     caption: "",
@@ -61,11 +61,11 @@ export default reducer(initState, {
     };
   },
 
-  [types.SEND_SUCCESS]: (state, action) => {
+  [types.SEND_SUCCESS]: (state) => {
     return {
       ...state,
       isLoading: false,
-      data: action.payload
+      error: null,
     };
   },
 
