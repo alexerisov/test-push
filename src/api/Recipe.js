@@ -74,6 +74,10 @@ export default {
     return http.get(`/recipe/search_suggestions?search=${search}`);
   },
 
+  getSearchResult: (title) => {
+    return http.get(`/recipe?title=${title}`);
+  },
+
   getTopRatedMeals: () => {
     return http.get(`/recipe/top_rated_meals`);
   },

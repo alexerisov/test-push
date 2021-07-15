@@ -1,0 +1,67 @@
+@import "~styles/mixins/mixins.scss";
+@import "~styles/variables.scss";
+
+.search {
+    padding: 45px 40px;
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+
+        span {
+            color: $--color-orange;
+        }
+    }
+
+    &__filterHeader {
+        display: flex;
+        justify-content: space-between;
+        margin: 36px 0 42px 0;
+
+        &_left {
+            display: flex;
+            justify-content: space-between;
+            width: 338px;
+        }
+    }
+
+    &__content {
+        display: grid;
+        grid-template-columns: 338px 1fr;
+        gap: 34px;
+    }
+
+    &__filter {
+        display: flex;
+        flex-direction: column;
+        gap: 10px 0;
+
+        &__button {
+            font-size: 20px;
+            @include fontMedium();
+            min-width: 169px;
+            height: 92px;
+            background: #F8F8F8 0% 0% no-repeat padding-box;
+            border-radius: 3px;
+            border: none;
+            margin: 0 0 20px 0;
+        }
+
+        &__list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px 0;
+        }
+    }
+
+    &__result {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px 34px;
+    }
+
+    &__searchButton {
+        border: none;
+        cursor: pointer;
+    }
+}
