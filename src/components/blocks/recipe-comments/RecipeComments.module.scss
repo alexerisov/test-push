@@ -1,0 +1,70 @@
+@import "~styles/mixins/mixins.scss";
+
+.comments {
+  display: flex;
+  flex-direction: column;
+
+  &__title {
+    @include fontMedium();
+    font-size: 28px;
+  }
+
+  &__lineContainer {
+    margin: 16px 0 30px 0;
+    display: flex;
+    align-items: center;
+  }
+
+  &__yellowLine {
+    width: 316px;
+    height: 10px;
+    background: $--color-orange 0% 0% no-repeat padding-box;
+    border-radius: 24px;
+  }
+
+  &__blueСircle {
+    margin: 0 0 0 5px ;
+    width: 10px;
+    height: 10px;
+    border-radius: 24px;
+    background-color: $--color-blue;
+  }
+
+  &__input {
+    @include fontMedium();
+    width: 713px;
+    height: 209px;
+    padding: 26px 30px;
+    margin-bottom: 30px;
+    color: $--color-gray-10;
+    font-size: 20px;
+    border-radius: 5px;
+    resize: none;
+    border: 1px solid $--color-gray-9;
+  }
+
+  &__input:focus {
+    color: inherit;
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    max-width: 632px;
+    max-height: 724px;
+    padding: 40px 0 80px;
+  }
+
+  &__pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: auto;
+    transform: translateY(20px);
+  }
+
+  &__subtitle {
+    @include fontMedium();
+    font-size: 20px;
+    line-height: 24px;
+  }
+}

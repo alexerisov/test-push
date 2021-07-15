@@ -8,13 +8,13 @@ import { useRouter } from 'next/router';
 import {cuisineList, recipeTypes, cookingMethods, dietaryrestrictions} from '@/utils/datasets';
 import { Button } from '@material-ui/core';
 import Link from "next/link";
+import ResipeComments from "@/components/blocks/recipe-comments";
 
 function CreateRecipe (props) {
 
     const router = useRouter();
 
     const [recipeId, setRecipeId] = useState();
-
     const [recipe, setRecipe] = useState();
     // const [author, setAuthor] = useState();
 
@@ -175,6 +175,9 @@ function CreateRecipe (props) {
                     <div></div>
                 </div>
             </div>
+
+            <ResipeComments recipeId={recipeId} />
+
             <div className={classes.recipe__banner}>
                 <p className={classes.recipe__banner__title}>Do you <span>have any question</span> or ready <span>to cook?</span></p>
                 <p className={classes.recipe__banner__subtitle}>share your mail id and we will shortly connect you</p>
