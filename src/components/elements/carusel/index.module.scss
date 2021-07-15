@@ -1,0 +1,117 @@
+@import "~styles/variables.scss";
+$slide-count: 3;
+$slide-width: 32rem;
+
+.carousel__wrap {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  position: absolute;
+  bottom: 44px;
+  left: 53%;
+  width: 550px;
+  height: 510px;
+}
+
+.carousel__container {
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.carousel__banner {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.carousel__btn__prev {
+  align-items: center;
+  background: $--color-orange;
+  border: 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 100%;
+  transform: translateY(-50%);
+  left: 19rem;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  z-index: 100;
+  border: 2px solid $--color-orange
+}
+
+.carousel__btn__prev:hover {
+  background:$--color-white;
+
+  i {
+    border: solid $--color-orange;
+    border-width: 0 0.2rem 0.2rem 0;
+    height: 1rem;
+    padding: 3px;
+    width: 1rem;
+    z-index: 10;
+    transform: rotate(135deg);
+  }
+}
+
+.carousel__btn__next {
+  align-items: center;
+  background: $--color-orange;
+  border: 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 100%;
+  transform: translateY(-50%);
+  right: 160px;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  z-index: 100;
+  border: 2px solid $--color-orange
+}
+
+.carousel__btn__next:hover {
+  background:$--color-white;
+
+  i {
+    border: solid $--color-orange;
+    border-width: 0 0.2rem 0.2rem 0;
+    height: 1rem;
+    padding: 3px;
+    width: 1rem;
+    z-index: 10;
+    transform: rotate(-45deg);
+  }
+}
+
+.carousel__btn_arrow__left {
+  border: solid $--color-white;
+  border-width: 0 0.2rem 0.2rem 0;
+  height: 1rem;
+  padding: 3px;
+  width: 1rem;
+  z-index: 10;
+  transform: rotate(135deg);
+}
+
+.carousel__btn_arrow__right {
+  border: solid $--color-white;
+  border-width: 0 0.2rem 0.2rem 0;
+  height: 1rem;
+  padding: 3px;
+  width: 1rem;
+  z-index: 10;
+  transform: rotate(-45deg);
+}
