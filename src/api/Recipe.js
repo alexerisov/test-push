@@ -70,7 +70,6 @@ export default {
     id,
     text
   }) => {
-    console.log(2);
     return http.post(`recipe/${id}/comments`, {
       text
     });

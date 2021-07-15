@@ -4,6 +4,7 @@ import Pagination from "@material-ui/lab/Pagination";
 
 import { CommentItem } from "@/components/elements/comment";
 import Recipe from "@/api/Recipe";
+import { validator } from "@/utils/validator";
 
 import classes from './RecipeComments.module.scss';
 
@@ -38,6 +39,11 @@ const ResipeComments = ({ recipeId, }) => {
   };
 
   const uploadComment = async () => {
+    if (!validator.isCommentTextareaValid(commentsTextarea)) {
+      setCommentsTextarea('Please type more than 5 letters...');
+      return;
+    }
+
     try {
       const targetComment = {
         id: +recipeId,
