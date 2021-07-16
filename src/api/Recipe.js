@@ -120,5 +120,9 @@ export default {
 
   getComments: (id) => {
     return http.get(`/recipe/${id}/comments`);
+  },
+
+  getSavedRecipes: () => {
+    return http.get(`/recipe/saved_recipe/`);
   }
 };
