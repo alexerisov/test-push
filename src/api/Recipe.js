@@ -77,13 +77,16 @@ export default {
 
   uploadCommentsLikes: ({
     id,
-    likeType,
-    value
+    type
   }) => {
-    const targetField = likeType === 'like' ? 'likes_number' : 'likes_number';
-    return http.post(`recipe/comment/${id}/like`, {
-      [targetField]: value
-    });
+    if (type === 'dislike') {
+      return http.post(
+        `recipe/comment/${id}/like`,
+        {},
+        {params: {'dislike': 'Y'}});
+    }
+
+    return http.post(`recipe/comment/${id}/like`, {});
   },
   
   getPinnedMeals: () => {
