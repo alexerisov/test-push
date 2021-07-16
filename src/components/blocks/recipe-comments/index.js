@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from "@material-ui/core";
 import Pagination from "@material-ui/lab/Pagination";
+import { useSelector } from "react-redux";
 
 import { CommentItem } from "@/components/elements/comment";
 import Recipe from "@/api/Recipe";
@@ -8,8 +9,11 @@ import { validator } from "@/utils/validator";
 
 import classes from './RecipeComments.module.scss';
 
-const ResipeComments = ({ recipeId, }) => {
+const ResipeComments = ({ recipeId }) => {
+  const isAuthorized = useSelector(state => state.account.hasToken);
+
   const [comments, setComments] = useState();
+
   const [commentsTextarea, setCommentsTextarea] = useState();
 
   const placeholder = "Add your comments here...";
@@ -39,6 +43,11 @@ const ResipeComments = ({ recipeId, }) => {
   };
 
   const uploadComment = async () => {
+    if(!isAuthorized) {
+      setCommentsTextarea('Please login first...');
+      return;
+    }
+
     if (!validator.isCommentTextareaValid(commentsTextarea)) {
       setCommentsTextarea('Please type more than 5 letters...');
       return;
@@ -95,9 +104,13 @@ const ResipeComments = ({ recipeId, }) => {
         .map((comment, index) => {
           return (
             <CommentItem
+            user={comment.user}
             key={`${comment.pk}-${index + 1}`}
-            text={comment?.text} userId={comment.user}
+            text={comment.text}
+            username={comment.user?.full_name}
+            avatar={comment.user?.avatar}
             likesNumber={comment['likes_number']}
+            dislikesNumber={comment['dislikes_number']}
             commentId={comment.pk}
             />
           );
