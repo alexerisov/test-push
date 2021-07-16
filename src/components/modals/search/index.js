@@ -10,7 +10,7 @@ import { profileActions } from '@/store/actions';
 import Recipe from '@/api/Recipe.js';
 import Link from "next/link";
 
-function Search (props) {
+function SearchBanner (props) {
 
   const [result, setResult] = useState([]);
 
@@ -58,7 +58,7 @@ function Search (props) {
         <p>Suggestions :</p>
         <p>
         {result.map((item, index) => {
-          return <Link key={index} href="/recipe/recipes">
+          return <Link key={index} href={`/search/${item.result}`}>
             <a><button onClick={onCancel}>{item.result}</button></a>
             </Link>
         })}
@@ -78,4 +78,4 @@ function Search (props) {
 
 export default connect((state => ({
   search: state.search
-})))(Search);
+})))(SearchBanner);
