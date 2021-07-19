@@ -53,10 +53,6 @@
         padding: 0 0 50px 0;
         margin: 0 0 50px 0;
         border-bottom: 1px solid #DFDFDF;
-
-        p {
-            color: #B1B1B1;
-        }
     }
 
     &__avatar {
@@ -104,6 +100,19 @@
             @include fontSemiBold();
             font-size: 16px;
             margin: 0 0 10px 0;
+        }
+    }
+
+    &__formStatus {
+        height: 20px;
+        padding: 5px 0;
+
+        &_true {
+            color: green;
+        }
+
+        &_error {
+            color: red;
         }
     }
 }

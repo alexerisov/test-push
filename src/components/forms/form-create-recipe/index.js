@@ -4,14 +4,15 @@ import { connect } from 'react-redux';
 import { useRouter } from 'next/router';
 import { modalActions, recipeUploadActions } from '@/store/actions';
 import {
-  Button,
   TextField,
   FormControl,
   Select,
   MenuItem,
   RadioGroup,
   FormControlLabel,
-  Radio
+  Radio,
+  FormHelperText,
+  NoSsr,
 } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -33,36 +34,57 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiOutlinedInput-root': {
       borderRadius: '10px',
     },
+    '& .MuiFormHelperText-root': {
+      color: '#FA0926'
+    }
     
   },
   textField: {
     '& .MuiOutlinedInput-root': {
-      // width: '400px',
       borderRadius: '10px',
     },
     '& .MuiInputBase-input': {
       height: 'auto',
-      width: 'auto',
     },
   },
   svgIcon: {
     width: '0.8em',
     height: '0.8em',
-  }
+  },
+  chips: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  chip: {
+    margin: 2,
+  },
 }));
 
-
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 5 + ITEM_PADDING_TOP,
+      width: 400,
+    },
+  },
+};
 
 function FormCreateRecipe (props) {
   const router = useRouter();
   const classMarerialUi = useStyles();
-  const { data, errors } = props.recipeUpload;
-  
+  const { data, error } = props.recipeUpload;
+
   function onChangeField(name) {
     return (event) => {
       const newData = { ...data, [name]: event.target.value };
+      const newError = {...error, [name]: ''};
       props.dispatch(
         recipeUploadActions.update(newData),
+      );
+      props.dispatch(
+        recipeUploadActions.updateError(newError),
       );
     };
   }
@@ -70,17 +92,25 @@ function FormCreateRecipe (props) {
   function onChangeFieldNumber(name) {
     return (event) => {
       const newData = { ...data, [name]: +event.target.value };
+      const newError = {...error, [name]: ''};
       props.dispatch(
         recipeUploadActions.update(newData),
+      );
+      props.dispatch(
+        recipeUploadActions.updateError(newError),
       );
     };
   }
 
   function onChangeSelect(name) {
     return (event) => {
-      const newData = { ...data, [name]: [+event.target.value] };
+      const newData = { ...data, [name]: event.target.value };
+      const newError = {...error, [name]: ''};
       props.dispatch(
         recipeUploadActions.update(newData),
+      );
+      props.dispatch(
+        recipeUploadActions.updateError(newError),
       );
     };
   }
@@ -129,13 +159,21 @@ function FormCreateRecipe (props) {
     return itemList;
   };
 
-  function uploadRecipe (e) {
-    e.preventDefault();
-    if(document.getElementById("DemoCamera_720p") && document.getElementById("DemoCamera_720p").value !== '') {
-      const thumbnail = `https:${document.getElementById("DemoCamera_vga_thumb").value}`;
-      const full_thumbnail = `https:${document.getElementById("DemoCamera_vga_filmstrip").value}`;
-      const mp4 = `https:${document.getElementById("DemoCamera_720p").value}`;
-      const webm = `https:${document.getElementById("DemoCamera_vertical").value}`;
+  React.useEffect(() => {
+    if (isWindowExist()) {
+      CameraTag.setup();
+    }
+  }, []);
+
+  if (isWindowExist()) {
+    CameraTag.observe("DemoCamera", "published", function(){
+      const myCamera = CameraTag.cameras["DemoCamera"];
+      const myVideo = myCamera.getVideo();
+      console.log(myVideo);
+      const thumbnail = `https:${myVideo.medias.vga_thumb}`;
+      const full_thumbnail = `https:${myVideo.medias.vga_filmstrip}`;
+      const mp4 = `https:${myVideo.medias['720p']}`;
+      const webm = `https:${myVideo.medias.vertical}`;
       const newData = {
         ...data,
         preview_thumbnail_url: thumbnail,
@@ -143,13 +181,37 @@ function FormCreateRecipe (props) {
         preview_mp4_url: mp4,
         preview_webm_url: webm,
       };
-      props.dispatch(recipeUploadActions.uploadRecipe(newData))
-      .then(() => props.dispatch(modalActions.open('uploadSuccessful')))
+        if (!props.recipeUpload.data.preview_mp4_url) {
+        props.dispatch(recipeUploadActions.update(newData));
+      }
+    });
+  }
+  
+  function uploadRecipe (e) {
+    e.preventDefault();
+    // if(document.getElementById("DemoCamera_720p") && document.getElementById("DemoCamera_720p").value !== '') {
+    //   const thumbnail = `https:${document.getElementById("DemoCamera_vga_thumb").value}`;
+    //   const full_thumbnail = `https:${document.getElementById("DemoCamera_vga_filmstrip").value}`;
+    //   const mp4 = `https:${document.getElementById("DemoCamera_720p").value}`;
+    //   const webm = `https:${document.getElementById("DemoCamera_vertical").value}`;
+    //   const newData = {
+    //     ...data,
+    //     preview_thumbnail_url: thumbnail,
+    //     preview_full_thumbnail_url: full_thumbnail,
+    //     preview_mp4_url: mp4,
+    //     preview_webm_url: webm,
+    //   };
+      props.dispatch(recipeUploadActions.uploadRecipe(data))
+      .then((data) => {
+        console.log(data);
+        return props.dispatch(modalActions.open('uploadSuccessful',{
+          pk: data.pk,
+        }));
+      })
       .catch((error) => {
         console.log(error);
-      })
-    ;
-    }
+      });
+    // }
   }
 
   return (
@@ -159,7 +221,8 @@ function FormCreateRecipe (props) {
           <h2 className={classes.createRecipeSubtitle}>Basic Details</h2>
           <div>
             <label htmlFor="create-title" className={classes.createRecipeLabel}>Title</label>
-            <TextField
+            <NoSsr>
+              <TextField
               id="create-title"
               type="text"
               onChange={onChangeField('title')}
@@ -167,11 +230,15 @@ function FormCreateRecipe (props) {
               variant="outlined"
               fullWidth
               className={classMarerialUi.textField}
+              error={error?.title}
+              helperText={error?.title ? "This field is required" : ""}
             />
+            </NoSsr>
           </div>
           <div>
             <label htmlFor="create-description" className={classes.createRecipeLabel}>Description</label>
-            <TextField
+            <NoSsr>
+              <TextField
               id="create-description"
               multiline
               rows={4}
@@ -180,7 +247,10 @@ function FormCreateRecipe (props) {
               value={data?.description}
               fullWidth
               className={classMarerialUi.textField}
+              error={error?.description}
+              helperText={error?.description ? "This field is required" : ""}
             />
+            </NoSsr>
           </div>
         </div>
         <div className={classes.createRecipeSection}>
@@ -340,6 +410,7 @@ function FormCreateRecipe (props) {
             >
             </input>
           </div>
+          <FieldError errors={error} path="images" />
         </div>
         <div className={classes.createRecipeSection}>
           <h2 className={classes.createRecipeSubtitle_withoutInput}>Cooking Video</h2>
@@ -353,6 +424,7 @@ function FormCreateRecipe (props) {
           >
           </camera> */}
           <camera id='DemoCamera' data-app-id='63f9c870-72c4-0130-04c5-123139045d73' data-sources='upload'></camera>
+          <FieldError errors={error} path="preview_mp4_url" />
         </div>
         <div className={classes.createRecipeSection}>
           <h2 className={classes.createRecipeSubtitle_withoutInput}>Video Elements</h2>
@@ -362,24 +434,30 @@ function FormCreateRecipe (props) {
               Lorem Ipsum is simply dummy text of the printing and typesetting industry
             </p>
             <div className={classes.createRecipeItem__inputContainer}>
-              <TextField
-                id="create-language"
-                type="text"
-                onChange={onChangeField('language')}
-                value={data?.language}
-                variant="outlined"
-                placeholder="Language"
-                className={classMarerialUi.textField}
-              />
-              <TextField
-                id="create-caption"
-                type="text"
-                onChange={onChangeField('caption')}
-                value={data?.caption}
-                variant="outlined"
-                placeholder="Caption"
-                className={classMarerialUi.textField}
-              />
+              <NoSsr>
+                <TextField
+                  id="create-language"
+                  type="text"
+                  onChange={onChangeField('language')}
+                  value={data?.language}
+                  variant="outlined"
+                  placeholder="Language"
+                  className={classMarerialUi.textField}
+                  error={error?.language}
+                  helperText={error?.language ? "This field is required" : ""}
+                />
+                <TextField
+                  id="create-caption"
+                  type="text"
+                  onChange={onChangeField('caption')}
+                  value={data?.caption}
+                  variant="outlined"
+                  placeholder="Caption"
+                  className={classMarerialUi.textField}
+                  error={error?.caption}
+                  helperText={error?.caption ? "This field is required" : ""}
+                />
+              </NoSsr>
             </div>
           </div>
           <div className={classes.createRecipeItem}>
@@ -387,15 +465,19 @@ function FormCreateRecipe (props) {
             <p className={classes.createRecipeItem__text}>
               Lorem Ipsum is simply dummy text of the printing and typesetting industry
             </p>
-            <RadioGroup
+            <NoSsr>
+              <RadioGroup
               aria-label="create-visibility"
               name="create-visibility"
               value={data?.publish_status}
               onChange={onChangeFieldNumber('publish_status')}
-            >
-              <FormControlLabel value={1} control={<Radio />} label="Save" />
-              <FormControlLabel value={2} control={<Radio />} label="Publish" />
-            </RadioGroup>
+              error={error?.publish_status}
+              helperText={error?.publish_status ? "This field is required" : ""}
+              >
+                <FormControlLabel value={1} control={<Radio />} label="Save" />
+                <FormControlLabel value={2} control={<Radio />} label="Publish" />
+              </RadioGroup>
+            </NoSsr>
           </div>
         </div>
         <div className={classes.createRecipeSection}>
@@ -403,90 +485,108 @@ function FormCreateRecipe (props) {
           <div className={classes.createRecipeSection__grid_type_input}>
             <div className={classes.createRecipeItem}>
               <label htmlFor="create-cooking_time" className={classes.createRecipeLabel}>Preparation Time</label>
-              <TextField
-                id="create-cooking_time"
-                type="time"
-                onChange={onChangeField('cooking_time')}
-                value={data?.cooking_time}
-                variant="outlined"
-                className={classMarerialUi.textField}
-                fullWidth
-              />
+              <NoSsr>
+                <TextField
+                  id="create-cooking_time"
+                  type="time"
+                  onChange={onChangeField('cooking_time')}
+                  value={data?.cooking_time}
+                  variant="outlined"
+                  className={classMarerialUi.textField}
+                  fullWidth
+                />
+              </NoSsr>
             </div>
-            <FormControl variant="outlined" className={classMarerialUi.formControl}>
-            <label
-              htmlFor="create-types-select"
-              className={classes.createRecipeLabel}>
-                Type
-            </label>
-            <Select
-              id="create-types-select"
-              value={data?.types}
-              onChange={onChangeSelect('types')}
-              autoWidth
-            >{
-              selectItemList(recipeTypes)
-            }
-            </Select>
-            </FormControl>
-            <FormControl variant="outlined" className={classMarerialUi.formControl}>
-              <label
-                htmlFor="create-diet-restrictions-select"
-                className={classes.createRecipeLabel}>
-                  Lifestyle
-              </label>
-              <Select
-                id="create-diet-restrictions-select"
-                value={data?.diet_restrictions}
-                onChange={onChangeSelect('diet_restrictions')}
-                autoWidth
-              >{
-                selectItemList(dietaryrestrictions)
-              }
-              </Select>
-            </FormControl>
-            <FormControl variant="outlined" className={classMarerialUi.formControl}>
-              <label
-                htmlFor="create-cuisines-select"
-                className={classes.createRecipeLabel}>
-                  Cuisine
-              </label>
-              <Select
-                id="create-cuisines-select"
-                value={data?.cuisines}
-                onChange={onChangeSelect('cuisines')}
-                autoWidth
-                labelWidth={10}
-              >{
-                selectItemList(cuisineList)
-              }
-              </Select>
-            </FormControl>
-            <FormControl variant="outlined" className={classMarerialUi.formControl}>
-              <label
-                htmlFor="create-cooking-methods-select"
-                className={classes.createRecipeLabel}>
-                  Cooking Method
-              </label>
-              <Select
-                id="create-cooking-methods-select"
-                value={data?.cooking_methods}
-                onChange={onChangeSelect('cooking_methods')}
-                autoWidth
-              >{
+            <NoSsr>
+              <FormControl variant="outlined" className={classMarerialUi.formControl}>
+                <label
+                  htmlFor="create-types-select"
+                  className={classes.createRecipeLabel}>
+                    Type
+                </label>
+                <Select
+                  id="create-types-select"
+                  value={data?.types}
+                  onChange={onChangeSelect('types')}
+                  autoWidth
+                  error={error?.types}
+                  MenuProps={MenuProps}
+                  multiple
+                >{
+                  selectItemList(recipeTypes)
+                }
+                </Select>
+                <FormHelperText>{error?.types ? "This field is required" : ""}</FormHelperText>
+              </FormControl>
+              <FormControl variant="outlined" className={classMarerialUi.formControl}>
+                <label
+                  htmlFor="create-diet-restrictions-select"
+                  className={classes.createRecipeLabel}>
+                    Lifestyle
+                </label>
+                <Select
+                  id="create-diet-restrictions-select"
+                  value={data?.diet_restrictions}
+                  onChange={onChangeSelect('diet_restrictions')}
+                  autoWidth
+                  error={error?.diet_restrictions}
+                  MenuProps={MenuProps}
+                  multiple
+                >{
+                  selectItemList(dietaryrestrictions)
+                }
+                </Select>
+                <FormHelperText>{error?.diet_restrictions ? "This field is required" : ""}</FormHelperText>
+              </FormControl>
+              <FormControl variant="outlined" className={classMarerialUi.formControl}>
+                <label
+                  htmlFor="create-cuisines-select"
+                  className={classes.createRecipeLabel}>
+                    Cuisine
+                </label>
+                <Select
+                  id="create-cuisines-select"
+                  value={data?.cuisines}
+                  onChange={onChangeSelect('cuisines')}
+                  autoWidth
+                  labelWidth={10}
+                  error={error?.cuisines}
+                  MenuProps={MenuProps}
+                  multiple
+                >{
+                  selectItemList(cuisineList)
+                }
+                </Select>
+                <FormHelperText>{error?.cuisines ? "This field is required" : ""}</FormHelperText>
+              </FormControl>
+              <FormControl variant="outlined" className={classMarerialUi.formControl}>
+                <label
+                  htmlFor="create-cooking-methods-select"
+                  className={classes.createRecipeLabel}>
+                    Cooking Method
+                </label>
+                <Select
+                  id="create-cooking-methods-select"
+                  value={data?.cooking_methods}
+                  onChange={onChangeSelect('cooking_methods')}
+                  autoWidth
+                  error={error?.cooking_methods}
+                  MenuProps={MenuProps}
+                  multiple
+                >{
                 selectItemList(cookingMethods)
-              }
-              </Select>
-            </FormControl>
+                }
+                </Select>
+                <FormHelperText>{error?.cooking_methods ? "This field is required" : ""}</FormHelperText>
+              </FormControl>
+            </NoSsr>
           </div>
         </div>
-        {/* <FieldError errors={errors} path="detail" /> */}
       </form>
       <div className={classes.createRecipebuttonContainer}>
         <button
           className={classes.createRecipeButton}
           onClick={uploadRecipe}
-          // disabled={!data.email || !data.password}
           >
           <p className={classes.createRecipeButton__text}>Submit</p>
         </button>

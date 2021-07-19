@@ -3,29 +3,9 @@ import {types} from './actions.js';
 
 const initState = {
   data: {
-    title: "",
-    cooking_time: "",
-    cuisines: [],
-    // cooking_skill: "",
-    cooking_methods: [],
-    diet_restrictions: [],
-    description: "",
-    preview_thumbnail_url: "",
-    preview_full_thumbnail_url: "",
-    preview_mp4_url: "",
-    preview_webm_url: "",
-    types: [],
-    // tags: null,
-    language: "",
-    caption: "",
-    ingredients: [],
-    calories: null,
-    proteins: null,
-    carbohydrates: null,
-    fats: null,
-    steps: [],
-    publish_status: null,
-    images: [],
+    access_token: null,
+    account_type: null,
+    backend: null,
   },
   isLoading: false,
   error: null,
@@ -43,16 +23,6 @@ export default reducer(initState, {
     };
   },
 
-  [types.UPDATE_ERROR]: (state, action) => {
-    return {
-      ...state,
-      error: {
-        ...state.error,
-        ...action.payload,
-      },
-    };
-  },
-
   [types.SEND]: (state) => {
     return {
       ...state,
@@ -64,6 +34,11 @@ export default reducer(initState, {
   [types.SEND_SUCCESS]: (state) => {
     return {
       ...state,
+      data: {
+        access_token: null,
+        account_type: null,
+        backend: null,
+      },
       isLoading: false,
       error: null,
     };

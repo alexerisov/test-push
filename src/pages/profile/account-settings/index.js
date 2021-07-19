@@ -29,10 +29,11 @@ const ProfileAccountSettings = (props) => {
     return (<div>loading...</div>);
   }
 
+  const phoneRegExp = /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){5,18}(\s*)?$/;
+
   const validationSchema = yup.object({
     email: yup
       .string('Enter your email')
-      .email('Enter a valid email')
       .required('Email is required'),
     full_name: yup
       .string('Enter your Full Name')
@@ -40,25 +41,39 @@ const ProfileAccountSettings = (props) => {
       .max(80, 'Full Name should be of maximum 80 characters length'),
     phone_number: yup
       .string('Enter your Phone number')
-      .required('Phone number is required'),
+      .matches(phoneRegExp, 'Phone number is not valid')
   });
 
-  const { email, full_name, phone_number, city, language, avatar } = props.account.profile;
+  const { email, full_name, phone_number, city, language, avatar, user_type } = props.account.profile;
+
+  const [avatarFile, setAvatarFile] = useState(avatar);
+  const [formStatus, setFormStatus] = useState('');
+  const [statusSubmit, setStatusSubmit] = useState('Update');
 
   const formik = useFormik({
     initialValues: {
       email: email,
-      full_name: full_name,
-      phone_number: phone_number,
-      city: city,
-      language: language,
+      full_name: full_name ?? "",
+      phone_number: phone_number ?? "",
+      city: city ?? "",
+      language: language ?? "",
       avatar: avatar
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
+      setStatusSubmit('Loading...')
+      setFormStatus('')
+      values.user_type = user_type;
       props.dispatch(profileActions.updateProfile(values))
       .then((res) => {
+        setStatusSubmit('Update')
+        setFormStatus(<span className={classes.profile__formStatus_true}>Successfully sent</span>)
         props.dispatch(accountActions.remind());
+      })
+      .catch((error) => {
+        setStatusSubmit('Update')
+        setFormStatus(<span className={classes.profile__formStatus_error}>Error</span>)
+        console.log(error);
       })
     },
   });
@@ -75,8 +90,8 @@ const ProfileAccountSettings = (props) => {
       <form onSubmit={formik.handleSubmit} className={classes.profile__data}>
         <div className={classes.profile__formAvatar}>
           <div className={classes.profile__upload} onClick={onClickUpload}>
-            { !avatar ? <img src="/images/index/default-avatar.png" alt="avatar" className={classes.profile__avatar}/>
-            : avatar && <img src={avatar} alt="avatar" className={classes.profile__avatar}/>}
+            { !avatarFile ? <img src="/images/index/default-avatar.png" alt="avatar" className={classes.profile__avatar}/>
+            : avatarFile && <img src={avatarFile} alt="avatar" className={classes.profile__avatar}/>}
             <div className={classes.profile__avatarBack} />
           </div>
           <input
@@ -86,11 +101,15 @@ const ProfileAccountSettings = (props) => {
               value={formik.avatar}
               hidden
               onChange = {(event) => {
+                setAvatarFile(URL.createObjectURL(event.currentTarget.files[0]));
                 formik.setFieldValue("avatar", event.currentTarget.files[0]);
               }}
           />
           <label>Profile-pic.jpg</label>
-          <button type="submit" className={classes.profile__buttonUpdate}>Update</button>
+          <div>
+            <button type="submit" className={classes.profile__buttonUpdate}>{statusSubmit}</button>
+            <p className={classes.profile__formStatus}>{formStatus}</p>
+          </div>
         </div>
         <h2 className={classes.profile__title}>Update User Information</h2>
         <div>
@@ -98,7 +117,7 @@ const ProfileAccountSettings = (props) => {
           <StyledTextField
             id="full_name"
             name="full_name"
-            value={formik.values.full_name}
+            value={formik.values.full_name ? formik.values.full_name : ""}
             onChange={formik.handleChange}
             variant="outlined"
             error={formik.touched.full_name && Boolean(formik.errors.full_name)}
@@ -108,6 +127,7 @@ const ProfileAccountSettings = (props) => {
         <div>
           <label className={classes.profile__label}>Email</label>
           <StyledTextField
+            disabled
             id="email"
             name="email"
             variant="outlined"
@@ -123,7 +143,7 @@ const ProfileAccountSettings = (props) => {
             id="phone_number"
             name="phone_number"
             variant="outlined"
-            value={formik.values.phone_number}
+            value={formik.values.phone_number ? formik.values.phone_number : ""}
             onChange={formik.handleChange}
             error={formik.touched.phone_number && Boolean(formik.errors.phone_number)}
             helperText={formik.touched.phone_number && formik.errors.phone_number}
@@ -135,7 +155,7 @@ const ProfileAccountSettings = (props) => {
             id="city"
             name="city"
             variant="outlined"
-            value={formik.values.city}
+            value={formik.values.city ? formik.values.city : ""}
             onChange={formik.handleChange}
             error={formik.touched.city && Boolean(formik.errors.city)}
             helperText={formik.touched.city && formik.errors.city}
@@ -147,13 +167,16 @@ const ProfileAccountSettings = (props) => {
             id="language"
             name="language"
             variant="outlined"
-            value={formik.values.language}
+            value={formik.values.language ? formik.values.language : ""}
             onChange={formik.handleChange}
             error={formik.touched.language && Boolean(formik.errors.language)}
             helperText={formik.touched.language && formik.errors.language}
           />
         </div>
-        <button type="submit" className={classes.profile__buttonUpdate}>Update</button>
+        <div>
+          <button type="submit" className={classes.profile__buttonUpdate}>{statusSubmit}</button>
+          <p className={classes.profile__formStatus}>{formStatus}</p>
+        </div>
       </form>
     </ContentLayout>
   </>

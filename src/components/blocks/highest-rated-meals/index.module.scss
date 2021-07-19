@@ -4,6 +4,7 @@
 .ratedMeals {
     @include fontRegular();
     margin: 100px 0 80px 0;
+    position: relative;
 
     &__title {
         padding: 38px 0 0 0;
@@ -39,9 +40,42 @@
 }
 
 .container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    max-width: 1070px;
+    display: grid;
+    grid-template-columns: repeat(3, 338px);
+    column-gap: 34px;
+    row-gap: 20px;
+    max-width: 1082px;
     margin: 0 auto;
+}
+
+.containerButtons {
+    margin: 53px auto 0;
+    max-width: 204px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button_type_lineLong {
+    width: 62px;
+    height: 9px;
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    border-radius: 23px;
+    background: $--color-orange;
+    cursor: pointer;
+}
+
+.button_type_lineShort {
+    width: 12px;
+    height: 9px;
+    margin: 0 ;
+    padding: 0;
+    border: none;
+    outline: none;
+    border-radius: 23px;
+    background: $--color-orange-light;
+    cursor: pointer;
 }

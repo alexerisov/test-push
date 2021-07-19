@@ -2,7 +2,7 @@
 
 .home {
     @include fontRegular();
-    min-height: calc(100vh - 113px);
+    min-height: 670px;
     padding: 38px 100px 0 100px;
     display: flex;
     flex-direction: column;
@@ -63,10 +63,14 @@
     }
     
     &__title {
+        font-size: 50px;
+        line-height: 58px;
         color: $--color-orange;
     }
     
     &__subtitle {
+        font-size: 50px;
+        line-height: 58px;
         color: $--color-black;
     }
     

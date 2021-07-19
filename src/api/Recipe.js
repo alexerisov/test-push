@@ -65,6 +65,29 @@ export default {
       },
     );
   },
+
+  uploadComments: ({
+    id,
+    text
+  }) => {
+    return http.post(`recipe/${id}/comments`, {
+      text
+    });
+  },
+
+  uploadCommentsLikes: ({
+    id,
+    type
+  }) => {
+    if (type === 'dislike') {
+      return http.post(
+        `recipe/comment/${id}/like`,
+        {},
+        {params: {'dislike': 'Y'}});
+    }
+
+    return http.post(`recipe/comment/${id}/like`, {});
+  },
   
   getPinnedMeals: () => {
     return http.get(`/recipe/pinned_meals`);
@@ -72,6 +95,10 @@ export default {
 
   getQueryResult: (search) => {
     return http.get(`/recipe/search_suggestions?search=${search}`);
+  },
+
+  getSearchResult: (search) => {
+    return http.get(`/recipe${search}`);
   },
 
   getTopRatedMeals: () => {
@@ -93,4 +120,8 @@ export default {
   getRecipe: (id) => {
     return http.get(`/recipe/${id}`);
   },
+
+  getComments: (id) => {
+    return http.get(`/recipe/${id}/comments`);
+  }
 };

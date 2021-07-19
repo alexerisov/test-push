@@ -8,13 +8,13 @@ import { useRouter } from 'next/router';
 import {cuisineList, recipeTypes, cookingMethods, dietaryrestrictions} from '@/utils/datasets';
 import { Button } from '@material-ui/core';
 import Link from "next/link";
+import ResipeComments from "@/components/blocks/recipe-comments";
 
 function CreateRecipe (props) {
 
     const router = useRouter();
 
     const [recipeId, setRecipeId] = useState();
-
     const [recipe, setRecipe] = useState();
     // const [author, setAuthor] = useState();
 
@@ -58,13 +58,18 @@ function CreateRecipe (props) {
                             <p>{recipe.cooking_time.slice(3, 5)} MIN</p>
                         </div>
                     </div>
-
-                    <video width="1000" controls>
-                      <source src={recipe.preview_mp4_url} type="video/mp4" />
-                    </video>
-                    
+                    <div>
+                            { recipe.preview_mp4_url
+                                ?
+                                    <video width="1000" controls>
+                                        <source src={recipe.preview_mp4_url} type="video/mp4" />
+                                    </video>
+                                : ''
+                            }
+                        </div>
                     <div>
                         <h2 className={classes.recipe__title}>Description</h2>
+
                         <p dangerouslySetInnerHTML={{__html: recipe.description}}></p>
                     </div>
 
@@ -170,6 +175,9 @@ function CreateRecipe (props) {
                     <div></div>
                 </div>
             </div>
+
+            <ResipeComments recipeId={recipeId} />
+
             <div className={classes.recipe__banner}>
                 <p className={classes.recipe__banner__title}>Do you <span>have any question</span> or ready <span>to cook?</span></p>
                 <p className={classes.recipe__banner__subtitle}>share your mail id and we will shortly connect you</p>

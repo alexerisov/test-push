@@ -1,11 +1,24 @@
 import React from 'react';
 import classes from "./index.module.scss";
 import CardHighestMeals from "@/components/elements/card-highest-meals";
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import Recipe from '@/api/Recipe.js';
 
 const HighestRatedMealsBlock = () => {
+  const CARDS_QUANTITY = 6;
+  const POSITION = {
+    first: 0,
+    second: 1,
+    third: 2
+  };
 
   const [recipes, setRecipes] = React.useState([]);
+  const [position, setPosition] = React.useState(POSITION.first);
+  const [recipesPart, setRecipesPart] = React.useState([]);
+  const [step1, setStep1] = React.useState(true);
+  const [step2, setStep2] = React.useState(false);
+  const [step3, setStep3] = React.useState(false);
 
   React.useEffect(() => {
     Recipe.getTopRatedMeals()
@@ -13,6 +26,42 @@ const HighestRatedMealsBlock = () => {
       setRecipes(data.data);
     });
   },[]);
+
+  React.useEffect(() => {
+    const newRecipesPart = recipes.filter((item, index) => {
+      return index < (position * CARDS_QUANTITY + CARDS_QUANTITY) && index >= (position * CARDS_QUANTITY);
+    });
+    setRecipesPart(newRecipesPart);
+    if (position === POSITION.first) {
+      setStep1(true);
+      setStep2(false);
+      setStep3(false);
+    } else if (position === POSITION.second) {
+      setStep1(false);
+      setStep2(true);
+      setStep3(false);
+    } else {
+      setStep1(false);
+      setStep2(false);
+      setStep3(true);
+    }
+  },[position, recipes]);
+
+  const onClickReturn = () => {
+    if (position > POSITION.first) {
+      setPosition(position - 1);
+    }
+  };
+
+  const onClickForward = () => {
+    if (position < POSITION.third) {
+      setPosition(position + 1);
+    }
+  };
+
+  const onClickPosition = (e) => {
+    setPosition(+e.currentTarget.id);
+  };
 
     return (
       <section className={classes.ratedMeals}>
@@ -25,17 +74,52 @@ const HighestRatedMealsBlock = () => {
         </div>
         <div className={classes.container}>
           {
-            recipes.map((recipe, index) => {
+            recipesPart.map((recipe, index) => {
               return <CardHighestMeals
                         key={`${recipe.pk}-${index}`}
                         title={recipe?.title}
-                        image={recipe?.images[0]?.tag}
+                        image={recipe?.images[0]?.url}
                         name={recipe?.user?.full_name}
                         city={recipe?.user?.city}
                         id={recipe.pk}
                       />;
             })
           }
+        </div>
+        <div className={classes.containerButtons}>
+          <ArrowBackIcon
+            style={{
+              color: '#FFAA00',
+              fontSize: 24,
+              cursor: 'pointer',
+              marginRight: '34px'
+            }}
+            onClick={onClickReturn}
+          />
+          <button
+            className={step1 ? classes.button_type_lineLong : classes.button_type_lineShort}
+            onClick={onClickPosition}
+            id={POSITION.first}>
+          </button>
+          <button
+            className={step2 ? classes.button_type_lineLong : classes.button_type_lineShort}
+            onClick={onClickPosition}
+            id={POSITION.second}>
+          </button>
+          <button
+          className={step3 ? classes.button_type_lineLong : classes.button_type_lineShort}
+            onClick={onClickPosition}
+            id={POSITION.third}>
+          </button>
+          <ArrowForwardIcon
+            style={{
+              color: '#FFAA00',
+              fontSize: 24,
+              cursor: 'pointer',
+              marginLeft: '34px'
+            }}
+            onClick={onClickForward}
+          />
         </div>
       </section>
     );

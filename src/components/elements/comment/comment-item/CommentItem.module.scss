@@ -1,0 +1,58 @@
+@import "~styles/mixins/mixins.scss";
+
+.comment {
+  display: flex;
+  padding: 24px 0 34px;
+  border-bottom: 1px solid $--color-gray-9;
+
+  &__avatar {
+    align-self: flex-start;
+    object-fit: contain;
+    width: 50px;
+    height: 50px;
+    margin-right: 30px;
+    border-radius: 50%;
+  }
+
+  &__body {
+    max-width: 632px;
+    @include fontRegular();
+    font-size: 18px;
+  }
+
+  &__username {
+    margin-bottom: 10px;
+    @include fontMedium();
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  &__text {
+    word-break: break-all;
+    margin-bottom: 16px;
+  }
+
+  &__likes {
+    display: flex;
+  }
+
+  &__like {
+    display: flex;
+    align-items: center;
+    margin-right: 42px;
+
+    &__icon {
+      color: $--color-gray1;
+      margin-right: 12px;
+      cursor: pointer;
+    }
+
+    &__icon:hover {
+      color: black;
+    }
+  }
+
+  &__like:last-child {
+    margin-right: 0;
+  }
+}
