@@ -77,13 +77,16 @@ export default {
 
   uploadCommentsLikes: ({
     id,
-    likeType,
-    value
+    type
   }) => {
-    const targetField = likeType === 'like' ? 'likes_number' : 'likes_number';
-    return http.post(`recipe/comment/${id}/like`, {
-      [targetField]: value
-    });
+    if (type === 'dislike') {
+      return http.post(
+        `recipe/comment/${id}/like`,
+        {},
+        {params: {'dislike': 'Y'}});
+    }
+
+    return http.post(`recipe/comment/${id}/like`, {});
   },
   
   getPinnedMeals: () => {
@@ -94,8 +97,8 @@ export default {
     return http.get(`/recipe/search_suggestions?search=${search}`);
   },
 
-  getSearchResult: (title) => {
-    return http.get(`/recipe?title=${title}`);
+  getSearchResult: (search) => {
+    return http.get(`/recipe${search}`);
   },
 
   getTopRatedMeals: () => {

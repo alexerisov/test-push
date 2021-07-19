@@ -29,6 +29,7 @@
         display: grid;
         grid-template-columns: 338px 1fr;
         gap: 34px;
+        margin: 35px 0 0 0;
     }
 
     &__filter {
@@ -45,6 +46,11 @@
             border-radius: 3px;
             border: none;
             margin: 0 0 20px 0;
+
+            &_active {
+                background-color: $--color-orange;
+                color: $--color-white;
+            }
         }
 
         &__list {
@@ -52,16 +58,96 @@
             flex-direction: column;
             gap: 10px 0;
         }
+
+        div {
+            box-shadow: none;
+            padding: 0;
+
+            &::before {
+                display: none;
+            }
+
+            span {
+                font-size: 16px;
+                color: $--color-black;
+            }
+        }
+
+        &__title {
+            color: $--color-black;
+            font-weight: 700;
+            font-size: 16px;
+        }
     }
 
     &__result {
+        margin: 30px 0 0 0;
         display: flex;
-        flex-wrap: wrap;
-        gap: 16px 34px;
+        flex-direction: column;
+        justify-content: space-between;
+
+        &__container {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            gap: 16px 34px;
+            margin: 0 0 40px 0;
+        }
     }
 
     &__searchButton {
         border: none;
         cursor: pointer;
+    }
+
+    &__clearButton {
+        font-size: 15px;
+        color: $--color-blue;
+        border: none;
+        cursor: pointer;
+        @include fontMedium();
+    }
+
+    &__buttonSliderLeft {
+        background-image: url('/images/index/slider-gray.svg');
+        background-repeat: no-repeat;
+        background-size: 30px 30px;
+        border: none;
+        width: 30px;
+        height: 30px;
+        margin: 0 20px 0 0;
+        transform: rotate(90deg);
+    }
+
+    &__buttonSliderRight {
+        background-image: url('/images/index/slider-gray.svg');
+        background-repeat: no-repeat;
+        background-size: 30px 30px;
+        border: none;
+        width: 30px;
+        height: 30px;
+        transform: rotate(-90deg);
+    }
+
+    &__buttonSliderLeft:hover, &__buttonSliderRight:hover {
+        background-image: url('/images/index/slider-yellow.svg');
+    }
+
+    &__buttonSliderLeft:active, &__buttonSliderRight:active {
+        opacity: 0.6;
+    }
+
+    &__buttonSliderLeft:disabled, &__buttonSliderRight:disabled {
+
+        &:hover{
+            background-image: url('/images/index/slider-gray.svg');
+        }
+
+        opacity: 0.3;
+    }
+
+    &__NoResult {
+        font-size: 30px;
+        margin: 20px 0;
     }
 }
