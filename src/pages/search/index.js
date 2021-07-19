@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import classes from "./index.module.scss";
 import LayoutPage from '@/components/layouts/layout-page';
 import { useRouter } from 'next/router';
-import Button from '@material-ui/core/Button';
 import styled from 'styled-components';
 import Recipe from '@/api/Recipe.js';
 import CardHighestMeals from "@/components/elements/card-highest-meals";
@@ -18,11 +17,9 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import { useFormik } from 'formik';
-import * as yup from 'yup';
-import TextField from '@material-ui/core/TextField';
+import Pagination from '@material-ui/lab/Pagination';
 
 const StyledAccordion = styled(Accordion)`
   p {
@@ -46,6 +43,7 @@ const Recipes = (props) => {
   const [query, setQuery] = useState();
   const [title, setTitle] = useState();
   const [page, setPage] = useState(1);
+  const [data, setData] = useState();
   const [result, setResult] = useState([]);
   const [typeSelection, setTypeSelection] = useState("Food");
   const [pageError, setPageError] = useState(false);
@@ -193,6 +191,8 @@ const Recipes = (props) => {
 
   useEffect(() => {
     setTitle(router.query.title);
+    setPage(router.query.page ? Number(router.query.page) : 1);
+    formik.handleSubmit();
   }, [router]);
 
   useEffect(() => {
@@ -208,7 +208,10 @@ const Recipes = (props) => {
 
   useEffect(() => {
       Recipe.getSearchResult(`?title=${title}`)
-        .then((res) => setResult(res.data.results))
+        .then((res) => {
+          setResult(res.data.results);
+          setData(res.data);
+        })
         .catch(e => {
           console.log('error', e);
       });
@@ -251,14 +254,13 @@ const Recipes = (props) => {
     formik.handleSubmit();
   };
 
-  const onClickReturn = () => {
-      setPage(page - 1);
-      formik.handleSubmit();
+  const handleChangePage = (event, value) => {
+    setPage(value)
+    pushNewPage(value)
   };
-  
-  const onClickForward = () => {
-    setPage(page + 1);
-    formik.handleSubmit();
+
+  const pushNewPage = (page) => {
+    router.push(`/search?title=${title}&page=${page}`);
   };
 
   const content = <div className={classes.search}>
@@ -397,8 +399,11 @@ const Recipes = (props) => {
           }
         </div>
         <div>
-          <button onClick={onClickReturn} type="submit" className={classes.search__buttonSliderLeft} disabled={page === 1} />
-          <button onClick={onClickForward} type="submit" className={classes.search__buttonSliderRight} disabled={pageError} />
+          {data && <Pagination count={Math.ceil(data.count / 10)} color="primary"
+            page={page && page} onChange={(event, value) => {
+              handleChangePage(event, value)
+            }}
+          />}
         </div>
       </div>
     </div>
