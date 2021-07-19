@@ -16,6 +16,7 @@ function CreateRecipe (props) {
 
     const [recipeId, setRecipeId] = useState();
     const [recipe, setRecipe] = useState();
+    const [likeRecipe, setLikeRecipe] = useState(false);
     // const [author, setAuthor] = useState();
 
     useEffect(() => {
@@ -32,9 +33,18 @@ function CreateRecipe (props) {
         try {
           const response = await Recipe.getRecipe(recipeId);
           setRecipe(response.data);
+          setLikeRecipe(response.data.user_liked)
         } catch (e) {
           console.log(e);
         }
+    };
+
+    const onClickLikeVideo = () => {
+        Recipe.uploadLikesRecipe(recipeId)
+        .then(() => {
+            setLikeRecipe(true);
+        })
+        .catch((err) => console.log(err));
     };
 
     const content = <div className={classes.recipe}>
@@ -59,13 +69,29 @@ function CreateRecipe (props) {
                         </div>
                     </div>
                     <div>
-                            { recipe.preview_mp4_url
-                                ?
-                                    <video width="400" controls>
+                        { recipe.preview_mp4_url
+                            ?   <div className={classes.recipe__video}>
+                                    <video width="1000" controls="controls">
                                         <source src={recipe.preview_mp4_url} type="video/mp4" />
                                     </video>
-                                : ''
-                            }
+                                    <div className={classes.recipe__video__player}>
+                                        <div className={classes.recipe__video__views}>
+                                            <img src="/images/index/ionic-md-eye.svg" alt="" />
+                                            <span>{recipe.views_count} Views</span>
+                                        </div>
+                                        <div className={classes.recipe__video__likes}>
+                                            <img src="/images/index/Icon awesome-heart.svg" alt="" />
+                                            <span>{recipe.likes_number ?? 0}</span>
+                                        </div>
+                                        <button className={classes.recipe__video__likes_last} onClick={onClickLikeVideo} >
+                                            {!likeRecipe ? <img src="/images/index/Icon-awesome-heart-null.svg" alt="" />
+                                            : <img src="/images/index/Icon awesome-heart.svg" alt="" />}
+                                            <span>Vote</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            : ''
+                        }
                         </div>
                     <div>
                         <h2 className={classes.recipe__title}>Description</h2>
