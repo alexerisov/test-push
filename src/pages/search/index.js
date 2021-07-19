@@ -29,6 +29,14 @@ const StyledAccordion = styled(Accordion)`
     font-size: 16px;
     font-weight: 600;
   }
+
+  .MuiAccordionSummary-expandIcon.Mui-expanded {
+    div {
+      div:last-of-type {
+        transform: none;
+      }
+    }
+  }
 `;
 
 const Recipes = (props) => {
@@ -283,7 +291,11 @@ const Recipes = (props) => {
         <NoSsr>
         {(typeSelection !== "Beverages") && <StyledAccordion>
           <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
+            expandIcon={
+            <div className={classes.search__clickList}>
+              <div></div>
+              <div className={classes.search__clickList__active}></div>
+            </div>}
             aria-controls="panel1a-content"
             id="panel1a-header"
           >
@@ -297,7 +309,11 @@ const Recipes = (props) => {
         </StyledAccordion>}
         <StyledAccordion>
           <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
+            expandIcon={
+              <div className={classes.search__clickList}>
+                <div></div>
+                <div className={classes.search__clickList__active}></div>
+              </div>}
             aria-controls="panel1a-content"
             id="panel1a-header"
           >
@@ -311,7 +327,11 @@ const Recipes = (props) => {
         </StyledAccordion>
         <StyledAccordion>
           <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
+            expandIcon={
+              <div className={classes.search__clickList}>
+                <div></div>
+                <div className={classes.search__clickList__active}></div>
+              </div>}
             aria-controls="panel1a-content"
             id="panel1a-header"
           >
@@ -325,7 +345,11 @@ const Recipes = (props) => {
         </StyledAccordion>
         <StyledAccordion>
           <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
+            expandIcon={
+              <div className={classes.search__clickList}>
+                <div></div>
+                <div className={classes.search__clickList__active}></div>
+              </div>}
             aria-controls="panel1a-content"
             id="panel1a-header"
           >
@@ -339,7 +363,11 @@ const Recipes = (props) => {
         </StyledAccordion>
         <StyledAccordion>
           <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
+            expandIcon={
+              <div className={classes.search__clickList}>
+                <div></div>
+                <div className={classes.search__clickList__active}></div>
+              </div>}
             aria-controls="panel1a-content"
             id="panel1a-header"
           >
