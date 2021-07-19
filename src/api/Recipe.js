@@ -88,6 +88,10 @@ export default {
 
     return http.post(`recipe/comment/${id}/like`, {});
   },
+
+  uploadLikesRecipe: (id) => {
+    return http.post(`/recipe/${id}/like`);
+  },
   
   getPinnedMeals: () => {
     return http.get(`/recipe/pinned_meals`);
