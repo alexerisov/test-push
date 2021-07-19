@@ -140,6 +140,7 @@ const FavoriteCuisinesBlock = () => {
                       rating={card?.avg_rating}
                       name={card?.user?.full_name}
                       city={card?.user?.city}
+                      likes={card?.likes_number}
                       id={card.pk}/>;
           })
         }
@@ -154,6 +155,7 @@ const FavoriteCuisinesBlock = () => {
                     rating={card?.avg_rating}
                     name={card?.user?.full_name}
                     city={card?.user?.city}
+                    likes={card?.likes_number}
                     id={card.pk}/>;
           })
         }
@@ -168,6 +170,7 @@ const FavoriteCuisinesBlock = () => {
                     rating={card?.avg_rating}
                     name={card?.user?.full_name}
                     city={card?.user?.city}
+                    likes={card?.likes_number}
                     id={card.pk}/>;
           })
         }
@@ -182,6 +185,7 @@ const FavoriteCuisinesBlock = () => {
                     rating={card?.avg_rating}
                     name={card?.user?.full_name}
                     city={card?.user?.city}
+                    likes={card?.likes_number}
                     id={card.pk}/>;
           })
         }
@@ -196,6 +200,7 @@ const FavoriteCuisinesBlock = () => {
                       rating={card?.avg_rating}
                       name={card?.user?.full_name}
                       city={card?.user?.city}
+                      likes={card?.likes_number}
                       id={card.pk}/>;
           })
         }
@@ -210,6 +215,7 @@ const FavoriteCuisinesBlock = () => {
                       rating={card?.avg_rating}
                       name={card?.user?.full_name}
                       city={card?.user?.city}
+                      likes={card?.likes_number}
                       id={card.pk}/>;
           })
         }
@@ -224,6 +230,7 @@ const FavoriteCuisinesBlock = () => {
                       rating={card?.avg_rating}
                       name={card?.user?.full_name}
                       city={card?.user?.city}
+                      likes={card?.likes_number}
                       id={card.pk}/>;
           })
         }
