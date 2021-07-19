@@ -125,7 +125,14 @@ export default {
     return http.get(`/recipe/${id}/comments`);
   },
 
-  getSavedRecipes: () => {
-    return http.get(`/recipe/saved_recipe/`);
+  getSavedRecipes: (page) => {
+    console.log(page);
+    return http.get(`/recipe/saved_recipe/`,
+      {
+        params: {
+          'page': `${page}`,
+          'page_size': 12,
+        }
+      });
   }
 };
