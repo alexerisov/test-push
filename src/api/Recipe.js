@@ -121,7 +121,14 @@ export default {
     return http.get(`/recipe/${id}`);
   },
 
-  getComments: (id) => {
-    return http.get(`/recipe/${id}/comments`);
+  getComments: ({recipeId, page}) => {
+    return http.get(
+      `/recipe/${recipeId}/comments`,
+      { params:
+          {
+            'page': `${page}`,
+            'page_size': 4,
+          }
+      });
   }
 };
