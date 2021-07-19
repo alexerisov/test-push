@@ -24,40 +24,41 @@ const CommentItem = ({ likesNumber, dislikesNumber, avatar, text, username, comm
   const uploadLike = async ({type}) => {
     try {
       const targetLike = {
-        id: +commentId,
+        id: commentId,
         type: type
       };
 
       const response = await Recipe.uploadCommentsLikes(targetLike);
+      const likeStatus = response.data['like_status'];
+      const dislikeStatus = response.data['dislike_status'];
 
-      if (type === likeTypes.like) {
-        setLikes(setLikeValuesByResponseLikeStatus({type, likeStatus: response.data['like_status']}));
-        return;
-      }
-
-      if (type === likeTypes.dislike) {
-        setDislikes(setLikeValuesByResponseLikeStatus({type, likeStatus: response.data['dislike_status']}));
-      }
+      setLikeValuesByResponseLikeStatus({likeStatus, dislikeStatus});
     } catch (e) {
       console.log(e);
     }
   };
 
-  const setLikeValuesByResponseLikeStatus = ({likeStatus, type}) => {
-    if (type === likeTypes.like) {
-      return likeStatus === status.created ? likes + 1 : likes - 1;
+  const setLikeValuesByResponseLikeStatus = ({likeStatus, dislikeStatus}) => {
+    if (likeStatus === status.created) {
+      setLikes(likes + 1);
     }
 
-    if (type === likeTypes.dislike) {
-      return likeStatus === status.created ? dislikes + 1 : dislikes - 1;
+    if (likeStatus === status.deleted) {
+      setLikes(likes - 1);
+    }
+
+    if (dislikeStatus === status.created) {
+      setDislikes(dislikes + 1);
+    }
+
+    if (dislikeStatus === status.deleted) {
+      setDislikes(dislikes - 1);
     }
   };
 
   return (
     <div  className={classes.comment}>
-      <div className={classes.comment__avatar}>
-        <img src={avatar ? avatar : defaultAvatar} alt="avatar"/>
-      </div>
+      <img className={classes.comment__avatar} src={avatar ? avatar : defaultAvatar} alt="avatar"/>
 
       <div className={classes.comment__body}>
         <p className={classes.comment__username}>{username ? username : "No name"}</p>
