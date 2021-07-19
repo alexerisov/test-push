@@ -86,6 +86,8 @@ const Recipes = (props) => {
   const recipeTypesList = [];
   const cuisineListList = [];
   const cookingSkillList = [];
+
+  const numberCardsDisplayed = 10;
   
   for (let i = 1; i < Object.keys(dietaryrestrictions).length; i++) {
     dietaryrestrictionsList.push(
@@ -399,7 +401,7 @@ const Recipes = (props) => {
           }
         </div>
         <div>
-          {data && <Pagination count={Math.ceil(data.count / 10)} color="primary"
+          {data && <Pagination count={Math.ceil(data.count / numberCardsDisplayed)} color="primary"
             page={page && page} onChange={(event, value) => {
               handleChangePage(event, value)
             }}
