@@ -18,28 +18,31 @@ const ResipeComments = ({ recipeId }) => {
 
   const placeholder = "Add your comments here...";
 
-  useEffect(() => {
-    if (recipeId) {
-      getComments();
-    }
-  }, []);
-
-  useEffect(() => {
-    setNumberOfPages(Math.ceil(comments?.length / itemsPerPage));
-  }, [comments]);
-
   // Pagination for comments
   const itemsPerPage = 4;
   const [page, setPage] = useState(1);
   const [numberOfPages, setNumberOfPages] = useState();
 
+  useEffect(() => {
+    if (recipeId) {
+      getComments();
+    }
+  }, [page]);
+
   const getComments = async () => {
     try {
-      const response = await Recipe.getComments(recipeId);
+      const response = await Recipe.getComments({recipeId, page});
+      setNumberOfPages(countCommentsPages(response.data.count));
       setComments(response.data.results);
     } catch (e) {
       console.log(e);
     }
+  };
+
+  const countCommentsPages = (count) => {
+    const isRemainExists = (count % itemsPerPage) > 0;
+    let pages = Math.floor(count / itemsPerPage);
+    return isRemainExists ? ++pages : pages;
   };
 
   const uploadComment = async () => {
@@ -100,7 +103,6 @@ const ResipeComments = ({ recipeId }) => {
         </h3>
 
       {comments?.length && comments
-        .slice((page - 1) * itemsPerPage, page * itemsPerPage)
         .map((comment, index) => {
           return (
             <CommentItem
