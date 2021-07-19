@@ -9,15 +9,17 @@ import TextField from '@material-ui/core/TextField';
 import { profileActions } from '@/store/actions';
 import Recipe from '@/api/Recipe.js';
 import Link from "next/link";
+import { useRouter } from 'next/router';
 
 function SearchBanner (props) {
+
+  const router = useRouter();
 
   const [result, setResult] = useState([]);
 
   const validationSchema = yup.object({
     search: yup
       .string('Search for dish name')
-      .min(2, '')
   });
 
   const formik = useFormik({
@@ -26,13 +28,20 @@ function SearchBanner (props) {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      Recipe.getQueryResult(values.search)
+      router.push(`/search?title=${values.search}`);
+      onCancel();
+    },
+  });
+
+  const onChangeInputSearch = () => {
+    if (formik.values.search.length !== 0) {
+      Recipe.getQueryResult(formik.values.search)
         .then((res) => setResult(res.data))
         .catch(e => {
           console.log('error', e);
-        });
-    },
-  });
+        }); 
+    }
+  }
 
   const onCancel = () => {
     props.dispatch(modalActions.close());
@@ -40,17 +49,16 @@ function SearchBanner (props) {
 
   const renderContent = () => {
     return <div className={classes.search}>
-      <form className={classes.search__form}>
+      <form className={classes.search__form} onSubmit={formik.handleSubmit}>
         <TextField
             id="search"
             name="search"
             value={formik.values.search}
             placeholder="Search for dish name"
-            onChange={formik.handleChange}
             onChange={(e) => {
               formik.handleChange(e);
-              formik.handleSubmit();  
-          }}
+              onChangeInputSearch();  
+            }}
             fullWidth
           />
       </form>
@@ -58,7 +66,7 @@ function SearchBanner (props) {
         <p>Suggestions :</p>
         <p>
         {result.map((item, index) => {
-          return <Link key={index} href={`/search/${item.result}`}>
+          return <Link key={index} href={`/search/?title=${item.result}`}>
             <a><button onClick={onCancel}>{item.result}</button></a>
             </Link>
         })}
