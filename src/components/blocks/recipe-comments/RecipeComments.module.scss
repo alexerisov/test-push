@@ -30,6 +30,11 @@
     background-color: $--color-blue;
   }
 
+  &__form {
+    display: flex;
+    flex-direction: column;
+  }
+
   &__input {
     @include fontMedium();
     width: 713px;
@@ -41,6 +46,11 @@
     border-radius: 5px;
     resize: none;
     border: 1px solid $--color-gray-9;
+
+    &__error {
+      margin-bottom: 20px;
+      color: red;
+    }
   }
 
   &__input:focus {

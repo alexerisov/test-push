@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Button } from "@material-ui/core";
 import Pagination from "@material-ui/lab/Pagination";
 import { useSelector } from "react-redux";
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 import { CommentItem } from "@/components/elements/comment";
 import Recipe from "@/api/Recipe";
-import { validator } from "@/utils/validator";
 
 import classes from './RecipeComments.module.scss';
 
@@ -14,14 +15,28 @@ const ResipeComments = ({ recipeId }) => {
 
   const [comments, setComments] = useState();
 
-  const [commentsTextarea, setCommentsTextarea] = useState();
-
   const placeholder = "Add your comments here...";
+  const authError = "Please login first, then you will can comment recipes!";
 
   // Pagination for comments
   const itemsPerPage = 4;
   const [page, setPage] = useState(1);
   const [numberOfPages, setNumberOfPages] = useState();
+
+  const formik = useFormik({
+    initialValues: {
+      textarea: '',
+    },
+    validationSchema: Yup.object({
+      textarea: Yup.string()
+        .min(5, 'Must be 5 characters or more')
+        .max(3000, 'Must be 3000 characters or less')
+        .required('Write something before sumbit...')
+    }),
+    onSubmit: values => {
+      uploadComment(values);
+    },
+  });
 
   useEffect(() => {
     if (recipeId) {
@@ -33,7 +48,7 @@ const ResipeComments = ({ recipeId }) => {
     try {
       const response = await Recipe.getComments({recipeId, page});
       setNumberOfPages(countCommentsPages(response.data.count));
-      setComments(response.data.results);
+      setComments(response.data);
     } catch (e) {
       console.log(e);
     }
@@ -45,33 +60,25 @@ const ResipeComments = ({ recipeId }) => {
     return isRemainExists ? ++pages : pages;
   };
 
-  const uploadComment = async () => {
-    if(!isAuthorized) {
-      setCommentsTextarea('Please login first...');
-      return;
-    }
-
-    if (!validator.isCommentTextareaValid(commentsTextarea)) {
-      setCommentsTextarea('Please type more than 5 letters...');
+  const uploadComment = async ({ textarea }) => {
+    if (!isAuthorized) {
       return;
     }
 
     try {
       const targetComment = {
         id: +recipeId,
-        text: commentsTextarea
+        text: textarea
       };
       const response = await Recipe.uploadComments(targetComment);
 
-      setComments([...comments, response.data]);
-      setCommentsTextarea('');
+      if (response.status === 201) {
+        getComments();
+        formik.values.textarea = '';
+      }
     } catch (e) {
       console.log(e);
     }
-  };
-
-  const commentsTextareaHandler = ({ target }) => {
-    setCommentsTextarea(target.value);
   };
 
   return (
@@ -82,28 +89,41 @@ const ResipeComments = ({ recipeId }) => {
           <span className={classes.comments__blueСircle} />
       </span>
 
-      <textarea
-        className={classes.comments__input}
-        name="comments-input" placeholder={placeholder}
-        onChange={commentsTextareaHandler}
-        value={commentsTextarea}
-      />
+      <form className={classes.comments__form} onSubmit={formik.handleSubmit}>
+        <textarea
+          className={classes.comments__input}
+          id="textarea"
+          name="textarea"
+          placeholder={placeholder}
+          onBlur={formik.handleBlur}
+          onChange={formik.handleChange}
+          value={formik.values.textarea}
+        />
 
-      <Button
-        variant='contained'
-        color='primary'
-        onClick={uploadComment}
-      >
-        Submit
-      </Button>
+        {formik.touched.textarea && formik.errors.textarea ? (
+          <div className={classes.comments__input__error}>{formik.errors.textarea}</div>
+        ) : null}
+
+        {!isAuthorized && (
+          <div className={classes.comments__input__error}>{authError}</div>
+        )}
+
+        <Button
+          type="submit"
+          variant='contained'
+          color='primary'
+        >
+          Submit
+        </Button>
+      </form>
 
       <div className={classes.comments__body}>
         <h3 className={classes.comments__subtitle}>
-          Comments ({comments && comments.length})
+          Comments ({comments && comments.count})
         </h3>
 
-      {comments?.length && comments
-        .map((comment, index) => {
+      {comments &&
+        comments?.results.map((comment, index) => {
           return (
             <CommentItem
             user={comment.user}
@@ -122,7 +142,7 @@ const ResipeComments = ({ recipeId }) => {
         <Pagination
           classes={{root: classes.comments__pagination}}
           count={numberOfPages}
-          onChange={(event, number) => setPage(number)}
+          onChange={(event, page) => setPage(page)}
         />
       </div>
     </div>
