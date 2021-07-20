@@ -74,3 +74,8 @@ export const nutritions = {
   carbohydrates: 'Carbs',
   fats: 'Fat',
 };
+
+export const USER_TYPE = {
+  viewerType: 0,
+  chefType: 1,
+};

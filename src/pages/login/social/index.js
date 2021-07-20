@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {loginSocialActions} from '@/store/actions';
 import Router, {withRouter} from 'next/router';
 import {withoutAuth} from '@/utils/authProvider';
+import {USER_TYPE} from '@/utils/datasets';
 
 class LoginSocial extends Component {
   static propTypes = {
@@ -22,7 +23,7 @@ class LoginSocial extends Component {
     this.props.dispatch(
       loginSocialActions.login({
         access_token,
-        account_type: state.account_type,
+        account_type: state.account_type ?? USER_TYPE.viewerType,
         backend: state.backend,
         register: state.register,
       }),
