@@ -29,7 +29,7 @@ const Home = (props) => {
     .then((data) => {
       setMeal(data?.data[0]);
     });
-    Recipe.getHomepageBanners();
+    Recipe.getHomepageCarouselItems();
   },[]);
 
   React.useEffect(() => {

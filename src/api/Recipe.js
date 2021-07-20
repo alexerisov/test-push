@@ -113,7 +113,8 @@ export default {
     return http.get(`/recipe/favorite_cuisines?cuisine=${id}`);
   },
 
-  getHomepageBanners: () => {
+  // Get banners for homepage carousel
+  getHomepageCarouselItems: () => {
     return http.get(`/recipe/homepage_banners`);
   },
 
