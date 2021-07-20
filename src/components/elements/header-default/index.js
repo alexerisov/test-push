@@ -59,7 +59,7 @@ const HeaderDefault = (props) => {
           </a>
         </Link>
         <nav className={classes.header__links}>
-          <Link href="/">
+          <Link href="/search?title=">
             <a className={classes.header__link}>Recipes</a>
           </Link>
           <Link href="/">

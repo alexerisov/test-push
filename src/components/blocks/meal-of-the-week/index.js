@@ -1,6 +1,7 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import $clamp from 'clamp-js';
 import classes from "./index.module.scss";
+import Recipe from '@/api/Recipe.js';
 
 const MealOfWeekBlock = (props) => {
   const description = useRef();
@@ -8,6 +9,22 @@ const MealOfWeekBlock = (props) => {
   useEffect(() => {
     $clamp(description.current, {clamp: 3});
   });
+
+  const recipeId = props?.meal?.pk;
+
+  const [likeRecipe, setLikeRecipe] = useState(false);
+
+  useEffect(() => {
+    setLikeRecipe(props?.meal?.user_liked);
+  }, [props.meal])
+
+  const onClickLike = () => {
+    Recipe.uploadLikesRecipe(recipeId)
+    .then(() => {
+      setLikeRecipe(true);
+    })
+    .catch((err) => console.log(err));
+  };
 
   const image = props?.meal?.images[0].url ? props?.meal?.images[0].url : '';
     return (
@@ -82,6 +99,16 @@ const MealOfWeekBlock = (props) => {
                   {props?.meal?.carbohydrates ? props?.meal?.carbohydrates : '-'}
                 </p>
                 <p className={classes.meal__recipe__nutritionsName}>Carbs</p>
+              </div>
+            </div>
+            <div className={classes.meal__recipe__likes}>
+              <button className={classes.meal__recipe__likesButton} onClick={onClickLike} >
+                <img src="/images/index/Icon awesome-heart.svg" className={classes.meal__recipe__likesIcon}/>
+                <span className={classes.meal__recipe__likesText}>{!likeRecipe ? "Vote this recipe" : "There is a vote!"}</span>
+              </button>
+              <div className={classes.meal__recipe__likesQuantity}>
+                <img src="/images/index/Icon awesome-heart.svg" className={classes.meal__recipe__likesIconQuantity}/>
+                <span>{props?.meal?.likes_number ?? 0} Votes</span>
               </div>
             </div>
           </div>

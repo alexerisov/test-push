@@ -21,7 +21,7 @@ const CardHighestMeals = (props) => {
             <p className={classes.card__author}>{`by Chef ${props.name}`}</p>
             <p className={classes.card__location}>{props.city}</p>
             <Link href={`/recipe/${props.id}`}><a>View recipe</a></Link>
-            {/* <div className={classes.card__likeIcon}><LikeIcon /></div> */}
+            <div className={classes.card__likeIcon}><LikeIcon value={props.likes} /></div>
           </div>
           <RaitingIcon />
         </CardContent>

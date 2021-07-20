@@ -92,6 +92,52 @@
         left: 200px;
         margin: 20px 0 0 0;
 
+        &__likesButton {
+            width: 253px;
+            height: 56px;
+            border: 2px solid $--color-orange;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        &__likesQuantity {
+            display: flex;
+            align-items: center;
+
+            span {
+                margin: 0 0 0 8px;
+                color: $--color-gray7;
+                font-size: 16px;
+                font-weight: 600;
+            }
+        }
+
+        &__likes {
+            display: flex;
+            gap: 0 20px;
+            align-items: center;
+        }
+
+        &__likesText {
+            margin: 0 0 0 10px;
+            font-size: 20px;
+            font-weight: 600;
+            color: $--color-orange;
+            @include fontMedium();
+        }
+
+        &__likesIcon {
+            width: 36px;
+            height: 32px;
+        }
+
+        &__likesIconQuantity {
+            width: 21px;
+            height: 18px;
+        }
+
         &__tltle {
             @include fontSemiBold();
             font-size: 30px;
@@ -105,6 +151,10 @@
             line-height: 27px;
             overflow: hidden;
             margin: 16px 0 50px 0;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: normal;
+            max-height: 255px;
         }
 
         &__ingredientsTitleContainer {

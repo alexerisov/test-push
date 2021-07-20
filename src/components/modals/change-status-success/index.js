@@ -14,9 +14,11 @@ function ChangeStatusSuccess (props) {
     return <div className={classes.ChangeSuccess}>
       <img src="/images/index/upload_success.svg" alt="Success"></img>
       <h2 className={classes.ChangeSuccess__title}>
-        Congratulations! <br />
-        now you are a Home Chef!
+        Congratulations!
       </h2>
+      <p className={classes.ChangeSuccess__subtitle}>
+        Now you are a Home Chef!
+      </p>
     </div>;
   };
 
