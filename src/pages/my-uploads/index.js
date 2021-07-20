@@ -50,10 +50,7 @@ const MyUploadsPage = () => {
       <div className={classes.uploads__header}>
         <h2 className={classes.uploads__title}>Uploads</h2>
 
-        <ButtonUploadRecipe>
-          <img className={classes.uploads__btn__icon} src={uploadIcon} alt="upload recipe icon"/>
-          <span>Upload recipe</span>
-        </ButtonUploadRecipe>
+        <ButtonUploadRecipe />
       </div>
 
       <div className={classes.uploads__recipes}>
