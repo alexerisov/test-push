@@ -88,7 +88,7 @@ const HeaderDefault = (props) => {
               </Link>
             </MenuItem>
             <MenuItem onClick={handleClose}>
-              <Link href="/">
+              <Link href="/my-uploads">
                 <a className={classes.header__link_place_menu}>Saved Recipes</a>
               </Link>
             </MenuItem>

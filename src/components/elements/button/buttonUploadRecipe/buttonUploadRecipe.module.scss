@@ -1,0 +1,22 @@
+@import '~styles/variables.scss';
+@import "~styles/mixins/mixins.scss";
+
+.btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 260px;
+  height: 60px;
+  padding: 0;
+  @include fontMedium();
+  font-size: 20px;
+  color: $--color-orange;
+  border: 2px solid $--color-orange;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    filter: opacity(0.7);
+  }
+}
