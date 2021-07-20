@@ -33,7 +33,11 @@ export const loginViaFacebook = (
   return async () => {
     openOAuth(
         `https://www.facebook.com/v10.0/dialog/oauth?scope=public_profile email&client_id=${CONFIG.fbClientId}&response_type=token&redirect_uri=${CONFIG.oauthRedirectUrl}&state=${JSON.stringify(
-            {account_type: accountType, register: register, backend: 'facebook'})}`,
+            {
+              account_type: accountType,
+              register: register,
+              backend: 'facebook',
+            })}`,
         register, accountType,
     );
   };
@@ -69,7 +73,11 @@ export const loginViaInstagram = (
   return async () => {
     openOAuth(
         `https://api.instagram.com/oauth/authorize?scope=user_profile,user_media&response_type=code&client_id=${CONFIG.instagramClientId}&redirect_uri=${CONFIG.oauthRedirectUrl}&state=${JSON.stringify(
-            {account_type: accountType, backend: 'instagram'})}`,
+            {
+              account_type: accountType,
+              register: register,
+              backend: 'instagram',
+            })}`,
         register, accountType,
     );
   };
