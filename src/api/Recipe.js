@@ -126,8 +126,8 @@ export default {
     return http.get(`/recipe/${id}`);
   },
 
-  getSavedRecipes: (page) => {
-    return http.get(`/recipe/saved_recipe/`,
+  getUploadRecipes: (page) => {
+    return http.get(`/recipe/my`,
       {
         params: {
           'page': `${page}`,
