@@ -9,10 +9,8 @@ import Recipe from "@/api/Recipe";
 
 import classes from "./index.module.scss";
 
-import uploadIcon from '../../../public/images/index/icon_upload.svg';
-
 const MyUploadsPage = () => {
-  const [savedRecipes, setSavedRecipes] = useState();
+  const [uploadRecipes, setUploadRecipes] = useState();
 
   // Pagination params
   const itemsPerPage = 12;
@@ -26,14 +24,14 @@ const MyUploadsPage = () => {
   };
 
   useEffect(() => {
-    getSavedRecipes();
+    getUploadRecipes();
   }, [page]);
 
-  const getSavedRecipes = async () => {
+  const getUploadRecipes = async () => {
     try {
-      const response = await Recipe.getSavedRecipes(page);
+      const response = await Recipe.getUploadRecipes(page);
       await setNumberOfPages(countPages(response.data.count));
-      await setSavedRecipes(response.data.results);
+      await setUploadRecipes(response.data.results);
     }
     catch (e) {
       console.log(e);
@@ -54,14 +52,14 @@ const MyUploadsPage = () => {
       </div>
 
       <div className={classes.uploads__recipes}>
-        {savedRecipes &&
-        savedRecipes.map(item => (
+        {uploadRecipes &&
+        uploadRecipes.map(item => (
           <CardHighestMeals
             key={`${item.pk + '1k0'}`}
-            title={item.recipe.title}
-            image={item.recipe.images[0].url}
-            city={item.recipe.city}
-            id={item.recipe.pk}
+            title={item.title}
+            image={item.images[0]?.url}
+            city={item.city}
+            id={item.pk}
           />)
         )}
       </div>
