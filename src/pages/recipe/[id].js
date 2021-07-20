@@ -49,6 +49,16 @@ function CreateRecipe (props) {
         }
     };
 
+    const openRegisterPopup = (name) => {
+        return () => {
+          props.dispatch(
+            modalActions.open(name),
+          ).then(result => {
+            // result when modal return promise and close
+          });
+        };
+    };
+
     const onClickLike = () => {
         Recipe.uploadLikesRecipe(recipeId)
         .then((res) => {
@@ -86,7 +96,7 @@ function CreateRecipe (props) {
     };
 
     const content = <div className={classes.recipe}>
-        {recipe && authorPk &&
+        {recipe &&
             <>
             <h2 className={classes.recipe__navbar}>
                 <Link href="/"><a>Home /</a></Link>
@@ -126,7 +136,10 @@ function CreateRecipe (props) {
                                             <img src="/images/index/Icon awesome-heart.svg" alt="" />
                                             <span>{Number(likesNumber)}</span>
                                         </div>
-                                        <button className={classes.recipe__video__likes_last} onClick={onClickLike} >
+                                        <button
+                                            className={classes.recipe__video__likes_last} 
+                                            onClick={!props.account.hasToken ? openRegisterPopup('register') : onClickLike} 
+                                        >
                                             {!likeRecipe ? <img src="/images/index/Icon-awesome-heart-null.svg" alt="" />
                                             : <img src="/images/index/Icon awesome-heart.svg" alt="" />}
                                             <span>Vote</span>
