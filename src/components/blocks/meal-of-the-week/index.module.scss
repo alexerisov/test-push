@@ -99,8 +99,11 @@
         }
 
         &__subtitle {
+            position: relative;
+            height: 76px;
             font-size: 18px;
             line-height: 27px;
+            overflow: hidden;
             margin: 16px 0 50px 0;
         }
 
