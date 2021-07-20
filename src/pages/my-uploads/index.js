@@ -60,6 +60,7 @@ const MyUploadsPage = () => {
             image={item.images[0]?.url}
             city={item.city}
             id={item.pk}
+            likes={item?.['likes_number']}
           />)
         )}
       </div>
