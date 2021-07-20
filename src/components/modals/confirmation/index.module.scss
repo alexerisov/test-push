@@ -1,0 +1,16 @@
+@import "~styles/variables.scss";
+@import "~styles/mixins/mixins.scss";
+
+.confirmation {
+  color: $--color-gray7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 0 0 0;
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 40px 0;
+  }
+}

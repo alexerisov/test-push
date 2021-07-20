@@ -2,6 +2,8 @@ import React, {useEffect, useRef, useState} from 'react';
 import $clamp from 'clamp-js';
 import classes from "./index.module.scss";
 import Recipe from '@/api/Recipe.js';
+import { modalActions } from '@/store/actions';
+import { connect } from 'react-redux';
 
 const MealOfWeekBlock = (props) => {
   const description = useRef();
@@ -13,15 +15,34 @@ const MealOfWeekBlock = (props) => {
   const recipeId = props?.meal?.pk;
 
   const [likeRecipe, setLikeRecipe] = useState(false);
+  const [likesNumber, setLikesNumber] = useState(false);
 
   useEffect(() => {
     setLikeRecipe(props?.meal?.user_liked);
+    setLikesNumber(props?.meal?.likes_number);
   }, [props.meal])
+
+  const openRegisterPopup = (name) => {
+    return () => {
+      props.dispatch(
+        modalActions.open(name),
+      ).then(result => {
+        // result when modal return promise and close
+      });
+    };
+  };
 
   const onClickLike = () => {
     Recipe.uploadLikesRecipe(recipeId)
-    .then(() => {
-      setLikeRecipe(true);
+    .then((res) => {
+      if (res.data.like_status === "deleted") {
+        setLikeRecipe(false);
+        (likesNumber > 0) && setLikesNumber(likesNumber - 1)
+      } else {
+        setLikeRecipe(true);
+        setLikesNumber(likesNumber + 1)
+      }
+      console.log(res)
     })
     .catch((err) => console.log(err));
   };
@@ -102,13 +123,22 @@ const MealOfWeekBlock = (props) => {
               </div>
             </div>
             <div className={classes.meal__recipe__likes}>
-              <button className={classes.meal__recipe__likesButton} onClick={onClickLike} >
-                <img src="/images/index/Icon awesome-heart.svg" className={classes.meal__recipe__likesIcon}/>
-                <span className={classes.meal__recipe__likesText}>{!likeRecipe ? "Vote this recipe" : "There is a vote!"}</span>
+              <button
+                className={classes.meal__recipe__likesButton}
+                onClick={!props.account.hasToken ? openRegisterPopup('register') : onClickLike}
+              >
+                <img 
+                  src={likeRecipe ? "/images/index/Icon awesome-heart.svg"
+                  : "/images/index/heart-icon-yellow-null.svg"}
+                  className={classes.meal__recipe__likesIcon}
+                />
+                <span className={classes.meal__recipe__likesText}>
+                  {!likeRecipe ? "Vote this recipe" : "There is a vote!"}
+                </span>
               </button>
               <div className={classes.meal__recipe__likesQuantity}>
                 <img src="/images/index/Icon awesome-heart.svg" className={classes.meal__recipe__likesIconQuantity}/>
-                <span>{props?.meal?.likes_number ?? 0} Votes</span>
+                <span>{Number(likesNumber)} Votes</span>
               </div>
             </div>
           </div>
@@ -118,4 +148,6 @@ const MealOfWeekBlock = (props) => {
     );
   };
   
-export default MealOfWeekBlock;
+export default connect((state) => ({
+  account: state.account,
+}))(MealOfWeekBlock);

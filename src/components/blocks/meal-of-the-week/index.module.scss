@@ -95,11 +95,16 @@
         &__likesButton {
             width: 253px;
             height: 56px;
-            border: 2px solid $--color-orange;
+            border: 3px solid $--color-orange;
             border-radius: 5px;
             display: flex;
             align-items: center;
             justify-content: center;
+            cursor: pointer;
+
+            &:hover {
+                opacity: 0.5;
+            }
         }
 
         &__likesQuantity {
