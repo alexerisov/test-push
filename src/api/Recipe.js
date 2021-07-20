@@ -130,7 +130,6 @@ export default {
   },
 
   getSavedRecipes: (page) => {
-    console.log(page);
     return http.get(`/recipe/saved_recipe/`,
       {
         params: {
