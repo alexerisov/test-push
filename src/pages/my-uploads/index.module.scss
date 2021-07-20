@@ -1,0 +1,58 @@
+@import "~styles/mixins/mixins.scss";
+@import "~styles/variables.scss";
+
+.uploads {
+  display: flex;
+  flex-direction: column;
+  padding: 40px 119.5px 97px;
+
+  &__navbar {
+    margin-bottom: 40px;
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 45px;
+
+    span {
+      color: $--color-orange;
+    }
+
+    a, a:active, a:visited {
+      font-size: 20px;
+      font-weight: 300;
+      line-height: 45px;
+      color: $--color-gray6;
+    }
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 65px;
+  }
+
+  &__title {
+    font-size: 30px;
+    @include fontMedium();
+  }
+
+  &__btn {
+
+    &__icon {
+      position: absolute;
+      left: 9px;
+    }
+  }
+
+  &__recipes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 34px;
+    margin-bottom: 20px;
+  }
+
+  &__pagination {
+    align-self: center;
+  }
+}

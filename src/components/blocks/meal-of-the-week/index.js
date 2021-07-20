@@ -1,8 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
+import $clamp from 'clamp-js';
 import classes from "./index.module.scss";
 import Recipe from '@/api/Recipe.js';
 
 const MealOfWeekBlock = (props) => {
+  const description = useRef();
+
+  useEffect(() => {
+    $clamp(description.current, {clamp: 3});
+  });
 
   const recipeId = props?.meal?.pk;
 
@@ -42,8 +48,9 @@ const MealOfWeekBlock = (props) => {
             <h3 className={classes.meal__recipe__tltle}>{props?.meal?.title}</h3>
             <p
               className={classes.meal__recipe__subtitle}
-              dangerouslySetInnerHTML={{__html: props?.meal?.description}}>
-            </p>
+              dangerouslySetInnerHTML={{__html: props?.meal?.description}}
+              ref={description}
+            ></p>
             <div className={classes.meal__recipe__ingredientsTitleContainer}>
               <h4 className={classes.meal__recipe__ingredientsTitle}>Ingredients</h4>
               <a className={classes.meal__recipe__link} href={`/recipe/${props?.meal?.pk}`}>
