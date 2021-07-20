@@ -9,6 +9,8 @@ import {cuisineList, recipeTypes, cookingMethods, dietaryrestrictions} from '@/u
 import { Button } from '@material-ui/core';
 import Link from "next/link";
 import ResipeComments from "@/components/blocks/recipe-comments";
+import Account from '@/api/Account.js';
+import { modalActions } from '@/store/actions';
 
 function CreateRecipe (props) {
 
@@ -17,7 +19,7 @@ function CreateRecipe (props) {
     const [recipeId, setRecipeId] = useState();
     const [recipe, setRecipe] = useState();
     const [likeRecipe, setLikeRecipe] = useState(false);
-    // const [author, setAuthor] = useState();
+    const [authorPk, setAuthorPk] = useState();
 
     useEffect(() => {
         if (recipeId) {
@@ -27,6 +29,12 @@ function CreateRecipe (props) {
 
     useEffect(() => {
         setRecipeId(router.query.id);
+        if (props.account.hasToken) {
+            Account.current()
+            .then((res) => {
+                setAuthorPk(res.data.pk)
+            })
+        }
     }, [router]);
 
     const getRecipe = async () => {
@@ -47,8 +55,30 @@ function CreateRecipe (props) {
         .catch((err) => console.log(err));
     };
 
+    const deleteRecipe = (confirm) => {
+        if (confirm) {
+            Recipe.deleteRecipe(recipeId)
+            .then((res) => {
+                router.push('/my-uploads')
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+        }
+    };
+
+    const handleClickDelete = (name) => {
+        return () => {
+          props.dispatch(
+            modalActions.open(name),
+          ).then(result => {
+            deleteRecipe(result);
+          });
+        };
+    };
+
     const content = <div className={classes.recipe}>
-        {recipe &&
+        {recipe && authorPk &&
             <>
             <h2 className={classes.recipe__navbar}>
                 <Link href="/"><a>Home /</a></Link>
@@ -63,9 +93,14 @@ function CreateRecipe (props) {
                             <p className={classes.recipe__location}>{recipe.user.city}</p>
                             <RaitingIcon value={recipe.avg_rating} />
                         </div>
-                        <div className={classes.recipe__time}>
-                            <img src="/images/index/timer.svg" />
-                            <p>{recipe.cooking_time.slice(3, 5)} MIN</p>
+                        <div className={classes.recipe__icons}>
+                            {(recipe.user.pk === authorPk) && <button className={classes.recipe__deleteButton} onClick={handleClickDelete('confirmation')}>
+                                <img src="/images/index/delete.svg" />
+                            </button>}
+                            <div className={classes.recipe__time}>
+                                <img src="/images/index/timer.svg" />
+                                <p>{recipe.cooking_time.slice(3, 5)} MIN</p>
+                            </div>
                         </div>
                     </div>
                     <div>
@@ -225,4 +260,6 @@ function CreateRecipe (props) {
     );
 }
 
-export default connect()(CreateRecipe);
+export default connect((state) => ({
+    account: state.account,
+  }))(CreateRecipe);

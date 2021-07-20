@@ -144,5 +144,9 @@ export default {
             'page_size': 4,
           }
       });
-  }
+  },
+
+  deleteRecipe: (id) => {
+    return http.delete(`/recipe/${id}`);
+  },
 };
