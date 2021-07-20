@@ -122,32 +122,29 @@ function CreateRecipe (props) {
                         </div>
                     </div>
                     <div>
-                        { recipe.preview_mp4_url
-                            ?   <div className={classes.recipe__video}>
-                                    <video width="1000" controls="controls">
-                                        <source src={recipe.preview_mp4_url} type="video/mp4" />
-                                    </video>
-                                    <div className={classes.recipe__video__player}>
-                                        <div className={classes.recipe__video__views}>
-                                            <img src="/images/index/ionic-md-eye.svg" alt="" />
-                                            <span>{recipe.views_count} Views</span>
-                                        </div>
-                                        <div className={classes.recipe__video__likes}>
-                                            <img src="/images/index/Icon awesome-heart.svg" alt="" />
-                                            <span>{Number(likesNumber)}</span>
-                                        </div>
-                                        <button
-                                            className={classes.recipe__video__likes_last} 
-                                            onClick={!props.account.hasToken ? openRegisterPopup('register') : onClickLike} 
-                                        >
-                                            {!likeRecipe ? <img src="/images/index/Icon-awesome-heart-null.svg" alt="" />
-                                            : <img src="/images/index/Icon awesome-heart.svg" alt="" />}
-                                            <span>Vote</span>
-                                        </button>
+                        <div className={classes.recipe__video}>
+                                {recipe.preview_mp4_url && <video width="1000" controls="controls" className={classes.recipe__video__video}>
+                                    <source src={recipe.preview_mp4_url} type="video/mp4" />
+                                </video>}
+                                <div className={classes.recipe__video__player}>
+                                    <div className={classes.recipe__video__views}>
+                                        <img src="/images/index/ionic-md-eye.svg" alt="" />
+                                        <span>{recipe.views_count} Views</span>
                                     </div>
+                                    <div className={classes.recipe__video__likes}>
+                                        <img src="/images/index/Icon awesome-heart.svg" alt="" />
+                                        <span>{Number(likesNumber)}</span>
+                                    </div>
+                                    <button
+                                        className={classes.recipe__video__likes_last} 
+                                        onClick={!props.account.hasToken ? openRegisterPopup('register') : onClickLike} 
+                                    >
+                                        {!likeRecipe ? <img src="/images/index/Icon-awesome-heart-null.svg" alt="" />
+                                        : <img src="/images/index/Icon awesome-heart.svg" alt="" />}
+                                        <span>Vote</span>
+                                    </button>
                                 </div>
-                            : ''
-                        }
+                            </div>
                         </div>
                     <div>
                         <h2 className={classes.recipe__title}>Description</h2>
