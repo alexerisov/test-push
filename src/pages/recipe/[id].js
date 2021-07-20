@@ -19,6 +19,7 @@ function CreateRecipe (props) {
     const [recipeId, setRecipeId] = useState();
     const [recipe, setRecipe] = useState();
     const [likeRecipe, setLikeRecipe] = useState(false);
+    const [likesNumber, setLikesNumber] = useState(false);
     const [authorPk, setAuthorPk] = useState();
 
     useEffect(() => {
@@ -41,7 +42,8 @@ function CreateRecipe (props) {
         try {
           const response = await Recipe.getRecipe(recipeId);
           setRecipe(response.data);
-          setLikeRecipe(response.data.user_liked)
+          setLikeRecipe(response.data.user_liked);
+          setLikesNumber(response.data.likes_number);
         } catch (e) {
           console.log(e);
         }
@@ -49,8 +51,14 @@ function CreateRecipe (props) {
 
     const onClickLike = () => {
         Recipe.uploadLikesRecipe(recipeId)
-        .then(() => {
+        .then((res) => {
+          if (res.data.like_status === "deleted") {
+            setLikeRecipe(false);
+            (likesNumber > 0) && setLikesNumber(likesNumber - 1)
+          } else {
             setLikeRecipe(true);
+            setLikesNumber(likesNumber + 1)
+          }
         })
         .catch((err) => console.log(err));
     };
@@ -116,7 +124,7 @@ function CreateRecipe (props) {
                                         </div>
                                         <div className={classes.recipe__video__likes}>
                                             <img src="/images/index/Icon awesome-heart.svg" alt="" />
-                                            <span>{recipe.likes_number ?? 0}</span>
+                                            <span>{Number(likesNumber)}</span>
                                         </div>
                                         <button className={classes.recipe__video__likes_last} onClick={onClickLike} >
                                             {!likeRecipe ? <img src="/images/index/Icon-awesome-heart-null.svg" alt="" />
