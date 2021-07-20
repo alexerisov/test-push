@@ -88,13 +88,17 @@ const HeaderDefault = (props) => {
               </Link>
             </MenuItem>
             <MenuItem onClick={handleClose}>
-              <Link href="/my-uploads">
-                <a className={classes.header__link_place_menu}>Saved Recipes</a>
+              <Link href={props?.account?.profile?.user_type === viewerType ? "/" : "/my-uploads"}>
+                <a className={classes.header__link_place_menu}>
+                  {props?.account?.profile?.user_type === viewerType ? "Saved Recipes" : "Uploads" }
+                </a>
               </Link>
             </MenuItem>
             <MenuItem onClick={handleClose}>
               <Link href="/">
-                <a className={classes.header__link_place_menu}>History</a>
+                <a className={classes.header__link_place_menu}>
+                  {props?.account?.profile?.user_type === viewerType ? "History" : "My videos" }
+                </a>
               </Link>
             </MenuItem>
             <MenuItem onClick={handleClose}>

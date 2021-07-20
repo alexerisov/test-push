@@ -37,14 +37,6 @@
     @include fontMedium();
   }
 
-  &__btn {
-
-    &__icon {
-      position: absolute;
-      left: 9px;
-    }
-  }
-
   &__recipes {
     display: flex;
     flex-wrap: wrap;

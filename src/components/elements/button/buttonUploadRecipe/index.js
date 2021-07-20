@@ -1,18 +1,38 @@
 import React from 'react';
-import Link from "next/link";
+import { Button } from '@material-ui/core';
+import {makeStyles} from "@material-ui/core/styles";
 
-import classes from "./buttonUploadRecipe.module.scss";
+import styles from "./buttonUploadRecipe.module.scss";
+import uploadIcon from "../../../../../public/images/index/icon_upload.svg";
 
-const buttonUploadRecipe = ({ children }) => {
+const useStyles = makeStyles({
+  root: {
+    position: 'relative',
+    padding: '5px 9px',
+    fontSize: '20px',
+    borderWidth: '2px'
+  },
+  outlinedPrimary: {
+    '&:hover': {
+      borderWidth: '2px'
+    },
+  }
+});
+
+const buttonUploadRecipe = () => {
+  const classes = useStyles();
+
   return (
     <>
-      <Link
+      <Button
+        color="primary"
+        variant="outlined"
         href="/recipe/upload"
+        classes={{root: classes.root, outlinedPrimary: classes.outlinedPrimary}}
       >
-        <button type="btn" className={classes.btn}>
-          {children}
-        </button>
-      </Link>
+          <img className={styles.icon} src={uploadIcon} alt="upload recipe icon"/>
+          <span className={styles.name}>Upload your recipe</span>
+      </Button>
     </>
   );
 };
