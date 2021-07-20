@@ -19,7 +19,10 @@ class LoginSocial extends Component {
     } else {
       this.query = new URLSearchParams(this.props.router.asPath);
     }
-    const access_token = this.query.get('access_token');
+    let access_token = this.query.get('access_token');
+    if (!access_token) {
+      access_token = this.query.get('code');
+    }
     const state = JSON.parse(this.query.get('state').replace("#_", ""));
     if (this.props.account.hasToken) {
       Router.router.push('/');
