@@ -30,6 +30,7 @@
     "axios": "^0.21.1",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.2.2",
+    "clamp-js": "^0.7.0",
     "cross-env": "^7.0.3",
     "css-loader": "^5.0.1",
     "eslint": "^7.18.0",
