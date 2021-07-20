@@ -24,7 +24,7 @@ const Carousel = () => {
     };
 
     React.useEffect(() => {
-      Recipe.getHomepageBanners()
+      Recipe.getHomepageCarouselItems()
       .then((data) => {
         setItemList(data.data);
       });
@@ -47,8 +47,8 @@ const Carousel = () => {
                 {
                     itemList.map((item, index) => {
                         return  <div
-                                    key={`banner-${index}`}
-                                    className={classes.carousel__banner}
+                                    key={`carousel-item-${index}`}
+                                    className={classes.carousel__item}
                                     style={{
                                         backgroundImage: `url(${item.image})`,
                                         display: `${index == position ? 'block' : 'none'}`,
