@@ -81,6 +81,7 @@ const HighestRatedMealsBlock = () => {
                         image={recipe?.images[0]?.url}
                         name={recipe?.user?.full_name}
                         city={recipe?.user?.city}
+                        likes={recipe?.likes_number}
                         id={recipe.pk}
                       />;
             })

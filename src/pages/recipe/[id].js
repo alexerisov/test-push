@@ -39,7 +39,7 @@ function CreateRecipe (props) {
         }
     };
 
-    const onClickLikeVideo = () => {
+    const onClickLike = () => {
         Recipe.uploadLikesRecipe(recipeId)
         .then(() => {
             setLikeRecipe(true);
@@ -83,7 +83,7 @@ function CreateRecipe (props) {
                                             <img src="/images/index/Icon awesome-heart.svg" alt="" />
                                             <span>{recipe.likes_number ?? 0}</span>
                                         </div>
-                                        <button className={classes.recipe__video__likes_last} onClick={onClickLikeVideo} >
+                                        <button className={classes.recipe__video__likes_last} onClick={onClickLike} >
                                             {!likeRecipe ? <img src="/images/index/Icon-awesome-heart-null.svg" alt="" />
                                             : <img src="/images/index/Icon awesome-heart.svg" alt="" />}
                                             <span>Vote</span>
