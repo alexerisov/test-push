@@ -9,7 +9,7 @@ const useStyles = makeStyles({
   root: {
     position: 'relative',
     padding: '5px 9px',
-    fontSize: '20px',
+    fontSize: '19px',
     borderWidth: '2px'
   },
   outlinedPrimary: {
