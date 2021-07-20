@@ -14,10 +14,13 @@ class LoginSocial extends Component {
 
   constructor(props) {
     super(props);
-    this.query = new URLSearchParams(this.props.router.asPath.split('#').pop());
+    if (this.props.router.asPath.includes('social#')) {
+      this.query = new URLSearchParams(this.props.router.asPath.split('social#').pop());
+    } else {
+      this.query = new URLSearchParams(this.props.router.asPath);
+    }
     const access_token = this.query.get('access_token');
     const state = JSON.parse(this.query.get('state'));
-    console.debug(state);
     if (this.props.account.hasToken) {
       Router.router.push('/');
     }
