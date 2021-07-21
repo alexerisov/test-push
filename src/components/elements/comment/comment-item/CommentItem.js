@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import ThumbDownOutlinedIcon from '@material-ui/icons/ThumbDownOutlined';
 
@@ -6,6 +6,7 @@ import classes from './CommentItem.module.scss';
 
 import defaultAvatar from '../../../../../public/images/index/icon_user.svg';
 import Recipe from "@/api/Recipe";
+import { debounce } from "@/utils/debounce";
 
 const CommentItem = ({ likesNumber, dislikesNumber, avatar, text, username, commentId }) => {
   const status = {
@@ -18,10 +19,16 @@ const CommentItem = ({ likesNumber, dislikesNumber, avatar, text, username, comm
     dislike: 'dislike'
   };
 
-  const [likes, setLikes] = useState(Number(likesNumber));
-  const [dislikes, setDislikes] = useState(Number(dislikesNumber));
+  const [likes, setLikes] = useState({
+    value: Number(likesNumber),
+    updated: false
+  });
+  const [dislikes, setDislikes] = useState({
+    value: Number(dislikesNumber),
+    updated: false
+  });
 
-  const uploadLike = async ({type}) => {
+  const uploadLike = async (type) => {
     try {
       const targetLike = {
         id: commentId,
@@ -38,24 +45,40 @@ const CommentItem = ({ likesNumber, dislikesNumber, avatar, text, username, comm
     }
   };
 
+  const likeHandler = debounce((type) => {
+    uploadLike(type);
+  }, 600);
+
   const setLikeValuesByResponseLikeStatus = ({likeStatus, dislikeStatus}) => {
-    let likesCount = likes;
-    let dislikesCount = dislikes;
+    let likeCount = likes.value;
+    let dislikeCount = dislikes.value;
 
-    if (likeStatus === status.created) {
-      setLikes(++likesCount);
+    if (likeStatus === status.created && !likes.updated) {
+      setLikes({
+        value: ++likeCount,
+        updated: true
+      });
     }
 
-    if (likeStatus === status.deleted) {
-      setLikes(--likesCount);
+    if (likeStatus === status.deleted && likes.updated) {
+      setLikes({
+        value: --likeCount,
+        updated: false
+      });
     }
 
-    if (dislikeStatus === status.created) {
-      setDislikes(++dislikesCount);
+    if (dislikeStatus === status.created && !dislikes.updated) {
+      setDislikes({
+        value: ++dislikeCount,
+        updated: true
+      });
     }
 
-    if (dislikeStatus === status.deleted) {
-      setDislikes(--dislikesCount);
+    if (dislikeStatus === status.deleted && dislikes.updated) {
+      setDislikes({
+        value: --dislikeCount,
+        updated: false
+      });
     }
   };
 
@@ -73,18 +96,18 @@ const CommentItem = ({ likesNumber, dislikesNumber, avatar, text, username, comm
             <ThumbUpOutlinedIcon
               classes={{root:classes.comment__like__icon}}
               style={{fontSize: '30px'}}
-              onClick={() => uploadLike({type:likeTypes.like})}
+              onClick={() => likeHandler(likeTypes.like)}
             />
-            <span>{likes} Likes</span>
+            <span>{likes.value} Likes</span>
           </div>
 
           <div className={classes.comment__like}>
             <ThumbDownOutlinedIcon
               classes={{root:classes.comment__like__icon}}
               style={{fontSize: '30px'}}
-              onClick={() => uploadLike({type: likeTypes.dislike})}
+              onClick={() => likeHandler(likeTypes.dislike)}
             />
-            <span>{dislikes} Dislikes</span>
+            <span>{dislikes.value} Dislikes</span>
           </div>
         </div>
       </div>
