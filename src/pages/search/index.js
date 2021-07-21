@@ -232,11 +232,7 @@ const Recipes = (props) => {
   };
 
   const handleClickClearAll = () => {
-    setPageError(false);
-    setTypeSelection("Food");
-    setPage(1);
-    formik.handleReset();
-    formik.handleSubmit();
+    router.push(`/search?title=`);
   };
 
   const setTypeSelectionFood = (event) => {

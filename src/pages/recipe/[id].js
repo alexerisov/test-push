@@ -100,7 +100,7 @@ function CreateRecipe (props) {
             <>
             <h2 className={classes.recipe__navbar}>
                 <Link href="/"><a>Home /</a></Link>
-                <Link href="/recipe/recipes"><a> Recipes /</a></Link>
+                <Link href="/my-uploads"><a> Recipes /</a></Link>
                 <span> {recipe.title}</span></h2>
             <div className={classes.recipe__content}>    
                 <div className={classes.recipe__recipeContent}>
