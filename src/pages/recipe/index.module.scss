@@ -29,6 +29,11 @@
 
     &__deleteButton {
         border: none;
+        cursor: pointer;
+
+        &:hover {
+            opacity: 0.5;
+        }
 
         img {
             width: 30px;

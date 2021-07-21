@@ -10,14 +10,6 @@
     display: grid;
     grid-template-columns: auto auto;
 
-    button {
-      border: none;
-      color: $--color-orange;
-      @include fontRegular();
-      font-size: 15px;
-      cursor: pointer;
-    }
-
     a {
       margin: 0 15px 0 0;
     }
@@ -25,6 +17,25 @@
     p:last-of-type {
       color: $--color-orange;
       margin: 0 0 0 6px;
+    }
+  }
+
+  &__buttonLink {
+    border: none;
+    color: $--color-orange;
+    @include fontRegular();
+    font-size: 15px;
+    cursor: pointer;
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 150px;
+
+    button {
+      margin-left: auto;
     }
   }
 }

@@ -6,7 +6,7 @@ import classes from "./index.module.scss";
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import TextField from '@material-ui/core/TextField';
-import { profileActions } from '@/store/actions';
+import { Button } from "@material-ui/core";
 import Recipe from '@/api/Recipe.js';
 import Link from "next/link";
 import { useRouter } from 'next/router';
@@ -60,18 +60,28 @@ function SearchBanner (props) {
               onChangeInputSearch();  
             }}
             fullWidth
-          />
+        />
+        <div className={classes.search__container}>
+          <div className={classes.search__grid}>
+            <p>Suggestions :</p>
+            <p>
+            {result.map((item, index) => {
+              return <Link key={index} href={`/search/?title=${item.result}`}>
+                <a><button onClick={onCancel} className={classes.search__buttonLink}>{item.result}</button></a>
+                </Link>
+            })}
+            </p>
+          </div>
+          <Button
+            type="submit"
+            variant='contained'
+            color='primary'
+            className={classes.search__buttonSubmit}
+          >
+            Submit
+          </Button>
+        </div>
       </form>
-      <div className={classes.search__grid}>
-        <p>Suggestions :</p>
-        <p>
-        {result.map((item, index) => {
-          return <Link key={index} href={`/search/?title=${item.result}`}>
-            <a><button onClick={onCancel}>{item.result}</button></a>
-            </Link>
-        })}
-        </p>
-      </div>
     </div>
   }
 
