@@ -9,6 +9,7 @@ import {cuisineList, recipeTypes, cookingMethods, dietaryrestrictions, cookingSk
 import { modalActions } from '@/store/actions';
 import { connect } from 'react-redux';
 import { NoSsr } from '@material-ui/core';
+import Link from "next/link";
 
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -20,6 +21,7 @@ import Typography from '@material-ui/core/Typography';
 
 import { useFormik } from 'formik';
 import Pagination from '@material-ui/lab/Pagination';
+import { route } from 'next/dist/next-server/server/router';
 
 const StyledAccordion = styled(Accordion)`
   p {
@@ -46,7 +48,6 @@ const Recipes = (props) => {
   const [data, setData] = useState();
   const [result, setResult] = useState([]);
   const [typeSelection, setTypeSelection] = useState("Food");
-  const [pageError, setPageError] = useState(false);
 
   // formik
 
@@ -67,9 +68,7 @@ const Recipes = (props) => {
       types: [],
     },
     onSubmit: (values) => {
-      // router.push({
-      //     search: `?${createQueryParams(values).toString()}`
-      // });
+      
       values.title = title;
       values.page = page;
 
@@ -77,7 +76,9 @@ const Recipes = (props) => {
         values.types = [5]
       }
 
-      setQuery(`?${createQueryParams(values).toString()}`)
+      router.push({
+          search: `?${createQueryParams(values).toString()}`
+      });
     }
   });
 
@@ -88,6 +89,8 @@ const Recipes = (props) => {
   const cookingSkillList = [];
 
   const numberCardsDisplayed = 10;
+
+  // const createFilterParams = () => {}
   
   for (let i = 1; i < Object.keys(dietaryrestrictions).length; i++) {
     dietaryrestrictionsList.push(
@@ -186,7 +189,6 @@ const Recipes = (props) => {
 
   const onChangeCheckboxInput = (e) => {
     setPage(1);
-    setPageError(false);
     formik.handleChange(e);
     formik.handleSubmit();  
   }
@@ -194,22 +196,12 @@ const Recipes = (props) => {
   useEffect(() => {
     setTitle(router.query.title);
     setPage(router.query.page ? Number(router.query.page) : 1);
-    formik.handleSubmit();
+    setQuery(router.query);
   }, [router]);
 
   useEffect(() => {
     if (query) {
       Recipe.getSearchResult(query)
-        .then((res) => setResult(res.data.results))
-        .catch(e => {
-          setPageError(true);
-          console.log('error', e);
-      });
-    }
-  }, [query])
-
-  useEffect(() => {
-      Recipe.getSearchResult(`?title=${title}`)
         .then((res) => {
           setResult(res.data.results);
           setData(res.data);
@@ -217,7 +209,8 @@ const Recipes = (props) => {
         .catch(e => {
           console.log('error', e);
       });
-  }, [title])
+    }
+  }, [query])
 
   // search banner
 
@@ -232,13 +225,12 @@ const Recipes = (props) => {
   };
 
   const handleClickClearAll = () => {
-    router.push(`/search?title=`);
+    router.push("/search");
   };
 
   const setTypeSelectionFood = (event) => {
     event.preventDefault()
     setPage(1);
-    setPageError(false);
     setTypeSelection("Food");
     formik.values.types = [];
     formik.handleSubmit();
@@ -247,18 +239,13 @@ const Recipes = (props) => {
   const setTypeSelectionBeverages = (event) => {
     event.preventDefault();
     setPage(1);
-    setPageError(false);
     setTypeSelection("Beverages");
     formik.handleSubmit();
   };
 
   const handleChangePage = (event, value) => {
-    setPage(value)
-    pushNewPage(value)
-  };
-
-  const pushNewPage = (page) => {
-    router.push(`/search?title=${title}&page=${page}`);
+    setPage(value);
+    formik.handleSubmit();
   };
 
   const content = <div className={classes.search}>
@@ -273,6 +260,7 @@ const Recipes = (props) => {
         <div className={classes.search__filterHeader_left}>
           <p className={classes.search__filter__title}>Filter</p>
           <button type="reset" onClick={handleClickClearAll} className={classes.search__clearButton}>Clear all</button>
+          {/* <Link href="/search"><a>Clear all</a></Link> */}
         </div>
         <div>
           <button
