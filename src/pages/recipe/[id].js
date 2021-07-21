@@ -112,9 +112,14 @@ function CreateRecipe (props) {
                             <RaitingIcon value={recipe.avg_rating} />
                         </div>
                         <div className={classes.recipe__icons}>
-                            {(recipe.user.pk === authorPk) && <button className={classes.recipe__deleteButton} onClick={handleClickDelete('confirmation')}>
-                                <img src="/images/index/delete.svg" />
-                            </button>}
+                            {(recipe.user.pk === authorPk) && <div>
+                                <Link href={`/recipe/editing/${recipeId}`}>
+                                    <a className={classes.recipe__linkEdit}><img src="/images/index/pencil-black.svg" /></a>
+                                </Link>
+                                <button className={classes.recipe__deleteButton} onClick={handleClickDelete('confirmation')}>
+                                    <img src="/images/index/delete.svg" />
+                                </button>
+                            </div>}
                             <div className={classes.recipe__time}>
                                 <img src="/images/index/timer.svg" />
                                 <p>{recipe.cooking_time.slice(3, 5)} MIN</p>
