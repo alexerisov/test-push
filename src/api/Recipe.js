@@ -101,8 +101,26 @@ export default {
     return http.get(`/recipe/search_suggestions?search=${search}`);
   },
 
-  getSearchResult: (search) => {
-    return http.get(`/recipe${search}`);
+  getSearchResult: ({
+    cooking_methods = null,
+    cooking_skills = null,
+    cuisines = null,
+    diet_restrictions = null,
+    page = null,
+    title = null,
+    types = null,
+  }) => {
+    return http.get(`/recipe`, {
+      params: {
+        cooking_methods,
+        cooking_skills,
+        cuisines,
+        diet_restrictions,
+        page,
+        title,
+        types,
+      },
+    });
   },
 
   getTopRatedMeals: () => {
