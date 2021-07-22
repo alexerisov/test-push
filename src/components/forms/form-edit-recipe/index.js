@@ -20,7 +20,7 @@ import FieldError from '../../elements/field-error';
 import {cuisineList, recipeTypes, cookingMethods, dietaryrestrictions} from '@/utils/datasets';
 import { isWindowExist } from '@/utils/isTypeOfWindow';
 import classes from "./form-create-recipe.module.scss";
-import { CardIngredient, CardNutrition, CardImage } from '@/components/elements/card';
+import { CardIngredient, CardNutrition, CardImageEditRecipe } from '@/components/elements/card';
 import Recipe from '@/api/Recipe';
 
 const useStyles = makeStyles((theme) => ({
@@ -148,10 +148,15 @@ function FormEditRecipe (props) {
     props.dispatch(recipeEditActions.update(newData));
   }
 
-  function handleRemoveImage (id) {
+  function handleRemoveImage (id, pk) {
     const newImagetList = data?.images.filter((image, index) => index !== id);
     const newData = { ...data, images: newImagetList };
-    props.dispatch(recipeEditActions.update(newData));
+
+    const newImagetListId = [pk];
+
+    const newDataDelete = { ...newData, images_to_delete: newImagetListId };
+
+    props.dispatch(recipeEditActions.update(newDataDelete));
   }
 
   function handleDeleteStep (e) {
@@ -395,11 +400,13 @@ function FormEditRecipe (props) {
           <div className={classes.createRecipeSection__grid_type_cardImages}>
             {
               data?.images.length !== 0
-              ? data?.images.map((item, index) => <CardImage
+              ? data?.images.map((item, index) => <CardImageEditRecipe
                                                           delete={handleRemoveImage}
                                                           key={index}
                                                           src={item.url ?? URL.createObjectURL(item)}
-                                                          id={index}/>)
+                                                          id={index}
+                                                          pk={item.id}/>
+                                                          )
               : ''
             }
             <label htmlFor="create-images" className={classes.createRecipeLabel_type_addImage}

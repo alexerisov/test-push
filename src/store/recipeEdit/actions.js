@@ -56,6 +56,7 @@ export default {
             fats: data?.fats,
             steps: data?.steps,
             publish_status: data?.publish_status,
+            images_to_delete: data?.images_to_delete,
           },
           data?.images ?? null,
           data.id
