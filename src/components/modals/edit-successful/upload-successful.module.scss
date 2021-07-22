@@ -1,0 +1,36 @@
+@import "~styles/variables.scss";
+
+.UploadSuccess {
+  padding: 0 35px 20px;
+  color: $--color-gray7;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 40px;
+
+  &__title {
+    font-size: 18px;
+    line-height: 1.22;
+    font-weight: 900;
+    margin: 25px 0;
+  }
+
+  &__button {
+    width: 144px;
+    height: 40px;
+    padding: 11px 0;
+    text-align: center;
+    border: none;
+    outline: none;
+    border-radius: 3px;
+    cursor: pointer;
+    color: $--color-white;
+    font: 16px/22px "Montserrat";
+    font-weight: 900;
+    font-size: 14px;
+    line-height: 1.29;
+    text-align: center;
+    background-color: $--color-blue;
+  }
+}

@@ -311,3 +311,24 @@
     line-height: 1.5;
   }
 }
+
+.recipe__video {
+  max-height: 310px;
+  display: block;
+
+  &__button {
+    width: 200px;
+    height: 40px;
+    margin: 20px 0 0 0;
+    font-size: 25px;
+    border: $--color-orange 1px solid;
+    border-radius: 7px;
+    cursor: pointer;
+    color: $--color-orange;
+
+    &:hover {
+      background-color: $--color-orange;
+      color: $--color-white;
+    }
+  }
+}
