@@ -1,0 +1,54 @@
+@import "~styles/mixins/mixins.scss";
+
+.shareBtn {
+  position: relative;
+  width: max-content;
+
+  &__dropdown {
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    z-index: 5;
+    transform: translateY(100%);
+    min-width: 50%;
+    height: max-content;
+    padding: 5px 0;
+    border-radius: 5px;
+    overflow: hidden;
+    opacity: 1;
+    background-color: #fff;
+    box-shadow: 0px 3px 6px #00000029;
+    transition: 0.25s;
+
+    &__disabled {
+      @extend .shareBtn__dropdown;
+      height: 0;
+      padding: 0;
+      opacity: 0;
+      transition: 0.25s;
+    }
+  }
+
+  &__icon {
+    width: 15px;
+    height: 15px;
+    margin-right: 10px;
+    transform: rotate(-45deg);
+  }
+
+  &__dropdown__item {
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    height: 30px;
+    cursor: pointer;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.04);
+    }
+  }
+}

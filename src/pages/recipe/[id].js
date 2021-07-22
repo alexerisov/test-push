@@ -6,11 +6,11 @@ import RaitingIcon from "@/components/elements/rating-icon";
 import Recipe from '@/api/Recipe.js';
 import { useRouter } from 'next/router';
 import {cuisineList, recipeTypes, cookingMethods, dietaryrestrictions} from '@/utils/datasets';
-import { Button } from '@material-ui/core';
 import Link from "next/link";
 import ResipeComments from "@/components/blocks/recipe-comments";
 import Account from '@/api/Account.js';
 import { modalActions } from '@/store/actions';
+import { ButtonShare } from '@/components/elements/button';
 
 function CreateRecipe (props) {
 
@@ -266,12 +266,7 @@ function CreateRecipe (props) {
                 <p className={classes.recipe__banner__title}>Do you <span>have any question</span> or ready <span>to cook?</span></p>
                 <p className={classes.recipe__banner__subtitle}>share your mail id and we will shortly connect you</p>
                 <input className={classes.recipe__banner__inputEmail} placeholder="example@gmail.com"></input>
-                <Button
-                  variant='contained'
-                  color='primary'
-                >
-                  Share
-                </Button>
+                <ButtonShare recipeId={recipeId}/>
                 <img src="/images/index/banner-view-recipe.svg" className={classes.recipe__banner__photo} />
             </div>
             </>
@@ -279,7 +274,9 @@ function CreateRecipe (props) {
     </div>
 
     return (
+      <>
         <LayoutPage content={content} />
+      </>
     );
 }
 
