@@ -158,7 +158,6 @@ function FormEditRecipe (props) {
     e.preventDefault();
     const newStepList = data?.steps.filter((step) => step.num !== +e.currentTarget.id);
     const newData = { ...data, steps: newStepList };
-    console.log(newData);
     props.dispatch(recipeEditActions.update(newData));
   }
 
@@ -192,7 +191,6 @@ function FormEditRecipe (props) {
     CameraTag.observe("DemoCamera", "published", function(){
       const myCamera = CameraTag.cameras["DemoCamera"];
       const myVideo = myCamera.getVideo();
-      console.log(myVideo);
       const thumbnail = `https:${myVideo.medias.vga_thumb}`;
       const full_thumbnail = `https:${myVideo.medias.vga_filmstrip}`;
       const mp4 = `https:${myVideo.medias['720p']}`;
