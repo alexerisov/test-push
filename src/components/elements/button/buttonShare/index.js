@@ -1,33 +1,52 @@
 import React, { useState, useEffect } from 'react';
+import {connect} from "react-redux";
 import Clipboard from 'clipboard';
-import LinkIcon from '@material-ui/icons/Link';
-
-import { Button } from "@material-ui/core";
+import ShareIcon from '@material-ui/icons/Share';
+import Tooltip from '@material-ui/core/Tooltip';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 import Recipe from "@/api/Recipe";
+import {modalActions} from "@/store/actions";
 
-import classes from './buttonShare.module.scss';
+import styles from './buttonShare.module.scss';
 
-const Index = ({recipeId}) => {
-  const [anchorEl, setAnchorEl] = useState(false);
+const ButtonShare = ({recipeId, account, dispatch}) => {
+  const [open, setOpen] = useState(false);
+  const isAuthorized = account.hasToken;
+
+  const openRegisterPopup = (name) => {
+    return () => {
+      dispatch(
+        modalActions.open(name),
+      ).then(result => {
+        // result when modal return promise and close
+      });
+    };
+  };
+
+  const handleTooltipOpen = () => {
+    setOpen(true);
+  };
+
+  const handleTooltipClose = () => {
+    setOpen(false);
+  };
 
   useEffect(() => {
     const currentUrl = window.location.href;
 
-    new Clipboard('.copy-clipboard', {
-      text: () => {
-        return currentUrl;
-      }
-    });
-  }, []);
-
-  const toggleMenu = () => {
-    setAnchorEl(!anchorEl);
-  };
+    if (isAuthorized) {
+      new Clipboard('.buttonShare_shareBtn__1v3WU', {
+        text: () => {
+          return currentUrl;
+        }
+      });
+    }
+  }, [isAuthorized]);
 
   const copyLink = async () => {
-    uploadShareStats();
-    setAnchorEl(!anchorEl);
+    await uploadShareStats();
+    handleTooltipOpen();
   };
 
   const uploadShareStats = () => {
@@ -40,23 +59,33 @@ const Index = ({recipeId}) => {
   };
 
   return (
-    <div className={classes.shareBtn}>
-      <Button
-        variant='contained'
-        color='primary'
-        onClick={toggleMenu}
+    <ClickAwayListener onClickAway={handleTooltipClose}>
+      <Tooltip
+        classes={{tooltipArrow: styles.shareBtn__tooltipArrow}}
+        arrow
+        PopperProps={{
+          disablePortal: true,
+        }}
+        onClose={handleTooltipClose}
+        open={open}
+        disableFocusListener
+        disableHoverListener
+        disableTouchListener
+        title="Successfully copied!"
       >
-        Share
-      </Button>
-
-      <ul className={anchorEl ? classes.shareBtn__dropdown : classes.shareBtn__dropdown__disabled}>
-        <li className={`${classes.shareBtn__dropdown__item} copy-clipboard`} onClick={copyLink}>
-          <LinkIcon classes={{root: classes.shareBtn__icon}}/>
-          Copy Link
-        </li>
-      </ul>
-    </div>
+        <button
+          className={styles.shareBtn}
+          type="button"
+          onClick={!isAuthorized ? openRegisterPopup('register') : copyLink}
+        >
+          <ShareIcon />
+          <span className={styles.shareBtn__text}>Share</span>
+        </button>
+      </Tooltip>
+    </ClickAwayListener>
   );
 };
 
-export default Index;
+export default connect((state) => ({
+  account: state.account,
+}))(ButtonShare);
