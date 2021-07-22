@@ -50,4 +50,8 @@ body {
         min-width: 0;
         margin: 0 10px 0 0;
     }
+
+    [class*='MuiTooltip-popper'] {
+        z-index: 195;
+    }
 }
