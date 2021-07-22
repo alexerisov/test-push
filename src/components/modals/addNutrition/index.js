@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {LayoutModal} from '@/components/layouts';
 import { modalActions, recipeUploadActions } from '@/store/actions';
@@ -37,6 +37,8 @@ function AddNutrition (props) {
     quantity: '',
   });
 
+  const [error, setError] = useState(false);
+
   function onChangeField(name) {
     return (event) => {
       const newData = { ...nutrition, [name]: event.target.value };
@@ -44,8 +46,33 @@ function AddNutrition (props) {
     };
   }
 
+  function handleValidationOnSubmit() {
+    if (nutrition.title === "calories") {
+      if (nutrition.quantity > 0 && nutrition.quantity < 100000) {
+        setError(false);
+        return true;
+      }
+      if (nutrition.quantity > 99999) {
+        setError("The maximum possible value 99999");
+        return false;
+      }
+    }
+    if (nutrition.quantity > 100) {
+      setError("The maximum possible value 100");
+      return false;
+    }
+    if (nutrition.quantity < 0) {
+      setError("Minimum possible value 0");
+      return false;
+    }
+    return true;
+  }
+
   function handleAddNutrition (e) {
     e.preventDefault();
+    if (!handleValidationOnSubmit()) {
+      return;
+    }
     const newData = { ...data, [nutrition.title]: nutrition.quantity };
     props.dispatch(recipeUploadActions.update(newData));
     props.dispatch(modalActions.close());
@@ -115,6 +142,7 @@ function AddNutrition (props) {
           >
             Add
           </button>
+          {error && <p>{error}</p>}
         </div>
       </form>
     </div>;

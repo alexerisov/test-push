@@ -46,15 +46,36 @@ function EditNutrition (props) {
     };
   }
 
+  function handleValidationOnSubmit() {
+    if (nutrition.title === "calories") {
+      if (nutrition.quantity > 0 && nutrition.quantity < 100000) {
+        setError(false);
+        return true;
+      }
+      if (nutrition.quantity > 99999) {
+        setError("The maximum possible value 99999");
+        return false;
+      }
+    }
+    if (nutrition.quantity > 100) {
+      setError("The maximum possible value 100");
+      return false;
+    }
+    if (nutrition.quantity < 0) {
+      setError("Minimum possible value 0");
+      return false;
+    }
+    return true;
+  }
+
   function handleAddNutrition (e) {
     e.preventDefault();
-    if (nutrition.quantity < 1) {
-      setError(true);
-    } else {
-      const newData = { ...data, [nutrition.title]: nutrition.quantity };
-      props.dispatch(recipeEditActions.update(newData));
-      props.dispatch(modalActions.close());
+    if (!handleValidationOnSubmit()) {
+      return;
     }
+    const newData = { ...data, [nutrition.title]: nutrition.quantity };
+    props.dispatch(recipeEditActions.update(newData));
+    props.dispatch(modalActions.close());
   }
 
   const onCancel = () => {
@@ -113,7 +134,7 @@ function EditNutrition (props) {
           >
             Add
           </button>
-          {error && <p>Quantity must be positive</p>}
+          {error && <p>{error}</p>}
         </div>
       </form>
     </div>;
