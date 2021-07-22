@@ -92,6 +92,14 @@ export default {
   uploadLikesRecipe: (id) => {
     return http.post(`/recipe/${id}/like`);
   },
+
+  uploadShareStatsForRecipe: (recipeId) => {
+    return http.post(`/stats/increment`, {
+      "key": "SHARES_COUNTER",
+      "content_type": "recipe",
+      "object_id": recipeId
+    });
+  },
   
   getPinnedMeals: () => {
     return http.get(`/recipe/pinned_meals`);
