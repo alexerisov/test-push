@@ -19,6 +19,14 @@
     margin: 2px 0 0 7px;
   }
 
+  &__icon {
+    display: inline-block;
+    width: 20px;
+    height: 18px;
+    margin-top: 2px;
+    font-size: 21px;
+  }
+
   &__tooltipArrow span {
     color: rgba(97, 97, 97, 0.9) !important;
   }
