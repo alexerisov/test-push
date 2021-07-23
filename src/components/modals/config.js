@@ -7,3 +7,4 @@ export { default as addNutrition } from './addNutrition';
 export { default as addStep } from './addStep';
 export { default as uploadSuccessful } from './upload-successful';
 export { default as changeStatusSuccess } from './change-status-success';
+export { default as showRecipePhotos } from './showRecipePhotos';
