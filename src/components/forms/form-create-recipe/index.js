@@ -263,6 +263,7 @@ function FormCreateRecipe (props) {
                                                           key={index}
                                                           title={item.title}
                                                           quantity={item.quantity}
+                                                          unit={item.unit}
                                                           id={index}/>)
               : ''
             }

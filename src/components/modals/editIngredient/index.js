@@ -5,6 +5,8 @@ import { modalActions, recipeEditActions } from '@/store/actions';
 import { connect } from 'react-redux';
 import classes from "./addIngredient.module.scss";
 import TextField from '@material-ui/core/TextField';
+import { units } from '@/utils/datasets';
+import { Select, MenuItem } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   textField: {
@@ -18,13 +20,30 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 5 + ITEM_PADDING_TOP,
+      width: 400,
+    },
+  },
+};
+
 function EditIngredient (props) {
   const classMarerialUi = useStyles();
   const { data } = props.recipeEdit;
   const [ingredient, setIngedient] = React.useState({
     title: '',
     quantity: '',
+    unit: '',
   });
+
+  const unitsList = [];
+  for (let i = 1; i < Object.keys(units).length; i++) {
+    unitsList.push(<MenuItem key={i} value={units[i]}>{units[i]}</MenuItem>);
+  }
 
   function onChangeField(name) {
     return (event) => {
@@ -60,9 +79,10 @@ function EditIngredient (props) {
             className={classMarerialUi.textField}
           />
         </div>
-        <div>
+        <div className={classes.addIngredient__container}>
           <label htmlFor="addIngredient-quantity" className={classes.addIngredient__label}>Quantity</label>
           <TextField
+            type="number"
             id="addIngredient-quantity"
             name="quantity"
             value={ingredient.quantity}
@@ -71,6 +91,19 @@ function EditIngredient (props) {
             fullWidth
             className={classMarerialUi.textField}
           />
+          <label htmlFor="create-types-select" className={classes.addIngredient__label}>Unit</label>
+          <Select
+            MenuProps={MenuProps}
+            id="addIngredient-unit"
+            name="unit"
+            value={ingredient.unit}
+            onChange={onChangeField('unit')}
+            variant="outlined"
+            fullWidth
+          >{
+            unitsList
+          }
+          </Select>
         </div>
         <div className={classes.addIngredient__buttonContainer}>
           <button
