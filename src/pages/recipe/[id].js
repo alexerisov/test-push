@@ -10,6 +10,7 @@ import Link from "next/link";
 import ResipeComments from "@/components/blocks/recipe-comments";
 import Account from '@/api/Account.js';
 import { modalActions } from '@/store/actions';
+import { recipePhotoSlider } from "@/store/actions";
 import {Button} from "@material-ui/core";
 import { ButtonShare } from "@/components/elements/button";
 
@@ -45,6 +46,7 @@ function CreateRecipe (props) {
           setRecipe(response.data);
           setLikeRecipe(response.data.user_liked);
           setLikesNumber(response.data.likes_number);
+          props.dispatch(recipePhotoSlider.setPhotos(response.data));
         } catch (e) {
           console.log(e);
         }
@@ -59,6 +61,20 @@ function CreateRecipe (props) {
           });
         };
     };
+
+    const openShowRecipePhotosPopup = (currentPhotoIndex) => {
+    return () => {
+      props.dispatch(
+        recipePhotoSlider.setStartPhoto(currentPhotoIndex)
+      );
+
+      props.dispatch(
+        modalActions.open('showRecipePhotos'),
+      ).then(result => {
+        // result when modal return promise and close
+      });
+    };
+  };
 
     const onClickLike = () => {
         Recipe.uploadLikesRecipe(recipeId)
@@ -238,11 +254,12 @@ function CreateRecipe (props) {
                     </div>
 
                     <div className={classes.recipe__gridPhoto}>
-                        {recipe.images.map((item) => 
+                        {recipe.images.map((item, index) =>
                         <div
-                            key={item.id} 
+                            key={item.id}
                             className={classes.cardImage}
                             style={{backgroundImage: `url(${item.url})`}}
+                            onClick={openShowRecipePhotosPopup(index)}
                         />)}
                     </div>
 

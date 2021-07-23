@@ -11,3 +11,4 @@ export { default as editStep } from './editStep';
 export { default as uploadSuccessful } from './upload-successful';
 export { default as editSuccessful } from './edit-successful';
 export { default as changeStatusSuccess } from './change-status-success';
+export { default as showRecipePhotos } from './showRecipePhotos';
