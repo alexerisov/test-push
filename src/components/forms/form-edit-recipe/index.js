@@ -82,6 +82,8 @@ function FormEditRecipe (props) {
 
   const [newVideo, setNewVideo] = useState(false);
 
+  const [statusSubmit, setStatusSubmit] = useState('Edit');
+
   useEffect(() => {
     Recipe.getRecipe(recipeId)
     .then((res) => {
@@ -181,7 +183,7 @@ function FormEditRecipe (props) {
     return itemList;
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isWindowExist()) {
       CameraTag.setup();
     }
@@ -202,21 +204,25 @@ function FormEditRecipe (props) {
         preview_mp4_url: mp4,
         preview_webm_url: webm,
       };
-        if (!props.recipeEdit.data.preview_mp4_url) {
+      console.log(newData)
+        if (props.recipeEdit.data.preview_mp4_url !== mp4) {
         props.dispatch(recipeEditActions.update(newData));
       }
     });
   }
   
   function uploadRecipe (e) {
+    setStatusSubmit('Loading...');
     e.preventDefault();
       props.dispatch(recipeEditActions.updateRecipe(data))
       .then((data) => {
+        setStatusSubmit('Edit');
         return props.dispatch(modalActions.open('editSuccessful',{
           pk: data.pk,
         }));
       })
       .catch((error) => {
+        setStatusSubmit('Edit');
         console.log(error);
       });
     // }
@@ -595,7 +601,7 @@ function FormEditRecipe (props) {
           className={classes.createRecipeButton}
           onClick={uploadRecipe}
           >
-          <p className={classes.createRecipeButton__text}>Edit</p>
+          <p className={classes.createRecipeButton__text}>{statusSubmit}</p>
         </button>
         <button
         className={classes.createRecipeButton_color_gray}
