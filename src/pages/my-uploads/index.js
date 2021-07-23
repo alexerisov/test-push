@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { withRouter } from "next/router";
 
 import Link from "next/link";
 import { ButtonUploadRecipe } from '@/components/elements/button';
@@ -6,6 +7,8 @@ import { LayoutPage } from "@/components/layouts";
 import Pagination from "@material-ui/lab/Pagination";
 import CardHighestMeals from "@/components/elements/card-highest-meals";
 import Recipe from "@/api/Recipe";
+import { RedirectWithoutAuthAndByCheckingUserType } from "@/utils/authProvider";
+import { CHEF_TYPE } from "@/utils/constants";
 
 import classes from "./index.module.scss";
 
@@ -73,9 +76,7 @@ const MyUploadsPage = () => {
     </div>
   );
 
-  return (
-      <LayoutPage content={content} />
-  );
+  return <LayoutPage content={content} />;
 };
 
-export default MyUploadsPage;
+export default withRouter(RedirectWithoutAuthAndByCheckingUserType(MyUploadsPage, CHEF_TYPE));
