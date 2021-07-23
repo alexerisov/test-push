@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {LayoutModal} from '@/components/layouts';
 import { modalActions, recipeEditActions } from '@/store/actions';
@@ -26,7 +26,6 @@ const MenuProps = {
   PaperProps: {
     style: {
       maxHeight: ITEM_HEIGHT * 5 + ITEM_PADDING_TOP,
-      width: 400,
     },
   },
 };
@@ -45,6 +44,8 @@ function EditIngredient (props) {
     unitsList.push(<MenuItem key={i} value={units[i]}>{units[i]}</MenuItem>);
   }
 
+  const [error, setError] = useState(false);
+
   function onChangeField(name) {
     return (event) => {
       const newData = { ...ingredient, [name]: event.target.value };
@@ -52,8 +53,39 @@ function EditIngredient (props) {
     };
   }
 
+  const handleValidationOnSubmit = () => {
+    if (ingredient.title === "") {
+      setError("Name is required");
+      return false;
+    }
+    if (ingredient.quantity === "") {
+      setError("Quantity is required");
+      return false;
+    }
+    if (ingredient.unit === "") {
+      setError("Unit is required");
+      return false;
+    }
+    if (isNaN(ingredient.quantity)) {
+      setError("Quantity should be a number");
+      return false;
+    }
+    if (ingredient.quantity < 0) {
+      setError("Minimum possible quantity 0");
+      return false;
+    }
+    if (ingredient.quantity > 99999) {
+      setError("Maximum possible quantity 99999");
+      return false;
+    }
+    return true;
+  }
+
   function handleAddIngredient (e) {
     e.preventDefault();
+    if (!handleValidationOnSubmit()) {
+      return;
+    }
     const newData = { ...data, ingredients: [...data.ingredients, ingredient] };
     props.dispatch(recipeEditActions.update(newData));
     props.dispatch(modalActions.close());
@@ -82,7 +114,6 @@ function EditIngredient (props) {
         <div className={classes.addIngredient__container}>
           <label htmlFor="addIngredient-quantity" className={classes.addIngredient__label}>Quantity</label>
           <TextField
-            type="number"
             id="addIngredient-quantity"
             name="quantity"
             value={ingredient.quantity}
@@ -112,6 +143,7 @@ function EditIngredient (props) {
           >
             Add
           </button>
+          {error && <p>{error}</p>}
         </div>
       </form>
     </div>;
