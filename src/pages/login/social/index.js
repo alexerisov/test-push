@@ -5,6 +5,7 @@ import {loginSocialActions} from '@/store/actions';
 import Router, {withRouter} from 'next/router';
 import {withoutAuth} from '@/utils/authProvider';
 import {USER_TYPE} from '@/utils/datasets';
+import CONFIG from '@/config.js';
 
 class LoginSocial extends Component {
   static propTypes = {
@@ -36,6 +37,7 @@ class LoginSocial extends Component {
           account_type: state.account_type ?? USER_TYPE.viewerType,
           backend: state.backend,
           register: state.register,
+          redirect_uri: CONFIG.oauthRedirectUrl,
         }),
     ).then(() => {
       window.close();
