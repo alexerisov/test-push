@@ -2,15 +2,15 @@ import http from '../utils/http';
 
 export default {
   login: (email, password) => {
-    return http.post(`token/`, { email, password });
+    return http.post(`token/`, {email, password});
   },
 
-  socialLogin: ({ access_token, account_type, backend, register }) => {
+  socialLogin: ({access_token, code, account_type, backend, register}) => {
     return http.get(
-      `token/social`,
-      {
-        params: { access_token, account_type, backend, register },
-      },
+        `token/social`,
+        {
+          params: {access_token, code, account_type, backend, register},
+        },
     );
   },
 
@@ -22,13 +22,13 @@ export default {
     email,
     phone_number,
     password,
-    user_type
+    user_type,
   }) => {
     return http.post(`account/register`, {
       email,
       phone_number,
       password,
-      user_type
+      user_type,
     });
   },
 
@@ -38,7 +38,7 @@ export default {
     phone_number,
     email,
     user_type,
-    language
+    language,
   }, avatar) => {
     const formData = new FormData();
     if (avatar instanceof File) {
@@ -50,16 +50,16 @@ export default {
       phone_number,
       email,
       user_type,
-      language
+      language,
     }));
     return http.patch(
-      `account/me`,
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
+        `account/me`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
         },
-      },
     );
   },
 
@@ -69,13 +69,13 @@ export default {
     });
   },
 
-  resetPasswordCheckCode: ({ code }) => {
+  resetPasswordCheckCode: ({code}) => {
     return http.post(`account/password/reset/check`, {
       code,
     });
   },
 
-  resetPasswordSetNew: ({ code, password }) => {
+  resetPasswordSetNew: ({code, password}) => {
     return http.post(`account/password/new`, {
       code,
       password,
@@ -93,6 +93,6 @@ export default {
   },
 
   changePassword: (password, new_password) => {
-    return http.post(`/account/password/change`, { password, new_password });
+    return http.post(`/account/password/change`, {password, new_password});
   },
 };

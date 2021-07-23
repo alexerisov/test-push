@@ -20,12 +20,12 @@ export default {
     };
   },
 
-  login: ({access_token, account_type, backend, register}) => {
+  login: ({access_token, code, account_type, backend, register}) => {
     return async dispatch => {
       dispatch({type: types.SEND});
       try {
         const response = await Account.socialLogin(
-          {access_token, account_type, backend, register});
+            {access_token, code, account_type, backend, register});
         const {access, refresh} = response.data;
         const payload = {token: access, refresh};
         dispatch(accountActions.saveSession(payload));
