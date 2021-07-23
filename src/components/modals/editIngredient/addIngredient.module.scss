@@ -1,11 +1,11 @@
 @import "~styles/variables.scss";
 
-.addNutrition {
+.addIngredient {
   padding: 0 35px 20px;
   color: $--color-gray7;
 
   &__form {
-    margin: 0;
+    margin: 25px 0 0 0;
   }
 
   &__label {
@@ -44,17 +44,5 @@
     line-height: 1.29;
     text-align: center;
     background-color: $--color-blue;
-  }
-
-  &__buttonContainer {
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: space-between;
-    margin-top: 22px;
-    align-items: center;
-
-    p {
-      color: red;
-    }
   }
 }

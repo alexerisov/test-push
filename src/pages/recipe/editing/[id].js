@@ -1,12 +1,21 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { FormEditRecipe } from '@/components/forms';
 import { connect } from 'react-redux';
 import HeaderDefault from '@/components/elements/header-default';
 import { LayoutFooter } from '@/components/layouts/';
 import classes from "./create-recipe.module.scss";
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 function EditRecipe (props) {
+
+  const router = useRouter();
+
+  const [recipeId, setRecipeId] = useState();
+
+  useEffect(() => {
+    setRecipeId(router.query.id);
+  }, [router]);
 
   return (
     <div className={classes.register}>
@@ -15,7 +24,7 @@ function EditRecipe (props) {
         <script src="//cameratag.com/api/v14/js/cameratag.min.js"></script>
       </Head>
       <HeaderDefault />
-      <FormEditRecipe />
+      {recipeId && <FormEditRecipe recipeId={recipeId} />}
       <LayoutFooter />
     </div>
   );

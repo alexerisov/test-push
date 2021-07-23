@@ -6,12 +6,13 @@ import RaitingIcon from "@/components/elements/rating-icon";
 import Recipe from '@/api/Recipe.js';
 import { useRouter } from 'next/router';
 import {cuisineList, recipeTypes, cookingMethods, dietaryrestrictions} from '@/utils/datasets';
-import { Button } from '@material-ui/core';
 import Link from "next/link";
 import ResipeComments from "@/components/blocks/recipe-comments";
 import Account from '@/api/Account.js';
 import { modalActions } from '@/store/actions';
 import { recipePhotoSlider } from "@/store/actions";
+import {Button} from "@material-ui/core";
+import { ButtonShare } from "@/components/elements/button";
 
 function CreateRecipe (props) {
 
@@ -164,6 +165,7 @@ function CreateRecipe (props) {
                                         : <img src="/images/index/Icon awesome-heart.svg" alt="" />}
                                         <span>Vote</span>
                                     </button>
+                                    <ButtonShare recipeId={recipeId}/>
                                 </div>
                             </div>
                         </div>

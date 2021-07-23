@@ -92,6 +92,14 @@ export default {
   uploadLikesRecipe: (id) => {
     return http.post(`/recipe/${id}/like`);
   },
+
+  uploadShareStatsForRecipe: (recipeId) => {
+    return http.post(`/stats/increment`, {
+      "key": "SHARES_COUNTER",
+      "content_type": "recipe",
+      "object_id": recipeId
+    });
+  },
   
   getPinnedMeals: () => {
     return http.get(`/recipe/pinned_meals`);
@@ -101,8 +109,26 @@ export default {
     return http.get(`/recipe/search_suggestions?search=${search}`);
   },
 
-  getSearchResult: (search) => {
-    return http.get(`/recipe${search}`);
+  getSearchResult: ({
+    cooking_methods = null,
+    cooking_skills = null,
+    cuisines = null,
+    diet_restrictions = null,
+    page = null,
+    title = null,
+    types = null,
+  }) => {
+    return http.get(`/recipe`, {
+      params: {
+        cooking_methods,
+        cooking_skills,
+        cuisines,
+        diet_restrictions,
+        page,
+        title,
+        types,
+      },
+    });
   },
 
   getTopRatedMeals: () => {
@@ -149,5 +175,73 @@ export default {
 
   deleteRecipe: (id) => {
     return http.delete(`/recipe/${id}`);
+  },
+
+  
+  update: ({
+    title,
+    cooking_time,
+    cuisines,
+    // cooking_skill,
+    cooking_methods,
+    diet_restrictions,
+    description,
+    preview_thumbnail_url,
+    preview_full_thumbnail_url,
+    preview_mp4_url,
+    preview_webm_url,
+    types,
+    // tags,
+    language,
+    caption,
+    ingredients,
+    calories,
+    proteins,
+    carbohydrates,
+    fats,
+    steps,
+    publish_status,
+    images_to_delete},
+    images, id) => {
+    const formData = new FormData();
+    if (images.length !== 0) {
+      images.forEach((image, index) => {
+        formData.append(`images[${index}]`, image);
+      });
+    }
+    formData.append('data', JSON.stringify({
+      title,
+      cooking_time,
+      cuisines,
+      // cooking_skill,
+      cooking_methods,
+      diet_restrictions,
+      description,
+      preview_thumbnail_url,
+      preview_full_thumbnail_url,
+      preview_mp4_url,
+      preview_webm_url,
+      types,
+      // tags,
+      language,
+      caption,
+      ingredients,
+      calories,
+      proteins,
+      carbohydrates,
+      fats,
+      steps,
+      publish_status,
+      images_to_delete
+    }));
+    return http.patch(
+      `recipe/${id}`,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      },
+    );
   },
 };

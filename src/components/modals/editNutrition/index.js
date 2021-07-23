@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {LayoutModal} from '@/components/layouts';
-import { modalActions, recipeUploadActions } from '@/store/actions';
+import { modalActions, recipeEditActions } from '@/store/actions';
 import { connect } from 'react-redux';
 import classes from "./addNutrition.module.scss";
 import { TextField, FormControl, Select, MenuItem } from '@material-ui/core';
@@ -29,9 +29,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function AddNutrition (props) {
+function EditNutrition (props) {
   const classMarerialUi = useStyles();
-  const { data } = props.recipeUpload;
+  const { data } = props.recipeEdit;
   const [nutrition, setNutrition] = React.useState({
     title: '',
     quantity: '',
@@ -74,20 +74,12 @@ function AddNutrition (props) {
       return;
     }
     const newData = { ...data, [nutrition.title]: nutrition.quantity };
-    props.dispatch(recipeUploadActions.update(newData));
+    props.dispatch(recipeEditActions.update(newData));
     props.dispatch(modalActions.close());
   }
 
   const onCancel = () => {
     props.dispatch(modalActions.close());
-  };
-
-  const selectItemList = (list) => {
-    let itemList = [];
-    for (let key in list) {
-      itemList.push(<MenuItem key={key} value={key}>{list[key]}</MenuItem>);
-    }
-    return itemList;
   };
 
   const renderContent = () => {
@@ -159,5 +151,5 @@ function AddNutrition (props) {
 }
 
 export default connect((state => ({
-  recipeUpload: state.recipeUpload,
-})))(AddNutrition);
+  recipeEdit: state.recipeEdit,
+})))(EditNutrition);

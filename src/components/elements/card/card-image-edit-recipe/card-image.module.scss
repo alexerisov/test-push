@@ -1,0 +1,33 @@
+@import '~styles/variables.scss';
+
+.cardImage {
+  
+  margin: 0;
+  border: none;
+  width: 230px;
+  height: 155px;
+  position: relative;
+  padding: 0;
+  background-position: center; 
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  &__button {
+    position: absolute;
+    top: -16px;
+    right: -16px;
+    width: 32px;
+    height: 32px;
+    font-size: 20px;
+    border-radius: 50%;
+    background-color: $--color-white;
+    border: none;
+    outline: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 5px;
+    cursor: pointer;
+  }
+}

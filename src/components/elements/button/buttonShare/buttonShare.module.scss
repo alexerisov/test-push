@@ -1,0 +1,25 @@
+@import "~styles/mixins/mixins.scss";
+
+.shareBtn {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  width: max-content;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.5;
+  }
+
+  &__text {
+    margin: 2px 0 0 7px;
+  }
+
+  &__tooltipArrow span {
+    color: rgba(97, 97, 97, 0.9) !important;
+  }
+}

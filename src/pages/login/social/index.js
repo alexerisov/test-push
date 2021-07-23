@@ -15,25 +15,28 @@ class LoginSocial extends Component {
   constructor(props) {
     super(props);
     if (this.props.router.asPath.includes('social#')) {
-      this.query = new URLSearchParams(this.props.router.asPath.split('social#').pop());
+      this.query = new URLSearchParams(
+          this.props.router.asPath.split('social#').pop());
     } else {
-      this.query = new URLSearchParams(this.props.router.asPath);
+      this.query = new URLSearchParams(
+          this.props.router.asPath.split('social?').pop());
     }
-    let access_token = this.query.get('access_token');
-    if (!access_token) {
-      access_token = this.query.get('code');
-    }
-    const state = JSON.parse(this.query.get('state').replace("#_", ""));
+    const state = JSON.parse(this.query.get('state').replace('#_', ''));
+
+    const access_token = this.query.get('access_token');
+    const code = this.query.get('code');
+
     if (this.props.account.hasToken) {
       Router.router.push('/');
     }
     this.props.dispatch(
-      loginSocialActions.login({
-        access_token,
-        account_type: state.account_type ?? USER_TYPE.viewerType,
-        backend: state.backend,
-        register: state.register,
-      }),
+        loginSocialActions.login({
+          access_token,
+          code,
+          account_type: state.account_type ?? USER_TYPE.viewerType,
+          backend: state.backend,
+          register: state.register,
+        }),
     ).then(() => {
       window.close();
     }).catch(() => {
@@ -43,13 +46,13 @@ class LoginSocial extends Component {
 
   render() {
     return (
-      <div>
-        {
-          !this.props.loginSocial.error
-            ? 'loading...'
-            : this.props.loginSocial.error
-        }
-      </div>
+        <div>
+          {
+            !this.props.loginSocial.error
+                ? 'loading...'
+                : this.props.loginSocial.error
+          }
+        </div>
     );
   }
 }
