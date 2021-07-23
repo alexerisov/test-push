@@ -63,7 +63,9 @@ const ButtonShare = ({recipeId}) => {
           type="button"
           onClick={copyLink}
         >
-          <ShareIcon />
+          <div className={styles.shareBtn__icon}>
+            <ShareIcon fontSize='inherit'/>
+          </div>
           <span className={styles.shareBtn__text}>Share</span>
         </button>
       </Tooltip>
