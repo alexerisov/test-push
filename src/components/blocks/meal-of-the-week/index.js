@@ -16,10 +16,12 @@ const MealOfWeekBlock = (props) => {
 
   const [likeRecipe, setLikeRecipe] = useState(false);
   const [likesNumber, setLikesNumber] = useState(false);
+  const [ingredients, setIngredients] = useState(false);
 
   useEffect(() => {
     setLikeRecipe(props?.meal?.user_liked);
     setLikesNumber(props?.meal?.likes_number);
+    setIngredients(props?.meal?.ingredients.slice(0, 4));
   }, [props.meal])
 
   const openRegisterPopup = (name) => {
@@ -81,9 +83,9 @@ const MealOfWeekBlock = (props) => {
             
             <div className={classes.meal__recipe__ingredientsContainer}>
               {
-                props?.meal?.ingredients.length !== 0
+                (ingredients && ingredients.length !== 0)
                 ?
-                props?.meal?.ingredients.map((ingredient, index) => {
+                ingredients.map((ingredient, index) => {
                   return <div className={classes.meal__recipe__ingredientsItem} key={`${ingredient.recipe}-${index}`}>
                           <p className={classes.meal__recipe__ingredientsName}>{ingredient.title}</p>
                           <p className={classes.meal__recipe__ingredientsQuantity}>{ingredient.quantity}</p>

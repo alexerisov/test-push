@@ -200,7 +200,8 @@ export default {
     carbohydrates,
     fats,
     steps,
-    publish_status},
+    publish_status,
+    images_to_delete},
     images, id) => {
     const formData = new FormData();
     if (images.length !== 0) {
@@ -230,7 +231,8 @@ export default {
       carbohydrates,
       fats,
       steps,
-      publish_status
+      publish_status,
+      images_to_delete
     }));
     return http.patch(
       `recipe/${id}`,

@@ -45,4 +45,16 @@
     text-align: center;
     background-color: $--color-blue;
   }
+
+  &__buttonContainer {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    margin-top: 22px;
+    align-items: center;
+
+    p {
+      color: red;
+    }
+  }
 }
