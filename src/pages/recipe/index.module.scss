@@ -329,6 +329,11 @@
     background-position: center; 
     background-repeat: no-repeat;
     background-size: cover;
+    cursor: pointer;
+
+    &:hover {
+        box-shadow: 0px 10px 25px #00000040;
+    }
   
     &__button {
       position: absolute;
