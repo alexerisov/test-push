@@ -18,7 +18,8 @@ class LoginSocial extends Component {
       this.query = new URLSearchParams(
           this.props.router.asPath.split('social#').pop());
     } else {
-      this.query = new URLSearchParams(this.props.router.asPath);
+      this.query = new URLSearchParams(
+          this.props.router.asPath.split('social?').pop());
     }
     const state = JSON.parse(this.query.get('state').replace('#_', ''));
 
