@@ -5,11 +5,11 @@ export default {
     return http.post(`token/`, {email, password});
   },
 
-  socialLogin: ({access_token, code, account_type, backend, register}) => {
+  socialLogin: ({access_token, code, account_type, backend, register, redirect_uri}) => {
     return http.get(
         `token/social`,
         {
-          params: {access_token, code, account_type, backend, register},
+          params: {access_token, code, account_type, backend, register, redirect_uri},
         },
     );
   },
