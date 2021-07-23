@@ -7,7 +7,6 @@ import classes from "./upload-successful.module.scss";
 
 function UploadSuccessful (props) {
   const router = useRouter();
-  console.log(props);
 
   function handleClick (e) {
     e.preventDefault();

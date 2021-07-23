@@ -204,7 +204,6 @@ function FormEditRecipe (props) {
         preview_mp4_url: mp4,
         preview_webm_url: webm,
       };
-      console.log(newData)
         if (props.recipeEdit.data.preview_mp4_url !== mp4) {
         props.dispatch(recipeEditActions.update(newData));
       }

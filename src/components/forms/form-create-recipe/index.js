@@ -169,7 +169,6 @@ function FormCreateRecipe (props) {
     CameraTag.observe("DemoCamera", "published", function(){
       const myCamera = CameraTag.cameras["DemoCamera"];
       const myVideo = myCamera.getVideo();
-      console.log(myVideo);
       const thumbnail = `https:${myVideo.medias.vga_thumb}`;
       const full_thumbnail = `https:${myVideo.medias.vga_filmstrip}`;
       const mp4 = `https:${myVideo.medias['720p']}`;
