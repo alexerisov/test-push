@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { useRouter } from 'next/router';
@@ -169,7 +169,6 @@ function FormCreateRecipe (props) {
     CameraTag.observe("DemoCamera", "published", function(){
       const myCamera = CameraTag.cameras["DemoCamera"];
       const myVideo = myCamera.getVideo();
-      console.log(myVideo);
       const thumbnail = `https:${myVideo.medias.vga_thumb}`;
       const full_thumbnail = `https:${myVideo.medias.vga_filmstrip}`;
       const mp4 = `https:${myVideo.medias['720p']}`;
@@ -186,6 +185,8 @@ function FormCreateRecipe (props) {
       }
     });
   }
+
+  const [statusSubmit, setStatusSubmit] = useState('Submit');
   
   function uploadRecipe (e) {
     e.preventDefault();
@@ -201,14 +202,16 @@ function FormCreateRecipe (props) {
     //     preview_mp4_url: mp4,
     //     preview_webm_url: webm,
     //   };
+    setStatusSubmit('Loading...');
       props.dispatch(recipeUploadActions.uploadRecipe(data))
       .then((data) => {
-        console.log(data);
+        setStatusSubmit('Submit');
         return props.dispatch(modalActions.open('uploadSuccessful',{
           pk: data.pk,
         }));
       })
       .catch((error) => {
+        setStatusSubmit('Submit');
         console.log(error);
       });
     // }
@@ -588,7 +591,7 @@ function FormCreateRecipe (props) {
           className={classes.createRecipeButton}
           onClick={uploadRecipe}
           >
-          <p className={classes.createRecipeButton__text}>Submit</p>
+          <p className={classes.createRecipeButton__text}>{statusSubmit}</p>
         </button>
         <button
         className={classes.createRecipeButton_color_gray}
