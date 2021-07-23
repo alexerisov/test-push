@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import Recipe from '@/api/Recipe.js';
 import CardHighestMeals from "@/components/elements/card-highest-meals";
-import {cuisineList, recipeTypes, cookingMethods, dietaryrestrictions, cookingSkill} from '@/utils/datasets';
+import { recipeTypes, cookingMethods, dietaryrestrictions, cookingSkill} from '@/utils/datasets';
 import { modalActions } from '@/store/actions';
 import { connect } from 'react-redux';
 import { NoSsr } from '@material-ui/core';
@@ -63,7 +63,6 @@ const Recipes = (props) => {
     initialValues: {
       diet_restrictions: [],
       cooking_methods: [],
-      cuisines: [],
       cooking_skills: [],
       types: [],
     },
@@ -85,7 +84,6 @@ const Recipes = (props) => {
   const dietaryrestrictionsList = [];
   const cookingMethodsList = [];
   const recipeTypesList = [];
-  const cuisineListList = [];
   const cookingSkillList = [];
 
   const numberCardsDisplayed = 10;
@@ -110,24 +108,6 @@ const Recipes = (props) => {
         }
         label={dietaryrestrictions[i]}
       />
-    )
-  }
-
-  for (let i = 1; i <= Object.keys(cuisineList).length; i++) {
-    cuisineListList.push(
-      <FormControlLabel
-      key={i}
-      control={<Checkbox 
-        value={i}
-        onChange={(e) => {
-          onChangeCheckboxInput(e); 
-        }}
-        name="cuisines" 
-        color="primary"
-        />
-      }
-      label={cuisineList[i]}
-    />
     )
   }
   
@@ -295,24 +275,6 @@ const Recipes = (props) => {
             </div>
           </AccordionDetails>
         </StyledAccordion>}
-        <StyledAccordion>
-          <AccordionSummary
-            expandIcon={
-              <div className={classes.search__clickList}>
-                <div></div>
-                <div className={classes.search__clickList__active}></div>
-              </div>}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-          >
-            <Typography className={classes.search__filter__title}>Cuisines</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <div className={classes.search__filter__list}>
-              {cuisineListList}
-            </div>
-          </AccordionDetails>
-        </StyledAccordion>
         <StyledAccordion>
           <AccordionSummary
             expandIcon={

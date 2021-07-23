@@ -112,7 +112,6 @@ export default {
   getSearchResult: ({
     cooking_methods = null,
     cooking_skills = null,
-    cuisines = null,
     diet_restrictions = null,
     page = null,
     title = null,
@@ -122,7 +121,6 @@ export default {
       params: {
         cooking_methods,
         cooking_skills,
-        cuisines,
         diet_restrictions,
         page,
         title,
