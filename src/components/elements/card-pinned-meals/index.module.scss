@@ -20,6 +20,7 @@
         display: grid;
         grid-template-columns: 58px auto;
         gap: 7px;
+        @include fontMedium();
     }
 
     &__column {

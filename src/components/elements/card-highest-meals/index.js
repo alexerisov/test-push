@@ -7,6 +7,8 @@ import RaitingIcon from "@/components/elements/rating-icon";
 import LikeIcon from "@/components/elements/like-icon";
 import Link from "next/link";
 import styled from 'styled-components';
+import { CardActionArea } from '@material-ui/core';
+import { useRouter } from 'next/router';
 
 const StyledCardMedia = styled(CardMedia)`
   .MuiCardMedia-root {
@@ -15,8 +17,16 @@ const StyledCardMedia = styled(CardMedia)`
 `;
 
 const CardHighestMeals = (props) => {
-    return (
-      <Card className={classes.card}>
+
+  const router = useRouter();
+
+  const redirectToRecipeCard = (id) => {
+    router.push(`/recipe/${id}`);
+  };
+
+  return (
+    <Card className={classes.card}>
+      <CardActionArea onClick={() => redirectToRecipeCard(props.id)}>
         <StyledCardMedia
           className={classes.card__media}
           image={props.image}
@@ -32,8 +42,9 @@ const CardHighestMeals = (props) => {
           </div>
           <RaitingIcon />
         </CardContent>
-      </Card>
-    );
-  };
+      </CardActionArea>
+    </Card>
+  );
+};
   
 export default CardHighestMeals;
