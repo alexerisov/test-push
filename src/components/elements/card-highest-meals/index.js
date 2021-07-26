@@ -6,11 +6,18 @@ import CardContent from '@material-ui/core/CardContent';
 import RaitingIcon from "@/components/elements/rating-icon";
 import LikeIcon from "@/components/elements/like-icon";
 import Link from "next/link";
+import styled from 'styled-components';
+
+const StyledCardMedia = styled(CardMedia)`
+  .MuiCardMedia-root {
+    background-size: auto;
+  }
+`;
 
 const CardHighestMeals = (props) => {
     return (
       <Card className={classes.card}>
-        <CardMedia
+        <StyledCardMedia
           className={classes.card__media}
           image={props.image}
           title=""

@@ -13,6 +13,8 @@ import { modalActions } from '@/store/actions';
 import { recipePhotoSlider } from "@/store/actions";
 import {Button} from "@material-ui/core";
 import { ButtonShare } from "@/components/elements/button";
+import CardHighestMeals from "@/components/elements/card-highest-meals";
+import CardPopularRecipes from "@/components/elements/card-popular-recipes";
 
 function CreateRecipe (props) {
 
@@ -22,7 +24,10 @@ function CreateRecipe (props) {
     const [recipe, setRecipe] = useState();
     const [likeRecipe, setLikeRecipe] = useState(false);
     const [likesNumber, setLikesNumber] = useState(false);
-    const [authorPk, setAuthorPk] = useState();
+    const [userId, setUserId] = useState();
+
+    const [popularRecipes, setPopularRecipes] = useState();
+    const [latestRecipes, setLatestRecipes] = useState();
 
     useEffect(() => {
         if (recipeId) {
@@ -35,10 +40,22 @@ function CreateRecipe (props) {
         if (props.account.hasToken) {
             Account.current()
             .then((res) => {
-                setAuthorPk(res.data.pk)
+                setUserId(res.data.pk)
             })
         }
     }, [router]);
+
+    useEffect(() => {
+        Recipe.getPopularRecipes()
+            .then((res) => setPopularRecipes(res.data));
+    }, [])
+
+    useEffect(() => {
+        if (userId) {
+            Recipe.getLatestRecipes(userId)
+            .then((res) => setLatestRecipes(res.data));
+        }
+    }, [userId])
 
     const getRecipe = async () => {
         try {
@@ -129,7 +146,7 @@ function CreateRecipe (props) {
                             <RaitingIcon value={recipe.avg_rating} />
                         </div>
                         <div className={classes.recipe__icons}>
-                            {(recipe.user.pk === authorPk) && <div>
+                            {(recipe.user.pk === userId) && <div>
                                 <Link href={`/recipe/editing/${recipeId}`}>
                                     <a className={classes.recipe__linkEdit}><img src="/images/index/pencil-black.svg" /></a>
                                 </Link>
@@ -145,7 +162,7 @@ function CreateRecipe (props) {
                     </div>
                     <div>
                         <div className={classes.recipe__video}>
-                                {recipe.preview_mp4_url && <video width="1000" controls="controls" className={classes.recipe__video__video}>
+                                {recipe.preview_mp4_url && <video width="715" controls="controls" className={classes.recipe__video__video}>
                                     <source src={recipe.preview_mp4_url} type="video/mp4" />
                                 </video>}
                                 <div className={classes.recipe__video__player}>
@@ -275,7 +292,33 @@ function CreateRecipe (props) {
                     </div>}
                 </div>
                 <div className={classes.recipe__cards}>
-                    <div></div>
+                {latestRecipes && <>
+                    <h2 className={classes.recipe__cards__title}>Latest Recipes</h2>
+                    {latestRecipes.slice(0, 2).map((recipe, index) => {
+                        return <CardHighestMeals
+                                  key={`${recipe.pk}-${index}`}
+                                  title={recipe?.title}
+                                  image={recipe?.images[0]?.url}
+                                  name={recipe?.user?.full_name}
+                                  city={recipe?.user?.city}
+                                  likes={recipe?.likes_number}
+                                  id={recipe.pk}
+                                />;
+                    })}
+                  </>
+                }
+                {popularRecipes && <>
+                    <h2 className={classes.recipe__cards__title}>Popular Recipes</h2>
+                    {popularRecipes.map((recipe, index) => {
+                        return <CardPopularRecipes
+                                  key={`${recipe.pk}-${index}`}
+                                  title={recipe?.title}
+                                  image={recipe?.images[0]?.url}
+                                  id={recipe.pk}
+                                />;
+                    })}
+                  </>
+                }
                 </div>
             </div>
 

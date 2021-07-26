@@ -1,0 +1,32 @@
+@import "~styles/variables.scss";
+@import "~styles/mixins/mixins.scss";
+
+.card {
+    width: 338px;
+    min-height: 72px;
+
+    &__content {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+    }
+
+    &__images {
+        height: 72px;
+        width: 140px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    &__title {
+        @include fontMedium();
+        max-width: 198px;
+        padding: 3px 18px;
+        color: $--color-black;
+        font-size: 18px;
+        overflow: hidden;
+        max-height: 72px;
+    }
+}
