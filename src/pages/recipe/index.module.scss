@@ -1,7 +1,7 @@
 @import "~styles/mixins/mixins.scss";
 
 .recipe {
-    padding: 40px 40px 0 40px;
+    padding: 40px 100px 0 100px;
 
     &__navbar {
         font-size: 20px;
@@ -63,7 +63,7 @@
 
     &__content {
         display: grid;
-        grid-template-columns: 715px auto;
+        grid-template-columns: 715px 340px;
         margin: 50px 0;
         gap: 0 35px;
     }

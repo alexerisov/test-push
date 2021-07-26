@@ -9,6 +9,7 @@
 	animation-iteration-count: 1;
 	animation-timing-function: ease-in;
 	animation-duration: 0.5s;
+    position: relative;
 
     &__content {
         display: flex;

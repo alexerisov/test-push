@@ -7,8 +7,6 @@ import RaitingIcon from "@/components/elements/rating-icon";
 import LikeIcon from "@/components/elements/like-icon";
 import Link from "next/link";
 import styled from 'styled-components';
-import { useRouter } from 'next/router';
-import { CardActionArea } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { modalActions } from '@/store/actions';
 import Recipe from '@/api/Recipe.js';
@@ -21,13 +19,7 @@ const StyledCardMedia = styled(CardMedia)`
 
 const CardLatestRecipes = (props) => {
 
-  const router = useRouter();
-
   const [saveRecipeId, setSaveRecipeId] = useState(props.savedId);
-
-  const redirectToRecipeCard = (id) => {
-    router.push(`/recipe/${id}`);
-  };
 
   const openRegisterPopup = (name) => {
     return () => {
@@ -59,7 +51,6 @@ const CardLatestRecipes = (props) => {
 
   return (
     <Card className={classes.card}>
-      <CardActionArea onClick={() => redirectToRecipeCard(props.id)}>
         <StyledCardMedia
           className={classes.card__media}
           image={props.image}
@@ -85,7 +76,6 @@ const CardLatestRecipes = (props) => {
           </div>
           <RaitingIcon />
         </CardContent>
-      </CardActionArea>
     </Card>
   );
 };
