@@ -13,7 +13,7 @@ import { modalActions } from '@/store/actions';
 import { recipePhotoSlider } from "@/store/actions";
 import {Button} from "@material-ui/core";
 import { ButtonShare } from "@/components/elements/button";
-import CardHighestMeals from "@/components/elements/card-highest-meals";
+import CardLatestRecipes from "@/components/elements/card-latest-recipes";
 import CardPopularRecipes from "@/components/elements/card-popular-recipes";
 
 function CreateRecipe (props) {
@@ -295,7 +295,7 @@ function CreateRecipe (props) {
                 {latestRecipes && <>
                     <h2 className={classes.recipe__cards__title}>Latest Recipes</h2>
                     {latestRecipes.slice(0, 2).map((recipe, index) => {
-                        return <CardHighestMeals
+                        return <CardLatestRecipes
                                   key={`${recipe.pk}-${index}`}
                                   title={recipe?.title}
                                   image={recipe?.images[0]?.url}
