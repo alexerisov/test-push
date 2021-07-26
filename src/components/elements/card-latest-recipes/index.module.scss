@@ -67,6 +67,26 @@
             background-color: rgba($color: #000000, $alpha: 1);
         }
     }
+
+    &__buttonDeleteRecipe {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background-color: rgba($color: #000000, $alpha: 0.35);
+        border: none;
+        background-image: url('/images/index/icon-delete-file.png');
+        background-size: 25px 25px;
+        background-position: center;
+        background-repeat: no-repeat;
+        cursor: pointer;
+
+        &:hover {
+            background-color: rgba($color: #000000, $alpha: 1);
+        }
+    }
 }
 
 @keyframes fadeInOpacity {

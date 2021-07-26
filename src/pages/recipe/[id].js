@@ -305,6 +305,7 @@ function CreateRecipe (props) {
                                   name={recipe?.user?.full_name}
                                   city={recipe?.user?.city}
                                   likes={recipe?.likes_number}
+                                  savedId={recipe?.user_saved_recipe}
                                   id={recipe.pk}
                                 />;
                     })}

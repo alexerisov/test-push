@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classes from "./index.module.scss";
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -23,6 +23,8 @@ const CardLatestRecipes = (props) => {
 
   const router = useRouter();
 
+  const [saveRecipeId, setSaveRecipeId] = useState(props.savedId);
+
   const redirectToRecipeCard = (id) => {
     router.push(`/recipe/${id}`);
   };
@@ -41,7 +43,16 @@ const CardLatestRecipes = (props) => {
     e.preventDefault();
     Recipe.postSavedRecipe(props.id)
     .then((res) => {
-      console.log(res)
+      setSaveRecipeId(res.data.pk);
+    })
+    .catch((err) => console.log(err));
+  };
+
+  const onClickDelete = (e) => {
+    e.preventDefault();
+    Recipe.deleteSavedRecipe(saveRecipeId)
+    .then((res) => {
+      setSaveRecipeId(false);
     })
     .catch((err) => console.log(err));
   };
@@ -54,10 +65,16 @@ const CardLatestRecipes = (props) => {
           image={props.image}
           title=""
         />
-        <button
+        {!saveRecipeId
+        ? <button
           className={classes.card__buttonSaveRecipe}
           onClick={!props.account.hasToken ? openRegisterPopup('register') : onClickSave}
         />
+        : <button
+          className={classes.card__buttonDeleteRecipe}
+          onClick={!props.account.hasToken ? openRegisterPopup('register') : onClickDelete}
+        />
+        }
         <CardContent className={classes.card__content}>
           <div>
             <p className={classes.card__name} title={props.title}>{props.title}</p>

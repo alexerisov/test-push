@@ -256,7 +256,10 @@ export default {
   postSavedRecipe: (id) => {
     return http.post(`/recipe/saved_recipe/`, {
       "recipe": id
-    }
-    );
+    });
+  },
+  
+  deleteSavedRecipe: (id) => {
+    return http.delete(`/recipe/saved_recipe/${id}`);
   },
 };
