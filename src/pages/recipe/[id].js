@@ -15,6 +15,7 @@ import {Button} from "@material-ui/core";
 import { ButtonShare } from "@/components/elements/button";
 import CardLatestRecipes from "@/components/elements/card-latest-recipes";
 import CardPopularRecipes from "@/components/elements/card-popular-recipes";
+import RecipeNotFound from "@/components/elements/recipe-not-found";
 
 function CreateRecipe (props) {
 
@@ -28,6 +29,8 @@ function CreateRecipe (props) {
 
     const [popularRecipes, setPopularRecipes] = useState();
     const [latestRecipes, setLatestRecipes] = useState();
+
+    const [notFound, setNotFound] = useState(false);
 
     useEffect(() => {
         if (recipeId) {
@@ -65,7 +68,7 @@ function CreateRecipe (props) {
           setLikesNumber(response.data.likes_number);
           props.dispatch(recipePhotoSlider.setPhotos(response.data));
         } catch (e) {
-          console.log(e);
+            setNotFound(true)
         }
     };
 
@@ -342,7 +345,7 @@ function CreateRecipe (props) {
 
     return (
       <>
-        <LayoutPage content={content} />
+        <LayoutPage content={!notFound ? content : <RecipeNotFound />} />
       </>
     );
 }
