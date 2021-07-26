@@ -266,6 +266,7 @@ function FormCreateRecipe (props) {
                                                           key={index}
                                                           title={item.title}
                                                           quantity={item.quantity}
+                                                          unit={item.unit}
                                                           id={index}/>)
               : ''
             }
@@ -481,6 +482,7 @@ function FormCreateRecipe (props) {
                 <FormControlLabel value={2} control={<Radio />} label="Publish" />
               </RadioGroup>
             </NoSsr>
+            {error?.publish_status && <p className={classes.createRecipeItem__errorPublishStatus}>This field is required</p>}
           </div>
         </div>
         <div className={classes.createRecipeSection}>

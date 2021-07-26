@@ -25,7 +25,13 @@
   &__buttonContainer {
     display: flex;
     flex-direction: row-reverse;
+    justify-content: space-between;
     margin-top: 22px;
+    align-items: center;
+
+    p {
+      color: red;
+    }
   }
 
   &__button {
@@ -44,5 +50,13 @@
     line-height: 1.29;
     text-align: center;
     background-color: $--color-blue;
+  }
+
+  &__container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-flow: column;
+    grid-template-rows: 1fr 1fr;
+    gap: 0 20px;
   }
 }
