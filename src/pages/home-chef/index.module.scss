@@ -1,0 +1,252 @@
+@import "~styles/mixins/mixins.scss";
+@import "~styles/variables.scss";
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  padding: 40px 119.5px 80px;
+}
+
+// Navbar
+.navbar {
+  margin-bottom: 68px;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 45px;
+
+  span {
+    color: $--color-orange;
+  }
+}
+
+.section {
+  margin-bottom: 40px;
+
+  &:last-child {
+    margin-bottom: 66px;
+  }
+}
+
+.sectionTitle {
+  margin-bottom: 20px;
+}
+
+.avatar {
+  float: left;
+  width: 144px;
+  height: 114px;
+}
+
+// Info
+.info {
+  padding-bottom: 40px;
+  margin-bottom: 40px;
+  border-bottom: 1px solid $--color-gray2;
+
+  &__content {
+    display: flex;
+    padding-top: 24px;
+  }
+}
+
+.info__left,
+.info__right {
+  flex: 1;
+  display: flex;
+}
+
+.info__left {
+  flex-direction: column;
+  padding-right: 56px;
+  border-right: 1px solid $--color-gray;
+
+  &__table {
+    width: 100%;
+  }
+}
+
+.info__right {
+  display: flex;
+  flex-direction: column;
+  padding-left: 56px;
+}
+
+.cell {
+  max-width: 50%;
+  padding-bottom: 28px;
+}
+
+.cell:nth-child(2n) {
+  width: 30%;
+}
+
+.field {
+  margin-bottom: 16px;
+  @include fontMedium();
+  font-size: 20px;
+  line-height: 24px;
+  text-transform: uppercase;
+}
+
+.value {
+  max-width: 90%;
+  word-break: break-word;
+  @include fontMedium();
+  font-size: 18px;
+  line-height: 22px;
+  color: $--color-gray7;
+}
+
+.name {
+  margin: 0 0 63px 138px;
+
+  &__field {
+    font-size: 22px;
+    line-height: 27px;
+  }
+
+  &__value {
+    max-width: 100%;
+    font-size: 20px;
+    line-height: 24px;
+  }
+}
+
+.bio {
+  margin-bottom: 28px;
+}
+
+/* Role models */
+.roleCarousel {
+  position: relative;
+  max-height: max-content;
+
+  & ul {
+    padding-left: 20px;
+  }
+
+  &__item {
+    max-height: max-content;
+    padding: 0 0 10px 0;
+  }
+
+  &__btn {
+    position: absolute;
+    top: calc(93px / 2);
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    color: #fff;
+    border-radius: 50%;
+    background-color: $--color-orange;
+    opacity: 0.5;
+    border: none;
+    outline: none;
+    transition: 0.2s;
+  }
+
+  &__btn:hover {
+    width: 35px;
+    height: 35px;
+    opacity: 1;
+  }
+
+  &__btn:disabled {
+    display: none;
+  }
+
+  &__next {
+    @extend .roleCarousel__btn;
+    right: 5px;
+  }
+
+  &__prev {
+    @extend .roleCarousel__btn;
+    left: 5px;
+  }
+}
+
+/* My favorite dishes */
+.favDishesCarousel {
+  @extend .roleCarousel;
+
+  & ul {
+    padding: 5px 0 5px 43px;
+  }
+
+  &__item {
+    min-height: max-content;
+    padding: 0 0 10px 0;
+  }
+
+  &__btn:hover {
+    width: 35px;
+    height: 35px;
+  }
+
+  &__btn:disabled {
+    display: none;
+  }
+
+  &__next {
+    @extend .roleCarousel__next;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+  }
+
+  &__prev {
+    @extend .roleCarousel__prev;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 10px;
+  }
+}
+
+/* Other Info*/
+.itemsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 40px;
+}
+
+.icon {
+  width: 14px !important;
+  height: 14px !important;
+}
+
+/* My recipes */
+.sectionRecipes {
+  display: flex;
+  align-items: flex-start;
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__pagination {
+    margin: 20px auto 0;
+  }
+}
+
+.closed {
+  position: relative;
+  top: -2px;
+  transform: rotate(90deg);
+  cursor: pointer;
+}
+
+.expanded {
+  position: relative;
+  top: -2px;
+  transform: rotate(-90deg);
+  cursor: pointer;
+}
+
+
