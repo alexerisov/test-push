@@ -88,3 +88,40 @@ export const withoutAuth = (WrappedComponent) => {
     }
   };
 };
+
+// Redirect to home, if no authorization and to 404 if authorized user not match to allowed userType
+export const RedirectWithoutAuthAndByCheckingUserType = (WrappedComponent, userType) => {
+  return connect(state => ({ account: state.account }))(props => {
+    const router = useRouter();
+
+    // Type of current authorized user
+    const authUserType = props.account?.profile?.user_type;
+    const isAuthUserTypeNumber = Number.isFinite(authUserType);
+
+    const [verified, setVerified] = useState(false);
+
+    useEffect( () => {
+      const { token } = AuthCookieStorage.auth;
+      if (!token) {
+        router.replace("/");
+      } else {
+        setVerified(true);
+      }
+    }, []);
+
+    if (verified && !userType) {
+      return <WrappedComponent {...props} />;
+    }
+
+    // Checking user type
+    if (verified && isAuthUserTypeNumber && authUserType === userType) {
+      return <WrappedComponent {...props} />;
+    }
+
+    if (verified && isAuthUserTypeNumber && authUserType !== userType) {
+      router.replace("/404");
+    }
+
+    return null;
+  });
+};
