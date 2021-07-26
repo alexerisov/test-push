@@ -1,4 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
+import Link from 'next/link';
 import $clamp from 'clamp-js';
 import classes from "./index.module.scss";
 import Recipe from '@/api/Recipe.js';
@@ -54,7 +55,10 @@ const MealOfWeekBlock = (props) => {
       <section className={classes.meal}>
         
         <div className={classes.meal__title}>
-          <h2>Meal of the week</h2>
+          <Link href={`/recipe/${recipeId}`}>
+            <h2 className={classes.meal__title__text}>Meal of the week</h2>
+          </Link>
+
           <span className={classes.meal__lineContainer}>
             <span className={classes.meal__yellowLine} />
             <span className={classes.meal__blueСircle} />
@@ -62,10 +66,14 @@ const MealOfWeekBlock = (props) => {
         </div>
         <div className={classes.meal__content}>
           <div className={classes.meal__special}>Special</div>
-          <div
-            className={classes.meal__images__circle}
-            style={{backgroundImage: `url(${image})`}}
-          ></div>
+
+          <Link href={`/recipe/${recipeId}`}>
+            <div
+              className={classes.meal__images__circle}
+              style={{backgroundImage: `url(${image})`}}
+            ></div>
+          </Link>
+
           <div className={classes.meal__images__square}></div>
           <div className={classes.meal__recipe}>
             <h3 className={classes.meal__recipe__tltle}>{props?.meal?.title}</h3>
