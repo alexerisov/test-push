@@ -96,7 +96,6 @@ const MealOfWeekBlock = (props) => {
                 ingredients.map((ingredient, index) => {
                   return <div className={classes.meal__recipe__ingredientsItem} key={`${ingredient.recipe}-${index}`}>
                           <p className={classes.meal__recipe__ingredientsName}>{ingredient.title}</p>
-                          <p className={classes.meal__recipe__ingredientsQuantity}>{ingredient.quantity}</p>
                         </div>;
                 })
                 : 'no Ingredients'
