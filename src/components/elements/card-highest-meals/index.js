@@ -23,7 +23,6 @@ const CardHighestMeals = (props) => {
             <Link href={`/recipe/${props.id}`}><a>View recipe</a></Link>
             <div className={classes.card__likeIcon}><LikeIcon value={props.likes} /></div>
           </div>
-          <RaitingIcon />
         </CardContent>
       </Card>
     );
