@@ -242,4 +242,22 @@ export default {
       },
     );
   },
+
+  getPopularRecipes: () => {
+    return http.get(`/recipe/popular_recipes`);
+  },
+
+  getLatestRecipes: (userId) => {
+    return http.get(`/recipe/latest_user_recipes/${userId}`);
+  },
+
+  postSavedRecipe: (id) => {
+    return http.post(`/recipe/saved_recipe/`, {
+      "recipe": id
+    });
+  },
+  
+  deleteSavedRecipe: (id) => {
+    return http.delete(`/recipe/saved_recipe/${id}`);
+  },
 };
