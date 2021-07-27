@@ -63,7 +63,7 @@ const HeaderDefault = (props) => {
             <a className={classes.header__link}>Recipes</a>
           </Link>
           <Link href="/">
-            <a className={classes.header__link}>Videos</a>
+            <a className={classes.header__link}>Get Inspired!</a>
           </Link>
           <Link href="/">
             <a className={classes.header__link}>Menu</a>

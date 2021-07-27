@@ -18,7 +18,7 @@ const LayoutFooter = (props) => {
                     <ul>
                         <li className={classes.footer__linkList}>Home</li>
                         <li className={classes.footer__linkList}>Recipes</li>
-                        <li className={classes.footer__linkList}>Videos</li>
+                        <li className={classes.footer__linkList}>Get Inspired!</li>
                     </ul>
                 </div>
                 <div>
