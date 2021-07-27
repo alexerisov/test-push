@@ -30,7 +30,7 @@ const ResipeComments = ({ recipeId }) => {
     validationSchema: Yup.object({
       textarea: Yup.string()
         .min(5, 'Must be 5 characters or more')
-        .max(3000, 'Must be 3000 characters or less')
+        .max(300, 'Must be 300 characters or less')
         .required('Write something before sumbit...')
     }),
     onSubmit: values => {
