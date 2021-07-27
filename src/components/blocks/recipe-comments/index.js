@@ -83,7 +83,7 @@ const ResipeComments = ({ recipeId }) => {
 
   return (
     <div className={classes.comments}>
-      <h2 className={classes.comments__title}>Write review</h2>
+      <h2 className={classes.comments__title}>Write a comment</h2>
       <span className={classes.comments__lineContainer}>
           <span className={classes.comments__yellowLine} />
           <span className={classes.comments__blueСircle} />
