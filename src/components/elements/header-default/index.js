@@ -51,7 +51,6 @@ const HeaderDefault = (props) => {
 
   return (
     <div className={classes.header}>
-      <div className={classes.header__phone}>Customer support: 1800 234 356 79</div>
       <div className={classes.header__container}>
         <Link href="/">
           <a>
