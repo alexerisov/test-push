@@ -220,7 +220,7 @@ function CreateRecipe (props) {
                             {recipe.ingredients.map((item, index) => {
                                 return <div key={index}>
                                     <h4 className={classes.recipe__subtitle}>{item.title}</h4>
-                                    <p>{item.quantity}</p>
+                                    <p>{`${item.quantity} ${item.unit ?? ''}`}</p>
                                 </div>
                             })}
                         </div>
