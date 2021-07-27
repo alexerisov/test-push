@@ -15,6 +15,7 @@ function UploadSuccessful (props) {
   }
 
   const onCancel = () => {
+    router.push(`/recipe/${props?.pk}`);
     props.dispatch(modalActions.close());
   };
 
