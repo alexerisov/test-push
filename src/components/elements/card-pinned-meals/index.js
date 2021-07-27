@@ -5,15 +5,27 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Link from "next/link";
 import styled from 'styled-components';
+import { CardActionArea } from '@material-ui/core';
+import { useRouter } from 'next/router';
 
-const StyledCardContent = styled(CardContent)`
+const StyledCardActionArea = styled(CardActionArea)`
   height: 100%;
+  display: grid;
+  padding: 15px 10px;
+  align-items: flex-start;
 `;
 
 const CardPinnedMeals = ({ title, raitingValue, avatar, id }) => {
-    return (
-      <Card className={classes.card}>
-        <StyledCardContent className={classes.card__content}>
+
+  const router = useRouter();
+
+  const redirectToRecipeCard = (id) => {
+    router.push(`/recipe/${id}`);
+  };
+
+  return (
+    <Card className={classes.card} onClick={() => redirectToRecipeCard(id)}>
+      <StyledCardActionArea className={classes.card__content} onClick={() => redirectToRecipeCard(id)}>
           <div className={classes.card__avatarContainer}>
           { !avatar ? <img src="/images/index/default-avatar.png" alt="avatar" className={classes.card__avatar}/>
             : <img src={avatar} alt="avatar" className={classes.card__avatar} />
@@ -21,14 +33,11 @@ const CardPinnedMeals = ({ title, raitingValue, avatar, id }) => {
           </div>
           <div className={classes.card__column}>
             <p>{title}</p>
-            <span className={classes.card__raiting}>
-              <RaitingIcon value={raitingValue} />
-            </span>
-            <Link href={`/recipe/${id}`}><a>Watch video!</a></Link>
+            <Link href={`/recipe/${id}`}><a>Watch Live video</a></Link>
           </div>
-        </StyledCardContent>
-      </Card>
-    );
-  };
+      </StyledCardActionArea>
+    </Card>
+  );
+};
   
 export default CardPinnedMeals;

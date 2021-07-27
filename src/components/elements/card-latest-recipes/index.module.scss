@@ -1,0 +1,100 @@
+@import "~styles/variables.scss";
+@import "~styles/mixins/mixins.scss";
+
+.card {
+    width: 338px;
+    min-height: 350px;
+    opacity: 1;
+	animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: 0.5s;
+    position: relative;
+
+    &__content {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        font-size: 18px;
+        @include fontMedium();
+    }
+
+    &__media {
+        height: 173px;
+    }
+
+    a {
+        color: $--color-orange;
+    }
+
+    p {
+        font-weight: 600;
+    }
+
+    &__name {
+        margin: 0 0 10px 0;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        max-width: 265px;
+    }
+
+    &__location {
+        color: $--color-gray5;
+        margin: 0 0 17px 0;
+        font-size: 14px;
+    }
+
+    &__likeIcon {
+        margin: 10px 0 0 0;
+    }
+
+    &__buttonSaveRecipe {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background-color: rgba($color: #000000, $alpha: 0.35);
+        border: none;
+        background-image: url('/images/index/icon-favorite.png');
+        background-size: 25px 25px;
+        background-position: center;
+        background-repeat: no-repeat;
+        cursor: pointer;
+
+        &:hover {
+            background-color: rgba($color: #000000, $alpha: 1);
+        }
+    }
+
+    &__buttonDeleteRecipe {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background-color: rgba($color: #000000, $alpha: 0.35);
+        border: none;
+        background-image: url('/images/index/icon-delete-file.png');
+        background-size: 25px 25px;
+        background-position: center;
+        background-repeat: no-repeat;
+        cursor: pointer;
+
+        &:hover {
+            background-color: rgba($color: #000000, $alpha: 1);
+        }
+    }
+}
+
+@keyframes fadeInOpacity {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
