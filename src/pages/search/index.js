@@ -206,6 +206,7 @@ const Recipes = (props) => {
 
   const handleClickClearAll = () => {
     router.push("/search");
+    setTimeout(router.reload, 100);
   };
 
   const setTypeSelectionFood = (event) => {
