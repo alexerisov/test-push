@@ -74,7 +74,10 @@ const HeaderDefault = (props) => {
           ? <button className={classes.header__button} onClick={handleClickLogin('register')}>Login</button>
           : <>
           <button onClick={handleClick} className={classes.header__button}>
-            {props?.account?.profile?.user_type === viewerType ? "Hi, user!" : "Hi, chef!" }
+            {props?.account?.profile?.user_type === viewerType
+              ? `Hi, ${props?.account?.profile?.full_name.split(' ')[0]}!`
+              : `Hi, ${props?.account?.profile?.full_name.split(' ')[0]}!`
+            }
           </button>
           <StyledMenu
             id="simple-menu"
