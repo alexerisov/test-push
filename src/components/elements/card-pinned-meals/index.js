@@ -33,7 +33,7 @@ const CardPinnedMeals = ({ title, raitingValue, avatar, id }) => {
           </div>
           <div className={classes.card__column}>
             <p>{title}</p>
-            <Link href={`/recipe/${id}`}><a>Watch Live video</a></Link>
+            <Link href={`/recipe/${id}`}><a>Watch video!</a></Link>
           </div>
       </StyledCardActionArea>
     </Card>
