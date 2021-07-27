@@ -85,7 +85,7 @@ const MealOfWeekBlock = (props) => {
             <div className={classes.meal__recipe__ingredientsTitleContainer}>
               <h4 className={classes.meal__recipe__ingredientsTitle}>Ingredients</h4>
               <a className={classes.meal__recipe__link} href={`/recipe/${props?.meal?.pk}`}>
-                View all
+                View recipe
               </a>
             </div>
             
