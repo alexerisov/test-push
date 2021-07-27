@@ -24,7 +24,7 @@ const CardPinnedMeals = ({ title, raitingValue, avatar, id }) => {
             <span className={classes.card__raiting}>
               <RaitingIcon value={raitingValue} />
             </span>
-            <Link href={`/recipe/${id}`}><a>Watch Live video</a></Link>
+            <Link href={`/recipe/${id}`}><a>Watch video!</a></Link>
           </div>
         </StyledCardContent>
       </Card>
