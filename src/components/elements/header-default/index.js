@@ -51,7 +51,6 @@ const HeaderDefault = (props) => {
 
   return (
     <div className={classes.header}>
-      <div className={classes.header__phone}>Customer support: 1800 234 356 79</div>
       <div className={classes.header__container}>
         <Link href="/">
           <a>
@@ -63,7 +62,7 @@ const HeaderDefault = (props) => {
             <a className={classes.header__link}>Recipes</a>
           </Link>
           <Link href="/">
-            <a className={classes.header__link}>Videos</a>
+            <a className={classes.header__link}>Get Inspired!</a>
           </Link>
           <Link href="/">
             <a className={classes.header__link}>Menu</a>
@@ -74,7 +73,10 @@ const HeaderDefault = (props) => {
           ? <button className={classes.header__button} onClick={handleClickLogin('register')}>Login</button>
           : <>
           <button onClick={handleClick} className={classes.header__button}>
-            {props?.account?.profile?.user_type === viewerType ? "Hi, user!" : "Hi, chef!" }
+            {props?.account?.profile?.user_type === viewerType
+              ? `Hi, ${props?.account?.profile?.full_name.split(' ')[0]}!`
+              : `Hi, ${props?.account?.profile?.full_name.split(' ')[0]}!`
+            }
           </button>
           <StyledMenu
             id="simple-menu"

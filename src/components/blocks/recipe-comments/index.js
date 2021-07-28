@@ -30,8 +30,8 @@ const ResipeComments = ({ recipeId }) => {
     validationSchema: Yup.object({
       textarea: Yup.string()
         .min(5, 'Must be 5 characters or more')
-        .max(3000, 'Must be 3000 characters or less')
-        .required('Write something before sumbit...')
+        .max(300, 'Must be 300 characters or less')
+        .required('Write something before submit...')
     }),
     onSubmit: values => {
       uploadComment(values);
@@ -83,7 +83,7 @@ const ResipeComments = ({ recipeId }) => {
 
   return (
     <div className={classes.comments}>
-      <h2 className={classes.comments__title}>Write review</h2>
+      <h2 className={classes.comments__title}>Write a comment</h2>
       <span className={classes.comments__lineContainer}>
           <span className={classes.comments__yellowLine} />
           <span className={classes.comments__blueСircle} />

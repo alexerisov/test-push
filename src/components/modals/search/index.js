@@ -62,7 +62,7 @@ function SearchBanner (props) {
             fullWidth
         />
         <div className={classes.search__container}>
-          <div className={classes.search__grid}>
+          {(result.length !== 0) ? <div className={classes.search__grid}>
             <p>Suggestions :</p>
             <p>
             {result.map((item, index) => {
@@ -71,7 +71,7 @@ function SearchBanner (props) {
                 </Link>
             })}
             </p>
-          </div>
+          </div> : <div className={classes.search__grid} />}
           <Button
             type="submit"
             variant='contained'

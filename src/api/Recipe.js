@@ -112,7 +112,6 @@ export default {
   getSearchResult: ({
     cooking_methods = null,
     cooking_skills = null,
-    cuisines = null,
     diet_restrictions = null,
     page = null,
     title = null,
@@ -122,7 +121,6 @@ export default {
       params: {
         cooking_methods,
         cooking_skills,
-        cuisines,
         diet_restrictions,
         page,
         title,
@@ -243,5 +241,23 @@ export default {
         },
       },
     );
+  },
+
+  getPopularRecipes: () => {
+    return http.get(`/recipe/popular_recipes`);
+  },
+
+  getLatestRecipes: (userId) => {
+    return http.get(`/recipe/latest_user_recipes/${userId}`);
+  },
+
+  postSavedRecipe: (id) => {
+    return http.post(`/recipe/saved_recipe/`, {
+      "recipe": id
+    });
+  },
+  
+  deleteSavedRecipe: (id) => {
+    return http.delete(`/recipe/saved_recipe/${id}`);
   },
 };

@@ -80,7 +80,7 @@ const Home = (props) => {
             color='primary'
             href="/recipe/upload"
           >
-            Upload your recipe
+            Upload New Recipe!
           </Button>
         : <Button
             variant='contained'

@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {LayoutModal} from '@/components/layouts';
 import { modalActions, recipeUploadActions } from '@/store/actions';
 import { connect } from 'react-redux';
 import classes from "./addIngredient.module.scss";
 import TextField from '@material-ui/core/TextField';
+import { units } from '@/utils/datasets';
+import { Select, MenuItem } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   textField: {
@@ -18,13 +20,29 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 5 + ITEM_PADDING_TOP,
+    },
+  },
+};
+
 function AddIngredient (props) {
   const classMarerialUi = useStyles();
   const { data } = props.recipeUpload;
   const [ingredient, setIngedient] = React.useState({
     title: '',
     quantity: '',
+    unit: '',
   });
+
+  const unitsList = [];
+  for (let i = 1; i < Object.keys(units).length; i++) {
+    unitsList.push(<MenuItem key={i} value={units[i]}>{units[i]}</MenuItem>);
+  }
 
   function onChangeField(name) {
     return (event) => {
@@ -33,8 +51,41 @@ function AddIngredient (props) {
     };
   }
 
+  const [error, setError] = useState(false);
+
+  const handleValidationOnSubmit = () => {
+    if (ingredient.title === "") {
+      setError("Name is required");
+      return false;
+    }
+    if (ingredient.quantity === "") {
+      setError("Quantity is required");
+      return false;
+    }
+    if (ingredient.unit === "") {
+      setError("Unit is required");
+      return false;
+    }
+    if (isNaN(ingredient.quantity)) {
+      setError("Quantity should be a number");
+      return false;
+    }
+    if (ingredient.quantity < 0) {
+      setError("Minimum possible quantity 0");
+      return false;
+    }
+    if (ingredient.quantity > 99999) {
+      setError("Maximum possible quantity 99999");
+      return false;
+    }
+    return true;
+  }
+
   function handleAddIngredient (e) {
     e.preventDefault();
+    if (!handleValidationOnSubmit()) {
+      return;
+    }
     const newData = { ...data, ingredients: [...data.ingredients, ingredient] };
     props.dispatch(recipeUploadActions.update(newData));
     props.dispatch(modalActions.close());
@@ -60,7 +111,7 @@ function AddIngredient (props) {
             className={classMarerialUi.textField}
           />
         </div>
-        <div>
+        <div className={classes.addIngredient__container}>
           <label htmlFor="addIngredient-quantity" className={classes.addIngredient__label}>Quantity</label>
           <TextField
             id="addIngredient-quantity"
@@ -71,6 +122,19 @@ function AddIngredient (props) {
             fullWidth
             className={classMarerialUi.textField}
           />
+           <label htmlFor="create-types-select" className={classes.addIngredient__label}>Unit</label>
+          <Select
+            MenuProps={MenuProps}
+            id="addIngredient-unit"
+            name="unit"
+            value={ingredient.unit}
+            onChange={onChangeField('unit')}
+            variant="outlined"
+            fullWidth
+          >{
+            unitsList
+          }
+          </Select>
         </div>
         <div className={classes.addIngredient__buttonContainer}>
           <button
@@ -79,6 +143,7 @@ function AddIngredient (props) {
           >
             Add
           </button>
+          {error && <p>{error}</p>}
         </div>
       </form>
     </div>;

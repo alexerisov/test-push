@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { useRouter } from 'next/router';
@@ -75,6 +75,14 @@ function FormCreateRecipe (props) {
   const router = useRouter();
   const classMarerialUi = useStyles();
   const { data, error } = props.recipeUpload;
+
+  useEffect(() => {
+    const newData = data;
+    newData.cooking_time = '00:00';
+    props.dispatch(
+      recipeUploadActions.update(newData),
+    );
+  }, [router])
 
   function onChangeField(name) {
     return (event) => {
@@ -266,6 +274,7 @@ function FormCreateRecipe (props) {
                                                           key={index}
                                                           title={item.title}
                                                           quantity={item.quantity}
+                                                          unit={item.unit}
                                                           id={index}/>)
               : ''
             }
@@ -481,6 +490,7 @@ function FormCreateRecipe (props) {
                 <FormControlLabel value={2} control={<Radio />} label="Publish" />
               </RadioGroup>
             </NoSsr>
+            {error?.publish_status && <p className={classes.createRecipeItem__errorPublishStatus}>This field is required</p>}
           </div>
         </div>
         <div className={classes.createRecipeSection}>

@@ -47,6 +47,18 @@ function EditNutrition (props) {
   }
 
   function handleValidationOnSubmit() {
+    if (nutrition.title === "") {
+      setError("Name is required");
+      return false;
+    }
+    if (nutrition.quantity === "") {
+      setError("Quantity is required");
+      return false;
+    }
+    if (isNaN(nutrition.quantity)) {
+      setError("Quantity should be a number");
+      return false;
+    }
     if (nutrition.title === "calories") {
       if (nutrition.quantity > 0 && nutrition.quantity < 100000) {
         setError(false);
@@ -119,7 +131,6 @@ function EditNutrition (props) {
           <TextField
             id="addNutrition-quantity"
             name="quantity"
-            type="number"
             value={nutrition.quantity}
             onChange={onChangeField('quantity')}
             variant="outlined"

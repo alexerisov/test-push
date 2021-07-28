@@ -21,8 +21,9 @@
             background-repeat: no-repeat;
             background-size: cover;
             left: 237px;
-            bottom: 155px;
+            top: 135px;
             position: absolute;
+            cursor: pointer;
         }
 
         &__square {
@@ -56,6 +57,10 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+
+        &__text {
+            cursor: pointer;
+        }
     }
 
     &__lineContainer {
