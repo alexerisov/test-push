@@ -31,7 +31,7 @@ const ResipeComments = ({ recipeId }) => {
       textarea: Yup.string()
         .min(5, 'Must be 5 characters or more')
         .max(300, 'Must be 300 characters or less')
-        .required('Write something before sumbit...')
+        .required('Write something before submit...')
     }),
     onSubmit: values => {
       uploadComment(values);
