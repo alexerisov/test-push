@@ -152,12 +152,12 @@ export default {
     return http.get(`/recipe/${id}`);
   },
 
-  getUploadRecipes: (page) => {
+  getUploadRecipes: (pageSize, page) => {
     return http.get(`/recipe/my`,
       {
         params: {
           'page': `${page}`,
-          'page_size': 12,
+          'page_size': `${pageSize}`,
         }
       });
   },

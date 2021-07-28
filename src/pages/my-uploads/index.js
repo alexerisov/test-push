@@ -29,7 +29,7 @@ const MyUploadsPage = () => {
 
   const getUploadRecipes = async () => {
     try {
-      const response = await Recipe.getUploadRecipes(page);
+      const response = await Recipe.getUploadRecipes(12, page);
       await setNumberOfPages(countPages(response.data.count));
       await setUploadRecipes(response.data.results);
     }
