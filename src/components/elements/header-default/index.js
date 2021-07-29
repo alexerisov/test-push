@@ -74,8 +74,14 @@ const HeaderDefault = (props) => {
           : <>
           <button onClick={handleClick} className={classes.header__button}>
             {props?.account?.profile?.user_type === viewerType
-              ? `Hi, ${props?.account?.profile?.full_name.split(' ')[0]}!`
-              : `Hi, ${props?.account?.profile?.full_name.split(' ')[0]}!`
+              ?
+              `Hi, ${props?.account?.profile?.full_name
+                ? props?.account?.profile?.full_name?.split(' ')[0]
+                : 'user'}!`
+              :
+              `Hi, ${props?.account?.profile?.full_name
+                ? props?.account?.profile?.full_name?.split(' ')[0]
+                : 'chef'}!`
             }
           </button>
           <StyledMenu
