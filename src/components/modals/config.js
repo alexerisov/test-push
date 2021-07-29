@@ -12,3 +12,5 @@ export { default as uploadSuccessful } from './upload-successful';
 export { default as editSuccessful } from './edit-successful';
 export { default as changeStatusSuccess } from './change-status-success';
 export { default as showRecipePhotos } from './showRecipePhotos';
+export { default as addRoleModel } from './addRoleModel';
+export { default as addOtherInformations } from './addOtherInformations';
