@@ -120,9 +120,9 @@ function FormEditAccountChef (props) {
     };
   };
 
-  const [cookingPhilosophyArr, setCookingPhilosophyArr] = useState(cooking_philosophy);
-  const [sourceInspirationArr, setSourceInspirationArr] = useState(source_of_inspiration);
-  const [personalCookingMissionArr, setPersonalCookingMissionArrr] = useState(personal_cooking_mission);
+  const [cookingPhilosophyArr, setCookingPhilosophyArr] = useState(cooking_philosophy ?? []);
+  const [sourceInspirationArr, setSourceInspirationArr] = useState(source_of_inspiration ?? []);
+  const [personalCookingMissionArr, setPersonalCookingMissionArrr] = useState(personal_cooking_mission ?? []);
 
   const handleClickPopupOpenOtherInformations = (name, params) => {
     return () => {
@@ -156,7 +156,7 @@ function FormEditAccountChef (props) {
     setRoleModelsArr(data)
   }
 
-  const content = <>
+  return (
     <ContentLayout>
       <h2 className={classes.profile__title}>Update a New Photo</h2>
       <form onSubmit={formik.handleSubmit} className={classes.profile__data}>
@@ -443,12 +443,7 @@ function FormEditAccountChef (props) {
           <p className={classes.profile__formStatus}>{formStatus}</p>
         </div>
       </form>
-    </ContentLayout>
-  </>
-
-  return (
-    <LayoutPage content={content} />
-  );
+    </ContentLayout>)
 }
 
 FormEditAccountChef.propTypes = {
