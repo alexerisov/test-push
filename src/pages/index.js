@@ -38,13 +38,7 @@ const Home = (props) => {
 
   const handleChangeStatus = () => {
     if (props?.profile?.data?.user_type === viewerType) {
-      const data = { ...props.profile.data, user_type: chefType };
-      props.dispatch(
-        profileActions.updateProfile(data)
-    ).then(() => {
-      props.dispatch(accountActions.remind());
-      props.dispatch(modalActions.open('changeStatusSuccess'));
-    });
+      router.push('/profile/become-home-chef')
     } else {
       props.dispatch(modalActions.open('register'));
     }

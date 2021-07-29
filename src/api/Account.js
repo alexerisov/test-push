@@ -63,6 +63,47 @@ export default {
     );
   },
 
+  updateAccountType: ({
+    city,
+    full_name,
+    bio,
+    phone_number,
+    email,
+    user_type,
+    language,
+    experience,
+    personal_cooking_mission,
+    source_of_inspiration,
+    cooking_philosophy,
+  }, avatar) => {
+    const formData = new FormData();
+    if (avatar instanceof File) {
+      formData.append('avatar', avatar);
+    }
+    formData.append('data', JSON.stringify({
+      city,
+      full_name,
+      bio,
+      phone_number,
+      email,
+      user_type,
+      language,
+      experience,
+      personal_cooking_mission,
+      source_of_inspiration,
+      cooking_philosophy,
+    }));
+    return http.post(
+        `account/homechef_request`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+    );
+  },
+
   resetPassword: (email) => {
     return http.post(`account/password/reset`, {
       email,

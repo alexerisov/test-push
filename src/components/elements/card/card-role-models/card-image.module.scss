@@ -1,0 +1,47 @@
+@import '~styles/variables.scss';
+@import "~styles/mixins/mixins.scss";
+
+.card {
+  width: 115px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px 0;
+
+  &__image {
+    margin: 0;
+    border: 1px solid $--color-orange;
+    width: 95px;
+    height: 95px;
+    position: relative;
+    padding: 0;
+    background-position: center; 
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 50%;
+  }
+
+  &__button {
+    position: absolute;
+    top: -12px;
+    right: -5px;
+    width: 32px;
+    height: 32px;
+    font-size: 20px;
+    border-radius: 50%;
+    background-color: $--color-white;
+    border: none;
+    outline: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 5px;
+    cursor: pointer;
+  }
+
+  &__title {
+    @include fontSemiBold();
+    font-size: 14px;
+  }
+}
