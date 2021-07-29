@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from "react-redux";
 import Link from "next/link";
 import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel';
@@ -9,6 +9,8 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import Collapse from '@material-ui/core/Collapse';
 import Tooltip from "@material-ui/core/Tooltip";
+import {withRouter} from "next/router";
+import Pagination from "@material-ui/lab/Pagination";
 
 import { LayoutPage } from "@/components/layouts";
 import CardFavouriteDishes from "@/components/elements/card/card-favourite-dishes";
@@ -17,11 +19,11 @@ import CardHighestMeals from "@/components/elements/card-highest-meals";
 import RoleModel from "@/components/elements/role-model";
 
 import Recipe from "@/api/Recipe";
+import {CHEF_TYPE} from "@/utils/constants";
+import {RedirectWithoutAuthAndByCheckingUserType} from "@/utils/authProvider";
 
 import styles from "./index.module.scss";
 import 'pure-react-carousel/dist/react-carousel.es.css';
-import classes from "@/pages/my-uploads/index.module.scss";
-import Pagination from "@material-ui/lab/Pagination";
 
 const useAvatarStyles = makeStyles({
   root: {
@@ -112,7 +114,9 @@ const HomeChef = ({ account }) => {
                   </td>
                   <td className={styles.cell}>
                     <h3 className={styles.field}>Phone Number</h3>
-                    <p className={styles.value}>{!account?.profile?.phone_number ? '-' : account.profile?.phone_number}</p>
+                    <p className={styles.value}>
+                      {!account?.profile?.phone_number ? '-' : account.profile?.phone_number}
+                    </p>
                   </td>
                 </tr>
 
@@ -156,14 +160,18 @@ const HomeChef = ({ account }) => {
           step={3}
         >
           <Slider className={styles.roleCarousel__slider}>
-            {account?.profile?.role_models &&
-            account.profile.role_models.map((role, index) => {
-              return (
-                <Slide className={styles.roleCarousel__item} index={index}>
-                  <RoleModel key={`role_model${role.pk}`} name={role.name} avatar={role.file} />
-                </Slide>
-              );
-            })}
+            {account?.profile?.role_models.length
+              ?
+              account.profile.role_models.map((role, index) => {
+                return (
+                  <Slide key={`role_model${role.pk}`} className={styles.roleCarousel__item} index={index}>
+                    <RoleModel name={role.name} avatar={role.file} />
+                  </Slide>
+                );
+              })
+              :
+              'No Role models exists yet!'
+            }
           </Slider>
           <ButtonBack className={styles.roleCarousel__prev}>
             <NavigateBeforeIcon />
@@ -186,48 +194,33 @@ const HomeChef = ({ account }) => {
           step={3}
         >
           <Slider className={styles.favDishesCarousel__slider}>
-                <Slide className={styles.favDishesCarousel__item} index={1}>
-                  <CardFavouriteDishes
-                  title="Card to heuaheaqgqgqtt"
-                  image="http://localhost:4096/media/recipe_files/284/4a30033d69d1269c313995b99eec0fbb.jpg"/>
-                </Slide>
-
-            <Slide className={styles.favDishesCarousel__item} index={2}>
-              <CardFavouriteDishes
-                title="Card to heuaheaqgqgqtt"
-                image="http://localhost:4096/media/recipe_files/284/4a30033d69d1269c313995b99eec0fbb.jpg"/>
-            </Slide>
-
-            <Slide className={styles.favDishesCarousel__item} index={3}>
-              <CardFavouriteDishes
-                title="Card to heuaheaqgqgqtt"
-                image="http://localhost:4096/media/recipe_files/284/4a30033d69d1269c313995b99eec0fbb.jpg"/>
-            </Slide>
-
-            <Slide className={styles.favDishesCarousel__item} index={4}>
-              <CardFavouriteDishes
-                title="Card to heuaheaqgqgqtt"
-                image="http://localhost:4096/media/recipe_files/284/4a30033d69d1269c313995b99eec0fbb.jpg"/>
-            </Slide>
-
-            <Slide className={styles.favDishesCarousel__item} index={5}>
-              <CardFavouriteDishes
-                title="Card to heuaheaqgqgqtt"
-                image="http://localhost:4096/media/recipe_files/284/4a30033d69d1269c313995b99eec0fbb.jpg"/>
-            </Slide>
-
-            <Slide className={styles.favDishesCarousel__item} index={6}>
-              <CardFavouriteDishes
-                title="Card to heuaheaqgqgqtt"
-                image="http://localhost:4096/media/recipe_files/284/4a30033d69d1269c313995b99eec0fbb.jpg"/>
-            </Slide>
+            {account?.profile?.favourite_recipes?.length
+              ?
+              account?.profile?.favourite_recipes?.map(item => {
+                return (
+                  <Slide key={`card-favorite-dish-${item.pk}`} className={styles.favDishesCarousel__item} index={1}>
+                    <CardFavouriteDishes
+                      recipeId={item.pk}
+                      title={item.title}
+                      image={item.images[0]}
+                    />
+                  </Slide>
+                );
+              })
+              :
+              'No favourite dishes exists yet!'
+            }
           </Slider>
-          <ButtonBack className={styles.favDishesCarousel__prev}>
-            <NavigateBeforeIcon />
-          </ButtonBack>
-          <ButtonNext className={styles.favDishesCarousel__next}>
-            <NavigateNextIcon />
-          </ButtonNext>
+          {account?.profile?.favourite_recipes?.length &&
+          <>
+            <ButtonBack className={styles.favDishesCarousel__prev}>
+              <NavigateBeforeIcon/>
+            </ButtonBack>
+            <ButtonNext className={styles.favDishesCarousel__next}>
+              <NavigateNextIcon/>
+            </ButtonNext>
+          </>
+          }
         </CarouselProvider>
       </section>
 
@@ -302,6 +295,6 @@ const HomeChef = ({ account }) => {
   );
 };
 
-export default connect((state) => ({
+export default withRouter(RedirectWithoutAuthAndByCheckingUserType(connect((state) => ({
   account: state.account,
-}))(HomeChef);
+}))(HomeChef), CHEF_TYPE));
