@@ -242,6 +242,7 @@ const HomeChefBlock = ({ account, user }) => {
               uploadRecipes.map(item => (
                 <CardHighestMeals
                   key={`${item.pk + '1k0'}`}
+                  name={item.user.full_name}
                   title={item.title}
                   image={item.images[0]?.url}
                   city={item.city}
