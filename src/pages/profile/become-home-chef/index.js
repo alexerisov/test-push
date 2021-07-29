@@ -133,8 +133,9 @@ const ProfileAccountSettings = (props) => {
     };
   };
 
-  const resetValuesOtherInformations = (functionSetValues) => {
+  const resetValuesOtherInformations = (functionSetValues, name) => {
     functionSetValues([]);
+    formik.setFieldValue(name, []);
   }
 
   const onClickDeleteRoleModels = (id) => {
@@ -301,7 +302,9 @@ const ProfileAccountSettings = (props) => {
                   <button 
                     type="button"
                     className={classes.profile__otherInformationsCard__buttonDelete}
-                    onClick={() => resetValuesOtherInformations(setPersonalCookingMissionArrr)}
+                    onClick={() => 
+                      resetValuesOtherInformations(setPersonalCookingMissionArrr, "personal_cooking_mission")
+                    }
                   />
                 </div>
               </div>
@@ -349,7 +352,9 @@ const ProfileAccountSettings = (props) => {
                   <button 
                     type="button"
                     className={classes.profile__otherInformationsCard__buttonDelete}
-                    onClick={() => resetValuesOtherInformations(setSourceInspirationArr)}
+                    onClick={() => 
+                      resetValuesOtherInformations(setSourceInspirationArr, "source_of_inspiration")
+                    }
                   />
                 </div>
               </div>
@@ -397,7 +402,9 @@ const ProfileAccountSettings = (props) => {
                   <button 
                     type="button"
                     className={classes.profile__otherInformationsCard__buttonDelete}
-                    onClick={() => resetValuesOtherInformations(setCookingPhilosophyArr)}
+                    onClick={() => 
+                      resetValuesOtherInformations(setCookingPhilosophyArr, "cooking_philosophy")
+                    }
                   />
                 </div>
               </div>
