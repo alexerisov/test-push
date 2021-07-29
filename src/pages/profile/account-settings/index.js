@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import classes from "./index.module.scss";
 import LayoutPage from '@/components/layouts/layout-page';
 import ContentLayout from "@/components/layouts/layout-profile-content";
+import FormEditAccountChef from "@/components/forms/form-edit-account-chef";
 import PropTypes from "prop-types";
 
 import { useFormik } from 'formik';
@@ -64,7 +65,7 @@ const ProfileAccountSettings = (props) => {
       setStatusSubmit('Loading...')
       setFormStatus('')
       values.user_type = user_type;
-      props.dispatch(profileActions.updateProfile(values))
+      props.dispatch(profileActions.updateProfileUser(values))
       .then((res) => {
         setStatusSubmit('Update')
         setFormStatus(<span className={classes.profile__formStatus_true}>Successfully sent</span>)
@@ -84,7 +85,7 @@ const ProfileAccountSettings = (props) => {
     inputRef.current.click();
   };
 
-  const content = (user_type === 1) ?
+  const content = (user_type === 0) ?
     <ContentLayout>
       <h2 className={classes.profile__title}>Update a New Photo</h2>
       <form onSubmit={formik.handleSubmit} className={classes.profile__data}>
@@ -179,100 +180,7 @@ const ProfileAccountSettings = (props) => {
         </div>
       </form>
     </ContentLayout> :
-    <ContentLayout>
-    <h2 className={classes.profile__title}>Update a New Photo</h2>
-    <form onSubmit={formik.handleSubmit} className={classes.profile__data}>
-      <div className={classes.profile__formAvatar}>
-        <div className={classes.profile__upload} onClick={onClickUpload}>
-          { !avatarFile ? <img src="/images/index/default-avatar.png" alt="avatar" className={classes.profile__avatar}/>
-          : avatarFile && <img src={avatarFile} alt="avatar" className={classes.profile__avatar}/>}
-          <div className={classes.profile__avatarBack} />
-        </div>
-        <input
-            type="file"
-            ref={inputRef}
-            name="avatar"
-            value={formik.avatar}
-            hidden
-            onChange = {(event) => {
-              setAvatarFile(URL.createObjectURL(event.currentTarget.files[0]));
-              formik.setFieldValue("avatar", event.currentTarget.files[0]);
-            }}
-        />
-        <label>Profile-pic.jpg</label>
-        <div>
-          <button type="submit" className={classes.profile__buttonUpdate}>{statusSubmit}</button>
-          <p className={classes.profile__formStatus}>{formStatus}</p>
-        </div>
-      </div>
-      <h2 className={classes.profile__title}>Update User Information</h2>
-      <div>
-        <label className={classes.profile__label}>Full Name</label>
-        <StyledTextField
-          id="full_name"
-          name="full_name"
-          value={formik.values.full_name ? formik.values.full_name : ""}
-          onChange={formik.handleChange}
-          variant="outlined"
-          error={formik.touched.full_name && Boolean(formik.errors.full_name)}
-          helperText={formik.touched.full_name && formik.errors.full_name}
-        />
-      </div>
-      <div>
-        <label className={classes.profile__label}>Email</label>
-        <StyledTextField
-          disabled
-          id="email"
-          name="email"
-          variant="outlined"
-          value={formik.values.email}
-          onChange={formik.handleChange}
-          error={formik.touched.email && Boolean(formik.errors.email)}
-          helperText={formik.touched.email && formik.errors.email}
-        />
-      </div>
-      <div>
-        <label className={classes.profile__label}>Phone Number</label>
-        <StyledTextField
-          id="phone_number"
-          name="phone_number"
-          variant="outlined"
-          value={formik.values.phone_number ? formik.values.phone_number : ""}
-          onChange={formik.handleChange}
-          error={formik.touched.phone_number && Boolean(formik.errors.phone_number)}
-          helperText={formik.touched.phone_number && formik.errors.phone_number}
-        />
-      </div>
-      <div>
-        <label className={classes.profile__label}>City</label>
-        <StyledTextField
-          id="city"
-          name="city"
-          variant="outlined"
-          value={formik.values.city ? formik.values.city : ""}
-          onChange={formik.handleChange}
-          error={formik.touched.city && Boolean(formik.errors.city)}
-          helperText={formik.touched.city && formik.errors.city}
-        />
-      </div>
-      <div>
-        <label className={classes.profile__label}>Language</label>
-        <StyledTextField
-          id="language"
-          name="language"
-          variant="outlined"
-          value={formik.values.language ? formik.values.language : ""}
-          onChange={formik.handleChange}
-          error={formik.touched.language && Boolean(formik.errors.language)}
-          helperText={formik.touched.language && formik.errors.language}
-        />
-      </div>
-      <div>
-        <button type="submit" className={classes.profile__buttonUpdate}>{statusSubmit}</button>
-        <p className={classes.profile__formStatus}>{formStatus}</p>
-      </div>
-    </form>
-  </ContentLayout>
+    <FormEditAccountChef />
 
   return (
     <LayoutPage content={content} />
