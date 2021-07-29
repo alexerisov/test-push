@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import classes from "./index.module.scss";
 import LayoutPage from '@/components/layouts/layout-page';
 import ContentLayout from "@/components/layouts/layout-profile-content";
+import FormEditAccountChef from "@/components/forms/form-edit-account-chef";
 import PropTypes from "prop-types";
 
 import { useFormik } from 'formik';
@@ -64,7 +65,7 @@ const ProfileAccountSettings = (props) => {
       setStatusSubmit('Loading...')
       setFormStatus('')
       values.user_type = user_type;
-      props.dispatch(profileActions.updateProfile(values))
+      props.dispatch(profileActions.updateProfileUser(values))
       .then((res) => {
         setStatusSubmit('Update')
         setFormStatus(<span className={classes.profile__formStatus_true}>Successfully sent</span>)
@@ -84,7 +85,7 @@ const ProfileAccountSettings = (props) => {
     inputRef.current.click();
   };
 
-  const content = <>
+  const content = (user_type === 0) ?
     <ContentLayout>
       <h2 className={classes.profile__title}>Update a New Photo</h2>
       <form onSubmit={formik.handleSubmit} className={classes.profile__data}>
@@ -178,8 +179,8 @@ const ProfileAccountSettings = (props) => {
           <p className={classes.profile__formStatus}>{formStatus}</p>
         </div>
       </form>
-    </ContentLayout>
-  </>
+    </ContentLayout> :
+    <FormEditAccountChef />
 
   return (
     <LayoutPage content={content} />
