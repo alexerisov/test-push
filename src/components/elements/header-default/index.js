@@ -91,7 +91,7 @@ const HeaderDefault = (props) => {
             onClose={handleClose}
           >
             <MenuItem onClick={handleClose}>
-              <Link href="/profile/account-settings">
+              <Link href={props?.account?.profile?.user_type === viewerType ? "/profile/account-settings" : '/home-chef'}>
                 <a className={classes.header__link_place_menu}>My Profile</a>
               </Link>
             </MenuItem>

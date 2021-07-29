@@ -1,0 +1,51 @@
+@import "~styles/variables.scss";
+@import "~styles/mixins/mixins.scss";
+
+.card {
+  width: 480px;
+  min-height: 241px;
+  padding: 28px 0 0 42px;
+}
+
+.title {
+  font-size: 22px;
+  @include fontSemiBold();
+  margin-bottom: 35px;
+  color: $--color-orange;
+}
+
+.listContainer {
+  display: flex;
+}
+
+.list {
+  margin-left: 34px;
+  list-style-type: none;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.item:last-child {
+  margin-bottom: 0px;
+}
+
+.image {
+  width: 100px;
+  height: 100px;
+}
+
+.item__circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 29px;
+  height: 29px;
+  margin-right: 10px;
+  color: #fff;
+  background-color: $--color-orange;
+  border-radius: 50%;
+}
