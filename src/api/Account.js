@@ -70,15 +70,21 @@ export default {
     phone_number,
     email,
     user_type,
+    role_models,
     language,
     experience,
     personal_cooking_mission,
     source_of_inspiration,
     cooking_philosophy,
-  }, avatar) => {
+  }, avatar, role_model_images) => {
     const formData = new FormData();
     if (avatar instanceof File) {
       formData.append('avatar', avatar);
+    }
+    if (role_model_images.length !== 0) {
+      role_model_images.forEach((image, index) => {
+        formData.append(`role_model_images[${index}]`, image);
+      });
     }
     formData.append('data', JSON.stringify({
       city,
@@ -89,6 +95,7 @@ export default {
       user_type,
       language,
       experience,
+      role_models,
       personal_cooking_mission,
       source_of_inspiration,
       cooking_philosophy,
@@ -112,14 +119,21 @@ export default {
     email,
     user_type,
     language,
+    role_models,
     experience,
     personal_cooking_mission,
     source_of_inspiration,
     cooking_philosophy,
-  }, avatar) => {
+    role_models_to_delete,
+  }, avatar, role_model_images) => {
     const formData = new FormData();
     if (avatar instanceof File) {
       formData.append('avatar', avatar);
+    }
+    if (role_model_images.length !== 0) {
+      role_model_images.forEach((image, index) => {
+        formData.append(`role_model_images[${index}]`, image);
+      });
     }
     formData.append('data', JSON.stringify({
       city,
@@ -127,12 +141,14 @@ export default {
       bio,
       phone_number,
       email,
+      role_models,
       user_type,
       language,
       experience,
       personal_cooking_mission,
       source_of_inspiration,
       cooking_philosophy,
+      role_models_to_delete,
     }));
     return http.patch(
         `account/homechef_request`,

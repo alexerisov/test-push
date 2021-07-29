@@ -52,6 +52,7 @@ const ProfileAccountSettings = (props) => {
   const [avatarFile, setAvatarFile] = useState(avatar);
   const [formStatus, setFormStatus] = useState('');
   const [statusSubmit, setStatusSubmit] = useState('Become a home chef');
+  const [roleModelsArr, setRoleModelsArr] = useState([]);
 
   const formik = useFormik({
     initialValues: {
@@ -66,7 +67,8 @@ const ProfileAccountSettings = (props) => {
       personal_cooking_mission: [],
       source_of_inspiration: [],
       cooking_philosophy: [],
-      avatar: avatar
+      avatar: avatar,
+      role_model_images: [],
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
@@ -93,8 +95,6 @@ const ProfileAccountSettings = (props) => {
     inputRef.current.click();
   };
 
-  const [roleModelsArr, setRoleModelsArr] = useState([]);
-
   const handleClickPopupOpenAddRoleModels = (name, params) => {
     return () => {
       props.dispatch(modalActions.open(name, params))
@@ -103,7 +103,7 @@ const ProfileAccountSettings = (props) => {
             const data = roleModelsArr;
             data.push(res)
             setRoleModelsArr(data)
-            formik.setFieldValue("role_models", data);
+            setValuesRoleModels(data);
           }
         })
     };
@@ -142,7 +142,19 @@ const ProfileAccountSettings = (props) => {
     const data = roleModelsArr.filter(function(item, index) {
       return index !== id;
     });
-    setRoleModelsArr(data)
+    setRoleModelsArr(data);
+    setValuesRoleModels(data);
+  }
+
+  const setValuesRoleModels = (data) => {
+    const nameArr = [];
+    const avatarArr = [];
+    data.forEach(function(item) {
+      nameArr.push(item.name);
+      avatarArr.push(item.avatar);
+    });
+    formik.setFieldValue("role_models", nameArr);
+    formik.setFieldValue("role_model_images", avatarArr);
   }
 
   const content = <>
