@@ -9,7 +9,6 @@ import classes from "./index.module.scss";
 import hat from './hat.svg';
 import bulb from './bulb.svg';
 import rocket from './rocket.svg';
-import Recipe from "@/api/Recipe";
 
 const useStyles = makeStyles({
   content: {
@@ -22,15 +21,6 @@ const useStyles = makeStyles({
 
 const CardHomeChefProfile = ({ list, type }) => {
   const cardStyles = useStyles();
-
-  const getUploadRecipes = async () => {
-    try {
-      const response = await Recipe.getUploadRecipes();
-    }
-    catch (e) {
-      console.log(e);
-    }
-  };
 
   const choosePhoto = (type) => {
     switch (type) {
@@ -71,7 +61,7 @@ const CardHomeChefProfile = ({ list, type }) => {
           <ul className={classes.list}>
             {list?.length &&
             list.map((item, index) => (
-              <li className={classes.item}>
+              <li key={`homechef-card-${index}`} className={classes.item}>
                   <span className={classes.item__circle}>
                     {index + 1}
                   </span>

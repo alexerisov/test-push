@@ -14,7 +14,6 @@ const useStyles = makeStyles({
 });
 
 const RoleModel = ({ name, avatar }) => {
-  console.log(avatar);
   const classes = useStyles();
 
   return (
