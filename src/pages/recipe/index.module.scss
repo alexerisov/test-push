@@ -85,6 +85,7 @@
     &__author {
         font-size: 18px;
         @include fontMedium();
+        cursor: pointer;
     }
 
     &__location {
