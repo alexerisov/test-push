@@ -8,7 +8,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Collapse from "@material-ui/core/Collapse";
 import Pagination from "@material-ui/lab/Pagination";
 import Avatar from "@material-ui/core/Avatar";
-import {makeStyles} from "@material-ui/core";
+import { makeStyles } from '@material-ui/core/styles';
 
 import {LayoutPage} from "@/components/layouts";
 import RoleModel from "@/components/elements/role-model";
