@@ -2,10 +2,10 @@
 
 .footer {
     width: 100%;
-    min-height: 460px;
+    min-height: 390px;
     background-color: $--color-gray3;
     margin: 0;
-    padding: 65px 142px 40px 142px;
+    padding: 50px 142px 40px 142px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -26,14 +26,14 @@
 
     &__titleList {
         @include fontMontserratSemiBold();
-        font-size: 20px;
+        font-size: 18px;
         line-height: 42px;
-        margin: 0 0 25px 0;
+        margin: 0 0 20px 0;
     }
 
     &__linkList {
-        font-size: 20px;
-        line-height: 42px;
+        font-size: 16px;
+        line-height: 35px;
         margin: 0 35px 0 0;
     }
 
@@ -68,6 +68,7 @@
     &__foodImg {
         position: absolute;
         right: 40px;
-        top: 120px;
+        top: 140px;
+        width: 240px;
     }
 }
