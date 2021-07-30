@@ -188,7 +188,7 @@ const HomePageOfTargetChef = () => {
               <span className={styles.roleCarousel__empty}>No Role models exists yet!</span>
             }
           </Slider>
-          {chefInfo?.role_models?.length &&
+          {chefInfo?.role_models?.length !== 0 &&
           <>
             <ButtonBack className={styles.roleCarousel__prev}>
               <NavigateBeforeIcon/>
@@ -280,7 +280,7 @@ const HomePageOfTargetChef = () => {
           </Tooltip>
         </div>
 
-        <Collapse in={expanded} timeout="auto" collapsedSize={380}>
+        <Collapse in={expanded} timeout="auto" collapsedSize={380} style={{minHeight: "380px"}}>
           <div className={styles.sectionRecipes__wrapper}>
             <div className={styles.itemsContainer}>
               {uploadRecipes &&

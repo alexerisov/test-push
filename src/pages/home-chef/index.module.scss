@@ -166,6 +166,7 @@
   &__empty {
     position: relative;
     left: -20px;
+    min-width: max-content;
   }
 
   &__next {
