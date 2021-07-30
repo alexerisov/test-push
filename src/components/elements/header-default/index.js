@@ -10,8 +10,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import styled from 'styled-components';
 import { NoSsr } from '@material-ui/core';
 import { useRouter } from 'next/router';
-import { VIEWER_TYPE } from "@/utils/constants";
-import { CHEF_TYPE } from "@/utils/constants";
+import { USER_TYPE } from "@/utils/datasets";
 
 const StyledMenu = styled(Menu)`
   margin: 40px 0 0 0;
@@ -81,7 +80,7 @@ const HeaderDefault = (props) => {
           ? <button className={classes.header__button} onClick={handleClickLogin('register')}>Login</button>
           : <>
           <button onClick={handleClick} className={classes.header__button}>
-            {props?.account?.profile?.user_type === VIEWER_TYPE
+            {props?.account?.profile?.user_type === USER_TYPE.viewerType
               ?
               `Hi, ${props?.account?.profile?.full_name
                 ? props?.account?.profile?.full_name?.split(' ')[0]
@@ -103,7 +102,7 @@ const HeaderDefault = (props) => {
                 <a className={classes.header__link_place_menu}>My Profile</a>
               </Link>
             </MenuItem>
-            {props?.account?.profile?.user_type === CHEF_TYPE &&
+            {props?.account?.profile?.user_type === USER_TYPE.chefType &&
             <>
               <MenuItem onClick={handleClose}>
                 <Link href="/">
@@ -131,7 +130,7 @@ const HeaderDefault = (props) => {
             <MenuItem onClick={handleClose}>
               <Link href="/">
                 <a className={classes.header__link_place_menu}>
-                  {props?.account?.profile?.user_type === VIEWER_TYPE ? "History" : "My videos" }
+                  {props?.account?.profile?.user_type === USER_TYPE.viewerType ? "History" : "My videos" }
                 </a>
               </Link>
             </MenuItem>
