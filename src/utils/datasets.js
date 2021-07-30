@@ -132,3 +132,14 @@ export const USER_TYPE = {
   viewerType: 0,
   chefType: 1,
 };
+
+export const PUBLISH_STATUS = {
+  notPublished: 1,
+  published: 2
+};
+
+export const APPROVED_STATUS = {
+  1: "Awaiting",
+  2: "Approved",
+  3: "Rejected"
+};

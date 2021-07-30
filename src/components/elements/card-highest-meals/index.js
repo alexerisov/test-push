@@ -10,6 +10,8 @@ import styled from 'styled-components';
 import { CardActionArea } from '@material-ui/core';
 import { useRouter } from 'next/router';
 
+import { PUBLISH_STATUS, APPROVED_STATUS } from "@/utils/datasets";
+
 const StyledCardMedia = styled(CardMedia)`
   .MuiCardMedia-root {
     background-size: auto;
@@ -22,6 +24,23 @@ const CardHighestMeals = (props) => {
 
   const redirectToRecipeCard = (id) => {
     router.push(`/recipe/${id}`);
+  };
+
+  const getStatusOfCard = () => {
+    if (props.publishStatus === PUBLISH_STATUS.notPublished) {
+      return 'Saved';
+    }
+
+    if (props.reviewStatus) {
+      switch (props.reviewStatus) {
+        case 1:
+          return APPROVED_STATUS[1];
+        case 2:
+          return APPROVED_STATUS[2];
+        case 3:
+          return APPROVED_STATUS[3];
+      }
+    }
   };
 
   return (
@@ -39,6 +58,8 @@ const CardHighestMeals = (props) => {
             <p className={classes.card__location}>{props.city}</p>
             <Link href={`/recipe/${props.id}`}><a>View recipe</a></Link>
             <div className={classes.card__likeIcon}><LikeIcon value={props.likes} /></div>
+            {props.publishStatus &&
+            <div className={classes.card__status}>{getStatusOfCard()}</div>}
           </div>
         </CardContent>
       </CardActionArea>
