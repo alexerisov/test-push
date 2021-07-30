@@ -23,7 +23,7 @@ import styles from "@/pages/home-chef/index.module.scss";
 import 'pure-react-carousel/dist/react-carousel.es.css';
 
 const useAvatarStyles = makeStyles({
-  root: {
+  circle: {
     position: "absolute",
     width: "114px",
     height: "114px",
@@ -31,7 +31,7 @@ const useAvatarStyles = makeStyles({
 });
 
 const HomePageOfTargetChef = () => {
-  const classes = useAvatarStyles();
+  const avatarStyles = useAvatarStyles();
   const router = useRouter();
   const [chefInfo, setChefInfo] = useState(null);
   const [chefId, setChefId] = useState(null);
@@ -105,8 +105,9 @@ const HomePageOfTargetChef = () => {
       </h2>
 
       <section className={`${styles.section} ${styles.info}`}>
-        <Avatar classes={{root: classes.root}}
+        <Avatar classes={{circle: avatarStyles.circle}}
                 src={chefInfo?.avatar}
+                variant='circle'
         />
 
         <div className={styles.info__content}>
@@ -280,7 +281,7 @@ const HomePageOfTargetChef = () => {
           </Tooltip>
         </div>
 
-        <Collapse in={expanded} timeout="auto" collapsedSize={380} style={{minHeight: "380px"}}>
+        <Collapse in={expanded} timeout="auto" collapsedSize={380} style={{minHeight: "380px", visibility: 'visible'}}>
           <div className={styles.sectionRecipes__wrapper}>
             <div className={styles.itemsContainer}>
               {uploadRecipes &&
