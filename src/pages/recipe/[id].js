@@ -132,6 +132,10 @@ function CreateRecipe (props) {
         };
     };
 
+    const redirectToHomeChefPage = () => {
+      router.push(`/home-chef/${recipe?.user?.pk}`);
+    };
+
     const content = <div className={classes.recipe}>
         {recipe &&
             <>
@@ -144,7 +148,9 @@ function CreateRecipe (props) {
                     <div className={classes.recipe__header}>
                         <div>
                             <h2 className={classes.recipe__title}>{recipe.title}</h2>
-                            <p className={classes.recipe__author}>by Chef {recipe.user.full_name}</p>
+                            <p className={classes.recipe__author} onClick={redirectToHomeChefPage}>
+                              by Chef {recipe.user.full_name}
+                            </p>
                             <p className={classes.recipe__location}>{recipe.user.city}</p>
                             <RaitingIcon value={recipe.avg_rating} />
                         </div>

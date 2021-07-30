@@ -29,7 +29,9 @@ function AddRoleModel (props) {
   const validationSchema = yup.object({
     name: yup
       .string('Name your email')
-      .required('Name is required'),
+      .required('Name is required')
+      .min(5, 'Name should be of minimum 5 characters length')
+      .max(100, 'Name should be of maximum 100 characters length')
   });
 
   const [avatarFile, setAvatarFile] = useState();

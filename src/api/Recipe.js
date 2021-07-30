@@ -159,7 +159,14 @@ export default {
         }
       });
   },
-    
+
+  getUploadRecipesForTargetUser: ({query, id}) => {
+    return http.get(`/recipe/user/${id}`,
+      {
+        params: query
+      });
+  },
+
   getComments: ({recipeId, page}) => {
     return http.get(
       `/recipe/${recipeId}/comments`,
@@ -260,4 +267,10 @@ export default {
   deleteSavedRecipe: (id) => {
     return http.delete(`/recipe/saved_recipe/${id}`);
   },
+
+  getSavedRecipes: (query) => {
+    return http.get('/recipe/saved_recipe', {
+      params: query
+    });
+  }
 };
