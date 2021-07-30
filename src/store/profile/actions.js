@@ -79,11 +79,14 @@ export default {
             language: sendData?.language,
             user_type: +sendData?.user_type,
             experience: sendData?.experience,
+            role_models: sendData?.role_models,
             personal_cooking_mission: sendData?.personal_cooking_mission,
             source_of_inspiration: sendData?.source_of_inspiration,
             cooking_philosophy: sendData?.cooking_philosophy,
+            role_models_to_delete: sendData?.role_models_to_delete,
           },
           sendData?.avatar ?? null,
+          sendData?.role_model_images ?? null,
         );
         dispatch({ type: types.SEND_SUCCESS });
       } catch (e) {
@@ -109,11 +112,13 @@ export default {
             language: sendData?.language,
             user_type: +sendData?.user_type,
             experience: sendData?.experience,
+            role_models: sendData?.role_models,
             personal_cooking_mission: sendData?.personal_cooking_mission,
             source_of_inspiration: sendData?.source_of_inspiration,
             cooking_philosophy: sendData?.cooking_philosophy,
           },
           sendData?.avatar ?? null,
+          sendData?.role_model_images ?? null,
         );
         dispatch({ type: types.SEND_SUCCESS });
       } catch (e) {

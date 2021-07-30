@@ -1,8 +1,6 @@
 import React from 'react';
 import classes from "./index.module.scss";
-import RaitingIcon from "@/components/elements/rating-icon";
 import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import Link from "next/link";
 import styled from 'styled-components';
 import { CardActionArea } from '@material-ui/core';

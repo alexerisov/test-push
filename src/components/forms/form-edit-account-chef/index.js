@@ -15,7 +15,7 @@ import styled from 'styled-components';
 import { CardRoleModels } from '@/components/elements/card';
 
 const StyledTextField = styled(TextField)`
-  width: 561px;
+  width: 100%;
     .PrivateNotchedOutline-root-1:hover {
       border-color: #000000;
     }
@@ -51,14 +51,32 @@ function FormEditAccountChef (props) {
     email,
     full_name,
     phone_number, 
-    city, language, 
-    avatar, user_type, 
+    city,
+    language, 
+    avatar,
+    user_type, 
     bio,
+    role_models,
     experience,
     personal_cooking_mission,
     source_of_inspiration,
     cooking_philosophy,
   } = props.account.profile;
+
+  const namesRoleModels = [];
+  const avatarsRoleModels = [];
+
+  const [roleModelsArr, setRoleModelsArr] = useState([]);
+
+  useEffect(() => {
+    if (role_models) {
+      role_models.forEach(function(item) {
+      namesRoleModels.push(item.name);
+      avatarsRoleModels.push(item.file);
+    });
+    setRoleModelsArr(role_models);
+  }
+  }, [role_models])
 
   const [avatarFile, setAvatarFile] = useState(avatar);
   const [formStatus, setFormStatus] = useState('');
@@ -73,17 +91,20 @@ function FormEditAccountChef (props) {
       city: city ?? "",
       language: language ?? "",
       experience: experience ?? "",
-      role_models: [],
+      role_models: namesRoleModels ?? [],
       personal_cooking_mission: personal_cooking_mission ?? [],
       source_of_inspiration: source_of_inspiration ?? [],
       cooking_philosophy: cooking_philosophy ?? [],
-      avatar: avatar
+      avatar: avatar,
+      role_model_images: avatarsRoleModels ?? [],
+      role_models_to_delete: [],
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
       setStatusSubmit('Loading...')
       setFormStatus('')
       values.user_type = user_type;
+      console.log(values)
       props.dispatch(profileActions.updateAccountChef(values))
       .then((res) => {
         setStatusSubmit('Update')
@@ -104,8 +125,6 @@ function FormEditAccountChef (props) {
     inputRef.current.click();
   };
 
-  const [roleModelsArr, setRoleModelsArr] = useState([]);
-
   const handleClickPopupOpenAddRoleModels = (name, params) => {
     return () => {
       props.dispatch(modalActions.open(name, params))
@@ -113,8 +132,8 @@ function FormEditAccountChef (props) {
           if (res) {
             const data = roleModelsArr;
             data.push(res)
-            setRoleModelsArr(data)
-            formik.setFieldValue("role_models", data);
+            setRoleModelsArr(data);
+            setValuesRoleModels(data);
           }
         })
     };
@@ -149,11 +168,31 @@ function FormEditAccountChef (props) {
     formik.setFieldValue(name, []);
   }
 
-  const onClickDeleteRoleModels = (id) => {
+  const roleModelsToDelete = [];
+
+  const onClickDeleteRoleModels = (id, pk) => {
+    if (pk) {
+      roleModelsToDelete.push(pk);
+      formik.setFieldValue("role_models_to_delete", roleModelsToDelete);
+    }
     const data = roleModelsArr.filter(function(item, index) {
       return index !== id;
     });
-    setRoleModelsArr(data)
+    setRoleModelsArr(data);
+    setValuesRoleModels(data);
+  }
+
+  const setValuesRoleModels = (data) => {
+    const nameArr = [];
+    const avatarArr = [];
+    data.forEach(function(item) {
+      if (item.avatar instanceof File) {
+        nameArr.push(item.name);
+        avatarArr.push(item.avatar);
+      }
+    });
+    formik.setFieldValue("role_models", nameArr);
+    formik.setFieldValue("role_model_images", avatarArr);
   }
 
   return (
@@ -271,7 +310,7 @@ function FormEditAccountChef (props) {
           <h2 className={classes.profile__title}>Role Models</h2>
           <div className={classes.profile__container_addRoleModels}>
             {roleModelsArr.map((item, index) => {
-              return <CardRoleModels key={index} id={index} delete={onClickDeleteRoleModels} src={item.avatar} title={item.name} />
+              return <CardRoleModels key={index} id={index} pk={item.pk ?? null} delete={onClickDeleteRoleModels} src={item.avatar ?? item.file} title={item.name} />
             })}
             <buuton
               className={classes.profile__button__addRoleModels}
