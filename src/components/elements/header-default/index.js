@@ -1,6 +1,7 @@
 import React from 'react';
 import classes from "./index.module.scss";
 import Link from "next/link";
+import { makeStyles } from "@material-ui/core/styles";
 import { modalActions, accountActions } from '@/store/actions';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
@@ -9,6 +10,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import styled from 'styled-components';
 import { NoSsr } from '@material-ui/core';
 import { useRouter } from 'next/router';
+import { VIEWER_TYPE } from "@/utils/constants";
+import { CHEF_TYPE } from "@/utils/constants";
 
 const StyledMenu = styled(Menu)`
   margin: 40px 0 0 0;
@@ -18,11 +21,16 @@ const StyledMenu = styled(Menu)`
   }
 `;
 
+const useSeparatorStyles = makeStyles({
+  root: {
+    borderWidth: '2px 0 2px 0',
+    borderStyle: 'solid',
+    borderColor: '#FFAA00'
+  }
+});
+
 const HeaderDefault = (props) => {
-
-  const viewerType = 0;
-  const chefType = 1;
-
+  const separatorStyles = useSeparatorStyles();
   const handleClickLogin = (name) => {
     return () => {
       props.dispatch(
@@ -73,7 +81,7 @@ const HeaderDefault = (props) => {
           ? <button className={classes.header__button} onClick={handleClickLogin('register')}>Login</button>
           : <>
           <button onClick={handleClick} className={classes.header__button}>
-            {props?.account?.profile?.user_type === viewerType
+            {props?.account?.profile?.user_type === VIEWER_TYPE
               ?
               `Hi, ${props?.account?.profile?.full_name
                 ? props?.account?.profile?.full_name?.split(' ')[0]
@@ -95,17 +103,35 @@ const HeaderDefault = (props) => {
                 <a className={classes.header__link_place_menu}>My Profile</a>
               </Link>
             </MenuItem>
-            <MenuItem onClick={handleClose}>
-              <Link href={props?.account?.profile?.user_type === viewerType ? "/saved-recipes" : "/my-uploads"}>
+            {props?.account?.profile?.user_type === CHEF_TYPE &&
+            <>
+              <MenuItem onClick={handleClose}>
+                <Link href="/">
+                  <a className={classes.header__link_place_menu}>
+                    My Pencils
+                  </a>
+                </Link>
+              </MenuItem>
+              <MenuItem onClick={handleClose}>
+                <Link href="/my-uploads">
+                  <a className={classes.header__link_place_menu}>
+                    My Recipes
+                  </a>
+                </Link>
+              </MenuItem>
+            </>
+            }
+            <MenuItem onClick={handleClose} classes={{root: separatorStyles.root}}>
+              <Link href="/saved-recipes">
                 <a className={classes.header__link_place_menu}>
-                  {props?.account?.profile?.user_type === viewerType ? "Saved Recipes" : "Uploads" }
+                  Saved Recipes
                 </a>
               </Link>
             </MenuItem>
             <MenuItem onClick={handleClose}>
               <Link href="/">
                 <a className={classes.header__link_place_menu}>
-                  {props?.account?.profile?.user_type === viewerType ? "History" : "My videos" }
+                  {props?.account?.profile?.user_type === VIEWER_TYPE ? "History" : "My videos" }
                 </a>
               </Link>
             </MenuItem>
