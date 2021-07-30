@@ -1,22 +1,26 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
+import { useRouter } from "next/router";
 import Link from "next/link";
-import { makeStyles } from "@material-ui/core";
+import {ButtonBack, ButtonNext, CarouselProvider, Slide, Slider} from "pure-react-carousel";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import Avatar from "@material-ui/core/Avatar";
 import Tooltip from "@material-ui/core/Tooltip";
 import Collapse from "@material-ui/core/Collapse";
 import Pagination from "@material-ui/lab/Pagination";
-import { ButtonBack, ButtonNext, CarouselProvider, Slide, Slider } from "pure-react-carousel";
+import Avatar from "@material-ui/core/Avatar";
+import {makeStyles} from "@material-ui/core";
 
+import {LayoutPage} from "@/components/layouts";
 import RoleModel from "@/components/elements/role-model";
 import CardFavouriteDishes from "@/components/elements/card/card-favourite-dishes";
 import CardHomeChefProfile from "@/components/elements/card/card-homechef-profile";
 import CardHighestMeals from "@/components/elements/card-highest-meals";
 
 import Recipe from "@/api/Recipe";
+import Account from "@/api/Account";
 
-import styles from './homeChefBlock.module.scss';
+import styles from "@/pages/home-chef/index.module.scss";
+import 'pure-react-carousel/dist/react-carousel.es.css';
 
 const useAvatarStyles = makeStyles({
   root: {
@@ -26,11 +30,15 @@ const useAvatarStyles = makeStyles({
   }
 });
 
-const HomeChefBlock = ({ account, user }) => {
+const HomePageOfTargetChef = () => {
   const classes = useAvatarStyles();
-  const [uploadRecipes, setUploadRecipes] = useState();
-  const [expanded, setExpanded] = React.useState(false);
+  const router = useRouter();
+  const [chefInfo, setChefInfo] = useState(null);
+  const [chefId, setChefId] = useState(null);
 
+  const [uploadRecipes, setUploadRecipes] = useState();
+
+  const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -46,27 +54,51 @@ const HomeChefBlock = ({ account, user }) => {
     return isRemainExists ? ++pages : pages;
   };
 
+  useEffect(async () => {
+    if (chefId) {
+      try {
+        const response = await Account.getTargetChefAccountInfo(chefId);
+
+        if (response.status === 200) {
+          setChefInfo(response.data);
+        }
+      }
+      catch (e) {
+        console.error(e);
+      }
+    }
+  }, [chefId]);
+
   useEffect(() => {
-    getUploadRecipes( );
-  }, [page]);
+    setChefId(router.query.id);
+  }, [router]);
 
-  const getUploadRecipes = async () => {
-    try {
-      const response = await Recipe.getUploadRecipes(6, page);
-      await setNumberOfPages(countPages(response.data.count));
-      await setUploadRecipes(response.data.results);
+  useEffect(async () => {
+    if (chefId) {
+      try {
+        const query = new URLSearchParams({
+          'page_size': 6,
+          'page': page,
+        });
+
+        const response = await Recipe.getUploadRecipesForTargetUser({
+          query,
+          id: chefId
+        });
+
+        if (response.status === 200) {
+          setNumberOfPages(countPages(response.data.count));
+          setUploadRecipes(response.data.results);
+        }
+      }
+      catch (e) {
+        console.error(e);
+      }
     }
-    catch (e) {
-      console.log(e);
-    }
-  };
+  }, [page, chefId]);
 
-  const chooseUser = () => {
-    return !user ? account : user;
-  };
-
-  return (
-    <>
+  const content = (
+    <div className={styles.profile}>
       <h2 className={styles.navbar}>
         <Link href="/"><a>Home /</a></Link>
         <span> My Profile</span>
@@ -74,14 +106,14 @@ const HomeChefBlock = ({ account, user }) => {
 
       <section className={`${styles.section} ${styles.info}`}>
         <Avatar classes={{root: classes.root}}
-                src={chooseUser()?.profile?.avatar}
+                src={chefInfo?.avatar}
         />
 
         <div className={styles.info__content}>
           <div className={styles.info__left}>
             <div className={styles.name}>
               <h3 className={`${styles.field} ${styles.name__field}`}>Name</h3>
-              <p className={`${styles.value} ${styles.name__value}`}>{chooseUser()?.profile?.full_name}</p>
+              <p className={`${styles.value} ${styles.name__value}`}>{chefInfo?.full_name}</p>
             </div>
 
             <table className={styles.info__left__table}>
@@ -89,12 +121,12 @@ const HomeChefBlock = ({ account, user }) => {
               <tr className={styles.row}>
                 <td className={styles.cell} style={{width: '50%'}}>
                   <h3 className={styles.field}>Email</h3>
-                  <p className={styles.value}>{!chooseUser()?.profile?.email ? '-' : chooseUser().profile?.email}</p>
+                  <p className={styles.value}>{!chefInfo?.email ? '-' : chefInfo.email}</p>
                 </td>
                 <td className={styles.cell}>
                   <h3 className={styles.field}>Phone Number</h3>
                   <p className={styles.value}>
-                    {!chooseUser()?.profile?.phone_number ? '-' : chooseUser().profile?.phone_number}
+                    {!chefInfo?.phone_number ? '-' : chefInfo.phone_number}
                   </p>
                 </td>
               </tr>
@@ -102,12 +134,12 @@ const HomeChefBlock = ({ account, user }) => {
               <tr className={styles.row}>
                 <td className={styles.cell}>
                   <h3 className={styles.field}>City</h3>
-                  <p className={styles.value}>{!chooseUser()?.profile?.city ? '-' : chooseUser().profile?.city}</p>
+                  <p className={styles.value}>{!chefInfo?.city ? '-' : chefInfo.city}</p>
                 </td>
                 <td className={styles.cell}>
                   <h3 className={styles.field}>Language</h3>
                   <p className={styles.value}>
-                    {!chooseUser()?.profile?.language ? '-' : chooseUser().profile?.language}
+                    {!chefInfo?.language ? '-' : chefInfo.language}
                   </p>
                 </td>
               </tr>
@@ -118,13 +150,13 @@ const HomeChefBlock = ({ account, user }) => {
           <div className={styles.info__right}>
             <div className={styles.bio}>
               <h3 className={styles.field}>Bio</h3>
-              <p className={styles.value}>{!chooseUser()?.profile?.bio ? '-' : chooseUser()?.profile?.bio}</p>
+              <p className={styles.value}>{!chefInfo?.bio ? '-' : chefInfo?.bio}</p>
             </div>
 
             <div className={styles.experience}>
               <h3 className={styles.field}>Experience</h3>
               <p className={styles.value}>
-                {!chooseUser()?.profile?.experience ? '-' : chooseUser()?.profile?.experience}
+                {!chefInfo?.experience ? '-' : chefInfo?.experience}
               </p>
             </div>
           </div>
@@ -138,14 +170,14 @@ const HomeChefBlock = ({ account, user }) => {
           className={styles.roleCarousel}
           naturalSlideWidth={100}
           isIntrinsicHeight={true}
-          totalSlides={chooseUser()?.profile?.role_models.length}
+          totalSlides={chefInfo?.role_models.length}
           visibleSlides={8}
-          step={3}
+          step={5}
         >
           <Slider className={styles.roleCarousel__slider}>
-            {chooseUser()?.profile?.role_models.length
+            {chefInfo?.role_models?.length
               ?
-              chooseUser().profile.role_models.map((role, index) => {
+              chefInfo.role_models.map((role, index) => {
                 return (
                   <Slide key={`role_model${role.pk}`} className={styles.roleCarousel__item} index={index}>
                     <RoleModel name={role.name} avatar={role.file} />
@@ -153,15 +185,19 @@ const HomeChefBlock = ({ account, user }) => {
                 );
               })
               :
-              'No Role models exists yet!'
+              <span className={styles.roleCarousel__empty}>No Role models exists yet!</span>
             }
           </Slider>
-          <ButtonBack className={styles.roleCarousel__prev}>
-            <NavigateBeforeIcon />
-          </ButtonBack>
-          <ButtonNext className={styles.roleCarousel__next}>
-            <NavigateNextIcon />
-          </ButtonNext>
+          {chefInfo?.role_models?.length &&
+          <>
+            <ButtonBack className={styles.roleCarousel__prev}>
+              <NavigateBeforeIcon/>
+            </ButtonBack>
+            <ButtonNext className={styles.roleCarousel__next}>
+              <NavigateNextIcon/>
+            </ButtonNext>
+          </>
+          }
         </CarouselProvider>
       </section>
 
@@ -177,9 +213,9 @@ const HomeChefBlock = ({ account, user }) => {
           step={3}
         >
           <Slider className={styles.favDishesCarousel__slider}>
-            {chooseUser()?.profile?.favourite_recipes?.length
+            {chefInfo?.favourite_recipes?.length
               ?
-              chooseUser()?.profile?.favourite_recipes?.map(item => {
+              chefInfo?.favourite_recipes?.map(item => {
                 return (
                   <Slide key={`card-favorite-dish-${item.pk}`} className={styles.favDishesCarousel__item} index={1}>
                     <CardFavouriteDishes
@@ -191,10 +227,10 @@ const HomeChefBlock = ({ account, user }) => {
                 );
               })
               :
-              'No favourite dishes exists yet!'
+              <span className={styles.favDishesCarousel__empty}>No favourite dishes exists yet!</span>
             }
           </Slider>
-          {chooseUser()?.profile?.favourite_recipes?.length &&
+          {chefInfo?.favourite_recipes?.length &&
           <>
             <ButtonBack className={styles.favDishesCarousel__prev}>
               <NavigateBeforeIcon/>
@@ -211,18 +247,27 @@ const HomeChefBlock = ({ account, user }) => {
         <h2 className={styles.sectionTitle}>Other Informations</h2>
 
         <div className={styles.itemsContainer}>
+          {chefInfo?.cooking_philosophy?.length &&
           <CardHomeChefProfile
             type={1}
-            list={chooseUser()?.profile?.cooking_philosophy}
-          />
+            list={chefInfo?.cooking_philosophy}
+          />}
+          {chefInfo?.personal_cooking_mission?.length &&
           <CardHomeChefProfile
             type={2}
-            list={chooseUser()?.profile?.personal_cooking_mission}
-          />
+            list={chefInfo?.personal_cooking_mission}
+          />}
+          {chefInfo?.source_of_inspiration?.length &&
           <CardHomeChefProfile
             type={3}
-            list={chooseUser()?.profile?.source_of_inspiration}
-          />
+            list={chefInfo?.source_of_inspiration}
+          />}
+          {
+            !chefInfo?.source_of_inspiration?.length &&
+            !chefInfo?.personal_cooking_mission?.length &&
+            !chefInfo?.cooking_philosophy?.length &&
+            <div className={styles.itemsContainer__empty}>No other information yet exist yet!</div>
+          }
         </div>
       </section>
 
@@ -261,8 +306,12 @@ const HomeChefBlock = ({ account, user }) => {
           </div>
         </Collapse>
       </section>
-    </>
+    </div>
+  );
+
+  return (
+    <LayoutPage content={content} />
   );
 };
 
-export default HomeChefBlock;
+export default HomePageOfTargetChef;

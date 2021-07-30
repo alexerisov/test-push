@@ -193,4 +193,8 @@ export default {
   changePassword: (password, new_password) => {
     return http.post(`/account/password/change`, {password, new_password});
   },
+
+  getTargetChefAccountInfo: (id) => {
+    return http.get(`/account/${id}`);
+  }
 };

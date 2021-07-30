@@ -159,7 +159,14 @@ export default {
         }
       });
   },
-    
+
+  getUploadRecipesForTargetUser: ({query, id}) => {
+    return http.get(`/recipe/user/${id}`,
+      {
+        params: query
+      });
+  },
+
   getComments: ({recipeId, page}) => {
     return http.get(
       `/recipe/${recipeId}/comments`,
