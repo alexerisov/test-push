@@ -105,7 +105,7 @@ const SavedRecipesPage = () => {
   const content = (
     <div className={styles.savedRecipes}>
       <h2 className={styles.savedRecipes__navbar}>
-        <Link href="/"><a>Home /</a></Link>
+        <Link href="/"><a className={styles.savedRecipes__navbar__link}>Home /</a></Link>
         <span> Saved Recipes</span>
       </h2>
 

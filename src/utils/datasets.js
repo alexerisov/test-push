@@ -132,3 +132,9 @@ export const USER_TYPE = {
   viewerType: 0,
   chefType: 1,
 };
+
+export const pageNames = {
+  "/": "Home",
+  "/my-uploads": "My uploads",
+  "/saved-recipes": "Saved recipes",
+}

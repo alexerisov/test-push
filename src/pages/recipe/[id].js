@@ -5,7 +5,7 @@ import LayoutPage from '@/components/layouts/layout-page';
 import RaitingIcon from "@/components/elements/rating-icon";
 import Recipe from '@/api/Recipe.js';
 import { useRouter } from 'next/router';
-import {cuisineList, recipeTypes, cookingMethods, dietaryrestrictions} from '@/utils/datasets';
+import {cuisineList, recipeTypes, cookingMethods, dietaryrestrictions, pageNames} from '@/utils/datasets';
 import Link from "next/link";
 import ResipeComments from "@/components/blocks/recipe-comments";
 import Account from '@/api/Account.js';
@@ -136,12 +136,31 @@ function CreateRecipe (props) {
       router.push(`/home-chef/${recipe?.user?.pk}`);
     };
 
+    const [breadcrumbsName, setBreadcrumbsName] = useState('Home');
+    const [breadcrumbsLink, setBreadcrumbsLink] = useState('/');
+
+    useEffect(() => {
+      if (typeof window !== 'undefined') {
+        if (window.history.state.GROOVE_TRACKER) {
+          const url = window.history.state.GROOVE_TRACKER.referrer;
+          const page = url.slice(url.lastIndexOf('/'));
+          if (page.includes('search')) {
+            setBreadcrumbsName('Search')
+          } else {
+            setBreadcrumbsName(pageNames[page])
+          }
+          setBreadcrumbsLink(page)
+        }
+      }
+    }, [])
+
     const content = <div className={classes.recipe}>
         {recipe &&
             <>
             <h2 className={classes.recipe__navbar}>
-                <Link href="/"><a>Home /</a></Link>
-                <Link href="/my-uploads"><a> Recipes /</a></Link>
+                <Link href={breadcrumbsLink}>
+                  <a className={classes.recipe__navbar__link}>{breadcrumbsName} /</a>
+                </Link>
                 <span> {recipe.title}</span></h2>
             <div className={classes.recipe__content}>    
                 <div className={classes.recipe__recipeContent}>
