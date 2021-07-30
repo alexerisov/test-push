@@ -31,7 +31,7 @@ const StyledTabs = styled(Tabs)`
       justify-content: space-between;
     }
 
-    .PrivateTabIndicator-root-1 {
+    .MuiTabs-indicator {
       background-color: #FFAA00;
       height: 6px;
       border-radius: 13px;
