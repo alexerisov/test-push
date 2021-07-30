@@ -4,7 +4,6 @@ import { ButtonLogin } from '@/components/elements/button';
 import {
   loginViaFacebook,
   loginViaGoogle,
-  loginViaInstagram
 } from '@/utils/authSocial';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import classes from "./loginSocial.module.scss";
@@ -25,7 +24,6 @@ function LoginSocial (props) {
       <h2 className={classes.registerTitle}>LOGIN</h2>
       <ButtonLogin onClick={loginViaFacebook()}>LOGIN WITH FACEBOOK</ButtonLogin>
       <ButtonLogin onClick={loginViaGoogle()}>LOGIN WITH GOOGLE</ButtonLogin>
-      <ButtonLogin onClick={loginViaInstagram()}>LOGIN WITH INSTAGRAM</ButtonLogin>
     </div>
   );
 }
