@@ -104,7 +104,6 @@ function FormEditAccountChef (props) {
       setStatusSubmit('Loading...')
       setFormStatus('')
       values.user_type = user_type;
-      console.log(values)
       props.dispatch(profileActions.updateAccountChef(values))
       .then((res) => {
         setStatusSubmit('Update')
