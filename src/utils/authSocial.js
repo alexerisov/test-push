@@ -62,23 +62,3 @@ export const loginViaGoogle = (
     );
   };
 };
-
-/**
- * @param {number} accountType
- * @param {boolean} register
- * @return {function(): Promise<void>}
- */
-export const loginViaInstagram = (
-    accountType = USER_TYPE.viewerType, register = true) => {
-  return async () => {
-    openOAuth(
-        `https://api.instagram.com/oauth/authorize?scope=user_profile,user_media&response_type=code&client_id=${CONFIG.instagramClientId}&redirect_uri=${CONFIG.oauthRedirectUrl}&state=${JSON.stringify(
-            {
-              account_type: accountType,
-              register: register,
-              backend: 'instagram',
-            })}`,
-        register, accountType,
-    );
-  };
-};

@@ -14,7 +14,6 @@ const CONFIG = {
   baseUrl: process.env.BASE_URL,
   fbClientId: process.env.fbClientId,
   googleClientId: process.env.googleClientId,
-  instagramClientId: process.env.instagramClientId,
   currentUrl,
   oauthRedirectUrl: `${currentUrl}/login/social/`,
   STRIPE_PUBLISH_KEY: process.env.STRIPE_PUBLISH_KEY,

@@ -14,7 +14,6 @@ if (process.env.NODE_ENV === 'production') {
   envs = {
     fbClientId: '',
     googleClientId: '',
-    instagramClientId: '',
     NODE_ENV: 'production',
     BASE_URL: 'https://api.eatchefs.com',
     DEBUG: JSON.stringify(process.env.DEBUG ?? false),
@@ -23,7 +22,6 @@ if (process.env.NODE_ENV === 'production') {
   envs = {
     fbClientId: '553583208994808',
     googleClientId: '245264013276-sbkrl06fu1e7d6m0d3724or58hvdmpej.apps.googleusercontent.com',
-    instagramClientId: '175357134619632',
     NODE_ENV: 'development',
     BASE_URL: 'https://api.eatchefs.goodbit.dev',
     DEBUG: true,
@@ -32,7 +30,6 @@ if (process.env.NODE_ENV === 'production') {
   envs = {
     fbClientId: '3044235379228131',
     googleClientId: '655496569198-f4akmc86kndanpb2p10uk80h5al1sg4l.apps.googleusercontent.com',
-    instagramClientId: '282462186958896',
     NODE_ENV: 'development',
     BASE_URL: 'http://localhost:4096',
     DEBUG: true,
