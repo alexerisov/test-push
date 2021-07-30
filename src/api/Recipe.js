@@ -260,4 +260,10 @@ export default {
   deleteSavedRecipe: (id) => {
     return http.delete(`/recipe/saved_recipe/${id}`);
   },
+
+  getSavedRecipes: (query) => {
+    return http.get('/recipe/saved_recipe', {
+      params: query
+    });
+  }
 };
