@@ -15,7 +15,7 @@ import styled from 'styled-components';
 import { CardRoleModels } from '@/components/elements/card';
 
 const StyledTextField = styled(TextField)`
-  width: 561px;
+  width: 100%;
     .PrivateNotchedOutline-root-1:hover {
       border-color: #000000;
     }
