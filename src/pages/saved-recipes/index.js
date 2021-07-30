@@ -119,7 +119,7 @@ const SavedRecipesPage = () => {
 
       <h3 className={styles.savedRecipes__subtitle}>{`All (${savedRecipes ? savedRecipes.count : 0})`}</h3>
 
-      <Collapse in={expanded} collapsedSize="400px">
+      <Collapse in={expanded} collapsedSize="400px" style={{minHeight: '400px'}}>
         <div className={styles.savedRecipes__wrapper}>
           <div className={styles.savedRecipes__container}>
             {savedRecipes?.results?.length
