@@ -1,3 +1,6 @@
+@import "~styles/variables.scss";
+@import "~styles/mixins/mixins.scss";
+
 .profile {
   display: flex;
   flex-direction: column;
@@ -7,9 +10,6 @@
 .content {
   height: 500px;
 }
-
-@import "~styles/variables.scss";
-@import "~styles/mixins/mixins.scss";
 
 // Navbar
 .navbar {
@@ -36,8 +36,8 @@
 }
 
 .avatar {
-  float: left;
-  width: 144px;
+  position: absolute;
+  width: 114px;
   height: 114px;
 }
 
@@ -166,6 +166,7 @@
   &__empty {
     position: relative;
     left: -20px;
+    min-width: max-content;
   }
 
   &__next {

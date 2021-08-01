@@ -143,3 +143,9 @@ export const APPROVED_STATUS = {
   2: "Approved",
   3: "Rejected"
 };
+
+export const pageNames = {
+  "/": "Home",
+  "/my-uploads": "My uploads",
+  "/saved-recipes": "Saved recipes",
+}

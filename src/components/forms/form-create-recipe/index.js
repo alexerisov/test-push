@@ -21,6 +21,7 @@ import {cuisineList, recipeTypes, cookingMethods, dietaryrestrictions} from '@/u
 import { isWindowExist } from '@/utils/isTypeOfWindow';
 import classes from "./form-create-recipe.module.scss";
 import { CardIngredient, CardNutrition, CardImage } from '@/components/elements/card';
+import { validator } from "@/utils/validator";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -87,7 +88,13 @@ function FormCreateRecipe (props) {
   function onChangeField(name) {
     return (event) => {
       const newData = { ...data, [name]: event.target.value };
-      const newError = {...error, [name]: ''};
+      const currentLength = event?.target.value.length;
+      const newError = {
+        ...error,
+        [name]: `${validator.getErrorStatusByCheckingLength({
+          currentLength,
+          ...getMaxLengthOfField(name)
+      })}`};
       props.dispatch(
         recipeUploadActions.update(newData),
       );
@@ -96,6 +103,15 @@ function FormCreateRecipe (props) {
       );
     };
   }
+
+  const getMaxLengthOfField = (name) => {
+    switch(name) {
+      case 'title':
+        return {maxLength : 100};
+      case 'description':
+        return {maxLength : 500};
+    }
+  };
 
   function onChangeFieldNumber(name) {
     return (event) => {
@@ -243,7 +259,8 @@ function FormCreateRecipe (props) {
               fullWidth
               className={classMarerialUi.textField}
               error={error?.title}
-              helperText={error?.title ? "This field is required" : ""}
+              helperText={error?.title}
+              inputProps={{maxLength: 100}}
             />
             </NoSsr>
           </div>
@@ -260,7 +277,8 @@ function FormCreateRecipe (props) {
               fullWidth
               className={classMarerialUi.textField}
               error={error?.description}
-              helperText={error?.description ? "This field is required" : ""}
+              helperText={error?.description}
+              inputProps={{maxLength: 500}}
             />
             </NoSsr>
           </div>
@@ -457,7 +475,7 @@ function FormCreateRecipe (props) {
                   placeholder="Language"
                   className={classMarerialUi.textField}
                   error={error?.language}
-                  helperText={error?.language ? "This field is required" : ""}
+                  helperText={error?.language}
                 />
                 <TextField
                   id="create-caption"
@@ -468,7 +486,7 @@ function FormCreateRecipe (props) {
                   placeholder="Caption"
                   className={classMarerialUi.textField}
                   error={error?.caption}
-                  helperText={error?.caption ? "This field is required" : ""}
+                  helperText={error?.caption}
                 />
               </NoSsr>
             </div>

@@ -105,7 +105,7 @@ const SavedRecipesPage = () => {
   const content = (
     <div className={styles.savedRecipes}>
       <h2 className={styles.savedRecipes__navbar}>
-        <Link href="/"><a>Home /</a></Link>
+        <Link href="/"><a className={styles.savedRecipes__navbar__link}>Home /</a></Link>
         <span> Saved Recipes</span>
       </h2>
 
@@ -119,7 +119,7 @@ const SavedRecipesPage = () => {
 
       <h3 className={styles.savedRecipes__subtitle}>{`All (${savedRecipes ? savedRecipes.count : 0})`}</h3>
 
-      <Collapse in={expanded} collapsedSize="400px">
+      <Collapse in={expanded} collapsedSize="400px" style={{minHeight: '400px', visibility:'visible'}}>
         <div className={styles.savedRecipes__wrapper}>
           <div className={styles.savedRecipes__container}>
             {savedRecipes?.results?.length

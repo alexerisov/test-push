@@ -18,6 +18,14 @@
             line-height: 45px;
             color: $--color-gray6;
         }
+
+        &__link:hover {
+            color: $--color-orange;
+        }
+
+        &__link:hover:visited {
+            color: $--color-orange;
+        }
     }
 
     &__icons {
