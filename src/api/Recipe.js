@@ -258,6 +258,10 @@ export default {
     return http.get(`/recipe/latest_user_recipes/${userId}`);
   },
 
+  getFeaturedMeals: () => {
+    return http.get(`/recipe/featured_meals`);
+  },
+
   postSavedRecipe: (id) => {
     return http.post(`/recipe/saved_recipe/`, {
       "recipe": id

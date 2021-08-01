@@ -29,6 +29,7 @@ function CreateRecipe (props) {
 
     const [popularRecipes, setPopularRecipes] = useState();
     const [latestRecipes, setLatestRecipes] = useState();
+    const [featuredMeals, setFeaturedMeals] = useState();
 
     const [notFound, setNotFound] = useState(false);
 
@@ -57,6 +58,8 @@ function CreateRecipe (props) {
         if (userId) {
             Recipe.getLatestRecipes(userId)
             .then((res) => setLatestRecipes(res.data));
+            Recipe.getFeaturedMeals(userId)
+            .then((res) => setFeaturedMeals(res.data));
         }
     }, [userId])
 
@@ -331,6 +334,18 @@ function CreateRecipe (props) {
                                   city={recipe?.user?.city}
                                   likes={recipe?.likes_number}
                                   savedId={recipe?.user_saved_recipe}
+                                  id={recipe.pk}
+                                />;
+                    })}
+                  </>
+                }
+                {featuredMeals && <>
+                    <h2 className={classes.recipe__cards__title}>Featured Recipes</h2>
+                    {featuredMeals.map((recipe, index) => {
+                        return <CardPopularRecipes
+                                  key={`${recipe.pk}-${index}`}
+                                  title={recipe?.title}
+                                  image={recipe?.images[0]?.url}
                                   id={recipe.pk}
                                 />;
                     })}
