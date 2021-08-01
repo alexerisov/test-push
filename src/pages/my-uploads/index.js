@@ -44,7 +44,7 @@ const MyUploadsPage = () => {
   const content = (
     <div className={classes.uploads}>
       <h2 className={classes.uploads__navbar}>
-        <Link href="/"><a>Home /</a></Link>
+        <Link href="/"><a className={classes.uploads__navbar__link}>Home /</a></Link>
         <span> My Uploads</span>
       </h2>
 

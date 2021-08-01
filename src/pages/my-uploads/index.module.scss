@@ -22,6 +22,10 @@
       line-height: 45px;
       color: $--color-gray6;
     }
+
+    &__link:hover:visited {
+      color: $--color-orange;
+    }
   }
 
   &__header {
