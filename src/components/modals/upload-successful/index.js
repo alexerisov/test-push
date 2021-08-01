@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 import {LayoutModal} from '@/components/layouts';
 import { modalActions } from '@/store/actions';
 import { connect } from 'react-redux';
+import { PUBLISH_STATUS } from "@/utils/datasets";
+
 import classes from "./upload-successful.module.scss";
 
 function UploadSuccessful (props) {
@@ -23,14 +25,17 @@ function UploadSuccessful (props) {
     return <div className={classes.UploadSuccess}>
       <img src="/images/index/upload_success.svg" alt="Success"></img>
       <h2 className={classes.UploadSuccess__title}>
-        Recipe successfully upload
+        {props.publishStatus === PUBLISH_STATUS.published
+          ? 'Recipe submitted to EatChefs Administration team for approval'
+          : 'Recipe has been saved'
+        }
       </h2>
       <button
         type="button"
         className={classes.UploadSuccess__button}
         onClick={handleClick}
       >
-        See prewiew
+        See preview
       </button>
     </div>;
   };

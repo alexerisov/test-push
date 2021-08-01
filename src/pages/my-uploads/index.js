@@ -64,6 +64,8 @@ const MyUploadsPage = () => {
             city={item.city}
             id={item.pk}
             likes={item?.['likes_number']}
+            publishStatus={item?.publish_status}
+            reviewStatus={item?.status}
           />)
         )}
       </div>

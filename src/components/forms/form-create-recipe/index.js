@@ -232,6 +232,7 @@ function FormCreateRecipe (props) {
         setStatusSubmit('Submit');
         return props.dispatch(modalActions.open('uploadSuccessful',{
           pk: data.pk,
+          publishStatus: data.publish_status
         }));
       })
       .catch((error) => {
