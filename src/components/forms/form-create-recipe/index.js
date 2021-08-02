@@ -170,9 +170,11 @@ function FormCreateRecipe (props) {
   };
 
   const handleAddImage = (e) => {
-    const newImageList = [...data?.images, e.currentTarget.files[0]];
-    const newData = { ...data, images: newImageList };
-    props.dispatch(recipeUploadActions.update(newData));
+    if (e.currentTarget.files[0]) {
+      const newImageList = [...data?.images, e.currentTarget.files[0]];
+      const newData = { ...data, images: newImageList };
+      props.dispatch(recipeUploadActions.update(newData));
+    }
   };
 
   const selectItemList = (list) => {
