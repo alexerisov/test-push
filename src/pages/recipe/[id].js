@@ -209,9 +209,12 @@ function CreateRecipe (props) {
                     </div>
                     <div>
                         <div className={classes.recipe__video}>
-                                {recipe.preview_mp4_url && <video width="715" controls="controls" className={classes.recipe__video__video}>
-                                    <source src={recipe.preview_mp4_url} type="video/mp4" />
-                                </video>}
+                                {recipe.preview_mp4_url && <div className={classes.recipe__video__watermark} >
+                                  <video width="715" controls="controls" className={classes.recipe__video__video}>
+                                      <source src={recipe.preview_mp4_url} type="video/mp4" />
+                                  </video>
+                                  <div className={classes.recipe__video__watermark__icon} />
+                                </div>}
                                 <div className={classes.recipe__video__player}>
                                     <div className={classes.recipe__video__views}>
                                         <img src="/images/index/ionic-md-eye.svg" alt="" />

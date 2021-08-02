@@ -331,4 +331,22 @@
       color: $--color-white;
     }
   }
+
+  &__watermark {
+    position: relative;
+    height: 309px;
+
+    &__icon {
+        position: absolute;
+        background-image: url('/images/index/footer_logo.png');
+        background-position: center;
+        background-size: 100px 70px;
+        background-repeat: no-repeat;
+        width: 150px;
+        height: 100px;
+        bottom: 20px;
+        left: 20px;
+        opacity: 0.5;
+    }
+}
 }

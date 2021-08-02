@@ -1,5 +1,6 @@
 import React from 'react';
 import classes from "./index.module.scss";
+import Link from 'next/link';
 
 const LayoutFooter = (props) => {
     return (
@@ -15,27 +16,49 @@ const LayoutFooter = (props) => {
                 </div>
                 <div>
                     <h2 className={classes.footer__titleList}>Quick Links</h2>
-                    <ul>
-                        <li className={classes.footer__linkList}>Home</li>
-                        <li className={classes.footer__linkList}>Recipes</li>
-                        <li className={classes.footer__linkList}>Get Inspired!</li>
-                    </ul>
+                    <div className={classes.footer__list}>
+                        <Link href="/">
+                            <a className={classes.footer__linkList}>Home</a>
+                        </Link>
+                        <Link href="/search">
+                            <a className={classes.footer__linkList}>Recipes</a>
+                        </Link>
+                        <Link href="/">
+                            <a className={classes.footer__linkList}>Get Inspired!</a>
+                        </Link>
+                    </div>
                 </div>
                 <div>
                     <h2 className={classes.footer__titleList}>Recipes & Menu</h2>
                     <div className={classes.footer__rowContainer}>
-                        <ul>
-                            <li className={classes.footer__linkList}>Breakfast</li>
-                            <li className={classes.footer__linkList}>Lunch</li>
-                            <li className={classes.footer__linkList}>Dinner</li>
-                            <li className={classes.footer__linkList}>Appetizer & Snacks</li>
-                        </ul>
-                        <ul>
-                            <li className={classes.footer__linkList}>Drinks</li>
-                            <li className={classes.footer__linkList}>Desserts</li>
-                            <li className={classes.footer__linkList}>Salad</li>
-                            <li className={classes.footer__linkList}>Bread</li>
-                        </ul>
+                        <div className={classes.footer__list}>
+                            <Link href="/search?types=1">
+                                <a className={classes.footer__linkList}>Breakfast</a>
+                            </Link>
+                            <Link href="/search?types=2">
+                                <a className={classes.footer__linkList}>Lunch</a>
+                            </Link>
+                            <Link href="/search?types=3">
+                                <a className={classes.footer__linkList}>Dinner</a>
+                            </Link>
+                            <Link href="/search?types=6">
+                                <a className={classes.footer__linkList}>Appetizer & Snacks</a>
+                            </Link>
+                        </div>
+                        <div className={classes.footer__list}>
+                            <Link href="/search?types=5">
+                                <a className={classes.footer__linkList}>Drinks</a>
+                            </Link>
+                            <Link href="/search?types=4">
+                                <a className={classes.footer__linkList}>Desserts</a>
+                            </Link>
+                            <Link href="/search?types=7">
+                                <a className={classes.footer__linkList}>Salad</a>
+                            </Link>
+                            <Link href="/search?types=8">
+                                <a className={classes.footer__linkList}>Bread</a>
+                            </Link>
+                        </div>
                     </div>
                 </div>
                 <div>
@@ -50,7 +73,7 @@ const LayoutFooter = (props) => {
             </div>
             <div>
                 <p className={classes.footer__termsOfUse}>Terms of use | Privacy policy</p>
-                <p className={classes.footer__copyright}>Copyright 2021. All right reserved</p>
+                <p className={classes.footer__copyright}>©EatChefs 2021. All right reserved</p>
             </div>
             <img src="/images/index/footer_img.png" className={classes.footer__foodImg}/>
         </div>

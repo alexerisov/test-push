@@ -260,6 +260,25 @@
         width: 100%;
         display: flex;
         flex-direction: column;
+        position: relative;
+
+        &__watermark {
+            position: relative;
+            height: 402px;
+
+            &__icon {
+                position: absolute;
+                background-image: url('/images/index/footer_logo.png');
+                background-position: center;
+                background-size: 100px 70px;
+                background-repeat: no-repeat;
+                width: 150px;
+                height: 100px;
+                bottom: 30px;
+                left: 20px;
+                opacity: 0.5;
+            }
+        }
 
         &__video {
             max-height: 90vh;
