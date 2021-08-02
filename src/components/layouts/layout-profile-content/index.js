@@ -25,7 +25,11 @@ const ContentLayout = (props) => {
   
   const content = (
     <div className={classes.dashboard__navbar}>
-      <h2 className={classes.dashboard__title}>Home / <span>My profile</span></h2>
+      <h2 className={classes.dashboard__title}>
+        <Link href="/">
+          <a className={classes.dashboard__navbar__link}>Home / </a>
+        </Link>
+        <span>My profile</span></h2>
       <ul className={classes.dashboard__itemContainer}>
         <li className={`${classes.dashboard__item} ${(router.asPath === data.accountSettings.path) && classes.dashboard__item_active}`}>
           <Link href={data.accountSettings.path}>
