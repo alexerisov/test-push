@@ -126,13 +126,19 @@ function CreateRecipe (props) {
     };
 
     const handleClickDelete = (name) => {
-        return () => {
-          props.dispatch(
-            modalActions.open(name),
-          ).then(result => {
-            deleteRecipe(result);
-          });
-        };
+      return () => {
+        props.dispatch(
+          modalActions.open(name),
+        ).then(result => {
+          deleteRecipe(result);
+        });
+      };
+    };
+
+    const handleRecipeCookingTime = (time) => {
+      const mins = Number(time.slice(3, 5));
+      const hours = Number(time.slice(0, 2));
+      return (hours * 60 + mins)
     };
 
     const redirectToHomeChefPage = () => {
@@ -187,7 +193,7 @@ function CreateRecipe (props) {
                             </div>}
                             <div className={classes.recipe__time}>
                                 <img src="/images/index/timer.svg" />
-                                <p>{recipe.cooking_time.slice(3, 5)} MIN</p>
+                                <p>{handleRecipeCookingTime(recipe.cooking_time)} MIN</p>
                             </div>
                         </div>
                     </div>
