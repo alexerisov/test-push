@@ -60,6 +60,7 @@ const MyUploadsPage = () => {
           <CardHighestMeals
             key={`${item.pk + '1k0'}`}
             title={item.title}
+            name={item.user.full_name}
             image={item.images[0]?.url}
             city={item.city}
             id={item.pk}
