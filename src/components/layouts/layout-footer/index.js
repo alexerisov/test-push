@@ -50,7 +50,7 @@ const LayoutFooter = (props) => {
             </div>
             <div>
                 <p className={classes.footer__termsOfUse}>Terms of use | Privacy policy</p>
-                <p className={classes.footer__copyright}>Copyright 2021. All right reserved</p>
+                <p className={classes.footer__copyright}>©EatChefs 2021. All right reserved</p>
             </div>
             <img src="/images/index/footer_img.png" className={classes.footer__foodImg}/>
         </div>
