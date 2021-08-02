@@ -255,12 +255,13 @@
 
         &__watermark {
             position: relative;
+            height: 402px;
 
             &__icon {
                 position: absolute;
                 background-image: url('/images/index/footer_logo.png');
                 background-position: center;
-                background-size: 120px 90px;
+                background-size: 100px 70px;
                 background-repeat: no-repeat;
                 width: 150px;
                 height: 100px;
