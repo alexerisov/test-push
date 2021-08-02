@@ -148,10 +148,15 @@ function CreateRecipe (props) {
           const url = window.history.state.GROOVE_TRACKER.referrer;
           const page = url.slice(url.lastIndexOf('/'));
           if (page.includes('search')) {
-            setBreadcrumbsName('Search')
-          } else {
-            setBreadcrumbsName(pageNames[page])
+            setBreadcrumbsName('Recipes')
+            return
           }
+          if (!pageNames[page]) {
+            setBreadcrumbsName(pageNames[page] ?? "Home")
+            setBreadcrumbsLink("/")
+            return
+          }
+          setBreadcrumbsName(pageNames[page] ?? "Home")
           setBreadcrumbsLink(page)
         }
       }
@@ -161,9 +166,14 @@ function CreateRecipe (props) {
         {recipe &&
             <>
             <h2 className={classes.recipe__navbar}>
-                <Link href={breadcrumbsLink}>
-                  <a className={classes.recipe__navbar__link}>{breadcrumbsName} /</a>
+                <Link href="/">
+                  <a className={classes.recipe__navbar__link}>Home /</a>
                 </Link>
+                {(breadcrumbsLink !== "/") &&
+                <Link href={breadcrumbsLink}>
+                  <a className={classes.recipe__navbar__link}> {breadcrumbsName} /</a>
+                </Link>
+                }
                 <span> {recipe.title}</span></h2>
             <div className={classes.recipe__content}>    
                 <div className={classes.recipe__recipeContent}>
