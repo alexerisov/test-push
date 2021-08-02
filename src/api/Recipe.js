@@ -254,8 +254,8 @@ export default {
     return http.get(`/recipe/popular_recipes`);
   },
 
-  getLatestRecipes: (userId) => {
-    return http.get(`/recipe/latest_user_recipes/${userId}`);
+  getLatestRecipes: () => {
+    return http.get(`/recipe/latest_user_recipes`);
   },
 
   getFeaturedMeals: () => {

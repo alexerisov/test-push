@@ -52,12 +52,12 @@ function CreateRecipe (props) {
     useEffect(() => {
         Recipe.getPopularRecipes()
             .then((res) => setPopularRecipes(res.data));
+        Recipe.getLatestRecipes()
+        .then((res) => setLatestRecipes(res.data));
     }, [])
 
     useEffect(() => {
         if (userId) {
-            Recipe.getLatestRecipes(userId)
-            .then((res) => setLatestRecipes(res.data));
             Recipe.getFeaturedMeals(userId)
             .then((res) => setFeaturedMeals(res.data));
         }
