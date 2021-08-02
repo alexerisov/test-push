@@ -15,6 +15,11 @@
     position: relative;
     overflow: hidden;
 
+    &__list {
+        display: flex;
+        flex-direction: column;
+    }
+
     &__container {
         display: flex;
         justify-content: space-between;
@@ -35,6 +40,7 @@
         font-size: 16px;
         line-height: 35px;
         margin: 0 35px 0 0;
+        color: $--color-white;
     }
 
     &__RecipesList {
