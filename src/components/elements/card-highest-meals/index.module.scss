@@ -66,35 +66,6 @@
     &:hover .card__status {
       opacity: 1;
     }
-
-    &__savedStatus {
-      position: absolute;
-      z-index: 10;
-      right: 16px;
-      top: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      background: #000000 0 0 no-repeat padding-box;
-      opacity: 0.35;
-      cursor: pointer;
-    }
-
-    &__savedStatus:hover {
-      transform: scale(1.1);
-    }
-
-    &:hover .card__savedStatus {
-      opacity: 1;
-    }
-
-    &__savedStatus_enabled {
-      @extend .card__savedStatus;
-      opacity: 1;
-    }
 }
 
 @keyframes fadeInOpacity {
