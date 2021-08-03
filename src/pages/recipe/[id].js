@@ -154,10 +154,15 @@ function RecipePage (props) {
           const url = window.history.state.GROOVE_TRACKER.referrer;
           const page = url.slice(url.lastIndexOf('/'));
           if (page.includes('search')) {
-            setBreadcrumbsName('Search')
-          } else {
-            setBreadcrumbsName(pageNames[page])
+            setBreadcrumbsName('Recipes')
+            return
           }
+          if (!pageNames[page]) {
+            setBreadcrumbsName(pageNames[page] ?? "Home")
+            setBreadcrumbsLink("/")
+            return
+          }
+          setBreadcrumbsName(pageNames[page] ?? "Home")
           setBreadcrumbsLink(page)
         }
       }
@@ -167,9 +172,14 @@ function RecipePage (props) {
         {recipe &&
             <>
             <h2 className={classes.recipe__navbar}>
-                <Link href={breadcrumbsLink}>
-                  <a className={classes.recipe__navbar__link}>{breadcrumbsName} /</a>
+                <Link href="/">
+                  <a className={classes.recipe__navbar__link}>Home /</a>
                 </Link>
+                {(breadcrumbsLink !== "/") &&
+                <Link href={breadcrumbsLink}>
+                  <a className={classes.recipe__navbar__link}> {breadcrumbsName} /</a>
+                </Link>
+                }
                 <span> {recipe.title}</span></h2>
             <div className={classes.recipe__content}>    
                 <div className={classes.recipe__recipeContent}>
@@ -199,9 +209,12 @@ function RecipePage (props) {
                     </div>
                     <div>
                         <div className={classes.recipe__video}>
-                                {recipe.preview_mp4_url && <video width="715" controls="controls" className={classes.recipe__video__video}>
-                                    <source src={recipe.preview_mp4_url} type="video/mp4" />
-                                </video>}
+                                {recipe.preview_mp4_url && <div className={classes.recipe__video__watermark} >
+                                  <video width="715" controls="controls" className={classes.recipe__video__video}>
+                                      <source src={recipe.preview_mp4_url} type="video/mp4" />
+                                  </video>
+                                  <div className={classes.recipe__video__watermark__icon} />
+                                </div>}
                                 <div className={classes.recipe__video__player}>
                                     <div className={classes.recipe__video__views}>
                                         <img src="/images/index/ionic-md-eye.svg" alt="" />

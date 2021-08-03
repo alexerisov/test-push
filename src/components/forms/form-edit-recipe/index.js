@@ -437,9 +437,12 @@ function FormEditRecipe (props) {
           <h2 className={classes.createRecipeSubtitle_withoutInput}>Cooking Video</h2>
 
           {!newVideo ? 
-          data.preview_mp4_url && <video width="550" controls="controls" className={classes.recipe__video}>
-          <source src={data.preview_mp4_url} type="video/mp4" />
-          </video> :
+          data.preview_mp4_url && <div className={classes.recipe__video__watermark} >
+            <video width="550" controls="controls" className={classes.recipe__video}>
+              <source src={data.preview_mp4_url} type="video/mp4" />
+            </video>
+            <div className={classes.recipe__video__watermark__icon} />
+          </div> :
           <div>
             <camera id='DemoCamera' data-app-id='63f9c870-72c4-0130-04c5-123139045d73' data-sources='upload'></camera>
             <FieldError errors={error} path="preview_mp4_url" />
