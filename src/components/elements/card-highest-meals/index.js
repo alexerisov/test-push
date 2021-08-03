@@ -18,6 +18,18 @@ const StyledCardMedia = styled(CardMedia)`
   }
 `;
 
+const StyledCardContent = styled(CardContent)`
+  padding: 16px;
+`;
+
+const StyledCardActionArea = styled(CardActionArea)`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: flex-start;
+`;
+
 const CardHighestMeals = (props) => {
 
   const router = useRouter();
@@ -45,24 +57,23 @@ const CardHighestMeals = (props) => {
 
   return (
     <Card className={classes.card}>
-      <CardActionArea onClick={() => redirectToRecipeCard(props.id)}>
+      <StyledCardActionArea onClick={() => redirectToRecipeCard(props.id)}>
         <StyledCardMedia
           className={classes.card__media}
           image={props.image}
           title=""
         />
-        <CardContent className={classes.card__content}>
+        <StyledCardContent className={classes.card__content}>
           <div>
             <p className={classes.card__name} title={props.title}>{props.title}</p>
             <p className={classes.card__author}>{`by Chef ${props.name}`}</p>
             <p className={classes.card__location}>{props.city}</p>
-            <Link href={`/recipe/${props.id}`}><a>View recipe</a></Link>
             <div className={classes.card__likeIcon}><LikeIcon value={props.likes} /></div>
             {props.publishStatus &&
             <div className={classes.card__status}>{getStatusOfCard()}</div>}
           </div>
-        </CardContent>
-      </CardActionArea>
+        </StyledCardContent>
+      </StyledCardActionArea>
     </Card>
   );
 };

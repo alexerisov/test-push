@@ -11,8 +11,10 @@ import {
 import {FormLogin, FormRegister, FormResetPassword} from '@/components/forms';
 import { connect } from 'react-redux';
 import classes from "./register.module.scss";
+import { useRouter } from 'next/router';
 
 function Register (props) {
+  const router = useRouter();
 
   const USER_TYPE = {
     viewerType: 0,
@@ -44,6 +46,9 @@ function Register (props) {
 
   const onCancel = () => {
     props.dispatch(modalActions.close());
+    if (router.pathname === "/confirm/email/[code]") {
+      router.push("/");
+    }
   };
 
   const switchToPageEmail = () => {
