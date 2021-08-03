@@ -21,6 +21,13 @@
   span {
     color: $--color-orange;
   }
+
+  a, a:active, a:visited {
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 45px;
+    color: $--color-gray6;
+  }
 }
 
 .section {
@@ -113,8 +120,11 @@
     max-width: 100%;
     font-size: 20px;
     line-height: 24px;
-    color: $--color-orange;
     cursor: pointer;
+  }
+
+  &__value:hover {
+    color: $--color-orange;
   }
 }
 
