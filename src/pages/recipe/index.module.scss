@@ -351,6 +351,30 @@
             font-size: 16px;
             font-weight: 600;
         }
+
+        &__saveStatus {
+            display: flex;
+            border: none;
+            color: black;
+            outline: none;
+            cursor: pointer;
+        }
+
+        &__saveStatus:hover {
+            opacity: 0.5;
+        }
+
+        &__saveStatusImage {
+            margin: 4px 8px 0 0;
+        }
+
+        &__saveStatusLabel {
+            margin-top: 2px;
+            @include fontRegular();
+            color: $--color-gray3;
+            font-size: 16px;
+            font-weight: 600;
+        }
     }
 }
 
