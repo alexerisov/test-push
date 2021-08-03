@@ -104,9 +104,10 @@ const Home = (props) => {
         description="EatChef"
         canonical="https://www.canonicalurl.ie/"
         openGraph={{
+          site_name: 'Eatchefs',
           url: 'https://www.canonicalurl.ie/',
-          title: 'Open Graph Title',
-          description: 'Open Graph Description',
+          title: 'Homemade food',
+          description: 'Your favorite recipes and meals from home with love',
           images: [
             {
               url: 'https://www.example.ie/og-image-01.jpg',

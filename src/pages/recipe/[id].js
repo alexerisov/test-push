@@ -16,13 +16,16 @@ import { ButtonShare } from "@/components/elements/button";
 import CardLatestRecipes from "@/components/elements/card-latest-recipes";
 import CardPopularRecipes from "@/components/elements/card-popular-recipes";
 import RecipeNotFound from "@/components/elements/recipe-not-found";
+import {NextSeo} from "next-seo";
 
-function CreateRecipe (props) {
+function CreateRecipe (props, recipes) {
 
     const router = useRouter();
 
     const [recipeId, setRecipeId] = useState();
     const [recipe, setRecipe] = useState();
+    const [recipeItem, setreciEItem] = useState(recipes);
+    console.log(recipes);
     const [likeRecipe, setLikeRecipe] = useState(false);
     const [likesNumber, setLikesNumber] = useState(false);
     const [userId, setUserId] = useState();
@@ -405,6 +408,24 @@ function CreateRecipe (props) {
 
     return (
       <>
+        <NextSeo
+          title="EatChef"
+          description="EatChef"
+          canonical="https://www.canonicalurl.ie/"
+          openGraph={{
+            url: 'https://www.canonicalurl.ie/',
+            title: `${recipe?.title}`,
+            description: `${recipe?.description}`,
+            images: [
+              {
+                url: 'https://www.example.ie/og-image-01.jpg',
+                width: 800,
+                height: 600,
+                alt: 'Og Image Alt',
+              }
+            ],
+          }}
+        />
         <LayoutPage content={!notFound ? content : <RecipeNotFound />} />
       </>
     );
@@ -413,3 +434,18 @@ function CreateRecipe (props) {
 export default connect((state) => ({
     account: state.account,
   }))(CreateRecipe);
+
+export async function getStaticProps() {
+  const router = useRouter();
+  const recipeId = router.query.id;
+  // Call an external API endpoint to get posts
+  const res = await Recipe.getRecipe(recipeId);
+
+  // By returning { props: { posts } }, the Blog component
+  // will receive `posts` as a prop at build time
+  return {
+    props: {
+      recipes: res,
+    },
+  };
+}
