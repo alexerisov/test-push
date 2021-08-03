@@ -103,7 +103,7 @@ const HeaderDefault = (props) => {
                 </Link>
               </MenuItem>
               <MenuItem onClick={handleClose} classes={{root: separatorStyles.root}}>
-                <Link href="/my-uploads">
+                <Link href="/">
                   <a className={classes.header__link_place_menu}>
                     My Pencils
                   </a>
