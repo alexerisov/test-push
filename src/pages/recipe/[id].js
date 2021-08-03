@@ -17,7 +17,7 @@ import CardLatestRecipes from "@/components/elements/card-latest-recipes";
 import CardPopularRecipes from "@/components/elements/card-popular-recipes";
 import RecipeNotFound from "@/components/elements/recipe-not-found";
 
-function CreateRecipe (props) {
+function RecipePage (props) {
 
     const router = useRouter();
 
@@ -327,6 +327,7 @@ function CreateRecipe (props) {
                             </div>
                         })}
                     </div>}
+                    <ResipeComments recipeId={recipeId} />
                 </div>
                 <div className={classes.recipe__cards}>
                 {latestRecipes && <>
@@ -371,9 +372,6 @@ function CreateRecipe (props) {
                 }
                 </div>
             </div>
-
-            <ResipeComments recipeId={recipeId} />
-
             <div className={classes.recipe__banner}>
                 <p className={classes.recipe__banner__title}>Do you <span>have any question</span> or ready <span>to cook?</span></p>
                 <p className={classes.recipe__banner__subtitle}>share your mail id and we will shortly connect you</p>
@@ -399,4 +397,4 @@ function CreateRecipe (props) {
 
 export default connect((state) => ({
     account: state.account,
-  }))(CreateRecipe);
+  }))(RecipePage);

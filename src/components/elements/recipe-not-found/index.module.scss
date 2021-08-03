@@ -11,5 +11,9 @@
 
   a {
     color: $--color-orange;
+
+    &:hover {
+      opacity: 0.5;
+    }
   }
 }

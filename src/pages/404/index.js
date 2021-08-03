@@ -7,6 +7,7 @@ const Custom404 = () => {
 
   const content = (
     <div className={classes.notFound}>
+      <h2>404</h2>
       <h1>Page not found</h1>
       <Link href="/"><a>Home</a></Link>
     </div>
