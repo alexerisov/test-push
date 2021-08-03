@@ -43,7 +43,7 @@ export default reducer(initState, {
   [types.SAVED_DEL_SUCCESS]: (state, action) => {
     return {
       ...state,
-      data: [...state.data.filter(recipe => recipe !== action.payload.pk)],
+      data: [...state.data.filter(recipe => recipe.user_saved_recipe !== action.payload)],
       isLoading: false
     };
   },

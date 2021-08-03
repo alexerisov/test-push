@@ -28,7 +28,7 @@ export default {
         }
       } catch (e) {
         console.error(e);
-        dispatch({ type: types.SAVED_REQUEST_ERROR, payload: e.response.statusText});
+        dispatch({ type: types.SAVED_REQUEST_ERROR, payload: e});
       }
     };
   },
@@ -37,31 +37,29 @@ export default {
     return async dispatch => {
       try {
         const response = await Recipe.postSavedRecipe(recipeId);
-        console.log(response);
 
         if (response.status === 201) {
           dispatch({ type: types.SAVED_SEND_SUCCESS, payload: response.data.recipe});
+          return response.data.recipe;
         }
       } catch (e) {
         console.error(e);
-        dispatch({ type: types.SAVED_REQUEST_ERROR, payload: e.response.statusText });
+        dispatch({ type: types.SAVED_REQUEST_ERROR, payload: e });
       }
     };
   },
 
-  deleteFromSaved: ({recipeId}) => {
+  deleteFromSaved: ({recipeId, savedId}) => {
     return async dispatch => {
       try {
-        const response = await Recipe.deleteSavedRecipe(recipeId);
-        console.log(response);
+        const response = await Recipe.deleteSavedRecipe(savedId);
 
-
-        if (response.status === 201) {
-          dispatch({ type: types.SAVED_DEL_SUCCESS });
+        if (response.status === 204) {
+          dispatch({ type: types.SAVED_DEL_SUCCESS, payload: savedId });
         }
       } catch (e) {
         console.error(e);
-        dispatch({ type: types.SAVED_REQUEST_ERROR, payload: e.response.statusText });
+        dispatch({ type: types.SAVED_REQUEST_ERROR, payload: e });
       }
     };
   }
