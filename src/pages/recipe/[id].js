@@ -205,7 +205,7 @@ function RecipePage (props) {
                                 <div className={classes.recipe__video__player}>
                                     <div className={classes.recipe__video__views}>
                                         <img src="/images/index/ionic-md-eye.svg" alt="" />
-                                        <span>{recipe.views_count} Views</span>
+                                        <span>{recipe.views_number} Views</span>
                                     </div>
                                     <div className={classes.recipe__video__likes}>
                                         <img src="/images/index/Icon awesome-heart.svg" alt="" />
