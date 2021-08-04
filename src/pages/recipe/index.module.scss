@@ -63,10 +63,11 @@
     }
 
     &__title {
+        max-width: 600px;
         font-size: 30px;
         @include fontMedium();
         margin: 0 0 30px 0;
-        max-width: 60vw;
+        line-height: 40px;
     }
 
     &__content {
@@ -93,6 +94,11 @@
     &__author {
         font-size: 18px;
         @include fontMedium();
+    }
+
+    &__authorText:hover {
+        @extend .recipe__author;
+        color: $--color-orange;
         cursor: pointer;
     }
 
@@ -347,6 +353,30 @@
         }
 
         p, span {
+            color: $--color-gray3;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        &__saveStatus {
+            display: flex;
+            border: none;
+            color: black;
+            outline: none;
+            cursor: pointer;
+        }
+
+        &__saveStatus:hover {
+            opacity: 0.5;
+        }
+
+        &__saveStatusImage {
+            margin: 4px 8px 0 0;
+        }
+
+        &__saveStatusLabel {
+            margin-top: 2px;
+            @include fontRegular();
             color: $--color-gray3;
             font-size: 16px;
             font-weight: 600;

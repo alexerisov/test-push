@@ -1,0 +1,69 @@
+@import "~styles/mixins/mixins.scss";
+@import "~styles/variables.scss";
+
+.confirm {
+  min-height: calc(100vh - 100px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__successTitle {
+    font-size: 35px;
+    line-height: 1.08;
+    text-align: center;
+    color: $--color-orange;;
+    margin: 0 0 37px;
+  }
+
+  &__successSubTitle {
+    font-size: 25px;
+    line-height: 1.44;
+    text-align: center;
+    color: $--color-gray3;
+    margin: 0 0 27px;
+    font-weight: bold;
+    cursor: pointer;
+
+    &:hover {
+      color: $--color-orange;
+    }
+  }
+
+  &__successText {
+    font-size: 20px;
+    line-height: 1.86;
+    text-align: center;
+    color: $--color-gray3;
+    padding-bottom: 50px;
+    cursor: pointer;
+  }
+
+  &__buttonLogin {
+    @include fontRegular();
+    border: none;
+    font-size: 20px;
+    line-height: 1.86;
+    color: $--color-gray3;
+    cursor: pointer;
+
+    &:hover {
+      color: $--color-orange;
+    }
+  }
+
+  &__link {
+    cursor: pointer;
+
+    &:hover {
+      color: $--color-orange;
+    }
+
+    &:visited {
+      color: $--color-gray3;
+    }
+
+    &:visited:hover {
+      color: $--color-orange;
+    }
+  }
+}

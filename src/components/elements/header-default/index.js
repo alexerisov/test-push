@@ -4,7 +4,6 @@ import Link from "next/link";
 import { makeStyles } from "@material-ui/core/styles";
 import { modalActions, accountActions } from '@/store/actions';
 import { connect } from 'react-redux';
-import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import styled from 'styled-components';
@@ -14,7 +13,6 @@ import { USER_TYPE } from "@/utils/datasets";
 
 const StyledMenu = styled(Menu)`
   margin: 40px 0 0 0;
-
   li {
     padding: 0;
   }
@@ -22,9 +20,7 @@ const StyledMenu = styled(Menu)`
 
 const useSeparatorStyles = makeStyles({
   root: {
-    borderWidth: '2px 0 2px 0',
-    borderStyle: 'solid',
-    borderColor: '#FFAA00'
+    borderBottom: '2px solid #f8f8f8'
   }
 });
 
@@ -97,24 +93,19 @@ const HeaderDefault = (props) => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem onClick={handleClose}>
-              <Link href="/profile/account-settings">
-                <a className={classes.header__link_place_menu}>My Profile</a>
-              </Link>
-            </MenuItem>
             {props?.account?.profile?.user_type === USER_TYPE.chefType &&
             <>
-              <MenuItem onClick={handleClose}>
-                <Link href="/">
-                  <a className={classes.header__link_place_menu}>
-                    My Pencils
-                  </a>
-                </Link>
-              </MenuItem>
               <MenuItem onClick={handleClose}>
                 <Link href="/my-uploads">
                   <a className={classes.header__link_place_menu}>
                     My Recipes
+                  </a>
+                </Link>
+              </MenuItem>
+              <MenuItem onClick={handleClose} classes={{root: separatorStyles.root}}>
+                <Link href="/">
+                  <a className={classes.header__link_place_menu}>
+                    My Pencils
                   </a>
                 </Link>
               </MenuItem>
@@ -127,11 +118,16 @@ const HeaderDefault = (props) => {
                 </a>
               </Link>
             </MenuItem>
-            <MenuItem onClick={handleClose}>
+            { props?.account?.profile?.user_type === USER_TYPE.viewerType && <MenuItem onClick={handleClose}>
               <Link href="/">
                 <a className={classes.header__link_place_menu}>
-                  {props?.account?.profile?.user_type === USER_TYPE.viewerType ? "History" : "My videos" }
+                  History
                 </a>
+              </Link>
+            </MenuItem>}
+            <MenuItem onClick={handleClose}>
+              <Link href="/profile/account-settings">
+                <a className={classes.header__link_place_menu}>My Profile</a>
               </Link>
             </MenuItem>
             <MenuItem onClick={handleClose}>

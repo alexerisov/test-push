@@ -12,9 +12,11 @@ import { LayoutPage } from "@/components/layouts";
 import CardHighestMeals from "@/components/elements/card-highest-meals";
 
 import Recipe from "@/api/Recipe";
+import savedRecipesActions from '@/store/savedRecipes/actions';
 import { DEFAULT_VALUE_TAB_STATE } from "@/utils/constants";
 
 import styles from "./index.module.scss";
+import {useDispatch, useSelector} from "react-redux";
 
 const StyledTabs = styled(Tabs)`
     width: 100%;
@@ -52,15 +54,12 @@ const StyledTab = styled(Tab)`
 `;
 
 const SavedRecipesPage = () => {
-  const [savedRecipes, setSavedRecipes] = useState(null);
+  const dispatch = useDispatch();
+  const savedRecipes = useSelector(state => state.savedRecipes.data);
   const [query, setQuery] = useState(new URLSearchParams(''));
-  const [expanded, setExpanded] = useState(false);
-  const handleExpand = () => {
-    setExpanded(!expanded);
-  };
 
   // Pagination params
-  const itemsPerPage = 9;
+  const itemsPerPage = 6;
   const [page, setPage] = useState(1);
   const [numberOfPages, setNumberOfPages] = useState();
 
@@ -85,14 +84,14 @@ const SavedRecipesPage = () => {
 
   useEffect(() => {
     if (query) {
-      Recipe.getSavedRecipes(query)
-        .then(response => {
-          setSavedRecipes(response.data);
-          setNumberOfPages(countPages(response.data.count));
-        })
-        .catch(e => console.error(e.message));
+      dispatch(savedRecipesActions.startSavedRecipesRequests());
+      dispatch(savedRecipesActions.getSavedRecipes(query));
     }
   }, [query]);
+
+  useEffect(() => {
+    setNumberOfPages(countPages(savedRecipes.count));
+  }, [savedRecipes]);
 
   useEffect(() => {
     const queryParams = new URLSearchParams();
@@ -113,49 +112,42 @@ const SavedRecipesPage = () => {
 
       <NoSsr>
         <StyledTabs value={valueTab} onChange={handleChangeOfTabs} aria-label="simple tabs example">
-          <StyledTab label={`All (${savedRecipes ? savedRecipes.count : 0})`} {...a11yProps(0)} />
+          <StyledTab label={`All (${savedRecipes?.results ? savedRecipes.count : 0})`} {...a11yProps(0)} />
         </StyledTabs>
       </NoSsr>
 
-      <h3 className={styles.savedRecipes__subtitle}>{`All (${savedRecipes ? savedRecipes.count : 0})`}</h3>
+      <h3 className={styles.savedRecipes__subtitle}>{`All (${savedRecipes?.results ? savedRecipes.count : 0})`}</h3>
 
-      <Collapse in={expanded} collapsedSize="400px" style={{minHeight: '400px', visibility:'visible'}}>
-        <div className={styles.savedRecipes__wrapper}>
-          <div className={styles.savedRecipes__container}>
-            {savedRecipes?.results?.length
-              ?
-              savedRecipes.results.map((result) => {
-                return <CardHighestMeals
-                  key={result.recipe.pk}
-                  image={result.recipe?.images[0]?.url}
-                  title={result.recipe?.title}
-                  rating={result.recipe?.avg_rating}
-                  name={result.recipe?.user?.full_name}
-                  city={result.recipe?.user?.city}
-                  likes={result.recipe?.likes_number}
-                  id={result.recipe.pk}/>;
-              })
-              :
-              <span>No saved recipes yet!</span>
-            }
-          </div>
-          {expanded &&
-          <Pagination
-            classes={{root: styles.sectionRecipes__pagination}}
-            count={numberOfPages}
-            page={page}
-            onChange={(event, number) => setPage(number)}
-          />}
+      <div className={styles.savedRecipes__wrapper}>
+        <div className={styles.savedRecipes__container}>
+          {savedRecipes?.results?.length
+            ?
+            savedRecipes.results.map((result) => {
+              return <CardHighestMeals
+                key={result.recipe.pk}
+                image={result.recipe?.images[0]?.url}
+                title={result.recipe?.title}
+                rating={result.recipe?.avg_rating}
+                name={result.recipe?.user?.full_name}
+                city={result.recipe?.user?.city}
+                likes={result.recipe?.likes_number}
+                id={result.recipe.pk}
+                isSavedByUser={result.recipe.user_saved_recipe}
+              />;
+            })
+            :
+            <span>No saved recipes yet!</span>
+          }
         </div>
-      </Collapse>
 
-      {Boolean(savedRecipes?.results?.length) && <Button
-        variant="contained"
-        color="primary"
-        onClick={handleExpand}
-      >
-        {!expanded ? 'See all' : 'Close all' }
-      </Button>}
+        {savedRecipes?.results?.length > 0 &&
+        <Pagination
+          classes={{root: styles.sectionRecipes__pagination}}
+          count={numberOfPages}
+          page={page}
+          onChange={(event, number) => setPage(number)}
+        />}
+      </div>
     </div>
   );
 

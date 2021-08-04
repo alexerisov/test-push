@@ -21,6 +21,13 @@
   span {
     color: $--color-orange;
   }
+
+  a, a:active, a:visited {
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 45px;
+    color: $--color-gray6;
+  }
 }
 
 .section {

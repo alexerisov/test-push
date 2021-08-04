@@ -41,11 +41,13 @@ const ShowRecipePhoto = ({ recipePhotoSlider, dispatch }) => {
       <div className={classes.slider__container}>
         {recipePhotoSlider.photos &&
             <div className={classes.slider__photo}>
-              <img src={recipePhotoSlider.photos[currentPhotoIndex]?.url} />
+              <img className={classes.slider__photo__item} src={recipePhotoSlider.photos[currentPhotoIndex]?.url} />
             </div>
         }
 
-        <div className={classes.slider__counter}>{`${currentPhotoIndex + 1} / ${recipePhotoSlider.photos?.length}`}</div>
+        <div className={classes.slider__counter}>
+          {`${currentPhotoIndex + 1} / ${recipePhotoSlider.photos?.length}`}
+        </div>
 
         {/*Next and previous buttons*/}
         <a className={classes.slider__prev} onClick={sliderCounterDown}>
