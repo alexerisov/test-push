@@ -433,12 +433,17 @@ export default connect((state) => ({
 
 export async function getServerSideProps(context) {
   const id = context.params.id;
-  
-  const response = await Recipe.getRecipe(id);
 
-  return {
-    props: {
-      recipesData: response.data,
-    },
-  };
+  try {
+    const response = await Recipe.getRecipe(id);
+
+    return {
+      props: {
+        recipesData: response.data,
+      },
+    };
+  }
+  catch(e) {
+    console.error(e);
+  }
 }

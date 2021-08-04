@@ -133,11 +133,16 @@ export default connect((state) => ({
 }))(Home);
 
 export async function getStaticProps() {
-  const response = await Recipe.getMealOfWeek();
+  try {
+    const response = await Recipe.getMealOfWeek();
 
-  return {
-    props: {
-      mealOfTheWeek: response?.data[0]
-    },
-  };
+    return {
+      props: {
+        mealOfTheWeek: response?.data[0]
+      },
+    };
+  }
+  catch(e) {
+    console.error(e);
+  }
 }
