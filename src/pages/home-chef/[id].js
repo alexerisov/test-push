@@ -114,7 +114,9 @@ const HomePageOfTargetChef = () => {
           <div className={styles.info__left}>
             <div className={styles.name}>
               <h3 className={`${styles.field} ${styles.name__field}`}>Name</h3>
-              <p className={`${styles.value} ${styles.name__value}`}>{chefInfo?.full_name}</p>
+              <p className={`${styles.value} ${styles.name__value}`}
+                 >{chefInfo?.full_name}
+              </p>
             </div>
 
             <table className={styles.info__left__table}>
@@ -248,17 +250,17 @@ const HomePageOfTargetChef = () => {
         <h2 className={styles.sectionTitle}>Other Informations</h2>
 
         <div className={styles.itemsContainer}>
-          {chefInfo?.cooking_philosophy?.length &&
+          {chefInfo?.cooking_philosophy?.length !== 0 &&
           <CardHomeChefProfile
             type={1}
             list={chefInfo?.cooking_philosophy}
           />}
-          {chefInfo?.personal_cooking_mission?.length &&
+          {chefInfo?.personal_cooking_mission?.length !== 0 &&
           <CardHomeChefProfile
             type={2}
             list={chefInfo?.personal_cooking_mission}
           />}
-          {chefInfo?.source_of_inspiration?.length &&
+          {chefInfo?.source_of_inspiration?.length !== 0 &&
           <CardHomeChefProfile
             type={3}
             list={chefInfo?.source_of_inspiration}

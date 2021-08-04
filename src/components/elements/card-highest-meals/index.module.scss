@@ -4,7 +4,7 @@
 .card {
   position: relative;
     width: 338px;
-    min-height: 350px;
+    min-height: 320px;
     opacity: 1;
 	animation-name: fadeInOpacity;
 	animation-iteration-count: 1;
@@ -21,6 +21,7 @@
 
     &__media {
         height: 173px;
+        width: 100%;
     }
 
     a {
@@ -41,7 +42,7 @@
 
     &__location {
         color: $--color-gray5;
-        margin: 0 0 17px 0;
+        margin: 0 0 14px 0;
         font-size: 14px;
     }
 

@@ -11,3 +11,4 @@ export { default as recipeUpload } from './recipeUpload/reducer';
 export { default as recipeEdit } from './recipeEdit/reducer';
 export { default as restorePassword } from "./restore-password/reducer";
 export { default as recipePhotoSlider } from "./recipePhotoSlider/reducer";
+export { default as savedRecipes } from './savedRecipes/reducer';
