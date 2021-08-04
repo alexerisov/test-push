@@ -116,6 +116,7 @@ export default {
     page = null,
     title = null,
     types = null,
+    ordering = null,
   }) => {
     return http.get(`/recipe`, {
       params: {
@@ -125,6 +126,7 @@ export default {
         page,
         title,
         types,
+        ordering,
       },
     });
   },

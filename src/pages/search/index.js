@@ -5,11 +5,10 @@ import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import Recipe from '@/api/Recipe.js';
 import CardHighestMeals from "@/components/elements/card-highest-meals";
-import { recipeTypes, cookingMethods, dietaryrestrictions, cookingSkill} from '@/utils/datasets';
+import { recipeTypes, cookingMethods, dietaryrestrictions, cookingSkill, ordering} from '@/utils/datasets';
 import { modalActions } from '@/store/actions';
 import { connect } from 'react-redux';
 import { NoSsr } from '@material-ui/core';
-import Link from "next/link";
 
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -21,7 +20,9 @@ import Typography from '@material-ui/core/Typography';
 
 import { useFormik } from 'formik';
 import Pagination from '@material-ui/lab/Pagination';
-import { route } from 'next/dist/next-server/server/router';
+import InputLabel from '@material-ui/core/InputLabel';
+import { Select, MenuItem } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
 const StyledAccordion = styled(Accordion)`
   p {
@@ -38,9 +39,30 @@ const StyledAccordion = styled(Accordion)`
   }
 `;
 
+const useStyles = makeStyles((theme) => ({
+  selectEmpty: {
+    marginTop: 0,
+    minWidth: 157,
+    '& .MuiSelect-root': {
+      padding: 4,
+    },
+  },
+}));
+
+const ITEM_HEIGHT = 30;
+const ITEM_PADDING_TOP = 6;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 5 + ITEM_PADDING_TOP,
+    },
+  },
+};
+
 const Recipes = (props) => {
 
   const router = useRouter();
+  const classMarerialUi = useStyles();
 
   const [query, setQuery] = useState();
   const [title, setTitle] = useState();
@@ -65,6 +87,7 @@ const Recipes = (props) => {
       cooking_methods: [],
       cooking_skills: [],
       types: [],
+      ordering: [],
     },
     onSubmit: (values) => {
       
@@ -85,10 +108,10 @@ const Recipes = (props) => {
   const cookingMethodsList = [];
   const recipeTypesList = [];
   const cookingSkillList = [];
+  
+  const orderingList = [];
 
   const numberCardsDisplayed = 10;
-
-  // const createFilterParams = () => {}
   
   for (let i = 1; i < Object.keys(dietaryrestrictions).length; i++) {
     dietaryrestrictionsList.push(
@@ -167,6 +190,12 @@ const Recipes = (props) => {
     )
   }
 
+  ordering.forEach((item, index) => {
+    orderingList.push(
+      <MenuItem key={index} value={item.valueSort}>{item.nameSort}</MenuItem>
+    )
+  })
+
   const onChangeCheckboxInput = (e) => {
     setPage(1);
     formik.handleChange(e);
@@ -236,8 +265,8 @@ const Recipes = (props) => {
         <img src="/images/index/icon_search.svg"/>
       </button>
     </div>
-    <div className={classes.search__content}>
-      <form className={classes.search__filter} onSubmit={formik.handleSubmit}>
+    <form className={classes.search__content}>
+      <div className={classes.search__filter} onSubmit={formik.handleSubmit}>
         <div className={classes.search__filterHeader_left}>
           <p className={classes.search__filter__title}>Filter</p>
           <button type="reset" onClick={handleClickClearAll} className={classes.search__clearButton}>Clear all</button>
@@ -331,8 +360,23 @@ const Recipes = (props) => {
           </AccordionDetails>
         </StyledAccordion>
         </NoSsr>
-      </form>
+      </div>
       <div className={classes.search__result}>
+        <div className={classes.search__sorting}>
+          <InputLabel htmlFor="age-native-simple">Sort by</InputLabel>
+          <Select
+            MenuProps={MenuProps}
+            className={classMarerialUi.selectEmpty}
+            variant="outlined"
+            name="ordering"
+            value={formik.values.ordering}
+            onChange={(e) => {
+              onChangeCheckboxInput(e);
+            }}
+          >
+            {orderingList}
+          </Select>
+        </div>
         <div className={classes.search__result__container}>
           {
             (result.length !== 0) ? result.map((recipe, index) => {
@@ -356,7 +400,7 @@ const Recipes = (props) => {
           />}
         </div>
       </div>
-    </div>
+    </form>
   </div>
 
   return (

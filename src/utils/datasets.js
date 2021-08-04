@@ -128,6 +128,21 @@ export const nutritions = {
   fats: 'Fat',
 };
 
+export const ordering = [
+  {
+    valueSort: "views_number",
+    nameSort: "Views"
+  },
+  {
+    valueSort: "likes_number",
+    nameSort: "Vote"
+  },
+  {
+    valueSort: "created_at",
+    nameSort: "New"
+  },
+];
+
 export const USER_TYPE = {
   viewerType: 0,
   chefType: 1,
