@@ -406,18 +406,18 @@ function CreateRecipe (props, recipes) {
       <>
         <NextSeo
           title={recipe?.title}
-          description={recipe?.description}
+          description={recipe?.description?.split('.').slice(0, 4).join('.')}
           canonical="https://www.canonicalurl.ie/"
           openGraph={{
             url: 'https://www.canonicalurl.ie/',
             title: `${recipe?.title}`,
-            description: `${recipe?.description}`,
+            description: `${recipe?.description?.split('.').slice(0, 4).join('.')}`,
             images: [
               {
-                url: 'https://www.example.ie/og-image-01.jpg',
-                width: 800,
-                height: 600,
-                alt: 'Og Image Alt',
+                url: '../../public/images/index/logo.png',
+                width: 120,
+                height: 83,
+                alt: 'Logo',
               }
             ],
           }}
