@@ -187,7 +187,7 @@ function RecipePage (props) {
                         <div>
                             <h2 className={classes.recipe__title}>{recipe.title}</h2>
                             <p className={classes.recipe__author} onClick={redirectToHomeChefPage}>
-                              by Chef {recipe.user.full_name}
+                              by Chef <span className={classes.recipe__authorText}>{recipe.user.full_name}</span>
                             </p>
                             <p className={classes.recipe__location}>{recipe.user.city}</p>
                             <RaitingIcon value={recipe.avg_rating} />

@@ -94,6 +94,11 @@
     &__author {
         font-size: 18px;
         @include fontMedium();
+    }
+
+    &__authorText:hover {
+        @extend .recipe__author;
+        color: $--color-orange;
         cursor: pointer;
     }
 
