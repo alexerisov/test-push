@@ -250,17 +250,17 @@ const HomePageOfTargetChef = () => {
         <h2 className={styles.sectionTitle}>Other Informations</h2>
 
         <div className={styles.itemsContainer}>
-          {chefInfo?.cooking_philosophy?.length &&
+          {chefInfo?.cooking_philosophy?.length !== 0 ??
           <CardHomeChefProfile
             type={1}
             list={chefInfo?.cooking_philosophy}
           />}
-          {chefInfo?.personal_cooking_mission?.length &&
+          {chefInfo?.personal_cooking_mission?.length !== 0 &&
           <CardHomeChefProfile
             type={2}
             list={chefInfo?.personal_cooking_mission}
           />}
-          {chefInfo?.source_of_inspiration?.length &&
+          {chefInfo?.source_of_inspiration?.length !== 0 &&
           <CardHomeChefProfile
             type={3}
             list={chefInfo?.source_of_inspiration}
