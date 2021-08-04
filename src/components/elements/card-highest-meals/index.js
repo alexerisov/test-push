@@ -31,7 +31,6 @@ const StyledCardActionArea = styled(CardActionArea)`
 `;
 
 const CardHighestMeals = (props) => {
-
   const router = useRouter();
 
   const redirectToRecipeCard = (id) => {

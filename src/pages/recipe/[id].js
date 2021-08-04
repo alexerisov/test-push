@@ -16,6 +16,11 @@ import { ButtonShare } from "@/components/elements/button";
 import CardLatestRecipes from "@/components/elements/card-latest-recipes";
 import CardPopularRecipes from "@/components/elements/card-popular-recipes";
 import RecipeNotFound from "@/components/elements/recipe-not-found";
+import savedStatus from './savedStatus.svg';
+import notSavedStatus from './notSavedStatus.svg';
+import savedRecipesActions from "@/store/savedRecipes/actions";
+
+import { debounce } from "@/utils/debounce";
 
 function RecipePage (props) {
 
@@ -33,7 +38,10 @@ function RecipePage (props) {
 
     const [notFound, setNotFound] = useState(false);
 
-    useEffect(() => {
+  const [savedId, setSavedId] = useState(null);
+  console.log(savedId)
+
+  useEffect(() => {
         if (recipeId) {
             getRecipe();
         }
@@ -69,6 +77,7 @@ function RecipePage (props) {
           setRecipe(response.data);
           setLikeRecipe(response.data.user_liked);
           setLikesNumber(response.data.likes_number);
+          setSavedId(response.data.user_saved_recipe);
           props.dispatch(recipePhotoSlider.setPhotos(response.data));
         } catch (e) {
             setNotFound(true)
@@ -135,6 +144,19 @@ function RecipePage (props) {
       };
     };
 
+  const handleSaveRecipe = async () => {
+    props.dispatch(savedRecipesActions.startSavedRecipesRequests());
+
+    if (!Number.isFinite(savedId)) {
+      const response = await props.dispatch(savedRecipesActions.saveRecipe({ recipeId }));
+      setSavedId(response?.user_saved_recipe);
+      return;
+    }
+
+    props.dispatch(savedRecipesActions.deleteFromSaved({ recipeId, savedId }));
+    setSavedId(null);
+  };
+
     const handleRecipeCookingTime = (time) => {
       const mins = Number(time.slice(3, 5));
       const hours = Number(time.slice(0, 2));
@@ -190,7 +212,6 @@ function RecipePage (props) {
                               by Chef <span className={classes.recipe__authorText}>{recipe.user.full_name}</span>
                             </p>
                             <p className={classes.recipe__location}>{recipe.user.city}</p>
-                            <RaitingIcon value={recipe.avg_rating} />
                         </div>
                         <div className={classes.recipe__icons}>
                             {(recipe.user.pk === userId) && <div>
@@ -233,6 +254,20 @@ function RecipePage (props) {
                                         <span>Vote</span>
                                     </button>
                                     <ButtonShare recipeId={recipeId}/>
+                                    <button
+                                      className={classes.recipe__video__saveStatus}
+                                      onClick={!props.account.hasToken
+                                        ? openRegisterPopup('register')
+                                        : debounce(handleSaveRecipe, 500)}
+                                    >
+                                      <img
+                                       className={classes.recipe__video__saveStatusImage}
+                                       src={savedId ? savedStatus : notSavedStatus} alt="saved status"
+                                      />
+                                      <span className={classes.recipe__video__saveStatusLabel}>
+                                        Save
+                                      </span>
+                                    </button>
                                 </div>
                             </div>
                         </div>
