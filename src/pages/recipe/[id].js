@@ -16,35 +16,28 @@ import { ButtonShare } from "@/components/elements/button";
 import CardLatestRecipes from "@/components/elements/card-latest-recipes";
 import CardPopularRecipes from "@/components/elements/card-popular-recipes";
 import RecipeNotFound from "@/components/elements/recipe-not-found";
+import {NextSeo} from "next-seo";
 import savedStatus from './savedStatus.svg';
 import notSavedStatus from './notSavedStatus.svg';
 import savedRecipesActions from "@/store/savedRecipes/actions";
-
 import { debounce } from "@/utils/debounce";
 
 function RecipePage (props) {
-
     const router = useRouter();
-
     const [recipeId, setRecipeId] = useState();
     const [recipe, setRecipe] = useState();
     const [likeRecipe, setLikeRecipe] = useState(false);
     const [likesNumber, setLikesNumber] = useState(false);
     const [userId, setUserId] = useState();
-
+    const [savedId, setSavedId] = useState(null);
     const [popularRecipes, setPopularRecipes] = useState();
     const [latestRecipes, setLatestRecipes] = useState();
     const [featuredMeals, setFeaturedMeals] = useState();
 
     const [notFound, setNotFound] = useState(false);
 
-  const [savedId, setSavedId] = useState(null);
-  console.log(savedId)
-
-  useEffect(() => {
-        if (recipeId) {
-            getRecipe();
-        }
+    useEffect(() => {
+        getRecipe();
     }, [recipeId]);
 
     useEffect(() => {
@@ -72,16 +65,15 @@ function RecipePage (props) {
     }, [userId])
 
     const getRecipe = async () => {
-        try {
-          const response = await Recipe.getRecipe(recipeId);
-          setRecipe(response.data);
-          setLikeRecipe(response.data.user_liked);
-          setLikesNumber(response.data.likes_number);
-          setSavedId(response.data.user_saved_recipe);
-          props.dispatch(recipePhotoSlider.setPhotos(response.data));
-        } catch (e) {
-            setNotFound(true)
-        }
+      if (props?.recipesData) {
+        setRecipe(props?.recipesData);
+        setLikeRecipe(props?.recipesData.user_liked);
+        setLikesNumber(props?.recipesData.likes_number);
+        props.dispatch(recipePhotoSlider.setPhotos(props.recipesData));
+        return;
+      }
+
+      setNotFound(props?.notFound);
     };
 
     const openRegisterPopup = (name) => {
@@ -438,6 +430,24 @@ function RecipePage (props) {
 
     return (
       <>
+        <NextSeo
+          title={recipe?.title}
+          description={recipe?.description?.split('.').slice(0, 4).join('.')}
+          canonical="https://www.canonicalurl.ie/"
+          openGraph={{
+            url: 'https://www.canonicalurl.ie/',
+            title: `${recipe?.title}`,
+            description: `${recipe?.description?.split('.').slice(0, 4).join('.')}`,
+            images: [
+              {
+                url: '../../public/images/index/logo.png',
+                width: 120,
+                height: 83,
+                alt: 'Logo',
+              }
+            ],
+          }}
+        />
         <LayoutPage content={!notFound ? content : <RecipeNotFound />} />
       </>
     );
@@ -446,3 +456,26 @@ function RecipePage (props) {
 export default connect((state) => ({
     account: state.account,
   }))(RecipePage);
+
+export async function getServerSideProps(context) {
+  const id = context.params.id;
+
+  try {
+    const response = await Recipe.getRecipe(id);
+
+    return {
+      props: {
+        recipesData: response.data,
+      },
+    };
+  }
+  catch(e) {
+    console.error(e);
+
+    return {
+      props: {
+        notFound: true
+      }
+    };
+  }
+}
