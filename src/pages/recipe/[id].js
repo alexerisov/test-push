@@ -19,13 +19,10 @@ import RecipeNotFound from "@/components/elements/recipe-not-found";
 import {NextSeo} from "next-seo";
 
 function CreateRecipe (props, recipes) {
-
     const router = useRouter();
-
     const [recipeId, setRecipeId] = useState();
     const [recipe, setRecipe] = useState();
     const [recipeItem, setreciEItem] = useState(recipes);
-    console.log(recipes);
     const [likeRecipe, setLikeRecipe] = useState(false);
     const [likesNumber, setLikesNumber] = useState(false);
     const [userId, setUserId] = useState();
@@ -68,11 +65,10 @@ function CreateRecipe (props, recipes) {
 
     const getRecipe = async () => {
         try {
-          const response = await Recipe.getRecipe(recipeId);
-          setRecipe(response.data);
-          setLikeRecipe(response.data.user_liked);
-          setLikesNumber(response.data.likes_number);
-          props.dispatch(recipePhotoSlider.setPhotos(response.data));
+          setRecipe(props.recipesData);
+          setLikeRecipe(props.recipesData.user_liked);
+          setLikesNumber(props.recipesData.likes_number);
+          props.dispatch(recipePhotoSlider.setPhotos(props.recipesData));
         } catch (e) {
             setNotFound(true)
         }
@@ -409,8 +405,8 @@ function CreateRecipe (props, recipes) {
     return (
       <>
         <NextSeo
-          title="EatChef"
-          description="EatChef"
+          title={recipe?.title}
+          description={recipe?.description}
           canonical="https://www.canonicalurl.ie/"
           openGraph={{
             url: 'https://www.canonicalurl.ie/',
@@ -435,17 +431,14 @@ export default connect((state) => ({
     account: state.account,
   }))(CreateRecipe);
 
-export async function getStaticProps() {
-  const router = useRouter();
-  const recipeId = router.query.id;
-  // Call an external API endpoint to get posts
-  const res = await Recipe.getRecipe(recipeId);
+export async function getServerSideProps(context) {
+  const id = context.params.id;
+  
+  const response = await Recipe.getRecipe(id);
 
-  // By returning { props: { posts } }, the Blog component
-  // will receive `posts` as a prop at build time
   return {
     props: {
-      recipes: res,
+      recipesData: response.data,
     },
   };
 }

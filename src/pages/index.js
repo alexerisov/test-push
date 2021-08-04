@@ -25,11 +25,7 @@ const Home = (props) => {
   const [meal, setMeal] = React.useState(null);
 
   React.useEffect(() => {
-    Recipe.getMealOfWeek()
-    .then((data) => {
-      setMeal(data?.data[0]);
-    });
-    Recipe.getHomepageCarouselItems();
+    setMeal(props?.mealOfTheWeek);
   },[]);
 
   React.useEffect(() => {
@@ -100,8 +96,8 @@ const Home = (props) => {
   return (
     <div>
       <NextSeo
-        title="EatChef"
-        description="EatChef"
+        title="Homemade food"
+        description="Your favorite recipes and meals from home with love"
         canonical="https://www.canonicalurl.ie/"
         openGraph={{
           site_name: 'Eatchefs',
@@ -135,3 +131,13 @@ export default connect((state) => ({
   account: state.account,
   profile: state.profile,
 }))(Home);
+
+export async function getStaticProps() {
+  const response = await Recipe.getMealOfWeek();
+
+  return {
+    props: {
+      mealOfTheWeek: response?.data[0]
+    },
+  };
+}
