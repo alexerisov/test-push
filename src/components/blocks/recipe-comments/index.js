@@ -42,7 +42,7 @@ const ResipeComments = ({ recipeId }) => {
     if (recipeId) {
       getComments();
     }
-  }, [page]);
+  }, [page, recipeId]);
 
   const getComments = async () => {
     try {
