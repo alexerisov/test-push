@@ -27,9 +27,14 @@ $slide-width: 32rem;
   position: absolute;
   left: 0;
   top: 0;
+  opacity: 1;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  animation-name: fadeInOpacity;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 0.5s;
 }
 
 .carousel__btn__prev {
@@ -114,4 +119,13 @@ $slide-width: 32rem;
   width: 1rem;
   z-index: 10;
   transform: rotate(-45deg);
+}
+
+@keyframes fadeInOpacity {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
