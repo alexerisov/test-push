@@ -97,13 +97,13 @@ const Home = (props) => {
     <div>
       <NextSeo
         title="Homemade food"
-        description="Your favorite recipes and meals from home with love"
+        description="Make people Happy with HOME COOKED FOOD. Eatchefs helps home chefs to produce, distribute and promote their delicious meals🤗"
         canonical="https://www.canonicalurl.ie/"
         openGraph={{
           site_name: 'Eatchefs',
           url: 'https://www.canonicalurl.ie/',
           title: 'Homemade food',
-          description: 'Your favorite recipes and meals from home with love',
+          description: 'Make people Happy with HOME COOKED FOOD. Eatchefs helps home chefs to produce, distribute and promote their delicious meals🤗',
           images: [
             {
               url: 'https://www.example.ie/og-image-01.jpg',
