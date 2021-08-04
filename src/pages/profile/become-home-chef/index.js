@@ -72,20 +72,24 @@ const ProfileAccountSettings = (props) => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      setStatusSubmit('Loading...')
-      setFormStatus('')
-      values.user_type = user_type;
-      props.dispatch(profileActions.updateAccountType(values))
-      .then((res) => {
-        setStatusSubmit('Become a home chef')
-        setFormStatus(<span className={classes.profile__formStatus_true}>Successfully sent</span>)
-        props.dispatch(accountActions.remind());
-      })
-      .catch((error) => {
-        setStatusSubmit('Become a home chef')
-        setFormStatus(<span className={classes.profile__formStatus_error}>Error</span>)
-        console.log(error);
-      })
+      if (values.avatar === null) {
+        setFormStatus(<span className={classes.profile__formStatus_error}>Avatar is required</span>)
+      } else {
+        setStatusSubmit('Loading...')
+        setFormStatus('')
+        values.user_type = user_type;
+        props.dispatch(profileActions.updateAccountType(values))
+        .then((res) => {
+          setStatusSubmit('Become a home chef')
+          setFormStatus(<span className={classes.profile__formStatus_true}>Successfully sent</span>)
+          props.dispatch(accountActions.remind());
+        })
+        .catch((error) => {
+          setStatusSubmit('Become a home chef')
+          setFormStatus(<span className={classes.profile__formStatus_error}>Error</span>)
+          console.log(error);
+        })
+      }
     },
   });
 
