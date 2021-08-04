@@ -41,6 +41,10 @@
         line-height: 35px;
         margin: 0 35px 0 0;
         color: $--color-white;
+
+        &:hover {
+            opacity: 0.6;
+        }
     }
 
     &__RecipesList {
@@ -64,6 +68,16 @@
 
     &__termsOfUse {
         text-align: center;
+
+        &__link {
+            font-size: 16px;
+            line-height: 35px;
+            color: $--color-white;
+
+            &:hover {
+                opacity: 0.6;
+            }
+        }
     }
 
     &__copyright {

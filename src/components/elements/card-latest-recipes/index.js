@@ -10,6 +10,8 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { modalActions } from '@/store/actions';
 import Recipe from '@/api/Recipe.js';
+import { useRouter } from 'next/router';
+import { CardActionArea } from '@material-ui/core';
 
 const StyledCardMedia = styled(CardMedia)`
   .MuiCardMedia-root {
@@ -17,7 +19,17 @@ const StyledCardMedia = styled(CardMedia)`
   }
 `;
 
+const StyledCardActionArea = styled(CardActionArea)`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: flex-start;
+`;
+
 const CardLatestRecipes = (props) => {
+
+  const router = useRouter();
 
   const [saveRecipeId, setSaveRecipeId] = useState(props.savedId);
 
@@ -32,7 +44,7 @@ const CardLatestRecipes = (props) => {
   };
 
   const onClickSave = (e) => {
-    e.preventDefault();
+    e.stopPropagation();
     Recipe.postSavedRecipe(props.id)
     .then((res) => {
       setSaveRecipeId(res.data.pk);
@@ -41,7 +53,7 @@ const CardLatestRecipes = (props) => {
   };
 
   const onClickDelete = (e) => {
-    e.preventDefault();
+    e.stopPropagation();
     Recipe.deleteSavedRecipe(saveRecipeId)
     .then((res) => {
       setSaveRecipeId(false);
@@ -49,8 +61,14 @@ const CardLatestRecipes = (props) => {
     .catch((err) => console.log(err));
   };
 
+  const redirectToRecipeCard = (id, e) => {
+    e.preventDefault();
+    router.push(`/recipe/${id}`);
+  };
+
   return (
     <Card className={classes.card}>
+      <StyledCardActionArea onClick={(e) => redirectToRecipeCard(props.id, e)} component="div">
         <StyledCardMedia
           className={classes.card__media}
           image={props.image}
@@ -71,11 +89,10 @@ const CardLatestRecipes = (props) => {
             <p className={classes.card__name} title={props.title}>{props.title}</p>
             <p className={classes.card__author}>{`by Chef ${props.name}`}</p>
             <p className={classes.card__location}>{props.city}</p>
-            <Link href={`/recipe/${props.id}`}><a>View recipe</a></Link>
             <div className={classes.card__likeIcon}><LikeIcon value={props.likes} /></div>
           </div>
-          <RaitingIcon />
         </CardContent>
+      </StyledCardActionArea>
     </Card>
   );
 };

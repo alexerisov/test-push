@@ -1,0 +1,28 @@
+@import "~styles/variables.scss";
+@import "~styles/mixins/mixins.scss";
+
+.terms {
+  padding: 50px 50px 100px 50px;
+
+  &__title {
+    font-size: 30px;
+    @include fontSemiBold();
+  }
+
+  &__text {
+    padding: 20px 0;
+    font-size: 20px;
+  }
+
+  &__textBold {
+    padding: 20px 0;
+    font-size: 20px;
+    @include fontSemiBold();
+  }
+
+  &__subtitle {
+    font-size: 25px;
+    padding: 20px 0 0 0;
+    @include fontSemiBold();
+  }
+}
