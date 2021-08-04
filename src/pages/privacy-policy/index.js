@@ -8,6 +8,9 @@ const PrivacyPolicy = () => {
 
   const content = <div className={classes.privacyPolicy}>
     <h1 className={classes.privacyPolicy__title}>Privacy Policy</h1>
+    <p className={classes.privacyPolicy__text}>
+      Our commitment to transparency applies not only to the food we source, but also to the data we collect about you, how it is used and with whom it is shared. This Privacy Policy describes how Grocery Delivery E-Services USA, INC. dba Eatchefs (“<b>Eatchefs</b>”, “<b>we</b>”, “<b>us</b>” or “<b>our</b>”) collect, use and share your personal information in connection with your use of our websites (collectively, the “<b>Site</b>”), mobile applications (collectively, the “<b>App</b>”), and social media pages that link to this Privacy Policy (together with the “Site” and “App”, the “Service”); and in the context of certain offline activities described in this notice.
+    </p>
     <nav className={classes.privacyPolicy__linkList}>
       <Link href="/privacy-policy#personal_information">
         <a className={classes.privacyPolicy__link}>Personal information we collect</a>
@@ -33,7 +36,7 @@ const PrivacyPolicy = () => {
       <Link href="/privacy-policy#children">
         <a className={classes.privacyPolicy__link}>Children</a>
       </Link>
-      <Link href="/privacy-policy#сhanges_to_this_privacy_policy">
+      <Link href="/privacy-policy#Changes_to_this_Privacy_Policy">
         <a className={classes.privacyPolicy__link}>Changes to this Privacy Policy</a>
       </Link>
       <Link href="/privacy-policy#important_information_for_California">
@@ -43,7 +46,7 @@ const PrivacyPolicy = () => {
     <h2 id="personal_information" className={classes.privacyPolicy__subtitle}>
       Information you provide to us.
     </h2>
-    <p className={classes.privacyPolicy__text}>
+    <div className={classes.privacyPolicy__text}>
       <p className={classes.privacyPolicy__text}>
         Personal information you may provide to us through the Service or otherwise includes:
       </p>
@@ -113,11 +116,11 @@ const PrivacyPolicy = () => {
       <p className={classes.privacyPolicy__text}>
         <b>Information we obtain from social media platforms. </b> Information you provide when you interact with us on social media. If you choose to log in to the Service through a social network or other third party platform, or otherwise connect your account on a third party platform to your account through the Service, we may collect information about you from that platform or network. For example, this information may include your username, user ID, profile picture, cover photo, email address and other contact information, and your affiliations. You may also have the opportunity to provide us with additional information through the third party platform, such as a list of your friends or connections. Read more about third party platforms in the Your Choices section below.
       </p>
-    </p>
+    </div>
     <h2 id="how_we_use_personal_information" className={classes.privacyPolicy__subtitle}>
       How we use your personal information.
     </h2>
-    <p className={classes.privacyPolicy__text}>
+    <div className={classes.privacyPolicy__text}>
       <p className={classes.privacyPolicy__text}>
         <b>Service delivery. </b> We may use your personal information to:
       </p>
@@ -142,7 +145,7 @@ const PrivacyPolicy = () => {
       <p>
         - provide support and maintenance for the Service and to respond to your requests, questions and feedback
       </p>
-    </p>
+    </div>
     <p className={classes.privacyPolicy__text}>
       <b>Research and development. </b> We may use your personal information for research and development purposes, including to analyze and improve the Service and our business. As part of these activities, we may create aggregated, de-identified or other anonymous data from personal information we collect. We make personal information into anonymous data by removing information that makes the data personally identifiable to you. We may use this anonymous data and share it with third parties for our lawful business purposes, including to analyze and improve the Service and promote our business.
     </p>
@@ -158,7 +161,7 @@ const PrivacyPolicy = () => {
     <p className={classes.privacyPolicy__text}>
       <b>Compliance and protection. </b> We may use your personal information to:
     </p>
-    <p className={classes.privacyPolicy__text}>
+    <div className={classes.privacyPolicy__text}>
       <p>
         - comply with applicable laws, lawful requests, and legal process, such as to respond to subpoenas or requests from government authorities.
       </p>
@@ -168,7 +171,7 @@ const PrivacyPolicy = () => {
       <p>
         - enforce the terms and conditions that govern the Services and prevent, identify, investigate and deter fraudulent, harmful, unauthorized, unethical or illegal activity, including cyberattacks and identity theft.
       </p>
-    </p>
+    </div>
     <p className={classes.privacyPolicy__text}>
       <b>For other purposes. </b> We may also use your personal information for other purposes described in this Privacy Policy or at the time we collect the information.
     </p>
@@ -256,7 +259,7 @@ const PrivacyPolicy = () => {
     <p className={classes.privacyPolicy__text}>
       Our sites and online services are not intended for use by children under 16 years of age. If we learn that we have collected personal information from a child under 16 without the consent of the child’s parent or guardian as required by law, we will delete it.
     </p>
-    <h2 id="сhanges_to_this_privacy_policy" className={classes.privacyPolicy__subtitle}>
+    <h2 id="Changes_to_this_Privacy_Policy" className={classes.privacyPolicy__subtitle}>
       Changes to this Privacy Policy
     </h2>
     <p className={classes.privacyPolicy__text}>
@@ -274,7 +277,7 @@ const PrivacyPolicy = () => {
     <p className={classes.privacyPolicy__subtitle}>
       Your California privacy rights. As a California resident, you have the rights listed below. However, these rights are not absolute, and in certain cases we may decline your request as permitted by law.
     </p>
-    <p className={classes.privacyPolicy__text}>
+    <div className={classes.privacyPolicy__text}>
       <p>
         - You can request the following information about how we have collected and used your Personal Information during the past 12 months:
       </p>
@@ -308,7 +311,7 @@ const PrivacyPolicy = () => {
       <p>
         - You are entitled to exercise the rights described above free from discrimination in the form of refusal to provide the Services or legally prohibited changes to the price or quality of the Services.
       </p>
-    </p>
+    </div>
     <p className={classes.privacyPolicy__text}>
       <b>How to exercise your rights.</b> You may exercise your California privacy rights described above as follows:
     </p>
@@ -318,12 +321,12 @@ const PrivacyPolicy = () => {
     <p className={classes.privacyPolicy__text}>
       We reserve the right to confirm your California residency to process your requests and will need to confirm your identity to process your requests to exercise your information, access or deletion rights. As a part of this process, government identification may be required. Consistent with California law, you may designate an authorized agent to make a request on your behalf. In order to designate an authorized agent to make a request on your behalf, you must provide a valid power of attorney, the requester’s valid government-issued identification, and the authorized agent’s valid government issued identification. We cannot process your request if you do not provide us with sufficient detail to allow us to understand and respond to it.
     </p>
-    <p className={classes.privacyPolicy__text}>
+    <div className={classes.privacyPolicy__text}>
       For information about:
       <p>- The categories of sources of this information, see the section above entitled personal information we collect</p>
       <p>- The business/commercial purposes for which we collect this information, see the section above entitled how we use your personal information;</p>
       <p>- The categories of third parties to which we disclose this information for business purposes, see the section above entitled how we share your personal information.</p>
-    </p>
+    </div>
   </div>
   return (
       <LayoutPage content={content} />
