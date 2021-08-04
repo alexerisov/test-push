@@ -3,7 +3,7 @@
 
 .card {
     width: 338px;
-    min-height: 350px;
+    min-height: 320px;
     opacity: 1;
 	animation-name: fadeInOpacity;
 	animation-iteration-count: 1;
@@ -21,6 +21,7 @@
 
     &__media {
         height: 173px;
+        width: 100%;
     }
 
     a {
