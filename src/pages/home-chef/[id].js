@@ -97,10 +97,6 @@ const HomePageOfTargetChef = () => {
     }
   }, [page, chefId]);
 
-  const handleClickOnChefName = () => {
-    router.replace(`/home-chef/${chefId}`);
-  };
-
   const content = (
     <div className={styles.profile}>
       <h2 className={styles.navbar}>
@@ -119,7 +115,7 @@ const HomePageOfTargetChef = () => {
             <div className={styles.name}>
               <h3 className={`${styles.field} ${styles.name__field}`}>Name</h3>
               <p className={`${styles.value} ${styles.name__value}`}
-                 onClick={handleClickOnChefName}>{chefInfo?.full_name}
+                 >{chefInfo?.full_name}
               </p>
             </div>
 
