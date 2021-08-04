@@ -84,7 +84,7 @@ const Home = (props) => {
       <img src="/images/index/mint.png" className={classes.imgMint2}/>
       <img src="/images/index/broccoli.png" className={classes.imgBroccoli}/>
       <img src="/images/index/carrot.png" className={classes.imgCarrot}/>
-      <Carousel />
+      <Carousel images={props?.carouselItems}/>
     </section>
     <PinnedMeals />
     <HighestRatedMealsBlock />
@@ -132,13 +132,15 @@ export default connect((state) => ({
   profile: state.profile,
 }))(Home);
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   try {
     const response = await Recipe.getMealOfWeek();
+    const banners = await Recipe.getHomepageCarouselItems();
 
     return {
       props: {
-        mealOfTheWeek: response?.data[0]
+        mealOfTheWeek: response?.data[0],
+        carouselItems: banners.data
       },
     };
   }
