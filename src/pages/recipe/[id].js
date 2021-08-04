@@ -34,9 +34,7 @@ function CreateRecipe (props, recipes) {
     const [notFound, setNotFound] = useState(false);
 
     useEffect(() => {
-        if (recipeId) {
-            getRecipe();
-        }
+        getRecipe();
     }, [recipeId]);
 
     useEffect(() => {
@@ -64,14 +62,15 @@ function CreateRecipe (props, recipes) {
     }, [userId])
 
     const getRecipe = async () => {
-        try {
-          setRecipe(props.recipesData);
-          setLikeRecipe(props.recipesData.user_liked);
-          setLikesNumber(props.recipesData.likes_number);
-          props.dispatch(recipePhotoSlider.setPhotos(props.recipesData));
-        } catch (e) {
-            setNotFound(true)
-        }
+      if (props?.recipesData) {
+        setRecipe(props?.recipesData);
+        setLikeRecipe(props?.recipesData.user_liked);
+        setLikesNumber(props?.recipesData.likes_number);
+        props.dispatch(recipePhotoSlider.setPhotos(props.recipesData));
+        return;
+      }
+
+      setNotFound(props?.notFound);
     };
 
     const openRegisterPopup = (name) => {
@@ -445,5 +444,11 @@ export async function getServerSideProps(context) {
   }
   catch(e) {
     console.error(e);
+
+    return {
+      props: {
+        notFound: true
+      }
+    };
   }
 }
