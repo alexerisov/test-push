@@ -31,20 +31,4 @@ export default reducer(initState, {
       isLoading: false
     };
   },
-
-  [types.SAVED_SEND_SUCCESS]: (state, action) => {
-    return {
-      ...state,
-      data: [...state.data, action.payload],
-      isLoading: false,
-    };
-  },
-
-  [types.SAVED_DEL_SUCCESS]: (state, action) => {
-    return {
-      ...state,
-      data: [...state.data.filter(recipe => recipe.user_saved_recipe !== action.payload)],
-      isLoading: false
-    };
-  },
 });

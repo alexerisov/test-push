@@ -19,8 +19,6 @@ import RecipeNotFound from "@/components/elements/recipe-not-found";
 import {NextSeo} from "next-seo";
 import savedStatus from './savedStatus.svg';
 import notSavedStatus from './notSavedStatus.svg';
-import savedRecipesActions from "@/store/savedRecipes/actions";
-import { debounce } from "@/utils/debounce";
 
 function RecipePage (props) {
     const router = useRouter();
@@ -29,7 +27,7 @@ function RecipePage (props) {
     const [likeRecipe, setLikeRecipe] = useState(false);
     const [likesNumber, setLikesNumber] = useState(false);
     const [userId, setUserId] = useState();
-    const [savedId, setSavedId] = useState(null);
+    const [savedId, setSavedId] = useState();
     const [popularRecipes, setPopularRecipes] = useState();
     const [latestRecipes, setLatestRecipes] = useState();
     const [featuredMeals, setFeaturedMeals] = useState();
@@ -69,6 +67,7 @@ function RecipePage (props) {
         setRecipe(props?.recipesData);
         setLikeRecipe(props?.recipesData.user_liked);
         setLikesNumber(props?.recipesData.likes_number);
+        setSavedId(props?.recipesData?.user_saved_recipe);
         props.dispatch(recipePhotoSlider.setPhotos(props.recipesData));
         return;
       }
@@ -136,17 +135,20 @@ function RecipePage (props) {
       };
     };
 
-  const handleSaveRecipe = async () => {
-    props.dispatch(savedRecipesActions.startSavedRecipesRequests());
+  const handleSaveRecipe = () => {
+    Recipe.postSavedRecipe(props.recipesData.pk)
+      .then((res) => {
+        setSavedId(res.data.pk);
+      })
+      .catch((err) => console.log(err));
+  };
 
-    if (!Number.isFinite(savedId)) {
-      const response = await props.dispatch(savedRecipesActions.saveRecipe({ recipeId }));
-      setSavedId(response?.user_saved_recipe);
-      return;
-    }
-
-    props.dispatch(savedRecipesActions.deleteFromSaved({ recipeId, savedId }));
-    setSavedId(null);
+  const handleDeleteRecipeFromSaved = () => {
+    Recipe.deleteSavedRecipe(savedId)
+      .then((res) => {
+        setSavedId(false);
+      })
+      .catch((err) => console.log(err));
   };
 
     const handleRecipeCookingTime = (time) => {
@@ -246,20 +248,43 @@ function RecipePage (props) {
                                         <span>Vote</span>
                                     </button>
                                     <ButtonShare recipeId={recipeId}/>
+
+                                  {!savedId
+                                    ?
                                     <button
                                       className={classes.recipe__video__saveStatus}
                                       onClick={!props.account.hasToken
                                         ? openRegisterPopup('register')
-                                        : debounce(handleSaveRecipe, 500)}
+                                        : handleSaveRecipe}
                                     >
-                                      <img
-                                       className={classes.recipe__video__saveStatusImage}
-                                       src={savedId ? savedStatus : notSavedStatus} alt="saved status"
-                                      />
+                                      <div className={classes.recipe__video___saveStatusImageWrapper}>
+                                        <img
+                                          className={classes.recipe__video__saveStatusImage}
+                                          src={notSavedStatus} alt="saved status"
+                                        />
+                                      </div>
                                       <span className={classes.recipe__video__saveStatusLabel}>
                                         Save
                                       </span>
                                     </button>
+                                    :
+                                    <button
+                                      className={classes.recipe__video__saveStatus}
+                                      onClick={!props.account.hasToken
+                                        ? openRegisterPopup('register')
+                                        : handleDeleteRecipeFromSaved}
+                                    >
+                                      <div className={classes.recipe__video___saveStatusImageWrapper}>
+                                        <img
+                                          className={classes.recipe__video__saveStatusImage}
+                                          src={savedStatus} alt="saved status"
+                                        />
+                                      </div>
+                                      <span className={classes.recipe__video__saveStatusLabel}>
+                                        Save
+                                      </span>
+                                    </button>
+                                  }
                                 </div>
                             </div>
                         </div>
