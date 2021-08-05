@@ -19,6 +19,11 @@
     &__upload {
         position: relative;
         height: 90px;
+
+        // Don't want break markup, it is styles for label for Profil-pic.jpg
+        &Label {
+            visibility: hidden;
+        }
     }
 
     &__avatarBack:before {
