@@ -17,7 +17,7 @@ import {
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FieldError from '../../elements/field-error';
-import {cuisineList, recipeTypes, cookingMethods, dietaryrestrictions} from '@/utils/datasets';
+import {cuisineList, recipeTypes, cookingMethods, dietaryrestrictions, cookingSkill} from '@/utils/datasets';
 import { isWindowExist } from '@/utils/isTypeOfWindow';
 import classes from "./form-create-recipe.module.scss";
 import { CardIngredient, CardNutrition, CardImageEditRecipe } from '@/components/elements/card';
@@ -77,7 +77,6 @@ function FormEditRecipe (props) {
   const router = useRouter();
   const classMarerialUi = useStyles();
   const { data, error } = props.recipeEdit;
-
   const recipeId = props.recipeId;
 
   const [newVideo, setNewVideo] = useState(false);
@@ -601,6 +600,25 @@ function FormEditRecipe (props) {
                 }
                 </Select>
                 <FormHelperText>{error?.cooking_methods ? "This field is required" : ""}</FormHelperText>
+              </FormControl>
+              <FormControl variant="outlined" className={classMarerialUi.formControl}>
+                <label
+                  htmlFor="create-cooking-skills-select"
+                  className={classes.createRecipeLabel}>
+                  Cooking skills
+                </label>
+                <Select
+                  id="create-cooking-skills-select"
+                  value={data?.cooking_skills}
+                  onChange={onChangeSelect('cooking_skills')}
+                  autoWidth
+                  error={error?.cooking_skills}
+                  MenuProps={MenuProps}
+                >{
+                  selectItemList(cookingSkill)
+                }
+                </Select>
+                <FormHelperText>{error?.cooking_skills ? "This field is required" : ""}</FormHelperText>
               </FormControl>
             </NoSsr>
           </div>

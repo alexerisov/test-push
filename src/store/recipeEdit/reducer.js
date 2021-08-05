@@ -6,7 +6,7 @@ const initState = {
     title: "",
     cooking_time: "",
     cuisines: [],
-    // cooking_skill: "",
+    cooking_skills: "",
     cooking_methods: [],
     diet_restrictions: [],
     description: "",
