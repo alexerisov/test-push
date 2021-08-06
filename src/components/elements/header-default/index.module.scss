@@ -24,6 +24,10 @@
         }
     }
 
+    @media (max-width: $--xs) {
+        min-height: 52px;
+    }
+
     &__container {
         display: flex;
         justify-content: space-between;
@@ -43,6 +47,11 @@
 
     &__logo {
         max-width: 129px;
+
+        @media (max-width: $--xs) {
+            width: 63px;
+            height: 43px;
+        }
     }
 
     &__links {
