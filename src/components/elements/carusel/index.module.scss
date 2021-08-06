@@ -74,13 +74,7 @@ $slide-width: 32rem;
   z-index: 5;
   border: 2px solid $--color-orange;
 
-  @media (max-width: $--lg) {
-    left: auto;
-  }
-
-  @media (max-width: $--sm) {
-    display: none;
-  }
+  display: none;
 }
 
 .carousel__btn__prev:hover {
@@ -114,13 +108,7 @@ $slide-width: 32rem;
   z-index: 5;
   border: 2px solid $--color-orange;
 
-  @media (max-width: $--lg) {
-    right: 130px;
-  }
-
-  @media (max-width: $--sm) {
-    display: none;
-  }
+  display: none;
 }
 
 .carousel__btn__next:hover {
