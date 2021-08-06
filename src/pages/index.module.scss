@@ -1,15 +1,20 @@
 @import "~styles/mixins/mixins.scss";
+@import "~styles/variables.scss";
 
 .home {
     @include fontRegular();
     min-height: 670px;
-    padding: 38px 100px 0 100px;
+    padding: 38px 90px 0 90px;
     display: flex;
     flex-direction: column;
     position: relative;
 
-    @media (min-width: 991.98px) {
-        padding: 38px 90px 0 90px;
+    @media (max-width: $--lg) {
+        padding: 20px 0 0 0;
+    }
+
+    @media (max-width: $--xs) {
+        min-height: 400px;
     }
 
     &__inputSearch {
@@ -26,6 +31,14 @@
         letter-spacing: 0px;
         color: #B1B1B1;
         @include fontRegular();
+
+        @media (max-width: $--lg) {
+            max-width: 350px;
+        }
+
+        @media (max-width: $--sm) {
+            display: none;
+        }
     }
 
     &__iconSearch {
@@ -37,6 +50,10 @@
     &__titleContainer {
         display: flex;
         margin: 67px 0 38px 0;
+
+        @media (max-width: $--lg) {
+            margin: 0 0 38px 0;
+        }
     }
     
     &__titleContainer::before {
@@ -45,6 +62,10 @@
         border-radius: 7px;
         width: 8px;
         background: $--color-gray3 0% 0% no-repeat padding-box;
+
+        @media (max-width: $--xs) {
+            width: 1px;
+        }
     }
     
     &__titleTextContainer {
@@ -54,24 +75,63 @@
         @include fontSemiBold();
         font-size: 50px;
         line-height: 58px;
+
+        @media (max-width: $--lg) {
+            font-size: 40px;
+            line-height: 42px;
+        }
+
+        @media (max-width: $--sm) {
+            margin: 0 0 0 6px;
+        }
     }
     
     &__titleText {
         font-size: 30px;
         line-height: 37px;
         color: $--color-gray;
+
+        @media (max-width: $--lg) {
+            font-size: 25px;
+            line-height: 35px;
+        }
+
+        @media (max-width: $--xs) {
+            font-size: 18px;
+            line-height: 20px;
+        }
     }
     
     &__title {
         font-size: 50px;
         line-height: 58px;
         color: $--color-orange;
+
+        @media (max-width: $--lg) {
+            font-size: 30px;
+            line-height: 32px;
+        }
+
+        @media (max-width: $--xs) {
+            font-size: 28px;
+            line-height: 30px;
+        }
     }
     
     &__subtitle {
         font-size: 50px;
         line-height: 58px;
         color: $--color-black;
+
+        @media (max-width: $--lg) {
+            font-size: 30px;
+            line-height: 32px;
+        }
+
+        @media (max-width: $--xs) {
+            font-size: 28px;
+            line-height: 30px;
+        }
     }
     
     &__slide {
@@ -99,6 +159,12 @@
         color: $--color-orange;
         background-color: rgba(0, 0, 0, 0);
     }
+
+    &__buttonUploud {
+        @media (max-width: $--xs) {
+            display: none;
+        }
+    }
 }
 
 .imgMint1 {
@@ -107,6 +173,21 @@
     left: -60px;
     top: 20px;
     z-index: -1;
+
+    @media (max-width: $--lg) {
+        left: 28%;
+        top: 380px;
+    }
+
+    @media (max-width: $--sm) {
+        top: 440px;
+        left: -100px;
+    }
+
+    @media (max-width: $--xs) {
+        top: 200px;
+        left: -110px;
+    }
 }
 
 .imgBroccoli {
@@ -114,6 +195,17 @@
     width: 140px;
     bottom: 0;
     left: -40px;
+    z-index: -1;
+
+    @media (max-width: $--sm) {
+        left: -70px;
+        bottom: -330px;
+    }
+
+    @media (max-width: $--xs) {
+        bottom: -250px;
+        left: -90px;
+    }
 }
 
 .imgMint2 {
@@ -122,6 +214,12 @@
     right: 0;
     bottom: 50px;
     z-index: -1;
+
+    @media (max-width: $--sm) {
+        bottom: auto;
+        top: -100px;
+        right: -10px;
+    }
 }
 
 .imgCarrot {
@@ -130,6 +228,13 @@
     right: 0;
     bottom: 0;
     z-index: -2;
+
+    @media (max-width: $--sm) {
+        transform: rotate(-70deg);
+        bottom: auto;
+        top: -70px;
+        right: -80px;
+    }
 }
 
 .imgBanner {
