@@ -152,7 +152,6 @@ const MealOfWeekBlock = (props) => {
             </div>
           </div>
         </div>
-        <img src="/images/index/bg_wheat.png" className={classes.meal__ear}/>
       </section>
     );
   };
