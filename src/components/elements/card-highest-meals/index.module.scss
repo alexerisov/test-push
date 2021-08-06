@@ -3,13 +3,17 @@
 
 .card {
   position: relative;
-    width: 338px;
-    min-height: 320px;
-    opacity: 1;
+  width: 338px;
+  min-height: 320px;
+  opacity: 1;
 	animation-name: fadeInOpacity;
 	animation-iteration-count: 1;
 	animation-timing-function: ease-in;
 	animation-duration: 0.5s;
+
+  @media (max-width: $--lg) {
+    width: 285px;
+  }
 
     &__content {
         display: flex;
