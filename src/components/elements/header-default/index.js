@@ -256,8 +256,8 @@ const HeaderDefault = (props) => {
 
         {!mobile && defaultContent}
 
-        {mobile && isExpanded && <MenuIcon className={classes.header__burger} onClick={handleExpandingMobileMenu} />}
-        {mobile && !isExpanded && <CloseIcon className={classes.header__burger} onClick={handleExpandingMobileMenu} />}
+        {mobile && !isExpanded && <MenuIcon className={classes.header__burger} onClick={handleExpandingMobileMenu} />}
+        {mobile && isExpanded && <CloseIcon className={classes.header__burger} onClick={handleExpandingMobileMenu} />}
       </div>
       {mobile && mobileMenu}
     </div>
