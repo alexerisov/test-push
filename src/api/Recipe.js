@@ -148,7 +148,15 @@ export default {
     return http.get(`/recipe/meal_of_the_week`);
   },
 
-  getRecipe: (id) => {
+  getRecipe: (id, token) => {
+    if (token) {
+      return http.get(`/recipe/${id}`, {
+        headers: {
+          'Authorization': `Bearer ${JSON.parse(token).token}`
+        }
+      });
+    }
+
     return http.get(`/recipe/${id}`);
   },
 
