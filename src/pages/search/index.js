@@ -24,6 +24,9 @@ import InputLabel from '@material-ui/core/InputLabel';
 import { Select, MenuItem } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
+import SearchDrawer from "@/components/elements/search-drawer";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+
 const StyledAccordion = styled(Accordion)`
   p {
     font-size: 16px;
@@ -60,7 +63,7 @@ const MenuProps = {
 };
 
 const Recipes = (props) => {
-
+  const mobile = useMediaQuery('max-width: 768px');
   const router = useRouter();
   const classMarerialUi = useStyles();
 
@@ -90,7 +93,7 @@ const Recipes = (props) => {
       ordering: [],
     },
     onSubmit: (values) => {
-      
+
       values.title = title;
       values.page = page;
 
@@ -99,7 +102,7 @@ const Recipes = (props) => {
       }
 
       router.push({
-          search: `?${createQueryParams(values).toString()}`
+        search: `?${createQueryParams(values).toString()}`
       });
     }
   });
@@ -108,48 +111,48 @@ const Recipes = (props) => {
   const cookingMethodsList = [];
   const recipeTypesList = [];
   const cookingSkillList = [];
-  
+
   const orderingList = [];
 
   const numberCardsDisplayed = 10;
-  
+
   for (let i = 1; i < Object.keys(dietaryrestrictions).length; i++) {
     dietaryrestrictionsList.push(
       <FormControlLabel
         key={i}
-        control={<Checkbox 
-          style ={{
+        control={<Checkbox
+          style={{
             color: "#000000"
           }}
           value={i}
           onChange={(e) => {
             onChangeCheckboxInput(e);
           }}
-          name="diet_restrictions" 
+          name="diet_restrictions"
           color="primary"
-          />
+        />
         }
         label={dietaryrestrictions[i]}
       />
     )
   }
-  
+
   for (let i = 1; i <= Object.keys(cookingSkill).length; i++) {
     cookingSkillList.push(
       <FormControlLabel
-      key={i}
-      control={<Checkbox 
-        value={i}
-        checked={formik.values.check}
-        onChange={(e) => {
-          onChangeCheckboxInput(e); 
-        }}
-        name="cooking_skills" 
-        color="primary"
+        key={i}
+        control={<Checkbox
+          value={i}
+          checked={formik.values.check}
+          onChange={(e) => {
+            onChangeCheckboxInput(e);
+          }}
+          name="cooking_skills"
+          color="primary"
         />
-      }
-      label={cookingSkill[i]}
-    />
+        }
+        label={cookingSkill[i]}
+      />
     )
   }
 
@@ -157,36 +160,37 @@ const Recipes = (props) => {
     if (i !== 5) {
       recipeTypesList.push(
         <FormControlLabel
-        key={i}
-        control={<Checkbox 
-          value={i}
-          onChange={(e) => {
-            onChangeCheckboxInput(e);
-          }}
-          name="types" 
-          color="primary"
+          key={i}
+          control={<Checkbox
+            value={i}
+            onChange={(e) => {
+              onChangeCheckboxInput(e);
+            }}
+            name="types"
+            color="primary"
           />
-        }
-        label={recipeTypes[i]}
+          }
+          label={recipeTypes[i]}
         />
-    )}
+      )
+    }
   }
 
   for (let i = 1; i <= Object.keys(cookingMethods).length; i++) {
     cookingMethodsList.push(
       <FormControlLabel
-      key={i}
-      control={<Checkbox 
-        value={i}
-        onChange={(e) => {
-          onChangeCheckboxInput(e);
-        }}
-        name="cooking_methods" 
-        color="primary"
+        key={i}
+        control={<Checkbox
+          value={i}
+          onChange={(e) => {
+            onChangeCheckboxInput(e);
+          }}
+          name="cooking_methods"
+          color="primary"
         />
-      }
-      label={cookingMethods[i]}
-    />
+        }
+        label={cookingMethods[i]}
+      />
     )
   }
 
@@ -199,7 +203,7 @@ const Recipes = (props) => {
   const onChangeCheckboxInput = (e) => {
     setPage(1);
     formik.handleChange(e);
-    formik.handleSubmit();  
+    formik.handleSubmit();
   }
 
   useEffect(() => {
@@ -217,7 +221,7 @@ const Recipes = (props) => {
         })
         .catch(e => {
           console.log('error', e);
-      });
+        });
     }
   }, [query])
 
@@ -258,13 +262,15 @@ const Recipes = (props) => {
     formik.handleSubmit();
   };
 
+  const searchField = <div className={classes.search__header}>
+    {title ? <p>Search results for : <span>"{title}"</span></p> : <p></p>}
+    <button className={classes.search__searchButton} onClick={handleClickSearch('search')}>
+      <img src="/images/index/icon_search.svg"/>
+    </button>
+  </div>;
+
   const content = <div className={classes.search}>
-    <div className={classes.search__header}>
-      {title ? <p>Search results for : <span>"{title}"</span></p> : <p></p>}
-      <button className={classes.search__searchButton} onClick={handleClickSearch('search')}>
-        <img src="/images/index/icon_search.svg"/>
-      </button>
-    </div>
+    {!mobile && searchField}
     <form className={classes.search__content}>
       <div className={classes.search__filter} onSubmit={formik.handleSubmit}>
         <div className={classes.search__filterHeader_left}>
@@ -287,78 +293,78 @@ const Recipes = (props) => {
           </button>
         </div>
         <NoSsr>
-        {(typeSelection !== "Beverages") && <StyledAccordion>
-          <AccordionSummary
-            expandIcon={
-            <div className={classes.search__clickList}>
-              <div></div>
-              <div className={classes.search__clickList__active}></div>
-            </div>}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-          >
-            <Typography className={classes.search__filter__title}>Type</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <div className={classes.search__filter__list}>
-              {recipeTypesList}
-            </div>
-          </AccordionDetails>
-        </StyledAccordion>}
-        <StyledAccordion>
-          <AccordionSummary
-            expandIcon={
-              <div className={classes.search__clickList}>
-                <div></div>
-                <div className={classes.search__clickList__active}></div>
-              </div>}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-          >
-            <Typography className={classes.search__filter__title}>Cooking Skills</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <div className={classes.search__filter__list}>
-              {cookingSkillList}
-            </div>
-          </AccordionDetails>
-        </StyledAccordion>
-        <StyledAccordion>
-          <AccordionSummary
-            expandIcon={
-              <div className={classes.search__clickList}>
-                <div></div>
-                <div className={classes.search__clickList__active}></div>
-              </div>}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-          >
-            <Typography className={classes.search__filter__title}>Cooking Method</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <div className={classes.search__filter__list}>
-              {cookingMethodsList}
-            </div>
-          </AccordionDetails>
-        </StyledAccordion>
-        <StyledAccordion>
-          <AccordionSummary
-            expandIcon={
-              <div className={classes.search__clickList}>
-                <div></div>
-                <div className={classes.search__clickList__active}></div>
-              </div>}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-          >
-            <Typography className={classes.search__filter__title}>Dietary Restrictions</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <div className={classes.search__filter__list}>
-              {dietaryrestrictionsList}
-            </div>
-          </AccordionDetails>
-        </StyledAccordion>
+          {(typeSelection !== "Beverages") && <StyledAccordion>
+            <AccordionSummary
+              expandIcon={
+                <div className={classes.search__clickList}>
+                  <div></div>
+                  <div className={classes.search__clickList__active}></div>
+                </div>}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography className={classes.search__filter__title}>Type</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <div className={classes.search__filter__list}>
+                {recipeTypesList}
+              </div>
+            </AccordionDetails>
+          </StyledAccordion>}
+          <StyledAccordion>
+            <AccordionSummary
+              expandIcon={
+                <div className={classes.search__clickList}>
+                  <div></div>
+                  <div className={classes.search__clickList__active}></div>
+                </div>}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography className={classes.search__filter__title}>Cooking Skills</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <div className={classes.search__filter__list}>
+                {cookingSkillList}
+              </div>
+            </AccordionDetails>
+          </StyledAccordion>
+          <StyledAccordion>
+            <AccordionSummary
+              expandIcon={
+                <div className={classes.search__clickList}>
+                  <div></div>
+                  <div className={classes.search__clickList__active}></div>
+                </div>}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography className={classes.search__filter__title}>Cooking Method</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <div className={classes.search__filter__list}>
+                {cookingMethodsList}
+              </div>
+            </AccordionDetails>
+          </StyledAccordion>
+          <StyledAccordion>
+            <AccordionSummary
+              expandIcon={
+                <div className={classes.search__clickList}>
+                  <div></div>
+                  <div className={classes.search__clickList__active}></div>
+                </div>}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography className={classes.search__filter__title}>Dietary Restrictions</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <div className={classes.search__filter__list}>
+                {dietaryrestrictionsList}
+              </div>
+            </AccordionDetails>
+          </StyledAccordion>
         </NoSsr>
       </div>
       <div className={classes.search__result}>
@@ -377,34 +383,43 @@ const Recipes = (props) => {
             {orderingList}
           </Select>
         </div>
-        <div className={classes.search__result__container}>
+        {!mobile && <div className={classes.search__result__container}>
           {
             (result.length !== 0) ? result.map((recipe, index) => {
               return <CardHighestMeals
-                        key={`${recipe.pk}-${index}`}
-                        title={recipe?.title}
-                        image={recipe?.images[0]?.url}
-                        name={recipe?.user?.full_name}
-                        city={recipe?.user?.city}
-                        likes={recipe?.likes_number}
-                        id={recipe.pk}
-                      />;
+                key={`${recipe.pk}-${index}`}
+                title={recipe?.title}
+                image={recipe?.images[0]?.url}
+                name={recipe?.user?.full_name}
+                city={recipe?.user?.city}
+                likes={recipe?.likes_number}
+                id={recipe.pk}
+              />;
             }) : <p className={classes.search__NoResult}>No results</p>
           }
-        </div>
+        </div>}
         <div>
           {data && <Pagination count={Math.ceil(data.count / numberCardsDisplayed)} color="primary"
-            page={page && page} onChange={(event, value) => {
-              handleChangePage(event, value)
-            }}
+                               page={page && page} onChange={(event, value) => {
+            handleChangePage(event, value)
+          }}
           />}
         </div>
       </div>
     </form>
-  </div>
+  </div>;
+
+  const searchDrawer = () => {
+    return content;
+  };
 
   return (
-    <LayoutPage content={content} />
+    <>
+      <LayoutPage content={content} />
+      <SearchDrawer>
+        {searchDrawer()}
+      </SearchDrawer>
+    </>
   );
 };
   

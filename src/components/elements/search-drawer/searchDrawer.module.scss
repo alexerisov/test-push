@@ -1,0 +1,15 @@
+@import '~styles/variables.scss';
+
+.drawer {
+
+  &__toggle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+    color: $--color-orange;
+    border-radius: 50%;
+    border: 1.5px solid $--color-gray5;
+  }
+}
