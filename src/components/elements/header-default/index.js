@@ -14,6 +14,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
+import logo from './logo.svg';
+
 const StyledMenu = styled(Menu)`
   margin: 40px 0 0 0;
   li {
@@ -250,7 +252,7 @@ const HeaderDefault = (props) => {
       <div className={classes.header__container}>
         <Link href="/">
           <a>
-            <img src="/images/index/logo.png" className={classes.header__logo} alt="" />
+            <img src={logo} className={classes.header__logo} alt="" />
           </a>
         </Link>
 
