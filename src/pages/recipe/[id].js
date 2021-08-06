@@ -19,6 +19,7 @@ import RecipeNotFound from "@/components/elements/recipe-not-found";
 import {NextSeo} from "next-seo";
 import savedStatus from './savedStatus.svg';
 import notSavedStatus from './notSavedStatus.svg';
+import Cookies from 'cookies';
 
 function RecipePage (props) {
     const router = useRouter();
@@ -484,9 +485,11 @@ export default connect((state) => ({
 
 export async function getServerSideProps(context) {
   const id = context.params.id;
+  const cookies = new Cookies(context.req, context.res);
+  const token = decodeURIComponent(cookies.get('aucr'));
 
   try {
-    const response = await Recipe.getRecipe(id);
+    const response = await Recipe.getRecipe(id, token);
 
     return {
       props: {
