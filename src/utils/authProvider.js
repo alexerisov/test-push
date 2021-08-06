@@ -12,7 +12,6 @@ export const AuthProvider = connect(state => ({ account: state.account }))((prop
 
   useEffect(() => {
     remind();
-    props.dispatch(accountActions.saveSession(AuthCookieStorage.auth));
   }, []);
 
   useEffect(() => {
@@ -23,9 +22,23 @@ export const AuthProvider = connect(state => ({ account: state.account }))((prop
   const remind = () => {
     if (props.account.hasToken) {
       props.dispatch(
-        accountActions.remind(),
-      );
+        accountActions.remind()
+      )
+      .then(() => {
+        props.dispatch(accountActions.saveSession(AuthCookieStorage.auth));
+      })
+      .catch((e) => {
+        refreshToken();
+      })
+      ;
     }
+  };
+
+  const refreshToken = () => {
+    props.dispatch(
+      accountActions.refreshToken(),
+    )
+    .then(() => location.reload())
   };
 
   return (

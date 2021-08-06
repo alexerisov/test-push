@@ -18,6 +18,12 @@ export default {
     return http.get(`account/me`);
   },
 
+  refreshToken: (refresh) => {
+    return http.post(`/token/refresh/`, {
+      refresh: refresh
+    });
+  },
+
   register: ({
     email,
     phone_number,

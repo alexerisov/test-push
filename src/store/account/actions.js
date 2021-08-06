@@ -62,4 +62,23 @@ export default {
     };
   },
 
+  refreshToken: () => {
+    return async dispatch => {
+      dispatch({ type: types.REMIND });
+
+      const { refresh } = AuthCookieStorage.auth;
+
+      if (refresh) {
+          const res = await Account.refreshToken(refresh);
+          const token = res.data.access;
+          const data = {
+            token: token,
+            refresh: refresh
+          }
+          AuthCookieStorage.auth = { token, refresh };
+          dispatch({ type: types.SAVE_SESSION, payload: data });
+      }
+    }
+  }
+
 };
