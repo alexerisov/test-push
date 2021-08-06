@@ -4,7 +4,19 @@
 .uploads {
   display: flex;
   flex-direction: column;
-  padding: 40px 119.5px 97px;
+  padding: 40px 0 97px;
+
+  @media (max-width: $--sm) {
+    & {
+      padding: 40px 0 97px;
+    }
+  }
+
+  @media (max-width: $--lg) {
+    & {
+      padding: 40px 0 97px;
+    }
+  }
 
   &__navbar {
     margin-bottom: 40px;
@@ -28,6 +40,20 @@
     }
   }
 
+  @media (max-width: $--lg) {
+    &__navbar {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+  }
+
+  @media (max-width: $--sm) {
+    &__navbar {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+  }
+
   &__header {
     display: flex;
     align-items: center;
@@ -41,11 +67,41 @@
     @include fontMedium();
   }
 
+  @media (max-width: $--lg) {
+    &__header {
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 60px;
+    }
+
+    &__title {
+      margin-bottom: 20px;
+    }
+  }
+
   &__recipes {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 34px;
+    width: 100%;
     margin-bottom: 20px;
+  }
+
+  @media (max-width: $--lg) {
+    &__recipes {
+      display: grid;
+      grid-template-columns: max-content max-content;
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: $--sm - 1) {
+    &__recipes {
+      display: grid;
+      grid-template-columns: auto;
+      justify-content: center;
+    }
   }
 
   &__pagination {

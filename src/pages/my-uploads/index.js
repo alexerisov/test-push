@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { withRouter } from "next/router";
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import Link from "next/link";
 import { ButtonUploadRecipe } from '@/components/elements/button';
@@ -13,10 +14,11 @@ import { CHEF_TYPE } from "@/utils/constants";
 import classes from "./index.module.scss";
 
 const MyUploadsPage = () => {
+  const matches = useMediaQuery('(max-width: 767.95px)');
   const [uploadRecipes, setUploadRecipes] = useState();
 
   // Pagination params
-  const itemsPerPage = 12;
+  const itemsPerPage = matches ? 6 : 12;
   const [page, setPage] = useState(1);
   const [numberOfPages, setNumberOfPages] = useState();
 
@@ -28,11 +30,11 @@ const MyUploadsPage = () => {
 
   useEffect(() => {
     getUploadRecipes();
-  }, [page]);
+  }, [page, itemsPerPage]);
 
   const getUploadRecipes = async () => {
     try {
-      const response = await Recipe.getUploadRecipes(12, page);
+      const response = await Recipe.getUploadRecipes(itemsPerPage, page);
       await setNumberOfPages(countPages(response.data.count));
       await setUploadRecipes(response.data.results);
     }
@@ -74,7 +76,10 @@ const MyUploadsPage = () => {
       <Pagination
         classes={{root: classes.uploads__pagination}}
         count={numberOfPages}
+        size={matches ? 'small' : 'large'}
         onChange={(event, number) => setPage(number)}
+        defaultPage={1}
+        siblingCount={matches ? 0 : 1}
       />
     </div>
   );
