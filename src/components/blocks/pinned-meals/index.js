@@ -35,7 +35,7 @@ const PinnedMeals = () => {
 
   meals.forEach((item, index) => {
     mealsArr.push(
-      <Slide key={index} index={index} style={{paddingBottom: 0}}>
+      <Slide key={index} index={index} style={{paddingBottom: 0, width: 270}}>
           <CardPinnedMeals
             key={item.pk}
             pk={item.pk}
