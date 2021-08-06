@@ -5,21 +5,21 @@
         margin: 122px 0 0 0;
     }
 
-    @media (min-width: 767.98px) {
-        main, header {
-          padding: 0 calc(50vw - 360px);
-        }
+    @media (min-width: 200px) {
+      main, header {
+        padding: 0 40px;
+      }
     }
 
-    @media (min-width: 991.98px) {
+    @media (min-width: 768.98px) {
       main, header {
-        padding: 0 calc(50vw - 550px);
+        padding: 0 80px;
       }
     }
 
     @media (min-width: 1199.98px) {
       main, header {
-        padding: 0 calc(50vw - 600px);
+        padding: 0 135px;
       }
     }
 

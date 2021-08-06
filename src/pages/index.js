@@ -63,23 +63,25 @@ const Home = (props) => {
           <p className={classes.home__subtitle}>delivered doorstep</p>
         </div>
       </div>
-      {
-        props?.profile?.data?.user_type === chefType
-        ? <Button
-            variant='contained'
-            color='primary'
-            href="/recipe/upload"
-          >
-            Upload New Recipe!
-          </Button>
-        : <Button
-            variant='contained'
-            color='primary'
-            onClick={handleChangeStatus}
-          >
-            Become a home chef
-          </Button>
-      }
+      <div className={classes.home__buttonUploud}>
+        {
+          props?.profile?.data?.user_type === chefType
+          ? <Button
+              variant='contained'
+              color='primary'
+              href="/recipe/upload"
+            >
+              Upload New Recipe!
+            </Button>
+          : <Button
+              variant='contained'
+              color='primary'
+              onClick={handleChangeStatus}
+            >
+              Become a home chef
+            </Button>
+        }
+      </div>
       <img src="/images/index/mint.png" className={classes.imgMint1}/>
       <img src="/images/index/mint.png" className={classes.imgMint2}/>
       <img src="/images/index/broccoli.png" className={classes.imgBroccoli}/>
@@ -89,7 +91,6 @@ const Home = (props) => {
     <PinnedMeals />
     <HighestRatedMealsBlock />
     <MealOfWeekBlock meal={meal}/>
-    <FavoriteCuisinesBlock />
   </>;
 
 

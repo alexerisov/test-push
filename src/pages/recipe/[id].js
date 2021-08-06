@@ -203,8 +203,8 @@ function RecipePage (props) {
                     <div className={classes.recipe__header}>
                         <div>
                             <h2 className={classes.recipe__title}>{recipe.title}</h2>
-                            <p className={classes.recipe__author} onClick={redirectToHomeChefPage}>
-                              by Chef <span className={classes.recipe__authorText}>{recipe.user.full_name}</span>
+                            <p className={classes.recipe__author}>
+                              by Chef <span onClick={redirectToHomeChefPage} className={classes.recipe__authorText}>{recipe.user.full_name}</span>
                             </p>
                             <p className={classes.recipe__location}>{recipe.user.city}</p>
                         </div>

@@ -14,6 +14,15 @@
   top: -85px;
   left: 313px;
   border-radius: 50%;
+
+  @media (max-width: $--sm) {
+    top: 80px;
+    width: 120px;
+    height: 120px;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+  }
 }
 
 .registerImage {
@@ -21,4 +30,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+
+  @media (max-width: $--sm) {
+    width: 80px;
+  }
 }

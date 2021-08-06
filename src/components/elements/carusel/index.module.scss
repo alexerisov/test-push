@@ -12,6 +12,26 @@ $slide-width: 32rem;
   left: 53%;
   width: 550px;
   height: 510px;
+
+  @media (max-width: $--lg) {
+    width: 400px;
+    height: 380px;
+    bottom: auto;
+    top: 150px;
+  }
+
+  @media (max-width: $--sm) {
+    top: 250px;
+    right: 10px;
+    left: auto;
+  }
+
+  @media (max-width: $--xs) {
+    width: 240px;
+    height: 220px;
+    right: -20px;
+    top: 150px;
+  }
 }
 
 .carousel__container {
@@ -52,7 +72,15 @@ $slide-width: 32rem;
   width: 34px;
   height: 34px;
   z-index: 5;
-  border: 2px solid $--color-orange
+  border: 2px solid $--color-orange;
+
+  @media (max-width: $--lg) {
+    left: auto;
+  }
+
+  @media (max-width: $--sm) {
+    display: none;
+  }
 }
 
 .carousel__btn__prev:hover {
@@ -84,7 +112,15 @@ $slide-width: 32rem;
   width: 34px;
   height: 34px;
   z-index: 5;
-  border: 2px solid $--color-orange
+  border: 2px solid $--color-orange;
+
+  @media (max-width: $--lg) {
+    right: 130px;
+  }
+
+  @media (max-width: $--sm) {
+    display: none;
+  }
 }
 
 .carousel__btn__next:hover {
