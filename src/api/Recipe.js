@@ -149,14 +149,13 @@ export default {
   },
 
   getRecipe: (id, token) => {
-    if (token) {
+    if (token !== 'undefined') {
       return http.get(`/recipe/${id}`, {
         headers: {
           'Authorization': `Bearer ${JSON.parse(token).token}`
         }
       });
     }
-
     return http.get(`/recipe/${id}`);
   },
 
