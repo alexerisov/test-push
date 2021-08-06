@@ -106,7 +106,7 @@ function FormEditAccountUser (props) {
                 formik.setFieldValue("avatar", event.currentTarget.files[0]);
               }}
           />
-          <label>Profile-pic.jpg</label>
+          <label className={classes.profile__uploadLabel}>Profile-pic.jpg</label>
           <div>
             <button type="submit" className={classes.profile__buttonUpdate}>{statusSubmit}</button>
             <p className={classes.profile__formStatus}>{formStatus}</p>
