@@ -20,11 +20,6 @@ const StyledTextField = styled(TextField)`
       border-color: #000000;
     }
 `;
-
-const StyledAutoTextField = styled(TextField)`
-  width: auto;
-`;
-
 function FormEditAccountChef (props) {
 
   if (!props.account.profile) {
@@ -216,7 +211,7 @@ function FormEditAccountChef (props) {
               }}
           />
           <label className={classes.profile__uploadLabel}>Profile-pic.jpg</label>
-          <div>
+          <div className={classes.profile__buttonUpdate_place_avatar}>
             <button type="submit" className={classes.profile__buttonUpdate}>{statusSubmit}</button>
             <p className={classes.profile__formStatus}>{formStatus}</p>
           </div>
@@ -249,49 +244,57 @@ function FormEditAccountChef (props) {
           />
         </div>
         <div className={classes.profile__container_emailAndPhone}>
-          <label className={classes.profile__label}>Email</label>
-          <StyledAutoTextField
-            disabled
-            id="email"
-            name="email"
-            variant="outlined"
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            error={formik.touched.email && Boolean(formik.errors.email)}
-            helperText={formik.touched.email && formik.errors.email}
-          />
-          <label className={classes.profile__label}>Phone Number</label>
-          <StyledAutoTextField
-            id="phone_number"
-            name="phone_number"
-            variant="outlined"
-            value={formik.values.phone_number ? formik.values.phone_number : ""}
-            onChange={formik.handleChange}
-            error={formik.touched.phone_number && Boolean(formik.errors.phone_number)}
-            helperText={formik.touched.phone_number && formik.errors.phone_number}
-          />
+          <div>
+            <label className={classes.profile__label}>Email</label>
+            <StyledTextField
+              disabled
+              id="email"
+              name="email"
+              variant="outlined"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              error={formik.touched.email && Boolean(formik.errors.email)}
+              helperText={formik.touched.email && formik.errors.email}
+            />
+          </div>
+          <div>
+            <label className={classes.profile__label}>Phone Number</label>
+            <StyledTextField
+              id="phone_number"
+              name="phone_number"
+              variant="outlined"
+              value={formik.values.phone_number ? formik.values.phone_number : ""}
+              onChange={formik.handleChange}
+              error={formik.touched.phone_number && Boolean(formik.errors.phone_number)}
+              helperText={formik.touched.phone_number && formik.errors.phone_number}
+            />
+          </div>
         </div>
         <div className={classes.profile__container_emailAndPhone}>
-          <label className={classes.profile__label}>City</label>
-          <StyledAutoTextField
-            id="city"
-            name="city"
-            variant="outlined"
-            value={formik.values.city ? formik.values.city : ""}
-            onChange={formik.handleChange}
-            error={formik.touched.city && Boolean(formik.errors.city)}
-            helperText={formik.touched.city && formik.errors.city}
-          />
-          <label className={classes.profile__label}>Language</label>
-          <StyledAutoTextField
-            id="language"
-            name="language"
-            variant="outlined"
-            value={formik.values.language ? formik.values.language : ""}
-            onChange={formik.handleChange}
-            error={formik.touched.language && Boolean(formik.errors.language)}
-            helperText={formik.touched.language && formik.errors.language}
-          />
+          <div>
+            <label className={classes.profile__label}>City</label>
+            <StyledTextField
+              id="city"
+              name="city"
+              variant="outlined"
+              value={formik.values.city ? formik.values.city : ""}
+              onChange={formik.handleChange}
+              error={formik.touched.city && Boolean(formik.errors.city)}
+              helperText={formik.touched.city && formik.errors.city}
+            />
+          </div>
+          <div>
+            <label className={classes.profile__label}>Language</label>
+            <StyledTextField
+              id="language"
+              name="language"
+              variant="outlined"
+              value={formik.values.language ? formik.values.language : ""}
+              onChange={formik.handleChange}
+              error={formik.touched.language && Boolean(formik.errors.language)}
+              helperText={formik.touched.language && formik.errors.language}
+            />
+          </div>
         </div>
         <div>
           <label className={classes.profile__label}>Work Experience (if any)</label>
@@ -340,7 +343,7 @@ function FormEditAccountChef (props) {
             : <div className={classes.profile__otherInformationsCard}>
               <div className={classes.profile__otherInformationsCard__header}>
                 <p className={classes.profile__otherInformationsCard__title}>Personal Cooking Mission</p>
-                <div>
+                <div className={classes.profile__otherInformationsCard__buttons}>
                   <button 
                     type="button"
                     className={classes.profile__otherInformationsCard__buttonEdit}
@@ -390,7 +393,7 @@ function FormEditAccountChef (props) {
             : <div className={classes.profile__otherInformationsCard}>
               <div className={classes.profile__otherInformationsCard__header}>
                 <p className={classes.profile__otherInformationsCard__title}>Source Of Inspiration</p>
-                <div>
+                <div className={classes.profile__otherInformationsCard__buttons}>
                   <button 
                     type="button"
                     className={classes.profile__otherInformationsCard__buttonEdit}
@@ -440,7 +443,7 @@ function FormEditAccountChef (props) {
             : <div className={classes.profile__otherInformationsCard}>
               <div className={classes.profile__otherInformationsCard__header}>
                 <p className={classes.profile__otherInformationsCard__title}>Cooking Philosophy</p>
-                <div>
+                <div className={classes.profile__otherInformationsCard__buttons}>
                   <button 
                     type="button"
                     className={classes.profile__otherInformationsCard__buttonEdit}

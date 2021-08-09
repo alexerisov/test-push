@@ -14,7 +14,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 const StyledTextField = styled(TextField)`
-  width: 525px;
+  width: 100%;
     .PrivateNotchedOutline-root-1:hover {
       border-color: #000000;
     }
@@ -107,7 +107,7 @@ function FormEditAccountUser (props) {
               }}
           />
           <label className={classes.profile__uploadLabel}>Profile-pic.jpg</label>
-          <div>
+          <div className={classes.profile__buttonUpdate_place_avatar}>
             <button type="submit" className={classes.profile__buttonUpdate}>{statusSubmit}</button>
             <p className={classes.profile__formStatus}>{formStatus}</p>
           </div>
