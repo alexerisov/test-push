@@ -1,24 +1,28 @@
 import React from 'react';
+import styled from 'styled-components';
 import Drawer from '@material-ui/core/Drawer';
-import {Divider, List, ListItem, ListItemIcon, ListItemText, makeStyles} from "@material-ui/core";
-import Button from "@material-ui/core/Button";
+import {Divider, List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 import TuneIcon from '@material-ui/icons/Tune';
+import close from './close.svg';
 
 import styles from './searchDrawer.module.scss';
 
-const SearchDrawer = ({ children }) => {
-  const [state, setState] = React.useState({
-    right: false,
-  });
+const MyDrawer = styled(Drawer)`
+  .MuiDrawer-paper {
+    width: 100%;
+    padding: 19px 17px;
+  }
+  
+  .MuiButtonBase-root {
+    margin-right: 0;
+  }
+  
+  .MuiTouchRipple-root {
+    right: 20px;
+  }
+`;
 
-  const toggleDrawer = (anchor, open) => (event) => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-      return;
-    }
-
-    setState({ ...state, [anchor]: open });
-  };
-
+const SearchDrawer = ({ children, toggleValue, toggleDrawer }) => {
   const list = (anchor) => (
     <div
       role="presentation"
@@ -47,12 +51,16 @@ const SearchDrawer = ({ children }) => {
     <div>
       {['right'].map((anchor) => (
         <React.Fragment key={anchor}>
-          <div className={styles.drawer__toggle} onClick={toggleDrawer(anchor, true)} c>
+          <div className={styles.drawer__toggle} onClick={toggleDrawer(anchor, true)}>
             <TuneIcon fontSize={'small'}/>
           </div>
-          <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
+          <MyDrawer
+            anchor={anchor}
+            open={toggleValue[anchor]}
+          >
+            <img src={close} className={styles.drawer__closeIcon} onClick={toggleDrawer(anchor, false)}/>
             {children}
-          </Drawer>
+          </MyDrawer>
         </React.Fragment>
       ))}
     </div>

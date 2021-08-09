@@ -26,11 +26,16 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import SearchDrawer from "@/components/elements/search-drawer";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import {InputSearch} from "@/components/elements/input";
 
 const StyledAccordion = styled(Accordion)`
   p {
     font-size: 16px;
     font-weight: 600;
+  }
+  
+  .MuiAccordionSummary-expandIcon {
+    margin-right: 0;
   }
 
   .MuiAccordionSummary-expandIcon.Mui-expanded {
@@ -63,7 +68,7 @@ const MenuProps = {
 };
 
 const Recipes = (props) => {
-  const mobile = useMediaQuery('(max-width:768px)');
+  const mobile = useMediaQuery('(max-width: 992px)');
   const router = useRouter();
   const classMarerialUi = useStyles();
 
@@ -73,6 +78,21 @@ const Recipes = (props) => {
   const [data, setData] = useState();
   const [result, setResult] = useState([]);
   const [typeSelection, setTypeSelection] = useState("Food");
+
+  // Drawer
+  const [isDrawerOpened, setDrawerOpened] = useState({
+    right: false,
+  });
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+
+    setDrawerOpened({ ...isDrawerOpened, [anchor]: open });
+  };
+
+
 
   // formik
 
@@ -204,7 +224,7 @@ const Recipes = (props) => {
     setPage(1);
     formik.handleChange(e);
     formik.handleSubmit();
-  }
+  };
 
   useEffect(() => {
     setTitle(router.query.title);
@@ -273,10 +293,10 @@ const Recipes = (props) => {
     <div className={classes.search__filter} onSubmit={formik.handleSubmit}>
       <div className={classes.search__filterHeader_left}>
         <p className={classes.search__filter__title}>Filter</p>
-        <button type="reset" onClick={handleClickClearAll} className={classes.search__clearButton}>Clear all</button>
+        {!mobile && <button type="reset" onClick={handleClickClearAll} className={classes.search__clearButton}>Clear all</button>}
         {/* <Link href="/search"><a>Clear all</a></Link> */}
       </div>
-      <div>
+      <div className={classes.search__filter__button__wrapper}>
         <button
           type="submit"
           className={`${classes.search__filter__button} ${(typeSelection === "Food") && classes.search__filter__button_active}`}
@@ -364,6 +384,12 @@ const Recipes = (props) => {
           </AccordionDetails>
         </StyledAccordion>
       </NoSsr>
+      {mobile &&
+        <div className={classes.search__filter__footer}>
+          <button type="reset" onClick={handleClickClearAll} className={classes.search__clearButton}>Clear all</button>
+          <button type="button" className={classes.search__applyBtn} onClick={toggleDrawer('right', false)}>Apply</button>
+        </div>
+      }
     </div>
   );
 
@@ -375,23 +401,29 @@ const Recipes = (props) => {
       </form>}
 
       <div className={classes.search__result}>
-        <div className={classes.search__sorting}>
-          {!mobile && <InputLabel htmlFor="age-native-simple">Sort by</InputLabel>}
-          {mobile && <SearchDrawer>
+        {mobile &&
+        <div className={classes.search__wrapper}>
+          {mobile ? <InputSearch /> : searchField}
+
+          <SearchDrawer toggleDrawer={(anchor, open) => toggleDrawer(anchor, open)} toggleValue={isDrawerOpened}>
             {searchFilter}
-          </SearchDrawer>}
-          <Select
-            MenuProps={MenuProps}
-            className={classMarerialUi.selectEmpty}
-            variant="outlined"
-            name="ordering"
-            value={formik.values.ordering}
-            onChange={(e) => {
-              onChangeCheckboxInput(e);
-            }}
-          >
-            {orderingList}
-          </Select>
+          </SearchDrawer>
+        </div>
+        }
+        <div className={classes.search__sorting}>
+            <InputLabel htmlFor="age-native-simple">Sort by</InputLabel>
+            <Select
+              MenuProps={MenuProps}
+              className={classMarerialUi.selectEmpty}
+              variant="outlined"
+              name="ordering"
+              value={formik.values.ordering}
+              onChange={(e) => {
+                onChangeCheckboxInput(e);
+              }}
+            >
+              {orderingList}
+            </Select>
         </div>
         <div className={classes.search__result__container}>
           {
@@ -407,12 +439,15 @@ const Recipes = (props) => {
               />;
             }) : <p className={classes.search__NoResult}>No results</p>
           }
-        </div>}
+        </div>
         <div>
-          {data && <Pagination count={Math.ceil(data.count / numberCardsDisplayed)} color="primary"
-                               page={page && page} onChange={(event, value) => {
-            handleChangePage(event, value)
-          }}
+          {data &&
+          <Pagination
+            count={Math.ceil(data.count / numberCardsDisplayed)}
+            color="primary"
+            page={page && page}
+            onChange={(event, value) => handleChangePage(event, value)}
+            size={mobile ? 'small' : 'large'}
           />}
         </div>
       </div>
