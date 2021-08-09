@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 const StyledTextField = styled(TextField)`
-  width: 525px;
+  width: 100%;
     .PrivateNotchedOutline-root-1:hover {
       border-color: #000000;
     }
