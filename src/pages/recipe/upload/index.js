@@ -1,23 +1,13 @@
 import React from 'react';
-import { FormCreateRecipe } from '@/components/forms';
 import { connect } from 'react-redux';
-import HeaderDefault from '@/components/elements/header-default';
-import { LayoutFooter } from '@/components/layouts/';
-import classes from "./create-recipe.module.scss";
-import Head from 'next/head';
 
-function CreateRecipe (props) {
+import LayoutPage from '@/components/layouts/layout-page';
+import { FormCreateRecipe } from '@/components/forms';
+
+function CreateRecipe () {
 
   return (
-    <div className={classes.register}>
-      <Head>
-        <link rel="stylesheet" href="//cameratag.com/static/14/cameratag.css"></link>
-        <script src="//cameratag.com/api/v14/js/cameratag.min.js"></script>
-      </Head>
-      <HeaderDefault />
-      <FormCreateRecipe />
-      <LayoutFooter />
-    </div>
+    <LayoutPage content={<FormCreateRecipe />} />
   );
 }
 
