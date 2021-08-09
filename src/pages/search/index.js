@@ -63,7 +63,7 @@ const MenuProps = {
 };
 
 const Recipes = (props) => {
-  const mobile = useMediaQuery('max-width: 768px');
+  const mobile = useMediaQuery('(max-width:768px)');
   const router = useRouter();
   const classMarerialUi = useStyles();
 
@@ -269,107 +269,117 @@ const Recipes = (props) => {
     </button>
   </div>;
 
+  const searchFilter = (
+    <div className={classes.search__filter} onSubmit={formik.handleSubmit}>
+      <div className={classes.search__filterHeader_left}>
+        <p className={classes.search__filter__title}>Filter</p>
+        <button type="reset" onClick={handleClickClearAll} className={classes.search__clearButton}>Clear all</button>
+        {/* <Link href="/search"><a>Clear all</a></Link> */}
+      </div>
+      <div>
+        <button
+          type="submit"
+          className={`${classes.search__filter__button} ${(typeSelection === "Food") && classes.search__filter__button_active}`}
+          onClick={(event) => setTypeSelectionFood(event)}>
+          Food
+        </button>
+        <button
+          type="submit"
+          className={`${classes.search__filter__button} ${(typeSelection === "Beverages") && classes.search__filter__button_active}`}
+          onClick={(event) => setTypeSelectionBeverages(event)}>
+          Beverages
+        </button>
+      </div>
+      <NoSsr>
+        {(typeSelection !== "Beverages") && <StyledAccordion>
+          <AccordionSummary
+            expandIcon={
+              <div className={classes.search__clickList}>
+                <div></div>
+                <div className={classes.search__clickList__active}></div>
+              </div>}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography className={classes.search__filter__title}>Type</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <div className={classes.search__filter__list}>
+              {recipeTypesList}
+            </div>
+          </AccordionDetails>
+        </StyledAccordion>}
+        <StyledAccordion>
+          <AccordionSummary
+            expandIcon={
+              <div className={classes.search__clickList}>
+                <div></div>
+                <div className={classes.search__clickList__active}></div>
+              </div>}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography className={classes.search__filter__title}>Cooking Skills</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <div className={classes.search__filter__list}>
+              {cookingSkillList}
+            </div>
+          </AccordionDetails>
+        </StyledAccordion>
+        <StyledAccordion>
+          <AccordionSummary
+            expandIcon={
+              <div className={classes.search__clickList}>
+                <div></div>
+                <div className={classes.search__clickList__active}></div>
+              </div>}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography className={classes.search__filter__title}>Cooking Method</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <div className={classes.search__filter__list}>
+              {cookingMethodsList}
+            </div>
+          </AccordionDetails>
+        </StyledAccordion>
+        <StyledAccordion>
+          <AccordionSummary
+            expandIcon={
+              <div className={classes.search__clickList}>
+                <div></div>
+                <div className={classes.search__clickList__active}></div>
+              </div>}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography className={classes.search__filter__title}>Dietary Restrictions</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <div className={classes.search__filter__list}>
+              {dietaryrestrictionsList}
+            </div>
+          </AccordionDetails>
+        </StyledAccordion>
+      </NoSsr>
+    </div>
+  );
+
   const content = <div className={classes.search}>
     {!mobile && searchField}
-    <form className={classes.search__content}>
-      <div className={classes.search__filter} onSubmit={formik.handleSubmit}>
-        <div className={classes.search__filterHeader_left}>
-          <p className={classes.search__filter__title}>Filter</p>
-          <button type="reset" onClick={handleClickClearAll} className={classes.search__clearButton}>Clear all</button>
-          {/* <Link href="/search"><a>Clear all</a></Link> */}
-        </div>
-        <div>
-          <button
-            type="submit"
-            className={`${classes.search__filter__button} ${(typeSelection === "Food") && classes.search__filter__button_active}`}
-            onClick={(event) => setTypeSelectionFood(event)}>
-            Food
-          </button>
-          <button
-            type="submit"
-            className={`${classes.search__filter__button} ${(typeSelection === "Beverages") && classes.search__filter__button_active}`}
-            onClick={(event) => setTypeSelectionBeverages(event)}>
-            Beverages
-          </button>
-        </div>
-        <NoSsr>
-          {(typeSelection !== "Beverages") && <StyledAccordion>
-            <AccordionSummary
-              expandIcon={
-                <div className={classes.search__clickList}>
-                  <div></div>
-                  <div className={classes.search__clickList__active}></div>
-                </div>}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <Typography className={classes.search__filter__title}>Type</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <div className={classes.search__filter__list}>
-                {recipeTypesList}
-              </div>
-            </AccordionDetails>
-          </StyledAccordion>}
-          <StyledAccordion>
-            <AccordionSummary
-              expandIcon={
-                <div className={classes.search__clickList}>
-                  <div></div>
-                  <div className={classes.search__clickList__active}></div>
-                </div>}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <Typography className={classes.search__filter__title}>Cooking Skills</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <div className={classes.search__filter__list}>
-                {cookingSkillList}
-              </div>
-            </AccordionDetails>
-          </StyledAccordion>
-          <StyledAccordion>
-            <AccordionSummary
-              expandIcon={
-                <div className={classes.search__clickList}>
-                  <div></div>
-                  <div className={classes.search__clickList__active}></div>
-                </div>}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <Typography className={classes.search__filter__title}>Cooking Method</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <div className={classes.search__filter__list}>
-                {cookingMethodsList}
-              </div>
-            </AccordionDetails>
-          </StyledAccordion>
-          <StyledAccordion>
-            <AccordionSummary
-              expandIcon={
-                <div className={classes.search__clickList}>
-                  <div></div>
-                  <div className={classes.search__clickList__active}></div>
-                </div>}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <Typography className={classes.search__filter__title}>Dietary Restrictions</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <div className={classes.search__filter__list}>
-                {dietaryrestrictionsList}
-              </div>
-            </AccordionDetails>
-          </StyledAccordion>
-        </NoSsr>
-      </div>
+    <div className={classes.search__content}>
+      {!mobile && <form>
+        {searchFilter}
+      </form>}
+
       <div className={classes.search__result}>
         <div className={classes.search__sorting}>
-          <InputLabel htmlFor="age-native-simple">Sort by</InputLabel>
+          {!mobile && <InputLabel htmlFor="age-native-simple">Sort by</InputLabel>}
+          {mobile && <SearchDrawer>
+            {searchFilter}
+          </SearchDrawer>}
           <Select
             MenuProps={MenuProps}
             className={classMarerialUi.selectEmpty}
@@ -383,7 +393,7 @@ const Recipes = (props) => {
             {orderingList}
           </Select>
         </div>
-        {!mobile && <div className={classes.search__result__container}>
+        <div className={classes.search__result__container}>
           {
             (result.length !== 0) ? result.map((recipe, index) => {
               return <CardHighestMeals
@@ -406,19 +416,12 @@ const Recipes = (props) => {
           />}
         </div>
       </div>
-    </form>
+    </div>
   </div>;
-
-  const searchDrawer = () => {
-    return content;
-  };
 
   return (
     <>
       <LayoutPage content={content} />
-      <SearchDrawer>
-        {searchDrawer()}
-      </SearchDrawer>
     </>
   );
 };

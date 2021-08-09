@@ -4,6 +4,10 @@
 .search {
     padding: 45px 40px;
 
+    @media (max-width: $--sm) {
+        padding: 45px 0;
+    }
+
     &__header {
         display: flex;
         justify-content: space-between;
@@ -30,6 +34,11 @@
         grid-template-columns: 338px 1fr;
         gap: 34px;
         margin: 35px 0 0 0;
+
+        @media (max-width: $--sm) {
+            grid-template-columns: 1fr;
+            justify-items: center;
+        }
     }
 
     &__filter {
