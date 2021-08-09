@@ -149,7 +149,7 @@ export default {
   },
 
   getRecipe: (id, token) => {
-    if (token !== 'undefined') {
+    if (token && token !== "{\"token\":null,\"refresh\":null}") {
       return http.get(`/recipe/${id}`, {
         headers: {
           'Authorization': `Bearer ${JSON.parse(token).token}`
