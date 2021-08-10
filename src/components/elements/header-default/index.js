@@ -83,7 +83,7 @@ const HeaderDefault = (props) => {
           </li>
 
           <li className={classes.mobileMenu__navItem} onClick={handleExpandingMobileMenu}>
-            <Link href="/">
+            <Link href="/get-inspired?include_eatchefs_recipes=Y">
               <a>Get Inspired!</a>
             </Link>
           </li>
@@ -169,7 +169,7 @@ const HeaderDefault = (props) => {
         <Link href="/search?title=">
           <a className={classes.header__link}>Recipes</a>
         </Link>
-        <Link href="/">
+        <Link href="/get-inspired?include_eatchefs_recipes=Y">
           <a className={classes.header__link}>Get Inspired!</a>
         </Link>
         <Link href="/">
