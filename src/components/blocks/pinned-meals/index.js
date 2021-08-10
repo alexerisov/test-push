@@ -50,7 +50,7 @@ const PinnedMeals = () => {
 
   return ( <section className={classes.container}>
       <CarouselProvider
-        naturalSlideWidth={200}
+        naturalSlideWidth={280}
         naturalSlideHeight={0}
         totalSlides={meals.length}
       >
