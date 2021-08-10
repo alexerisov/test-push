@@ -125,13 +125,13 @@ const HeaderDefault = (props) => {
                   </Link>
                 </li>
 
-                <li className={classes.mobileMenu__item} onClick={handleExpandingMobileMenu}>
+                {/*<li className={classes.mobileMenu__item} onClick={handleExpandingMobileMenu}>
                   <Link href="/">
                     <a>
                       My Pencils
                     </a>
                   </Link>
-                </li>
+                </li>*/}
               </>
             }
 
