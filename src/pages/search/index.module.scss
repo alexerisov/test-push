@@ -83,7 +83,7 @@
             margin: 0 0 20px 0;
             cursor: pointer;
 
-            @media (max-width: $--sm) {
+            @media (max-width: $--md) {
                 min-width: max-content;
                 height: max-content;
                 line-height: 19px;
@@ -108,7 +108,7 @@
                 color: #fff;
                 background-color: $--color-orange;
 
-                @media (max-width: $--sm) {
+                @media (max-width: $--md) {
                     border-radius: 0;
                     color: inherit;
                     background-color: unset;
@@ -138,7 +138,6 @@
 
             span {
                 font-size: 16px;
-                color: $--color-black;
             }
         }
 
@@ -183,7 +182,7 @@
         cursor: pointer;
         @include fontMedium();
 
-        @media (max-width: $--sm) {
+        @media (max-width: $--md) {
             color: $--color-orange;
         }
     }

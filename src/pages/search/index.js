@@ -142,7 +142,7 @@ const Recipes = (props) => {
         key={i}
         control={<Checkbox
           style={{
-            color: "#000000"
+            color: "#FFAA00"
           }}
           value={i}
           onChange={(e) => {
@@ -162,6 +162,9 @@ const Recipes = (props) => {
       <FormControlLabel
         key={i}
         control={<Checkbox
+          style={{
+            color: "#FFAA00"
+          }}
           value={i}
           checked={formik.values.check}
           onChange={(e) => {
@@ -182,6 +185,9 @@ const Recipes = (props) => {
         <FormControlLabel
           key={i}
           control={<Checkbox
+            style={{
+              color: "#FFAA00"
+            }}
             value={i}
             onChange={(e) => {
               onChangeCheckboxInput(e);
@@ -201,6 +207,9 @@ const Recipes = (props) => {
       <FormControlLabel
         key={i}
         control={<Checkbox
+          style={{
+            color: "#FFAA00"
+          }}
           value={i}
           onChange={(e) => {
             onChangeCheckboxInput(e);
