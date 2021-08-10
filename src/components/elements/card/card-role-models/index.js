@@ -16,7 +16,6 @@ const CardRoleModels = (props) => {
           type="button"
           className={classes.card__button}
           onClick={handleDelete}>
-            &#128473;
         </button>
       </div>
       <p className={classes.card__title}>{title}</p>

@@ -4,6 +4,7 @@
 .container {
     @include fontRegular();
     padding: 38px 90px 0 90px;
+    min-width: 350px;
 
     @media (max-width: $--lg) {
         padding: 38px 50px 0 20px;
