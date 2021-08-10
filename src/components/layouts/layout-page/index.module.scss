@@ -1,8 +1,14 @@
+@import "~styles/variables.scss";
+
 .layout {
     overflow: hidden;
     
     &__content {
         margin: 122px 0 0 0;
+
+      @media (max-width: $--xs) {
+        margin-top: 90px;
+      }
     }
 
     @media (min-width: 200px) {
