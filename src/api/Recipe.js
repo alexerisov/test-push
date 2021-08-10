@@ -117,7 +117,9 @@ export default {
     title = null,
     types = null,
     ordering = null,
-  }) => {
+  }, includeEatChef = false) => {
+    const eatchefRecipesParams =  !includeEatChef ? {} : {include_eatchefs_recipes: 'Y'};
+
     return http.get(`/recipe`, {
       params: {
         cooking_methods,
@@ -127,6 +129,7 @@ export default {
         title,
         types,
         ordering,
+        ...eatchefRecipesParams
       },
     });
   },
