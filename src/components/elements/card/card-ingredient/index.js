@@ -15,7 +15,6 @@ const CardIngredient = (props) => {
         type="button"
         className={classes.cardIngredients__button}
         onClick={handleDelete}>
-          &#128473;
       </button>
     </div>
   );

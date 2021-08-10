@@ -14,7 +14,6 @@ const CardImageEditRecipe = (props) => {
         type="button"
         className={classes.cardImage__button}
         onClick={handleDelete}>
-          &#128473;
       </button>
     </div>
   );

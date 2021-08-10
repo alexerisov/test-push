@@ -19,10 +19,15 @@
     &__upload {
         position: relative;
         height: 90px;
+        width: 90px;
 
         // Don't want break markup, it is styles for label for Profil-pic.jpg
         &Label {
             visibility: hidden;
+
+            @media (max-width: $--lg) {
+                display: none;
+            }
         }
     }
 
@@ -58,6 +63,12 @@
         padding: 0 0 50px 0;
         margin: 0 0 50px 0;
         border-bottom: 1px solid #DFDFDF;
+
+        @media (max-width: $--lg) {
+            display: flex;
+            justify-content: center;
+            padding: 0 0 20px 0;
+        }
     }
 
     &__avatar {
@@ -93,6 +104,12 @@
         &:active {
             background-color: $--color-blue;
             color: $--color-white;
+        }
+
+        &_place_avatar {
+            @media (max-width: $--lg) {
+                display: none;
+            }
         }
     }
 

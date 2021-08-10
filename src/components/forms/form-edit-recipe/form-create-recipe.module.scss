@@ -4,12 +4,22 @@
   font-size: 30px;
   line-height: 1.08;
   margin: 0px 20px 0px;
+
+  @media (max-width: $--xs) {
+    font-size: 25px;
+    margin: 0 0 20px;
+  }
 }
 
 .createRecipeSubtitle_withoutInput {
   font-size: 30px;
   line-height: 1.08;
   margin: 0px 20px 20px;
+
+  @media (max-width: $--xs) {
+    font-size: 25px;
+    margin: 0 0 20px;
+  }
 }
 
 .createRecipeForm {
@@ -20,6 +30,12 @@
 
 .createRecipeSection {
   padding-top: 40px;
+
+  @media (max-width: $--xs) {
+    &:first-of-type {
+      padding-top: 0;
+    }
+  }
 }
 
 .createRecipeSection__grid_type_input {
@@ -28,6 +44,10 @@
   grid-template-columns: 1fr 1fr;
   column-gap: 29px;
   row-gap: 0;
+
+  @media (max-width: $--xs) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .createRecipeSection__grid_type_cardIngredients {
@@ -54,6 +74,12 @@
   gap: 12px;
   margin-top: 20px;
   position: relative;
+
+  @media (max-width: $--xs) {
+    grid-template-columns: 230px;
+    margin: 20px auto 0 auto;
+    width: max-content;
+  }
 }
 
 .createRecipeLabel {
@@ -98,9 +124,17 @@
 
 .createRecipeItem {
   margin-bottom: 40px;
+
+  @media (max-width: $--xs) {
+    margin-bottom: 15px;
+  }
   
   &__title {
     font-size: 26px;
+
+    @media (max-width: $--xs) {
+      font-size: 20px;
+    }
   }
 
   &__text {
@@ -108,6 +142,10 @@
     line-height: 1.11;
     margin: 15px 0 28px;
     color: $--color-gray7;
+
+    @media (max-width: $--xs) {
+      font-size: 16px;
+    }
   }
 
   &__inputContainer {
@@ -115,8 +153,13 @@
     max-width: 672px;
     gap: 16px;
     grid-template-columns: 1fr 1fr;
+
+    @media (max-width: $--xs) {
+      grid-template-columns: 1fr;
+    }
   }
 }
+
 .createRecipebuttonContainer {
   display: flex;
   flex-direction: row-reverse;
@@ -233,7 +276,7 @@
 }
 
 .createRecipeButton_type_addStep {
-  width: 1030px;
+  width: 100%;
   height: 68px;
   padding: 22px 0;
   text-align: center;
@@ -316,6 +359,11 @@
   max-height: 310px;
   display: block;
 
+  @media (max-width: $--xs) {
+    max-width: 300px;
+    max-height: 170px;
+  }
+
   &__button {
     width: 200px;
     height: 40px;
@@ -336,6 +384,10 @@
     position: relative;
     height: 309px;
 
+    @media (max-width: $--xs) {
+      height: 170px;
+    }
+
     &__icon {
         position: absolute;
         background-image: url('/images/index/footer_logo.png');
@@ -347,6 +399,13 @@
         bottom: 20px;
         left: 20px;
         opacity: 0.5;
+
+        @media (max-width: $--xs) {
+          width: 80px;
+          background-size: 70px 50px;
+          bottom: 0;
+          left: 10px;
+        }
     }
-}
+  }
 }

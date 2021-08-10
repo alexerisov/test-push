@@ -52,9 +52,10 @@
     width: 24px;
     height: 24px;
     z-index: 999;
-    text-decoration: none;
-    color: $--color-white;
-    font-size: 24px;
+    background-image: url('/images/index/icons-delete-cross-white.svg');
+    background-size: 24px 24px;
+    background-position: center;
+    background-repeat: no-repeat;
   }
 
   &__inner {

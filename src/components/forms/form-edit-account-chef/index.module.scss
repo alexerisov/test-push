@@ -19,10 +19,15 @@
     &__upload {
         position: relative;
         height: 90px;
+        width: 90px;
 
         // Don't want break markup, it is styles for label for Profil-pic.jpg
         &Label {
             visibility: hidden;
+
+            @media (max-width: $--lg) {
+                display: none;
+            }
         }
     }
 
@@ -58,6 +63,12 @@
         padding: 0 0 50px 0;
         margin: 0 0 50px 0;
         border-bottom: 1px solid #DFDFDF;
+
+        @media (max-width: $--lg) {
+            display: flex;
+            justify-content: center;
+            padding: 0 0 20px 0;
+        }
     }
 
     &__avatar {
@@ -95,6 +106,12 @@
             background-color: $--color-blue;
             color: $--color-white;
         }
+
+        &_place_avatar {
+            @media (max-width: $--lg) {
+                display: none;
+            }
+        }
     }
 
     &__data {
@@ -126,9 +143,12 @@
         &_emailAndPhone {
             display: grid;
             grid-template-columns: 57% 40%;
-            grid-auto-flow: column;
-            grid-template-rows: 35px 1fr;
             gap: 0 20px;
+
+            @media (max-width: $--sm) {
+                grid-template-columns: 1fr;
+                gap: 20px 0;
+            }
         }
 
         &_addRoleModels {
@@ -146,6 +166,7 @@
 
     &__button {
         &__addRoleModels {
+            margin: 0 9px;
             width: 97px;
             height: 97px;
             border: 2px solid $--color-orange;
@@ -221,6 +242,10 @@
         gap: 35px 0;
         padding: 28px 20px 10px 42px;
 
+        @media (max-width: $--sm) {
+            padding: 10px 0;
+        }
+
         &__header {
             width: 100%;
             display: flex;
@@ -230,6 +255,10 @@
         &__content {
             display: flex;
             gap: 0 34px;
+
+            @media (max-width: $--sm) {
+                flex-direction: column;
+            }
         }
 
         &__title {
@@ -294,10 +323,19 @@
                 opacity: 0.5;
             }
         }
+
+        &__buttons {
+            display: flex;
+            margin: 0 0 0 10px;
+        }
     }
 
     &__iconOtherInformations {
         width: 101px;
         height: 101px;
+
+        @media (max-width: $--sm) {
+            margin: 0 auto 10px auto;
+        }
     }
 }
