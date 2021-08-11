@@ -9,9 +9,7 @@ const LayoutFooter = (props) => {
                 <div className={classes.footer__top}>
                     <img src="/images/index/footer_logo.png" className={classes.footer__logo} alt="" />
                     <p className={classes.footer__aboutCompanyText}>
-                        Make people Happy with HOME COOKED FOOD.
-                        Eatchefs helps home chefs to produce, distribute
-                        and promote their delicious meals🤗
+                        Platform for Home Chefs to promote their food creations and for consumers to get inspired for a good meal
                     </p>
                 </div>
                 <div className={classes.footer__middle}>
