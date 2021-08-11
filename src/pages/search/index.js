@@ -299,6 +299,7 @@ const Recipes = (props) => {
   </div>;
 
   const searchFilter = (
+    <>
     <div className={classes.search__filter} onSubmit={formik.handleSubmit}>
       <div className={classes.search__filterHeader_left}>
         <p className={classes.search__filter__title}>Filter</p>
@@ -393,13 +394,14 @@ const Recipes = (props) => {
           </AccordionDetails>
         </StyledAccordion>
       </NoSsr>
-      {mobile &&
-        <div className={classes.search__filter__footer}>
-          <button type="reset" onClick={handleClickClearAll} className={classes.search__clearButton}>Clear all</button>
-          <button type="button" className={classes.search__applyBtn} onClick={toggleDrawer('right', false)}>Apply</button>
-        </div>
-      }
     </div>
+    {mobile &&
+    <div className={classes.search__filter__footer}>
+      <button type="reset" onClick={handleClickClearAll} className={classes.search__clearButton}>Clear all</button>
+      <button type="button" className={classes.search__applyBtn} onClick={toggleDrawer('right', false)}>Apply</button>
+    </div>
+    }
+    </>
   );
 
   const content = <div className={classes.search}>
