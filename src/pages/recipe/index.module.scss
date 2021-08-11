@@ -1,7 +1,14 @@
 @import "~styles/mixins/mixins.scss";
 
 .recipe {
-    padding: 40px 100px 0 100px;
+    padding: 40px 0 0 0;
+    width: max-content;
+    margin: 0 auto;
+
+    @media (max-width: 600px) {
+        width: auto;
+        padding: 0;
+    }
 
     &__navbar {
         font-size: 20px;
@@ -34,6 +41,13 @@
         flex-direction: column;
         justify-content: space-between;
         align-items: flex-end;
+
+        @media (max-width: 600px) {
+            flex-direction: row;
+            align-items: center;
+            min-height: auto;
+            width: 100%;
+        }
     }
 
     &__linkEdit {
@@ -75,6 +89,14 @@
         grid-template-columns: 715px 340px;
         margin: 50px 0;
         gap: 0 35px;
+
+        @media (max-width: 1300px) {
+            grid-template-columns: 1fr;
+        }
+
+        @media (max-width: 600px) {
+            margin: 15px 0;
+        }
     }
 
     &__cards {
@@ -82,6 +104,10 @@
         flex-direction: column;
         gap: 30px 0;
         width: 100%;
+
+        @media (max-width: 1300px) {
+            display: none;
+        }
 
         &__title {
             font-size: 20px;
@@ -119,6 +145,11 @@
         display: flex;
         justify-content: space-between;
         align-items: flex-end;
+
+        @media (max-width: 600px) {
+            flex-direction: column;
+            align-items: flex-start;
+        }
     }
 
     &__time {
@@ -128,6 +159,10 @@
         margin-top: auto;
         gap: 4px 0;
         color: $--color-orange;
+
+        @media (max-width: 600px) {
+            margin-left: auto;
+        }
     }
 
     &__subtitle {
@@ -143,6 +178,10 @@
             grid-template-columns: 1fr 1fr 1fr;
             gap: 30px 0;
 
+            @media (max-width: 600px) {
+                grid-template-columns: 1fr 1fr;
+            }
+
             p {
                 @include fontMedium();
                 color: $--color-gray7;
@@ -156,12 +195,29 @@
         grid-auto-rows: 154px;
         gap: 10px;
         margin: 0 0 20px 0;
+        
+        @media (max-width: 890px) {
+            grid-template-columns: 230px 230px;
+        }
+
+        @media (max-width: 600px) {
+            grid-template-columns: 230px;
+            width: max-content;
+            margin: 0 auto 20px auto;
+        }
     }
 
     &__nutritionContainer {
         margin: 15px 0 43px 0;
         display: flex;
         gap: 0 59px;
+
+        @media (max-width: 600px) {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px 30px;
+            width: max-content;
+        }
     }
 
     &__nutritionItem {
@@ -202,6 +258,7 @@
     }
 
     &__banner {
+        width: 100%;
         display: flex;
         flex-direction: column;
         padding: 87px 0 90px 0;
@@ -244,8 +301,12 @@
 
         &__photo {
             position: absolute;
-            right: 0;
+            right: -50px;
             bottom: 30px;
+
+            @media (max-width: 1300px) {
+                display: none;
+            }
         }
 
         &:before {
@@ -263,14 +324,23 @@
     }
 
     &__video {
-        width: 100%;
+        width: max-content;
         display: flex;
         flex-direction: column;
         position: relative;
 
         &__watermark {
-            position: relative;
             height: 402px;
+            position: relative;
+            width: max-content;
+
+            @media (max-width: 890px) {
+                height: 280px;
+            }
+
+            @media (max-width: 600px) {
+                height: 168px;
+            }
 
             &__icon {
                 position: absolute;
@@ -287,19 +357,40 @@
         }
 
         &__video {
-            height: 402px;
+            @media (max-width: 890px) {
+                width: 500px;
+            }
+
+            @media (max-width: 600px) {
+                width: 300px;
+            }
         }
 
         &__player {
             display: flex;
             flex-direction: row;
+            justify-content: space-between;
             gap: 20px;
             border: 1px #E1E1E1 solid;
             width: 100%;
             height: 60px;
-            padding: 18px 20px 0 20px;
+            padding: 18px 20px 10px 20px;
             border-bottom-left-radius: 10px;
             border-bottom-right-radius: 10px;
+
+            @media (max-width: 890px) {
+                height: max-content;
+                flex-direction: column;
+            }
+
+            @media (max-width: 600px) {
+                padding: 18px 10px 10px 10px;
+            }
+
+            &_row {
+                display: flex;
+                gap: 20px;
+            }
         }
 
         &__views {
@@ -329,6 +420,10 @@
                 @include fontMedium();
                 padding: 0;
                 cursor: pointer;
+
+                @media (max-width: 890px) {
+                    margin-left: 0;
+                }
 
                 &:hover {
                     opacity: 0.5;
