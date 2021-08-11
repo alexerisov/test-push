@@ -6,8 +6,8 @@ import styles from './role-model.module.scss';
 
 const useStyles = makeStyles({
   root: {
-    width: "95px",
-    height: "95px",
+    width: "93px",
+    height: "93px",
     marginBottom: "6px",
     border: "1px solid #ffaa00"
   }
