@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { withRouter } from "next/router";
+import React, {useEffect, useState} from 'react';
+import {withRouter} from 'next/router';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-import Link from "next/link";
-import { ButtonUploadRecipe } from '@/components/elements/button';
-import { LayoutPage } from "@/components/layouts";
-import Pagination from "@material-ui/lab/Pagination";
-import CardHighestMeals from "@/components/elements/card-highest-meals";
-import Recipe from "@/api/Recipe";
-import { RedirectWithoutAuthAndByCheckingUserType } from "@/utils/authProvider";
-import { CHEF_TYPE } from "@/utils/constants";
+import Link from 'next/link';
+import {ButtonUploadRecipe} from '@/components/elements/button';
+import {LayoutPage} from '@/components/layouts';
+import Pagination from '@material-ui/lab/Pagination';
+import CardHighestMeals from '@/components/elements/card-highest-meals';
 
-import classes from "./index.module.scss";
+import Recipe from '@/api/Recipe';
+import {RedirectWithoutAuthAndByCheckingUserType} from '@/utils/authProvider';
+import {CHEF_TYPE} from '@/utils/constants';
+
+import classes from './index.module.scss';
 
 const MyUploadsPage = () => {
   const matches = useMediaQuery('(max-width: 767.95px)');
@@ -22,8 +23,8 @@ const MyUploadsPage = () => {
   const [page, setPage] = useState(1);
   const [numberOfPages, setNumberOfPages] = useState();
 
-  const countPages = (count) => {
-    const isRemainExists = (count % itemsPerPage) > 0;
+  const countPages = count => {
+    const isRemainExists = count % itemsPerPage > 0;
     let pages = Math.floor(count / itemsPerPage);
     return isRemainExists ? ++pages : pages;
   };
@@ -37,8 +38,7 @@ const MyUploadsPage = () => {
       const response = await Recipe.getUploadRecipes(itemsPerPage, page);
       await setNumberOfPages(countPages(response.data.count));
       await setUploadRecipes(response.data.results);
-    }
-    catch (e) {
+    } catch (e) {
       console.log(e);
     }
   };
@@ -46,8 +46,10 @@ const MyUploadsPage = () => {
   const content = (
     <div className={classes.uploads}>
       <h2 className={classes.uploads__navbar}>
-        <Link href="/"><a className={classes.uploads__navbar__link}>Home /</a></Link>
-        <span> My Uploads</span>
+        <Link href="/">
+          <a className={classes.uploads__navbar__link}>Home /</a>
+        </Link>
+        <span> My Recipes</span>
       </h2>
 
       <div className={classes.uploads__header}>
@@ -58,23 +60,23 @@ const MyUploadsPage = () => {
 
       <div className={classes.uploads__recipes}>
         {uploadRecipes &&
-        uploadRecipes.map(item => (
-          <CardHighestMeals
-            key={`${item.pk + '1k0'}`}
-            title={item.title}
-            name={item.user.full_name}
-            image={item.images[0]?.url}
-            city={item.city}
-            id={item.pk}
-            likes={item?.['likes_number']}
-            publishStatus={item?.publish_status}
-            reviewStatus={item?.status}
-          />)
-        )}
+          uploadRecipes.map(item => (
+            <CardHighestMeals
+              key={`${item.pk + '1k0'}`}
+              title={item.title}
+              name={item.user.full_name}
+              image={item.images[0]?.url}
+              city={item.city}
+              id={item.pk}
+              likes={item?.['likes_number']}
+              publishStatus={item?.publish_status}
+              reviewStatus={item?.status}
+            />
+          ))}
       </div>
 
       <Pagination
-        classes={{root: classes.uploads__pagination}}
+        classes={{ root: classes.uploads__pagination }}
         count={numberOfPages}
         size={matches ? 'small' : 'large'}
         onChange={(event, number) => setPage(number)}

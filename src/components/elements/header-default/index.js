@@ -1,15 +1,15 @@
 import React, {useEffect} from 'react';
 import classes from "./index.module.scss";
 import Link from "next/link";
-import { makeStyles } from "@material-ui/core/styles";
-import { modalActions, accountActions } from '@/store/actions';
-import { connect } from 'react-redux';
+import {makeStyles} from "@material-ui/core/styles";
+import {accountActions, modalActions} from '@/store/actions';
+import {connect} from 'react-redux';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import styled from 'styled-components';
-import { NoSsr } from '@material-ui/core';
-import { useRouter } from 'next/router';
-import { USER_TYPE } from "@/utils/datasets";
+import {NoSsr} from '@material-ui/core';
+import {useRouter} from 'next/router';
+import {USER_TYPE} from "@/utils/datasets";
 import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -83,7 +83,7 @@ const HeaderDefault = (props) => {
           </li>
 
           <li className={classes.mobileMenu__navItem} onClick={handleExpandingMobileMenu}>
-            <Link href="/">
+            <Link href="/get-inspired?include_eatchefs_recipes=Y">
               <a>Get Inspired!</a>
             </Link>
           </li>
@@ -118,7 +118,7 @@ const HeaderDefault = (props) => {
             {props?.account?.profile?.user_type === USER_TYPE.chefType &&
               <>
                 <li className={classes.mobileMenu__item} onClick={handleExpandingMobileMenu}>
-                  <Link href="/my-uploads">
+                  <Link href="/my-recipes">
                     <a>
                       My Recipes
                     </a>
@@ -169,7 +169,7 @@ const HeaderDefault = (props) => {
         <Link href="/search?title=">
           <a className={classes.header__link}>Recipes</a>
         </Link>
-        <Link href="/">
+        <Link href="/get-inspired?include_eatchefs_recipes=Y">
           <a className={classes.header__link}>Get Inspired!</a>
         </Link>
         <Link href="/">
@@ -201,19 +201,19 @@ const HeaderDefault = (props) => {
               {props?.account?.profile?.user_type === USER_TYPE.chefType &&
               <>
                 <MenuItem onClick={handleClose}>
-                  <Link href="/my-uploads">
+                  <Link href="/my-recipes">
                     <a className={classes.header__link_place_menu}>
                       My Recipes
                     </a>
                   </Link>
                 </MenuItem>
-                <MenuItem onClick={handleClose} classes={{root: separatorStyles.root}}>
+                {/*<MenuItem onClick={handleClose} classes={{root: separatorStyles.root}}>
                   <Link href="/">
                     <a className={classes.header__link_place_menu}>
                       My Pencils
                     </a>
                   </Link>
-                </MenuItem>
+                </MenuItem>*/}
               </>
               }
               <MenuItem onClick={handleClose} classes={{root: separatorStyles.root}}>
