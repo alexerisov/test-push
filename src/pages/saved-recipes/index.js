@@ -5,6 +5,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import {NoSsr} from "@material-ui/core";
 import Pagination from "@material-ui/lab/Pagination";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 import {LayoutPage} from "@/components/layouts";
 import CardHighestMeals from "@/components/elements/card-highest-meals";
@@ -13,7 +14,6 @@ import Recipe from "@/api/Recipe";
 import {DEFAULT_VALUE_TAB_STATE} from "@/utils/constants";
 
 import styles from "./index.module.scss";
-import {useDispatch} from "react-redux";
 
 const StyledTabs = styled(Tabs)`
     width: 100%;
@@ -51,12 +51,12 @@ const StyledTab = styled(Tab)`
 `;
 
 const SavedRecipesPage = () => {
-  const dispatch = useDispatch();
+  const matches = useMediaQuery('(max-width: 767.95px)');
   const [savedRecipes, setSavedRecipes ] = useState();
-  const [query, setQuery] = useState(new URLSearchParams(''));
+  const [query, setQuery] = useState();
 
   // Pagination params
-  const itemsPerPage = 6;
+  const itemsPerPage = matches ? 6 : 12;
   const [page, setPage] = useState(1);
   const [numberOfPages, setNumberOfPages] = useState();
 
@@ -103,7 +103,7 @@ const SavedRecipesPage = () => {
     queryParams.set('page', String(page));
 
     setQuery(queryParams);
-  }, [page]);
+  }, [page, itemsPerPage]);
 
   const content = (
     <div className={styles.savedRecipes}>
@@ -149,7 +149,10 @@ const SavedRecipesPage = () => {
           classes={{root: styles.sectionRecipes__pagination}}
           count={numberOfPages}
           page={page}
+          size={matches ? 'small' : 'large'}
           onChange={(event, number) => setPage(number)}
+          defaultPage={1}
+          siblingCount={matches ? 0 : 1}
         />}
       </div>
     </div>
