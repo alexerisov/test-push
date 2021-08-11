@@ -3,6 +3,8 @@
 
 .card {
   position: relative;
+  display: flex;
+  flex-direction: column;
   width: 338px;
   min-height: 320px;
   opacity: 1;

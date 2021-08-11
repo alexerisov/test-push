@@ -7,7 +7,7 @@ import { CardActionArea } from '@material-ui/core';
 import { useRouter } from 'next/router';
 
 const StyledCardActionArea = styled(CardActionArea)`
-  height: 100%;
+  flex: 1;
 `;
 
 const CardPinnedMeals = ({ title, raitingValue, avatar, id }) => {
@@ -36,5 +36,5 @@ const CardPinnedMeals = ({ title, raitingValue, avatar, id }) => {
       </Card>
   );
 };
-  
+
 export default CardPinnedMeals;
