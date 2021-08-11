@@ -7,6 +7,5 @@
   "jsxBracketSameLine": true,
   "bracketSpacing": true,
   "arrowParens": "avoid",
-  "endOfLine": "lf",
-  "htmlWhitespaceSensitivity": 'strict'
+  "endOfLine": "lf"
 }
