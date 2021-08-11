@@ -297,7 +297,11 @@ function RecipePage (props) {
                     <div>
                         <h2 className={classes.recipe__title}>Description</h2>
 
-                        <p dangerouslySetInnerHTML={{__html: recipe.description}}></p>
+                        <p
+                          dangerouslySetInnerHTML={{__html: recipe.description}}
+                          className={classes.recipe__description}
+                        >
+                        </p>
                     </div>
 
                     <div className={classes.recipe__classification}>
