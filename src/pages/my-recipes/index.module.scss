@@ -80,27 +80,15 @@
   }
 
   &__recipes {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 338px);
+    grid-gap: 34px;
     justify-content: center;
-    gap: 34px;
     width: 100%;
-    margin-bottom: 20px;
-  }
+    margin: 0 auto 40px;
 
-  @media (max-width: $--lg) {
-    &__recipes {
-      display: grid;
-      grid-template-columns: max-content max-content;
-      justify-content: center;
-    }
-  }
-
-  @media (max-width: $--sm - 1) {
-    &__recipes {
-      display: grid;
-      grid-template-columns: auto;
-      justify-content: center;
+    @media (max-width: $--sm) {
+      grid-template-columns: repeat(auto-fit, 285px);
     }
   }
 
