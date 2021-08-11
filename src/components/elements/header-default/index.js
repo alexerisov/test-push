@@ -207,13 +207,13 @@ const HeaderDefault = (props) => {
                     </a>
                   </Link>
                 </MenuItem>
-                <MenuItem onClick={handleClose} classes={{root: separatorStyles.root}}>
+                {/*<MenuItem onClick={handleClose} classes={{root: separatorStyles.root}}>
                   <Link href="/">
                     <a className={classes.header__link_place_menu}>
                       My Pencils
                     </a>
                   </Link>
-                </MenuItem>
+                </MenuItem>*/}
               </>
               }
               <MenuItem onClick={handleClose} classes={{root: separatorStyles.root}}>
