@@ -58,9 +58,8 @@ const Home = (props) => {
       </button>
       <div className={classes.home__titleContainer}>
         <div className={classes.home__titleTextContainer}>
-          <p className={classes.home__titleText}>Hungry?</p>
-          <h1 className={classes.home__title}>Homemade food</h1>
-          <p className={classes.home__subtitle}>delivered doorstep</p>
+          <h1 className={classes.home__title}>Find the fame</h1>
+          <p className={classes.home__subtitle}>you deserve!</p>
         </div>
       </div>
       <div className={classes.home__buttonUploud}>
