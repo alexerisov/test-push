@@ -189,15 +189,16 @@ function RecipePage (props) {
         {recipe &&
             <>
             <h2 className={classes.recipe__navbar}>
-                <Link href="/">
-                  <a className={classes.recipe__navbar__link}>Home /</a>
-                </Link>
-                {(breadcrumbsLink !== "/") &&
-                <Link href={breadcrumbsLink}>
-                  <a className={classes.recipe__navbar__link}> {breadcrumbsName} /</a>
-                </Link>
-                }
-                <span> {recipe.title}</span></h2>
+              <Link href="/">
+                <a className={classes.recipe__navbar__link}>Home /</a>
+              </Link>
+              {(breadcrumbsLink !== "/") &&
+              <Link href={breadcrumbsLink}>
+                <a className={classes.recipe__navbar__link}> {breadcrumbsName} /</a>
+              </Link>
+              }
+              <span> {recipe.title}</span>
+            </h2>
             <div className={classes.recipe__content}>    
                 <div className={classes.recipe__recipeContent}>
                     <div className={classes.recipe__header}>
@@ -232,6 +233,7 @@ function RecipePage (props) {
                                   <div className={classes.recipe__video__watermark__icon} />
                                 </div>}
                                 <div className={classes.recipe__video__player}>
+                                  <div className={classes.recipe__video__player_row}>
                                     <div className={classes.recipe__video__views}>
                                         <img src="/images/index/ionic-md-eye.svg" alt="" />
                                         <span>{recipe.views_number} Views</span>
@@ -240,6 +242,8 @@ function RecipePage (props) {
                                         <img src="/images/index/Icon awesome-heart.svg" alt="" />
                                         <span>{Number(likesNumber)}</span>
                                     </div>
+                                  </div>
+                                  <div className={classes.recipe__video__player_row}>
                                     <button
                                         className={classes.recipe__video__likes_last} 
                                         onClick={!props.account.hasToken ? openRegisterPopup('register') : onClickLike} 
@@ -250,7 +254,7 @@ function RecipePage (props) {
                                     </button>
                                     <ButtonShare recipeId={recipeId}/>
 
-                                  {!savedId
+                                    {!savedId
                                     ?
                                     <button
                                       className={classes.recipe__video__saveStatus}
@@ -285,7 +289,8 @@ function RecipePage (props) {
                                         Save
                                       </span>
                                     </button>
-                                  }
+                                    }
+                                  </div>
                                 </div>
                             </div>
                         </div>
