@@ -106,7 +106,7 @@
     background: $--color-white;
 
     .LayoutModal__close {
-      color: $--color-gray3;
+      background-image: url('/images/index/icons-delete-cross.svg');
     }
   }
 
@@ -122,7 +122,7 @@
     color: #000;
 
     .LayoutModal__close {
-      color: $--color-gray3;
+      background-image: url('/images/index/icons-delete-cross.svg');
     }
   }
 
@@ -138,7 +138,7 @@
     color: #000;
 
     .LayoutModal__close {
-      color: $--color-gray3;
+      background-image: url('/images/index/icons-delete-cross.svg');
     }
   }
 }
