@@ -29,7 +29,7 @@
             position: absolute;
             cursor: pointer;
 
-            @media (max-width: $--lg) {
+            @media (max-width: 1358px) {
                 left: auto;
                 top: 30px;
             }
@@ -51,7 +51,7 @@
             position: relative;
             z-index: -1;
 
-            @media (max-width: $--lg) {
+            @media (max-width: 1358px) {
                 transform: rotate(-90deg);
                 width: 300px;
             }
@@ -73,7 +73,7 @@
         color: $--color-white;
         opacity: 0.4;
 
-        @media (max-width: $--lg) {
+        @media (max-width: 1358px) {
             display: none;
         }
     }
@@ -137,7 +137,7 @@
         display: flex;
         position: relative;
 
-        @media (max-width: $--lg) {
+        @media (max-width: 1358px) {
             flex-direction: column;
             align-items: center;
         }
@@ -151,7 +151,7 @@
         left: 200px;
         margin: 20px 0 0 0;
 
-        @media (max-width: $--lg) {
+        @media (max-width: 1358px) {
             left: 0;
             margin: 0;
             max-width: 600px;
