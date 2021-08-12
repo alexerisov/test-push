@@ -2,19 +2,15 @@
 @import "~styles/variables.scss";
 
 .wrapper {
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
   max-width: 115px;
-  margin-right: 30px;
-
-  &:last-child {
-    margin: 0;
-  }
 }
 
 .name {
   @include fontSemiBold;
+  width: max-content;
   font-size: 14px;
   word-break: break-word;
 }

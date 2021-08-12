@@ -4,7 +4,11 @@
 .profile {
   display: flex;
   flex-direction: column;
-  padding: 40px 119.5px 80px;
+  padding: 40px 0 80px;
+
+  @media (max-width: $--md) {
+    padding: 20px 0;
+  }
 }
 
 .content {
@@ -17,6 +21,11 @@
   font-size: 20px;
   font-weight: 300;
   line-height: 45px;
+
+  @media (max-width: $--md) {
+    align-self: center;
+    margin-bottom: 20px;
+  }
 
   span {
     color: $--color-orange;
@@ -43,9 +52,10 @@
 }
 
 .avatar {
-  position: absolute;
-  width: 114px;
-  height: 114px;
+  @media (max-width: $--xs) {
+    position: unset !important;
+    align-self: center;
+  }
 }
 
 // Info
@@ -54,9 +64,18 @@
   margin-bottom: 40px;
   border-bottom: 1px solid $--color-gray2;
 
+  @media (max-width: $--xs) {
+    display: flex;
+    flex-direction: column;
+  }
+
   &__content {
     display: flex;
     padding-top: 24px;
+
+    @media (max-width: $--md) {
+      flex-direction: column;
+    }
   }
 }
 
@@ -71,8 +90,21 @@
   padding-right: 56px;
   border-right: 1px solid $--color-gray;
 
+  @media (max-width: $--md) {
+    padding-right: 0;
+    width: 100%;
+    border: none;
+  }
+
   &__table {
     width: 100%;
+  }
+}
+
+.row {
+  @media (max-width: $--xs) {
+    display: grid;
+    grid-template-columns: 1fr;
   }
 }
 
@@ -80,11 +112,21 @@
   display: flex;
   flex-direction: column;
   padding-left: 56px;
+
+  @media (max-width: $--md) {
+    width: 100%;
+    padding-left: 0;
+  }
 }
 
 .cell {
   max-width: 50%;
   padding-bottom: 28px;
+
+  @media (max-width: $--md) {
+    min-width: 100%;
+    max-width: 100%;
+  }
 }
 
 .cell:nth-child(2n) {
@@ -106,10 +148,18 @@
   font-size: 18px;
   line-height: 22px;
   color: $--color-gray7;
+
+  @media (max-width: $--md) {
+    max-width: 100%;
+  }
 }
 
 .name {
   margin: 0 0 63px 138px;
+
+  @media (max-width: $--xs) {
+    margin: 0;
+  }
 
   &__field {
     font-size: 22px;
@@ -120,6 +170,7 @@
     max-width: 100%;
     font-size: 20px;
     line-height: 24px;
+    margin-bottom: 16px;
   }
 }
 
@@ -130,15 +181,19 @@
 /* Role models */
 .roleCarousel {
   position: relative;
-  max-height: max-content;
+  height: max-content;
+
+  &__slider {
+    max-height: max-content;
+  }
 
   & ul {
-    padding-left: 20px;
+    width: max-content !important;
   }
 
   &__item {
-    max-height: max-content;
     padding: 0 0 10px 0;
+    margin-right: 10px !important;
   }
 
   &__btn {
@@ -178,12 +233,12 @@
 
   &__next {
     @extend .roleCarousel__btn;
-    right: 5px;
+    right: 0;
   }
 
   &__prev {
     @extend .roleCarousel__btn;
-    left: 5px;
+    left: 0;
   }
 }
 
@@ -192,12 +247,13 @@
   @extend .roleCarousel;
 
   & ul {
-    padding: 5px 0 5px 43px;
+    padding: 5px 0 5px 2px;
   }
 
   &__item {
     min-height: max-content;
     padding: 0 0 10px 0;
+    margin-right: 20px !important;
   }
 
   &__btn:hover {
