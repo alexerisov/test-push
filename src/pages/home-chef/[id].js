@@ -274,8 +274,8 @@ const HomePageOfTargetChef = () => {
             <CardHomeChefProfile type={3} list={chefInfo?.source_of_inspiration} />
           )}
           {chefInfo?.cooking_philosophy.every(item => !item.length) &&
-          chefInfo?.personal_cooking_mission.every(item => !item.length) &&
-          chefInfo?.source_of_inspiration.every(item => !item.length) && (
+            chefInfo?.personal_cooking_mission.every(item => !item.length) &&
+            chefInfo?.source_of_inspiration.every(item => !item.length) && (
               <div className={styles.itemsContainer__empty}>No other information yet exist yet!</div>
             )}
         </div>
