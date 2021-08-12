@@ -1,25 +1,31 @@
+@import "~styles/variables.scss";
+
 .layout {
     overflow: hidden;
     
     &__content {
         margin: 122px 0 0 0;
+
+      @media (max-width: $--xs) {
+        margin-top: 90px;
+      }
+    }
+
+    @media (min-width: 200px) {
+      main, header {
+        padding: 0 20px;
+      }
     }
 
     @media (min-width: 767.98px) {
-        main, header {
-          padding: 0 calc(50vw - 360px);
-        }
-    }
-
-    @media (min-width: 991.98px) {
       main, header {
-        padding: 0 calc(50vw - 550px);
+        padding: 0 80px;
       }
     }
 
     @media (min-width: 1199.98px) {
       main, header {
-        padding: 0 calc(50vw - 600px);
+        padding: 0 120px;
       }
     }
 

@@ -11,7 +11,8 @@ function initStore(initialState) {
 
   const composeEnhancers = composeWithDevTools({
     trace: true,
-    traceLimit: 25
+    traceLimit: 25,
+    serialize: true
   });
 
   return createStore(

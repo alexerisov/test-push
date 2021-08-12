@@ -58,38 +58,38 @@ const Home = (props) => {
       </button>
       <div className={classes.home__titleContainer}>
         <div className={classes.home__titleTextContainer}>
-          <p className={classes.home__titleText}>Hungry?</p>
-          <h1 className={classes.home__title}>Homemade food</h1>
-          <p className={classes.home__subtitle}>delivered doorstep</p>
+          <h1 className={classes.home__title}>Find the fame</h1>
+          <p className={classes.home__subtitle}>you deserve!</p>
         </div>
       </div>
-      {
-        props?.profile?.data?.user_type === chefType
-        ? <Button
-            variant='contained'
-            color='primary'
-            href="/recipe/upload"
-          >
-            Upload New Recipe!
-          </Button>
-        : <Button
-            variant='contained'
-            color='primary'
-            onClick={handleChangeStatus}
-          >
-            Become a home chef
-          </Button>
-      }
+      <div className={classes.home__buttonUploud}>
+        {
+          props?.profile?.data?.user_type === chefType
+          ? <Button
+              variant='contained'
+              color='primary'
+              href="/recipe/upload"
+            >
+              Upload New Recipe!
+            </Button>
+          : <Button
+              variant='contained'
+              color='primary'
+              onClick={handleChangeStatus}
+            >
+              Become a home chef
+            </Button>
+        }
+      </div>
       <img src="/images/index/mint.png" className={classes.imgMint1}/>
       <img src="/images/index/mint.png" className={classes.imgMint2}/>
       <img src="/images/index/broccoli.png" className={classes.imgBroccoli}/>
       <img src="/images/index/carrot.png" className={classes.imgCarrot}/>
-      <Carousel />
+      <Carousel images={props?.carouselItems}/>
     </section>
     <PinnedMeals />
     <HighestRatedMealsBlock />
     <MealOfWeekBlock meal={meal}/>
-    <FavoriteCuisinesBlock />
   </>;
 
 
@@ -97,13 +97,13 @@ const Home = (props) => {
     <div>
       <NextSeo
         title="Homemade food"
-        description="Your favorite recipes and meals from home with love"
+        description="Make people Happy with HOME COOKED FOOD. Eatchefs helps home chefs to produce, distribute and promote their delicious meals🤗"
         canonical="https://www.canonicalurl.ie/"
         openGraph={{
           site_name: 'Eatchefs',
           url: 'https://www.canonicalurl.ie/',
           title: 'Homemade food',
-          description: 'Your favorite recipes and meals from home with love',
+          description: 'Make people Happy with HOME COOKED FOOD. Eatchefs helps home chefs to produce, distribute and promote their delicious meals🤗',
           images: [
             {
               url: 'https://www.example.ie/og-image-01.jpg',
@@ -132,13 +132,15 @@ export default connect((state) => ({
   profile: state.profile,
 }))(Home);
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   try {
     const response = await Recipe.getMealOfWeek();
+    const banners = await Recipe.getHomepageCarouselItems();
 
     return {
       props: {
-        mealOfTheWeek: response?.data[0]
+        mealOfTheWeek: response?.data[0],
+        carouselItems: banners.data
       },
     };
   }

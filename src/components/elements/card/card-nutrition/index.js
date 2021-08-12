@@ -16,7 +16,6 @@ const CardNutrition = (props) => {
         type="button"
         className={classes.cardNutrition__button}
         onClick={handleDelete}>
-          &#128473;
       </button>
     </div>
   );

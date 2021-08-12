@@ -3,9 +3,13 @@
 
 .meal {
     @include fontRegular();
-    padding: 92px 0 0 0;
+    padding: 92px 0;
     color: $--color-gray3;
     position: relative;
+
+    @media (max-width: $--sm) {
+        padding: 30px 0 0 0;
+    }
 
     &__images {
         position: relative;
@@ -24,6 +28,17 @@
             top: 135px;
             position: absolute;
             cursor: pointer;
+
+            @media (max-width: 1358px) {
+                left: auto;
+                top: 30px;
+            }
+
+            @media (max-width: $--sm) {
+                width: 240px;
+                height: 240px;
+                top: 0;
+            }
         }
 
         &__square {
@@ -35,6 +50,16 @@
             left: 0;
             position: relative;
             z-index: -1;
+
+            @media (max-width: 1358px) {
+                transform: rotate(-90deg);
+                width: 300px;
+            }
+
+            @media (max-width: $--sm) {
+                height: 350px;
+                width: 180px;
+            }
         }
     }
 
@@ -47,6 +72,10 @@
         transform: rotate(-90deg);
         color: $--color-white;
         opacity: 0.4;
+
+        @media (max-width: 1358px) {
+            display: none;
+        }
     }
 
     &__title {
@@ -60,6 +89,12 @@
 
         &__text {
             cursor: pointer;
+
+            @media (max-width: $--sm) {
+                @include fontSemiBold();
+                font-size: 30px;
+                line-height: 32px;
+            }
         }
     }
 
@@ -67,6 +102,10 @@
         margin: 30px 0 50px 0;
         display: flex;
         align-items: center;
+
+        @media (max-width: $--sm) {
+            margin: 30px 0 10px 0;
+        }
     }
 
     &__yellowLine {
@@ -74,6 +113,11 @@
         height: 10px;
         background: $--color-orange 0% 0% no-repeat padding-box;
         border-radius: 24px;
+
+        @media (max-width: $--sm) {
+            width: 90px;
+            height: 6px;
+        }
     }
 
     &__blueСircle {
@@ -82,11 +126,21 @@
         height: 10px;
         border-radius: 24px;
         background-color: $--color-blue;
+
+        @media (max-width: $--sm) {
+            width: 6px;
+            height: 6px;
+        }
     }
 
     &__content {
         display: flex;
         position: relative;
+
+        @media (max-width: 1358px) {
+            flex-direction: column;
+            align-items: center;
+        }
     }
 
     &__recipe {
@@ -96,6 +150,18 @@
         position: relative;
         left: 200px;
         margin: 20px 0 0 0;
+
+        @media (max-width: 1358px) {
+            left: 0;
+            margin: 0;
+            max-width: 600px;
+            top: -120px;
+        }
+
+        @media (max-width: $--sm) {
+            top: -50px;
+            max-width: 320px;
+        }
 
         &__likesButton {
             width: 253px;
@@ -128,6 +194,11 @@
             display: flex;
             gap: 0 20px;
             align-items: center;
+
+            @media (max-width: $--sm) {
+                flex-direction: column;
+                gap: 20px 0;
+            }
         }
 
         &__likesText {
@@ -152,6 +223,11 @@
             @include fontSemiBold();
             font-size: 30px;
             line-height: 40px;
+
+            @media (max-width: $--sm) {
+                font-size: 25px;
+                line-height: 35px;
+            }
         }
 
         &__subtitle {
@@ -191,6 +267,10 @@
             grid-template-columns: 1fr 1fr;
             gap: 30px 150px;
             margin: 25px 0 50px 0;
+
+            @media (max-width: $--sm) {
+                grid-template-columns: 1fr;
+            }
         }
 
         &__ingredientsItem {
@@ -215,8 +295,11 @@
             margin: 15px 0 43px 0;
             display: grid;
             grid-template-columns: 1fr 1fr 1fr 1fr;
-            gap: 53px;
             font: normal normal medium 18px/20px Montserrat;
+
+            @media (max-width: $--sm) {
+                gap: 0 7px;
+            }
         }
 
         &__nutritionItem {
@@ -227,6 +310,11 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+
+            @media (max-width: $--sm) {
+                gap: 0 7px;
+                width: 78px;
+            }
         }
 
         &__nutritionsQuantity {

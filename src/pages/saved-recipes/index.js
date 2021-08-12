@@ -1,22 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import Link from "next/link";
 import styled from 'styled-components';
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import {NoSsr} from "@material-ui/core";
-import Button from "@material-ui/core/Button";
-import Collapse from "@material-ui/core/Collapse";
 import Pagination from "@material-ui/lab/Pagination";
 
-import { LayoutPage } from "@/components/layouts";
+import {LayoutPage} from "@/components/layouts";
 import CardHighestMeals from "@/components/elements/card-highest-meals";
 
 import Recipe from "@/api/Recipe";
-import savedRecipesActions from '@/store/savedRecipes/actions';
-import { DEFAULT_VALUE_TAB_STATE } from "@/utils/constants";
+import {DEFAULT_VALUE_TAB_STATE} from "@/utils/constants";
 
 import styles from "./index.module.scss";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 
 const StyledTabs = styled(Tabs)`
     width: 100%;
@@ -55,7 +52,7 @@ const StyledTab = styled(Tab)`
 
 const SavedRecipesPage = () => {
   const dispatch = useDispatch();
-  const savedRecipes = useSelector(state => state.savedRecipes.data);
+  const [savedRecipes, setSavedRecipes ] = useState();
   const [query, setQuery] = useState(new URLSearchParams(''));
 
   // Pagination params
@@ -82,15 +79,22 @@ const SavedRecipesPage = () => {
     };
   };
 
-  useEffect(() => {
+  useEffect(async () => {
     if (query) {
-      dispatch(savedRecipesActions.startSavedRecipesRequests());
-      dispatch(savedRecipesActions.getSavedRecipes(query));
+      try {
+        const response = await Recipe.getSavedRecipes(query);
+
+        if (response.status === 200) {
+          setSavedRecipes(response.data);
+        }
+      } catch (e) {
+        console.error(e);
+      }
     }
   }, [query]);
 
   useEffect(() => {
-    setNumberOfPages(countPages(savedRecipes.count));
+    setNumberOfPages(countPages(savedRecipes?.count));
   }, [savedRecipes]);
 
   useEffect(() => {
@@ -112,11 +116,11 @@ const SavedRecipesPage = () => {
 
       <NoSsr>
         <StyledTabs value={valueTab} onChange={handleChangeOfTabs} aria-label="simple tabs example">
-          <StyledTab label={`All (${savedRecipes?.results ? savedRecipes.count : 0})`} {...a11yProps(0)} />
+          <StyledTab label={`All (${savedRecipes?.count ? savedRecipes?.count : 0})`} {...a11yProps(0)} />
         </StyledTabs>
       </NoSsr>
 
-      <h3 className={styles.savedRecipes__subtitle}>{`All (${savedRecipes?.results ? savedRecipes.count : 0})`}</h3>
+      <h3 className={styles.savedRecipes__subtitle}>{`All (${savedRecipes?.count ? savedRecipes?.count : 0})`}</h3>
 
       <div className={styles.savedRecipes__wrapper}>
         <div className={styles.savedRecipes__container}>

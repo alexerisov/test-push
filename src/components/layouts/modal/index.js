@@ -22,9 +22,7 @@ const LayoutModal = (props) => {
       onClick={(e) => onCloseOverflow(e)}>
       <div className={`LayoutModal LayoutModal_theme_${themeName}`}>
         {toolClose ? (
-          <a className='LayoutModal__close' href='#' onClick={onClose}>
-            &#128473;
-          </a>
+          <a className='LayoutModal__close' href='#' onClick={onClose}></a>
         ) : null}
 
         <div className='LayoutModal__inner'>

@@ -117,7 +117,9 @@ export default {
     title = null,
     types = null,
     ordering = null,
-  }) => {
+  }, includeEatChef = false) => {
+    const eatchefRecipesParams =  !includeEatChef ? {} : {include_eatchefs_recipes: 'Y'};
+
     return http.get(`/recipe`, {
       params: {
         cooking_methods,
@@ -127,6 +129,7 @@ export default {
         title,
         types,
         ordering,
+        ...eatchefRecipesParams
       },
     });
   },
@@ -148,7 +151,14 @@ export default {
     return http.get(`/recipe/meal_of_the_week`);
   },
 
-  getRecipe: (id) => {
+  getRecipe: (id, token) => {
+    if (token && token !== "{\"token\":null,\"refresh\":null}") {
+      return http.get(`/recipe/${id}`, {
+        headers: {
+          'Authorization': `Bearer ${JSON.parse(token).token}`
+        }
+      });
+    }
     return http.get(`/recipe/${id}`);
   },
 

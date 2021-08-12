@@ -130,15 +130,15 @@ export const nutritions = {
 
 export const ordering = [
   {
-    valueSort: "views_number",
+    valueSort: "-views_number",
     nameSort: "Views"
   },
   {
-    valueSort: "likes_number",
+    valueSort: "-likes_number",
     nameSort: "Vote"
   },
   {
-    valueSort: "created_at",
+    valueSort: "-created_at",
     nameSort: "New"
   },
 ];

@@ -22,15 +22,16 @@ import { isWindowExist } from '@/utils/isTypeOfWindow';
 import classes from "./form-create-recipe.module.scss";
 import { CardIngredient, CardNutrition, CardImage } from '@/components/elements/card';
 import { validator } from "@/utils/validator";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: '0 0 20px',
     minWidth: 250,
-    width: 400,
+    width: '100%',
     '& .MuiInputBase-input': {
       height: 'auto',
-      width: '400px',
+      width: '100%',
     },
     '& .MuiOutlinedInput-root': {
       borderRadius: '10px',
@@ -67,7 +68,6 @@ const MenuProps = {
   PaperProps: {
     style: {
       maxHeight: ITEM_HEIGHT * 5 + ITEM_PADDING_TOP,
-      width: 400,
     },
   },
 };
@@ -243,6 +243,8 @@ function FormCreateRecipe (props) {
       });
     // }
   }
+
+  const mobile = useMediaQuery('(max-width:576px)');
 
   return (
     <div>
@@ -456,7 +458,13 @@ function FormCreateRecipe (props) {
           data-facing-mode='environment'
           >
           </camera> */}
-          <camera id='DemoCamera' data-app-id='63f9c870-72c4-0130-04c5-123139045d73' data-sources='upload'></camera>
+          <camera 
+            id='DemoCamera'
+            data-app-id='63f9c870-72c4-0130-04c5-123139045d73' 
+            data-sources='upload' 
+            data-width={mobile ? '300px' : '530px'}
+            data-height={mobile ? '170px' : '300px'}
+          ></camera>
           <FieldError errors={error} path="preview_mp4_url" />
         </div>
         <div className={classes.createRecipeSection}>
@@ -542,7 +550,7 @@ function FormCreateRecipe (props) {
                   id="create-types-select"
                   value={data?.types}
                   onChange={onChangeSelect('types')}
-                  autoWidth
+                  fullWidth
                   error={error?.types}
                   MenuProps={MenuProps}
                   multiple
@@ -562,7 +570,7 @@ function FormCreateRecipe (props) {
                   id="create-diet-restrictions-select"
                   value={data?.diet_restrictions}
                   onChange={onChangeSelect('diet_restrictions')}
-                  autoWidth
+                  fullWidth
                   error={error?.diet_restrictions}
                   MenuProps={MenuProps}
                   multiple
@@ -582,7 +590,7 @@ function FormCreateRecipe (props) {
                   id="create-cuisines-select"
                   value={data?.cuisines}
                   onChange={onChangeSelect('cuisines')}
-                  autoWidth
+                  fullWidth
                   labelWidth={10}
                   error={error?.cuisines}
                   MenuProps={MenuProps}
@@ -603,7 +611,7 @@ function FormCreateRecipe (props) {
                   id="create-cooking-methods-select"
                   value={data?.cooking_methods}
                   onChange={onChangeSelect('cooking_methods')}
-                  autoWidth
+                  fullWidth
                   error={error?.cooking_methods}
                   MenuProps={MenuProps}
                   multiple

@@ -2,7 +2,7 @@ import React from 'react';
 import classes from "./index.module.scss";
 import Recipe from '@/api/Recipe';
 
-const Carousel = () => {
+const Carousel = ({ images }) => {
     const FIRST_POSITION = 0;
     const [itemList, setItemList] = React.useState([]);
     const [position, setPosition] = React.useState(FIRST_POSITION);
@@ -24,11 +24,8 @@ const Carousel = () => {
     };
 
     React.useEffect(() => {
-      Recipe.getHomepageCarouselItems()
-      .then((data) => {
-        setItemList(data.data);
-      });
-    }, []);
+      setItemList(images);
+    }, [images]);
 
     React.useEffect(() => {
         const timer = setInterval(() => {
