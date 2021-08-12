@@ -1,0 +1,25 @@
+@import "~styles/variables.scss";
+@import "~styles/mixins/mixins.scss";
+
+.notFound {
+  height: calc(100vh - 120px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  flex-direction: column;
+  gap: 30px;
+
+  &__subtitle {
+    font-size: 30px;
+  }
+
+  a {
+    color: $--color-orange;
+    font-size: 25px;
+
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+}
