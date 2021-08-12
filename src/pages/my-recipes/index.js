@@ -1,16 +1,16 @@
-import React, {useEffect, useState} from 'react';
-import {withRouter} from 'next/router';
+import React, { useEffect, useState } from 'react';
+import { withRouter } from 'next/router';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import Link from 'next/link';
-import {ButtonUploadRecipe} from '@/components/elements/button';
-import {LayoutPage} from '@/components/layouts';
+import { ButtonUploadRecipe } from '@/components/elements/button';
+import { LayoutPage } from '@/components/layouts';
 import Pagination from '@material-ui/lab/Pagination';
 import CardHighestMeals from '@/components/elements/card-highest-meals';
 
 import Recipe from '@/api/Recipe';
-import {RedirectWithoutAuthAndByCheckingUserType} from '@/utils/authProvider';
-import {CHEF_TYPE} from '@/utils/constants';
+import { RedirectWithoutAuthAndByCheckingUserType } from '@/utils/authProvider';
+import { CHEF_TYPE } from '@/utils/constants';
 
 import classes from './index.module.scss';
 
