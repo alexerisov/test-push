@@ -12,5 +12,9 @@
   &__title {
     font-size: 16px;
     @include fontMedium();
+    text-overflow: ellipsis;
+    max-height: 16px;
+    white-space: nowrap;
+    overflow: hidden;
   }
 }

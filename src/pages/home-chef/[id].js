@@ -264,18 +264,18 @@ const HomePageOfTargetChef = () => {
         <h2 className={styles.sectionTitle}>Other Informations</h2>
 
         <div className={styles.itemsContainer}>
-          {chefInfo?.cooking_philosophy?.length !== 0 && (
+          {!chefInfo?.cooking_philosophy.every(item => !item.length) && (
             <CardHomeChefProfile type={1} list={chefInfo?.cooking_philosophy} />
           )}
-          {chefInfo?.personal_cooking_mission?.length !== 0 && (
+          {!chefInfo?.personal_cooking_mission.every(item => !item.length) && (
             <CardHomeChefProfile type={2} list={chefInfo?.personal_cooking_mission} />
           )}
-          {chefInfo?.source_of_inspiration?.length !== 0 && (
+          {!chefInfo?.source_of_inspiration.every(item => !item.length) && (
             <CardHomeChefProfile type={3} list={chefInfo?.source_of_inspiration} />
           )}
-          {!chefInfo?.source_of_inspiration?.length &&
-            !chefInfo?.personal_cooking_mission?.length &&
-            !chefInfo?.cooking_philosophy?.length && (
+          {chefInfo?.cooking_philosophy.every(item => !item.length) &&
+          chefInfo?.personal_cooking_mission.every(item => !item.length) &&
+          chefInfo?.source_of_inspiration.every(item => !item.length) && (
               <div className={styles.itemsContainer__empty}>No other information yet exist yet!</div>
             )}
         </div>
@@ -293,8 +293,8 @@ const HomePageOfTargetChef = () => {
         <Collapse
           in={expanded}
           timeout="auto"
-          collapsedSize={380}
-          style={{ minHeight: '380px', visibility: 'visible' }}>
+          collapsedSize={325}
+          style={{ minHeight: '325px', visibility: 'visible' }}>
           <div className={styles.sectionRecipes__wrapper}>
             <div className={styles.itemsContainer}>
               {uploadRecipes &&

@@ -60,15 +60,15 @@ const CardHomeChefProfile = ({ list, type }) => {
 
           <ul className={classes.list}>
             {list?.length &&
-            list.map((item, index) => (
-              <li key={`homechef-card-${index}`} className={classes.item}>
+            list.filter(item => item.length).map((item, index) => {
+              return (<li key={`homechef-card-${index}`} className={classes.item}>
                   <span className={classes.item__circle}>
                     {index + 1}
                   </span>
 
                 <p className={classes.item__text}>{item}</p>
-              </li>
-            ))}
+              </li>);
+            })}
           </ul>
         </div>
       </CardContent>
