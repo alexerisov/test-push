@@ -3,7 +3,7 @@ import subprocess
 import sys
 
 def build():
-    cmd = f'docker build -t {os.environ.get("MAIN_CLIENT_IMAGE")} ../../'
+    cmd = f'docker build -t ec-client:latest ../../'
     os.system(cmd)
     return
 
