@@ -335,7 +335,7 @@ function FormEditAccountChef(props) {
           </div>
         </div>
         <div>
-          <h2 className={classes.profile__title}>Other Informations</h2>
+          <h2 className={classes.profile__title}>Other Information</h2>
           <div className={classes.profile__container_otherInformations}>
             {personalCookingMissionArr.length === 0 ? (
               <button
