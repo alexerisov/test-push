@@ -5,6 +5,10 @@
   width: 480px;
   min-height: 241px;
   padding: 28px 0 0 42px;
+
+  @media (max-width: $--sm) {
+    padding: 25px 25px;
+  }
 }
 
 .title {
@@ -12,15 +16,28 @@
   @include fontSemiBold();
   margin-bottom: 35px;
   color: $--color-orange;
+
+  @media (max-width: $--xs) {
+    text-align: center;
+  }
 }
 
 .listContainer {
   display: flex;
+
+  @media (max-width: $--xs) {
+    flex-direction: column;
+  }
 }
 
 .list {
   margin-left: 34px;
   list-style-type: none;
+
+  @media (max-width: $--xs) {
+    margin-top: 20px;
+    margin-left: 0;
+  }
 }
 
 .item {
@@ -36,6 +53,10 @@
 .image {
   width: 100px;
   height: 100px;
+
+  @media (max-width: $--xs) {
+    align-self: center;
+  }
 }
 
 .item__circle {
