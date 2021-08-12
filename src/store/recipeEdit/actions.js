@@ -37,7 +37,7 @@ export default {
             title: data?.title,
             cooking_time: data?.cooking_time,
             cuisines: data?.cuisines,
-            // cooking_skill: data?.cooking_time,
+            cooking_skills: data?.cooking_skills,
             cooking_methods: data?.cooking_methods,
             diet_restrictions: data?.diet_restrictions,
             description: data?.description,

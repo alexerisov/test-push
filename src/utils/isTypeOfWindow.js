@@ -6,3 +6,10 @@ export const isWindowExist = () => {
   }
 };
 
+export const getBaseUrl = () => {
+  if (isWindowExist()) {
+    return location.origin;
+  }
+
+  return global.location;
+};
