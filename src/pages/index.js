@@ -12,6 +12,8 @@ import { Button } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { modalActions, profileActions, accountActions } from '@/store/actions';
 import Recipe from '@/api/Recipe';
+import {getBaseUrl} from "@/utils/isTypeOfWindow";
+import Head from "next/head";
 
 const Home = (props) => {
   const router = useRouter();
@@ -95,31 +97,16 @@ const Home = (props) => {
 
   return (
     <div>
+      <Head>
+        <meta property="og:url" content={`${getBaseUrl()}`}/>
+      </Head>
       <NextSeo
         title="Homemade food"
         description="Make people Happy with HOME COOKED FOOD. Eatchefs helps home chefs to produce, distribute and promote their delicious meals🤗"
-        canonical="https://www.canonicalurl.ie/"
         openGraph={{
           site_name: 'Eatchefs',
-          url: 'https://www.canonicalurl.ie/',
           title: 'Homemade food',
           description: 'Make people Happy with HOME COOKED FOOD. Eatchefs helps home chefs to produce, distribute and promote their delicious meals🤗',
-          images: [
-            {
-              url: 'https://www.example.ie/og-image-01.jpg',
-              width: 800,
-              height: 600,
-              alt: 'Og Image Alt',
-            },
-            {
-              url: 'https://www.example.ie/og-image-02.jpg',
-              width: 900,
-              height: 800,
-              alt: 'Og Image Alt Second',
-            },
-            { url: 'https://www.example.ie/og-image-03.jpg' },
-            { url: 'https://www.example.ie/og-image-04.jpg' },
-          ],
         }}
       />
       <LayoutPage content={content} />

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import Head from 'next/head';
 import classes from "./index.module.scss";
 import LayoutPage from '@/components/layouts/layout-page';
 import RaitingIcon from "@/components/elements/rating-icon";
 import Recipe from '@/api/Recipe.js';
 import { useRouter } from 'next/router';
-import {cuisineList, recipeTypes, cookingMethods, dietaryrestrictions, pageNames} from '@/utils/datasets';
+import {cuisineList, recipeTypes, cookingMethods, dietaryrestrictions, pageNames, cookingSkill} from '@/utils/datasets';
 import Link from "next/link";
 import ResipeComments from "@/components/blocks/recipe-comments";
 import Account from '@/api/Account.js';
@@ -20,6 +21,9 @@ import {NextSeo} from "next-seo";
 import savedStatus from './savedStatus.svg';
 import notSavedStatus from './notSavedStatus.svg';
 import Cookies from 'cookies';
+import {theme} from "@/utils/themeProvider";
+
+import { getBaseUrl } from "@/utils/isTypeOfWindow";
 
 function RecipePage (props) {
     const router = useRouter();
@@ -161,6 +165,8 @@ function RecipePage (props) {
     const redirectToHomeChefPage = () => {
       router.push(`/home-chef/${recipe?.user?.pk}`);
     };
+
+    console.log(getBaseUrl());
 
     const [breadcrumbsName, setBreadcrumbsName] = useState('Home');
     const [breadcrumbsLink, setBreadcrumbsLink] = useState('/');
@@ -331,6 +337,12 @@ function RecipePage (props) {
                                     })}
                                 </div>
                             }
+                            {(recipe?.cooking_skills) &&
+                            <div>
+                              <h4 className={classes.recipe__subtitle}>Cooking Skills</h4>
+                              <p>{cookingSkill[recipe.cooking_skills]}</p>
+                            </div>
+                            }
                             {(recipe.types.length !== 0) &&
                                 <div>
                                     <h4 className={classes.recipe__subtitle}>Lifestyle</h4>
@@ -465,24 +477,17 @@ function RecipePage (props) {
 
     return (
       <>
-        <NextSeo
-          title={recipe?.title}
-          description={recipe?.description?.split('.').slice(0, 4).join('.')}
-          canonical="https://www.canonicalurl.ie/"
-          openGraph={{
-            url: 'https://www.canonicalurl.ie/',
-            title: `${recipe?.title}`,
-            description: `${recipe?.description?.split('.').slice(0, 4).join('.')}`,
-            images: [
-              {
-                url: '../../public/images/index/logo.png',
-                width: 120,
-                height: 83,
-                alt: 'Logo',
-              }
-            ],
-          }}
-        />
+        <Head>
+          <title>{recipe?.title}</title>
+          <meta name="description" content={recipe?.description?.split('.').slice(0, 4).join('.')} />
+          <meta name="og:title" property="og:title" content={recipe?.title} />
+          <meta name="og:description"
+                property="og:description"
+                content={recipe?.description?.split('.').slice(0, 4).join('.')}
+          />
+          <meta property="og:url" content={`${getBaseUrl()}/recipe/${recipeId}`}/>
+        </Head>
+        <NextSeo/>
         <LayoutPage content={!notFound ? content : <RecipeNotFound />} />
       </>
     );
@@ -500,7 +505,6 @@ export async function getServerSideProps(context) {
 
   try {
     const response = await Recipe.getRecipe(id, token);
-
     return {
       props: {
         recipesData: response.data,
