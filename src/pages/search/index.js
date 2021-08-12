@@ -92,10 +92,7 @@ const Recipes = (props) => {
     setDrawerOpened({ ...isDrawerOpened, [anchor]: open });
   };
 
-
-
   // formik
-
   const createQueryParams = (data) => {
     const queryParams = new URLSearchParams();
     Object.entries(data).forEach(([key, value]) => {
@@ -104,21 +101,34 @@ const Recipes = (props) => {
     return queryParams;
   };
 
+  const getInitialValuesForFormik = (name) => {
+    if (name === 'ordering') {
+      return query?.[name] || '-likes_number';
+    }
+
+    if (query?.[name]?.length) {
+      return query?.[name].split(',');
+    }
+
+    return [];
+  };
+
   const formik = useFormik({
     initialValues: {
-      diet_restrictions: [],
-      cooking_methods: [],
-      cooking_skills: [],
-      types: [],
-      ordering: [],
+      diet_restrictions: [...getInitialValuesForFormik('diet_restrictions')],
+      cooking_methods: [...getInitialValuesForFormik('cooking_methods')],
+      cooking_skills: [...getInitialValuesForFormik('cooking_skills')],
+      types: [...getInitialValuesForFormik('types')],
+      ordering: [getInitialValuesForFormik('ordering')]
     },
+    enableReinitialize: true,
     onSubmit: (values) => {
 
       values.title = title;
       values.page = page;
 
       if (typeSelection === "Beverages") {
-        values.types = [5]
+        values.types = [5];
       }
 
       router.push({
@@ -144,6 +154,7 @@ const Recipes = (props) => {
           style={{
             color: "#FFAA00"
           }}
+          checked={formik.initialValues['diet_restrictions'].includes(String(i))}
           value={i}
           onChange={(e) => {
             onChangeCheckboxInput(e);
@@ -166,7 +177,7 @@ const Recipes = (props) => {
             color: "#FFAA00"
           }}
           value={i}
-          checked={formik.values.check}
+          checked={formik.initialValues['cooking_skills'].includes(String(i))}
           onChange={(e) => {
             onChangeCheckboxInput(e);
           }}
@@ -188,6 +199,7 @@ const Recipes = (props) => {
             style={{
               color: "#FFAA00"
             }}
+            checked={formik.initialValues['types'].includes(String(i))}
             value={i}
             onChange={(e) => {
               onChangeCheckboxInput(e);
@@ -210,6 +222,7 @@ const Recipes = (props) => {
           style={{
             color: "#FFAA00"
           }}
+          checked={formik.initialValues['cooking_methods'].includes(String(i))}
           value={i}
           onChange={(e) => {
             onChangeCheckboxInput(e);
@@ -226,8 +239,8 @@ const Recipes = (props) => {
   ordering.forEach((item, index) => {
     orderingList.push(
       <MenuItem key={index} value={item.valueSort}>{item.nameSort}</MenuItem>
-    )
-  })
+    );
+  });
 
   const onChangeCheckboxInput = (e) => {
     setPage(1);
