@@ -33,15 +33,18 @@ function SearchBanner (props) {
     },
   });
 
-  const onChangeInputSearch = () => {
-    if (formik.values.search.length !== 0) {
-      Recipe.getQueryResult(formik.values.search)
-        .then((res) => setResult(res.data))
-        .catch(e => {
-          console.log('error', e);
-        }); 
+  const onChangeInputSearch = search => {
+    if (!search.length) {
+      setResult([]);
+      return;
     }
-  }
+
+    Recipe.getQueryResult(search)
+      .then(res => setResult(res.data))
+      .catch(e => {
+        console.log('error', e);
+      });
+  };
 
   const onCancel = () => {
     props.dispatch(modalActions.close());
@@ -57,7 +60,7 @@ function SearchBanner (props) {
             placeholder="Search for dish name"
             onChange={(e) => {
               formik.handleChange(e);
-              onChangeInputSearch();  
+              onChangeInputSearch(e.target.value);
             }}
             fullWidth
         />
