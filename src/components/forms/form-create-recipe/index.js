@@ -638,7 +638,7 @@ function FormCreateRecipe (props) {
                   selectItemList(cookingSkill)
                 }
                 </Select>
-                <FormHelperText>{error?.cooking_methods ? "This field is required" : ""}</FormHelperText>
+                <FormHelperText>{error?.cooking_skills ? "This field is required" : ""}</FormHelperText>
               </FormControl>
             </NoSsr>
           </div>
@@ -653,7 +653,7 @@ function FormCreateRecipe (props) {
         </button>
         <button
         className={classes.createRecipeButton_color_gray}
-        onClick={() => router.push('/profile/account-settings')}
+        onClick={() => router.push('/my-recipes')}
         >
         <p className={classes.createRecipeButton__text}>Cancel</p>
         </button>
