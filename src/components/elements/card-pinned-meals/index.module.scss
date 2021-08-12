@@ -2,6 +2,8 @@
 @import "~styles/mixins/mixins.scss";
 
 .card {
+    display: flex;
+    flex-direction: column;
     width: 276px;
     min-height: 134px;
 
