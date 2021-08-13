@@ -261,7 +261,7 @@ const HomePageOfTargetChef = () => {
       </section>
 
       <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Other Informations</h2>
+        <h2 className={styles.sectionTitle}>Other Information</h2>
 
         <div className={styles.itemsContainer}>
           {!chefInfo?.cooking_philosophy.every(item => !item.length) && (
