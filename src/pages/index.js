@@ -99,11 +99,9 @@ const Home = (props) => {
     <div>
       <NextSeo
         title="Homemade food"
-        description="Make people Happy with HOME COOKED FOOD. Eatchefs helps home chefs to produce, distribute and promote their delicious meals🤗"
         openGraph={{
           url: `${props?.absolutePath}`,
           title: 'Homemade food',
-          description: 'Make people Happy with HOME COOKED FOOD. Eatchefs helps home chefs to produce, distribute and promote their delicious meals🤗',
         }}
       />
       <LayoutPage content={content} />
