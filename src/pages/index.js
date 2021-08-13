@@ -102,11 +102,8 @@ const Home = (props) => {
       </Head>
       <NextSeo
         title="Homemade food"
-        description="Platform for Home Chefs to promote their food creations and for consumers to get inspired for a good meal"
         openGraph={{
-          site_name: 'Eatchefs',
           title: 'Homemade food',
-          description: 'Platform for Home Chefs to promote their food creations and for consumers to get inspired for a good meal',
         }}
       />
       <LayoutPage content={content} />
