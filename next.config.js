@@ -12,7 +12,7 @@ if (typeof process.env.NODE_ENV === 'undefined') {
 let envs = {};
 if (process.env.NODE_ENV === 'production') {
   envs = {
-    fbClientId: '',
+    fbClientId: '161418379213740',
     googleClientId: '',
     NODE_ENV: 'production',
     BASE_URL: 'https://api.eatchefs.com',
