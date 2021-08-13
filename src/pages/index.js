@@ -97,12 +97,10 @@ const Home = (props) => {
 
   return (
     <div>
-      <Head>
-        <meta property="og:url" content={`${getBaseUrl()}`}/>
-      </Head>
       <NextSeo
         title="Homemade food"
         openGraph={{
+          url: `${props?.absolutePath}`,
           title: 'Homemade food',
         }}
       />
@@ -116,7 +114,7 @@ export default connect((state) => ({
   profile: state.profile,
 }))(Home);
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
   try {
     const response = await Recipe.getMealOfWeek();
     const banners = await Recipe.getHomepageCarouselItems();
@@ -124,7 +122,8 @@ export async function getServerSideProps() {
     return {
       props: {
         mealOfTheWeek: response?.data[0],
-        carouselItems: banners.data
+        carouselItems: banners.data,
+        absolutePath: context.req.headers.host
       },
     };
   }
