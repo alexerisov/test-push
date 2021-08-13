@@ -1,15 +1,15 @@
 import React, {useEffect} from 'react';
 import classes from "./index.module.scss";
 import Link from "next/link";
-import {makeStyles} from "@material-ui/core/styles";
-import {accountActions, modalActions} from '@/store/actions';
-import {connect} from 'react-redux';
+import { makeStyles } from "@material-ui/core/styles";
+import { modalActions, accountActions } from '@/store/actions';
+import { connect } from 'react-redux';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import styled from 'styled-components';
-import {NoSsr} from '@material-ui/core';
-import {useRouter} from 'next/router';
-import {USER_TYPE} from "@/utils/datasets";
+import { NoSsr } from '@material-ui/core';
+import { useRouter } from 'next/router';
+import { USER_TYPE } from "@/utils/datasets";
 import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -96,7 +96,7 @@ const HeaderDefault = (props) => {
 
           <li className={classes.mobileMenu__navItem} onClick={handleExpandingMobileMenu}>
             <Link href="/">
-              <a>Chef's Pensil</a>
+              <a>{`Chef's Pensil`}</a>
             </Link>
           </li>
         </nav>
@@ -199,7 +199,6 @@ const HeaderDefault = (props) => {
               onClose={handleClose}
             >
               {props?.account?.profile?.user_type === USER_TYPE.chefType &&
-              <>
                 <MenuItem onClick={handleClose}>
                   <Link href="/my-recipes">
                     <a className={classes.header__link_place_menu}>
@@ -207,15 +206,17 @@ const HeaderDefault = (props) => {
                     </a>
                   </Link>
                 </MenuItem>
-                {/*<MenuItem onClick={handleClose} classes={{root: separatorStyles.root}}>
+              }
+
+              {/*{props?.account?.profile?.user_type === USER_TYPE.chefType &&
+                <MenuItem onClick={handleClose} classes={{root: separatorStyles.root}}>
                   <Link href="/">
                     <a className={classes.header__link_place_menu}>
                       My Pencils
                     </a>
                   </Link>
-                </MenuItem>*/}
-              </>
-              }
+                </MenuItem>
+              }*/}
               <MenuItem onClick={handleClose} classes={{root: separatorStyles.root}}>
                 <Link href="/saved-recipes">
                   <a className={classes.header__link_place_menu}>
@@ -223,7 +224,8 @@ const HeaderDefault = (props) => {
                   </a>
                 </Link>
               </MenuItem>
-              { props?.account?.profile?.user_type === USER_TYPE.viewerType && <MenuItem onClick={handleClose}>
+              { props?.account?.profile?.user_type === USER_TYPE.viewerType &&
+              <MenuItem onClick={handleClose}>
                 <Link href="/">
                   <a className={classes.header__link_place_menu}>
                     History

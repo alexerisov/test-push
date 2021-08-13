@@ -2,24 +2,15 @@ import os
 import subprocess
 import sys
 
-ENV_FILE = '.client.env'
-
 def build():
-    BASE_URL = os.environ.get("BASE_URL")
-    DOMAIN = os.environ.get("DOMAIN")
-    cmd = f'docker build ' \
-          f'--build-arg BASE_URL={BASE_URL} ' \
-          f'--build-arg DOMAIN={DOMAIN} ' \
-          f'-t {os.environ.get("MAIN_CLIENT_IMAGE")} ../../'
+    cmd = f'docker build -t ec-client:latest ../../'
     os.system(cmd)
     return
-
 
 def deploy():
     build()
     stop_and_up_services()
     return
-
 
 def up_all():
     up_services()
@@ -64,34 +55,8 @@ def stop_main_client():
     os.system(f'docker-compose  -f services/main_client.yml up -d --scale main_client=0')
     return
 
-def create_env():
-    text = f'BASE_URL={os.environ.get("BASE_URL") or ""}\n' \
-           f'DOMAIN={os.environ.get("DOMAIN") or ""}\n' \
-           f'MAIN_CLIENT_IMAGE={os.environ.get("MAIN_CLIENT_IMAGE") or ""}\n' \
-           f'NETWORK=proxy\n'
-    with open(ENV_FILE, 'w+' if os.path.exists(ENV_FILE) else 'w') as file:
-        file.write(text)
-    print(f'Env file created: {ENV_FILE}')
-    return
-
-def load_env():
-    if os.path.exists(ENV_FILE) is False:
-        print(f'{ENV_FILE} DOES NOT exist!!! Please create this file.')
-        return
-    with open(ENV_FILE, 'r') as fh:
-        vars_dict = dict()
-        for line in fh.readlines():
-            if not line.startswith('#'):
-                line_dict = (tuple(line.rstrip("\n").split('=', 1)))
-                if len(line_dict) == 2:
-                    [env, value] = line_dict
-                    vars_dict[env] = value
-    os.environ.update(vars_dict)
-    return
-
 
 if __name__ == "__main__":
-    load_env()
     args = sys.argv
     # args[0] = current file
     # args[1] = function name

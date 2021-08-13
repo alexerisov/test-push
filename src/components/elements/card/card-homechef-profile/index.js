@@ -1,10 +1,10 @@
 import React from 'react';
-import { makeStyles } from "@material-ui/core";
+import { makeStyles } from '@material-ui/core';
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 
-import classes from "./index.module.scss";
+import classes from './index.module.scss';
 
 import hat from './hat.svg';
 import bulb from './bulb.svg';
@@ -15,14 +15,14 @@ const useStyles = makeStyles({
     padding: 0
   },
   root: {
-    boxShadow: "0px 0px 20px #4848480F !important"
+    boxShadow: '0px 0px 20px #4848480F !important'
   }
 });
 
 const CardHomeChefProfile = ({ list, type }) => {
   const cardStyles = useStyles();
 
-  const choosePhoto = (type) => {
+  const choosePhoto = type => {
     switch (type) {
       // Cooking_philosophy
       case 1:
@@ -36,7 +36,7 @@ const CardHomeChefProfile = ({ list, type }) => {
     }
   };
 
-  const chooseTitle = (type) => {
+  const chooseTitle = type => {
     switch (type) {
       // Cooking_philosophy
       case 1:
@@ -51,24 +51,25 @@ const CardHomeChefProfile = ({ list, type }) => {
   };
 
   return (
-    <Card className={classes.card} classes={{root: cardStyles.root}}>
-      <CardContent classes={{root: cardStyles.content}}>
+    <Card className={classes.card} classes={{ root: cardStyles.root }}>
+      <CardContent classes={{ root: cardStyles.content }}>
         <p className={classes.title}>{chooseTitle(type)}</p>
 
         <div className={classes.listContainer}>
-          <img className={classes.image} src={choosePhoto(type)} alt="image"/>
+          <img className={classes.image} src={choosePhoto(type)} alt="image" />
 
           <ul className={classes.list}>
             {list?.length &&
-            list.map((item, index) => (
-              <li key={`homechef-card-${index}`} className={classes.item}>
-                  <span className={classes.item__circle}>
-                    {index + 1}
-                  </span>
+              list.filter(item => item.length)
+                .map((item, index) => {
+                  return (
+                    <li key={`homechef-card-${index}`} className={classes.item}>
+                      <span className={classes.item__circle}>{index + 1}</span>
 
-                <p className={classes.item__text}>{item}</p>
-              </li>
-            ))}
+                      <p className={classes.item__text}>{item}</p>
+                    </li>
+                  );
+                })}
           </ul>
         </div>
       </CardContent>

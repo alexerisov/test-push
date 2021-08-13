@@ -16,8 +16,6 @@ import {InputAdornment} from "@material-ui/core";
 
 const InputSearchComponent = (props) => {
   const router = useRouter();
-  const [isSearchFieldNotEmpty, setSearchFieldNotEmpty] = useState(false);
-
   const [result, setResult] = useState([]);
 
   const validationSchema = yup.object({
@@ -35,19 +33,18 @@ const InputSearchComponent = (props) => {
     },
   });
 
-  const onChangeInputSearch = () => {
-    if (formik.values.search.length) {
-      Recipe.getQueryResult(formik.values.search)
-        .then((res) => setResult(res.data))
-        .catch(e => {
-          console.log('error', e);
-        });
-    } else {
-      setSearchFieldNotEmpty(false);
+  const onChangeInputSearch = search => {
+    if (!search?.length) {
+      setResult([]);
+      return;
     }
-  };
 
-  console.log(isSearchFieldNotEmpty);
+    Recipe.getQueryResult(search)
+      .then(res => setResult(res.data))
+      .catch(e => {
+        console.log('error', e);
+      });
+  };
 
   const renderContent = () => {
     return <div className={classes.search}>
@@ -61,7 +58,7 @@ const InputSearchComponent = (props) => {
           placeholder="Search for dish name"
           onChange={(e) => {
             formik.handleChange(e);
-            onChangeInputSearch();
+            onChangeInputSearch(e.target.value);
           }}
           fullWidth={true}
           InputLabelProps={{ shrink: true }}
