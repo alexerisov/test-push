@@ -5,7 +5,7 @@
     display: flex;
     flex-direction: column;
     width: 276px;
-    min-height: 134px;
+    min-height: 117px;
 
     &__avatarContainer {
         height: 58px;
@@ -23,21 +23,17 @@
         display: grid;
         grid-template-columns: 58px auto;
         gap: 7px;
-        padding: 15px 10px;
+        padding: 11px 10px;
         align-items: flex-start;
         @include fontMedium();
+        font-size: 16px;
     }
 
     &__column {
+        align-self: center;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        height: 100%;
-        padding: 10px 0 0 0;
-
-        p {
-            font-size: 16px;
-        }
     }
 
     &__raiting {
@@ -51,5 +47,11 @@
     a {
         color: $--color-orange;
         margin-top: auto;
+    }
+
+    &__cta {
+        position: absolute;
+        bottom: 11px;
+        font-size: 14px;
     }
 }
