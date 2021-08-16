@@ -26,7 +26,7 @@ function SearchBanner (props) {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      router.push(`${router?.pathname}?title=${values.search}`);
+      router.push(`${router?.pathname === '/' ? 'search/' : router?.pathname}?title=${values.search}`);
       onCancel();
     },
   });
@@ -37,7 +37,7 @@ function SearchBanner (props) {
       return;
     }
 
-    if (router.pathname === '/search') {
+    if (router.pathname === '/search' || router.pathname === '/') {
       Recipe.getQueryResult(search)
         .then(res => setResult(res.data))
         .catch(e => {
@@ -75,9 +75,18 @@ function SearchBanner (props) {
             <p>Suggestions :</p>
             <p>
             {result.map((item, index) => {
-              return <Link key={index} href={`${router?.pathname}/?title=${item.result}`}>
-                <a><button onClick={onCancel} className={classes.search__buttonLink}>{item.result}</button></a>
-                </Link>
+              return (
+              <Link
+                key={index}
+                href={`${router?.pathname === '/' ? 'search/' : router?.pathname}/?title=${item.result}`}
+              >
+                <a>
+                  <button onClick={onCancel} className={classes.search__buttonLink}>
+                    {item.result}
+                  </button>
+                </a>
+              </Link>
+              );
             })}
             </p>
           </div> : <div className={classes.search__grid} />}
