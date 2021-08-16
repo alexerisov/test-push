@@ -1,0 +1,44 @@
+@import '~styles/variables.scss';
+@import '~styles/mixins/mixins.scss';
+
+.card {
+  width: 100%;
+  min-height: 70px;
+  border: 1px solid $--color-gray-10;
+  border-radius: 12px;
+  margin: 30px 0;
+  padding: 20px 50px 20px 20px;
+  position: relative;
+
+  &__data {
+    color: $--color-gray5;
+    margin-top: auto;
+    padding: 10px 0 0 0;
+  }
+
+  &__text {
+    color: $--color-black;
+    margin: 20px 0;
+
+    &:hover {
+      color: $--color-orange;
+    }
+  }
+
+  &__title {
+    margin: 0 0 10px;
+  }
+
+  &__delete {
+    position: absolute;
+    right: 20px;
+    top: 45%;
+    background-image: url('/images/index/icons-delete-cross.svg');
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+    background-position: center;
+    border: none;
+  }
+}
