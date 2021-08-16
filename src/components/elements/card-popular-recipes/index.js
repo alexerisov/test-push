@@ -1,9 +1,9 @@
 import React from 'react';
-import classes from "./index.module.scss";
-import RaitingIcon from "@/components/elements/rating-icon";
+import classes from './index.module.scss';
+import RaitingIcon from '@/components/elements/rating-icon';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import Link from "next/link";
+import Link from 'next/link';
 import styled from 'styled-components';
 import CardMedia from '@material-ui/core/CardMedia';
 import { CardActionArea } from '@material-ui/core';
@@ -16,26 +16,23 @@ const StyledCardMedia = styled(CardMedia)`
 `;
 
 const CardPopularRecipes = ({ title, image, id }) => {
-
   const router = useRouter();
 
-  const redirectToRecipeCard = (id) => {
-    router.push(`/recipe/${id}`);
+  const redirectToRecipeCard = id => {
+    router.replace(`/recipe/${id}`);
+    setTimeout(router.reload, 50);
   };
 
   return (
     <Card className={classes.card}>
       <CardActionArea onClick={() => redirectToRecipeCard(id)}>
         <div className={classes.card__content}>
-          <div
-            className={classes.card__images}
-            style={{backgroundImage: `url(${image})`}}
-          ></div>
+          <div className={classes.card__images} style={{ backgroundImage: `url(${image})` }}></div>
           <p className={classes.card__title}>{title}</p>
         </div>
       </CardActionArea>
     </Card>
   );
 };
-  
+
 export default CardPopularRecipes;
