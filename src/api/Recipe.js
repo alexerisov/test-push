@@ -105,8 +105,9 @@ export default {
     return http.get(`/recipe/pinned_meals`);
   },
 
-  getQueryResult: (search) => {
-    return http.get(`/recipe/search_suggestions?search=${search}`);
+  getQueryResult: (search, isEatChefOnly = false) => {
+    const eatchefOnlyParams = !isEatChefOnly ? '' : '&include_eatchefs_recipes=Y';
+    return http.get(`/recipe/search_suggestions?search=${search}${eatchefOnlyParams}`);
   },
 
   getSearchResult: ({
