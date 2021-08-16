@@ -12,9 +12,7 @@ import Link from "next/link";
 import { useRouter } from 'next/router';
 
 function SearchBanner (props) {
-
   const router = useRouter();
-
   const [result, setResult] = useState([]);
 
   const validationSchema = yup.object({
@@ -28,7 +26,7 @@ function SearchBanner (props) {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      router.push(`/search?title=${values.search}`);
+      router.push(`${router?.pathname}?title=${values.search}`);
       onCancel();
     },
   });
@@ -39,11 +37,19 @@ function SearchBanner (props) {
       return;
     }
 
-    Recipe.getQueryResult(search)
-      .then(res => setResult(res.data))
-      .catch(e => {
-        console.log('error', e);
-      });
+    if (router.pathname === '/search') {
+      Recipe.getQueryResult(search)
+        .then(res => setResult(res.data))
+        .catch(e => {
+          console.log('error', e);
+        });
+    } else {
+      Recipe.getQueryResult(search, true)
+        .then(res => setResult(res.data))
+        .catch(e => {
+          console.log('error', e);
+        });
+    }
   };
 
   const onCancel = () => {
@@ -69,7 +75,7 @@ function SearchBanner (props) {
             <p>Suggestions :</p>
             <p>
             {result.map((item, index) => {
-              return <Link key={index} href={`/search/?title=${item.result}`}>
+              return <Link key={index} href={`${router?.pathname}/?title=${item.result}`}>
                 <a><button onClick={onCancel} className={classes.search__buttonLink}>{item.result}</button></a>
                 </Link>
             })}
