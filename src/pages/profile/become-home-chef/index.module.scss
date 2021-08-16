@@ -63,6 +63,10 @@
         background-color: #fff;
     }
 
+    &__avatarLabel {
+        visibility: hidden;
+    }
+
     &__input {
         width: 525px;
         height: 56px;
