@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react';
-import classes from "./index.module.scss";
-import Link from "next/link";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useEffect, useState } from 'react';
+import classes from './index.module.scss';
+import Link from 'next/link';
+import { makeStyles } from '@material-ui/core/styles';
 import { modalActions, accountActions } from '@/store/actions';
 import { connect } from 'react-redux';
 import Menu from '@material-ui/core/Menu';
@@ -9,10 +9,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import styled from 'styled-components';
 import { NoSsr } from '@material-ui/core';
 import { useRouter } from 'next/router';
-import { USER_TYPE } from "@/utils/datasets";
+import { USER_TYPE } from '@/utils/datasets';
 import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import Account from '@/api/Account';
 
 import logo from './logo.svg';
 
@@ -29,15 +30,13 @@ const useSeparatorStyles = makeStyles({
   }
 });
 
-const HeaderDefault = (props) => {
+const HeaderDefault = props => {
   const mobile = useMediaQuery('(max-width: 576px)');
   const [isExpanded, setExpanded] = React.useState(false);
   const separatorStyles = useSeparatorStyles();
-  const handleClickLogin = (name) => {
+  const handleClickLogin = name => {
     return () => {
-      props.dispatch(
-        modalActions.open(name),
-      ).then(result => {
+      props.dispatch(modalActions.open(name)).then(result => {
         // result when modal return promise and close
       });
     };
@@ -45,7 +44,7 @@ const HeaderDefault = (props) => {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleClick = (event) => {
+  const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -56,7 +55,7 @@ const HeaderDefault = (props) => {
       document.body.style.overflow = 'unset';
     }
   }, [isExpanded]);
-  
+
   const router = useRouter();
   const handleLogout = () => {
     props.dispatch(accountActions.logout());
@@ -71,6 +70,14 @@ const HeaderDefault = (props) => {
     setExpanded(!isExpanded);
   };
 
+  const [notificationAmount, setNotificationAmount] = useState(null);
+
+  useEffect(() => {
+    if (props.account.hasToken) {
+      Account.getNotifications().then(res => setNotificationAmount(res.data.length));
+    }
+  }, [props.account.hasToken]);
+
   const mobileMenu = (
     <div className={isExpanded ? classes.mobileMenu : classes.mobileMenu__dnone}>
       <div className={classes.mobileMenu__separator}></div>
@@ -83,7 +90,7 @@ const HeaderDefault = (props) => {
           </li>
 
           <li className={classes.mobileMenu__navItem} onClick={handleExpandingMobileMenu}>
-            <Link href="/get-inspired?include_eatchefs_recipes=Y">
+            <Link href="/get-inspired">
               <a>Get Inspired!</a>
             </Link>
           </li>
@@ -101,27 +108,26 @@ const HeaderDefault = (props) => {
           </li>
         </nav>
 
-        {!props.account.hasToken
-          ?
-            <li className={classes.mobileMenu__item} onClick={handleExpandingMobileMenu}>
-              <Link href="#">
-                <a onClick={handleClickLogin('register')}>Login</a>
-              </Link>
-            </li>
-          :
+        {!props.account.hasToken ? (
+          <li className={classes.mobileMenu__item} onClick={handleExpandingMobileMenu}>
+            <Link href="#">
+              <a onClick={handleClickLogin('register')}>Login</a>
+            </Link>
+          </li>
+        ) : (
           <>
-            <li className={`${classes.mobileMenu__item} ${classes.mobileMenu__itemFont}`} onClick={handleExpandingMobileMenu}>
+            <li
+              className={`${classes.mobileMenu__item} ${classes.mobileMenu__itemFont}`}
+              onClick={handleExpandingMobileMenu}>
               <Link href="/profile/account-settings">
                 <a>My Profile</a>
               </Link>
             </li>
-            {props?.account?.profile?.user_type === USER_TYPE.chefType &&
+            {props?.account?.profile?.user_type === USER_TYPE.chefType && (
               <>
                 <li className={classes.mobileMenu__item} onClick={handleExpandingMobileMenu}>
                   <Link href="/my-recipes">
-                    <a>
-                      My Recipes
-                    </a>
+                    <a>My Recipes</a>
                   </Link>
                 </li>
 
@@ -133,32 +139,28 @@ const HeaderDefault = (props) => {
                   </Link>
                 </li>*/}
               </>
-            }
+            )}
 
             <li className={classes.mobileMenu__item} onClick={handleExpandingMobileMenu}>
               <Link href="/saved-recipes">
-                <a>
-                Saved Recipes
-                </a>
+                <a>Saved Recipes</a>
               </Link>
             </li>
 
-            {props?.account?.profile?.user_type === USER_TYPE.viewerType &&
+            {props?.account?.profile?.user_type === USER_TYPE.viewerType && (
               <li className={classes.mobileMenu__item} onClick={handleExpandingMobileMenu}>
                 <Link href="/">
-                  <a>
-                  History
-                  </a>
+                  <a>History</a>
                 </Link>
               </li>
-            }
+            )}
             <li className={classes.mobileMenu__item} onClick={handleLogout}>
               <Link href="#">
                 <a>Logout</a>
               </Link>
             </li>
           </>
-          }
+        )}
       </ul>
     </div>
   );
@@ -169,7 +171,7 @@ const HeaderDefault = (props) => {
         <Link href="/search?title=">
           <a className={classes.header__link}>Recipes</a>
         </Link>
-        <Link href="/get-inspired?include_eatchefs_recipes=Y">
+        <Link href="/get-inspired">
           <a className={classes.header__link}>Get Inspired!</a>
         </Link>
         <Link href="/menu">
@@ -177,36 +179,37 @@ const HeaderDefault = (props) => {
         </Link>
       </nav>
       <NoSsr>
-        {!props.account.hasToken
-          ? <button className={classes.header__button} onClick={handleClickLogin('register')}>Login</button>
-          : <>
+        {!props.account.hasToken ? (
+          <button className={classes.header__button} onClick={handleClickLogin('register')}>
+            Login
+          </button>
+        ) : (
+          <div>
+            <Link href="/notifications">
+              <a className={classes.header__notifications}>
+                <img src="/images/index/icons-bell.png" />
+                {notificationAmount && (
+                  <span className={classes.header__notifications__amount}>{notificationAmount}</span>
+                )}
+              </a>
+            </Link>
             <button onClick={handleClick} className={classes.header__button}>
               {props?.account?.profile?.user_type === USER_TYPE.viewerType
-                ?
-                `Hi, ${props?.account?.profile?.full_name
-                  ? props?.account?.profile?.full_name?.split(' ')[0]
-                  : 'user'}!`
-                :
-                `Hi, ${props?.account?.profile?.full_name
-                  ? props?.account?.profile?.full_name?.split(' ')[0]
-                  : 'chef'}!`
-              }
+                ? `Hi, ${
+                    props?.account?.profile?.full_name ? props?.account?.profile?.full_name?.split(' ')[0] : 'user'
+                  }!`
+                : `Hi, ${
+                    props?.account?.profile?.full_name ? props?.account?.profile?.full_name?.split(' ')[0] : 'chef'
+                  }!`}
             </button>
-            <StyledMenu
-              id="simple-menu"
-              anchorEl={anchorEl}
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-            >
-              {props?.account?.profile?.user_type === USER_TYPE.chefType &&
+            <StyledMenu id="simple-menu" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+              {props?.account?.profile?.user_type === USER_TYPE.chefType && (
                 <MenuItem onClick={handleClose}>
                   <Link href="/my-recipes">
-                    <a className={classes.header__link_place_menu}>
-                      My Recipes
-                    </a>
+                    <a className={classes.header__link_place_menu}>My Recipes</a>
                   </Link>
                 </MenuItem>
-              }
+              )}
 
               {/*{props?.account?.profile?.user_type === USER_TYPE.chefType &&
                 <MenuItem onClick={handleClose} classes={{root: separatorStyles.root}}>
@@ -217,21 +220,18 @@ const HeaderDefault = (props) => {
                   </Link>
                 </MenuItem>
               }*/}
-              <MenuItem onClick={handleClose} classes={{root: separatorStyles.root}}>
+              <MenuItem onClick={handleClose} classes={{ root: separatorStyles.root }}>
                 <Link href="/saved-recipes">
-                  <a className={classes.header__link_place_menu}>
-                    Saved Recipes
-                  </a>
+                  <a className={classes.header__link_place_menu}>Saved Recipes</a>
                 </Link>
               </MenuItem>
-              { props?.account?.profile?.user_type === USER_TYPE.viewerType &&
-              <MenuItem onClick={handleClose}>
-                <Link href="/">
-                  <a className={classes.header__link_place_menu}>
-                    History
-                  </a>
-                </Link>
-              </MenuItem>}
+              {props?.account?.profile?.user_type === USER_TYPE.viewerType && (
+                <MenuItem onClick={handleClose}>
+                  <Link href="/">
+                    <a className={classes.header__link_place_menu}>History</a>
+                  </Link>
+                </MenuItem>
+              )}
               <MenuItem onClick={handleClose}>
                 <Link href="/profile/account-settings">
                   <a className={classes.header__link_place_menu}>My Profile</a>
@@ -239,12 +239,14 @@ const HeaderDefault = (props) => {
               </MenuItem>
               <MenuItem onClick={handleClose}>
                 <Link href="#">
-                  <a className={classes.header__link_place_menu} onClick={handleLogout}>Logout</a>
+                  <a className={classes.header__link_place_menu} onClick={handleLogout}>
+                    Logout
+                  </a>
                 </Link>
               </MenuItem>
             </StyledMenu>
-          </>
-        }
+          </div>
+        )}
       </NoSsr>
     </>
   );
@@ -259,15 +261,28 @@ const HeaderDefault = (props) => {
         </Link>
 
         {!mobile && defaultContent}
-
-        {mobile && !isExpanded && <MenuIcon className={classes.header__burger} onClick={handleExpandingMobileMenu} />}
-        {mobile && isExpanded && <CloseIcon className={classes.header__burger} onClick={handleExpandingMobileMenu} />}
+        {mobile && (
+          <div>
+            {
+              <Link href="/notifications">
+                <a className={classes.header__notifications}>
+                  <img src="/images/index/icons-bell.png" />
+                  {notificationAmount && (
+                    <span className={classes.header__notifications__amount}>{notificationAmount}</span>
+                  )}
+                </a>
+              </Link>
+            }
+            {!isExpanded && <MenuIcon className={classes.header__burger} onClick={handleExpandingMobileMenu} />}
+            {isExpanded && <CloseIcon className={classes.header__burger} onClick={handleExpandingMobileMenu} />}
+          </div>
+        )}
       </div>
       {mobile && mobileMenu}
     </div>
   );
 };
-  
-export default connect((state) => ({
-  account: state.account,
+
+export default connect(state => ({
+  account: state.account
 }))(HeaderDefault);

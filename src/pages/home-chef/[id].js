@@ -23,23 +23,21 @@ import Account from '@/api/Account';
 import styles from '@/pages/home-chef/index.module.scss';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 
-const useAvatarStyles = makeStyles(theme => ({
-  circle: {
-    position: 'absolute',
-    width: '114px',
-    height: '114px'
+const useAvatarStyles = makeStyles({
+  root: {
+      position: 'absolute',
+      width: '114px !important',
+      height: '114px !important'
   }
-}));
+});
 
 const HomePageOfTargetChef = () => {
   const mobile = useMediaQuery('(max-width: 568px)');
   const tablet = useMediaQuery('(max-width: 992px)');
-  const desktop = useMediaQuery('(max-width: 1200px)');
   const avatarStyles = useAvatarStyles();
   const router = useRouter();
   const [chefInfo, setChefInfo] = useState(null);
   const [chefId, setChefId] = useState(null);
-  console.log(chefInfo);
   const [uploadRecipes, setUploadRecipes] = useState();
 
   const [expanded, setExpanded] = React.useState(false);
@@ -134,10 +132,10 @@ const HomePageOfTargetChef = () => {
 
       <section className={`${styles.section} ${styles.info}`}>
         <Avatar
-          classes={{ circle: avatarStyles.circle }}
+          className={styles.avatar}
+          classes={{ root: avatarStyles.root }}
           src={chefInfo?.avatar}
           variant="circle"
-          className={styles.avatar}
         />
 
         <div className={styles.info__content}>
