@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import { connect } from 'react-redux';
+import Head from 'next/head';
 import classes from './index.module.scss';
 import LayoutPage from '@/components/layouts/layout-page';
+import RaitingIcon from '@/components/elements/rating-icon';
 import Recipe from '@/api/Recipe.js';
 import { useRouter } from 'next/router';
 import {
@@ -230,9 +232,21 @@ function RecipePage(props) {
                 <div className={classes.recipe__video}>
                   {recipe.preview_mp4_url && (
                     <div className={classes.recipe__video__watermark}>
-                      <video width="715" controls controlsList="nodownload" className={classes.recipe__video__video}>
-                        <source src={recipe.preview_mp4_url} type="video/mp4" />
-                      </video>
+                      {!router.query.autoplayVideo ? (
+                        <video width="715" controls controlsList="nodownload" className={classes.recipe__video__video}>
+                          <source src={recipe.preview_mp4_url} type="video/mp4" />
+                        </video>
+                      ) : (
+                        <video
+                          width="715"
+                          controls
+                          autoplay="autoplay"
+                          muted
+                          controlsList="nodownload"
+                          className={classes.recipe__video__video}>
+                          <source src={recipe.preview_mp4_url} type="video/mp4" />
+                        </video>
+                      )}
                       <div className={classes.recipe__video__watermark__icon} />
                     </div>
                   )}
