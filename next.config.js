@@ -12,8 +12,8 @@ if (typeof process.env.NODE_ENV === 'undefined') {
 let envs = {};
 if (process.env.NODE_ENV === 'production') {
   envs = {
-    fbClientId: '',
-    googleClientId: '',
+    fbClientId: '161418379213740',
+    googleClientId: '245264013276-avgqsj1umm7sc07sk2dtdgkpmqmn0p42.apps.googleusercontent.com',
     NODE_ENV: 'production',
     BASE_URL: 'https://api.eatchefs.com',
     DEBUG: JSON.stringify(process.env.DEBUG ?? false),

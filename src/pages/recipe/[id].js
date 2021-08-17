@@ -15,7 +15,7 @@ import {
   cookingSkill
 } from '@/utils/datasets';
 import Link from 'next/link';
-import ResipeComments from '@/components/blocks/recipe-comments';
+isipeComments from '@/components/blocks/recipe-comments';
 import Account from '@/api/Account.js';
 import { modalActions } from '@/store/actions';
 import { recipePhotoSlider } from '@/store/actions';
@@ -28,9 +28,6 @@ import { NextSeo } from 'next-seo';
 import savedStatus from './savedStatus.svg';
 import notSavedStatus from './notSavedStatus.svg';
 import Cookies from 'cookies';
-import { theme } from '@/utils/themeProvider';
-
-import { getBaseUrl } from '@/utils/isTypeOfWindow';
 
 function RecipePage(props) {
   const router = useRouter();
@@ -496,18 +493,21 @@ function RecipePage(props) {
 
   return (
     <>
-      <Head>
-        <title>{recipe?.title}</title>
-        <meta name="description" content={recipe?.description?.split('.').slice(0, 4).join('.')} />
-        <meta name="og:title" property="og:title" content={recipe?.title} />
-        <meta
-          name="og:description"
-          property="og:description"
-          content={recipe?.description?.split('.').slice(0, 4).join('.')}
-        />
-        <meta property="og:url" content={`${getBaseUrl()}/recipe/${recipeId}`} />
-      </Head>
-      <NextSeo />
+      <NextSeo
+        openGraph={{
+          url: `${props?.absolutePath}/recipe/${props?.recipesData.pk}`,
+          title: `${props?.recipesData?.title}`,
+          description: `${props?.recipesData?.description?.split('.').slice(0, 4).join('.')}`,
+          images: [
+            {
+              url: `${props?.recipesData?.images[0]?.url}`,
+              width: 800,
+              height: 600,
+              alt: 'recipe image'
+            }
+          ]
+        }}
+      />
       <LayoutPage content={!notFound ? content : <RecipeNotFound />} />
     </>
   );
@@ -528,7 +528,8 @@ export async function getServerSideProps(context) {
 
     return {
       props: {
-        recipesData: response.data
+        recipesData: response.data,
+        absolutePath: context.req.headers.host
       }
     };
   } catch (e) {

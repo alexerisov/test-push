@@ -90,7 +90,7 @@ const HeaderDefault = props => {
           </li>
 
           <li className={classes.mobileMenu__navItem} onClick={handleExpandingMobileMenu}>
-            <Link href="/get-inspired?include_eatchefs_recipes=Y">
+            <Link href="/get-inspired">
               <a>Get Inspired!</a>
             </Link>
           </li>
@@ -171,7 +171,7 @@ const HeaderDefault = props => {
         <Link href="/search?title=">
           <a className={classes.header__link}>Recipes</a>
         </Link>
-        <Link href="/get-inspired?include_eatchefs_recipes=Y">
+        <Link href="/get-inspired">
           <a className={classes.header__link}>Get Inspired!</a>
         </Link>
         <Link href="/menu">
@@ -188,8 +188,10 @@ const HeaderDefault = props => {
             <Link href="/notifications">
               <a className={classes.header__notifications}>
                 <img src="/images/index/icons-bell.png" />
-                {notificationAmount && (
+                {notificationAmount && notificationAmount !== 0 ? (
                   <span className={classes.header__notifications__amount}>{notificationAmount}</span>
+                ) : (
+                  <span />
                 )}
               </a>
             </Link>
@@ -267,8 +269,10 @@ const HeaderDefault = props => {
               <Link href="/notifications">
                 <a className={classes.header__notifications}>
                   <img src="/images/index/icons-bell.png" />
-                  {notificationAmount && (
+                  {notificationAmount && notificationAmount !== 0 ? (
                     <span className={classes.header__notifications__amount}>{notificationAmount}</span>
+                  ) : (
+                    <span />
                   )}
                 </a>
               </Link>

@@ -180,7 +180,7 @@ const ProfileAccountSettings = props => {
                 formik.setFieldValue('avatar', event.currentTarget.files[0]);
               }}
             />
-            <label>Profile-pic.jpg</label>
+            <label className={classes.profile__avatarLabel}>Profile-pic.jpg</label>
           </div>
           <h2 className={classes.profile__title}>Basic Information</h2>
           <div>

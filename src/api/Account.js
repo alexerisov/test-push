@@ -185,7 +185,7 @@ export default {
   },
 
   confirmEmail: code => {
-    return http.post(`/account/confirm/email`, {
+    return http.post(`/account/email/confirm`, {
       code
     });
   },
