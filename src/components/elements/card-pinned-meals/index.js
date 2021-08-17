@@ -14,7 +14,7 @@ const CardPinnedMeals = ({ title, raitingValue, avatar, id }) => {
   const router = useRouter();
 
   const redirectToRecipeCard = id => {
-    router.push(`/recipe/${id}`);
+    router.push(`/recipe/${id}?autoplayVideo=true`);
   };
 
   return (
