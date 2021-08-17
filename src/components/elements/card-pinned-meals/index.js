@@ -12,6 +12,7 @@ const StyledCardActionArea = styled(CardActionArea)`
   flex: 1;
   display: flex;
   align-items: flex-start;
+  justify-content: flex-start;
 `;
 
 const CardPinnedMeals = ({ title, avatar, id }) => {
