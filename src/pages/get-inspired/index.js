@@ -285,7 +285,7 @@ const Recipes = props => {
   };
 
   const handleClickClearAll = () => {
-    router.push('/get-inspired?include_eatchefs_recipes=Y');
+    router.push('/get-inspired?only_eatchefs_recipes=Y');
     setTimeout(router.reload, 100);
   };
 

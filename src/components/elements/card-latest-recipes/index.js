@@ -58,7 +58,6 @@ const CardLatestRecipes = props => {
 
   const redirectToRecipeCard = id => {
     router.push(`/recipe/${id}`);
-    setTimeout(router.reload, 50);
   };
 
   return (

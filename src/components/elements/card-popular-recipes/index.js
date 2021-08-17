@@ -20,7 +20,6 @@ const CardPopularRecipes = ({ title, image, id }) => {
 
   const redirectToRecipeCard = id => {
     router.replace(`/recipe/${id}`);
-    setTimeout(router.reload, 50);
   };
 
   return (

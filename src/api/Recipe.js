@@ -106,7 +106,7 @@ export default {
   },
 
   getQueryResult: (search, isEatChefOnly = false) => {
-    const eatchefOnlyParams = !isEatChefOnly ? '' : '&include_eatchefs_recipes=Y';
+    const eatchefOnlyParams = !isEatChefOnly ? '' : '&only_eatchefs_recipes=Y';
     return http.get(`/recipe/search_suggestions?search=${search}${eatchefOnlyParams}`);
   },
 
@@ -118,8 +118,8 @@ export default {
     title = null,
     types = null,
     ordering = null,
-  }, includeEatChef = false) => {
-    const eatchefRecipesParams =  !includeEatChef ? {} : {include_eatchefs_recipes: 'Y'};
+  }, onlyEatChef = false) => {
+    const eatchefRecipesParams =  !onlyEatChef ? {} : {only_eatchefs_recipes: 'Y'};
 
     return http.get(`/recipe`, {
       params: {
