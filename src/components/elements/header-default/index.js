@@ -188,8 +188,10 @@ const HeaderDefault = props => {
             <Link href="/notifications">
               <a className={classes.header__notifications}>
                 <img src="/images/index/icons-bell.png" />
-                {notificationAmount && (
+                {notificationAmount && notificationAmount !== 0 ? (
                   <span className={classes.header__notifications__amount}>{notificationAmount}</span>
+                ) : (
+                  <span />
                 )}
               </a>
             </Link>
@@ -267,8 +269,10 @@ const HeaderDefault = props => {
               <Link href="/notifications">
                 <a className={classes.header__notifications}>
                   <img src="/images/index/icons-bell.png" />
-                  {notificationAmount && (
+                  {notificationAmount && notificationAmount !== 0 ? (
                     <span className={classes.header__notifications__amount}>{notificationAmount}</span>
+                  ) : (
+                    <span />
                   )}
                 </a>
               </Link>
