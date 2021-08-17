@@ -15,7 +15,7 @@ import {
   cookingSkill
 } from '@/utils/datasets';
 import Link from 'next/link';
-isipeComments from '@/components/blocks/recipe-comments';
+import ResipeComments from '@/components/blocks/recipe-comments';
 import Account from '@/api/Account.js';
 import { modalActions } from '@/store/actions';
 import { recipePhotoSlider } from '@/store/actions';
