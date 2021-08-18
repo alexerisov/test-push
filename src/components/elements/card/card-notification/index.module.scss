@@ -19,8 +19,16 @@
   &__text {
     color: $--color-black;
     margin: 20px 0;
+  }
+
+  &__link {
+    color: $--color-orange;
 
     &:hover {
+      opacity: 0.5;
+    }
+
+    &:visited {
       color: $--color-orange;
     }
   }
