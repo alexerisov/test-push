@@ -29,7 +29,7 @@ const InputSearchComponent = (props) => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      router.push(`/search?title=${values.search}`);
+      router.push(`${router?.pathname}?title=${values.search}`);
     },
   });
 
@@ -39,11 +39,19 @@ const InputSearchComponent = (props) => {
       return;
     }
 
-    Recipe.getQueryResult(search)
-      .then(res => setResult(res.data))
-      .catch(e => {
-        console.log('error', e);
-      });
+    if (router.pathname === '/search') {
+      Recipe.getQueryResult(search)
+        .then(res => setResult(res.data))
+        .catch(e => {
+          console.log('error', e);
+        });
+    } else {
+      Recipe.getQueryResult(search, true)
+        .then(res => setResult(res.data))
+        .catch(e => {
+          console.log('error', e);
+        });
+    }
   };
 
   const renderContent = () => {
@@ -76,7 +84,7 @@ const InputSearchComponent = (props) => {
              <p>Suggestions :</p>
             <p>
               {result.map((item, index) => {
-                return <Link key={index} href={`/search/?title=${item.result}`}>
+                return <Link key={index} href={`${router?.pathname}/?title=${item.result}`}>
                   <a><button className={classes.search__buttonLink}>{item.result}</button></a>
                 </Link>
               })}

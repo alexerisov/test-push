@@ -1,14 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import { connect } from 'react-redux';
 import Head from 'next/head';
-import classes from "./index.module.scss";
+import classes from './index.module.scss';
 import LayoutPage from '@/components/layouts/layout-page';
-import RaitingIcon from "@/components/elements/rating-icon";
+import RaitingIcon from '@/components/elements/rating-icon';
 import Recipe from '@/api/Recipe.js';
 import { useRouter } from 'next/router';
-import {cuisineList, recipeTypes, cookingMethods, dietaryrestrictions, pageNames, cookingSkill} from '@/utils/datasets';
-import Link from "next/link";
-import ResipeComments from "@/components/blocks/recipe-comments";
+import {
+  cuisineList,
+  recipeTypes,
+  cookingMethods,
+  dietaryrestrictions,
+  pageNames,
+  cookingSkill
+} from '@/utils/datasets';
+import Link from 'next/link';
+import ResipeComments from '@/components/blocks/recipe-comments';
 import Account from '@/api/Account.js';
 import { modalActions } from '@/store/actions';
 import { recipePhotoSlider } from '@/store/actions';
@@ -21,9 +28,6 @@ import { NextSeo } from 'next-seo';
 import savedStatus from './savedStatus.svg';
 import notSavedStatus from './notSavedStatus.svg';
 import Cookies from 'cookies';
-import {theme} from "@/utils/themeProvider";
-
-import { getBaseUrl } from "@/utils/isTypeOfWindow";
 
 function RecipePage(props) {
   const router = useRouter();
@@ -78,8 +82,7 @@ function RecipePage(props) {
 
   const openRegisterPopup = name => {
     return () => {
-      props.dispatch(modalActions.open(name))
-        .then(result => {
+      props.dispatch(modalActions.open(name)).then(result => {
         // result when modal return promise and close
       });
     };
@@ -155,8 +158,8 @@ function RecipePage(props) {
     router.push(`/home-chef/${recipe?.user?.pk}`);
   };
 
-    const [breadcrumbsName, setBreadcrumbsName] = useState('Home');
-    const [breadcrumbsLink, setBreadcrumbsLink] = useState('/');
+  const [breadcrumbsName, setBreadcrumbsName] = useState('Home');
+  const [breadcrumbsLink, setBreadcrumbsLink] = useState('/');
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -229,9 +232,21 @@ function RecipePage(props) {
                 <div className={classes.recipe__video}>
                   {recipe.preview_mp4_url && (
                     <div className={classes.recipe__video__watermark}>
-                      <video width="715" controls="controls" className={classes.recipe__video__video}>
-                        <source src={recipe.preview_mp4_url} type="video/mp4" />
-                      </video>
+                      {!router.query.autoplayVideo ? (
+                        <video width="715" controls controlsList="nodownload" className={classes.recipe__video__video}>
+                          <source src={recipe.preview_mp4_url} type="video/mp4" />
+                        </video>
+                      ) : (
+                        <video
+                          width="715"
+                          controls
+                          autoplay="autoplay"
+                          muted
+                          controlsList="nodownload"
+                          className={classes.recipe__video__video}>
+                          <source src={recipe.preview_mp4_url} type="video/mp4" />
+                        </video>
+                      )}
                       <div className={classes.recipe__video__watermark__icon} />
                     </div>
                   )}
@@ -325,12 +340,12 @@ function RecipePage(props) {
                       })}
                     </div>
                   )}
-                  {(recipe?.cooking_skills) &&
-                  <div>
-                    <h4 className={classes.recipe__subtitle}>Cooking Skills</h4>
-                    <p>{cookingSkill[recipe.cooking_skills]}</p>
-                  </div>
-                  }
+                  {recipe?.cooking_skills && (
+                    <div>
+                      <h4 className={classes.recipe__subtitle}>Cooking Skills</h4>
+                      <p>{cookingSkill[recipe.cooking_skills]}</p>
+                    </div>
+                  )}
                   {recipe.types.length !== 0 && (
                     <div>
                       <h4 className={classes.recipe__subtitle}>Lifestyle</h4>
@@ -342,18 +357,21 @@ function RecipePage(props) {
                 </div>
               </div>
 
-                    {(recipe.ingredients.length !== 0) &&
-                    <div className={classes.recipe__classification}>
-                        <h2 className={classes.recipe__title}>Ingredients</h2>
-                        <div className={classes.recipe__classification__grid}>
-                            {recipe.ingredients.map((item, index) => {
-                                return <div key={index}>
-                                    <h4 className={classes.recipe__subtitle}>{item.title}</h4>
-                                    <p>{`${item.quantity} ${item.unit ?? ''}`}</p>
-                                </div>
-                            })}
+              {recipe.ingredients.length !== 0 && (
+                <div className={classes.recipe__classification}>
+                  <h2 className={classes.recipe__title}>Ingredients</h2>
+                  <div className={classes.recipe__classification__grid}>
+                    {recipe.ingredients.map((item, index) => {
+                      return (
+                        <div key={index}>
+                          <h4 className={classes.recipe__subtitle}>{item.title}</h4>
+                          <p>{`${item.quantity} ${item.unit ?? ''}`}</p>
                         </div>
-                    </div>}
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
 
               <div className={classes.recipe__nutritionContainer}>
                 <div className={classes.recipe__nutritionItem}>
@@ -473,26 +491,26 @@ function RecipePage(props) {
     </div>
   );
 
-    return (
-      <>
-        <NextSeo
-          openGraph={{
-            url: `${props?.absolutePath}/recipe/${props?.recipesData.pk}`,
-            title: `${props?.recipesData?.title}`,
-            description: `${props?.recipesData?.description?.split('.').slice(0, 4).join('.')}`,
-            images: [
-              {
-                url: `${props?.recipesData?.images[0]?.url}`,
-                width: 800,
-                height: 600,
-                alt: 'recipe image',
-              }
-            ],
-          }}
-        />
-        <LayoutPage content={!notFound ? content : <RecipeNotFound />} />
-      </>
-    );
+  return (
+    <>
+      <NextSeo
+        openGraph={{
+          url: `${props?.absolutePath}/recipe/${props?.recipesData.pk}`,
+          title: `${props?.recipesData?.title}`,
+          description: `${props?.recipesData?.description?.split('.').slice(0, 4).join('.')}`,
+          images: [
+            {
+              url: `${props?.recipesData?.images[0]?.url}`,
+              width: 800,
+              height: 600,
+              alt: 'recipe image'
+            }
+          ]
+        }}
+      />
+      <LayoutPage content={!notFound ? content : <RecipeNotFound />} />
+    </>
+  );
 }
 
 export default connect(state => ({
