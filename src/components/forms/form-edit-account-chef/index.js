@@ -80,7 +80,7 @@ function FormEditAccountChef(props) {
       phone_number: phone_number ?? '',
       city: city ?? '',
       language: language ?? '',
-      experience: experience ?? '',
+      experience: experience ?? [],
       role_models: [],
       personal_cooking_mission: personal_cooking_mission ?? [],
       source_of_inspiration: source_of_inspiration ?? [],
@@ -185,6 +185,29 @@ function FormEditAccountChef(props) {
     });
     formik.setFieldValue('role_models', nameArr);
     formik.setFieldValue('role_model_images', avatarArr);
+  };
+
+  const [experienceArr, setExperienceArr] = useState(experience ?? []);
+
+  const handleClickPopupOpenaddExperience = name => {
+    return () => {
+      props.dispatch(modalActions.open(name)).then(res => {
+        if (res) {
+          const data = experienceArr;
+          data.push(res.experience);
+          setExperienceArr(data);
+          formik.setFieldValue('experience', data);
+        }
+      });
+    };
+  };
+
+  const onClickDeleteExperience = id => {
+    const data = experienceArr.filter(function (item, index) {
+      return index !== id;
+    });
+    setExperienceArr(data);
+    formik.setFieldValue('experience', data);
   };
 
   return (
@@ -299,17 +322,25 @@ function FormEditAccountChef(props) {
             />
           </div>
         </div>
-        <div>
+        <div className={classes.profile__experience}>
           <label className={classes.profile__label}>Work Experience (if any)</label>
-          <StyledTextField
-            id="experience"
-            name="experience"
-            value={formik.values.experience ? formik.values.experience : ''}
-            onChange={formik.handleChange}
-            variant="outlined"
-            error={formik.touched.experience && Boolean(formik.errors.experience)}
-            helperText={formik.touched.experience && formik.errors.experience}
-          />
+          {experienceArr.map((item, index) => {
+            return (
+              <div className={classes.profile__experience__input} key={index}>
+                <p>{item}</p>
+                <button
+                  className={classes.profile__experience__delete}
+                  onClick={() => {
+                    onClickDeleteExperience(index);
+                  }}></button>
+              </div>
+            );
+          })}
+          <button
+            className={classes.profile__buttonAddExperience}
+            onClick={handleClickPopupOpenaddExperience('addExperience')}>
+            Add Experience
+          </button>
         </div>
         <div>
           <h2 className={classes.profile__title}>Role Models</h2>
