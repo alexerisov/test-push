@@ -14,3 +14,4 @@ export { default as changeStatusSuccess } from './change-status-success';
 export { default as showRecipePhotos } from './showRecipePhotos';
 export { default as addRoleModel } from './addRoleModel';
 export { default as addOtherInformations } from './addOtherInformations';
+export { default as addExperience } from './addExperience';
