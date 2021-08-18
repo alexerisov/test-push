@@ -180,7 +180,12 @@ const HomePageOfTargetChef = () => {
 
             <div className={styles.experience}>
               <h3 className={styles.field}>Experience</h3>
-              <p className={styles.value}>{!chefInfo?.experience ? '-' : chefInfo?.experience}</p>
+              {!chefInfo?.experience?.length
+                ? '-'
+                : chefInfo?.experience?.map(item => {
+                  return <p className={`${styles.value} ${styles.experience__value}`}>{`- ${item}`}</p>;
+                })
+              }
             </div>
           </div>
         </div>
