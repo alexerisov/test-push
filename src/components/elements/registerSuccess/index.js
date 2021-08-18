@@ -1,14 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import classes from "./registerSuccess.module.scss";
+import classes from './registerSuccess.module.scss';
 
-function RegisterSuccess (props) {
-  
+function RegisterSuccess(props) {
   return (
     <div>
+      <p className={classes.registerSuccessTextComplete}>
+        Please, follow the link in the email to complete registration
+      </p>
       <h2 className={classes.registerSuccessTitle}>REGISTERATION SUCCESSFUL</h2>
-      <p className={classes.registerSuccessSubTitle} onClick={props.onClose}>Let us know about your interests</p>
-      <p className={classes.registerSuccessText} onClick={props.onClose}>Skip and continue to website</p>
+      <p className={classes.registerSuccessSubTitle} onClick={props.onClose}>
+        Let us know about your interests
+      </p>
+      <p className={classes.registerSuccessText} onClick={props.onClose}>
+        Skip and continue to website
+      </p>
     </div>
   );
 }
