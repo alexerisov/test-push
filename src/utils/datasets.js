@@ -164,3 +164,9 @@ export const pageNames = {
   "/my-uploads": "My recipe",
   "/saved-recipes": "Saved recipes",
 }
+
+export const absolutePaths = {
+  production: 'https://eatchefs.com',
+  stage: 'https://eatchefs.goodbit.dev',
+  development: 'http://localhost:8030'
+};
