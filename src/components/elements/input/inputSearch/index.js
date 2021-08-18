@@ -29,7 +29,7 @@ const InputSearchComponent = (props) => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      router.push(`${router?.pathname}?title=${values.search}`);
+      router.push(`search?title=${values.search}&${!isOnlyEatchefRecipesQueryExist() ? '' : 'only_eatchefs_recipes=Y'}`);
     },
   });
 
@@ -39,7 +39,7 @@ const InputSearchComponent = (props) => {
       return;
     }
 
-    if (router.pathname === '/search') {
+    if (isOnlyEatchefRecipesQueryExist()) {
       Recipe.getQueryResult(search)
         .then(res => setResult(res.data))
         .catch(e => {
@@ -52,6 +52,10 @@ const InputSearchComponent = (props) => {
           console.log('error', e);
         });
     }
+  };
+
+  const isOnlyEatchefRecipesQueryExist = () => {
+    return !!router?.query?.['only_eatchefs_recipes']?.includes('Y');
   };
 
   const renderContent = () => {
@@ -84,7 +88,7 @@ const InputSearchComponent = (props) => {
              <p>Suggestions :</p>
             <p>
               {result.map((item, index) => {
-                return <Link key={index} href={`${router?.pathname}/?title=${item.result}`}>
+                return <Link key={index} href={`search?title=${item.result}&${!isOnlyEatchefRecipesQueryExist() ? '' : 'only_eatchefs_recipes=Y'}`}>
                   <a><button className={classes.search__buttonLink}>{item.result}</button></a>
                 </Link>
               })}
