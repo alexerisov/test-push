@@ -91,7 +91,7 @@ const Home = (props) => {
     </section>
     <PinnedMeals />
     <HighestRatedMealsBlock />
-    <MealOfWeekBlock meal={meal}/>
+    {meal && <MealOfWeekBlock meal={meal}/>}
   </>;
 
 
@@ -119,9 +119,11 @@ export async function getServerSideProps(context) {
     const response = await Recipe.getMealOfWeek();
     const banners = await Recipe.getHomepageCarouselItems();
 
+    const mealOfWeekBlock = response?.data?.length ? response?.data[0] : null;
+
     return {
       props: {
-        mealOfTheWeek: response?.data[0],
+        mealOfTheWeek: mealOfWeekBlock,
         carouselItems: banners.data,
         absolutePath: context.req.headers.host
       },
