@@ -29,10 +29,10 @@ export default {
     });
   },
 
-  register: ({ email, phone_number, password, user_type }) => {
+  register: ({ email, full_name, password, user_type }) => {
     return http.post(`account/register`, {
       email,
-      phone_number,
+      full_name,
       password,
       user_type
     });

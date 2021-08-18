@@ -6,28 +6,27 @@ export const types = {
   CLEAR: Symbol('CLEAR'),
   SEND_SUCCESS: Symbol('SEND_SUCCESS'),
   SEND_FAILURE: Symbol('SEND_FAILURE'),
-  CLEAR_FAILURE: Symbol('CLEAR_FAILURE'),
+  CLEAR_FAILURE: Symbol('CLEAR_FAILURE')
 };
 
 export default {
-
-  update: (data) => {
+  update: data => {
     return dispatch => {
       dispatch({
         type: types.UPDATE,
-        payload: data,
+        payload: data
       });
     };
   },
 
-  register: (data) => {
+  register: data => {
     return async dispatch => {
       dispatch({ type: types.SEND });
 
       try {
         const response = await Account.register({
           email: data.email,
-          phone_number: data.phone_number,
+          full_name: data.full_name,
           password: data.password,
           user_type: data.user_type
         });
@@ -42,9 +41,8 @@ export default {
   clear: () => {
     return dispatch => {
       dispatch({
-        type: types.CLEAR,
+        type: types.CLEAR
       });
     };
-  },
-
+  }
 };
