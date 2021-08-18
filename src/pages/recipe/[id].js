@@ -116,7 +116,7 @@ function RecipePage(props) {
     if (confirm) {
       Recipe.deleteRecipe(recipeId)
         .then(res => {
-          router.push('/my-uploads');
+          router.push('/my-recipes');
         })
         .catch(err => {
           console.log(err);
