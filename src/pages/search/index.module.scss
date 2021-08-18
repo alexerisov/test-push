@@ -118,6 +118,15 @@
             }
         }
 
+        &__label {
+            display: flex;
+            align-items: center;
+        }
+
+        &__labelTooltip {
+            display: flex;
+        }
+
         &__footer {
             position: fixed;
             bottom: 19px;
