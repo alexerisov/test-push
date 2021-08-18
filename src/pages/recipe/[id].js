@@ -493,9 +493,9 @@ function RecipePage(props) {
 
   return (
     <>
-      <NextSeo
+      {!notFound && <NextSeo
         openGraph={{
-          url: `${props?.absolutePath}/recipe/${props?.recipesData.pk}`,
+          url: `${props?.absolutePath}/recipe/${props?.recipesData?.pk}`,
           title: `${props?.recipesData?.title}`,
           description: `${props?.recipesData?.description?.split('.').slice(0, 4).join('.')}`,
           images: [
@@ -507,7 +507,7 @@ function RecipePage(props) {
             }
           ]
         }}
-      />
+      />}
       <LayoutPage content={!notFound ? content : <RecipeNotFound />} />
     </>
   );

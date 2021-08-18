@@ -160,9 +160,15 @@ export const APPROVED_STATUS = {
 };
 
 export const pageNames = {
-  '/': 'Home',
-  '/my-uploads': 'My recipe',
-  '/saved-recipes': 'Saved recipes'
+  "/": "Home",
+  "/my-uploads": "My recipe",
+  "/saved-recipes": "Saved recipes",
+}
+
+export const absolutePaths = {
+  production: 'https://eatchefs.com',
+  stage: 'https://eatchefs.goodbit.dev',
+  development: 'http://localhost:8030'
 };
 
 export const notificationTypesText = {
