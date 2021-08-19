@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import classes from "./index.module.scss";
 import LayoutPage from '@/components/layouts/layout-page';
 import { useRouter } from 'next/router';
@@ -125,7 +125,7 @@ const Recipes = (props) => {
     return queryParams;
   };
 
-  const getInitialValuesForFormik = (name) => {
+  const getInitialValuesForFormik = useCallback((name) => {
     if (name === 'ordering') {
       return query?.[name] || '-likes_number';
     }
@@ -135,7 +135,7 @@ const Recipes = (props) => {
     }
 
     return [];
-  };
+  }, [query]);
 
   const formik = useFormik({
     initialValues: {
@@ -170,6 +170,14 @@ const Recipes = (props) => {
 
   const numberCardsDisplayed = 10;
 
+  const getLabelByStatusOfCheckbox = useCallback(({fieldName, value, dataList}) => {
+    const labelClass = !formik.initialValues[fieldName].includes(String(value))
+      ? ""
+      : classes.search__filter__subLabel_active;
+
+    return <span className={labelClass}>{dataList[value]}</span>;
+  }, [formik.initialValues]);
+
   for (let i = 1; i < Object.keys(dietaryrestrictions).length; i++) {
     dietaryrestrictionsList.push(
       <FormControlLabel
@@ -187,7 +195,11 @@ const Recipes = (props) => {
           color="primary"
         />
         }
-        label={dietaryrestrictions[i]}
+        label={getLabelByStatusOfCheckbox({
+          fieldName: "diet_restrictions",
+          value: i,
+          dataList: dietaryrestrictions
+        })}
       />
     )
   }
@@ -209,7 +221,11 @@ const Recipes = (props) => {
           color="primary"
         />
         }
-        label={cookingSkill[i]}
+        label={getLabelByStatusOfCheckbox({
+          fieldName: "cooking_skills",
+          value: i,
+          dataList: cookingSkill
+        })}
       />
     )
   }
@@ -232,7 +248,11 @@ const Recipes = (props) => {
             color="primary"
           />
           }
-          label={recipeTypes[i]}
+          label={getLabelByStatusOfCheckbox({
+            fieldName: "types",
+            value: i,
+            dataList: recipeTypes
+          })}
         />
       )
     }
@@ -255,7 +275,11 @@ const Recipes = (props) => {
           color="primary"
         />
         }
-        label={cookingMethods[i]}
+        label={getLabelByStatusOfCheckbox({
+          fieldName: "cooking_methods",
+          value: i,
+          dataList: cookingMethods
+        })}
       />
     )
   }
@@ -346,7 +370,12 @@ const Recipes = (props) => {
             title={TOOLTIP_GET_INSPIRED}
             classes={{tooltip: TooltipStyles.tooltip}}
           >
-            <InfoOutlinedIcon onClick={handleTooltipOpen} style={{color: '#01d3ac', cursor: 'pointer'}} />
+            <InfoOutlinedIcon
+              fontSize={'small'}
+              className={classes.search__filter__tooltipIcon}
+              onClick={handleTooltipOpen}
+              style={{ cursor: 'pointer'}}
+            />
           </Tooltip>
       </ClickAwayListener>
     </div>
@@ -391,7 +420,7 @@ const Recipes = (props) => {
               color="primary"
             />
             }
-            label={'Get Inspired!'}
+            label={<span className={classes.search__filter__primaryLabel}>Get Inspired!</span>}
           />
           {tooltipForGetInspiredCheckbox}
         </div>
