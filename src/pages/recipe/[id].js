@@ -158,6 +158,14 @@ function RecipePage(props) {
     router.push(`/home-chef/${recipe?.user?.pk}`);
   };
 
+  const handleIngredientsUnit = unit => {
+    if (unit === 'other') {
+      return '';
+    } else {
+      return unit;
+    }
+  };
+
   const [breadcrumbsName, setBreadcrumbsName] = useState('Home');
   const [breadcrumbsLink, setBreadcrumbsLink] = useState('/');
 
@@ -365,7 +373,7 @@ function RecipePage(props) {
                       return (
                         <div key={index}>
                           <h4 className={classes.recipe__subtitle}>{item.title}</h4>
-                          <p>{`${item.quantity} ${item.unit ?? ''}`}</p>
+                          <p>{`${item.quantity} ${handleIngredientsUnit(item.unit)}`}</p>
                         </div>
                       );
                     })}
