@@ -342,6 +342,124 @@
     }
   }
 
+  &__carousel {
+    position: relative;
+    width: 715px;
+    max-height: 472px;
+
+    &Item {
+      object-fit: contain;
+      max-height: 100%;
+    }
+
+    &__wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 715px;
+      height: 472px;
+      border-radius: 5px;
+    }
+
+    &__back {
+      position: absolute;
+      top: 0;
+      left:0;
+      right:0;
+      bottom: 0;
+      background-color: black;
+      opacity: 0.1;
+    }
+
+    &__info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      z-index: 5;
+      display: flex;
+      min-width: 220px;
+      min-height: 40px;
+      max-height: 40px;
+    }
+
+    &__fullscreen {
+      position: absolute;
+      z-index: 1;
+      top: 6px;
+      right: 6px;
+      display: flex;
+      border-radius: 4px;
+      background-color: #fff;
+      cursor: pointer;
+    }
+
+    &__counter {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      color: #fff;
+      background-color: $--color-gray-11;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $--color-gray-12;
+      }
+    }
+
+    &__statusCounter {
+      padding: 3px;
+      background-color: $--color-gray-11;
+      color: #fff !important;
+      font-size: 12px !important;
+      border-radius: 4px;
+    }
+
+    &__image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    &:hover .recipe__carousel__btn {
+      display: flex;
+    }
+
+    &__btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border: none;
+      border-radius: 4px;
+      color: $--color-gray-11;
+      background: $--color-gray-14;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $--color-orange;
+        color: #fff;
+      }
+    }
+
+    &__prev {
+      @extend .recipe__carousel__btn;
+      left: 16px;
+    }
+
+    &__next {
+      @extend .recipe__carousel__btn;
+      right: 16px;
+    }
+  }
+
   &__video {
     width: max-content;
     display: flex;
