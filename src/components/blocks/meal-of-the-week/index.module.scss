@@ -31,17 +31,41 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
+
+      &:hover {
+        img {
+          transform: scale(1.8);
+        }
+
+        div {
+          transform: scale(5);
+        }
+      }
 
       &_play {
+        width: 93px;
+        height: 93px;
+        z-index: 1;
+        position: absolute;
+        transition: transform 0.25s;
+
+        @media (max-width: $--md) {
+          width: 70px;
+          height: 70px;
+        }
+      }
+
+      &__back {
         border-radius: 50%;
         width: 93px;
         height: 93px;
-        background-image: url('/images/index/play.svg');
-        background-size: 93px 93px;
-        background-position: center;
+        background-color: $--color-white;
+        z-index: 1;
+        opacity: 0.4;
+        transition: transform 0.25s;
 
         @media (max-width: $--md) {
-          background-size: 60px 60px;
           width: 60px;
           height: 60px;
         }
