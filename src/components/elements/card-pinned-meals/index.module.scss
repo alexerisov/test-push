@@ -18,6 +18,21 @@
         object-fit: cover;
     }
 
+    &__background {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+        border-radius: 50%;
+        background-color: $--color-gray8;
+    }
+
+    &__logo {
+        width: 40px !important;
+        height: auto;
+    }
+
     &__content {
         height: 100%;
         display: grid;
