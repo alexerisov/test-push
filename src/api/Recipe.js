@@ -118,8 +118,9 @@ export default {
     title = null,
     types = null,
     ordering = null,
-  }, onlyEatChef = false) => {
-    const eatchefRecipesParams =  !onlyEatChef ? {} : {only_eatchefs_recipes: 'Y'};
+    only_eatchefs_recipes = null,
+  }) => {
+    const eatchefRecipesParams =  !only_eatchefs_recipes ? {} : {only_eatchefs_recipes: 'Y'};
 
     return http.get(`/recipe`, {
       params: {

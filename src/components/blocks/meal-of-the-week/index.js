@@ -66,7 +66,8 @@ const MealOfWeekBlock = props => {
 
         <Link href={`/recipe/${recipeId}`}>
           <div className={classes.meal__images__circle} style={{ backgroundImage: `url(${image})` }}>
-            <div className={classes.meal__images__circle_play}></div>
+            <img src="/images/index/go.svg" className={classes.meal__images__circle_play} />
+            <div className={classes.meal__images__circle__back} />
           </div>
         </Link>
 

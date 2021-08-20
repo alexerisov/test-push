@@ -1,41 +1,40 @@
 import reducer from '../../utils/reducer';
-import {types} from './actions.js';
+import { types } from './actions.js';
 
 const initState = {
   data: {
     email: '',
-    phone_number: '',
+    full_name: '',
     password: '',
     user_type: '',
-    checkboxAcceptTerms: false,
+    checkboxAcceptTerms: false
   },
   isLoading: false,
-  error: null,
+  error: null
 };
 
 export default reducer(initState, {
-
   [types.UPDATE]: (state, action) => {
     return {
       ...state,
       data: {
         ...state.data,
-        ...action.payload,
-      },
+        ...action.payload
+      }
     };
   },
 
-  [types.SEND]: (state) => {
+  [types.SEND]: state => {
     return {
       ...state,
       isLoading: true,
-      error: null,
+      error: null
     };
   },
 
-  [types.CLEAR]: (state) => {
+  [types.CLEAR]: state => {
     return {
-      ...initState,
+      ...initState
     };
   },
 
@@ -44,11 +43,11 @@ export default reducer(initState, {
       ...state,
       data: {
         email: '',
-        phone_number: '',
+        full_name: '',
         password: '',
         user_type: ''
       },
-      isLoading: false,
+      isLoading: false
     };
   },
 
@@ -56,15 +55,14 @@ export default reducer(initState, {
     return {
       ...state,
       isLoading: false,
-      error: action.error,
+      error: action.error
     };
   },
 
-  [types.CLEAR_FAILURE]: (state) => {
+  [types.CLEAR_FAILURE]: state => {
     return {
       ...state,
-      error: null,
+      error: null
     };
-  },
-
+  }
 });

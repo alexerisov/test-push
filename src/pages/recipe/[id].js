@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
-import { connect } from 'react-redux';
+import {connect, useSelector} from 'react-redux';
 import Head from 'next/head';
 import classes from './index.module.scss';
+import styled from 'styled-components';
 import LayoutPage from '@/components/layouts/layout-page';
 import RaitingIcon from '@/components/elements/rating-icon';
 import Recipe from '@/api/Recipe.js';
@@ -28,8 +29,27 @@ import { NextSeo } from 'next-seo';
 import savedStatus from './savedStatus.svg';
 import notSavedStatus from './notSavedStatus.svg';
 import Cookies from 'cookies';
+import PlayArrowOutlinedIcon from '@material-ui/icons/PlayArrowOutlined';
+import PhotoCameraOutlinedIcon from '@material-ui/icons/PhotoCameraOutlined';
+
+// Carousel
+import { Carousel } from "react-responsive-carousel";
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import FullscreenOutlinedIcon from '@material-ui/icons/FullscreenOutlined';
+import VideoImageCarousel from "@/components/blocks/video-image-carousel/video-image-carousel";
+
+const StyledCarousel = styled(Carousel)`
+  .carousel-status {
+    top: unset;
+    bottom: 6px;
+    right: 5px;
+  }
+`
 
 function RecipePage(props) {
+  const currentSlider = useSelector(state => state.recipePhotoSlider.currentItemIndex);
   const router = useRouter();
   const [recipeId, setRecipeId] = useState();
   const [recipe, setRecipe] = useState();
@@ -73,7 +93,7 @@ function RecipePage(props) {
       setLikeRecipe(props?.recipesData.user_liked);
       setLikesNumber(props?.recipesData.likes_number);
       setSavedId(props?.recipesData?.user_saved_recipe);
-      props.dispatch(recipePhotoSlider.setPhotos(props.recipesData));
+      props.dispatch(recipePhotoSlider.setItems(props.recipesData));
       return;
     }
 
@@ -90,7 +110,7 @@ function RecipePage(props) {
 
   const openShowRecipePhotosPopup = currentPhotoIndex => {
     return () => {
-      props.dispatch(recipePhotoSlider.setStartPhoto(currentPhotoIndex));
+      props.dispatch(recipePhotoSlider.setCurrentItemIndex(0));
 
       props.dispatch(modalActions.open('showRecipePhotos')).then(result => {
         // result when modal return promise and close
@@ -116,7 +136,7 @@ function RecipePage(props) {
     if (confirm) {
       Recipe.deleteRecipe(recipeId)
         .then(res => {
-          router.push('/my-uploads');
+          router.push('/my-recipes');
         })
         .catch(err => {
           console.log(err);
@@ -158,6 +178,14 @@ function RecipePage(props) {
     router.push(`/home-chef/${recipe?.user?.pk}`);
   };
 
+  const handleIngredientsUnit = unit => {
+    if (unit === 'other') {
+      return '';
+    } else {
+      return unit;
+    }
+  };
+
   const [breadcrumbsName, setBreadcrumbsName] = useState('Home');
   const [breadcrumbsLink, setBreadcrumbsLink] = useState('/');
 
@@ -180,6 +208,36 @@ function RecipePage(props) {
       }
     }
   }, []);
+
+  const getVideoMarkupForCarousel = () => {
+    if (!recipe?.preview_mp4_url) {
+      return [];
+    }
+
+    return (
+      <div className={classes.recipe__video__watermark}>
+        {!router.query.autoplayVideo
+          ? (
+            <video width="715" controls controlsList="nodownload"
+                   className={classes.recipe__video__video}>
+              <source src={recipe.preview_mp4_url} type="video/mp4"/>
+            </video>
+          )
+          : (
+            <video
+              width="715"
+              controls
+              autoPlay="autoplay"
+              muted
+              controlsList="nodownload"
+              className={classes.recipe__video__video}>
+              <source src={recipe?.preview_mp4_url} type="video/mp4"/>
+            </video>
+          )}
+        <div className={classes.recipe__video__watermark__icon}/>
+      </div>
+    );
+  };
 
   const content = (
     <div className={classes.recipe}>
@@ -228,28 +286,16 @@ function RecipePage(props) {
                   </div>
                 </div>
               </div>
-              <div>
-                <div className={classes.recipe__video}>
-                  {recipe.preview_mp4_url && (
-                    <div className={classes.recipe__video__watermark}>
-                      {!router.query.autoplayVideo ? (
-                        <video width="715" controls controlsList="nodownload" className={classes.recipe__video__video}>
-                          <source src={recipe.preview_mp4_url} type="video/mp4" />
-                        </video>
-                      ) : (
-                        <video
-                          width="715"
-                          controls
-                          autoplay="autoplay"
-                          muted
-                          controlsList="nodownload"
-                          className={classes.recipe__video__video}>
-                          <source src={recipe.preview_mp4_url} type="video/mp4" />
-                        </video>
-                      )}
-                      <div className={classes.recipe__video__watermark__icon} />
-                    </div>
-                  )}
+
+              <div className={classes.recipe__video}>
+                {(recipe?.images.length !== 0 || recipe?.preview_thumbnail_url) &&
+                  <VideoImageCarousel>
+                    {getVideoMarkupForCarousel()}
+
+                    {recipe?.images.map(item => (
+                        <img className={classes.recipe__carouselItem} key={`recipe-slider-${item?.pk}`} src={item?.url} alt="recipe photo"/>
+                    ))}
+                  </VideoImageCarousel>}
                   <div className={classes.recipe__video__player}>
                     <div className={classes.recipe__video__player_row}>
                       <div className={classes.recipe__video__views}>
@@ -306,7 +352,7 @@ function RecipePage(props) {
                     </div>
                   </div>
                 </div>
-              </div>
+
               <div className={classes.recipe__description}>
                 <h2 className={classes.recipe__title}>Description</h2>
 
@@ -365,7 +411,7 @@ function RecipePage(props) {
                       return (
                         <div key={index}>
                           <h4 className={classes.recipe__subtitle}>{item.title}</h4>
-                          <p>{`${item.quantity} ${item.unit ?? ''}`}</p>
+                          <p>{`${item.quantity} ${handleIngredientsUnit(item.unit)}`}</p>
                         </div>
                       );
                     })}
@@ -388,21 +434,10 @@ function RecipePage(props) {
                 </div>
                 <div className={classes.recipe__nutritionItem}>
                   <p className={classes.recipe__nutritionsQuantity}>
-                    {recipe.carbohydrates ? recipe.carbohydrates : '-'}
+                    {recipe.carbohydrates ? `${recipe.carbohydrates}%` : '-'}
                   </p>
                   <p className={classes.recipe__nutritionsName}>Carbs</p>
                 </div>
-              </div>
-
-              <div className={classes.recipe__gridPhoto}>
-                {recipe.images.map((item, index) => (
-                  <div
-                    key={item.id}
-                    className={classes.cardImage}
-                    style={{ backgroundImage: `url(${item.url})` }}
-                    onClick={openShowRecipePhotosPopup(index)}
-                  />
-                ))}
               </div>
 
               {recipe.steps.length !== 0 && (
@@ -493,21 +528,23 @@ function RecipePage(props) {
 
   return (
     <>
-      <NextSeo
-        openGraph={{
-          url: `${props?.absolutePath}/recipe/${props?.recipesData.pk}`,
-          title: `${props?.recipesData?.title}`,
-          description: `${props?.recipesData?.description?.split('.').slice(0, 4).join('.')}`,
-          images: [
-            {
-              url: `${props?.recipesData?.images[0]?.url}`,
-              width: 800,
-              height: 600,
-              alt: 'recipe image'
-            }
-          ]
-        }}
-      />
+      {!notFound && (
+        <NextSeo
+          openGraph={{
+            url: `${props?.absolutePath}/recipe/${props?.recipesData?.pk}`,
+            title: `${props?.recipesData?.title}`,
+            description: `${props?.recipesData?.description?.split('.').slice(0, 4).join('.')}`,
+            images: [
+              {
+                url: `${props?.recipesData?.images[0]?.url}`,
+                width: 800,
+                height: 600,
+                alt: 'recipe image'
+              }
+            ]
+          }}
+        />
+      )}
       <LayoutPage content={!notFound ? content : <RecipeNotFound />} />
     </>
   );

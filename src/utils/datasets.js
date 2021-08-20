@@ -118,7 +118,9 @@ export const units = {
   46: 'sprig(s)',
   47: 'stalk(s)',
   48: 'tablespoon(s)',
-  49: 'teaspoon(s)'
+  49: 'teaspoon(s)',
+  50: 'thing(s)',
+  51: 'other'
 };
 
 export const nutritions = {
@@ -165,40 +167,50 @@ export const pageNames = {
   '/saved-recipes': 'Saved recipes'
 };
 
+export const absolutePaths = {
+  production: 'https://eatchefs.com',
+  stage: 'https://eatchefs.goodbit.dev',
+  development: 'http://localhost:8030'
+};
+
 export const notificationTypesText = {
   1: payload => {
     let link = `/profile/account-settings`;
     return {
       link: link,
-      text: `Click to go to profile settings`
+      text: `Click to go to`,
+      textLink: 'profile settings'
     };
   },
   2: payload => {
     let link = `/recipe/${payload?.id}`;
     return {
       link: link,
-      text: `Click to view the recipe ${payload?.title}`
+      text: `Click to view the recipe`,
+      textLink: `${payload?.title}`
     };
   },
   3: payload => {
     let link = `/recipe/${payload?.id}`;
     return {
       link: link,
-      text: `Click to view the recipe ${payload?.title}`
+      text: `Click to view the recipe`,
+      textLink: `${payload?.title}`
     };
   },
   4: payload => {
     let link = `/recipe/${payload?.id}`;
     return {
       link: link,
-      text: `Click to view the recipe ${payload?.title}`
+      text: `Click to view the recipe`,
+      textLink: `${payload?.title}`
     };
   }
 };
 
 export const notificationTypesTitle = {
   1: () => {
-    return 'The account has been created. Welcome to EatChef!';
+    return 'The account has been created. Welcome to EatChefs!';
   },
   2: () => {
     return 'Recipe created. Awaiting approval';

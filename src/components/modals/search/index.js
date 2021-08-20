@@ -26,7 +26,7 @@ function SearchBanner (props) {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      router.push(`${router?.pathname === '/' ? 'search/' : router?.pathname}?title=${values.search}`);
+      router.push(`search?title=${values.search}&${!isOnlyEatchefRecipesQueryExist() ? '' : 'only_eatchefs_recipes=Y'}`);
       onCancel();
     },
   });
@@ -37,7 +37,7 @@ function SearchBanner (props) {
       return;
     }
 
-    if (router.pathname === '/search' || router.pathname === '/') {
+    if (!isOnlyEatchefRecipesQueryExist()) {
       Recipe.getQueryResult(search)
         .then(res => setResult(res.data))
         .catch(e => {
@@ -54,6 +54,10 @@ function SearchBanner (props) {
 
   const onCancel = () => {
     props.dispatch(modalActions.close());
+  };
+
+  const isOnlyEatchefRecipesQueryExist = () => {
+    return !!router?.query?.['only_eatchefs_recipes']?.includes('Y');
   };
 
   const renderContent = () => {
@@ -78,7 +82,7 @@ function SearchBanner (props) {
               return (
               <Link
                 key={index}
-                href={`${router?.pathname === '/' ? 'search/' : router?.pathname}/?title=${item.result}`}
+                href={`search?title=${item.result}&${!isOnlyEatchefRecipesQueryExist() ? '' : 'only_eatchefs_recipes=Y'}`}
               >
                 <a>
                   <button onClick={onCancel} className={classes.search__buttonLink}>

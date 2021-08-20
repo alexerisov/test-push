@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import CardMedia from '@material-ui/core/CardMedia';
 import { CardActionArea } from '@material-ui/core';
 import { useRouter } from 'next/router';
+import logo from '/public/images/index/logo.svg';
 
 const StyledCardMedia = styled(CardMedia)`
   .MuiCardMedia-root {
@@ -22,11 +23,20 @@ const CardPopularRecipes = ({ title, image, id }) => {
     router.replace(`/recipe/${id}`);
   };
 
+  const emptyPhoto = (
+    <div className={classes.card__background}>
+      <img className={classes.card__logo} src={logo} alt="logo"/>
+    </div>
+  );
+
   return (
     <Card className={classes.card}>
       <CardActionArea onClick={() => redirectToRecipeCard(id)}>
         <div className={classes.card__content}>
-          <div className={classes.card__images} style={{ backgroundImage: `url(${image})` }}></div>
+          {image
+            ? <div className={classes.card__images} style={{ backgroundImage: `url(${image})` }}></div>
+            : emptyPhoto
+          }
           <p className={classes.card__title}>{title}</p>
         </div>
       </CardActionArea>

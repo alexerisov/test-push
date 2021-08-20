@@ -76,6 +76,10 @@
   &__content {
     height: 100%;
     padding-top: 25px;
+
+    @media (max-width: $--sm) {
+      padding: 25px 10px;
+    }
   }
 
   &__text {

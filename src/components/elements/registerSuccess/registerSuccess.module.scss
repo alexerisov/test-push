@@ -5,7 +5,16 @@
   line-height: 1.08;
   text-align: center;
   color: $--color-green;
+  margin: 0 0 37px;
+}
+
+.registerSuccessTextComplete {
   margin: 200px 0 37px;
+  font-size: 18px;
+  line-height: 1.44;
+  text-align: center;
+  color: $--color-white;
+  font-weight: bold;
 }
 
 .registerSuccessSubTitle {

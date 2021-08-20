@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import classes from "./index.module.scss";
 import LayoutPage from '@/components/layouts/layout-page';
 import { useRouter } from 'next/router';
@@ -12,6 +12,10 @@ import { NoSsr } from '@material-ui/core';
 
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import Tooltip from '@material-ui/core/Tooltip';
+import { TOOLTIP_GET_INSPIRED } from "@/utils/constants";
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -27,6 +31,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import SearchDrawer from "@/components/elements/search-drawer";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import {InputSearch} from "@/components/elements/input";
+
 
 const StyledAccordion = styled(Accordion)`
   p {
@@ -46,6 +51,13 @@ const StyledAccordion = styled(Accordion)`
     }
   }
 `;
+
+const useStyledTooltip = makeStyles({
+  tooltip: {
+    padding: '5px 5px !important',
+    fontSize: '16px'
+  }
+});
 
 const useStyles = makeStyles((theme) => ({
   selectEmpty: {
@@ -68,6 +80,7 @@ const MenuProps = {
 };
 
 const Recipes = (props) => {
+  const TooltipStyles = useStyledTooltip();
   const mobile = useMediaQuery('(max-width: 992px)');
   const router = useRouter();
   const classMarerialUi = useStyles();
@@ -78,6 +91,17 @@ const Recipes = (props) => {
   const [data, setData] = useState();
   const [result, setResult] = useState([]);
   const [typeSelection, setTypeSelection] = useState("Food");
+
+  // Tooltip
+  const [open, setOpen] = useState(false);
+
+  const handleTooltipClose = () => {
+    setOpen(false);
+  };
+
+  const handleTooltipOpen = () => {
+    setOpen(true);
+  };
 
   // Drawer
   const [isDrawerOpened, setDrawerOpened] = useState({
@@ -101,7 +125,7 @@ const Recipes = (props) => {
     return queryParams;
   };
 
-  const getInitialValuesForFormik = (name) => {
+  const getInitialValuesForFormik = useCallback((name) => {
     if (name === 'ordering') {
       return query?.[name] || '-likes_number';
     }
@@ -111,7 +135,7 @@ const Recipes = (props) => {
     }
 
     return [];
-  };
+  }, [query]);
 
   const formik = useFormik({
     initialValues: {
@@ -119,11 +143,11 @@ const Recipes = (props) => {
       cooking_methods: [...getInitialValuesForFormik('cooking_methods')],
       cooking_skills: [...getInitialValuesForFormik('cooking_skills')],
       types: [...getInitialValuesForFormik('types')],
-      ordering: [getInitialValuesForFormik('ordering')]
+      ordering: [getInitialValuesForFormik('ordering')],
+      only_eatchefs_recipes: [...getInitialValuesForFormik('only_eatchefs_recipes')]
     },
     enableReinitialize: true,
     onSubmit: (values) => {
-
       values.title = title;
       values.page = page;
 
@@ -133,7 +157,7 @@ const Recipes = (props) => {
 
       router.push({
         search: `?${createQueryParams(values).toString()}`
-      });
+      }, null, { scroll: false });
     }
   });
 
@@ -145,6 +169,14 @@ const Recipes = (props) => {
   const orderingList = [];
 
   const numberCardsDisplayed = 10;
+
+  const getLabelByStatusOfCheckbox = useCallback(({fieldName, value, dataList}) => {
+    const labelClass = !formik.initialValues[fieldName].includes(String(value))
+      ? ""
+      : classes.search__filter__subLabel_active;
+
+    return <span className={labelClass}>{dataList[value]}</span>;
+  }, [formik.initialValues]);
 
   for (let i = 1; i < Object.keys(dietaryrestrictions).length; i++) {
     dietaryrestrictionsList.push(
@@ -163,7 +195,11 @@ const Recipes = (props) => {
           color="primary"
         />
         }
-        label={dietaryrestrictions[i]}
+        label={getLabelByStatusOfCheckbox({
+          fieldName: "diet_restrictions",
+          value: i,
+          dataList: dietaryrestrictions
+        })}
       />
     )
   }
@@ -185,7 +221,11 @@ const Recipes = (props) => {
           color="primary"
         />
         }
-        label={cookingSkill[i]}
+        label={getLabelByStatusOfCheckbox({
+          fieldName: "cooking_skills",
+          value: i,
+          dataList: cookingSkill
+        })}
       />
     )
   }
@@ -208,7 +248,11 @@ const Recipes = (props) => {
             color="primary"
           />
           }
-          label={recipeTypes[i]}
+          label={getLabelByStatusOfCheckbox({
+            fieldName: "types",
+            value: i,
+            dataList: recipeTypes
+          })}
         />
       )
     }
@@ -231,7 +275,11 @@ const Recipes = (props) => {
           color="primary"
         />
         }
-        label={cookingMethods[i]}
+        label={getLabelByStatusOfCheckbox({
+          fieldName: "cooking_methods",
+          value: i,
+          dataList: cookingMethods
+        })}
       />
     )
   }
@@ -311,6 +359,28 @@ const Recipes = (props) => {
     </button>
   </div>;
 
+  const tooltipForGetInspiredCheckbox = (
+    <div className={classes.search__filter__labelTooltip}>
+      <ClickAwayListener onClickAway={handleTooltipClose}>
+          <Tooltip PopperProps={{disablePortal: true}}
+            onClose={handleTooltipClose}
+            open={open}
+            disableFocusListener
+            disableTouchListener
+            title={TOOLTIP_GET_INSPIRED}
+            classes={{tooltip: TooltipStyles.tooltip}}
+          >
+            <InfoOutlinedIcon
+              fontSize={'small'}
+              className={classes.search__filter__tooltipIcon}
+              onClick={handleTooltipOpen}
+              style={{ cursor: 'pointer'}}
+            />
+          </Tooltip>
+      </ClickAwayListener>
+    </div>
+  );
+
   const searchFilter = (
     <>
     <div className={classes.search__filter} onSubmit={formik.handleSubmit}>
@@ -334,6 +404,26 @@ const Recipes = (props) => {
         </button>
       </div>
       <NoSsr>
+        <div className={classes.search__filter__label}>
+          <FormControlLabel
+            key={'only_eatchefs_recipes'}
+            control={<Checkbox
+              style={{
+                color: "#FFAA00"
+              }}
+              value={'Y'}
+              checked={formik.initialValues['only_eatchefs_recipes'].includes('Y')}
+              onChange={(e) => {
+                onChangeCheckboxInput(e);
+              }}
+              name="only_eatchefs_recipes"
+              color="primary"
+            />
+            }
+            label={<span className={classes.search__filter__primaryLabel}>Get Inspired!</span>}
+          />
+          {tooltipForGetInspiredCheckbox}
+        </div>
         {(typeSelection !== "Beverages") && <StyledAccordion>
           <AccordionSummary
             expandIcon={

@@ -118,6 +118,30 @@
             }
         }
 
+        &__label {
+            display: flex;
+            align-items: center;
+        }
+
+        &__primaryLabel {
+            font-size: 20px !important;
+            @include fontMedium();
+        }
+
+        &__subLabel_active {
+            font-weight: 700;
+        }
+
+        &__labelTooltip {
+            display: flex;
+        }
+
+        &__tooltipIcon {
+            position: relative;
+            right: 12px;
+            color: $--color-blue;
+        }
+
         &__footer {
             position: fixed;
             bottom: 19px;

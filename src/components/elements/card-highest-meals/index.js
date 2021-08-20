@@ -10,6 +10,7 @@ import { CardActionArea } from '@material-ui/core';
 import { useRouter } from 'next/router';
 
 import { PUBLISH_STATUS, APPROVED_STATUS } from '@/utils/datasets';
+import logo from "../../../../public/images/index/logo.svg";
 
 const StyledCardMedia = styled(CardMedia)`
   .MuiCardMedia-root {
@@ -56,7 +57,7 @@ const CardHighestMeals = props => {
   return (
     <Card className={classes.card}>
       <StyledCardActionArea onClick={() => redirectToRecipeCard(props.id)}>
-        <StyledCardMedia className={classes.card__media} image={props.image} title="" />
+        <StyledCardMedia className={classes.card__media} image={props.image ?? logo} title="" />
         <StyledCardContent className={classes.card__content}>
           <div>
             <p className={classes.card__name} title={props.title}>

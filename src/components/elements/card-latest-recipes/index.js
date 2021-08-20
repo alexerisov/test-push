@@ -10,6 +10,7 @@ import { modalActions } from '@/store/actions';
 import Recipe from '@/api/Recipe.js';
 import { useRouter } from 'next/router';
 import { CardActionArea } from '@material-ui/core';
+import logo from "../../../../public/images/index/logo.svg";
 
 const StyledCardMedia = styled(CardMedia)`
   .MuiCardMedia-root {
@@ -63,7 +64,7 @@ const CardLatestRecipes = props => {
   return (
     <Card className={classes.card}>
       <StyledCardActionArea onClick={e => redirectToRecipeCard(props.id)} component="div">
-        <StyledCardMedia className={classes.card__media} image={props.image} title="" />
+        <StyledCardMedia className={classes.card__media} image={props.image ?? logo} title="" />
         {!saveRecipeId ? (
           <button
             className={classes.card__buttonSaveRecipe}

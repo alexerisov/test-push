@@ -8,3 +8,6 @@ export const REQUIRED_FIELD = 'Required field';
 
 // Tabs Material UI
 export const DEFAULT_VALUE_TAB_STATE = 0;
+
+// Tooltip
+export const TOOLTIP_GET_INSPIRED = "If enabled, you will see only Get Inspired recipes!";
