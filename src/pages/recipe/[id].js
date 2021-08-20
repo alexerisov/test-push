@@ -388,7 +388,7 @@ function RecipePage(props) {
                 </div>
                 <div className={classes.recipe__nutritionItem}>
                   <p className={classes.recipe__nutritionsQuantity}>
-                    {recipe.carbohydrates ? recipe.carbohydrates : '-'}
+                    {recipe.carbohydrates ? `${recipe.carbohydrates}%` : '-'}
                   </p>
                   <p className={classes.recipe__nutritionsName}>Carbs</p>
                 </div>
@@ -493,21 +493,23 @@ function RecipePage(props) {
 
   return (
     <>
-      {!notFound && <NextSeo
-        openGraph={{
-          url: `${props?.absolutePath}/recipe/${props?.recipesData?.pk}`,
-          title: `${props?.recipesData?.title}`,
-          description: `${props?.recipesData?.description?.split('.').slice(0, 4).join('.')}`,
-          images: [
-            {
-              url: `${props?.recipesData?.images[0]?.url}`,
-              width: 800,
-              height: 600,
-              alt: 'recipe image'
-            }
-          ]
-        }}
-      />}
+      {!notFound && (
+        <NextSeo
+          openGraph={{
+            url: `${props?.absolutePath}/recipe/${props?.recipesData?.pk}`,
+            title: `${props?.recipesData?.title}`,
+            description: `${props?.recipesData?.description?.split('.').slice(0, 4).join('.')}`,
+            images: [
+              {
+                url: `${props?.recipesData?.images[0]?.url}`,
+                width: 800,
+                height: 600,
+                alt: 'recipe image'
+              }
+            ]
+          }}
+        />
+      )}
       <LayoutPage content={!notFound ? content : <RecipeNotFound />} />
     </>
   );
