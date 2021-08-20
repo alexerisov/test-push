@@ -1,23 +1,23 @@
 export const types = {
-  SET_START_PHOTO: Symbol('SET_START_PHOTO'),
-  SET_PHOTOS: Symbol('SET_PHOTOS')
+  SET_ITEMS: Symbol('SET_ITEMS'),
+  SET_CURRENT_ITEM: Symbol('SET_CURRENT_ITEM')
 };
 
 export default {
-  setStartPhoto: (currentPhotoIndex) => {
-    return dispatch => {
+  setItems: (recipe) => {
+    return async (dispatch) => {
       dispatch({
-        type: types.SET_START_PHOTO,
-        payload: currentPhotoIndex
+        type: types.SET_ITEMS,
+        payload: recipe
       });
     };
   },
 
-  setPhotos: (recipe) => {
+  setCurrentItemIndex: (index) => {
     return async (dispatch) => {
       dispatch({
-        type: types.SET_PHOTOS,
-        payload: recipe.images
+        type: types.SET_CURRENT_ITEM,
+        payload: index
       });
     };
   }
