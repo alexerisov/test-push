@@ -13,6 +13,20 @@
 	animation-timing-function: ease-in;
 	animation-duration: 0.5s;
 
+  &__background {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    border-radius: 50%;
+    background-color: $--color-gray8;
+  }
+
+  &__logo {
+    width: 40px !important;
+    height: auto;
+  }
+
   @media (max-width: $--sm) {
     width: 285px;
   }
@@ -28,6 +42,7 @@
     &__media {
         height: 173px;
         width: 100%;
+        background-color: $--color-gray8;
     }
 
     a {

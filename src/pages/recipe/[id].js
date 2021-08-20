@@ -280,13 +280,14 @@ function RecipePage(props) {
               </div>
 
               <div className={classes.recipe__video}>
+                {(recipe?.images.length !== 0 || recipe?.preview_thumbnail_url) &&
                   <VideoImageCarousel>
                     {getVideoMarkupForCarousel()}
 
                     {recipe?.images.map(item => (
-                        <img className={classes.recipe__carouselItem} key={item?.pk} src={item?.url}></img>
+                        <img className={classes.recipe__carouselItem} key={`recipe-slider-${item?.pk}`} src={item?.url} alt="recipe photo"/>
                     ))}
-                  </VideoImageCarousel>
+                  </VideoImageCarousel>}
                   <div className={classes.recipe__video__player}>
                     <div className={classes.recipe__video__player_row}>
                       <div className={classes.recipe__video__views}>

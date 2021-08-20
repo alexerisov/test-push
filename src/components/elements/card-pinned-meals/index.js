@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { CardActionArea } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import $clamp from "clamp-js";
+import logo from "/public/images/index/logo.svg";
 
 const StyledCardActionArea = styled(CardActionArea)`
   position: relative;
@@ -27,13 +28,19 @@ const CardPinnedMeals = ({ title, avatar, id }) => {
     router.push(`/recipe/${id}?autoplayVideo=true`);
   };
 
+  const emptyPhoto = (
+    <div className={classes.card__background}>
+      <img className={classes.card__logo} src={logo} alt="logo"/>
+    </div>
+  );
+
   return (
     <Card className={classes.card} onClick={() => redirectToRecipeCard(id)}>
       <StyledCardActionArea onClick={() => redirectToRecipeCard(id)}>
         <div className={classes.card__content}>
           <div className={classes.card__avatarContainer}>
             {!avatar ? (
-              <img src="/images/index/default-avatar.png" alt="avatar" className={classes.card__avatar} />
+              emptyPhoto
             ) : (
               <img src={avatar} alt="avatar" className={classes.card__avatar} />
             )}

@@ -157,7 +157,7 @@ const Recipes = (props) => {
 
       router.push({
         search: `?${createQueryParams(values).toString()}`
-      });
+      }, null, { scroll: false });
     }
   });
 
