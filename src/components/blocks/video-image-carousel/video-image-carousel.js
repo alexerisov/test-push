@@ -1,12 +1,11 @@
-import React, {useCallback, useState} from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { makeStyles } from '@material-ui/core/styles';
-import { Transition } from 'react-transition-group';
+import { useMediaQuery } from '@material-ui/core';
 
 // Components
 import { Carousel } from 'react-responsive-carousel';
-import DialogCarousel from "@/components/blocks/video-image-carousel/Dialog/dialog";
+import DialogCarousel from '@/components/blocks/video-image-carousel/Dialog/dialog';
 
 // Handlers
 import { recipePhotoSlider } from '@/store/actions';
@@ -37,6 +36,7 @@ const StyledCarousel = styled(Carousel)`
 `;
 
 const VideoImageCarousel = ({ children }) => {
+  const tabletBreakpoint = useMediaQuery('(max-width: 768px)');
   const dispatch = useDispatch();
   const activeSlide = useSelector(state => state.recipePhotoSlider.currentItemIndex);
   const recipe = useSelector(state => state.recipePhotoSlider.items);
@@ -60,55 +60,64 @@ const VideoImageCarousel = ({ children }) => {
     return !!recipe?.preview_mp4_url;
   };
 
-  const handleCounterButtons = (buttonName) => {
+  const handleCounterButtons = buttonName => {
     if (buttonName === 'video') {
       dispatch(recipePhotoSlider.setCurrentItemIndex(0));
-      setOpen(true);
       return;
     }
 
     const targetIndex = isVideoExist() ? 1 : 0;
     dispatch(recipePhotoSlider.setCurrentItemIndex(targetIndex));
-    setOpen(true);
+  };
+
+  const hideFullScreenIconOnVideoSlide = () => {
+    if (isVideoExist() && !activeSlide) {
+      return null;
+    }
+
+    return (
+      <div className={classes.carousel__fullscreen} onClick={handleClickOpen}>
+        <FullscreenOutlinedIcon />
+      </div>
+    );
   };
 
   return (
     <div className={classes.carousel__wrapper}>
       <div className={classes.carousel__back}></div>
 
-      <div className={classes.carousel__fullscreen} onClick={handleClickOpen}>
-        <FullscreenOutlinedIcon />
-      </div>
+      {hideFullScreenIconOnVideoSlide()}
 
-      <div className={classes.carousel__info}>
-        {recipe?.preview_thumbnail_url &&
-        <button
-          type={"button"}
-          className={classes.carousel__counter}
-          onClick={() => handleCounterButtons('video')}
-        >
-          <PlayArrowOutlinedIcon />
-          Video
-        </button>}
+      {!tabletBreakpoint && (
+        <div className={classes.carousel__info}>
+          {recipe?.preview_thumbnail_url && (
+            <button type={'button'} className={classes.carousel__counter} onClick={() => handleCounterButtons('video')}>
+              <PlayArrowOutlinedIcon />
+              Video
+            </button>
+          )}
 
-        {recipe?.images?.length !== 0 &&
-        <button
-          type={"button"}
-          className={classes.carousel__counter}
-          onClick={() => handleCounterButtons('images')}
-        >
-          <PhotoCameraOutlinedIcon />
-          {`${recipe?.images?.length ? recipe?.images?.length : 0} Images`}
-        </button>}
-      </div>
+          {recipe?.images?.length !== 0 && (
+            <button
+              type={'button'}
+              className={classes.carousel__counter}
+              onClick={() => handleCounterButtons('images')}>
+              <PhotoCameraOutlinedIcon />
+              {`${recipe?.images?.length ? recipe?.images?.length : 0} Images`}
+            </button>
+          )}
+        </div>
+      )}
 
       <StyledCarousel
         infiniteLoop={true}
         showThumbs={false}
         showIndicators={false}
+        swipeable={false}
         axis={'horizontal'}
         selectedItem={activeSlide}
         className={classes.carousel}
+        autoPlay={false}
         onChange={index => changeCurrentSlideIndex(index)}
         // Buttons
         renderArrowPrev={(onClickHandler, hasPrev, label) =>
@@ -134,14 +143,16 @@ const VideoImageCarousel = ({ children }) => {
             return <div className={classes.carousel__item}>{item}</div>;
           }
 
-          return <div className={classes.carousel__item} onClick={setOpen}>{item}</div>;
+          return (
+            <div className={classes.carousel__item} onClick={setOpen}>
+              {item}
+            </div>
+          );
         }}>
         {children}
       </StyledCarousel>
 
-      <DialogCarousel open={open} setOpen={setOpen}>
-        {children}
-      </DialogCarousel>
+      <DialogCarousel open={open} setOpen={setOpen} />
     </div>
   );
 };

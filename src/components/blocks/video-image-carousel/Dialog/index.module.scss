@@ -58,10 +58,21 @@
     }
   }
 
+  &__video {
+    width: 100%;
+    height: auto;
+  }
+
   &__statusCounter {
     font-size: 20px !important;
     font-weight: 600;
     color: #fff !important;
+  }
+
+  @media (min-width: $--lg) {
+    &:hover .carousel__btn {
+      display: flex;
+    }
   }
 
   &__btn {
@@ -85,6 +96,10 @@
       @media (max-width: 768px) {
         background-color: transparent;
       }
+    }
+
+    @media (max-width: $--lg) {
+      display: flex;
     }
   }
 

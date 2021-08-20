@@ -108,8 +108,10 @@
     cursor: pointer;
   }
 
-  &:hover .carousel__btn {
-    display: flex;
+  @media (min-width: $--lg) {
+    &:hover .carousel__btn {
+      display: flex;
+    }
   }
 
   &__btn {
@@ -131,6 +133,10 @@
     &:hover {
       background-color: $--color-orange;
       color: #fff;
+    }
+
+    @media (max-width: $--lg) {
+      display: flex;
     }
   }
 
