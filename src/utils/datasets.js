@@ -118,7 +118,9 @@ export const units = {
   46: 'sprig(s)',
   47: 'stalk(s)',
   48: 'tablespoon(s)',
-  49: 'teaspoon(s)'
+  49: 'teaspoon(s)',
+  50: 'thing(s)',
+  51: 'other'
 };
 
 export const nutritions = {
@@ -160,10 +162,10 @@ export const APPROVED_STATUS = {
 };
 
 export const pageNames = {
-  "/": "Home",
-  "/my-uploads": "My recipe",
-  "/saved-recipes": "Saved recipes",
-}
+  '/': 'Home',
+  '/my-uploads': 'My recipe',
+  '/saved-recipes': 'Saved recipes'
+};
 
 export const absolutePaths = {
   production: 'https://eatchefs.com',

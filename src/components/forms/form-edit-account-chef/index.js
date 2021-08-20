@@ -244,7 +244,9 @@ function FormEditAccountChef(props) {
         </div>
         <h2 className={classes.profile__title}>Basic Information</h2>
         <div>
-          <label className={classes.profile__label}>Full Name</label>
+          <label className={classes.profile__label}>
+            <span style={{ color: 'red' }}>* </span>Full Name
+          </label>
           <StyledTextField
             id="full_name"
             name="full_name"
@@ -271,7 +273,9 @@ function FormEditAccountChef(props) {
         </div>
         <div className={classes.profile__container_emailAndPhone}>
           <div>
-            <label className={classes.profile__label}>Email</label>
+            <label className={classes.profile__label}>
+              <span style={{ color: 'red' }}>* </span>Email
+            </label>
             <StyledTextField
               disabled
               id="email"

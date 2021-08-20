@@ -1,4 +1,4 @@
-@import "~styles/variables.scss";
+@import '~styles/variables.scss';
 
 .addStep {
   padding: 0 35px 20px;
@@ -9,12 +9,12 @@
   }
 
   &__label {
-  margin: 20px 0 10px;
-  padding: 0;
-  font-size: 16px;
-  line-height: 1.19;
-  font-weight: 600;
-  display: block;
+    margin: 20px 0 10px;
+    padding: 0;
+    font-size: 16px;
+    line-height: 1.19;
+    font-weight: 600;
+    display: block;
   }
   &__title {
     font-size: 18px;
@@ -25,7 +25,13 @@
   &__buttonContainer {
     display: flex;
     flex-direction: row-reverse;
+    justify-content: space-between;
     margin-top: 22px;
+    align-items: center;
+
+    p {
+      color: red;
+    }
   }
 
   &__button {
@@ -38,7 +44,7 @@
     border-radius: 3px;
     cursor: pointer;
     color: $--color-white;
-    font: 16px/22px "Montserrat";
+    font: 16px/22px 'Montserrat';
     font-weight: 900;
     font-size: 14px;
     line-height: 1.29;
