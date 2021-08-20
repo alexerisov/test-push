@@ -242,7 +242,7 @@ function FormEditRecipe(props) {
           <h2 className={classes.createRecipeSubtitle}>Edit Recipe</h2>
           <div>
             <label htmlFor="create-title" className={classes.createRecipeLabel}>
-              Title
+              <span style={{ color: 'red' }}>* </span>Title
             </label>
             <NoSsr>
               <TextField
@@ -260,7 +260,7 @@ function FormEditRecipe(props) {
           </div>
           <div>
             <label htmlFor="create-description" className={classes.createRecipeLabel}>
-              Description
+              <span style={{ color: 'red' }}>* </span>Description
             </label>
             <NoSsr>
               <TextField
@@ -393,7 +393,9 @@ function FormEditRecipe(props) {
           </button>
         </div>
         <div className={classes.createRecipeSection}>
-          <h2 className={classes.createRecipeSubtitle}>Cooking images</h2>
+          <h2 className={classes.createRecipeSubtitle}>
+            <span style={{ color: 'red' }}>* </span>Cooking images
+          </h2>
           <div className={classes.createRecipeSection__grid_type_cardImages}>
             {data?.images.length !== 0
               ? data?.images.map((item, index) => (
@@ -422,7 +424,9 @@ function FormEditRecipe(props) {
           <FieldError errors={error} path="images" />
         </div>
         <div className={classes.createRecipeSection}>
-          <h2 className={classes.createRecipeSubtitle_withoutInput}>Cooking Video</h2>
+          <h2 className={classes.createRecipeSubtitle_withoutInput}>
+            <span style={{ color: 'red' }}>* </span>Cooking Video
+          </h2>
 
           {!newVideo ? (
             data.preview_mp4_url && (
@@ -450,7 +454,9 @@ function FormEditRecipe(props) {
         <div className={classes.createRecipeSection}>
           <h2 className={classes.createRecipeSubtitle_withoutInput}>Video Elements</h2>
           <div className={classes.createRecipeItem}>
-            <h3 className={classes.createRecipeItem__title}>Language and Caption</h3>
+            <h3 className={classes.createRecipeItem__title}>
+              <span style={{ color: 'red' }}>* </span>Language and Caption
+            </h3>
             <p className={classes.createRecipeItem__text}>
               Lorem Ipsum is simply dummy text of the printing and typesetting industry
             </p>
@@ -482,7 +488,9 @@ function FormEditRecipe(props) {
             </div>
           </div>
           <div className={classes.createRecipeItem}>
-            <h3 className={classes.createRecipeItem__title}>Visibility</h3>
+            <h3 className={classes.createRecipeItem__title}>
+              <span style={{ color: 'red' }}>* </span>Visibility
+            </h3>
             <p className={classes.createRecipeItem__text}>
               Lorem Ipsum is simply dummy text of the printing and typesetting industry
             </p>
@@ -587,7 +595,7 @@ function FormEditRecipe(props) {
               </FormControl>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
                 <label htmlFor="create-cooking-skills-select" className={classes.createRecipeLabel}>
-                  Cooking skills
+                  <span style={{ color: 'red' }}>* </span>Cooking skills
                 </label>
                 <Select
                   id="create-cooking-skills-select"

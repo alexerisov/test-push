@@ -66,7 +66,9 @@ const ProfilePassword = props => {
         <h2 className={classes.profile__title}>Update Password</h2>
         <form onSubmit={formik.handleSubmit} className={classes.profile__data}>
           <div>
-            <label className={classes.profile__label}>Current Password</label>
+            <label className={classes.profile__label}>
+              <span style={{ color: 'red' }}>* </span>Current Password
+            </label>
             <StyledTextField
               type="password"
               id="password"
@@ -77,7 +79,9 @@ const ProfilePassword = props => {
               error={formik.touched.password && Boolean(formik.errors.password)}
               helperText={formik.touched.password && formik.errors.password}
             />
-            <label className={classes.profile__label}>New Password</label>
+            <label className={classes.profile__label}>
+              <span style={{ color: 'red' }}>* </span>New Password
+            </label>
             <StyledTextField
               type="password"
               id="new_password"
@@ -88,7 +92,9 @@ const ProfilePassword = props => {
               error={formik.touched.new_password && Boolean(formik.errors.new_password)}
               helperText={formik.touched.new_password && formik.errors.new_password}
             />
-            <label className={classes.profile__label}>Confirm Password</label>
+            <label className={classes.profile__label}>
+              <span style={{ color: 'red' }}>* </span>Confirm Password
+            </label>
             <StyledTextField
               type="password"
               id="confirm_password"
