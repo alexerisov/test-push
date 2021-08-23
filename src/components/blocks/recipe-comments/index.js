@@ -86,11 +86,7 @@ const ResipeComments = ({ recipeId }) => {
       const response = await Recipe.deleteComment(commentId);
 
       if (response.status === 204) {
-        const filteredComments = {
-          ...comments,
-          results: comments.results.filter(comment => comment.pk !== commentId)
-        };
-        setComments(filteredComments);
+        getComments();
       }
     } catch (e) {
       console.log(e);
