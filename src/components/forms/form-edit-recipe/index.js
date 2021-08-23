@@ -457,9 +457,6 @@ function FormEditRecipe(props) {
             <h3 className={classes.createRecipeItem__title}>
               <span style={{ color: 'red' }}>* </span>Language and Caption
             </h3>
-            <p className={classes.createRecipeItem__text}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry
-            </p>
             <div className={classes.createRecipeItem__inputContainer}>
               <NoSsr>
                 <TextField
@@ -491,9 +488,6 @@ function FormEditRecipe(props) {
             <h3 className={classes.createRecipeItem__title}>
               <span style={{ color: 'red' }}>* </span>Visibility
             </h3>
-            <p className={classes.createRecipeItem__text}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry
-            </p>
             <NoSsr>
               <RadioGroup
                 aria-label="create-visibility"
