@@ -81,6 +81,22 @@ const ResipeComments = ({ recipeId }) => {
     }
   };
 
+  const deleteComment = async (commentId) => {
+    try {
+      const response = await Recipe.deleteComment(commentId);
+
+      if (response.status === 204) {
+        const filteredComments = {
+          ...comments,
+          results: comments.results.filter(comment => comment.pk !== commentId)
+        };
+        setComments(filteredComments);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <div className={classes.comments}>
       <h2 className={classes.comments__title}>Write a comment</h2>
@@ -134,6 +150,8 @@ const ResipeComments = ({ recipeId }) => {
             likesNumber={comment['likes_number']}
             dislikesNumber={comment['dislikes_number']}
             commentId={comment.pk}
+            createdAt={comment.created_at}
+            deleteComment={deleteComment}
             />
           );
         })
