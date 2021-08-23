@@ -101,11 +101,11 @@ const HeaderDefault = props => {
             </Link>
           </li>
 
-          <li className={classes.mobileMenu__navItem} onClick={handleExpandingMobileMenu}>
+          {/*<li className={classes.mobileMenu__navItem} onClick={handleExpandingMobileMenu}>
             <Link href="/">
               <a>{`Chef's Pensil`}</a>
             </Link>
-          </li>
+          </li>*/}
         </nav>
 
         {!props.account.hasToken ? (
@@ -147,13 +147,13 @@ const HeaderDefault = props => {
               </Link>
             </li>
 
-            {props?.account?.profile?.user_type === USER_TYPE.viewerType && (
+            {/*{props?.account?.profile?.user_type === USER_TYPE.viewerType && (
               <li className={classes.mobileMenu__item} onClick={handleExpandingMobileMenu}>
                 <Link href="/">
                   <a>History</a>
                 </Link>
               </li>
-            )}
+            )}*/}
             <li className={classes.mobileMenu__item} onClick={handleLogout}>
               <Link href="#">
                 <a>Logout</a>
@@ -227,13 +227,13 @@ const HeaderDefault = props => {
                   <a className={classes.header__link_place_menu}>Saved Recipes</a>
                 </Link>
               </MenuItem>
-              {props?.account?.profile?.user_type === USER_TYPE.viewerType && (
+              {/*{props?.account?.profile?.user_type === USER_TYPE.viewerType && (
                 <MenuItem onClick={handleClose}>
                   <Link href="/">
                     <a className={classes.header__link_place_menu}>History</a>
                   </Link>
                 </MenuItem>
-              )}
+              )}*/}
               <MenuItem onClick={handleClose}>
                 <Link href="/profile/account-settings">
                   <a className={classes.header__link_place_menu}>My Profile</a>
