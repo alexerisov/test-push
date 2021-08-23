@@ -161,9 +161,11 @@ function FormEditRecipe(props) {
   };
 
   const handleAddImage = e => {
-    const newImageList = [...data?.images, e.currentTarget.files[0]];
-    const newData = { ...data, images: newImageList };
-    props.dispatch(recipeEditActions.update(newData));
+    if (e.currentTarget.files.length !== 0) {
+      const newImageList = [...data?.images, ...Object.values(e.currentTarget.files)];
+      const newData = {...data, images: newImageList};
+      props.dispatch(recipeEditActions.update(newData));
+    }
   };
 
   const selectItemList = list => {
