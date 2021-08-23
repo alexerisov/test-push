@@ -140,9 +140,8 @@ function FormEditRecipe(props) {
     const newImagetList = data?.images.filter((image, index) => index !== id);
     const newData = { ...data, images: newImagetList };
 
-    const newImagetListId = [pk];
-
-    const newDataDelete = { ...newData, images_to_delete: newImagetListId };
+    // Filter for filtering undefined values
+    const newDataDelete = { ...newData, images_to_delete: [...data.images_to_delete, pk].filter(item => item) };
 
     props.dispatch(recipeEditActions.update(newDataDelete));
   }
