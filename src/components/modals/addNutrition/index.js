@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import classes from './addNutrition.module.scss';
 import { TextField, FormControl, Select, MenuItem } from '@material-ui/core';
 import { nutritions } from '@/utils/datasets';
+import { getMaxQuantityOfNutrition } from "@/utils/checkTotalQuantityOfNutrition";
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -31,6 +32,13 @@ const useStyles = makeStyles(theme => ({
 function AddNutrition(props) {
   const classMarerialUi = useStyles();
   const { data } = props.recipeUpload;
+
+  const nutritionData = {
+    fat: Number(data.fats),
+    carbs: Number(data.carbohydrates),
+    proteins: Number(data.proteins)
+  };
+
   const [nutrition, setNutrition] = React.useState({
     title: '',
     quantity: ''
@@ -68,8 +76,8 @@ function AddNutrition(props) {
         return false;
       }
     }
-    if (nutrition.quantity > 100) {
-      setError('The maximum possible value 100');
+    if (nutrition.quantity > getMaxQuantityOfNutrition(nutritionData)) {
+      setError(`The maximum possible value ${getMaxQuantityOfNutrition(nutritionData)}`);
       return false;
     }
     if (nutrition.quantity < 0) {
