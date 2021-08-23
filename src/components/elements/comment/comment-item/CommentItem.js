@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import ThumbDownOutlinedIcon from '@material-ui/icons/ThumbDownOutlined';
 
@@ -9,7 +10,8 @@ import defaultAvatar from '../../../../../public/images/index/icon_user.svg';
 import Recipe from '@/api/Recipe';
 import { debounce } from '@/utils/debounce';
 
-const CommentItem = ({ likesNumber, dislikesNumber, avatar, text, username, commentId, createdAt, deleteComment }) => {
+const CommentItem = ({ likesNumber, dislikesNumber, text, commentId, createdAt, deleteComment, user }) => {
+  const activeUserId = useSelector(state => state?.account?.profile?.pk);
   const status = {
     created: 'created',
     deleted: 'deleted'
@@ -35,6 +37,10 @@ const CommentItem = ({ likesNumber, dislikesNumber, avatar, text, username, comm
     const hoursDiff = Math.floor((currentTime - createdTimeOfTargetComment) / 3.6e6);
 
     return hoursDiff < 2;
+  };
+
+  const isCommentCreatedByActiveUser = () => {
+    return user.pk === activeUserId;
   };
 
   const uploadLike = async type => {
@@ -93,10 +99,10 @@ const CommentItem = ({ likesNumber, dislikesNumber, avatar, text, username, comm
 
   return (
     <div className={classes.comment}>
-      <img className={classes.comment__avatar} src={avatar ?? defaultAvatar} alt="avatar" />
+      <img className={classes.comment__avatar} src={user?.avatar ?? defaultAvatar} alt="avatar" />
 
       <div className={classes.comment__body}>
-        <p className={classes.comment__username}>{username ?? 'No name'}</p>
+        <p className={classes.comment__username}>{user?.full_name ?? 'No name'}</p>
 
         <p className={classes.comment__text}>{text}</p>
 
@@ -121,7 +127,7 @@ const CommentItem = ({ likesNumber, dislikesNumber, avatar, text, username, comm
         </div>
       </div>
 
-      {isCreatedTwoHoursAgo() && (
+      {isCreatedTwoHoursAgo() && isCommentCreatedByActiveUser() && (
         <AddOutlinedIcon
           className={classes.comment__delete}
           fontSize={'small'}

@@ -130,19 +130,18 @@ const ResipeComments = ({ recipeId }) => {
           comments?.results.map((comment, index) => {
             return (
               <CommentItem
-                user={comment.user}
-                key={`${comment.pk}-${index + 1}`}
-                text={comment.text}
-                username={comment.user?.full_name}
-                avatar={comment.user?.avatar}
-                likesNumber={comment['likes_number']}
-                dislikesNumber={comment['dislikes_number']}
-                commentId={comment.pk}
-                createdAt={comment.created_at}
+                user={comment?.user}
+                key={`${comment?.pk}-${index + 1}`}
+                text={comment?.text}
+                likesNumber={comment?.likes_number}
+                dislikesNumber={comment?.dislikes_number}
+                commentId={comment?.pk}
+                createdAt={comment?.created_at}
                 deleteComment={deleteComment}
               />
             );
-          })}
+          })
+        }
 
         <Pagination
           classes={{ root: classes.comments__pagination }}
