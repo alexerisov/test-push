@@ -1,6 +1,7 @@
 @import "~styles/mixins/mixins.scss";
 
 .comment {
+  position: relative;
   display: flex;
   padding: 24px 0 34px;
   border-bottom: 1px solid $--color-gray-9;
@@ -54,5 +55,24 @@
 
   &__like:last-child {
     margin-right: 0;
+  }
+
+  &__delete {
+    position: absolute;
+    top: 24px;
+    right: 10px;
+    color: inherit;
+    cursor: pointer;
+    transform: rotate(45deg);
+    opacity: 0.2;
+    transition: opacity 0.3s !important;
+
+    &:hover {
+      transform: rotate(45deg) scale(1.2);
+    }
+  }
+
+  &:hover .comment__delete {
+    opacity: 0.8;
   }
 }

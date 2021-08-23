@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import ThumbDownOutlinedIcon from '@material-ui/icons/ThumbDownOutlined';
 
 import classes from './CommentItem.module.scss';
+import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 
 import defaultAvatar from '../../../../../public/images/index/icon_user.svg';
 import Recipe from "@/api/Recipe";
 import { debounce } from "@/utils/debounce";
 
-const CommentItem = ({ likesNumber, dislikesNumber, avatar, text, username, commentId }) => {
+const CommentItem = ({ likesNumber, dislikesNumber, avatar, text, username, commentId, createdAt, deleteComment }) => {
   const status = {
     created: 'created',
     deleted: 'deleted'
@@ -27,6 +28,14 @@ const CommentItem = ({ likesNumber, dislikesNumber, avatar, text, username, comm
     value: Number(dislikesNumber),
     updated: false
   });
+
+  const isCreatedTwoHoursAgo = () => {
+    const createdTimeOfTargetComment = Date.parse(createdAt);
+    const currentTime = Date.now();
+    const hoursDiff = Math.floor((currentTime - createdTimeOfTargetComment) / 3.6e6);
+
+    return hoursDiff < 2;
+  };
 
   const uploadLike = async (type) => {
     try {
@@ -111,6 +120,13 @@ const CommentItem = ({ likesNumber, dislikesNumber, avatar, text, username, comm
           </div>
         </div>
       </div>
+
+      {isCreatedTwoHoursAgo() &&
+      <AddOutlinedIcon
+        className={classes.comment__delete}
+        fontSize={'small'}
+        onClick={() => deleteComment(commentId)}
+      />}
     </div>
   );
 };
