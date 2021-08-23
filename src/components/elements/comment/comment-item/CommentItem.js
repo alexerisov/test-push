@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import ThumbDownOutlinedIcon from '@material-ui/icons/ThumbDownOutlined';
 
@@ -6,8 +6,8 @@ import classes from './CommentItem.module.scss';
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 
 import defaultAvatar from '../../../../../public/images/index/icon_user.svg';
-import Recipe from "@/api/Recipe";
-import { debounce } from "@/utils/debounce";
+import Recipe from '@/api/Recipe';
+import { debounce } from '@/utils/debounce';
 
 const CommentItem = ({ likesNumber, dislikesNumber, avatar, text, username, commentId, createdAt, deleteComment }) => {
   const status = {
@@ -37,7 +37,7 @@ const CommentItem = ({ likesNumber, dislikesNumber, avatar, text, username, comm
     return hoursDiff < 2;
   };
 
-  const uploadLike = async (type) => {
+  const uploadLike = async type => {
     try {
       const targetLike = {
         id: commentId,
@@ -48,17 +48,17 @@ const CommentItem = ({ likesNumber, dislikesNumber, avatar, text, username, comm
       const likeStatus = response.data['like_status'];
       const dislikeStatus = response.data['dislike_status'];
 
-      setLikeValuesByResponseLikeStatus({likeStatus, dislikeStatus});
+      setLikeValuesByResponseLikeStatus({ likeStatus, dislikeStatus });
     } catch (e) {
       console.log(e);
     }
   };
 
-  const likeHandler = debounce((type) => {
+  const likeHandler = debounce(type => {
     uploadLike(type);
   }, 600);
 
-  const setLikeValuesByResponseLikeStatus = ({likeStatus, dislikeStatus}) => {
+  const setLikeValuesByResponseLikeStatus = ({ likeStatus, dislikeStatus }) => {
     let likeCount = likes.value;
     let dislikeCount = dislikes.value;
 
@@ -92,19 +92,19 @@ const CommentItem = ({ likesNumber, dislikesNumber, avatar, text, username, comm
   };
 
   return (
-    <div  className={classes.comment}>
-      <img className={classes.comment__avatar} src={avatar ?? defaultAvatar} alt="avatar"/>
+    <div className={classes.comment}>
+      <img className={classes.comment__avatar} src={avatar ?? defaultAvatar} alt="avatar" />
 
       <div className={classes.comment__body}>
-        <p className={classes.comment__username}>{username ?? "No name"}</p>
+        <p className={classes.comment__username}>{username ?? 'No name'}</p>
 
         <p className={classes.comment__text}>{text}</p>
 
         <div className={classes.comment__likes}>
           <div className={classes.comment__like}>
             <ThumbUpOutlinedIcon
-              classes={{root:classes.comment__like__icon}}
-              style={{fontSize: '30px'}}
+              classes={{ root: classes.comment__like__icon }}
+              style={{ fontSize: '30px' }}
               onClick={() => likeHandler(likeTypes.like)}
             />
             <span>{likes.value} Likes</span>
@@ -112,8 +112,8 @@ const CommentItem = ({ likesNumber, dislikesNumber, avatar, text, username, comm
 
           <div className={classes.comment__like}>
             <ThumbDownOutlinedIcon
-              classes={{root:classes.comment__like__icon}}
-              style={{fontSize: '30px'}}
+              classes={{ root: classes.comment__like__icon }}
+              style={{ fontSize: '30px' }}
               onClick={() => likeHandler(likeTypes.dislike)}
             />
             <span>{dislikes.value} Dislikes</span>
@@ -121,12 +121,13 @@ const CommentItem = ({ likesNumber, dislikesNumber, avatar, text, username, comm
         </div>
       </div>
 
-      {isCreatedTwoHoursAgo() &&
-      <AddOutlinedIcon
-        className={classes.comment__delete}
-        fontSize={'small'}
-        onClick={() => deleteComment(commentId)}
-      />}
+      {isCreatedTwoHoursAgo() && (
+        <AddOutlinedIcon
+          className={classes.comment__delete}
+          fontSize={'small'}
+          onClick={() => deleteComment(commentId)}
+        />
+      )}
     </div>
   );
 };
