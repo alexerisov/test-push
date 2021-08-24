@@ -33,16 +33,17 @@ const CommentItem = ({ likesNumber, dislikesNumber, text, commentId, createdAt, 
 
   const isCreatedTwoHoursAgo = () => {
     const createdTimeOfTargetComment = Date.parse(createdAt);
-    const currentTime = Date.now();
+
+    // This is a difference between current GMT and UTC of active user
+    const diffGMT = new Date().getTimezoneOffset() * 6e4;
+    const currentTime = Date.now() + diffGMT;
+
     const hoursDiff = Math.floor((currentTime - createdTimeOfTargetComment) / 3.6e6);
 
     return hoursDiff < 2;
   };
 
   const isCommentCreatedByActiveUser = () => {
-    console.log(`ReduxUserId: ${activeUserId}`);
-    console.log(`UserCommentId: ${user.pk}`);
-    console.log(`UserIdFromMyAccount: ${userId}`);
     return user.pk === userId;
   };
 
