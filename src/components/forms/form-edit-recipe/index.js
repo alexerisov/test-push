@@ -75,6 +75,7 @@ function FormEditRecipe(props) {
   const router = useRouter();
   const classMarerialUi = useStyles();
   const { data, error } = props.recipeEdit;
+  const recipeApproveStatus = data?.status;
   const recipeId = props.recipeId;
 
   const [newVideo, setNewVideo] = useState(false);
@@ -214,7 +215,8 @@ function FormEditRecipe(props) {
         setStatusSubmit('Edit');
         return props.dispatch(
           modalActions.open('editSuccessful', {
-            pk: data.pk
+            pk: data.pk,
+            status: recipeApproveStatus
           })
         );
       })
