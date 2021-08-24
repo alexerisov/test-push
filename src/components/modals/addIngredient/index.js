@@ -79,12 +79,22 @@ function AddIngredient (props) {
       setError("Maximum possible quantity 99999");
       return false;
     }
-    if (validator.checkNumberOfDigits({maxDigits: 3, value: ingredient.quantity})) {
-      setError("Maximum possible digits is 3");
-      return false;
-    }
 
     return true;
+  };
+
+  function getMaxThreeDigitValueOfQuantity() {
+    if (validator.checkNumberOfDigits({maxDigits: 3, value: ingredient.quantity})) {
+      return {
+        ...ingredient,
+        quantity: Number(ingredient.quantity).toFixed(3)
+      };
+    }
+
+    return {
+      ...ingredient,
+      quantity: parseFloat(ingredient.quantity)
+    };
   }
 
   function handleAddIngredient (e) {
@@ -92,11 +102,8 @@ function AddIngredient (props) {
     if (!handleValidationOnSubmit()) {
       return;
     }
-    const cloneIngridients = {
-      ...ingredient,
-      quantity: parseFloat(ingredient.quantity)
-    };
-    const newData = { ...data, ingredients: [...data.ingredients, cloneIngridients] };
+
+    const newData = { ...data, ingredients: [...data.ingredients, getMaxThreeDigitValueOfQuantity()] };
     props.dispatch(recipeUploadActions.update(newData));
     props.dispatch(modalActions.close());
   }
