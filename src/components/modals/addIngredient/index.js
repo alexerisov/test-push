@@ -7,6 +7,7 @@ import classes from "./addIngredient.module.scss";
 import TextField from '@material-ui/core/TextField';
 import { units } from '@/utils/datasets';
 import { Select, MenuItem } from '@material-ui/core';
+import {validator} from "@/utils/validator";
 
 const useStyles = makeStyles((theme) => ({
   textField: {
@@ -78,6 +79,11 @@ function AddIngredient (props) {
       setError("Maximum possible quantity 99999");
       return false;
     }
+    if (validator.checkNumberOfDigits({maxDigits: 3, value: ingredient.quantity})) {
+      setError("Maximum possible digits is 3");
+      return false;
+    }
+
     return true;
   }
 
@@ -116,6 +122,7 @@ function AddIngredient (props) {
           <TextField
             id="addIngredient-quantity"
             name="quantity"
+            type="number"
             value={ingredient.quantity}
             onChange={onChangeField('quantity')}
             variant="outlined"
