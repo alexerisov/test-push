@@ -92,7 +92,11 @@ function EditIngredient (props) {
     if (!handleValidationOnSubmit()) {
       return;
     }
-    const newData = { ...data, ingredients: [...data.ingredients, ingredient] };
+    const cloneIngridients = {
+      ...ingredient,
+      quantity: parseFloat(ingredient.quantity)
+    };
+    const newData = { ...data, ingredients: [...data.ingredients, cloneIngridients] };
     props.dispatch(recipeEditActions.update(newData));
     props.dispatch(modalActions.close());
   }
