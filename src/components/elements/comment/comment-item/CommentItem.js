@@ -40,6 +40,9 @@ const CommentItem = ({ likesNumber, dislikesNumber, text, commentId, createdAt, 
   };
 
   const isCommentCreatedByActiveUser = () => {
+    console.log(`ReduxUserId: ${activeUserId}`);
+    console.log(`UserCommentId: ${user.pk}`);
+    console.log(`UserIdFromMyAccount: ${userId}`);
     return user.pk === userId;
   };
 
