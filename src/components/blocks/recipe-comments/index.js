@@ -10,7 +10,7 @@ import Recipe from '@/api/Recipe';
 
 import classes from './RecipeComments.module.scss';
 
-const ResipeComments = ({ recipeId }) => {
+const ResipeComments = ({ recipeId, userId }) => {
   const isAuthorized = useSelector(state => state.account.hasToken);
 
   const [comments, setComments] = useState();
@@ -131,6 +131,7 @@ const ResipeComments = ({ recipeId }) => {
             return (
               <CommentItem
                 user={comment?.user}
+                userId={userId}
                 key={`${comment?.pk}-${index + 1}`}
                 text={comment?.text}
                 likesNumber={comment?.likes_number}

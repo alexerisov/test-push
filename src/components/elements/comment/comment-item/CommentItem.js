@@ -10,7 +10,7 @@ import defaultAvatar from '../../../../../public/images/index/icon_user.svg';
 import Recipe from '@/api/Recipe';
 import { debounce } from '@/utils/debounce';
 
-const CommentItem = ({ likesNumber, dislikesNumber, text, commentId, createdAt, deleteComment, user }) => {
+const CommentItem = ({ likesNumber, dislikesNumber, text, commentId, createdAt, deleteComment, user, userId }) => {
   const activeUserId = useSelector(state => state?.account?.profile?.pk);
   const status = {
     created: 'created',
@@ -40,7 +40,7 @@ const CommentItem = ({ likesNumber, dislikesNumber, text, commentId, createdAt, 
   };
 
   const isCommentCreatedByActiveUser = () => {
-    return user.pk === activeUserId;
+    return user.pk === userId;
   };
 
   const uploadLike = async type => {
