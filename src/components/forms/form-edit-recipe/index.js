@@ -140,9 +140,8 @@ function FormEditRecipe(props) {
     const newImagetList = data?.images.filter((image, index) => index !== id);
     const newData = { ...data, images: newImagetList };
 
-    const newImagetListId = [pk];
-
-    const newDataDelete = { ...newData, images_to_delete: newImagetListId };
+    // Filter for filtering undefined values
+    const newDataDelete = { ...newData, images_to_delete: [...data.images_to_delete, pk].filter(item => item) };
 
     props.dispatch(recipeEditActions.update(newDataDelete));
   }
@@ -161,9 +160,11 @@ function FormEditRecipe(props) {
   };
 
   const handleAddImage = e => {
-    const newImageList = [...data?.images, e.currentTarget.files[0]];
-    const newData = { ...data, images: newImageList };
-    props.dispatch(recipeEditActions.update(newData));
+    if (e.currentTarget.files.length !== 0) {
+      const newImageList = [...data?.images, ...Object.values(e.currentTarget.files)];
+      const newData = {...data, images: newImageList};
+      props.dispatch(recipeEditActions.update(newData));
+    }
   };
 
   const selectItemList = list => {
