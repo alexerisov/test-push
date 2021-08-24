@@ -11,23 +11,66 @@
   border: none;
   cursor: pointer;
 
-  &:hover {
-    opacity: 0.5;
-  }
-
   &__text {
     margin: 2px 0 0 7px;
   }
 
   &__icon {
-    display: inline-block;
-    width: 20px;
+    display: flex;
+    gap: 6px;
     height: 18px;
     margin-top: 2px;
     font-size: 21px;
   }
 
+  &:hover .shareBtn__icon {
+    opacity: 0.5;
+  }
+
   &__tooltipArrow span {
     color: rgba(97, 97, 97, 0.9) !important;
+  }
+}
+
+.shareWindow {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 20;
+  transform: translateY(100%);
+  height: max-content;
+  width: 200px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 3px 6px rgb(0 0 0 / 16%);
+  animation-name: shareWindow;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 0.4s;
+
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5px;
+    width: 100%;
+    min-height: 33px;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.04);
+    }
+
+    &:first-child {
+      padding: 8px 20px;
+    }
+  }
+
+  &__action {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    gap: 6px;
+    padding: 8px 20px !important;
   }
 }
