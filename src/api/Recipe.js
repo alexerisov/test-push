@@ -192,6 +192,10 @@ export default {
       });
   },
 
+  deleteComment: (id) => {
+    return http.delete(`recipe/comment/${id}/delete`);
+  },
+
   deleteRecipe: (id) => {
     return http.delete(`/recipe/${id}`);
   },
