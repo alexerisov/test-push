@@ -49,19 +49,21 @@ const HighestRatedMealsBlock = () => {
     }
   },[position, recipes]);
 
-  useEffect(() => {
-    titleElement.current.scrollIntoView({block: "center", inline: "nearest", behavior: "smooth"});
-  }, [recipesPart]);
+  const scrollToTopViewMealTitle = () => {
+    titleElement.current.scrollIntoView({block: "center", inline: "center", behavior: 'smooth'});
+  };
 
   const onClickReturn = () => {
     if (position > POSITION.first) {
       setPosition(position - 1);
+      scrollToTopViewMealTitle();
     }
   };
 
   const onClickForward = () => {
     if (position < POSITION.third) {
       setPosition(position + 1);
+      scrollToTopViewMealTitle();
     }
   };
 
@@ -71,7 +73,7 @@ const HighestRatedMealsBlock = () => {
 
     return (
       <section className={classes.ratedMeals}>
-        <div className={classes.ratedMeals__title}>
+        <div  className={classes.ratedMeals__title}>
           <h2 ref={titleElement}>Top Voted Meals</h2>
           <span className={classes.ratedMeals__lineContainer}>
             <span className={classes.ratedMeals__yellowLine} />
