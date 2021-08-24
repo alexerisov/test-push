@@ -222,3 +222,14 @@ export const notificationTypesTitle = {
     return `${payload.count} new comment in your recipe`;
   }
 };
+
+export const nameErrorRecipe = [
+  { nameErrorResponse: 'title', nameInput: 'create-title' },
+  { nameErrorResponse: 'description', nameInput: 'create-description' },
+  { nameErrorResponse: 'images', nameInput: 'create-images' },
+  { nameErrorResponse: 'preview_mp4_url', nameInput: 'DemoCamera' },
+  { nameErrorResponse: 'publish_status', nameInput: 'publish_status' },
+  { nameErrorResponse: 'caption', nameInput: 'create-caption' },
+  { nameErrorResponse: 'language', nameInput: 'create-language' },
+  { nameErrorResponse: 'cooking_skills', nameInput: 'create-cooking-skills-select' }
+];
