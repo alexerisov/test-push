@@ -17,7 +17,14 @@ import {
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FieldError from '../../elements/field-error';
-import { cuisineList, recipeTypes, cookingMethods, dietaryrestrictions, cookingSkill } from '@/utils/datasets';
+import {
+  cuisineList,
+  recipeTypes,
+  cookingMethods,
+  dietaryrestrictions,
+  cookingSkill,
+  nameErrorRecipe
+} from '@/utils/datasets';
 import { isWindowExist } from '@/utils/isTypeOfWindow';
 import classes from './form-create-recipe.module.scss';
 import { CardIngredient, CardNutrition, CardImageEditRecipe } from '@/components/elements/card';
@@ -219,10 +226,10 @@ function FormEditRecipe(props) {
         );
       })
       .catch(error => {
+        handleErrorScroll(error.response.data);
         setStatusSubmit('Edit');
         console.log(error);
       });
-    // }
   }
 
   const handleIngredientsUnit = unit => {
@@ -231,6 +238,31 @@ function FormEditRecipe(props) {
     } else {
       return unit;
     }
+  };
+
+  const handleErrorScroll = error => {
+    if (error !== null) {
+      const elementError = nameErrorRecipe.find(item => error[item.nameErrorResponse]);
+      if (elementError?.nameErrorResponse === 'description') {
+        const el = document.querySelector(`textarea[id=${elementError.nameInput}]`);
+        scrollToElement(el);
+        return;
+      }
+      if (elementError?.nameErrorResponse === 'preview_mp4_url') {
+        const el = document.querySelector(`div[id=${elementError.nameInput}]`);
+        scrollToElement(el);
+        return;
+      }
+      if (elementError) {
+        const el = document.querySelector(`input[id=${elementError.nameInput}]`);
+        scrollToElement(el);
+        return;
+      }
+    }
+  };
+
+  const scrollToElement = el => {
+    el !== null && el.scrollIntoView({ block: 'center', inline: 'center' });
   };
 
   const mobile = useMediaQuery('(max-width:576px)');
@@ -502,8 +534,8 @@ function FormEditRecipe(props) {
                 onChange={onChangeFieldNumber('publish_status')}
                 error={error?.publish_status}
                 helperText={error?.publish_status ? 'This field is required' : ''}>
-                <FormControlLabel value={1} control={<Radio />} label="Save" />
-                <FormControlLabel value={2} control={<Radio />} label="Publish" />
+                <FormControlLabel value={1} control={<Radio id="publish_status" />} label="Save" />
+                <FormControlLabel value={2} control={<Radio id="publish_status" />} label="Publish" />
               </RadioGroup>
             </NoSsr>
           </div>
