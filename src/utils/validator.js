@@ -11,5 +11,9 @@ export const validator = {
     }
 
     return '';
+  },
+
+  checkNumberOfDigits({maxDigits, value}) {
+    return String(value).split('.')?.[1]?.length > maxDigits;
   }
 };
