@@ -510,9 +510,6 @@ function FormCreateRecipe(props) {
             <h3 className={classes.createRecipeItem__title}>
               <span style={{ color: 'red' }}>* </span>Visibility
             </h3>
-            <p className={classes.createRecipeItem__text}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry
-            </p>
             <NoSsr>
               <RadioGroup
                 aria-label="create-visibility"
