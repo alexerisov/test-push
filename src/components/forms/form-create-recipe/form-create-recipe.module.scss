@@ -352,6 +352,7 @@
     line-height: 1.4;
     font-weight: 900;
     margin-right: 20px;
+    word-break: break-all;
   }
 
   &__title_color {
@@ -366,5 +367,6 @@
   &__text {
     font-size: 18px;
     line-height: 1.5;
+    word-break: break-all;
   }
 }
