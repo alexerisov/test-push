@@ -10,7 +10,8 @@ import { modalActions } from '@/store/actions';
 import Recipe from '@/api/Recipe.js';
 import { useRouter } from 'next/router';
 import { CardActionArea } from '@material-ui/core';
-import logo from "../../../../public/images/index/logo.svg";
+import logo from '../../../../public/images/index/logo.svg';
+import Link from 'next/link';
 
 const StyledCardMedia = styled(CardMedia)`
   .MuiCardMedia-root {
@@ -57,38 +58,36 @@ const CardLatestRecipes = props => {
       .catch(err => console.log(err));
   };
 
-  const redirectToRecipeCard = id => {
-    router.push(`/recipe/${id}`);
-  };
-
   return (
     <Card className={classes.card}>
-      <StyledCardActionArea onClick={e => redirectToRecipeCard(props.id)} component="div">
-        <StyledCardMedia className={classes.card__media} image={props.image ?? logo} title="" />
-        {!saveRecipeId ? (
-          <button
-            className={classes.card__buttonSaveRecipe}
-            onClick={!props.account.hasToken ? openRegisterPopup('register') : onClickSave}
-          />
-        ) : (
-          <button
-            className={classes.card__buttonDeleteRecipe}
-            onClick={!props.account.hasToken ? openRegisterPopup('register') : onClickDelete}
-          />
-        )}
-        <CardContent className={classes.card__content}>
-          <div>
-            <p className={classes.card__name} title={props.title}>
-              {props.title}
-            </p>
-            <p className={classes.card__author}>{`by Chef ${props.name}`}</p>
-            <p className={classes.card__location}>{props.city}</p>
-            <div className={classes.card__likeIcon}>
-              <LikeIcon value={props.likes} />
+      <Link href={`/recipe/${props.id}`}>
+        <a>
+          <StyledCardMedia className={classes.card__media} image={props.image ?? logo} title="" />
+          {!saveRecipeId ? (
+            <button
+              className={classes.card__buttonSaveRecipe}
+              onClick={!props.account.hasToken ? openRegisterPopup('register') : onClickSave}
+            />
+          ) : (
+            <button
+              className={classes.card__buttonDeleteRecipe}
+              onClick={!props.account.hasToken ? openRegisterPopup('register') : onClickDelete}
+            />
+          )}
+          <CardContent className={classes.card__content}>
+            <div>
+              <p className={classes.card__name} title={props.title}>
+                {props.title}
+              </p>
+              <p className={classes.card__author}>{`by Chef ${props.name}`}</p>
+              <p className={classes.card__location}>{props.city}</p>
+              <div className={classes.card__likeIcon}>
+                <LikeIcon value={props.likes} />
+              </div>
             </div>
-          </div>
-        </CardContent>
-      </StyledCardActionArea>
+          </CardContent>
+        </a>
+      </Link>
     </Card>
   );
 };

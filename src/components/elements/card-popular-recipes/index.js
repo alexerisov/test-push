@@ -25,21 +25,24 @@ const CardPopularRecipes = ({ title, image, id }) => {
 
   const emptyPhoto = (
     <div className={classes.card__background}>
-      <img className={classes.card__logo} src={logo} alt="logo"/>
+      <img className={classes.card__logo} src={logo} alt="logo" />
     </div>
   );
 
   return (
     <Card className={classes.card}>
-      <CardActionArea onClick={() => redirectToRecipeCard(id)}>
-        <div className={classes.card__content}>
-          {image
-            ? <div className={classes.card__images} style={{ backgroundImage: `url(${image})` }}></div>
-            : emptyPhoto
-          }
-          <p className={classes.card__title}>{title}</p>
-        </div>
-      </CardActionArea>
+      <Link href={`/recipe/${id}`}>
+        <a>
+          <div className={classes.card__content}>
+            {image ? (
+              <div className={classes.card__images} style={{ backgroundImage: `url(${image})` }}></div>
+            ) : (
+              emptyPhoto
+            )}
+            <p className={classes.card__title}>{title}</p>
+          </div>
+        </a>
+      </Link>
     </Card>
   );
 };
