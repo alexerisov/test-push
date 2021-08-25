@@ -1,14 +1,17 @@
 @import '~styles/variables.scss';
 
 .cardIngredients {
-  
-  margin: 0;
-  border: 1px $--color-gray2 solid;
-  width: 180px;
-  height: 94px;
   position: relative;
-  padding: 20px 0;
-  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 180px;
+  min-height: 94px;
+  max-height: max-content;
+  margin: 0;
+  padding: 20px 5px;
+  border: 1px $--color-gray2 solid;
+  border-radius: 5px;
 
   &__title {
     font-size: 20px;

@@ -17,7 +17,14 @@ import {
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FieldError from '../../elements/field-error';
-import { cuisineList, recipeTypes, cookingMethods, dietaryrestrictions, cookingSkill } from '@/utils/datasets';
+import {
+  cuisineList,
+  recipeTypes,
+  cookingMethods,
+  dietaryrestrictions,
+  cookingSkill,
+  nameErrorRecipe
+} from '@/utils/datasets';
 import { isWindowExist } from '@/utils/isTypeOfWindow';
 import classes from './form-create-recipe.module.scss';
 import { CardIngredient, CardNutrition, CardImage } from '@/components/elements/card';
@@ -156,8 +163,8 @@ function FormCreateRecipe(props) {
   };
 
   const handleAddImage = e => {
-    if (e.currentTarget.files[0]) {
-      const newImageList = [...data?.images, e.currentTarget.files[0]];
+    if (e.currentTarget.files.length !== 0) {
+      const newImageList = [...data?.images, ...Object.values(e.currentTarget.files)];
       const newData = { ...data, images: newImageList };
       props.dispatch(recipeUploadActions.update(newData));
     }
@@ -206,18 +213,6 @@ function FormCreateRecipe(props) {
 
   function uploadRecipe(e) {
     e.preventDefault();
-    // if(document.getElementById("DemoCamera_720p") && document.getElementById("DemoCamera_720p").value !== '') {
-    //   const thumbnail = `https:${document.getElementById("DemoCamera_vga_thumb").value}`;
-    //   const full_thumbnail = `https:${document.getElementById("DemoCamera_vga_filmstrip").value}`;
-    //   const mp4 = `https:${document.getElementById("DemoCamera_720p").value}`;
-    //   const webm = `https:${document.getElementById("DemoCamera_vertical").value}`;
-    //   const newData = {
-    //     ...data,
-    //     preview_thumbnail_url: thumbnail,
-    //     preview_full_thumbnail_url: full_thumbnail,
-    //     preview_mp4_url: mp4,
-    //     preview_webm_url: webm,
-    //   };
     setStatusSubmit('Loading...');
     props
       .dispatch(recipeUploadActions.uploadRecipe(data))
@@ -230,12 +225,38 @@ function FormCreateRecipe(props) {
           })
         );
       })
-      .catch(error => {
+      .catch(err => {
+        handleErrorScroll(err.response.data);
         setStatusSubmit('Submit');
-        console.log(error);
+        console.log(err);
       });
     // }
   }
+
+  const handleErrorScroll = error => {
+    if (error !== null) {
+      const elementError = nameErrorRecipe.find(item => error[item.nameErrorResponse]);
+      if (elementError?.nameErrorResponse === 'description') {
+        const el = document.querySelector(`textarea[id=${elementError.nameInput}]`);
+        scrollToElement(el);
+        return;
+      }
+      if (elementError?.nameErrorResponse === 'preview_mp4_url') {
+        const el = document.querySelector(`div[id=${elementError.nameInput}]`);
+        scrollToElement(el);
+        return;
+      }
+      if (elementError) {
+        const el = document.querySelector(`input[id=${elementError.nameInput}]`);
+        scrollToElement(el);
+        return;
+      }
+    }
+  };
+
+  const scrollToElement = el => {
+    el !== null && el.scrollIntoView({ block: 'center', inline: 'center' });
+  };
 
   const handleIngredientsUnit = unit => {
     if (unit === 'other') {
@@ -429,7 +450,7 @@ function FormCreateRecipe(props) {
               onChange={handleAddImage}
               className={classes.createRecipeInput_type_addImage}></input>
           </div>
-          <FieldError errors={error} path="images" />
+          <FieldError errors={error} path="images" id="error" />
         </div>
         <div className={classes.createRecipeSection}>
           <h2 className={classes.createRecipeSubtitle_withoutInput}>
@@ -458,9 +479,6 @@ function FormCreateRecipe(props) {
             <h3 className={classes.createRecipeItem__title}>
               <span style={{ color: 'red' }}>* </span>Language and Caption
             </h3>
-            <p className={classes.createRecipeItem__text}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry
-            </p>
             <div className={classes.createRecipeItem__inputContainer}>
               <NoSsr>
                 <TextField
@@ -492,9 +510,6 @@ function FormCreateRecipe(props) {
             <h3 className={classes.createRecipeItem__title}>
               <span style={{ color: 'red' }}>* </span>Visibility
             </h3>
-            <p className={classes.createRecipeItem__text}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry
-            </p>
             <NoSsr>
               <RadioGroup
                 aria-label="create-visibility"
@@ -503,8 +518,8 @@ function FormCreateRecipe(props) {
                 onChange={onChangeFieldNumber('publish_status')}
                 error={error?.publish_status}
                 helperText={error?.publish_status ? 'This field is required' : ''}>
-                <FormControlLabel value={1} control={<Radio />} label="Save" />
-                <FormControlLabel value={2} control={<Radio />} label="Publish" />
+                <FormControlLabel value={1} control={<Radio id="publish_status" />} label="Save" />
+                <FormControlLabel value={2} control={<Radio id="publish_status" />} label="Publish" />
               </RadioGroup>
             </NoSsr>
             {error?.publish_status && (

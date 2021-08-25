@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import classes from "./index.module.scss";
 import CardHighestMeals from "@/components/elements/card-highest-meals";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -6,6 +6,8 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import Recipe from '@/api/Recipe.js';
 
 const HighestRatedMealsBlock = () => {
+  const titleElement = useRef();
+
   const CARDS_QUANTITY = 6;
   const POSITION = {
     first: 0,
@@ -13,21 +15,21 @@ const HighestRatedMealsBlock = () => {
     third: 2
   };
 
-  const [recipes, setRecipes] = React.useState([]);
-  const [position, setPosition] = React.useState(POSITION.first);
-  const [recipesPart, setRecipesPart] = React.useState([]);
-  const [step1, setStep1] = React.useState(true);
-  const [step2, setStep2] = React.useState(false);
-  const [step3, setStep3] = React.useState(false);
+  const [recipes, setRecipes] = useState([]);
+  const [position, setPosition] = useState(POSITION.first);
+  const [recipesPart, setRecipesPart] = useState([]);
+  const [step1, setStep1] = useState(true);
+  const [step2, setStep2] = useState(false);
+  const [step3, setStep3] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     Recipe.getTopRatedMeals()
     .then((data) => {
       setRecipes(data.data);
     });
   },[]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const newRecipesPart = recipes.filter((item, index) => {
       return index < (position * CARDS_QUANTITY + CARDS_QUANTITY) && index >= (position * CARDS_QUANTITY);
     });
@@ -47,15 +49,21 @@ const HighestRatedMealsBlock = () => {
     }
   },[position, recipes]);
 
+  const scrollToTopViewMealTitle = () => {
+    titleElement.current.scrollIntoView({block: "center", inline: "center", behavior: 'smooth'});
+  };
+
   const onClickReturn = () => {
     if (position > POSITION.first) {
       setPosition(position - 1);
+      scrollToTopViewMealTitle();
     }
   };
 
   const onClickForward = () => {
     if (position < POSITION.third) {
       setPosition(position + 1);
+      scrollToTopViewMealTitle();
     }
   };
 
@@ -65,8 +73,8 @@ const HighestRatedMealsBlock = () => {
 
     return (
       <section className={classes.ratedMeals}>
-        <div className={classes.ratedMeals__title}>
-          <h2>Top Voted Meals</h2>
+        <div  className={classes.ratedMeals__title}>
+          <h2 ref={titleElement}>Top Voted Meals</h2>
           <span className={classes.ratedMeals__lineContainer}>
             <span className={classes.ratedMeals__yellowLine} />
             <span className={classes.ratedMeals__blueСircle} />

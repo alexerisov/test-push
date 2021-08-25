@@ -7,6 +7,7 @@ import classes from "./addIngredient.module.scss";
 import TextField from '@material-ui/core/TextField';
 import { units } from '@/utils/datasets';
 import { Select, MenuItem } from '@material-ui/core';
+import {validator} from "@/utils/validator";
 
 const useStyles = makeStyles((theme) => ({
   textField: {
@@ -78,7 +79,22 @@ function EditIngredient (props) {
       setError("Maximum possible quantity 99999");
       return false;
     }
+
     return true;
+  };
+
+  function getMaxThreeDigitValueOfQuantity() {
+    if (validator.checkNumberOfDigits({maxDigits: 3, value: ingredient.quantity})) {
+      return {
+        ...ingredient,
+        quantity: ingredient.quantity.toFixed(3)
+      };
+    }
+
+    return {
+      ...ingredient,
+      quantity: parseFloat(ingredient.quantity)
+    };
   }
 
   function handleAddIngredient (e) {
@@ -86,7 +102,8 @@ function EditIngredient (props) {
     if (!handleValidationOnSubmit()) {
       return;
     }
-    const newData = { ...data, ingredients: [...data.ingredients, ingredient] };
+
+    const newData = { ...data, ingredients: [...data.ingredients, getMaxThreeDigitValueOfQuantity()] };
     props.dispatch(recipeEditActions.update(newData));
     props.dispatch(modalActions.close());
   }
@@ -116,6 +133,7 @@ function EditIngredient (props) {
           <TextField
             id="addIngredient-quantity"
             name="quantity"
+            type="number"
             value={ingredient.quantity}
             onChange={onChangeField('quantity')}
             variant="outlined"

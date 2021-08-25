@@ -456,7 +456,7 @@ function RecipePage(props) {
                   })}
                 </div>
               )}
-              <ResipeComments recipeId={recipeId} />
+              <ResipeComments recipeId={recipeId} userId={userId}/>
             </div>
             <div className={classes.recipe__cards}>
               {latestRecipes && (
