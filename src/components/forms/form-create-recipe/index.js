@@ -255,7 +255,7 @@ function FormCreateRecipe(props) {
   };
 
   const scrollToElement = el => {
-    el !== null && el.scrollIntoView({ block: 'center', inline: 'center' });
+    el !== null && el.scrollIntoView({ block: 'center', inline: 'center', behavior: 'smooth' });
   };
 
   const handleIngredientsUnit = unit => {

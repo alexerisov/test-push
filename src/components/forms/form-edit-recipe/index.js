@@ -262,7 +262,7 @@ function FormEditRecipe(props) {
   };
 
   const scrollToElement = el => {
-    el !== null && el.scrollIntoView({ block: 'center', inline: 'center' });
+    el !== null && el.scrollIntoView({ block: 'center', inline: 'center', behavior: 'smooth' });
   };
 
   const mobile = useMediaQuery('(max-width:576px)');
