@@ -630,7 +630,7 @@ function FormEditRecipe(props) {
           </button>
         </div>
 
-        {data?.publish_status === 2 &&
+        {data?.publish_status === 2 && (data?.status === 2 || data?.status === 3) &&
         <Alert severity="error" className={classes.createRecipebuttonContainer__alert}>
           <AlertTitle classes={{root: AlertMaterialStyles.root}}>Warning!</AlertTitle>
           Your published recipe will be submitted to Eatchefs team for approval again — <strong>Pay attention to this!</strong>
