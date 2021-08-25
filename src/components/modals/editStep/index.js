@@ -46,6 +46,14 @@ function AddStep(props) {
       setError('Description is required');
       return false;
     }
+    if (step.title.length > 255) {
+      setError('Maximum title сharacters 255');
+      return false;
+    }
+    if (step.description.length > 300) {
+      setError('Maximum description сharacters 300');
+      return false;
+    }
     return true;
   };
 
@@ -61,6 +69,9 @@ function AddStep(props) {
 
   function handleUpdateStep(e) {
     e.preventDefault();
+    if (!handleValidationOnSubmit()) {
+      return;
+    }
     const newData = { ...data };
     newData.steps[props?.modal?.params.num - 1].title = step.title;
     newData.steps[props?.modal?.params.num - 1].description = step.description;
