@@ -22,10 +22,7 @@ function UploadSuccessful (props) {
     return <div className={classes.UploadSuccess}>
       <img src="/images/index/upload_success.svg" alt="Success"></img>
       <h2 className={classes.UploadSuccess__title}>
-        {props.status === 2
-          ? "Your published recipe submitted to EatChefs Administration team for approval again!"
-          : "Recipe successfully edit"
-        }
+        Recipe successfully edit
       </h2>
       <button
         type="button"

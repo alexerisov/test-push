@@ -174,9 +174,18 @@
 
 .createRecipebuttonContainer {
   display: flex;
-  flex-direction: row-reverse;
-  margin: 22px 0 100px;
-  max-width: 1080px;
+  flex-direction: column;
+  margin: 22px auto 100px;
+  max-width: 1000px;
+
+  &__wrapper {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+
+  &__alert {
+    margin-top: 20px;
+  }
 }
 
 .createRecipeButton {
