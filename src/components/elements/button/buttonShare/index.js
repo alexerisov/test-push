@@ -1,15 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import Clipboard from 'clipboard';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Fade from '@material-ui/core/Fade';
+import { useMobileDevice } from "@/customHooks/useMobileDevice";
+
+import { EmailShareButton, FacebookShareButton, TwitterShareButton } from "react-share";
+
 import ShareIcon from '@material-ui/icons/Share';
 import Tooltip from '@material-ui/core/Tooltip';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import AssignmentOutlinedIcon from '@material-ui/icons/AssignmentOutlined';
+import { EmailIcon, FacebookIcon, TwitterIcon } from "react-share";
+
 
 import Recipe from "@/api/Recipe";
 
 import styles from './buttonShare.module.scss';
 
 const ButtonShare = ({recipeId}) => {
+  const [openShareWindow, setOpenShareWindow] = useState(false);
   const [open, setOpen] = useState(false);
+  const [isMobileOrTabletDevice] = useMobileDevice();
+  const currentUrl = window.location.href;
 
   const handleTooltipOpen = () => {
     setOpen(true);
@@ -19,10 +30,16 @@ const ButtonShare = ({recipeId}) => {
     setOpen(false);
   };
 
-  useEffect(() => {
-    const currentUrl = window.location.href;
+  const handleOpenShareWindow = (e) => {
+    setOpenShareWindow(true);
+  };
 
-    new Clipboard('.buttonShare_shareBtn__1v3WU', {
+  const handleCloseShareWindow = (e) => {
+    setOpenShareWindow(false);
+  };
+
+  useEffect(() => {
+    new Clipboard('.buttonShare_shareWindow__item__3rA8k:first-child', {
       text: () => {
         return currentUrl;
       }
@@ -31,7 +48,24 @@ const ButtonShare = ({recipeId}) => {
 
   const copyLink = async () => {
     await uploadShareStats();
-    handleTooltipOpen();
+    handleCloseShareWindow();
+    setTimeout(handleTooltipOpen, 500);
+    setTimeout(handleTooltipClose, 1500);
+  };
+
+  const mobileHandler = () => {
+    if (navigator.share) {
+      navigator
+        .share({
+          url: document.location.href,
+        })
+        .then(() => {
+          console.log('Successfully shared');
+        })
+        .catch(error => {
+          console.error('Something went wrong sharing the blog', error);
+        });
+    }
   };
 
   const uploadShareStats = () => {
@@ -43,33 +77,73 @@ const ButtonShare = ({recipeId}) => {
     }
   };
 
+  const beforeOnClickOnSocialNetwork = async () => {
+    return new Promise((resolve) => {
+      resolve('success');
+    })
+      .then(() => {
+        handleCloseShareWindow();
+      }
+    );
+  };
+
   return (
-    <ClickAwayListener onClickAway={handleTooltipClose}>
-      <Tooltip
-        classes={{tooltipArrow: styles.shareBtn__tooltipArrow}}
-        arrow
-        PopperProps={{
-          disablePortal: true,
-        }}
-        onClose={handleTooltipClose}
-        open={open}
-        disableFocusListener
-        disableHoverListener
-        disableTouchListener
-        title="Successfully copied!"
+    <ClickAwayListener onClickAway={handleCloseShareWindow}>
+    <Tooltip
+      classes={{tooltipArrow: styles.shareBtn__tooltipArrow}}
+      arrow
+      PopperProps={{
+        disablePortal: true,
+      }}
+      onClose={handleTooltipClose}
+      open={open}
+      disableFocusListener
+      disableHoverListener
+      disableTouchListener
+      title="Link successfully copied!"
+    >
+      <button
+        className={styles.shareBtn}
+        type="button"
+        onClick={isMobileOrTabletDevice ? mobileHandler : (e) => handleOpenShareWindow(e)}
       >
-        <button
-          className={styles.shareBtn}
-          type="button"
-          onClick={copyLink}
-        >
-          <div className={styles.shareBtn__icon}>
-            <ShareIcon fontSize='inherit'/>
-          </div>
+        <div className={styles.shareBtn__icon}>
+          <ShareIcon fontSize='inherit'/>
+
           <span className={styles.shareBtn__text}>Share</span>
-        </button>
-      </Tooltip>
-    </ClickAwayListener>
+        </div>
+
+        <Fade in={openShareWindow}>
+          <ul className={styles.shareWindow}>
+            <li className={styles.shareWindow__item} onClick={copyLink}>
+              <AssignmentOutlinedIcon fontSize={'small'}/> Copy to clipboard
+            </li>
+
+            <li className={styles.shareWindow__item}>
+              <TwitterShareButton url={currentUrl} className={styles.shareWindow__action} beforeOnClick={beforeOnClickOnSocialNetwork}>
+                <TwitterIcon round={true} size='23px'/>
+                Twitter
+              </TwitterShareButton>
+            </li>
+
+            <li className={styles.shareWindow__item}>
+              <FacebookShareButton url={currentUrl} className={styles.shareWindow__action} beforeOnClick={beforeOnClickOnSocialNetwork}>
+                <FacebookIcon round={true} size='23px'/>
+                Facebook
+              </FacebookShareButton>
+            </li>
+
+            <li className={styles.shareWindow__item} >
+              <EmailShareButton url={currentUrl} className={styles.shareWindow__action} beforeOnClick={beforeOnClickOnSocialNetwork}>
+                <EmailIcon round={true} size='23px'/>
+                Email
+              </EmailShareButton>
+            </li>
+          </ul>
+        </Fade>
+      </button>
+    </Tooltip>
+  </ClickAwayListener>
   );
 };
 
