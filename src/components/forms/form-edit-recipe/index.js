@@ -30,6 +30,7 @@ import classes from './form-create-recipe.module.scss';
 import { CardIngredient, CardNutrition, CardImageEditRecipe } from '@/components/elements/card';
 import Recipe from '@/api/Recipe';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import {Alert, AlertTitle} from "@material-ui/lab";
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -68,6 +69,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const useAlertStyles = makeStyles({
+  root: {
+    fontWeight: '600'
+  }
+});
+
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -81,6 +88,7 @@ const MenuProps = {
 function FormEditRecipe(props) {
   const router = useRouter();
   const classMarerialUi = useStyles();
+  const AlertMaterialStyles = useAlertStyles();
   const { data, error } = props.recipeEdit;
   const recipeId = props.recipeId;
 
@@ -640,12 +648,21 @@ function FormEditRecipe(props) {
         </div>
       </form>
       <div className={classes.createRecipebuttonContainer}>
-        <button className={classes.createRecipeButton} onClick={uploadRecipe}>
-          <p className={classes.createRecipeButton__text}>{statusSubmit}</p>
-        </button>
-        <button className={classes.createRecipeButton_color_gray} onClick={() => router.push(`/recipe/${recipeId}`)}>
-          <p className={classes.createRecipeButton__text}>Cancel</p>
-        </button>
+        <div className={classes.createRecipebuttonContainer__wrapper}>
+          <button className={classes.createRecipeButton} onClick={uploadRecipe}>
+            <p className={classes.createRecipeButton__text}>{statusSubmit}</p>
+          </button>
+          <button className={classes.createRecipeButton_color_gray} onClick={() => router.push(`/recipe/${recipeId}`)}>
+            <p className={classes.createRecipeButton__text}>Cancel</p>
+          </button>
+        </div>
+
+        {data?.publish_status === 2 && (data?.status === 2 || data?.status === 3) &&
+        <Alert severity="error" className={classes.createRecipebuttonContainer__alert}>
+          <AlertTitle classes={{root: AlertMaterialStyles.root}}>Warning!</AlertTitle>
+          Your published recipe will be submitted to Eatchefs team for approval again — <strong>Pay attention to this!</strong>
+        </Alert>
+        }
       </div>
     </div>
   );
