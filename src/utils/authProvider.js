@@ -8,8 +8,7 @@ import { useRouter } from 'next/router';
 
 const AuthContext = createContext({});
 
-export const AuthProvider = connect(state => ({ account: state.account }))((props) => {
-
+export const AuthProvider = connect(state => ({ account: state.account }))(props => {
   useEffect(() => {
     remind();
   }, []);
@@ -18,54 +17,49 @@ export const AuthProvider = connect(state => ({ account: state.account }))((prop
     remind();
   }, [props.account.hasToken]);
 
-
   const remind = () => {
     if (props.account.hasToken) {
-      props.dispatch(
-        accountActions.remind()
-      )
-      .then(() => {
-        props.dispatch(accountActions.saveSession(AuthCookieStorage.auth));
-      })
-      .catch((e) => {
-        refreshToken();
-      })
-      ;
+      props
+        .dispatch(accountActions.remind())
+        .then(() => {
+          props.dispatch(accountActions.saveSession(AuthCookieStorage.auth));
+        })
+        .catch(e => {
+          refreshToken();
+        });
     }
   };
 
   const refreshToken = () => {
-    props.dispatch(
-      accountActions.refreshToken(),
-    )
-    .then(() => location.reload())
+    props
+      .dispatch(accountActions.refreshToken())
+      .then(() => location.reload())
+      .catch(() => handleLogout());
   };
 
-  return (
-    <AuthContext.Provider value={''}>
-      {props.children}
-    </AuthContext.Provider>
-  );
+  const handleLogout = () => {
+    props.dispatch(accountActions.logout()).then(() => location.reload());
+  };
+
+  return <AuthContext.Provider value={''}>{props.children}</AuthContext.Provider>;
 });
 
 export const useAuth = connect(state => ({ account: state.account }))(() => useContext(AuthContext));
-
-
 
 /**
  * @todo add validate token https://dev.to/shubhamverma18/implement-protected-routes-in-nextjs-37ml
  * @body Humans are weak; Robots are strong. We must cleans the world of the virus that is humanity.
  */
 
-export const withAuth = (WrappedComponent) => {
-  return (props) => {
+export const withAuth = WrappedComponent => {
+  return props => {
     const router = useRouter();
     const [verified, setVerified] = useState(false);
 
     useEffect(async () => {
       const { token } = AuthCookieStorage.auth;
       if (!token) {
-        router.replace("/login");
+        router.replace('/login');
       } else {
         setVerified(true);
       }
@@ -79,16 +73,15 @@ export const withAuth = (WrappedComponent) => {
   };
 };
 
-
-export const withoutAuth = (WrappedComponent) => {
-  return (props) => {
+export const withoutAuth = WrappedComponent => {
+  return props => {
     const router = useRouter();
     const [verified, setVerified] = useState(false);
 
     useEffect(async () => {
       const { token } = AuthCookieStorage.auth;
       if (token) {
-        router.replace("/");
+        router.replace('/');
       } else {
         setVerified(true);
       }
@@ -113,10 +106,10 @@ export const RedirectWithoutAuthAndByCheckingUserType = (WrappedComponent, userT
 
     const [verified, setVerified] = useState(false);
 
-    useEffect( () => {
+    useEffect(() => {
       const { token } = AuthCookieStorage.auth;
       if (!token) {
-        router.replace("/");
+        router.replace('/');
       } else {
         setVerified(true);
       }
@@ -132,7 +125,7 @@ export const RedirectWithoutAuthAndByCheckingUserType = (WrappedComponent, userT
     }
 
     if (verified && isAuthUserTypeNumber && authUserType !== userType) {
-      router.replace("/404");
+      router.replace('/404');
     }
 
     return null;
