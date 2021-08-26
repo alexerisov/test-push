@@ -46,8 +46,8 @@ function AddStep(props) {
       setError('Description is required');
       return false;
     }
-    if (step.title.length > 255) {
-      setError('Maximum title сharacters 255');
+    if (step.title.length > 200) {
+      setError('Maximum title сharacters 200');
       return false;
     }
     if (step.description.length > 300) {
