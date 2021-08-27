@@ -99,6 +99,7 @@ function AddStep(props) {
             <TextField
               id="addStep-name"
               name="title"
+              autoFocus
               value={step.title}
               onChange={onChangeField('title')}
               variant="outlined"
