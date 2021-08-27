@@ -30,6 +30,7 @@ import classes from './form-create-recipe.module.scss';
 import { CardIngredient, CardNutrition, CardImageEditRecipe } from '@/components/elements/card';
 import Recipe from '@/api/Recipe';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { Alert, AlertTitle } from '@material-ui/lab';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -68,6 +69,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const useAlertStyles = makeStyles({
+  root: {
+    fontWeight: '600'
+  }
+});
+
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -81,6 +88,7 @@ const MenuProps = {
 function FormEditRecipe(props) {
   const router = useRouter();
   const classMarerialUi = useStyles();
+  const AlertMaterialStyles = useAlertStyles();
   const { data, error } = props.recipeEdit;
   const recipeId = props.recipeId;
 
@@ -169,7 +177,7 @@ function FormEditRecipe(props) {
   const handleAddImage = e => {
     if (e.currentTarget.files.length !== 0) {
       const newImageList = [...data?.images, ...Object.values(e.currentTarget.files)];
-      const newData = {...data, images: newImageList};
+      const newData = { ...data, images: newImageList };
       props.dispatch(recipeEditActions.update(newData));
     }
   };
@@ -249,8 +257,8 @@ function FormEditRecipe(props) {
         scrollToElement(el);
         return;
       }
-      if (elementError?.nameErrorResponse === 'preview_mp4_url') {
-        const el = document.querySelector(`div[id=${elementError.nameInput}]`);
+      if (elementError?.nameDiv) {
+        const el = document.querySelector(`div[id=${elementError.nameDiv}]`);
         scrollToElement(el);
         return;
       }
@@ -312,7 +320,9 @@ function FormEditRecipe(props) {
           </div>
         </div>
         <div className={classes.createRecipeSection}>
-          <h2 className={classes.createRecipeSubtitle}>Ingredients</h2>
+          <h2 className={classes.createRecipeSubtitle}>
+            <span style={{ color: 'red' }}>* </span>Ingredients
+          </h2>
           <div className={classes.createRecipeSection__grid_type_cardIngredients}>
             {data?.ingredients.length !== 0
               ? data?.ingredients.map((item, index) => (
@@ -334,6 +344,7 @@ function FormEditRecipe(props) {
               <p className={classes.createRecipeButton_type_addIngredient__text}>Add More</p>
             </button>
           </div>
+          <FieldError errors={error} path="ingredients" id="error" />
         </div>
         <div className={classes.createRecipeSection}>
           <h2 className={classes.createRecipeSubtitle}>Nutrition value</h2>
@@ -457,9 +468,7 @@ function FormEditRecipe(props) {
           <FieldError errors={error} path="images" />
         </div>
         <div className={classes.createRecipeSection}>
-          <h2 className={classes.createRecipeSubtitle_withoutInput}>
-            <span style={{ color: 'red' }}>* </span>Cooking Video
-          </h2>
+          <h2 className={classes.createRecipeSubtitle_withoutInput}>Cooking Video</h2>
 
           {!newVideo ? (
             data.preview_mp4_url && (
@@ -485,38 +494,6 @@ function FormEditRecipe(props) {
           </button>
         </div>
         <div className={classes.createRecipeSection}>
-          <h2 className={classes.createRecipeSubtitle_withoutInput}>Video Elements</h2>
-          <div className={classes.createRecipeItem}>
-            <h3 className={classes.createRecipeItem__title}>
-              <span style={{ color: 'red' }}>* </span>Language and Caption
-            </h3>
-            <div className={classes.createRecipeItem__inputContainer}>
-              <NoSsr>
-                <TextField
-                  id="create-language"
-                  type="text"
-                  onChange={onChangeField('language')}
-                  value={data?.language}
-                  variant="outlined"
-                  placeholder="Language"
-                  className={classMarerialUi.textField}
-                  error={error?.language}
-                  helperText={error?.language ? 'This field is required' : ''}
-                />
-                <TextField
-                  id="create-caption"
-                  type="text"
-                  onChange={onChangeField('caption')}
-                  value={data?.caption}
-                  variant="outlined"
-                  placeholder="Caption"
-                  className={classMarerialUi.textField}
-                  error={error?.caption}
-                  helperText={error?.caption ? 'This field is required' : ''}
-                />
-              </NoSsr>
-            </div>
-          </div>
           <div className={classes.createRecipeItem}>
             <h3 className={classes.createRecipeItem__title}>
               <span style={{ color: 'red' }}>* </span>Visibility
@@ -573,7 +550,7 @@ function FormEditRecipe(props) {
               </FormControl>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
                 <label htmlFor="create-diet-restrictions-select" className={classes.createRecipeLabel}>
-                  Lifestyle
+                  <span style={{ color: 'red' }}>* </span>Lifestyle
                 </label>
                 <Select
                   id="create-diet-restrictions-select"
@@ -589,7 +566,7 @@ function FormEditRecipe(props) {
               </FormControl>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
                 <label htmlFor="create-cuisines-select" className={classes.createRecipeLabel}>
-                  Cuisine
+                  <span style={{ color: 'red' }}>* </span>Cuisine
                 </label>
                 <Select
                   id="create-cuisines-select"
@@ -606,7 +583,7 @@ function FormEditRecipe(props) {
               </FormControl>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
                 <label htmlFor="create-cooking-methods-select" className={classes.createRecipeLabel}>
-                  Cooking Method
+                  <span style={{ color: 'red' }}>* </span>Cooking Method
                 </label>
                 <Select
                   id="create-cooking-methods-select"
@@ -640,12 +617,22 @@ function FormEditRecipe(props) {
         </div>
       </form>
       <div className={classes.createRecipebuttonContainer}>
-        <button className={classes.createRecipeButton} onClick={uploadRecipe}>
-          <p className={classes.createRecipeButton__text}>{statusSubmit}</p>
-        </button>
-        <button className={classes.createRecipeButton_color_gray} onClick={() => router.push(`/recipe/${recipeId}`)}>
-          <p className={classes.createRecipeButton__text}>Cancel</p>
-        </button>
+        <div className={classes.createRecipebuttonContainer__wrapper}>
+          <button className={classes.createRecipeButton} onClick={uploadRecipe}>
+            <p className={classes.createRecipeButton__text}>{statusSubmit}</p>
+          </button>
+          <button className={classes.createRecipeButton_color_gray} onClick={() => router.push(`/recipe/${recipeId}`)}>
+            <p className={classes.createRecipeButton__text}>Cancel</p>
+          </button>
+        </div>
+
+        {data?.publish_status === 2 && (data?.status === 2 || data?.status === 3) && (
+          <Alert severity="error" className={classes.createRecipebuttonContainer__alert}>
+            <AlertTitle classes={{ root: AlertMaterialStyles.root }}>Warning!</AlertTitle>
+            Your published recipe will be submitted to Eatchefs team for approval again —{' '}
+            <strong>Pay attention to this!</strong>
+          </Alert>
+        )}
       </div>
     </div>
   );

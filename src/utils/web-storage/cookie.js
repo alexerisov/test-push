@@ -1,4 +1,4 @@
-import { isWindowExist } from "../isTypeOfWindow";
+import { isWindowExist } from '../isTypeOfWindow';
 
 /**
  *
@@ -9,8 +9,7 @@ import { isWindowExist } from "../isTypeOfWindow";
  * @param {number} expireMinutes
  * @param {number} expireSeconds
  */
-export function setCookie(
-  key, value, expireDays = 7, expireHours, expireMinutes, expireSeconds) {
+export function setCookie(key, value, expireDays = 7, expireHours, expireMinutes, expireSeconds) {
   let expireDate = new Date();
   if (expireDays) {
     expireDate.setDate(expireDate.getDate() + expireDays);
@@ -25,10 +24,15 @@ export function setCookie(
     expireDate.setSeconds(expireDate.getSeconds() + expireSeconds);
   }
   if (isWindowExist()) {
-    document.cookie = key + '=' + escape(value) +
-      ';domain=' + window.location.hostname +
+    document.cookie =
+      key +
+      '=' +
+      escape(value) +
+      ';domain=' +
+      window.location.hostname +
       ';path=/' +
-      ';expires=' + expireDate.toUTCString();
+      ';expires=' +
+      expireDate.toUTCString();
   }
 }
 
@@ -46,21 +50,35 @@ export function deleteCookie(name) {
  */
 export function getCookieValue(name) {
   if (isWindowExist()) {
-    const matches = document.cookie.match(new RegExp(
-      `(?:^|; )${name.replace(/([.$?*|{}()[]\/+^])/g, '\\$1')}=([^;]*)`,
-    ));
+    const matches = document.cookie.match(
+      new RegExp(`(?:^|; )${name.replace(/([.$?*|{}()[]\/+^])/g, '\\$1')}=([^;]*)`)
+    );
     return matches ? decodeURIComponent(matches[1]) : undefined;
+  }
+}
+
+// cookie banner methods
+
+export function setСonfirmBannerCoockie() {
+  setCookie(`gb-confirm-banner-coockie`, 'true', 1);
+}
+
+export function getСonfirmBannerCoockie() {
+  try {
+    getCookieValue('gb-confirm-banner-coockie');
+    return getCookieValue('gb-confirm-banner-coockie');
+  } catch (e) {
+    return null;
   }
 }
 
 //auth cookie
 export class AuthCookieStorage {
-
   static key = 'aucr';
 
   static default = {
     token: null,
-    refresh: null,
+    refresh: null
   };
 
   /**
