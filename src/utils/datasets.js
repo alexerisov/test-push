@@ -226,12 +226,17 @@ export const notificationTypesTitle = {
 export const nameErrorRecipe = [
   { nameErrorResponse: 'title', nameInput: 'create-title' },
   { nameErrorResponse: 'description', nameInput: 'create-description' },
+  { nameErrorResponse: 'ingredients', nameDiv: 'create-ingredients' },
   { nameErrorResponse: 'images', nameInput: 'create-images' },
-  { nameErrorResponse: 'preview_mp4_url', nameInput: 'DemoCamera' },
+  { nameErrorResponse: 'images_to_delete', nameInput: 'create-images' },
+  { nameErrorResponse: 'preview_mp4_url', nameDiv: 'DemoCamera' },
   { nameErrorResponse: 'publish_status', nameInput: 'publish_status' },
   { nameErrorResponse: 'caption', nameInput: 'create-caption' },
   { nameErrorResponse: 'language', nameInput: 'create-language' },
-  { nameErrorResponse: 'cooking_skills', nameInput: 'create-cooking-skills-select' }
+  { nameErrorResponse: 'diet_restrictions', nameDiv: 'create-diet-restrictions-select' },
+  { nameErrorResponse: 'cuisines', nameDiv: 'create-cuisines-select' },
+  { nameErrorResponse: 'cooking_skills', nameDiv: 'create-cooking-skills-select' },
+  { nameErrorResponse: 'cooking_methods', nameDiv: 'create-cooking-methods-select' }
 ];
 
 export const nameErrorProfile = [
