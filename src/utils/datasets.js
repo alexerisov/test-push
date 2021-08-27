@@ -233,3 +233,12 @@ export const nameErrorRecipe = [
   { nameErrorResponse: 'language', nameInput: 'create-language' },
   { nameErrorResponse: 'cooking_skills', nameInput: 'create-cooking-skills-select' }
 ];
+
+export const nameErrorProfile = [
+  { nameErrorResponse: 'full_name', nameInput: 'full_name' },
+  { nameErrorResponse: 'avatar', nameInput: 'avatar' },
+  { nameErrorResponse: 'bio', nameInput: 'bio' },
+  { nameErrorResponse: 'city', nameInput: 'city' },
+  { nameErrorResponse: 'phone_number', nameInput: 'phone_number' },
+  { nameErrorResponse: 'language', nameInput: 'language' }
+];

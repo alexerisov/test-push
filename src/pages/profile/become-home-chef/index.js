@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import classes from './index.module.scss';
+import { connect } from 'react-redux';
+
 import LayoutPage from '@/components/layouts/layout-page';
 import ContentLayout from '@/components/layouts/layout-profile-content';
-import PropTypes from 'prop-types';
 import { modalActions } from '@/store/actions';
-
-import { useFormik } from 'formik';
-import * as yup from 'yup';
-import TextField from '@material-ui/core/TextField';
-import Input from '@material-ui/core/Input';
 import { profileActions, accountActions } from '@/store/actions';
-import { connect } from 'react-redux';
-import styled from 'styled-components';
 import { CardRoleModels } from '@/components/elements/card';
+import { nameErrorProfile } from '@/utils/datasets';
+import { validator } from '@/utils/validator';
+import FieldError from '@/components/elements/field-error';
+
+import PropTypes from 'prop-types';
+import { useFormik } from 'formik';
+import styled from 'styled-components';
+import TextField from '@material-ui/core/TextField';
 
 const StyledTextField = styled(TextField)`
   width: 100%;
@@ -30,17 +32,29 @@ const ProfileAccountSettings = props => {
     return <div>loading...</div>;
   }
 
-  const phoneRegExp = /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){5,18}(\s*)?$/;
+  const [errorForm, setErrorForm] = useState(null);
 
-  const validationSchema = yup.object({
-    email: yup.string('Enter your email').required('Email is required'),
-    full_name: yup
-      .string('Enter your Full Name')
-      .required('Full Name is required')
-      .min(1, 'Full Name should be of minimum 1 characters length')
-      .max(80, 'Full Name should be of maximum 80 characters length'),
-    phone_number: yup.string('Enter your Phone number').matches(phoneRegExp, 'Phone number is not valid')
-  });
+  function onChangeField(name, event) {
+    const currentLength = event?.target.value.length;
+    const newError = {
+      ...errorForm,
+      [name]: `${validator.getErrorStatusByCheckingLength({
+        currentLength,
+        ...getMaxLengthOfField(name)
+      })}`
+    };
+    formik.handleChange(event);
+    setErrorForm(newError);
+  }
+
+  const getMaxLengthOfField = name => {
+    switch (name) {
+      case 'full_name':
+        return { maxLength: 80 };
+      case 'city':
+        return { maxLength: 255 };
+    }
+  };
 
   const { email, full_name, phone_number, city, language, avatar, user_type } = props.account.profile;
 
@@ -65,27 +79,25 @@ const ProfileAccountSettings = props => {
       avatar: avatar,
       role_model_images: []
     },
-    validationSchema: validationSchema,
     onSubmit: values => {
-      if (values.avatar === null) {
-        setFormStatus(<span className={classes.profile__formStatus_error}>Avatar is required</span>);
-      } else {
-        setStatusSubmit('Loading...');
-        setFormStatus('');
-        values.user_type = user_type;
-        props
-          .dispatch(profileActions.updateAccountType(values))
-          .then(res => {
-            setStatusSubmit('Become a home chef');
-            setFormStatus(<span className={classes.profile__formStatus_true}>Successfully sent</span>);
-            props.dispatch(accountActions.remind());
-          })
-          .catch(error => {
-            setStatusSubmit('Become a home chef');
-            setFormStatus(<span className={classes.profile__formStatus_error}>Error</span>);
-            console.log(error);
-          });
-      }
+      setStatusSubmit('Loading...');
+      setFormStatus('');
+      values.user_type = user_type;
+      props
+        .dispatch(profileActions.updateAccountType(values))
+        .then(res => {
+          setErrorForm(null);
+          setStatusSubmit('Become a home chef');
+          setFormStatus(<span className={classes.profile__formStatus_true}>Successfully sent</span>);
+          props.dispatch(accountActions.remind());
+        })
+        .catch(error => {
+          setErrorForm(error.response.data);
+          handleErrorScroll(error.response.data);
+          setStatusSubmit('Become a home chef');
+          setFormStatus(<span className={classes.profile__formStatus_error}>Error</span>);
+          console.log(error);
+        });
     }
   });
 
@@ -178,6 +190,34 @@ const ProfileAccountSettings = props => {
     formik.setFieldValue('experience', data);
   };
 
+  // scroll to error
+
+  const handleErrorScroll = error => {
+    if (error !== null) {
+      const elementError = nameErrorProfile.find(item => error[item.nameErrorResponse]);
+      if (elementError?.nameErrorResponse === 'bio') {
+        const el = document.querySelector(`textarea[id=${elementError.nameInput}]`);
+        scrollToElement(el);
+        return;
+      }
+      if (elementError?.nameErrorResponse === 'avatar') {
+        const el = document.querySelector(`div[id=${elementError.nameInput}]`);
+        scrollToElement(el);
+        return;
+      }
+      if (elementError) {
+        const el = document.querySelector(`input[id=${elementError.nameInput}]`);
+        scrollToElement(el);
+        console.log(el);
+        return;
+      }
+    }
+  };
+
+  const scrollToElement = el => {
+    el !== null && el.scrollIntoView({ block: 'center', inline: 'center', behavior: 'smooth' });
+  };
+
   const content = (
     <>
       <ContentLayout>
@@ -190,7 +230,7 @@ const ProfileAccountSettings = props => {
               ) : (
                 avatarFile && <img src={avatarFile} alt="avatar" className={classes.profile__avatar} />
               )}
-              <div className={classes.profile__avatarBack} />
+              <div className={classes.profile__avatarBack} id="avatar" />
             </div>
             <input
               type="file"
@@ -203,19 +243,25 @@ const ProfileAccountSettings = props => {
                 formik.setFieldValue('avatar', event.currentTarget.files[0]);
               }}
             />
+            <FieldError errors={errorForm} path="avatar" id="error" />
             <label className={classes.profile__avatarLabel}>Profile-pic.jpg</label>
           </div>
           <h2 className={classes.profile__title}>Basic Information</h2>
           <div>
-            <label className={classes.profile__label}>Full Name</label>
+            <label className={classes.profile__label}>
+              <span style={{ color: 'red' }}>* </span>Full Name
+            </label>
             <StyledTextField
               id="full_name"
               name="full_name"
               value={formik.values.full_name ? formik.values.full_name : ''}
-              onChange={formik.handleChange}
+              onChange={e => {
+                onChangeField('full_name', e);
+              }}
+              inputProps={{ maxLength: 80 }}
               variant="outlined"
-              error={formik.touched.full_name && Boolean(formik.errors.full_name)}
-              helperText={formik.touched.full_name && formik.errors.full_name}
+              error={Boolean(errorForm?.full_name)}
+              helperText={errorForm?.full_name}
             />
           </div>
           <div>
@@ -228,12 +274,14 @@ const ProfileAccountSettings = props => {
               value={formik.values.bio ? formik.values.bio : ''}
               onChange={formik.handleChange}
               variant="outlined"
-              error={formik.touched.bio && Boolean(formik.errors.bio)}
-              helperText={formik.touched.bio && formik.errors.bio}
+              error={Boolean(errorForm?.bio)}
+              helperText={errorForm?.bio}
             />
           </div>
           <div className={classes.profile__container_emailAndPhone}>
-            <label className={classes.profile__label}>Email</label>
+            <label className={classes.profile__label}>
+              <span style={{ color: 'red' }}>* </span>Email
+            </label>
             <StyledAutoTextField
               disabled
               id="email"
@@ -241,8 +289,8 @@ const ProfileAccountSettings = props => {
               variant="outlined"
               value={formik.values.email}
               onChange={formik.handleChange}
-              error={formik.touched.email && Boolean(formik.errors.email)}
-              helperText={formik.touched.email && formik.errors.email}
+              error={Boolean(errorForm?.email)}
+              helperText={errorForm?.email}
             />
             <label className={classes.profile__label}>Phone Number</label>
             <StyledAutoTextField
@@ -251,20 +299,25 @@ const ProfileAccountSettings = props => {
               variant="outlined"
               value={formik.values.phone_number ? formik.values.phone_number : ''}
               onChange={formik.handleChange}
-              error={formik.touched.phone_number && Boolean(formik.errors.phone_number)}
-              helperText={formik.touched.phone_number && formik.errors.phone_number}
+              error={Boolean(errorForm?.phone_number)}
+              helperText={errorForm?.phone_number}
             />
           </div>
           <div className={classes.profile__container_emailAndPhone}>
-            <label className={classes.profile__label}>City</label>
+            <label className={classes.profile__label}>
+              <span style={{ color: 'red' }}>* </span>City
+            </label>
             <StyledAutoTextField
               id="city"
               name="city"
               variant="outlined"
               value={formik.values.city ? formik.values.city : ''}
-              onChange={formik.handleChange}
-              error={formik.touched.city && Boolean(formik.errors.city)}
-              helperText={formik.touched.city && formik.errors.city}
+              onChange={e => {
+                onChangeField('city', e);
+              }}
+              inputProps={{ maxLength: 255 }}
+              error={Boolean(errorForm?.city)}
+              helperText={errorForm?.city}
             />
             <label className={classes.profile__label}>Language</label>
             <StyledAutoTextField
@@ -273,8 +326,8 @@ const ProfileAccountSettings = props => {
               variant="outlined"
               value={formik.values.language ? formik.values.language : ''}
               onChange={formik.handleChange}
-              error={formik.touched.language && Boolean(formik.errors.language)}
-              helperText={formik.touched.language && formik.errors.language}
+              error={Boolean(errorForm?.language)}
+              helperText={errorForm?.language}
             />
           </div>
           <div className={classes.profile__experience}>
