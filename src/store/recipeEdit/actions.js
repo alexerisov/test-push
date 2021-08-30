@@ -57,6 +57,7 @@ export default {
             steps: data?.steps,
             publish_status: data?.publish_status,
             images_to_delete: data?.images_to_delete,
+            main_image: data?.main_image
           },
           data?.images ?? null,
           data.id

@@ -26,6 +26,7 @@ const initState = {
     steps: [],
     publish_status: null,
     images: [],
+    main_image: null
   },
   isLoading: false,
   error: null,
