@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {LayoutModal} from '@/components/layouts';
+import { useMediaQuery } from "@material-ui/core";
 import {loginActions, modalActions, registerActions, restorePasswordActions} from '@/store/actions';
 import {
   LoginChoice,
@@ -15,6 +16,18 @@ import { useRouter } from 'next/router';
 
 function Register (props) {
   const router = useRouter();
+  const isMobile = useMediaQuery('(max-width: 768px)');
+
+  useEffect(() => {
+    if (isMobile) {
+      document.body.style.overflowY = 'hidden';
+    }
+
+    return () => {
+      document.body.style.overflowY = 'unset';
+    };
+  }, [isMobile]);
+
 
   const USER_TYPE = {
     viewerType: 0,
