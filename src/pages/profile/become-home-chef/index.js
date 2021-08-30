@@ -224,7 +224,6 @@ const ProfileAccountSettings = props => {
       if (elementError) {
         const el = document.querySelector(`input[id=${elementError.nameInput}]`);
         scrollToElement(el);
-        console.log(el);
         return;
       }
     }

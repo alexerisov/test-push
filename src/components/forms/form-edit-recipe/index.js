@@ -147,12 +147,6 @@ function FormEditRecipe(props) {
           ...getMaxLengthOfField(name)
         })}`
       };
-      console.log(
-        validator.getErrorStatusByCheckingLength({
-          currentLength,
-          ...getMaxLengthOfField(name)
-        })
-      );
       props.dispatch(recipeEditActions.update(newData));
       props.dispatch(recipeEditActions.updateError(newError));
     };
