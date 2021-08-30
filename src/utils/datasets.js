@@ -65,7 +65,9 @@ export const dietaryrestrictions = {
   11: 'Primal',
   12: 'Ketogenic',
   13: 'FODMAP',
-  14: 'Whole 30'
+  14: 'Whole 30',
+  15: 'Low FODMAP',
+  16: 'High FODMAP'
 };
 
 export const units = {

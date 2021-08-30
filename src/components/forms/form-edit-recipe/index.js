@@ -31,6 +31,7 @@ import { CardIngredient, CardNutrition, CardImageEditRecipe } from '@/components
 import Recipe from '@/api/Recipe';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Alert, AlertTitle } from '@material-ui/lab';
+import InputTime from "@/components/elements/input/inputTime";
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -520,12 +521,10 @@ function FormEditRecipe(props) {
                 Preparation Time
               </label>
               <NoSsr>
-                <TextField
+                <InputTime
                   id="create-cooking_time"
-                  type="time"
-                  onChange={onChangeField('cooking_time')}
                   value={data?.cooking_time}
-                  variant="outlined"
+                  onChange={onChangeField('cooking_time')}
                   className={classMarerialUi.textField}
                   fullWidth
                 />
