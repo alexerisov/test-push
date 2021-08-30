@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import {ReactSortable} from "react-sortablejs";
+import { ReactSortable } from 'react-sortablejs';
 import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { useRouter } from 'next/router';
@@ -113,7 +113,7 @@ function FormEditRecipe(props) {
     if (Array.isArray(data?.images)) {
       const imagesData = data?.images?.map((item, index) => {
         if (item instanceof File) {
-          return {id: index, image: item};
+          return { id: index, image: item };
         }
 
         return item;
@@ -197,13 +197,13 @@ function FormEditRecipe(props) {
     // for drag and drop
     if (isDragging && e?.dataTransfer?.files?.length !== 0) {
       const newImageList = [...data?.images, ...Object.values(e.dataTransfer.files)];
-      const newData = {...data, images: newImageList};
+      const newData = { ...data, images: newImageList };
       props.dispatch(recipeEditActions.update(newData));
     }
 
     if (!isDragging && e?.currentTarget?.files?.length !== 0) {
       const newImageList = [...data?.images, ...Object.values(e.currentTarget.files)];
-      const newData = {...data, images: newImageList};
+      const newData = { ...data, images: newImageList };
       props.dispatch(recipeEditActions.update(newData));
     }
   };
@@ -214,14 +214,14 @@ function FormEditRecipe(props) {
       const newImageList = data?.images.map((item, index) => {
         return index === id ? newImage : item;
       });
-      const newData = {...data, images: newImageList};
+      const newData = { ...data, images: newImageList };
       props.dispatch(recipeEditActions.update(newData));
     }
   };
 
-  const sortList = (e) => {
-    const imagesData = e.map(item => item.image ? item.image : item);
-    const newData = {...data, images: imagesData, main_image: imagesData[0]};
+  const sortList = e => {
+    const imagesData = e.map(item => (item.image ? item.image : item));
+    const newData = { ...data, images: imagesData, main_image: imagesData[0] };
     props.dispatch(recipeEditActions.update(newData));
   };
 
@@ -293,7 +293,7 @@ function FormEditRecipe(props) {
   function uploadRecipe(e) {
     setStatusSubmit('Loading...');
     e.preventDefault();
-    const clonedData = {...data};
+    const clonedData = { ...data };
 
     if (clonedData.main_image instanceof File) {
       clonedData.main_image = clonedData.main_image.name;
@@ -352,7 +352,6 @@ function FormEditRecipe(props) {
   };
 
   const mobile = useMediaQuery('(max-width:576px)');
-
 
   return (
     <div>
@@ -523,56 +522,56 @@ function FormEditRecipe(props) {
             filter=".form-create-recipe_createRecipeLabel_type_addImage__17fDT"
             draggable=".card-image_cardImage__yt16O"
             preventOnFilter
-            className={classes.createRecipeSection__grid_type_cardImages}
-          >
-          {images?.length !== 0
-            ? images?.map((item, index, array) => {
-                const card = (
-                  <CardImageEditRecipe
-                    image={item}
-                    delete={handleRemoveImage}
-                    update={handleUpdateImage}
-                    key={index}
-                    src={item.url ?? URL.createObjectURL(item.image)}
-                    id={index}
-                    pk={item.id}
-                  />
-                );
-
-                if (index === array.length - 1) {
-                  return (
-                    <>
-                      {card}
-                      <label
-                        htmlFor="create-images"
-                        ref={uploadImageLabel}
-                        className={classes.createRecipeLabel_type_addImage}
-                        onDrop={event => handleDrop(event)}
-                        onDragOver={event => handleDragOver(event)}
-                        onDragEnter={event => handleDragEnter(event)}
-                        onDragLeave={event => handleDragLeave(event)}
-                      >
-                        <PhotoCameraOutlinedIcon fontSize={'small'} color={"action"}/>
-                        <p className={classes.createRecipeLabel_type_addImage__text}>jpeg, png, webp, tif, less than 50 Mb</p>
-                        <p className={classes.createRecipeLabel_type_addImage__subtext}>Upload Photo</p>
-                      </label>
-                      <input
-                        type="file"
-                        id="create-images"
-                        name="create-images"
-                        accept="image/*"
-                        multiple
-                        onChange={handleAddImage}
-                        className={classes.createRecipeInput_type_addImage}
-                      />
-                    </>
+            className={classes.createRecipeSection__grid_type_cardImages}>
+            {images?.length !== 0
+              ? images?.map((item, index, array) => {
+                  const card = (
+                    <CardImageEditRecipe
+                      image={item}
+                      delete={handleRemoveImage}
+                      update={handleUpdateImage}
+                      key={index}
+                      src={item.url ?? URL.createObjectURL(item.image)}
+                      id={index}
+                      pk={item.id}
+                    />
                   );
-                }
 
-                return card;
-              })
-            : ''}
-            </ReactSortable>
+                  if (index === array.length - 1) {
+                    return (
+                      <>
+                        {card}
+                        <label
+                          htmlFor="create-images"
+                          ref={uploadImageLabel}
+                          className={classes.createRecipeLabel_type_addImage}
+                          onDrop={event => handleDrop(event)}
+                          onDragOver={event => handleDragOver(event)}
+                          onDragEnter={event => handleDragEnter(event)}
+                          onDragLeave={event => handleDragLeave(event)}>
+                          <PhotoCameraOutlinedIcon fontSize={'small'} color={'action'} />
+                          <p className={classes.createRecipeLabel_type_addImage__text}>
+                            jpeg, png, webp, tif, less than 50 Mb
+                          </p>
+                          <p className={classes.createRecipeLabel_type_addImage__subtext}>Upload Photo</p>
+                        </label>
+                        <input
+                          type="file"
+                          id="create-images"
+                          name="create-images"
+                          accept="image/*"
+                          multiple
+                          onChange={handleAddImage}
+                          className={classes.createRecipeInput_type_addImage}
+                        />
+                      </>
+                    );
+                  }
+
+                  return card;
+                })
+              : ''}
+          </ReactSortable>
           <FieldError errors={error} path="images" />
         </div>
         <div className={classes.createRecipeSection}>
