@@ -7,11 +7,15 @@ import { profileActions, accountActions } from '@/store/actions';
 import { validator } from '@/utils/validator';
 import { nameErrorProfile } from '@/utils/datasets';
 
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
+
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 import TextField from '@material-ui/core/TextField';
 import Input from '@material-ui/core/Input';
+import FieldError from '@/components/elements/field-error';
 
 const StyledTextField = styled(TextField)`
   width: 100%;
@@ -70,6 +74,7 @@ function FormEditAccountUser(props) {
       setStatusSubmit('Loading...');
       setFormStatus('');
       values.user_type = user_type;
+      values.phone_number = changePhone;
       props
         .dispatch(profileActions.updateProfileUser(values))
         .then(res => {
@@ -92,6 +97,8 @@ function FormEditAccountUser(props) {
   const onClickUpload = () => {
     inputRef.current.click();
   };
+
+  const [changePhone, handleChangePhone] = useState(phone_number);
 
   // scroll to error
 
@@ -176,16 +183,29 @@ function FormEditAccountUser(props) {
           />
         </div>
         <div>
-          <label className={classes.profile__label}>Phone Number</label>
-          <StyledTextField
+          <label className={classes.profile__label}>Phone number</label>
+          <PhoneInput
+            country="us"
             id="phone_number"
             name="phone_number"
+            international
             variant="outlined"
-            value={formik.values.phone_number ? formik.values.phone_number : ''}
-            onChange={formik.handleChange}
-            error={Boolean(errorForm?.phone_number)}
-            helperText={errorForm?.phone_number}
+            value={changePhone}
+            onChange={handleChangePhone}
+            containerClass={classes.profile__inputPhone}
+            inputStyle={{
+              border: 'none',
+              fontSize: '18px',
+              color: '#6A6A6A',
+              fontFamily: 'Montserrat',
+              width: '100%'
+            }}
+            buttonStyle={{
+              border: 'none',
+              backgroundColor: '#ffffff'
+            }}
           />
+          <FieldError errors={errorForm} path="phone_number" id="error" />
         </div>
         <div>
           <label className={classes.profile__label}>City</label>

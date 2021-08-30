@@ -33,7 +33,8 @@ import Recipe from '@/api/Recipe';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import PhotoCameraOutlinedIcon from '@material-ui/icons/PhotoCameraOutlined';
 import { Alert, AlertTitle } from '@material-ui/lab';
-import InputTime from "@/components/elements/input/inputTime";
+import { validator } from '@/utils/validator';
+import InputTime from '@/components/elements/input/inputTime';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -138,11 +139,33 @@ function FormEditRecipe(props) {
   function onChangeField(name) {
     return event => {
       const newData = { ...data, [name]: event.target.value };
-      const newError = { ...error, [name]: '' };
+      const currentLength = event?.target.value.length;
+      const newError = {
+        ...error,
+        [name]: `${validator.getErrorStatusByCheckingLength({
+          currentLength,
+          ...getMaxLengthOfField(name)
+        })}`
+      };
+      console.log(
+        validator.getErrorStatusByCheckingLength({
+          currentLength,
+          ...getMaxLengthOfField(name)
+        })
+      );
       props.dispatch(recipeEditActions.update(newData));
       props.dispatch(recipeEditActions.updateError(newError));
     };
   }
+
+  const getMaxLengthOfField = name => {
+    switch (name) {
+      case 'title':
+        return { maxLength: 50 };
+      case 'description':
+        return { maxLength: 200 };
+    }
+  };
 
   const changeVideoState = e => {
     e.preventDefault();
@@ -385,7 +408,8 @@ function FormEditRecipe(props) {
                 fullWidth
                 className={classMarerialUi.textField}
                 error={error?.title}
-                helperText={error?.title ? 'This field is required' : ''}
+                helperText={error?.title}
+                inputProps={{ maxLength: 50 }}
               />
             </NoSsr>
           </div>
@@ -404,7 +428,8 @@ function FormEditRecipe(props) {
                 fullWidth
                 className={classMarerialUi.textField}
                 error={error?.description}
-                helperText={error?.description ? 'This field is required' : ''}
+                helperText={error?.description}
+                inputProps={{ maxLength: 200 }}
               />
             </NoSsr>
           </div>
@@ -413,7 +438,7 @@ function FormEditRecipe(props) {
           <h2 className={classes.createRecipeSubtitle}>
             <span style={{ color: 'red' }}>* </span>Ingredients
           </h2>
-          <div className={classes.createRecipeSection__grid_type_cardIngredients}>
+          <div className={classes.createRecipeSection__grid_type_cardIngredients} id="create-ingredients">
             {data?.ingredients.length !== 0
               ? data?.ingredients.map((item, index) => (
                   <CardIngredient

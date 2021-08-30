@@ -378,4 +378,18 @@
     @include fontMedium();
     cursor: pointer;
   }
+
+  &__inputPhone {
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 0, 0, 0.23);
+    padding: 14px;
+    position: relative;
+
+    &__input {
+      border: none;
+      color: $--color-gray7;
+      font-size: 17.5px;
+    }
+  }
 }

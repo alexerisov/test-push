@@ -1,140 +1,154 @@
-@import "~styles/mixins/mixins.scss";
-@import "~styles/variables.scss";
+@import '~styles/mixins/mixins.scss';
+@import '~styles/variables.scss';
 
 .profile {
+  &__title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 25px 0;
+  }
+
+  &__label {
+    @include fontSemiBold();
+    font-size: 16px;
+    color: #000000;
+    margin: 0 0 10px 0;
+    display: block;
+  }
+
+  &__upload {
+    position: relative;
+    height: 90px;
+    width: 90px;
+
+    // Don't want break markup, it is styles for label for Profil-pic.jpg
+    &Label {
+      visibility: hidden;
+
+      @media (max-width: $--lg) {
+        display: none;
+      }
+    }
+  }
+
+  &__avatarBack:before {
+    background-image: url('/images/index/pencil.svg');
+    background-position: center;
+    background-size: 26px 26px;
+    background-repeat: no-repeat;
+    content: '';
+    position: absolute;
+    background-color: #000000;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border-radius: 50%;
+  }
+
+  &__avatarBack:hover:before {
+    opacity: 0.5;
+  }
+
+  &__avatarBack:hover {
+    cursor: pointer;
+  }
+
+  &__formAvatar {
+    display: grid;
+    grid-template-columns: 90px auto auto;
+    gap: 26px;
+    align-items: center;
+    padding: 0 0 50px 0;
+    margin: 0 0 50px 0;
+    border-bottom: 1px solid #dfdfdf;
+
+    @media (max-width: $--lg) {
+      display: flex;
+      justify-content: center;
+      padding: 0 0 20px 0;
+    }
+  }
+
+  &__avatar {
+    width: 100%;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 50%;
+    background-color: #fff;
+  }
+
+  &__input {
+    width: 525px;
+    height: 56px;
+    padding: 0 0 0 30px;
+    border: 1px solid #dedede;
+    border-radius: 4px;
+  }
+
+  &__buttonUpdate {
+    @include fontMedium();
+    font-size: 20px;
+    justify-self: end;
+    color: $--color-blue;
+    width: 140px;
+    height: 56px;
+    border: 1px solid $--color-blue;
+    border-radius: 3px;
+
+    &:hover {
+      opacity: 0.5;
+    }
+
+    &:active {
+      background-color: $--color-blue;
+      color: $--color-white;
+    }
+
+    &_place_avatar {
+      @media (max-width: $--lg) {
+        display: none;
+      }
+    }
+  }
+
+  &__data {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
     &__title {
-        font-size: 18px;
-        font-weight: 600;
-        margin: 0 0 25px 0;
+      @include fontSemiBold();
+      font-size: 16px;
+      margin: 0 0 10px 0;
+    }
+  }
+
+  &__formStatus {
+    height: 20px;
+    padding: 5px 0;
+
+    &_true {
+      color: green;
     }
 
-    &__label {
-        @include fontSemiBold();
-        font-size: 16px;
-        color: #000000;
-        margin: 0 0 10px 0;
-        display: block;
+    &_error {
+      color: red;
     }
+  }
 
-    &__upload {
-        position: relative;
-        height: 90px;
-        width: 90px;
-
-        // Don't want break markup, it is styles for label for Profil-pic.jpg
-        &Label {
-            visibility: hidden;
-
-            @media (max-width: $--lg) {
-                display: none;
-            }
-        }
-    }
-
-    &__avatarBack:before {
-        background-image: url('/images/index/pencil.svg');
-        background-position: center;
-        background-size: 26px 26px;
-        background-repeat: no-repeat;
-        content: '';
-        position: absolute;
-        background-color: #000000;
-        opacity: 0;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        border-radius: 50%;
-    }
-    
-    &__avatarBack:hover:before {
-        opacity: 0.5;
-    }
-    
-    &__avatarBack:hover {
-        cursor:  pointer;
-    }
-
-    &__formAvatar {
-        display: grid;
-        grid-template-columns: 90px auto auto;
-        gap: 26px;
-        align-items: center;
-        padding: 0 0 50px 0;
-        margin: 0 0 50px 0;
-        border-bottom: 1px solid #DFDFDF;
-
-        @media (max-width: $--lg) {
-            display: flex;
-            justify-content: center;
-            padding: 0 0 20px 0;
-        }
-    }
-
-    &__avatar {
-        width: 100%;
-        height: 90px;
-        object-fit: cover;
-        border-radius: 50%;
-        background-color: #fff;
-    }
+  &__inputPhone {
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 0, 0, 0.23);
+    padding: 14px;
+    position: relative;
 
     &__input {
-        width: 525px;
-        height: 56px;
-        padding: 0 0 0 30px;
-        border: 1px solid #DEDEDE;
-        border-radius: 4px;
+      border: none;
+      color: $--color-gray7;
+      font-size: 17.5px;
     }
-
-    &__buttonUpdate {
-        @include fontMedium();
-        font-size: 20px;
-        justify-self: end;
-        color: $--color-blue;
-        width: 140px;
-        height: 56px;
-        border: 1px solid $--color-blue;
-        border-radius: 3px;
-
-        &:hover {
-            opacity: 0.5;
-        }
-
-        &:active {
-            background-color: $--color-blue;
-            color: $--color-white;
-        }
-
-        &_place_avatar {
-            @media (max-width: $--lg) {
-                display: none;
-            }
-        }
-    }
-
-    &__data {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-
-        &__title {
-            @include fontSemiBold();
-            font-size: 16px;
-            margin: 0 0 10px 0;
-        }
-    }
-
-    &__formStatus {
-        height: 20px;
-        padding: 5px 0;
-
-        &_true {
-            color: green;
-        }
-
-        &_error {
-            color: red;
-        }
-    }
+  }
 }
