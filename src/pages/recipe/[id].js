@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import {connect, useSelector} from 'react-redux';
+import dayjs from "dayjs";
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 import Head from 'next/head';
 import classes from './index.module.scss';
 import styled from 'styled-components';
@@ -47,6 +49,8 @@ const StyledCarousel = styled(Carousel)`
     right: 5px;
   }
 `
+
+dayjs.extend(customParseFormat);
 
 function RecipePage(props) {
   const currentSlider = useSelector(state => state.recipePhotoSlider.currentItemIndex);
@@ -169,9 +173,17 @@ function RecipePage(props) {
   };
 
   const handleRecipeCookingTime = time => {
-    const mins = Number(time.slice(3, 5));
-    const hours = Number(time.slice(0, 2));
-    return hours * 60 + mins;
+    const parsedTime = dayjs(time,'HH-mm');
+
+    if (!parsedTime['$H']) {
+      return `${parsedTime['$m']} MIN`;
+    }
+
+    if (!parsedTime['$m']) {
+      return `${parsedTime['$H']} HOURS`;
+    }
+
+    return `${parsedTime['$H']}H ${parsedTime['$m']}MIN`;
   };
 
   const redirectToHomeChefPage = () => {
@@ -282,7 +294,7 @@ function RecipePage(props) {
                   )}
                   <div className={classes.recipe__time}>
                     <img src="/images/index/timer.svg" />
-                    <p>{handleRecipeCookingTime(recipe.cooking_time)} MIN</p>
+                    <p>{handleRecipeCookingTime(recipe.cooking_time)}</p>
                   </div>
                 </div>
               </div>

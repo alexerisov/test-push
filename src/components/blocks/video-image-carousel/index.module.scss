@@ -4,14 +4,17 @@
 .carousel {
   position: relative;
   max-width: 715px;
+  width: 715px;
   height: 100%;
 
   @media (max-width: 890px) {
     max-width: 500px;
+    width: 500px;
   }
 
   @media (max-width: 600px) {
     max-width: 300px;
+    width: 500px;
   }
 
   &__wrapper {

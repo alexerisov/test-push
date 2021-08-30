@@ -92,6 +92,13 @@ const Recipes = (props) => {
   const [result, setResult] = useState([]);
   const [typeSelection, setTypeSelection] = useState("Food");
 
+  // Accordion
+  const [expanded, setExpanded] = useState(false);
+
+  const handleAnchorAccordion = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
+
   // Tooltip
   const [open, setOpen] = useState(false);
 
@@ -308,6 +315,10 @@ const Recipes = (props) => {
         .then((res) => {
           setResult(res.data.results);
           setData(res.data);
+
+          if (!res?.data?.results?.length) {
+            setExpanded(false);
+          }
         })
         .catch(e => {
           console.log('error', e);
@@ -424,7 +435,11 @@ const Recipes = (props) => {
           />
           {tooltipForGetInspiredCheckbox}
         </div>
-        {(typeSelection !== "Beverages") && <StyledAccordion>
+        {(typeSelection !== "Beverages") &&
+        <StyledAccordion
+          expanded={expanded === 'panel1'}
+          onChange={handleAnchorAccordion('panel1')}
+        >
           <AccordionSummary
             expandIcon={
               <div className={classes.search__clickList}>
@@ -442,15 +457,18 @@ const Recipes = (props) => {
             </div>
           </AccordionDetails>
         </StyledAccordion>}
-        <StyledAccordion>
+        <StyledAccordion
+          expanded={expanded === 'panel2'}
+          onChange={handleAnchorAccordion('panel2')}
+        >
           <AccordionSummary
             expandIcon={
               <div className={classes.search__clickList}>
                 <div></div>
                 <div className={classes.search__clickList__active}></div>
               </div>}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
+            aria-controls="panel2a-content"
+            id="panel2a-header"
           >
             <Typography className={classes.search__filter__title}>Cooking Skills</Typography>
           </AccordionSummary>
@@ -460,15 +478,18 @@ const Recipes = (props) => {
             </div>
           </AccordionDetails>
         </StyledAccordion>
-        <StyledAccordion>
+        <StyledAccordion
+          expanded={expanded === 'panel3'}
+          onChange={handleAnchorAccordion('panel3')}
+        >
           <AccordionSummary
             expandIcon={
               <div className={classes.search__clickList}>
                 <div></div>
                 <div className={classes.search__clickList__active}></div>
               </div>}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
+            aria-controls="panel3a-content"
+            id="panel3a-header"
           >
             <Typography className={classes.search__filter__title}>Cooking Method</Typography>
           </AccordionSummary>
@@ -478,15 +499,18 @@ const Recipes = (props) => {
             </div>
           </AccordionDetails>
         </StyledAccordion>
-        <StyledAccordion>
+        <StyledAccordion
+          expanded={expanded === 'panel4'}
+          onChange={handleAnchorAccordion('panel4')}
+        >
           <AccordionSummary
             expandIcon={
               <div className={classes.search__clickList}>
                 <div></div>
                 <div className={classes.search__clickList__active}></div>
               </div>}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
+            aria-controls="panel4a-content"
+            id="panel4a-header"
           >
             <Typography className={classes.search__filter__title}>Dietary Restrictions</Typography>
           </AccordionSummary>
@@ -551,11 +575,11 @@ const Recipes = (props) => {
                 likes={recipe?.likes_number}
                 id={recipe.pk}
               />;
-            }) : <p className={classes.search__NoResult}>No results</p>
+            }) : <p className={classes.search__NoResult}>No Recipes Found</p>
           }
         </div>
         <div>
-          {data &&
+          {data?.results?.length !== 0 && data?.count &&
           <Pagination
             count={Math.ceil(data.count / numberCardsDisplayed)}
             color="primary"

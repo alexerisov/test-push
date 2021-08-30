@@ -23,7 +23,8 @@ export default {
     carbohydrates,
     fats,
     steps,
-    publish_status},
+    publish_status,
+    main_image},
     images) => {
     const formData = new FormData();
     if (images.length !== 0) {
@@ -53,7 +54,8 @@ export default {
       carbohydrates,
       fats,
       steps,
-      publish_status
+      publish_status,
+      main_image
     }));
     return http.post(
       `recipe/`,
@@ -224,7 +226,8 @@ export default {
     fats,
     steps,
     publish_status,
-    images_to_delete},
+    images_to_delete,
+    main_image},
     images, id) => {
     const formData = new FormData();
     if (images.length !== 0) {
@@ -232,6 +235,7 @@ export default {
         formData.append(`images[${index}]`, image);
       });
     }
+
     formData.append('data', JSON.stringify({
       title,
       cooking_time,
@@ -255,8 +259,10 @@ export default {
       fats,
       steps,
       publish_status,
-      images_to_delete
+      images_to_delete,
+      main_image
     }));
+
     return http.patch(
       `recipe/${id}`,
       formData,

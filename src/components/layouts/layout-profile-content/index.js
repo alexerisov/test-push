@@ -16,7 +16,7 @@ const ContentLayout = props => {
     setData({
       accountSettings: { path: `/profile/account-settings` },
       password: { path: `/profile/password` },
-      notificationSettings: { path: `/profile/notification-settings` }
+      becomeHomeChef: { path: `/profile/become-home-chef` }
     });
   }, []);
 
@@ -60,17 +60,19 @@ const ContentLayout = props => {
           </Link>
         </li>
       </ul>
-      <div className={classes.dashboard__buttonUploud}>
-        {props?.profile?.data?.user_type === USER_TYPE.chefType ? (
-          <Button variant="contained" color="primary" href="/recipe/upload">
-            Upload New Recipe!
-          </Button>
-        ) : (
-          <Button variant="contained" color="primary" onClick={handleChangeStatus}>
-            Become a home chef
-          </Button>
-        )}
-      </div>
+      {!(router.asPath === data.becomeHomeChef.path) && (
+        <div className={classes.dashboard__buttonUploud}>
+          {props?.profile?.data?.user_type === USER_TYPE.chefType ? (
+            <Button variant="contained" color="primary" href="/recipe/upload">
+              Upload New Recipe!
+            </Button>
+          ) : (
+            <Button variant="contained" color="primary" onClick={handleChangeStatus}>
+              Become a home chef
+            </Button>
+          )}
+        </div>
+      )}
     </div>
   );
 

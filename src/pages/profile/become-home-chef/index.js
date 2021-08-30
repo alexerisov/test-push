@@ -11,10 +11,14 @@ import { nameErrorProfile } from '@/utils/datasets';
 import { validator } from '@/utils/validator';
 import FieldError from '@/components/elements/field-error';
 
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
+
 import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
+import { useRouter } from 'next/router';
 
 const StyledTextField = styled(TextField)`
   width: 100%;
@@ -31,6 +35,8 @@ const ProfileAccountSettings = props => {
   if (!props.account.profile) {
     return <div>loading...</div>;
   }
+
+  const router = useRouter();
 
   const [errorForm, setErrorForm] = useState(null);
 
@@ -83,11 +89,13 @@ const ProfileAccountSettings = props => {
       setStatusSubmit('Loading...');
       setFormStatus('');
       values.user_type = user_type;
+      values.phone_number = changePhone;
       props
         .dispatch(profileActions.updateAccountType(values))
         .then(res => {
           setErrorForm(null);
           setStatusSubmit('Become a home chef');
+          handleOpenPopup('changeStatusSuccess');
           setFormStatus(<span className={classes.profile__formStatus_true}>Successfully sent</span>);
           props.dispatch(accountActions.remind());
         })
@@ -100,6 +108,12 @@ const ProfileAccountSettings = props => {
         });
     }
   });
+
+  const handleOpenPopup = name => {
+    props.dispatch(modalActions.open(name)).then(result => {
+      router.push('/profile/account-settings');
+    });
+  };
 
   const inputRef = React.createRef();
 
@@ -190,6 +204,8 @@ const ProfileAccountSettings = props => {
     formik.setFieldValue('experience', data);
   };
 
+  const [changePhone, handleChangePhone] = useState(phone_number);
+
   // scroll to error
 
   const handleErrorScroll = error => {
@@ -208,7 +224,6 @@ const ProfileAccountSettings = props => {
       if (elementError) {
         const el = document.querySelector(`input[id=${elementError.nameInput}]`);
         scrollToElement(el);
-        console.log(el);
         return;
       }
     }
@@ -278,11 +293,11 @@ const ProfileAccountSettings = props => {
               helperText={errorForm?.bio}
             />
           </div>
-          <div className={classes.profile__container_emailAndPhone}>
+          <div>
             <label className={classes.profile__label}>
               <span style={{ color: 'red' }}>* </span>Email
             </label>
-            <StyledAutoTextField
+            <StyledTextField
               disabled
               id="email"
               name="email"
@@ -292,16 +307,31 @@ const ProfileAccountSettings = props => {
               error={Boolean(errorForm?.email)}
               helperText={errorForm?.email}
             />
-            <label className={classes.profile__label}>Phone Number</label>
-            <StyledAutoTextField
+          </div>
+          <div>
+            <label className={classes.profile__label}>Phone number</label>
+            <PhoneInput
+              country="us"
               id="phone_number"
               name="phone_number"
+              international
               variant="outlined"
-              value={formik.values.phone_number ? formik.values.phone_number : ''}
-              onChange={formik.handleChange}
-              error={Boolean(errorForm?.phone_number)}
-              helperText={errorForm?.phone_number}
+              value={changePhone}
+              onChange={handleChangePhone}
+              containerClass={classes.profile__inputPhone}
+              inputStyle={{
+                border: 'none',
+                fontSize: '18px',
+                color: '#6A6A6A',
+                fontFamily: 'Montserrat',
+                width: '100%'
+              }}
+              buttonStyle={{
+                border: 'none',
+                backgroundColor: '#ffffff'
+              }}
             />
+            <FieldError errors={errorForm} path="phone_number" id="error" />
           </div>
           <div className={classes.profile__container_emailAndPhone}>
             <label className={classes.profile__label}>
