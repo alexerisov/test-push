@@ -79,17 +79,15 @@
 }
 
 .createRecipeSection__grid_type_cardImages {
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
   max-width: 714px;
-  grid-template-columns: repeat(auto-fill, 230px);
-  gap: 12px;
-  margin-top: 20px;
+  gap: 16px;
   position: relative;
+  margin-top: 48px;
 
   @media (max-width: $--xs) {
-    grid-template-columns: 230px;
-    margin: 20px auto 0 auto;
-    width: max-content;
+    margin: 48px auto 0;
   }
 }
 
@@ -101,28 +99,39 @@
   display: block;
 
   &_type_addImage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     margin: 0;
-    font-size: 20px;
-    line-height: 1;
-    width: 230px;
-    height: 155px;
-    border: $--color-orange 4px solid;
-    color: $--color-orange;
+    width: 126px;
+    height: 126px;
+    border: 1px dashed $--color-gray-9;
     text-align: center;
-    padding: 32px 0;
-    font-weight: 900;
-    background-color: $--color-gray7;
-    opacity: 0.7;
+    padding: 0 16px;
+    font-size: 12px;
+    line-height: 16px;
     cursor: pointer;
+    border-radius: 6px;
 
     &__icon {
       font-size: 48px;
     }
+
+    &__text {
+      margin: 6px 0 2px;
+      color: $--color-gray2;
+      font-weight: 600;
+    }
+
+    &__subtext {
+      color: $--color-orange;
+      font-weight: 600;
+    }
   }
 
   &_type_addImage:hover {
-    background-color: $--color-orange;
-    color: $--color-white;
+    border: 1px dashed $--color-gray3 !important;
   }
 }
 
