@@ -108,9 +108,9 @@ function FormCreateRecipe(props) {
   const getMaxLengthOfField = name => {
     switch (name) {
       case 'title':
-        return { maxLength: 100 };
+        return { maxLength: 50 };
       case 'description':
-        return { maxLength: 500 };
+        return { maxLength: 200 };
     }
   };
 
@@ -288,7 +288,7 @@ function FormCreateRecipe(props) {
                 className={classMarerialUi.textField}
                 error={error?.title}
                 helperText={error?.title}
-                inputProps={{ maxLength: 100 }}
+                inputProps={{ maxLength: 50 }}
               />
             </NoSsr>
           </div>
@@ -308,7 +308,7 @@ function FormCreateRecipe(props) {
                 className={classMarerialUi.textField}
                 error={error?.description}
                 helperText={error?.description}
-                inputProps={{ maxLength: 500 }}
+                inputProps={{ maxLength: 200 }}
               />
             </NoSsr>
           </div>
