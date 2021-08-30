@@ -121,6 +121,7 @@ function AddIngredient (props) {
           <TextField
             id="addIngredient-name"
             name="title"
+            autoFocus
             value={ingredient.title}
             onChange={onChangeField('title')}
             variant="outlined"

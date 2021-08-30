@@ -295,8 +295,8 @@ function FormCreateRecipe(props) {
         scrollToElement(el);
         return;
       }
-      if (elementError?.nameErrorResponse === 'preview_mp4_url') {
-        const el = document.querySelector(`div[id=${elementError.nameInput}]`);
+      if (elementError?.nameDiv) {
+        const el = document.querySelector(`div[id=${elementError.nameDiv}]`);
         scrollToElement(el);
         return;
       }
@@ -309,7 +309,7 @@ function FormCreateRecipe(props) {
   };
 
   const scrollToElement = el => {
-    el !== null && el.scrollIntoView({ block: 'center', inline: 'center' });
+    el !== null && el.scrollIntoView({ block: 'center', inline: 'center', behavior: 'smooth' });
   };
 
   const handleIngredientsUnit = unit => {
@@ -443,8 +443,10 @@ function FormCreateRecipe(props) {
           </div>
         </div>
         <div className={classes.createRecipeSection}>
-          <h2 className={classes.createRecipeSubtitle}>Ingredients</h2>
-          <div className={classes.createRecipeSection__grid_type_cardIngredients}>
+          <h2 className={classes.createRecipeSubtitle}>
+            <span style={{ color: 'red' }}>* </span>Ingredients
+          </h2>
+          <div className={classes.createRecipeSection__grid_type_cardIngredients} id="create-ingredients">
             {data?.ingredients.length !== 0
               ? data?.ingredients.map((item, index) => (
                   <CardIngredient
@@ -465,6 +467,7 @@ function FormCreateRecipe(props) {
               <p className={classes.createRecipeButton_type_addIngredient__text}>Add More</p>
             </button>
           </div>
+          <FieldError errors={error} path="ingredients" id="error" />
         </div>
         <div className={classes.createRecipeSection}>
           <h2 className={classes.createRecipeSubtitle}>Nutrition value</h2>
@@ -574,18 +577,7 @@ function FormCreateRecipe(props) {
           <FieldError errors={error?.images ? error : {'images': errorDeleteImages}} path="images" id="error" />
         </div>
         <div className={classes.createRecipeSection}>
-          <h2 className={classes.createRecipeSubtitle_withoutInput}>
-            <span style={{ color: 'red' }}>* </span>Cooking Video
-          </h2>
-          {/* <camera
-          data-app-id='bd67aac0-7869-0130-7e72-22000aaa02b5'
-          id='video'
-          data-maxlength='30'
-          data-width='9000'
-          data-height='300'
-          data-facing-mode='environment'
-          >
-          </camera> */}
+          <h2 className={classes.createRecipeSubtitle_withoutInput}>Cooking Video</h2>
           <camera
             id="DemoCamera"
             data-app-id="63f9c870-72c4-0130-04c5-123139045d73"
@@ -595,45 +587,10 @@ function FormCreateRecipe(props) {
           <FieldError errors={error} path="preview_mp4_url" />
         </div>
         <div className={classes.createRecipeSection}>
-          <h2 className={classes.createRecipeSubtitle_withoutInput}>Video Elements</h2>
-          <div className={classes.createRecipeItem}>
-            <h3 className={classes.createRecipeItem__title}>
-              <span style={{ color: 'red' }}>* </span>Language and Caption
-            </h3>
-            <div className={classes.createRecipeItem__inputContainer}>
-              <NoSsr>
-                <TextField
-                  id="create-language"
-                  type="text"
-                  onChange={onChangeField('language')}
-                  value={data?.language}
-                  variant="outlined"
-                  placeholder="Language"
-                  className={classMarerialUi.textField}
-                  error={error?.language}
-                  helperText={error?.language}
-                />
-                <TextField
-                  id="create-caption"
-                  type="text"
-                  onChange={onChangeField('caption')}
-                  value={data?.caption}
-                  variant="outlined"
-                  placeholder="Caption"
-                  className={classMarerialUi.textField}
-                  error={error?.caption}
-                  helperText={error?.caption}
-                />
-              </NoSsr>
-            </div>
-          </div>
           <div className={classes.createRecipeItem}>
             <h3 className={classes.createRecipeItem__title}>
               <span style={{ color: 'red' }}>* </span>Visibility
             </h3>
-            <p className={classes.createRecipeItem__text}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry
-            </p>
             <NoSsr>
               <RadioGroup
                 aria-label="create-visibility"
@@ -689,7 +646,7 @@ function FormCreateRecipe(props) {
               </FormControl>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
                 <label htmlFor="create-diet-restrictions-select" className={classes.createRecipeLabel}>
-                  Lifestyle
+                  <span style={{ color: 'red' }}>* </span>Lifestyle
                 </label>
                 <Select
                   id="create-diet-restrictions-select"
@@ -705,7 +662,7 @@ function FormCreateRecipe(props) {
               </FormControl>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
                 <label htmlFor="create-cuisines-select" className={classes.createRecipeLabel}>
-                  Cuisine
+                  <span style={{ color: 'red' }}>* </span>Cuisine
                 </label>
                 <Select
                   id="create-cuisines-select"
@@ -722,7 +679,7 @@ function FormCreateRecipe(props) {
               </FormControl>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
                 <label htmlFor="create-cooking-methods-select" className={classes.createRecipeLabel}>
-                  Cooking Method
+                  <span style={{ color: 'red' }}>* </span>Cooking Method
                 </label>
                 <Select
                   id="create-cooking-methods-select"

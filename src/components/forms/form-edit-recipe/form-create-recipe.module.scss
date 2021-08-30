@@ -57,6 +57,7 @@
   grid-template-columns: repeat(4, 1fr);
   column-gap: 28px;
   row-gap: 20px;
+  margin: 20px 0;
 
   @media (max-width: $--md) {
     grid-template-columns: repeat(3, 1fr);
@@ -171,9 +172,18 @@
 
 .createRecipebuttonContainer {
   display: flex;
-  flex-direction: row-reverse;
-  max-width: 1080px;
-  margin: 22px 0 100px;
+  flex-direction: column;
+  margin: 22px auto 100px;
+  max-width: 1000px;
+
+  &__wrapper {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+
+  &__alert {
+    margin-top: 20px;
+  }
 }
 
 .createRecipeButton {
@@ -347,6 +357,7 @@
     font-size: 20px;
     font-weight: 900;
     line-height: 1.4;
+    word-break: break-all;
   }
 
   &__title_color {
@@ -361,6 +372,7 @@
   &__text {
     font-size: 18px;
     line-height: 1.5;
+    word-break: break-all;
   }
 }
 

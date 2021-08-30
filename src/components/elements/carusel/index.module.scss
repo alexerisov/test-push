@@ -1,4 +1,4 @@
-@import "~styles/variables.scss";
+@import '~styles/variables.scss';
 $slide-count: 3;
 $slide-width: 32rem;
 
@@ -21,7 +21,7 @@ $slide-width: 32rem;
   }
 
   @media (max-width: $--sm) {
-    top: 250px;
+    top: 280px;
     right: 10px;
     left: auto;
   }
@@ -30,7 +30,7 @@ $slide-width: 32rem;
     width: 240px;
     height: 220px;
     right: -20px;
-    top: 150px;
+    top: 170px;
   }
 }
 
@@ -78,7 +78,7 @@ $slide-width: 32rem;
 }
 
 .carousel__btn__prev:hover {
-  background:$--color-white;
+  background: $--color-white;
 
   i {
     border: solid $--color-orange;
@@ -112,7 +112,7 @@ $slide-width: 32rem;
 }
 
 .carousel__btn__next:hover {
-  background:$--color-white;
+  background: $--color-white;
 
   i {
     border: solid $--color-orange;
