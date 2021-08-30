@@ -85,11 +85,13 @@ function FormEditRecipe(props) {
   const classMarerialUi = useStyles();
   const { data, error } = props.recipeEdit;
   const recipeId = props.recipeId;
-  const [isDragging, setIsDragging] = useState(false);
 
+  // For uploading images
   const uploadImageLabel = useRef();
-
+  const [isDragging, setIsDragging] = useState(false);
   const [images, setImages] = useState([]);
+  const [errorDeleteImages, setErrorDeleteImages] = useState('');
+
 
   const [newVideo, setNewVideo] = useState(false);
 
@@ -120,6 +122,7 @@ function FormEditRecipe(props) {
       });
 
       setImages(imagesData);
+      setErrorDeleteImages("");
     }
   }, [data]);
 
@@ -168,6 +171,7 @@ function FormEditRecipe(props) {
 
   function handleRemoveImage(id, pk) {
     if (data?.images?.length === 1) {
+      setErrorDeleteImages("Your recipe must have at least one photo");
       return;
     }
 
@@ -572,7 +576,7 @@ function FormEditRecipe(props) {
                 })
               : ''}
           </ReactSortable>
-          <FieldError errors={error} path="images" />
+          <FieldError errors={error?.images ? error : {'images': errorDeleteImages}} path="images" />
         </div>
         <div className={classes.createRecipeSection}>
           <h2 className={classes.createRecipeSubtitle_withoutInput}>
