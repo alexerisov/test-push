@@ -30,6 +30,7 @@ import classes from './form-create-recipe.module.scss';
 import { CardIngredient, CardNutrition, CardImage } from '@/components/elements/card';
 import { validator } from '@/utils/validator';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import InputTime from "@/components/elements/input/inputTime";
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -495,12 +496,10 @@ function FormCreateRecipe(props) {
                 Preparation Time
               </label>
               <NoSsr>
-                <TextField
+                <InputTime
                   id="create-cooking_time"
-                  type="time"
-                  onChange={onChangeField('cooking_time')}
                   value={data?.cooking_time}
-                  variant="outlined"
+                  onChange={onChangeField('cooking_time')}
                   className={classMarerialUi.textField}
                   fullWidth
                 />
