@@ -18,6 +18,7 @@ import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
+import { useRouter } from 'next/router';
 
 const StyledTextField = styled(TextField)`
   width: 100%;
@@ -34,6 +35,8 @@ const ProfileAccountSettings = props => {
   if (!props.account.profile) {
     return <div>loading...</div>;
   }
+
+  const router = useRouter();
 
   const [errorForm, setErrorForm] = useState(null);
 
@@ -92,6 +95,7 @@ const ProfileAccountSettings = props => {
         .then(res => {
           setErrorForm(null);
           setStatusSubmit('Become a home chef');
+          handleOpenPopup('changeStatusSuccess');
           setFormStatus(<span className={classes.profile__formStatus_true}>Successfully sent</span>);
           props.dispatch(accountActions.remind());
         })
@@ -104,6 +108,12 @@ const ProfileAccountSettings = props => {
         });
     }
   });
+
+  const handleOpenPopup = name => {
+    props.dispatch(modalActions.open(name)).then(result => {
+      router.push('/profile/account-settings');
+    });
+  };
 
   const inputRef = React.createRef();
 
