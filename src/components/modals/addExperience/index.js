@@ -38,7 +38,6 @@ function AddExperience(props) {
     },
     validationSchema: validationSchema,
     onSubmit: values => {
-      console.log(values);
       props.dispatch(modalActions.close(values));
     }
   });
