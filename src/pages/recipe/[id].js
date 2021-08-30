@@ -183,7 +183,7 @@ function RecipePage(props) {
       return `${parsedTime['$H']} HOURS`;
     }
 
-    return `${parsedTime['$H']} H ${parsedTime['$m']} MIN`;
+    return `${parsedTime['$H']}H ${parsedTime['$m']}MIN`;
   };
 
   const redirectToHomeChefPage = () => {
