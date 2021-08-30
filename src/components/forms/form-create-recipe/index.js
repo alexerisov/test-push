@@ -89,6 +89,7 @@ function FormCreateRecipe(props) {
   const [isDragging, setIsDragging] = useState(false);
   const uploadImageLabel = useRef();
   const [images, setImages] = useState([]);
+  const [errorDeleteImages, setErrorDeleteImages] = useState('');
 
   // for Drag and Drop, because Sortable.js don't maintain File
   useEffect(() => {
@@ -98,6 +99,7 @@ function FormCreateRecipe(props) {
       });
 
       setImages(imagesData);
+      setErrorDeleteImages('');
     }
   }, [data]);
 
@@ -161,18 +163,16 @@ function FormCreateRecipe(props) {
     props.dispatch(recipeUploadActions.update(newData));
   }
 
-  function handleRemoveImage(id, pk) {
+  function handleRemoveImage(id) {
     if (data?.images?.length === 1) {
+      setErrorDeleteImages("Your recipe must have at least one photo");
       return;
     }
 
     const newImagesList = data?.images.filter((image, index) => index !== id);
     const newData = { ...data, images: newImagesList };
 
-    // For filtering undefined values
-    const newDataDelete = { ...newData, images_to_delete: [...data.images_to_delete, pk].filter(item => item) };
-
-    props.dispatch(recipeUploadActions.update(newDataDelete));
+    props.dispatch(recipeUploadActions.update(newData));
   }
 
   function handleDeleteStep(e) {
@@ -571,7 +571,7 @@ function FormCreateRecipe(props) {
             className={classes.createRecipeSection__grid_type_cardImages}>
             {getMarkUpForUploadedImages()}
           </ReactSortable>
-          <FieldError errors={error} path="images" id="error" />
+          <FieldError errors={error?.images ? error : {'images': errorDeleteImages}} path="images" id="error" />
         </div>
         <div className={classes.createRecipeSection}>
           <h2 className={classes.createRecipeSubtitle_withoutInput}>
