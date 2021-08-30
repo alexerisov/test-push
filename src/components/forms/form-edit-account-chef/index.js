@@ -10,6 +10,9 @@ import { validator } from '@/utils/validator';
 import { nameErrorProfile } from '@/utils/datasets';
 import FieldError from '@/components/elements/field-error';
 
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
+
 import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 import styled from 'styled-components';
@@ -107,6 +110,7 @@ function FormEditAccountChef(props) {
       setStatusSubmit('Loading...');
       setFormStatus('');
       values.user_type = user_type;
+      values.phone_number = changePhone;
       props
         .dispatch(profileActions.updateAccountChef(values))
         .then(res => {
@@ -132,6 +136,8 @@ function FormEditAccountChef(props) {
   const onClickUpload = () => {
     inputRef.current.click();
   };
+
+  const [changePhone, handleChangePhone] = useState(phone_number);
 
   const handleClickPopupOpenAddRoleModels = (name, params) => {
     return () => {
@@ -317,34 +323,45 @@ function FormEditAccountChef(props) {
             helperText={errorForm?.bio}
           />
         </div>
-        <div className={classes.profile__container_emailAndPhone}>
-          <div>
-            <label className={classes.profile__label}>
-              <span style={{ color: 'red' }}>* </span>Email
-            </label>
-            <StyledTextField
-              disabled
-              id="email"
-              name="email"
-              variant="outlined"
-              value={formik.values.email}
-              onChange={formik.handleChange}
-              error={Boolean(errorForm?.email)}
-              helperText={errorForm?.email}
-            />
-          </div>
-          <div>
-            <label className={classes.profile__label}>Phone Number</label>
-            <StyledTextField
-              id="phone_number"
-              name="phone_number"
-              variant="outlined"
-              value={formik.values.phone_number ? formik.values.phone_number : ''}
-              onChange={formik.handleChange}
-              error={Boolean(errorForm?.phone_number)}
-              helperText={errorForm?.phone_number}
-            />
-          </div>
+        <div>
+          <label className={classes.profile__label}>
+            <span style={{ color: 'red' }}>* </span>Email
+          </label>
+          <StyledTextField
+            disabled
+            id="email"
+            name="email"
+            variant="outlined"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            error={Boolean(errorForm?.email)}
+            helperText={errorForm?.email}
+          />
+        </div>
+        <div>
+          <label className={classes.profile__label}>Phone number</label>
+          <PhoneInput
+            country="us"
+            id="phone_number"
+            name="phone_number"
+            international
+            variant="outlined"
+            value={changePhone}
+            onChange={handleChangePhone}
+            containerClass={classes.profile__inputPhone}
+            inputStyle={{
+              border: 'none',
+              fontSize: '18px',
+              color: '#6A6A6A',
+              fontFamily: 'Montserrat',
+              width: '100%'
+            }}
+            buttonStyle={{
+              border: 'none',
+              backgroundColor: '#ffffff'
+            }}
+          />
+          <FieldError errors={errorForm} path="phone_number" id="error" />
         </div>
         <div className={classes.profile__container_emailAndPhone}>
           <div>
