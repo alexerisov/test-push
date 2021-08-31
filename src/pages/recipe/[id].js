@@ -318,7 +318,7 @@ function RecipePage(props) {
                         )}
                         <span>Vote</span>
                       </button>
-                      <ButtonShare recipeId={recipeId} />
+                      <ButtonShare recipeId={recipeId} recipePhoto={recipe?.images[0]} recipeDescription={recipe?.description}/>
 
                       {!savedId ? (
                         <button

@@ -4,7 +4,13 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Fade from '@material-ui/core/Fade';
 import { useMobileDevice } from "@/customHooks/useMobileDevice";
 
-import { EmailShareButton, FacebookShareButton, TwitterShareButton } from "react-share";
+import {
+  EmailShareButton,
+  FacebookShareButton,
+  PinterestIcon,
+  PinterestShareButton,
+  TwitterShareButton
+} from "react-share";
 
 import ShareIcon from '@material-ui/icons/Share';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -16,7 +22,7 @@ import Recipe from "@/api/Recipe";
 
 import styles from './buttonShare.module.scss';
 
-const ButtonShare = ({recipeId}) => {
+const ButtonShare = ({recipeId, recipePhoto, recipeDescription}) => {
   const [openShareWindow, setOpenShareWindow] = useState(false);
   const [open, setOpen] = useState(false);
   const [isMobileOrTabletDevice] = useMobileDevice();
@@ -138,6 +144,14 @@ const ButtonShare = ({recipeId}) => {
                 <EmailIcon round={true} size='23px'/>
                 Email
               </EmailShareButton>
+            </li>
+
+            <li className={styles.shareWindow__item} >
+              <PinterestShareButton
+                className={styles.shareWindow__action} beforeOnClick={beforeOnClickOnSocialNetwork} media={recipePhoto.url} description={recipeDescription} url={currentUrl}>
+                <PinterestIcon round={true} size='23px'/>
+                Pinterest
+              </PinterestShareButton>
             </li>
           </ul>
         </Fade>
