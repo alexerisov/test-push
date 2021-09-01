@@ -315,6 +315,7 @@ function RecipePage(props) {
                       </div>
                     </div>
                     <div className={classes.recipe__video__player_row}>
+
                       <Tooltip
                         classes={!isMobileOrTablet && {tooltip: toolTipStyles.tooltip}}
                         title="Votes help recipe to get in production soon."
@@ -334,7 +335,7 @@ function RecipePage(props) {
                           <span>Vote</span>
                         </button>
                       </Tooltip>
-                      <ButtonShare recipeId={recipeId} />
+                      <ButtonShare recipeId={recipeId} recipePhoto={recipe?.images[0]} recipeDescription={recipe?.description}/>
 
                       {!savedId ? (
                         <button
