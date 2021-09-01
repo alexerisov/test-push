@@ -102,9 +102,8 @@ const ButtonShare = ({recipeId}) => {
       disableTouchListener
       title="Link successfully copied!"
     >
-      <button
+      <div
         className={styles.shareBtn}
-        type="button"
         onClick={isMobileOrTabletDevice ? mobileHandler : (e) => handleOpenShareWindow(e)}
       >
         <div className={styles.shareBtn__icon}>
@@ -141,7 +140,7 @@ const ButtonShare = ({recipeId}) => {
             </li>
           </ul>
         </Fade>
-      </button>
+      </div>
     </Tooltip>
   </ClickAwayListener>
   );
