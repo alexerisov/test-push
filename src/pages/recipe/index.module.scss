@@ -463,10 +463,21 @@
   }
 
   &__video {
-    width: max-content;
+    width: 100%;
+    max-width: 715px;
     display: flex;
     flex-direction: column;
     position: relative;
+
+    @media (max-width: 890px) {
+      max-width: 500px;
+      width: 500px;
+    }
+
+    @media (max-width: 600px) {
+      max-width: 100%;
+      width: 100%;
+    }
 
     &__watermark {
       height: 402px;
@@ -499,13 +510,13 @@
       max-height: 402px;
 
       @media (max-width: 890px) {
-        width: 500px;
-        max-height: 280px;
+        width: 100%;
+        max-height: 292px;
       }
 
       @media (max-width: 600px) {
-        width: 300px;
-        max-height: 170px;
+        width: 100%;
+        max-height: 192px;
       }
     }
 
