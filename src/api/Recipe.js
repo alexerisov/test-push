@@ -23,7 +23,8 @@ export default {
     carbohydrates,
     fats,
     steps,
-    publish_status},
+    publish_status,
+    main_image},
     images) => {
     const formData = new FormData();
     if (images.length !== 0) {
@@ -53,7 +54,8 @@ export default {
       carbohydrates,
       fats,
       steps,
-      publish_status
+      publish_status,
+      main_image
     }));
     return http.post(
       `recipe/`,
@@ -149,7 +151,14 @@ export default {
     return http.get(`/recipe/homepage_banners`);
   },
 
-  getMealOfWeek: () => {
+  getMealOfWeek: (token) => {
+    if (token && token !== "{\"token\":null,\"refresh\":null}") {
+      return http.get(`/recipe/meal_of_the_week`, {
+        headers: {
+          'Authorization': `Bearer ${JSON.parse(token).token}`
+        }
+      });
+    }
     return http.get(`/recipe/meal_of_the_week`);
   },
 
@@ -224,7 +233,8 @@ export default {
     fats,
     steps,
     publish_status,
-    images_to_delete},
+    images_to_delete,
+    main_image},
     images, id) => {
     const formData = new FormData();
     if (images.length !== 0) {
@@ -232,6 +242,7 @@ export default {
         formData.append(`images[${index}]`, image);
       });
     }
+
     formData.append('data', JSON.stringify({
       title,
       cooking_time,
@@ -255,8 +266,10 @@ export default {
       fats,
       steps,
       publish_status,
-      images_to_delete
+      images_to_delete,
+      main_image
     }));
+
     return http.patch(
       `recipe/${id}`,
       formData,

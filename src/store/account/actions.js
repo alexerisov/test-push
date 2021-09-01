@@ -1,5 +1,6 @@
 import Account from '@/api/Account.js';
 import { AuthCookieStorage } from '@/utils/web-storage/cookie';
+import { recoveryLocalStorage } from '@/utils/web-storage/local';
 
 export const types = {
   SAVE_SESSION: Symbol('SAVE_SESSION'),
@@ -8,7 +9,7 @@ export const types = {
 
   REMIND: Symbol('REMIND'),
   REMIND_SUCCESS: Symbol('REMIND_SUCCESS'),
-  REMIND_FAILURE: Symbol('REMIND_FAILURE'),
+  REMIND_FAILURE: Symbol('REMIND_FAILURE')
 };
 
 export default {
@@ -18,7 +19,7 @@ export default {
    *    refresh: string,
    * }}
    */
-  saveSession: (data) => {
+  saveSession: data => {
     return async dispatch => {
       const { token, refresh } = data;
       AuthCookieStorage.auth = { token, refresh };
@@ -29,6 +30,7 @@ export default {
   logout: () => {
     return async dispatch => {
       AuthCookieStorage.reset();
+      recoveryLocalStorage.deleteCreateRecipe();
       dispatch({ type: types.LOGOUT });
     };
   },
@@ -44,7 +46,7 @@ export default {
           const res = await Account.current();
           dispatch({
             type: types.REMIND_SUCCESS,
-            payload: { profile: res.data, token, refresh },
+            payload: { profile: res.data, token, refresh }
           });
           return res;
         } catch (e) {
@@ -56,7 +58,7 @@ export default {
       } else {
         dispatch({
           type: types.REMIND_FAILURE,
-          error: { message: 'Not found token in localStorage' },
+          error: { message: 'Not found token in localStorage' }
         });
       }
     };
@@ -69,16 +71,15 @@ export default {
       const { refresh } = AuthCookieStorage.auth;
 
       if (refresh) {
-          const res = await Account.refreshToken(refresh);
-          const token = res.data.access;
-          const data = {
-            token: token,
-            refresh: refresh
-          }
-          AuthCookieStorage.auth = { token, refresh };
-          dispatch({ type: types.SAVE_SESSION, payload: data });
+        const res = await Account.refreshToken(refresh);
+        const token = res.data.access;
+        const data = {
+          token: token,
+          refresh: refresh
+        };
+        AuthCookieStorage.auth = { token, refresh };
+        dispatch({ type: types.SAVE_SESSION, payload: data });
       }
-    }
+    };
   }
-
 };

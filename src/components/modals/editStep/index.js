@@ -5,6 +5,7 @@ import { modalActions, recipeEditActions } from '@/store/actions';
 import { connect } from 'react-redux';
 import classes from './addStep.module.scss';
 import TextField from '@material-ui/core/TextField';
+import { validator } from '@/utils/validator';
 
 const useStyles = makeStyles(theme => ({
   textField: {
@@ -28,14 +29,48 @@ function AddStep(props) {
     num: data.steps.length === 0 ? FIRST_STEP : data.steps.length + 1
   });
 
+  const [errorForm, setErrorForm] = useState(null);
+
   function onChangeField(name) {
     return event => {
+      const currentLength = event?.target.value.length;
+      const newError = {
+        ...errorForm,
+        [name]: `${validator.getErrorStatusByCheckingLength({
+          currentLength,
+          ...getMaxLengthOfField(name)
+        })}`
+      };
       const newData = { ...step, [name]: event.target.value };
       setStep(newData);
+      setErrorForm(newError);
+      if (name === 'title') {
+        setRemainingСharactersTitle(maxStepTitle - event.target.value.length);
+      }
+      if (name === 'description') {
+        setRemainingСharactersDescription(maxStepDescription - event.target.value.length);
+      }
     };
   }
 
+  const getMaxLengthOfField = name => {
+    switch (name) {
+      case 'title':
+        return { maxLength: 50 };
+      case 'description':
+        return { maxLength: 200 };
+    }
+  };
+
   const [error, setError] = useState(false);
+
+  const maxStepTitle = 50;
+  const maxStepDescription = 200;
+
+  const [remainingСharactersTitle, setRemainingСharactersTitle] = useState(maxStepTitle - step.title.length);
+  const [remainingСharactersDescription, setRemainingСharactersDescription] = useState(
+    maxStepDescription - step.description.length
+  );
 
   const handleValidationOnSubmit = () => {
     if (step.title === '') {
@@ -61,6 +96,9 @@ function AddStep(props) {
 
   function handleUpdateStep(e) {
     e.preventDefault();
+    if (!handleValidationOnSubmit()) {
+      return;
+    }
     const newData = { ...data };
     newData.steps[props?.modal?.params.num - 1].title = step.title;
     newData.steps[props?.modal?.params.num - 1].description = step.description;
@@ -88,12 +126,17 @@ function AddStep(props) {
             <TextField
               id="addStep-name"
               name="title"
+              autoFocus
               value={step.title}
               onChange={onChangeField('title')}
               variant="outlined"
               fullWidth
               className={classMarerialUi.textField}
+              inputProps={{ maxLength: maxStepTitle }}
+              error={Boolean(errorForm?.title)}
+              helperText={errorForm?.title}
             />
+            <p className={classes.addStep__maxLength}>{remainingСharactersTitle} characters left</p>
           </div>
           <div>
             <label htmlFor="addSep-description" className={classes.addStep__label}>
@@ -109,7 +152,11 @@ function AddStep(props) {
               multiline
               rows={4}
               className={classMarerialUi.textField}
+              inputProps={{ maxLength: maxStepDescription }}
+              error={Boolean(errorForm?.description)}
+              helperText={errorForm?.description}
             />
+            <p className={classes.addStep__maxLength}>{remainingСharactersDescription} characters left</p>
           </div>
           <div className={classes.addStep__buttonContainer}>
             <button type="submit" className={classes.addStep__button}>

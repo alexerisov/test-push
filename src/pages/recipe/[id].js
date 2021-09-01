@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {connect, useSelector} from 'react-redux';
-import Head from 'next/head';
+import dayjs from "dayjs";
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 import classes from './index.module.scss';
 import styled from 'styled-components';
 import LayoutPage from '@/components/layouts/layout-page';
-import RaitingIcon from '@/components/elements/rating-icon';
 import Recipe from '@/api/Recipe.js';
 import { useRouter } from 'next/router';
 import {
@@ -29,27 +29,26 @@ import { NextSeo } from 'next-seo';
 import savedStatus from './savedStatus.svg';
 import notSavedStatus from './notSavedStatus.svg';
 import Cookies from 'cookies';
-import PlayArrowOutlinedIcon from '@material-ui/icons/PlayArrowOutlined';
-import PhotoCameraOutlinedIcon from '@material-ui/icons/PhotoCameraOutlined';
+import Tooltip from '@material-ui/core/Tooltip';
 
-// Carousel
-import { Carousel } from "react-responsive-carousel";
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import "react-responsive-carousel/lib/styles/carousel.min.css";
-import FullscreenOutlinedIcon from '@material-ui/icons/FullscreenOutlined';
 import VideoImageCarousel from "@/components/blocks/video-image-carousel/video-image-carousel";
+import { makeStyles } from "@material-ui/core/styles";
+import {useMobileDevice} from "@/customHooks/useMobileDevice";
 
-const StyledCarousel = styled(Carousel)`
-  .carousel-status {
-    top: unset;
-    bottom: 6px;
-    right: 5px;
+dayjs.extend(customParseFormat);
+
+const useStyledTooltip = makeStyles({
+  tooltip: {
+    padding: '5px 5px !important',
+    fontSize: '16px',
+    wordBreak: 'break-all',
+    hyphens: 'auto'
   }
-`
+});
 
 function RecipePage(props) {
-  const currentSlider = useSelector(state => state.recipePhotoSlider.currentItemIndex);
+  const toolTipStyles = useStyledTooltip();
+  const [isMobileOrTablet] = useMobileDevice();
   const router = useRouter();
   const [recipeId, setRecipeId] = useState();
   const [recipe, setRecipe] = useState();
@@ -169,9 +168,17 @@ function RecipePage(props) {
   };
 
   const handleRecipeCookingTime = time => {
-    const mins = Number(time.slice(3, 5));
-    const hours = Number(time.slice(0, 2));
-    return hours * 60 + mins;
+    const parsedTime = dayjs(time,'HH-mm');
+
+    if (!parsedTime['$H']) {
+      return `${parsedTime['$m']} MIN`;
+    }
+
+    if (!parsedTime['$m']) {
+      return `${parsedTime['$H']} HOURS`;
+    }
+
+    return `${parsedTime['$H']}H ${parsedTime['$m']}MIN`;
   };
 
   const redirectToHomeChefPage = () => {
@@ -282,7 +289,7 @@ function RecipePage(props) {
                   )}
                   <div className={classes.recipe__time}>
                     <img src="/images/index/timer.svg" />
-                    <p>{handleRecipeCookingTime(recipe.cooking_time)} MIN</p>
+                    <p>{handleRecipeCookingTime(recipe.cooking_time)}</p>
                   </div>
                 </div>
               </div>
@@ -308,16 +315,26 @@ function RecipePage(props) {
                       </div>
                     </div>
                     <div className={classes.recipe__video__player_row}>
-                      <button
-                        className={classes.recipe__video__likes_last}
-                        onClick={!props.account.hasToken ? openRegisterPopup('register') : onClickLike}>
-                        {!likeRecipe ? (
-                          <img src="/images/index/Icon-awesome-heart-null.svg" alt="" />
-                        ) : (
-                          <img src="/images/index/Icon awesome-heart.svg" alt="" />
-                        )}
-                        <span>Vote</span>
-                      </button>
+
+                      <Tooltip
+                        classes={!isMobileOrTablet && {tooltip: toolTipStyles.tooltip}}
+                        title="Votes help recipe to get in production soon."
+                        disableFocusListener
+                        enterTouchDelay={200}
+                        leaveTouchDelay={2000}
+                      >
+                        <button
+                          className={classes.recipe__video__likes_last}
+                          onClick={!props.account.hasToken ? openRegisterPopup('register') : onClickLike}
+                        >
+                          {!likeRecipe ? (
+                            <img src="/images/index/Icon-awesome-heart-null.svg" alt="" />
+                          ) : (
+                            <img src="/images/index/Icon awesome-heart.svg" alt="" />
+                          )}
+                          <span>Vote</span>
+                        </button>
+                      </Tooltip>
                       <ButtonShare recipeId={recipeId} recipePhoto={recipe?.images[0]} recipeDescription={recipe?.description}/>
 
                       {!savedId ? (

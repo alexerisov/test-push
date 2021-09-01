@@ -5,7 +5,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import RaitingIcon from '@/components/elements/rating-icon';
 import LikeIcon from '@/components/elements/like-icon';
-import styled from 'styled-components';
+import { styled } from '@material-ui/core/styles';
 import { CardActionArea } from '@material-ui/core';
 import { useRouter } from 'next/router';
 
@@ -22,13 +22,13 @@ const StyledCardContent = styled(CardContent)`
   padding: 16px;
 `;
 
-const StyledCardActionArea = styled(CardActionArea)`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  justify-content: flex-start;
-`;
+const StyledCardActionArea = styled(CardActionArea)({
+  flex: 1,
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'start',
+  justifyContent: 'flex-start'
+});
 
 const CardHighestMeals = props => {
   const router = useRouter();

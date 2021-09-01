@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import classes from './index.module.scss';
-import LayoutPage from '@/components/layouts/layout-page';
-import ContentLayout from '@/components/layouts/layout-profile-content';
-import FormEditAccountChef from '@/components/forms/form-edit-account-chef';
-import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
+import ContentLayout from '@/components/layouts/layout-profile-content';
+import { profileActions, accountActions } from '@/store/actions';
+import { validator } from '@/utils/validator';
+import { nameErrorProfile } from '@/utils/datasets';
+
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
+
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
-import * as yup from 'yup';
 import TextField from '@material-ui/core/TextField';
 import Input from '@material-ui/core/Input';
-import { profileActions, accountActions } from '@/store/actions';
-import { connect } from 'react-redux';
-import styled from 'styled-components';
+import FieldError from '@/components/elements/field-error';
 
 const StyledTextField = styled(TextField)`
   width: 100%;
@@ -29,16 +33,27 @@ function FormEditAccountUser(props) {
     return <div>loading...</div>;
   }
 
-  const phoneRegExp = /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){5,18}(\s*)?$/;
+  const [errorForm, setErrorForm] = useState(null);
 
-  const validationSchema = yup.object({
-    email: yup.string('Enter your email').required('Email is required'),
-    full_name: yup
-      .string('Enter your Full Name')
-      .min(1, 'Full Name should be of minimum 1 characters length')
-      .max(80, 'Full Name should be of maximum 80 characters length'),
-    phone_number: yup.string('Enter your Phone number').matches(phoneRegExp, 'Phone number is not valid')
-  });
+  function onChangeField(name, event) {
+    const currentLength = event?.target.value.length;
+    const newError = {
+      ...errorForm,
+      [name]: `${validator.getErrorStatusByCheckingLength({
+        currentLength,
+        ...getMaxLengthOfField(name)
+      })}`
+    };
+    formik.handleChange(event);
+    setErrorForm(newError);
+  }
+
+  const getMaxLengthOfField = name => {
+    switch (name) {
+      case 'full_name':
+        return { maxLength: 80 };
+    }
+  };
 
   const { email, full_name, phone_number, city, language, avatar, user_type } = props.account.profile;
 
@@ -55,11 +70,11 @@ function FormEditAccountUser(props) {
       language: language ?? '',
       avatar: avatar
     },
-    validationSchema: validationSchema,
     onSubmit: values => {
       setStatusSubmit('Loading...');
       setFormStatus('');
       values.user_type = user_type;
+      values.phone_number = changePhone;
       props
         .dispatch(profileActions.updateProfileUser(values))
         .then(res => {
@@ -68,6 +83,8 @@ function FormEditAccountUser(props) {
           props.dispatch(accountActions.remind());
         })
         .catch(error => {
+          setErrorForm(error.response.data);
+          handleErrorScroll(error.response.data);
           setStatusSubmit('Update');
           setFormStatus(<span className={classes.profile__formStatus_error}>Error</span>);
           console.log(error);
@@ -79,6 +96,25 @@ function FormEditAccountUser(props) {
 
   const onClickUpload = () => {
     inputRef.current.click();
+  };
+
+  const [changePhone, handleChangePhone] = useState(phone_number);
+
+  // scroll to error
+
+  const handleErrorScroll = error => {
+    if (error !== null) {
+      const elementError = nameErrorProfile.find(item => error[item.nameErrorResponse]);
+      if (elementError) {
+        const el = document.querySelector(`input[id=${elementError.nameInput}]`);
+        scrollToElement(el);
+        return;
+      }
+    }
+  };
+
+  const scrollToElement = el => {
+    el !== null && el.scrollIntoView({ block: 'center', inline: 'center', behavior: 'smooth' });
   };
 
   return (
@@ -122,10 +158,13 @@ function FormEditAccountUser(props) {
             id="full_name"
             name="full_name"
             value={formik.values.full_name ? formik.values.full_name : ''}
-            onChange={formik.handleChange}
+            onChange={e => {
+              onChangeField('full_name', e);
+            }}
+            inputProps={{ maxLength: 80 }}
             variant="outlined"
-            error={formik.touched.full_name && Boolean(formik.errors.full_name)}
-            helperText={formik.touched.full_name && formik.errors.full_name}
+            error={Boolean(errorForm?.full_name)}
+            helperText={errorForm?.full_name}
           />
         </div>
         <div>
@@ -139,21 +178,34 @@ function FormEditAccountUser(props) {
             variant="outlined"
             value={formik.values.email}
             onChange={formik.handleChange}
-            error={formik.touched.email && Boolean(formik.errors.email)}
-            helperText={formik.touched.email && formik.errors.email}
+            error={Boolean(errorForm?.email)}
+            helperText={errorForm?.email}
           />
         </div>
         <div>
-          <label className={classes.profile__label}>Phone Number</label>
-          <StyledTextField
+          <label className={classes.profile__label}>Phone number</label>
+          <PhoneInput
+            country="us"
             id="phone_number"
             name="phone_number"
+            international
             variant="outlined"
-            value={formik.values.phone_number ? formik.values.phone_number : ''}
-            onChange={formik.handleChange}
-            error={formik.touched.phone_number && Boolean(formik.errors.phone_number)}
-            helperText={formik.touched.phone_number && formik.errors.phone_number}
+            value={changePhone}
+            onChange={handleChangePhone}
+            containerClass={classes.profile__inputPhone}
+            inputStyle={{
+              border: 'none',
+              fontSize: '18px',
+              color: '#6A6A6A',
+              fontFamily: 'Montserrat',
+              width: '100%'
+            }}
+            buttonStyle={{
+              border: 'none',
+              backgroundColor: '#ffffff'
+            }}
           />
+          <FieldError errors={errorForm} path="phone_number" id="error" />
         </div>
         <div>
           <label className={classes.profile__label}>City</label>
@@ -163,8 +215,8 @@ function FormEditAccountUser(props) {
             variant="outlined"
             value={formik.values.city ? formik.values.city : ''}
             onChange={formik.handleChange}
-            error={formik.touched.city && Boolean(formik.errors.city)}
-            helperText={formik.touched.city && formik.errors.city}
+            error={Boolean(errorForm?.city)}
+            helperText={errorForm?.city}
           />
         </div>
         <div>
@@ -175,8 +227,8 @@ function FormEditAccountUser(props) {
             variant="outlined"
             value={formik.values.language ? formik.values.language : ''}
             onChange={formik.handleChange}
-            error={formik.touched.language && Boolean(formik.errors.language)}
-            helperText={formik.touched.language && formik.errors.language}
+            error={Boolean(errorForm?.language)}
+            helperText={errorForm?.language}
           />
         </div>
         <div>

@@ -97,10 +97,10 @@ const ButtonShare = ({ recipeId, recipePhoto, recipeDescription }) => {
         disableHoverListener
         disableTouchListener
         title="Link successfully copied!">
-        <button
+        <div
           className={styles.shareBtn}
-          type="button"
-          onClick={isMobileOrTabletDevice ? mobileHandler : e => handleOpenShareWindow(e)}>
+          onClick={isMobileOrTabletDevice ? mobileHandler : e => handleOpenShareWindow(e)}
+        >
           <div className={styles.shareBtn__icon}>
             <ShareIcon fontSize="inherit" />
 
@@ -156,7 +156,7 @@ const ButtonShare = ({ recipeId, recipePhoto, recipeDescription }) => {
               </li>
             </ul>
           </Fade>
-        </button>
+        </div>
       </Tooltip>
     </ClickAwayListener>
   );

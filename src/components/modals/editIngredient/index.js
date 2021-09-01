@@ -7,7 +7,7 @@ import classes from "./addIngredient.module.scss";
 import TextField from '@material-ui/core/TextField';
 import { units } from '@/utils/datasets';
 import { Select, MenuItem } from '@material-ui/core';
-import {validator} from "@/utils/validator";
+import { getNumberWithMaxDigits } from "@/utils/helpers";
 
 const useStyles = makeStyles((theme) => ({
   textField: {
@@ -84,16 +84,9 @@ function EditIngredient (props) {
   };
 
   function getMaxThreeDigitValueOfQuantity() {
-    if (validator.checkNumberOfDigits({maxDigits: 3, value: ingredient.quantity})) {
-      return {
-        ...ingredient,
-        quantity: ingredient.quantity.toFixed(3)
-      };
-    }
-
     return {
       ...ingredient,
-      quantity: parseFloat(ingredient.quantity)
+      quantity: getNumberWithMaxDigits(Number(ingredient.quantity), 3)
     };
   }
 
@@ -121,6 +114,7 @@ function EditIngredient (props) {
           <TextField
             id="addIngredient-name"
             name="title"
+            autoFocus
             value={ingredient.title}
             onChange={onChangeField('title')}
             variant="outlined"

@@ -2,19 +2,19 @@ import React, { useEffect, useRef } from 'react';
 import classes from './index.module.scss';
 import Card from '@material-ui/core/Card';
 import Link from 'next/link';
-import styled from 'styled-components';
+import { styled } from '@material-ui/core/styles';
 import { CardActionArea } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import $clamp from "clamp-js";
 import logo from "/public/images/index/logo.svg";
 
-const StyledCardActionArea = styled(CardActionArea)`
-  position: relative;
-  flex: 1;
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-`;
+const StyledCardActionArea = styled(CardActionArea)({
+  position: 'relative',
+  flex: '1',
+  display: 'flex',
+  alignItems: 'flex-start',
+  justifyContent: 'flex-start'
+});
 
 const CardPinnedMeals = ({ title, avatar, id }) => {
   const router = useRouter();
