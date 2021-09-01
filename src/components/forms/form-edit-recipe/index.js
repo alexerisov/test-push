@@ -113,6 +113,7 @@ function FormEditRecipe(props) {
         const newData = res.data;
         newData.id = recipeId;
         newData.main_image = res.data.images[0];
+        newData.images_to_delete = [];
         props.dispatch(recipeEditActions.update(newData));
       })
       .catch(err => {
@@ -202,9 +203,9 @@ function FormEditRecipe(props) {
     }
 
     const newImagetList = data?.images.filter((image, index) => index !== id);
-    const newData = { ...data, images: newImagetList };
+    const newData = { ...data, images: newImagetList, main_image: newImagetList[0] };
 
-    // Filter for filtering undefined values
+    // Filter for filtering new files
     const newDataDelete = { ...newData, images_to_delete: [...data.images_to_delete, pk].filter(item => item) };
 
     props.dispatch(recipeEditActions.update(newDataDelete));
@@ -319,6 +320,10 @@ function FormEditRecipe(props) {
       }
     });
   }
+
+  console.log(images);
+  console.log(data?.images);
+  console.log(data?.images_to_delete);
 
   function uploadRecipe(e) {
     setStatusSubmit('Loading...');
@@ -568,7 +573,7 @@ function FormEditRecipe(props) {
                       key={index}
                       src={item.url ?? URL.createObjectURL(item.image)}
                       id={index}
-                      pk={item.id}
+                      pk={item.image ? null : item.id}
                     />
                   );
 
