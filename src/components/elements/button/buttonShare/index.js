@@ -143,17 +143,24 @@ const ButtonShare = ({ recipeId, recipePhoto, recipeDescription }) => {
                 </EmailShareButton>
               </li>
 
-              <li className={styles.shareWindow__item}>
+              {/*<li className={styles.shareWindow__item}>
+                <div
+                  className={styles.shareWindow__action}
+                  onClick={openPinterest}
+                >
+                  <PinterestIcon round={true} size="23px" />
+                  Pinterest
+                </div>
                 <PinterestShareButton
                   className={styles.shareWindow__action}
                   beforeOnClick={beforeOnClickOnSocialNetwork}
-                  media={recipePhoto.url}
                   description={recipeDescription}
-                  url={currentUrl}>
+                  url="https://eatchefs.goodbit.dev/recipe/2693"
+                  media={currentUrl}>
                   <PinterestIcon round={true} size="23px" />
                   Pinterest
                 </PinterestShareButton>
-              </li>
+              </li>*/}
             </ul>
           </Fade>
         </div>
