@@ -151,7 +151,14 @@ export default {
     return http.get(`/recipe/homepage_banners`);
   },
 
-  getMealOfWeek: () => {
+  getMealOfWeek: (token) => {
+    if (token && token !== "{\"token\":null,\"refresh\":null}") {
+      return http.get(`/recipe/meal_of_the_week`, {
+        headers: {
+          'Authorization': `Bearer ${JSON.parse(token).token}`
+        }
+      });
+    }
     return http.get(`/recipe/meal_of_the_week`);
   },
 

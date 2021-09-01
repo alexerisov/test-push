@@ -43,7 +43,6 @@ const MealOfWeekBlock = props => {
           setLikeRecipe(true);
           setLikesNumber(likesNumber + 1);
         }
-        console.log(res);
       })
       .catch(err => console.log(err));
   };

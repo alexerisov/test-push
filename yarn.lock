@@ -2127,11 +2127,6 @@ core-util-is@~1.0.0:
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
   integrity sha1-tf1UIgqivFq1eqtxQMlAdUUDwac=
 
-country-flag-icons@^1.0.2:
-  version "1.4.7"
-  resolved "https://registry.yarnpkg.com/country-flag-icons/-/country-flag-icons-1.4.7.tgz#6f9acb18fae373528ba38834ba80e30084f24e7f"
-  integrity sha512-tsF7fPalAub3f328OcZL6sUxC+g7Ndua+M4xXCm+Q3f/p2XtNmJNrZTopA9iyS82ddYyKZ5ClPZUhifWv6fn2g==
-
 create-ecdh@^4.0.0:
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/create-ecdh/-/create-ecdh-4.0.4.tgz#d6e7f4bffa66736085a0762fd3a632684dabcc4e"
@@ -3196,13 +3191,6 @@ inherits@2.0.3:
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.3.tgz#633c2c83e3da42a502f52466022480f4208261de"
   integrity sha1-Yzwsg+PaQqUC9SRmAiSA9CCCYd4=
 
-input-format@^0.3.6:
-  version "0.3.6"
-  resolved "https://registry.yarnpkg.com/input-format/-/input-format-0.3.6.tgz#b9b167dbd16435eb3c0012347964b230ea0024c8"
-  integrity sha512-SbUu43CDVV5GlC8Xi6NYBUoiU+tLpN/IMYyQl0mzSXDiU1w0ql8wpcwjDOFpaCVLySLoreLUimhI82IA5y42Pw==
-  dependencies:
-    prop-types "^15.7.2"
-
 internal-slot@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/internal-slot/-/internal-slot-1.0.3.tgz#7347e307deeea2faac2ac6205d4bc7d34967f59c"
@@ -3566,11 +3554,6 @@ levn@^0.4.1:
   dependencies:
     prelude-ls "^1.2.1"
     type-check "~0.4.0"
-
-libphonenumber-js@^1.9.22:
-  version "1.9.25"
-  resolved "https://registry.yarnpkg.com/libphonenumber-js/-/libphonenumber-js-1.9.25.tgz#e54b570f03d36ce059a88ab01ec49b9037ec1c97"
-  integrity sha512-LsSjcmXXGujESsrOsF2rrLdmuABj3OluCzPJKVNslJ2qc7xF5KdKXN8y0OcxHVurqosVf1/r4itrVrKSrlbVHA==
 
 load-json-file@^4.0.0:
   version "4.0.0"
@@ -4469,6 +4452,13 @@ react-responsive-carousel@^3.2.21:
     prop-types "^15.5.8"
     react-easy-swipe "^0.0.21"
 
+react-share@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/react-share/-/react-share-4.4.0.tgz#cabbf2111d7a907a888ab4d89d08410329efd5ee"
+  integrity sha512-POe8Ge/JT9Ew9iyW7CiYsCCWCb8uMJWqFl9S7W0fJ/oH5gBJNzukH0bL5vSr17KKG5h15d3GfKaoviI22BKeYA==
+  dependencies:
+    classnames "^2.2.5"
+    jsonp "^0.2.1"
 
 react-sortablejs@^6.0.0:
   version "6.0.0"
@@ -4477,14 +4467,6 @@ react-sortablejs@^6.0.0:
   dependencies:
     classnames "^2.2.6"
     tiny-invariant "^1.1.0"
-    
-react-share@^4.4.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/react-share/-/react-share-4.4.0.tgz#cabbf2111d7a907a888ab4d89d08410329efd5ee"
-  integrity sha512-POe8Ge/JT9Ew9iyW7CiYsCCWCb8uMJWqFl9S7W0fJ/oH5gBJNzukH0bL5vSr17KKG5h15d3GfKaoviI22BKeYA==
-  dependencies:
-    classnames "^2.2.5"
-    jsonp "^0.2.1"
 
 react-transition-group@^4.4.0, react-transition-group@^4.4.2:
   version "4.4.2"
