@@ -32,7 +32,8 @@ import { CardIngredient, CardNutrition, CardImage, CardImageEditRecipe } from '@
 import { validator } from '@/utils/validator';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import PhotoCameraOutlinedIcon from '@material-ui/icons/PhotoCameraOutlined';
-import InputTime from "@/components/elements/input/inputTime";
+import InputTime from '@/components/elements/input/inputTime';
+import { recoveryLocalStorage } from '@/utils/web-storage/local';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -108,7 +109,7 @@ function FormCreateRecipe(props) {
     const newData = data;
     newData.cooking_time = '00:00';
     props.dispatch(recipeUploadActions.update(newData));
-  }, [router]);
+  }, []);
 
   function onChangeField(name) {
     return event => {
@@ -166,7 +167,7 @@ function FormCreateRecipe(props) {
 
   function handleRemoveImage(id) {
     if (data?.images?.length === 1) {
-      setErrorDeleteImages("Your recipe must have at least one photo");
+      setErrorDeleteImages('Your recipe must have at least one photo');
       return;
     }
 
@@ -349,6 +350,33 @@ function FormCreateRecipe(props) {
     return undefined;
   }
 
+  const [restoreRecipeData, setRestoreRecipeData] = useState(false);
+
+  useEffect(() => {
+    if (restoreRecipeData) {
+      const newData = {
+        ...data,
+        images: [],
+        preview_full_thumbnail_url: '',
+        preview_mp4_url: '',
+        preview_thumbnail_url: '',
+        preview_webm_url: ''
+      };
+      recoveryLocalStorage.setCreateRecipe(newData);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    const newData = recoveryLocalStorage.getCreateRecipe();
+    newData && props.dispatch(recipeUploadActions.update(newData));
+    setRestoreRecipeData(true);
+  }, []);
+
+  const handleClearForm = () => {
+    recoveryLocalStorage.deleteCreateRecipe();
+    router.reload();
+  };
+
   const getMarkUpForUploadedImages = () => {
     return (
       <>
@@ -400,6 +428,12 @@ function FormCreateRecipe(props) {
 
   return (
     <div>
+      <div className={classes.createRecipeForm__header}>
+        <h1 className={classes.createRecipeForm__header__title}>Create New Recipe</h1>
+        <button className={classes.createRecipeForm__header__clear} onClick={handleClearForm}>
+          Clear All
+        </button>
+      </div>
       <form className={classes.createRecipeForm}>
         <div className={classes.createRecipeSection}>
           <h2 className={classes.createRecipeSubtitle}>Basic Details</h2>
@@ -416,7 +450,7 @@ function FormCreateRecipe(props) {
                 variant="outlined"
                 fullWidth
                 className={classMarerialUi.textField}
-                error={error?.title}
+                error={Boolean(error?.title)}
                 helperText={error?.title}
                 inputProps={{ maxLength: 50 }}
               />
@@ -436,7 +470,7 @@ function FormCreateRecipe(props) {
                 value={data?.description}
                 fullWidth
                 className={classMarerialUi.textField}
-                error={error?.description}
+                error={Boolean(error?.description)}
                 helperText={error?.description}
                 inputProps={{ maxLength: 200 }}
               />
@@ -575,7 +609,7 @@ function FormCreateRecipe(props) {
             className={classes.createRecipeSection__grid_type_cardImages}>
             {getMarkUpForUploadedImages()}
           </ReactSortable>
-          <FieldError errors={error?.images ? error : {'images': errorDeleteImages}} path="images" id="error" />
+          <FieldError errors={error?.images ? error : { images: errorDeleteImages }} path="images" id="error" />
         </div>
         <div className={classes.createRecipeSection}>
           <h2 className={classes.createRecipeSubtitle_withoutInput}>Cooking Video</h2>
