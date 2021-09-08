@@ -155,7 +155,10 @@ function FormCreateChefPencil(props) {
     dispatch(chefPencilUploadActions.uploadChefPencil(data))
       .then(data => {
         setStatusSubmit('Submit');
-        return dispatch(modalActions.open('uploadSuccessful'));
+        return dispatch(modalActions.open('uploadSuccessful', {
+          handleClick: handleClickForModal,
+          handleCancel: handleCloseForModal
+        }));
       })
       .catch(err => {
         handleErrorScroll(err.response.data);
@@ -164,6 +167,17 @@ function FormCreateChefPencil(props) {
       });
     // }
   }
+
+  const handleClickForModal = (e) => {
+    e.preventDefault();
+    router.push(`/`);
+    dispatch(modalActions.close());
+  };
+
+  const handleCloseForModal = () => {
+    router.push(`/`);
+    dispatch(modalActions.close());
+  };
 
   // Scroll to errors
   const handleErrorScroll = error => {

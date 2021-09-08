@@ -24,25 +24,33 @@ function UploadSuccessful (props) {
   const renderContent = () => {
     return <div className={classes.UploadSuccess}>
       <img src="/images/index/upload_success.svg" alt="Success"></img>
-      <h2 className={classes.UploadSuccess__title}>
-        {props.publishStatus === PUBLISH_STATUS.published
-          ? 'Recipe submitted to EatChefs Administration team for approval'
-          : 'Recipe has been saved'
-        }
-      </h2>
+      {!props.handleClick &&
+        <h2 className={classes.UploadSuccess__title}>
+          {props.publishStatus === PUBLISH_STATUS.published
+            ? 'Recipe submitted to EatChefs Administration team for approval'
+            : 'Recipe has been saved'
+          }
+        </h2>
+      }
+
+      {props.handleClick &&
+        <h2 className={classes.UploadSuccess__title}>
+          {"Chef's Pencil submitted to EatChefs Administration team"}
+        </h2>
+      }
       <button
         type="button"
         className={classes.UploadSuccess__button}
-        onClick={handleClick}
+        onClick={props.handleClick ?? handleClick}
       >
-        See preview
+        {props.handleClick ? "Return to home" : "See preview" }
       </button>
     </div>;
   };
 
   return (
       <LayoutModal
-        onClose={onCancel}
+        onClose={props.handleCancel ?? onCancel}
         themeName="white_small"
       >
         {renderContent()}
