@@ -362,7 +362,10 @@ function FormCreateRecipe(props) {
 
   const handleAddVideo = files => {
     Recipe.uploadVideoRecipe(files, setProgressVideo).then(res => {
-      setVideoRecipe(res.data);
+      setVideoRecipe(res.data).catch(err => {
+        setProgressVideo(0);
+        console.log(err);
+      });
       const newData = { ...data, video: res.data.pk };
       props.dispatch(recipeUploadActions.update(newData));
     });
