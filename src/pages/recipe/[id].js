@@ -39,10 +39,10 @@ dayjs.extend(customParseFormat);
 
 const useStyledTooltip = makeStyles({
   tooltip: {
-    padding: '5px 5px !important',
+    padding: '5px 10px !important',
     fontSize: '16px',
-    wordBreak: 'break-all',
-    hyphens: 'auto'
+    hyphens: 'auto',
+    maxWidth: '400px'
   }
 });
 

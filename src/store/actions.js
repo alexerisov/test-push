@@ -12,3 +12,4 @@ export { default as recipeEditActions } from './recipeEdit/actions';
 export { default as restorePasswordActions } from './restore-password/actions';
 export { default as recipePhotoSlider } from './recipePhotoSlider/actions';
 export { default as savedRecipes } from './savedRecipes/actions';
+export { default as chefPencilUploadActions } from './chefPencilUpload/actions';
