@@ -368,14 +368,16 @@ function FormEditRecipe(props) {
   };
 
   const handleAddVideo = files => {
-    Recipe.uploadVideoRecipe(files, setProgressVideo).then(res => {
-      setVideoRecipe(res.data).catch(err => {
+    Recipe.uploadVideoRecipe(files, setProgressVideo)
+      .then(res => {
+        setVideoRecipe(res.data);
+        const newData = { ...data, video: res.data.pk };
+        props.dispatch(recipeEditActions.update(newData));
+      })
+      .catch(err => {
         setProgressVideo(0);
         console.log(err);
       });
-      const newData = { ...data, video: res.data.pk };
-      props.dispatch(recipeEditActions.update(newData));
-    });
   };
 
   const handleDeleteVideo = () => {
