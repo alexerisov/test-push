@@ -3,8 +3,12 @@
 
 .createPencil {
   display: block;
-  max-width: 1000px;
   margin-bottom: 20px;
+
+  &__wrapper {
+    max-width: 1000px;;
+    margin: 0 auto;
+  }
 
   &__header {
     display: flex;
