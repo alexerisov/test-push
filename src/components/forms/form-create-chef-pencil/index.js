@@ -271,7 +271,7 @@ function FormCreateChefPencil(props) {
           </div>
         </div>
 
-        <div className={classes.createPencilSection}>
+        <div className={classes.createPencilSection} id="chef-pencil-upload-image">
           <h2 className={!data?.image ? classes.createPencilLabel : classes.createPencilLabel_margin}>
             <span style={{ color: 'red' }}>* </span>Chef Pencil Image
           </h2>
@@ -308,7 +308,7 @@ function FormCreateChefPencil(props) {
         </div>
 
         <Editor data={data} handleChange={onChangeEditorField} />
-        <div className={classes.fieldError}>
+        <div className={classes.fieldError} id="chef-pencil-editor">
           <FieldError errors={error} path="html_content" />
         </div>
       </form>
