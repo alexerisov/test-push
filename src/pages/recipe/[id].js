@@ -39,10 +39,10 @@ dayjs.extend(customParseFormat);
 
 const useStyledTooltip = makeStyles({
   tooltip: {
-    padding: '5px 5px !important',
+    padding: '5px 10px !important',
     fontSize: '16px',
-    wordBreak: 'break-all',
-    hyphens: 'auto'
+    hyphens: 'auto',
+    maxWidth: '400px'
   }
 });
 
@@ -317,11 +317,12 @@ function RecipePage(props) {
                     <div className={classes.recipe__video__player_row}>
 
                       <Tooltip
-                        classes={!isMobileOrTablet && {tooltip: toolTipStyles.tooltip}}
+                        classes={!isMobileOrTablet && {tooltip: toolTipStyles.tooltip, popper: toolTipStyles.popper}}
                         title="Votes help recipe to get in production soon."
                         disableFocusListener
                         enterTouchDelay={200}
                         leaveTouchDelay={2000}
+                        arrow
                       >
                         <button
                           className={classes.recipe__video__likes_last}
