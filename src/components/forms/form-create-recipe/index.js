@@ -248,6 +248,7 @@ function FormCreateRecipe(props) {
     props
       .dispatch(recipeUploadActions.uploadRecipe(clonedData))
       .then(data => {
+        setVideoRecipeError(false);
         setStatusSubmit('Submit');
         return props.dispatch(
           modalActions.open('uploadSuccessful', {
@@ -359,16 +360,21 @@ function FormCreateRecipe(props) {
   };
 
   const [videoRecipe, setVideoRecipe] = useState(false);
+  const [videoRecipeError, setVideoRecipeError] = useState();
 
   const handleAddVideo = files => {
-    Recipe.uploadVideoRecipe(files, setProgressVideo).then(res => {
-      setVideoRecipe(res.data).catch(err => {
+    Recipe.uploadVideoRecipe(files, setProgressVideo)
+      .then(res => {
+        setVideoRecipe(res.data);
+        const newData = { ...data, video: res.data.pk };
+        props.dispatch(recipeUploadActions.update(newData));
+        setVideoRecipeError(false);
+      })
+      .catch(err => {
         setProgressVideo(0);
+        setVideoRecipeError(err.response.data);
         console.log(err);
       });
-      const newData = { ...data, video: res.data.pk };
-      props.dispatch(recipeUploadActions.update(newData));
-    });
   };
 
   const handleDeleteVideo = () => {
@@ -697,6 +703,7 @@ function FormCreateRecipe(props) {
                 onChange={event => {
                   handleAddVideo(event.currentTarget.files[0]);
                 }}></input>
+              <FieldError errors={videoRecipeError} path="video" id="error" />
             </>
           ) : (
             <>
