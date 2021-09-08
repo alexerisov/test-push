@@ -5,3 +5,11 @@ export const getNumberWithMaxDigits = (value, maxDigits) => {
 
   return Number(value.toFixed(maxDigits)).toString();
 };
+
+export const removeHTMLTagsFromString = (value) => {
+  if (typeof value !== "string") {
+    throw new Error('You have provide not string value');
+  }
+
+  return value.replace(/<[^>]*>|\s/g, '');
+};

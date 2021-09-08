@@ -35,6 +35,7 @@ import PhotoCameraOutlinedIcon from '@material-ui/icons/PhotoCameraOutlined';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import { validator } from '@/utils/validator';
 import InputTime from '@/components/elements/input/inputTime';
+import LinearProgressWithLabel from '@/components/elements/linear-progress-with-label';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -100,10 +101,8 @@ function FormEditRecipe(props) {
   const uploadImageLabel = useRef();
   const [isDragging, setIsDragging] = useState(false);
   const [images, setImages] = useState([]);
+  const [videoRecipe, setVideoRecipe] = useState(false);
   const [errorDeleteImages, setErrorDeleteImages] = useState('');
-
-
-  const [newVideo, setNewVideo] = useState(false);
 
   const [statusSubmit, setStatusSubmit] = useState('Edit');
 
@@ -114,6 +113,11 @@ function FormEditRecipe(props) {
         newData.id = recipeId;
         newData.main_image = res.data.images[0];
         newData.images_to_delete = [];
+        if (newData.video && newData.video !== '') {
+          setVideoRecipe({
+            video: res.data.video_url
+          });
+        }
         props.dispatch(recipeEditActions.update(newData));
       })
       .catch(err => {
@@ -133,7 +137,7 @@ function FormEditRecipe(props) {
       });
 
       setImages(imagesData);
-      setErrorDeleteImages("");
+      setErrorDeleteImages('');
     }
   }, [data]);
 
@@ -160,11 +164,6 @@ function FormEditRecipe(props) {
       case 'description':
         return { maxLength: 200 };
     }
-  };
-
-  const changeVideoState = e => {
-    e.preventDefault();
-    setNewVideo(!newVideo);
   };
 
   function onChangeFieldNumber(name) {
@@ -198,7 +197,7 @@ function FormEditRecipe(props) {
 
   function handleRemoveImage(id, pk) {
     if (data?.images?.length === 1) {
-      setErrorDeleteImages("Your recipe must have at least one photo");
+      setErrorDeleteImages('Your recipe must have at least one photo');
       return;
     }
 
@@ -294,37 +293,6 @@ function FormEditRecipe(props) {
     return itemList;
   };
 
-  useEffect(() => {
-    if (isWindowExist()) {
-      CameraTag.setup();
-    }
-  }, [newVideo]);
-
-  if (isWindowExist()) {
-    CameraTag.observe('DemoCamera', 'published', function () {
-      const myCamera = CameraTag.cameras['DemoCamera'];
-      const myVideo = myCamera.getVideo();
-      const thumbnail = `https:${myVideo.medias.vga_thumb}`;
-      const full_thumbnail = `https:${myVideo.medias.vga_filmstrip}`;
-      const mp4 = `https:${myVideo.medias['720p']}`;
-      const webm = `https:${myVideo.medias.vertical}`;
-      const newData = {
-        ...data,
-        preview_thumbnail_url: thumbnail,
-        preview_full_thumbnail_url: full_thumbnail,
-        preview_mp4_url: mp4,
-        preview_webm_url: webm
-      };
-      if (props.recipeEdit.data.preview_mp4_url !== mp4) {
-        props.dispatch(recipeEditActions.update(newData));
-      }
-    });
-  }
-
-  console.log(images);
-  console.log(data?.images);
-  console.log(data?.images_to_delete);
-
   function uploadRecipe(e) {
     setStatusSubmit('Loading...');
     e.preventDefault();
@@ -339,6 +307,7 @@ function FormEditRecipe(props) {
     props
       .dispatch(recipeEditActions.updateRecipe(clonedData))
       .then(data => {
+        setVideoRecipeError(false);
         setStatusSubmit('Edit');
         return props.dispatch(
           modalActions.open('editSuccessful', {
@@ -387,6 +356,70 @@ function FormEditRecipe(props) {
   };
 
   const mobile = useMediaQuery('(max-width:576px)');
+
+  // video
+
+  const inputRefVideo = React.createRef();
+  const labelRefVideo = React.createRef();
+  const [progressVideo, setProgressVideo] = useState(0);
+  const [videoRecipeError, setVideoRecipeError] = useState();
+
+  const onClickUploadVideo = event => {
+    event.preventDefault();
+    inputRefVideo.current.click();
+  };
+
+  const handleAddVideo = files => {
+    Recipe.uploadVideoRecipe(files, setProgressVideo)
+      .then(res => {
+        setVideoRecipe(res.data);
+        const newData = { ...data, video: res.data.pk };
+        props.dispatch(recipeEditActions.update(newData));
+        setVideoRecipeError(false);
+      })
+      .catch(err => {
+        setProgressVideo(0);
+        setVideoRecipeError(err.response.data);
+        console.log(err);
+      });
+  };
+
+  const handleDeleteVideo = () => {
+    setProgressVideo(0);
+    setVideoRecipe(false);
+    const newData = { ...data, video: '' };
+    props.dispatch(recipeEditActions.update(newData));
+  };
+
+  useEffect(() => {
+    if (videoRecipe) {
+      labelRefVideo.current.style.border = 'none';
+    } else {
+      labelRefVideo.current.style.border = '3px dashed #dfdfdf';
+    }
+  }, [videoRecipe]);
+
+  function handleDropVideo(event) {
+    event.preventDefault();
+    handleAddVideo(event.dataTransfer.files[0]);
+  }
+
+  function handleDragOverVideo(event) {
+    event.preventDefault();
+    labelRefVideo.current.style.border = '3px dashed #61acd6';
+    return undefined;
+  }
+
+  function handleDragLeaveVideo(event) {
+    event.preventDefault();
+    labelRefVideo.current.style.border = '3px dashed #dfdfdf';
+    return undefined;
+  }
+
+  function handleDragEnterVideo(event) {
+    event.preventDefault();
+    return undefined;
+  }
 
   return (
     <div>
@@ -612,33 +645,60 @@ function FormEditRecipe(props) {
                 })
               : ''}
           </ReactSortable>
-          <FieldError errors={error?.images ? error : {'images': errorDeleteImages}} path="images" />
+          <FieldError errors={error?.images ? error : { images: errorDeleteImages }} path="images" />
         </div>
         <div className={classes.createRecipeSection}>
           <h2 className={classes.createRecipeSubtitle_withoutInput}>Cooking Video</h2>
-
-          {!newVideo ? (
-            data.preview_mp4_url && (
-              <div className={classes.recipe__video__watermark}>
+          {!videoRecipe ? (
+            <>
+              <div
+                ref={labelRefVideo}
+                className={classes.uploadVideoLabel}
+                onDrop={event => handleDropVideo(event)}
+                onDragOver={event => handleDragOverVideo(event)}
+                onDragEnter={event => handleDragEnterVideo(event)}
+                onDragLeave={event => handleDragLeaveVideo(event)}>
+                <img src="/images/index/upload-icon.svg" />
+                {progressVideo === 0 ? (
+                  <>
+                    <p className={classes.uploadVideoLabel__dragText}>Drag and drop files here</p>
+                    <p className={classes.uploadVideoLabel__orText}>or</p>
+                    <button
+                      className={classes.uploadVideoLabel__browseFilesButton}
+                      onClick={e => onClickUploadVideo(e)}>
+                      Browse files
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <p className={classes.uploadVideoLabel__dragText}>Uploading...</p>
+                    <LinearProgressWithLabel value={progressVideo} />
+                  </>
+                )}
+              </div>
+              <input
+                type="file"
+                ref={inputRefVideo}
+                accept="video/*"
+                hidden
+                onChange={event => {
+                  handleAddVideo(event.currentTarget.files[0]);
+                }}></input>
+              <FieldError errors={videoRecipeError} path="video" id="error" />
+            </>
+          ) : (
+            <>
+              <div className={classes.recipe__video__watermark} ref={labelRefVideo}>
                 <video width="550" controls="controls" className={classes.recipe__video}>
-                  <source src={data.preview_mp4_url} type="video/mp4" />
+                  <source src={videoRecipe?.video} type="video/mp4" />
                 </video>
                 <div className={classes.recipe__video__watermark__icon} />
               </div>
-            )
-          ) : (
-            <div className={classes.createRecipeVideo}>
-              <camera
-                id="DemoCamera"
-                data-app-id="63f9c870-72c4-0130-04c5-123139045d73"
-                data-sources="upload"
-                data-width={mobile ? '300px' : '530px'}
-                data-height={mobile ? '170px' : '300px'}></camera>
-            </div>
+              <button onClick={handleDeleteVideo} className={classes.recipe__video__button}>
+                Delete Video
+              </button>
+            </>
           )}
-          <button onClick={changeVideoState} className={classes.recipe__video__button}>
-            {!newVideo ? 'Update video' : 'Video'}
-          </button>
         </div>
         <div className={classes.createRecipeSection}>
           <div className={classes.createRecipeItem}>

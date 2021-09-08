@@ -14,7 +14,7 @@ body {
         width: 259px;
         height: 56px;
     }
-    
+
     [class*='MuiPaper-root'] {
         box-shadow: 0 3px 6px rgb(0 0 0 / 16%);
         border-radius: 5px;
@@ -37,7 +37,7 @@ body {
         font-size: 16px;
         color: $--color-black;
     }
-    
+
     [class*='MuiInputLabel-formControl'] {
         transform: translate(0, 0) scale(1);
     }
@@ -54,4 +54,9 @@ body {
     [class*='MuiTooltip-popper'] {
         z-index: 195;
     }
+}
+
+// CKEditor
+.ck-content {
+    min-height: 450px;
 }

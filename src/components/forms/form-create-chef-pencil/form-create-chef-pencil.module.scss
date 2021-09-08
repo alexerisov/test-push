@@ -1,0 +1,185 @@
+@import '~styles/variables.scss';
+@import '~styles/mixins/mixins.scss';
+
+.createPencil {
+  display: block;
+  margin-bottom: 20px;
+
+  &__wrapper {
+    max-width: 1000px;;
+    margin: 0 auto;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px 0;
+
+    @media (max-width: $--xs) {
+      padding: 0 0 30px;
+    }
+
+    &__title {
+      font-size: 35px;
+      line-height: 1.1;
+
+      @media (max-width: $--xs) {
+        font-size: 25px;
+      }
+    }
+
+    &__clear {
+      min-width: 90px;
+      font-size: 20px;
+      color: $--color-gray2;
+      cursor: pointer;
+      @include fontRegular();
+      border: none;
+
+      @media (max-width: $--xs) {
+        font-size: 18px;
+      }
+
+      &:hover {
+        color: $--color-orange;
+      }
+    }
+  }
+}
+
+.createPencilSection {
+  margin: 40px 0;
+
+  @media (max-width: $--xs) {
+    &:first-of-type {
+      padding-top: 0;
+    }
+  }
+}
+
+.createPencilUpload {
+  display: flex;
+  gap: 10px;
+}
+
+.createPencilLabel {
+  display: block;
+  margin: 20px 0 10px;
+  padding: 0;
+  font-size: 20px;
+  line-height: 1.08;
+
+  &_margin {
+    @extend .createPencilLabel;
+    margin: 20px 0 40px;
+  }
+
+  &_type_addImage {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    width: 126px;
+    height: 126px;
+    margin: 0;
+    padding: 0 16px;
+    font-size: 12px;
+    line-height: 16px;
+    text-align: center;
+    cursor: pointer;
+    border: 1px dashed $--color-gray-9;
+    border-radius: 6px;
+
+    &__icon {
+      font-size: 48px;
+    }
+
+    &__text {
+      margin: 6px 0 2px;
+      font-weight: 600;
+      color: $--color-gray2;
+    }
+
+    &__subtext {
+      font-weight: 600;
+      color: $--color-orange;
+    }
+  }
+
+  &_type_addImage:hover {
+    border: 1px dashed $--color-gray3 !important;
+  }
+}
+
+.createPencilInput_type_addImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.createPencilItem {
+  margin-bottom: 40px;
+
+  @media (max-width: $--xs) {
+    margin-bottom: 15px;
+  }
+}
+
+.createPencilbuttonContainer {
+  display: flex;
+  flex-direction: row-reverse;
+  max-width: 1000px;
+  margin: 40px 0 100px;
+}
+
+.createPencilButton {
+  width: 120px;
+  height: 40px;
+  padding: 0;
+  font: 16px/22px 'Montserrat';
+  color: $--color-white;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  border-radius: 3px;
+  outline: none;
+  background-color: $--color-blue;
+  transition: opacity 0.3s linear;
+
+  &_color_gray {
+    width: 120px;
+    height: 40px;
+    margin-right: 16px;
+    padding: 0;
+    font: 16px/22px 'Montserrat';
+    color: $--color-white;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    border-radius: 3px;
+    outline: none;
+    background-color: $--color-gray2;
+    transition: opacity 0.5s linear;
+  }
+
+  &_color_gray:hover {
+    opacity: 0.7;
+  }
+
+  &__text {
+    font-size: 14px;
+    font-weight: 900;
+    line-height: 1.29;
+  }
+}
+
+.createPencilButton:hover {
+  opacity: 0.7;
+}
+
+.fieldError {
+  margin-top: 10px;
+}

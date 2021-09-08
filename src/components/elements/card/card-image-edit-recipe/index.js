@@ -26,14 +26,14 @@ const CardImageEditRecipe = props => {
   return (
     <Fade in={true}>
       <div className={classes.cardImage}>
-        <button type="button" className={classes.cardImage__button_delete} onClick={handleDelete}>
+        {props.delete && <button type="button" className={classes.cardImage__button_delete} onClick={handleDelete}>
           <AddIcon fontSize="small" className={classes.cardImage__button__deleteIcon} />
-        </button>
-        <label htmlFor={`update-images${id}`} className={classes.cardImage__reuploadWrapper}>
+        </button>}
+        {props.update && <label htmlFor={`update-images${id}`} className={classes.cardImage__reuploadWrapper}>
           <div className={classes.cardImage__button_reload}>
             <ReplayIcon className={classes.cardImage__button__reloadIcon} classes={{ root: reloadIconStyles.root }} />
           </div>
-        </label>
+        </label>}
         <input
           type="file"
           id={`update-images${id}`}

@@ -4,27 +4,9 @@ import { types } from './actions.js';
 const initState = {
   data: {
     title: '',
-    cooking_time: '',
-    cuisines: [],
-    cooking_skills: '',
-    cooking_methods: [],
-    diet_restrictions: [],
-    description: '',
-    video: '',
-    types: [],
-    // tags: null,
-    language: '',
-    caption: '',
-    ingredients: [],
-    calories: null,
-    proteins: null,
-    carbohydrates: null,
-    fats: null,
-    steps: [],
-    publish_status: null,
-    images: [],
-    images_to_delete: [],
-    main_image: null
+    html_content: '',
+    attachments: null,
+    image: null
   },
   isLoading: false,
   error: null

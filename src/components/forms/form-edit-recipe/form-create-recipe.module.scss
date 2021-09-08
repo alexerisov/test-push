@@ -1,4 +1,5 @@
 @import '~styles/variables.scss';
+@import '~styles/mixins/mixins.scss';
 
 .createRecipeSubtitle {
   margin: 0px 20px 0px;
@@ -376,13 +377,90 @@
   }
 }
 
-.recipe__video {
-  display: block;
-  max-height: 310px;
+.uploadVideoLabel {
+  width: 530px;
+  height: 300px;
+  margin: 0;
+  padding: 0 16px;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+  border: 3px dashed #dfdfdf;
+  border-radius: 12px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
   @media (max-width: $--xs) {
     max-width: 300px;
     max-height: 170px;
+  }
+
+  &__logo {
+    @media (max-width: $--xs) {
+      margin: 20px 0;
+    }
+  }
+
+  &:hover {
+    border: 3px dashed $--color-blue !important;
+  }
+
+  &__dragText {
+    @include fontSemiBold();
+    color: $--color-blue-gray;
+    font-size: 20px;
+    line-height: 22px;
+    margin: 25px 0 13px 0;
+
+    @media (max-width: $--xs) {
+      display: none;
+    }
+  }
+
+  &__orText {
+    color: $--color-blue-gray;
+    font-size: 16px;
+    line-height: 18px;
+    margin: 0 0 13px 0;
+
+    @media (max-width: $--xs) {
+      display: none;
+    }
+  }
+
+  &__browseFilesButton {
+    @include fontSemiBold();
+    font-size: 16px;
+    line-height: 18px;
+    color: #f5f6fa;
+    width: 140px;
+    height: 50px;
+    border-radius: 3px;
+    cursor: pointer;
+    border: 2px solid $--color-blue;
+    background-color: $--color-blue;
+    cursor: pointer;
+    margin: 0 0 20px;
+
+    &:hover {
+      background-color: $--color-white;
+      color: $--color-blue;
+    }
+  }
+}
+
+.recipe__video {
+  display: block;
+  max-height: 310px;
+  min-height: 310px;
+
+  @media (max-width: $--xs) {
+    max-width: 300px;
+    max-height: 170px;
+    min-height: 170px;
   }
 
   &__button {
@@ -411,10 +489,10 @@
 
     &__icon {
       position: absolute;
-      bottom: 20px;
-      left: 20px;
-      width: 150px;
-      height: 100px;
+      bottom: 40px;
+      left: 40px;
+      width: 100px;
+      height: 70px;
       background-image: url('/images/index/footer_logo.png');
       background-repeat: no-repeat;
       background-position: center;
@@ -422,7 +500,8 @@
       opacity: 0.5;
 
       @media (max-width: $--xs) {
-        bottom: 0;
+        bottom: auto;
+        top: 10px;
         left: 10px;
         width: 80px;
         background-size: 70px 50px;
