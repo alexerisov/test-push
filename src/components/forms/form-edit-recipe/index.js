@@ -307,6 +307,7 @@ function FormEditRecipe(props) {
     props
       .dispatch(recipeEditActions.updateRecipe(clonedData))
       .then(data => {
+        setVideoRecipeError(false);
         setStatusSubmit('Edit');
         return props.dispatch(
           modalActions.open('editSuccessful', {
@@ -361,6 +362,7 @@ function FormEditRecipe(props) {
   const inputRefVideo = React.createRef();
   const labelRefVideo = React.createRef();
   const [progressVideo, setProgressVideo] = useState(0);
+  const [videoRecipeError, setVideoRecipeError] = useState();
 
   const onClickUploadVideo = event => {
     event.preventDefault();
@@ -373,9 +375,11 @@ function FormEditRecipe(props) {
         setVideoRecipe(res.data);
         const newData = { ...data, video: res.data.pk };
         props.dispatch(recipeEditActions.update(newData));
+        setVideoRecipeError(false);
       })
       .catch(err => {
         setProgressVideo(0);
+        setVideoRecipeError(err.response.data);
         console.log(err);
       });
   };
@@ -680,6 +684,7 @@ function FormEditRecipe(props) {
                 onChange={event => {
                   handleAddVideo(event.currentTarget.files[0]);
                 }}></input>
+              <FieldError errors={videoRecipeError} path="video" id="error" />
             </>
           ) : (
             <>
