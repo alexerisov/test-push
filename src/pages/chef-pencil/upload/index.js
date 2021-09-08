@@ -1,14 +1,13 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 import LayoutPage from '@/components/layouts/layout-page';
 import { FormCreateChefPencil } from '@/components/forms';
+import { withRouter } from 'next/router';
+import { RedirectWithoutAuthAndByCheckingUserType } from '@/utils/authProvider';
+import { CHEF_TYPE } from '@/utils/constants';
 
-function CreateRecipe () {
-
-  return (
-    <LayoutPage content={<FormCreateChefPencil />} />
-  );
+function CreatePencil() {
+  return <LayoutPage content={<FormCreateChefPencil />} />;
 }
 
-export default connect()(CreateRecipe);
+export default withRouter(RedirectWithoutAuthAndByCheckingUserType(CreatePencil, CHEF_TYPE));
