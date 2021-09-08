@@ -244,7 +244,7 @@ function FormCreateChefPencil(props) {
   };*/
 
   return (
-    <>
+    <div className={classes.createPencil__wrapper}>
       <div className={classes.createPencil__header}>
         <h1 className={classes.createPencil__header__title}>Create Chef Pencil</h1>
       </div>
@@ -324,7 +324,7 @@ function FormCreateChefPencil(props) {
           <p className={classes.createPencilButton__text}>Cancel</p>
         </button>
       </div>
-    </>
+    </div>
   );
 }
 
