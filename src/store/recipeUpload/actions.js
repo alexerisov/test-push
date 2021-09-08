@@ -5,30 +5,29 @@ export const types = {
   UPDATE_ERROR: Symbol('UPDATE_ERROR'),
   SEND: Symbol('SEND'),
   SEND_SUCCESS: Symbol('SEND_SUCCESS'),
-  SEND_FAILURE: Symbol('SEND_FAILURE'),
+  SEND_FAILURE: Symbol('SEND_FAILURE')
 };
 
 export default {
-
-  update: (data) => {
+  update: data => {
     return dispatch => {
       dispatch({
         type: types.UPDATE,
-        payload: data,
+        payload: data
       });
     };
   },
 
-  updateError: (error) => {
+  updateError: error => {
     return dispatch => {
       dispatch({
         type: types.UPDATE_ERROR,
-        payload: error,
+        payload: error
       });
     };
   },
 
-  uploadRecipe: (data) => {
+  uploadRecipe: data => {
     return async dispatch => {
       dispatch({ type: types.SEND });
 
@@ -42,10 +41,7 @@ export default {
             cooking_methods: data?.cooking_methods,
             diet_restrictions: data?.diet_restrictions,
             description: data?.description,
-            preview_thumbnail_url: data?.preview_thumbnail_url,
-            preview_full_thumbnail_url: data?.preview_full_thumbnail_url,
-            preview_mp4_url: data?.preview_mp4_url,
-            preview_webm_url: data?.preview_webm_url,
+            video: data?.video,
             types: data?.types,
             // tags,
             language: data?.language,
@@ -60,14 +56,14 @@ export default {
             images_to_delete: data?.images_to_delete,
             main_image: data?.main_image
           },
-          data?.images ?? null,
+          data?.images ?? null
         );
-        dispatch({ type: types.SEND_SUCCESS});
+        dispatch({ type: types.SEND_SUCCESS });
         return response.data;
       } catch (e) {
         dispatch({ type: types.SEND_FAILURE, error: e.response.data });
         throw e;
       }
     };
-  },
+  }
 };

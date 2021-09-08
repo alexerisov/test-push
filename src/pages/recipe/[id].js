@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import {connect, useSelector} from 'react-redux';
-import dayjs from "dayjs";
+import { connect, useSelector } from 'react-redux';
+import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import classes from './index.module.scss';
 import styled from 'styled-components';
@@ -31,9 +31,9 @@ import notSavedStatus from './notSavedStatus.svg';
 import Cookies from 'cookies';
 import Tooltip from '@material-ui/core/Tooltip';
 
-import VideoImageCarousel from "@/components/blocks/video-image-carousel/video-image-carousel";
-import { makeStyles } from "@material-ui/core/styles";
-import {useMobileDevice} from "@/customHooks/useMobileDevice";
+import VideoImageCarousel from '@/components/blocks/video-image-carousel/video-image-carousel';
+import { makeStyles } from '@material-ui/core/styles';
+import { useMobileDevice } from '@/customHooks/useMobileDevice';
 
 dayjs.extend(customParseFormat);
 
@@ -168,7 +168,7 @@ function RecipePage(props) {
   };
 
   const handleRecipeCookingTime = time => {
-    const parsedTime = dayjs(time,'HH-mm');
+    const parsedTime = dayjs(time, 'HH-mm');
 
     if (!parsedTime['$H']) {
       return `${parsedTime['$m']} MIN`;
@@ -217,31 +217,29 @@ function RecipePage(props) {
   }, []);
 
   const getVideoMarkupForCarousel = () => {
-    if (!recipe?.preview_mp4_url) {
+    console.log(recipe);
+    if (!recipe?.video_url) {
       return [];
     }
 
     return (
       <div className={classes.recipe__video__watermark}>
-        {!router.query.autoplayVideo
-          ? (
-            <video width="715" controls controlsList="nodownload"
-                   className={classes.recipe__video__video}>
-              <source src={recipe.preview_mp4_url} type="video/mp4"/>
-            </video>
-          )
-          : (
-            <video
-              width="715"
-              controls
-              autoPlay="autoplay"
-              muted
-              controlsList="nodownload"
-              className={classes.recipe__video__video}>
-              <source src={recipe?.preview_mp4_url} type="video/mp4"/>
-            </video>
-          )}
-        <div className={classes.recipe__video__watermark__icon}/>
+        {!router.query.autoplayVideo ? (
+          <video width="715" controls controlsList="nodownload" className={classes.recipe__video__video}>
+            <source src={recipe.video_url} type="video/mp4" />
+          </video>
+        ) : (
+          <video
+            width="715"
+            controls
+            autoPlay="autoplay"
+            muted
+            controlsList="nodownload"
+            className={classes.recipe__video__video}>
+            <source src={recipe?.video_url} type="video/mp4" />
+          </video>
+        )}
+        <div className={classes.recipe__video__watermark__icon} />
       </div>
     );
   };
@@ -295,81 +293,85 @@ function RecipePage(props) {
               </div>
 
               <div className={classes.recipe__video}>
-                {(recipe?.images.length !== 0 || recipe?.preview_thumbnail_url) &&
+                {(recipe?.images.length !== 0 || recipe?.preview_thumbnail_url) && (
                   <VideoImageCarousel>
                     {getVideoMarkupForCarousel()}
 
                     {recipe?.images.map(item => (
-                        <img className={classes.recipe__carouselItem} key={`recipe-slider-${item?.pk}`} src={item?.url} alt="recipe photo"/>
+                      <img
+                        className={classes.recipe__carouselItem}
+                        key={`recipe-slider-${item?.pk}`}
+                        src={item?.url}
+                        alt="recipe photo"
+                      />
                     ))}
-                  </VideoImageCarousel>}
-                  <div className={classes.recipe__video__player}>
-                    <div className={classes.recipe__video__player_row}>
-                      <div className={classes.recipe__video__views}>
-                        <img src="/images/index/ionic-md-eye.svg" alt="" />
-                        <span>{recipe.views_number} Views</span>
-                      </div>
-                      <div className={classes.recipe__video__likes}>
-                        <img src="/images/index/Icon awesome-heart.svg" alt="" />
-                        <span>{Number(likesNumber)}</span>
-                      </div>
+                  </VideoImageCarousel>
+                )}
+                <div className={classes.recipe__video__player}>
+                  <div className={classes.recipe__video__player_row}>
+                    <div className={classes.recipe__video__views}>
+                      <img src="/images/index/ionic-md-eye.svg" alt="" />
+                      <span>{recipe.views_number} Views</span>
                     </div>
-                    <div className={classes.recipe__video__player_row}>
-
-                      <Tooltip
-                        classes={!isMobileOrTablet && {tooltip: toolTipStyles.tooltip, popper: toolTipStyles.popper}}
-                        title="Votes help recipe to get in production soon."
-                        disableFocusListener
-                        enterTouchDelay={200}
-                        leaveTouchDelay={2000}
-                        arrow
-                      >
-                        <button
-                          className={classes.recipe__video__likes_last}
-                          onClick={!props.account.hasToken ? openRegisterPopup('register') : onClickLike}
-                        >
-                          {!likeRecipe ? (
-                            <img src="/images/index/Icon-awesome-heart-null.svg" alt="" />
-                          ) : (
-                            <img src="/images/index/Icon awesome-heart.svg" alt="" />
-                          )}
-                          <span>Vote</span>
-                        </button>
-                      </Tooltip>
-                      <ButtonShare recipeId={recipeId} recipePhoto={recipe?.images[0]} recipeDescription={recipe?.description}/>
-
-                      {!savedId ? (
-                        <button
-                          className={classes.recipe__video__saveStatus}
-                          onClick={!props.account.hasToken ? openRegisterPopup('register') : handleSaveRecipe}>
-                          <div className={classes.recipe__video___saveStatusImageWrapper}>
-                            <img
-                              className={classes.recipe__video__saveStatusImage}
-                              src={notSavedStatus}
-                              alt="saved status"
-                            />
-                          </div>
-                          <span className={classes.recipe__video__saveStatusLabel}>Save</span>
-                        </button>
-                      ) : (
-                        <button
-                          className={classes.recipe__video__saveStatus}
-                          onClick={
-                            !props.account.hasToken ? openRegisterPopup('register') : handleDeleteRecipeFromSaved
-                          }>
-                          <div className={classes.recipe__video___saveStatusImageWrapper}>
-                            <img
-                              className={classes.recipe__video__saveStatusImage}
-                              src={savedStatus}
-                              alt="saved status"
-                            />
-                          </div>
-                          <span className={classes.recipe__video__saveStatusLabel}>Save</span>
-                        </button>
-                      )}
+                    <div className={classes.recipe__video__likes}>
+                      <img src="/images/index/Icon awesome-heart.svg" alt="" />
+                      <span>{Number(likesNumber)}</span>
                     </div>
                   </div>
+                  <div className={classes.recipe__video__player_row}>
+                    <Tooltip
+                      classes={!isMobileOrTablet && { tooltip: toolTipStyles.tooltip }}
+                      title="Votes help recipe to get in production soon."
+                      disableFocusListener
+                      enterTouchDelay={200}
+                      leaveTouchDelay={2000}>
+                      <button
+                        className={classes.recipe__video__likes_last}
+                        onClick={!props.account.hasToken ? openRegisterPopup('register') : onClickLike}>
+                        {!likeRecipe ? (
+                          <img src="/images/index/Icon-awesome-heart-null.svg" alt="" />
+                        ) : (
+                          <img src="/images/index/Icon awesome-heart.svg" alt="" />
+                        )}
+                        <span>Vote</span>
+                      </button>
+                    </Tooltip>
+                    <ButtonShare
+                      recipeId={recipeId}
+                      recipePhoto={recipe?.images[0]}
+                      recipeDescription={recipe?.description}
+                    />
+
+                    {!savedId ? (
+                      <button
+                        className={classes.recipe__video__saveStatus}
+                        onClick={!props.account.hasToken ? openRegisterPopup('register') : handleSaveRecipe}>
+                        <div className={classes.recipe__video___saveStatusImageWrapper}>
+                          <img
+                            className={classes.recipe__video__saveStatusImage}
+                            src={notSavedStatus}
+                            alt="saved status"
+                          />
+                        </div>
+                        <span className={classes.recipe__video__saveStatusLabel}>Save</span>
+                      </button>
+                    ) : (
+                      <button
+                        className={classes.recipe__video__saveStatus}
+                        onClick={!props.account.hasToken ? openRegisterPopup('register') : handleDeleteRecipeFromSaved}>
+                        <div className={classes.recipe__video___saveStatusImageWrapper}>
+                          <img
+                            className={classes.recipe__video__saveStatusImage}
+                            src={savedStatus}
+                            alt="saved status"
+                          />
+                        </div>
+                        <span className={classes.recipe__video__saveStatusLabel}>Save</span>
+                      </button>
+                    )}
+                  </div>
                 </div>
+              </div>
 
               <div className={classes.recipe__description}>
                 <h2 className={classes.recipe__title}>Description</h2>
@@ -474,7 +476,7 @@ function RecipePage(props) {
                   })}
                 </div>
               )}
-              <ResipeComments recipeId={recipeId} userId={userId}/>
+              <ResipeComments recipeId={recipeId} userId={userId} />
             </div>
             <div className={classes.recipe__cards}>
               {latestRecipes && (
