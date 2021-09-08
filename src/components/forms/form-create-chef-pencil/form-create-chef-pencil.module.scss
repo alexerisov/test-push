@@ -68,6 +68,7 @@
   line-height: 1.08;
 
   &_margin {
+    @extend .createPencilLabel;
     margin: 20px 0 40px;
   }
 

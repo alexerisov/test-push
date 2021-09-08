@@ -307,6 +307,9 @@ function FormCreateChefPencil(props) {
           </div>
         </div>
 
+        <h2 className={classes.createPencilLabel}>
+          <span style={{ color: 'red' }}>* </span>Description
+        </h2>
         <Editor data={data} handleChange={onChangeEditorField} />
         <div className={classes.fieldError} id="chef-pencil-editor">
           <FieldError errors={error} path="html_content" />
