@@ -1,0 +1,253 @@
+@import '~styles/mixins/mixins.scss';
+
+.pencil {
+  max-width: 80vw;
+  margin: 0 auto;
+  padding: 40px 0 0 0;
+
+  @media (max-width: 600px) {
+    width: auto;
+    padding: 0;
+  }
+
+  &__navbar {
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 45px;
+
+    span {
+      color: $--color-orange;
+    }
+
+    a,
+    a:active,
+    a:visited {
+      font-size: 20px;
+      font-weight: 300;
+      line-height: 45px;
+      color: $--color-gray6;
+    }
+
+    &__link:hover {
+      color: $--color-orange;
+    }
+
+    &__link:hover:visited {
+      color: $--color-orange;
+    }
+  }
+
+  &__icons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    @media (max-width: 600px) {
+      align-items: center;
+      flex-direction: row;
+      width: 100%;
+      min-height: auto;
+    }
+  }
+
+  &__linkEdit {
+    margin: 0 6px 0 0;
+    cursor: pointer;
+
+    img {
+      width: 28px;
+    }
+
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+
+  &__deleteButton {
+    cursor: pointer;
+    border: none;
+
+    &:hover {
+      opacity: 0.5;
+    }
+
+    img {
+      width: 30px;
+    }
+  }
+
+  &__title {
+    max-width: 600px;
+    margin: 0 0 10px 0;
+    @include fontMedium();
+    font-size: 30px;
+    line-height: 40px;
+    word-break: break-all;
+
+    @media (max-width: $--md) {
+      max-width: 450px;
+    }
+  }
+
+  &__content {
+    display: grid;
+    margin: 40px 0;
+    grid-template-columns: 715px 340px;
+    gap: 0 35px;
+
+    @media (max-width: 1300px) {
+      grid-template-columns: 1fr;
+    }
+
+    @media (max-width: 600px) {
+      margin: 15px 0;
+    }
+  }
+
+  &__description {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    max-width: 700px;
+    word-break: break-all;
+
+    @media (max-width: 900px) {
+      max-width: 500px;
+    }
+
+    @media (max-width: 600px) {
+      max-width: 350px;
+    }
+
+    // blockquote styles
+    & blockquote {
+      position: relative;
+      margin: 5px 0;
+      padding: 20px 30px 20px 90px;
+      font-family: 'Lato', sans-serif;
+      color: #131314;
+      border: 3px dashed rgb(223, 223, 223);
+      border-radius: 5px;
+    }
+    & blockquote:before {
+      position: absolute;
+      top: 20px;
+      left: 16px;
+      width: 40px;
+      height: 40px;
+      font-family: serif;
+      font-size: 20px;
+      font-weight: bold;
+      line-height: 50px;
+      color: #fff;
+      text-align: center;
+      border-radius: 50%;
+      background: $--color-orange;
+      content: "\201C";
+    }
+    & blockquote:after {
+      position:absolute;
+      top: 20px;
+      bottom: 20px;
+      left: 70px;
+      width: 4px;
+      background: $--color-orange;
+      content: "";
+    }
+    & blockquote p {
+      margin-top: 0;
+      font-size: 24px;
+      font-weight: 300;
+    }
+    & blockquote cite {
+      font-style: normal;
+      text-transform: uppercase;
+    }
+
+    // table styles
+    & figure {
+      margin: 0 !important;
+    }
+
+    & table {
+      width: 100%;
+      font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+      color: #fff;
+      text-align: left;
+      border-spacing: 5px;
+      border-collapse: separate;
+      border-radius: 5px;
+      background: #ECE9E0;
+    }
+
+    & th {
+      padding: 10px;
+      font-size: 18px;
+      text-align: center;
+      border-radius: 5px;
+    }
+    & td {
+      padding: 10px;
+      text-align: center;
+      border-radius: 5px;
+      background: $--color-orange;
+    }
+  }
+
+  &__mainImage {
+    display: inline-block;
+    width: auto;
+    max-height: 241px;
+    margin: 0 auto 40px;
+
+    border-radius: 5px;
+  }
+
+  &__descriptionText {
+    width: 100%;
+  }
+
+  &__cards {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 30px 0;
+
+    @media (max-width: 1300px) {
+      display: none;
+    }
+
+    &__title {
+      font-size: 20px;
+      color: $--color-black;
+      @include fontSemiBold();
+    }
+  }
+
+  &__author {
+    font-size: 18px;
+    @include fontMedium();
+  }
+
+  &__authorText:hover {
+    @extend .pencil__author;
+    color: $--color-orange;
+    cursor: pointer;
+  }
+
+  &__pencilContent {
+    display: flex;
+    flex-direction: column;
+    gap: 30px 0;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+
+    @media (max-width: 600px) {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+}
