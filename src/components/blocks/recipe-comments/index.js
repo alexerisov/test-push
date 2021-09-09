@@ -10,7 +10,7 @@ import Recipe from '@/api/Recipe';
 
 import classes from './RecipeComments.module.scss';
 
-const ResipeComments = ({ recipeId, userId }) => {
+const ResipeComments = ({ id, userId, children, updateComments, addComment, uploadLikeHandler }) => {
   const isAuthorized = useSelector(state => state.account.hasToken);
 
   const [comments, setComments] = useState();
@@ -39,14 +39,21 @@ const ResipeComments = ({ recipeId, userId }) => {
   });
 
   useEffect(() => {
-    if (recipeId) {
+    if (id) {
       getComments();
     }
-  }, [page, recipeId]);
+  }, [page, id]);
 
   const getComments = async () => {
     try {
-      const response = await Recipe.getComments({ recipeId, page });
+      let response;
+
+      if (updateComments) {
+        response = await updateComments({ recipeId: id, page });
+      } else {
+          response = await Recipe.getComments({ recipeId: id, page });
+      }
+
       setNumberOfPages(countCommentsPages(response.data.count));
       setComments(response.data);
     } catch (e) {
@@ -67,10 +74,16 @@ const ResipeComments = ({ recipeId, userId }) => {
 
     try {
       const targetComment = {
-        id: +recipeId,
+        id: +id,
         text: textarea
       };
-      const response = await Recipe.uploadComments(targetComment);
+
+      let response;
+      if (updateComments) {
+        response = await addComment(targetComment);
+      } else {
+        response = await Recipe.uploadComments(targetComment);
+      }
 
       if (response.status === 201) {
         getComments();
@@ -101,6 +114,10 @@ const ResipeComments = ({ recipeId, userId }) => {
         <span className={classes.comments__blueСircle} />
       </span>
 
+      {children && <div className={classes.comments__rating}>
+        {children}
+      </div>}
+
       <form className={classes.comments__form} onSubmit={formik.handleSubmit}>
         <textarea
           className={classes.comments__input}
@@ -126,7 +143,7 @@ const ResipeComments = ({ recipeId, userId }) => {
       <div className={classes.comments__body}>
         <h3 className={classes.comments__subtitle}>Comments ({comments && comments.count})</h3>
 
-        {comments &&
+        {comments?.results?.length !== 0 &&
           comments?.results.map((comment, index) => {
             return (
               <CommentItem
@@ -139,16 +156,19 @@ const ResipeComments = ({ recipeId, userId }) => {
                 commentId={comment?.pk}
                 createdAt={comment?.created_at}
                 deleteComment={deleteComment}
+                isDeleteHided={true}
+                uploadLikeHandler={uploadLikeHandler}
               />
             );
           })
         }
 
+        {comments?.results?.length !== 0 &&
         <Pagination
           classes={{ root: classes.comments__pagination }}
           count={numberOfPages}
           onChange={(event, page) => setPage(page)}
-        />
+        />}
       </div>
     </div>
   );
