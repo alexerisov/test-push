@@ -166,7 +166,8 @@ export const APPROVED_STATUS = {
 export const pageNames = {
   '/': 'Home',
   '/my-uploads': 'My recipe',
-  '/saved-recipes': 'Saved recipes'
+  '/saved-recipes': 'Saved recipes',
+  '/chef-pencil': "Chef's pencil"
 };
 
 export const absolutePaths = {
