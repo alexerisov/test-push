@@ -2,10 +2,10 @@ import React from 'react';
 import classes from './index.module.scss';
 import Link from 'next/link';
 
-const RecipeNotFound = () => {
+const RecipeNotFound = ({ text }) => {
   return (
     <div className={classes.notFound}>
-      <h1 className={classes.notFound__title}>Recipe not found</h1>
+      <h1 className={classes.notFound__title}>{text ?? 'Recipe not found'}</h1>
       <Link href="/">
         <a>Home</a>
       </Link>
