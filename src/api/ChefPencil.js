@@ -69,6 +69,16 @@ export default {
     return http.get(`/chef_pencil/${id}`);
   },
 
+  getUploadPencils: (pageSize, page) => {
+    return http.get(`/chef-pencil/my`,
+      {
+        params: {
+          'page': `${page}`,
+          'page_size': `${pageSize}`,
+        }
+      });
+  },
+
   getLatestPencils: () => {
     return http.get(`/chef_pencil/latest_chef_pencils`);
   },

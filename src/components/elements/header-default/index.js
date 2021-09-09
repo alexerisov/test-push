@@ -131,13 +131,13 @@ const HeaderDefault = props => {
                   </Link>
                 </li>
 
-                {/*<li className={classes.mobileMenu__item} onClick={handleExpandingMobileMenu}>
-                  <Link href="/">
+                <li className={classes.mobileMenu__item} onClick={handleExpandingMobileMenu}>
+                  <Link href="/my-pencils">
                     <a>
                       My Pencils
                     </a>
                   </Link>
-                </li>*/}
+                </li>
               </>
             )}
 
@@ -213,15 +213,15 @@ const HeaderDefault = props => {
                 </MenuItem>
               )}
 
-              {/*{props?.account?.profile?.user_type === USER_TYPE.chefType &&
+              {props?.account?.profile?.user_type === USER_TYPE.chefType &&
                 <MenuItem onClick={handleClose} classes={{root: separatorStyles.root}}>
-                  <Link href="/">
+                  <Link href="/my-pencils">
                     <a className={classes.header__link_place_menu}>
                       My Pencils
                     </a>
                   </Link>
                 </MenuItem>
-              }*/}
+              }
               <MenuItem onClick={handleClose} classes={{ root: separatorStyles.root }}>
                 <Link href="/saved-recipes">
                   <a className={classes.header__link_place_menu}>Saved Recipes</a>
