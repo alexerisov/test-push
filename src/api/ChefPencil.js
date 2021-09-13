@@ -1,7 +1,7 @@
 import http from '../utils/http';
 
 export default {
-  upload: ({ title, html_content, attachments, image }) => {
+  upload: ({ title, html_content, image }) => {
     const formData = new FormData();
 
     if (image) {
@@ -58,8 +58,12 @@ export default {
     });
   },
 
-  getChefPencils: query => {
-    return http.get(`/chef_pencil/?${query}`);
+  getChefPencils: (query = '') => {
+    return http.get(`/chef_pencil?${query}`);
+  },
+
+  getPencilSearchSuggestions: (query) => {
+    return http.get(`/chef_pencil/search_suggestions?${query}`);
   },
 
   getTargetChefPencil: (id, token) => {
@@ -93,6 +97,10 @@ export default {
         page_size: 4
       }
     });
+  },
+
+  deleteComment: (id) => {
+    return http.delete(`chef_pencil/comment/${id}/delete`);
   },
 
   update: ({ title, html_content, attachments }, id) => {
