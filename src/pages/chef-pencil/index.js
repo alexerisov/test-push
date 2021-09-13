@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useFetch } from '@/customHooks/useFetch';
 import { useRouter } from 'next/router';
+import { useActions } from '@/customHooks/useActions';
 
 import Link from 'next/link';
 import { LayoutPage } from '@/components/layouts';
@@ -11,22 +12,33 @@ import { MainCardChefPencil } from '@/components/elements/card';
 import ChefPencil from '@/api/ChefPencil';
 
 import classes from './index.module.scss';
+import SearchIcon from '@material-ui/icons/Search';
+import { modalActions } from '@/store/actions';
 
 const ChefPencilsPage = () => {
-  const router = useRouter();
   const matches = useMediaQuery('(max-width: 768px)');
-  const {
-    data: pencils,
-    fetchDataNow
-  } = useFetch({
-    request: ChefPencil.getChefPencils,
-    initialValue: []
-  });
+  const router = useRouter();
+  const [query, setQuery] = useState();
 
-  // Pagination params
-  const itemsPerPage = matches ? 7 : 7;
+  const createQueryParams = queryObject => {
+    return new URLSearchParams(queryObject).toString();
+  };
+
+  const { open } = useActions(modalActions);
+
+  // Pagination
+  const itemsPerPage = matches ? 3 : 3;
   const [page, setPage] = useState(1);
   const [numberOfPages, setNumberOfPages] = useState();
+
+  const { data: pencils, fetchDataNow } = useFetch({
+    request: ChefPencil.getChefPencils,
+    initialValue: [],
+    query: createQueryParams({
+      page,
+      page_size: itemsPerPage
+    })
+  });
 
   const countPages = count => {
     const isRemainExists = count % itemsPerPage > 0;
@@ -34,35 +46,61 @@ const ChefPencilsPage = () => {
     return isRemainExists ? ++pages : pages;
   };
 
-  // Pagination
+  const handlePageChange = (event, value) => {
+    const query = new URLSearchParams({
+      search: router?.query?.search ?? '',
+      page: value,
+      page_size: itemsPerPage
+    });
+
+    setPage(value);
+    router.replace(`chef-pencil?${query}`, null, {
+      scroll: false
+    });
+  };
+
   useEffect(() => {
     const numberOfPages = countPages(pencils?.count);
     setNumberOfPages(numberOfPages);
   }, [pencils]);
 
   useEffect(() => {
-    const query = new URLSearchParams({
-      page,
-      page_size: itemsPerPage
-    });
+    if (Object.entries(router.query).length !== 0) {
+      setQuery(router.query);
+    }
 
-    router.replace(`chef-pencil/?${query.toString()}`);
-    fetchDataNow(query.toString());
-  }, [page]);
+    setPage(router.query.page ? Number(router.query.page) : 1);
+  }, [router]);
+
+  useEffect(() => {
+    if (query) {
+      fetchDataNow(createQueryParams(query));
+    }
+  }, [query]);
+
+  const handleClickSearch = name => {
+    return () => {
+      open(name).then(result => {
+        // result when modal return promise and close
+      });
+    };
+  };
 
   const content = (
     <div className={classes.pencils}>
       <h2 className={classes.pencils__navbar}>
-        <Link href="/">
-          <a className={classes.pencils__navbar__link}>Home /</a>
-        </Link>
-        <span>{" Chef's pencils"}</span>
+        <div className={classes.pencils__breadcrumbs}>
+          <Link href="/">
+            <a className={classes.pencils__navbar__link}>Home /</a>
+          </Link>
+          <span>{" Chef's pencils"}</span>
+        </div>
+
+        <SearchIcon className={classes.pencils__searchIcon} onClick={handleClickSearch('SearchModal')} />
       </h2>
 
       <div className={classes.pencils__header}>
         <h2 className={classes.pencils__title}>{"Chef's Pencil"}</h2>
-
-        {/*Здесь будет поиск*/}
       </div>
 
       <div className={classes.pencils__items}>
@@ -79,7 +117,7 @@ const ChefPencilsPage = () => {
             />
           ))
         ) : (
-          <span>{"No chef's pencils yet!"}</span>
+          <span>{"No chef's pencils found!"}</span>
         )}
       </div>
 
@@ -88,8 +126,8 @@ const ChefPencilsPage = () => {
           classes={{ root: classes.pencils__pagination }}
           count={numberOfPages}
           size={matches ? 'small' : 'large'}
-          onChange={(event, number) => setPage(number)}
-          defaultPage={1}
+          onChange={handlePageChange}
+          page={page}
           siblingCount={matches ? 0 : 1}
         />
       )}
