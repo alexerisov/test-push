@@ -19,6 +19,7 @@ import Cookies from 'cookies';
 import ChefPencil from '@/api/ChefPencil.js';
 
 import classes from './id.module.scss';
+import SearchIcon from "@material-ui/icons/Search";
 
 function RecipePage({ pencilData, notFound, absolutePath }) {
   const account = useSelector(state => state.account);
@@ -131,6 +132,11 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
           setBreadcrumbsLink(page);
           return;
         }
+        if (page.includes('chef-pencil')) {
+          setBreadcrumbsName("Chef's Pencil");
+          setBreadcrumbsLink(page);
+          return;
+        }
         if (!pageNames[page]) {
           setBreadcrumbsName('Home');
           setBreadcrumbsLink('/');
@@ -142,18 +148,30 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
     }
   }, []);
 
+  const handleClickSearch = name => {
+    return () => {
+      open(name).then(result => {
+        // result when modal return promise and close
+      });
+    };
+  };
+
   const content = (
     <div className={classes.pencil}>
       <h2 className={classes.pencil__navbar}>
-        <Link href="/">
-          <a className={classes.pencil__navbar__link}>Home /</a>
-        </Link>
-        {breadcrumbsLink !== '/' && (
-          <Link href={breadcrumbsLink}>
-            <a className={classes.pencil__navbar__link}> {breadcrumbsName} /</a>
+        <div className={classes.pencils__breadcrumbs}>
+          <Link href="/">
+            <a className={classes.pencil__navbar__link}>Home /</a>
           </Link>
-        )}
-        <span> {pencil?.title}</span>
+          {breadcrumbsLink !== '/' && (
+            <Link href={breadcrumbsLink}>
+              <a className={classes.pencil__navbar__link}> {breadcrumbsName} /</a>
+            </Link>
+          )}
+          <span> {pencil?.title}</span>
+        </div>
+
+        <SearchIcon className={classes.pencils__searchIcon} onClick={handleClickSearch('SearchModal')} />
       </h2>
       <div className={classes.pencil__content}>
         <div className={classes.pencil__pencilContent}>
@@ -195,7 +213,9 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
             userId={userId}
             updateComments={getComments}
             addComment={uploadComment}
-            uploadLikeHandler={uploadLike}>
+            uploadLikeHandler={uploadLike}
+            deleteCommentHandle={ChefPencil.deleteComment}
+          >
             <RatingComponent rating={rating ?? pencil?.avg_rating} handleRating={handleRating} />
           </ResipeComments>
         </div>

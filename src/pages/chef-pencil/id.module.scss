@@ -11,6 +11,9 @@
   }
 
   &__navbar {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1090px;
     font-size: 20px;
     font-weight: 300;
     line-height: 45px;
