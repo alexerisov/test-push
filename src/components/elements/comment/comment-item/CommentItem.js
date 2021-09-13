@@ -10,7 +10,17 @@ import defaultAvatar from '../../../../../public/images/index/icon_user.svg';
 import Recipe from '@/api/Recipe';
 import { debounce } from '@/utils/debounce';
 
-const CommentItem = ({ likesNumber, dislikesNumber, text, commentId, createdAt, deleteComment, user, userId, isDeleteHided, uploadLikeHandler}) => {
+const CommentItem = ({
+  likesNumber,
+  dislikesNumber,
+  text,
+  commentId,
+  createdAt,
+  deleteComment,
+  user,
+  userId,
+  uploadLikeHandler
+}) => {
   const activeUserId = useSelector(state => state?.account?.profile?.pk);
   const status = {
     created: 'created',
@@ -137,7 +147,7 @@ const CommentItem = ({ likesNumber, dislikesNumber, text, commentId, createdAt, 
         </div>
       </div>
 
-      {isCreatedTwoHoursAgo() && isCommentCreatedByActiveUser() && !isDeleteHided && (
+      {isCreatedTwoHoursAgo() && isCommentCreatedByActiveUser() && (
         <AddOutlinedIcon
           className={classes.comment__delete}
           fontSize={'small'}

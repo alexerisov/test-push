@@ -10,7 +10,15 @@ import Recipe from '@/api/Recipe';
 
 import classes from './RecipeComments.module.scss';
 
-const ResipeComments = ({ id, userId, children, updateComments, addComment, uploadLikeHandler }) => {
+const ResipeComments = ({
+  id,
+  userId,
+  children,
+  updateComments,
+  addComment,
+  uploadLikeHandler,
+  deleteCommentHandle
+}) => {
   const isAuthorized = useSelector(state => state.account.hasToken);
 
   const [comments, setComments] = useState();
@@ -51,7 +59,7 @@ const ResipeComments = ({ id, userId, children, updateComments, addComment, uplo
       if (updateComments) {
         response = await updateComments({ recipeId: id, page });
       } else {
-          response = await Recipe.getComments({ recipeId: id, page });
+        response = await Recipe.getComments({ recipeId: id, page });
       }
 
       setNumberOfPages(countCommentsPages(response.data.count));
@@ -62,7 +70,7 @@ const ResipeComments = ({ id, userId, children, updateComments, addComment, uplo
   };
 
   const countCommentsPages = count => {
-    const isRemainExists = (count % itemsPerPage) > 0;
+    const isRemainExists = count % itemsPerPage > 0;
     let pages = Math.floor(count / itemsPerPage);
     return isRemainExists ? ++pages : pages;
   };
@@ -96,7 +104,13 @@ const ResipeComments = ({ id, userId, children, updateComments, addComment, uplo
 
   const deleteComment = async commentId => {
     try {
-      const response = await Recipe.deleteComment(commentId);
+      let response;
+
+      if (deleteCommentHandle) {
+        response = await deleteCommentHandle(commentId);
+      } else {
+        response = await Recipe.deleteComment(commentId);
+      }
 
       if (response.status === 204) {
         getComments();
@@ -114,9 +128,7 @@ const ResipeComments = ({ id, userId, children, updateComments, addComment, uplo
         <span className={classes.comments__blueСircle} />
       </span>
 
-      {children && <div className={classes.comments__rating}>
-        {children}
-      </div>}
+      {children && <div className={classes.comments__rating}>{children}</div>}
 
       <form className={classes.comments__form} onSubmit={formik.handleSubmit}>
         <textarea
@@ -156,19 +168,18 @@ const ResipeComments = ({ id, userId, children, updateComments, addComment, uplo
                 commentId={comment?.pk}
                 createdAt={comment?.created_at}
                 deleteComment={deleteComment}
-                isDeleteHided={true}
                 uploadLikeHandler={uploadLikeHandler}
               />
             );
-          })
-        }
+          })}
 
-        {comments?.results?.length !== 0 &&
-        <Pagination
-          classes={{ root: classes.comments__pagination }}
-          count={numberOfPages}
-          onChange={(event, page) => setPage(page)}
-        />}
+        {comments?.results?.length !== 0 && (
+          <Pagination
+            classes={{ root: classes.comments__pagination }}
+            count={numberOfPages}
+            onChange={(event, page) => setPage(page)}
+          />
+        )}
       </div>
     </div>
   );
