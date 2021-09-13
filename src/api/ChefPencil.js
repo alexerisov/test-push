@@ -46,16 +46,20 @@ export default {
 
   uploadCommentsLikes: ({ id, type }) => {
     if (type === 'dislike') {
-      return http.post(`chef_pencil/comment/${id}/like`, {dislike: 'Y'});
+      return http.post(`chef_pencil/comment/${id}/like`, { dislike: 'Y' });
     }
 
     return http.post(`chef_pencil/comment/${id}/like`, {});
   },
 
-  uploadRating: ({value, id}) => {
+  uploadRating: ({ value, id }) => {
     return http.post(`/chef_pencil/${id}/rate`, {
       rating: value
     });
+  },
+
+  getChefPencils: query => {
+    return http.get(`/chef_pencil/?${query}`);
   },
 
   getTargetChefPencil: (id, token) => {
@@ -70,13 +74,12 @@ export default {
   },
 
   getUploadPencils: (pageSize, page) => {
-    return http.get(`/chef-pencil/my`,
-      {
-        params: {
-          'page': `${page}`,
-          'page_size': `${pageSize}`,
-        }
-      });
+    return http.get(`/chef-pencil/my`, {
+      params: {
+        page: `${page}`,
+        page_size: `${pageSize}`
+      }
+    });
   },
 
   getLatestPencils: () => {
