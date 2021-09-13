@@ -11,7 +11,6 @@ const Editor = ({ data, handleChange }) => {
     'link',
     '|',
     'blockQuote',
-    'insertTable',
     'undo',
     'redo'
   ];
