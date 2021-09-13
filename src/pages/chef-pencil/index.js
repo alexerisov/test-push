@@ -24,7 +24,7 @@ const ChefPencilsPage = () => {
   });
 
   // Pagination params
-  const itemsPerPage = matches ? 6 : 12;
+  const itemsPerPage = matches ? 7 : 7;
   const [page, setPage] = useState(1);
   const [numberOfPages, setNumberOfPages] = useState();
 
