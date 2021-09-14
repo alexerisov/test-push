@@ -19,6 +19,15 @@
     border: none;
   }
 
+  @media (max-width: $--md)  {
+    max-width: 285px;
+    border: none;
+    margin-bottom: 0;
+    overflow: hidden;
+    border-radius: 5px;
+    box-shadow: 0 0 20px #00000014 !important;
+  }
+
   &__content {
     display: flex;
     align-self: flex-start;
@@ -29,6 +38,10 @@
     @include fontMedium();
     color: rgba(0, 0, 0, 0.87);
     gap: 8px;
+
+    @media (max-width: $--md)  {
+      margin: 16px 0 0 11px;
+    }
   }
 
   &__media {
@@ -36,6 +49,10 @@
     min-height: 240px;
     border-radius: 5px;
     background-color: $--color-gray8;
+
+    @media (max-width: $--md)  {
+      max-width: 285px;
+    }
   }
 
   &__name {
@@ -58,6 +75,10 @@
     color: $--color-gray7;
     @include fontSemiBold();
     gap: 14px;
+
+    @media (max-width: $--md)  {
+      position: unset;
+    }
   }
 }
 

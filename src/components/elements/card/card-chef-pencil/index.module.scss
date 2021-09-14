@@ -11,6 +11,10 @@
   animation-iteration-count: 1;
   opacity: 1;
 
+  @media (max-width: $--sm) {
+    width: 285px;
+  }
+
   &__content {
     display: flex;
     flex-direction: column;

@@ -15,7 +15,12 @@ import Avatar from '@material-ui/core/Avatar';
 const StyledCardActionArea = styled(CardActionArea)({
   display: 'flex',
   justifyContent: 'flex-start',
-  borderRadius: '5px'
+  borderRadius: '5px',
+  "@media (max-width: 992px)": {
+    flexDirection: 'column',
+    maxWidth: '285px',
+    paddingBottom: '30px'
+}
 });
 
 const StyledCardContent = styled(CardContent)({
