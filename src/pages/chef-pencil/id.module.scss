@@ -9,6 +9,10 @@
     padding: 0;
   }
 
+  &__searchIcon {
+    cursor: pointer;
+  }
+
   &__navbar {
     display: flex;
     justify-content: space-between;
@@ -39,6 +43,8 @@
       color: $--color-orange;
     }
   }
+
+
 
   &__icons {
     display: flex;

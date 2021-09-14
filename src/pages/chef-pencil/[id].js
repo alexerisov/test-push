@@ -170,7 +170,7 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
           <span> {pencil?.title}</span>
         </div>
 
-        <SearchIcon className={classes.pencils__searchIcon} onClick={handleClickSearch('SearchModal')} />
+        <SearchIcon className={classes.pencil__searchIcon} onClick={handleClickSearch('SearchModal')} />
       </h2>
       <div className={classes.pencil__content}>
         <div className={classes.pencil__pencilContent}>
