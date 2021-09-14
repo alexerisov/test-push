@@ -7,7 +7,8 @@ const initState = {
     html_content: '',
     attachments: null,
     images: [],
-    main_image: null
+    main_image: null,
+    images_to_delete: []
   },
   isLoading: false,
   error: null
