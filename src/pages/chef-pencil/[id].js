@@ -17,15 +17,18 @@ import Account from '@/api/Account.js';
 import { modalActions } from '@/store/actions';
 import Cookies from 'cookies';
 import ChefPencil from '@/api/ChefPencil.js';
+import { recipePhotoSlider } from '@/store/actions';
 
 import classes from './id.module.scss';
 import SearchIcon from '@material-ui/icons/Search';
+import VideoImageCarousel from "@/components/blocks/video-image-carousel/video-image-carousel";
 
 function RecipePage({ pencilData, notFound, absolutePath }) {
   const account = useSelector(state => state.account);
 
   // Bind Modal action creators with dispatch
   const { open, close } = useActions(modalActions);
+  const { setItems: setImageCarouselItems } = useActions(recipePhotoSlider);
 
   const [isMobileOrTablet] = useMobileDevice();
   const router = useRouter();
@@ -46,6 +49,7 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
 
   useEffect(() => {
     setPencil(pencilData);
+    setImageCarouselItems(pencilData);
   }, [pencilId]);
 
   useEffect(() => {
@@ -200,7 +204,21 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
           </div>
 
           <div className={classes.pencil__description}>
-            {pencil?.image && <img src={pencil?.image} className={classes.pencil__mainImage} alt="pencil image" />}
+            {!pencil?.images?.length
+              ?
+              ''
+              :
+              <VideoImageCarousel>
+                {pencil?.images?.map(item => (
+                  <img
+                    className={classes.recipe__carouselItem}
+                    key={`recipe-slider-${item?.pk}`}
+                    src={item?.url}
+                    alt="recipe photo"
+                  />
+                ))}
+              </VideoImageCarousel>
+            }
 
             <p dangerouslySetInnerHTML={{ __html: pencil?.html_content }} className={classes.pencil__descriptionText} />
           </div>

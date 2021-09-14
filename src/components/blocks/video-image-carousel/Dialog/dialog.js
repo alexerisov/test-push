@@ -192,7 +192,7 @@ const DialogCarousel = ({ setOpen, open }) => {
         }}>
         {getVideoMarkupForCarousel()}
 
-        {recipe?.images.map(item => (
+        {recipe?.images?.map(item => (
           <img className={classes.recipe__carouselItem} key={`image-dialog-${item?.pk}`} src={item?.url} alt="recipe photo"/>
         ))}
       </StyledCarousel>
