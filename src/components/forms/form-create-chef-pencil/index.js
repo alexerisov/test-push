@@ -39,7 +39,7 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
   const dispatch = useDispatch();
   const { data, error } = useSelector(state => state.chefPencilUpload);
   const classMarerialUi = useStyles();
-  const { open } = useActions(modalActions);
+  const { open, close } = useActions(modalActions);
   const {update, uploadChefPencil, updateError, updateChefPencil} = useActions(chefPencilUploadActions);
 
   // For uploading images
@@ -140,7 +140,10 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
       updateChefPencil(data, id)
         .then(data => {
           setStatusSubmit('Submit');
-          return dispatch(modalActions.open('uploadSuccessful'));
+          return open('editSuccessful', {
+            handleClick: (e) => handleClickForModal(e, id),
+            handleCancel: handleCloseForModal
+          });
         })
         .catch(err => {
           handleErrorScroll(err.response.data);
@@ -154,10 +157,10 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
     uploadChefPencil(data)
       .then(data => {
         setStatusSubmit('Submit');
-        return dispatch(modalActions.open('uploadSuccessful', {
-          handleClick: handleClickForModal,
+        return open('uploadSuccessful', {
+          handleClick: (e) => handleClickForModal(e, data?.pk),
           handleCancel: handleCloseForModal
-        }));
+        });
       })
       .catch(err => {
         handleErrorScroll(err.response.data);
@@ -166,15 +169,28 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
       });
   }
 
-  const handleClickForModal = (e) => {
+  const handleClickForModal = (e, id) => {
     e.preventDefault();
-    router.push(`/`);
-    dispatch(modalActions.close());
+
+    if (isEditing) {
+      router.push(`/chef-pencil/${id}`);
+      close();
+      return;
+    }
+
+    router.push(`/chef-pencil/${id}`);
+    close();
   };
 
   const handleCloseForModal = () => {
+    if (isEditing) {
+      router.push(`/chef-pencil/${id}`);
+      close();
+      return;
+    }
+
     router.push(`/`);
-    dispatch(modalActions.close());
+    close();
   };
 
   // Scroll to errors
