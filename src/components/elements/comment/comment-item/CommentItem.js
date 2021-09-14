@@ -9,6 +9,7 @@ import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 import defaultAvatar from '../../../../../public/images/index/icon_user.svg';
 import Recipe from '@/api/Recipe';
 import { debounce } from '@/utils/debounce';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const CommentItem = ({
   likesNumber,
@@ -21,6 +22,7 @@ const CommentItem = ({
   userId,
   uploadLikeHandler
 }) => {
+  const mobile = useMediaQuery('(max-width: 568px)');
   const activeUserId = useSelector(state => state?.account?.profile?.pk);
   const status = {
     created: 'created',
@@ -119,10 +121,13 @@ const CommentItem = ({
 
   return (
     <div className={classes.comment}>
-      <img className={classes.comment__avatar} src={user?.avatar ?? defaultAvatar} alt="avatar" />
+      {!mobile && <img className={classes.comment__avatar} src={user?.avatar ?? defaultAvatar} alt="avatar" />}
 
       <div className={classes.comment__body}>
-        <p className={classes.comment__username}>{user?.full_name ?? 'No name'}</p>
+        <p className={classes.comment__username}>
+          {mobile && <img className={classes.comment__avatar} src={user?.avatar ?? defaultAvatar} alt="avatar" />}
+          {user?.full_name ?? 'No name'}
+        </p>
 
         <p className={classes.comment__text}>{text}</p>
 
