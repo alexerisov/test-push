@@ -50,7 +50,6 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
 
   useEffect(() => {
     ChefPencil.getLatestPencils().then(res => {
-      console.log(res);
       setLatestPencils(res.data);
     });
   }, []);
@@ -82,7 +81,7 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
           router.push('/my-pencils');
         })
         .catch(err => {
-          console.log(err);
+          console.error(err);
         });
     }
   };
