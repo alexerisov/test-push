@@ -19,7 +19,7 @@
     border: none;
   }
 
-  @media (max-width: $--md)  {
+  @media (max-width: $--md) {
     max-width: 285px;
     border: none;
     margin-bottom: 0;
@@ -39,7 +39,7 @@
     color: rgba(0, 0, 0, 0.87);
     gap: 8px;
 
-    @media (max-width: $--md)  {
+    @media (max-width: $--md) {
       margin: 16px 0 0 11px;
     }
   }
@@ -50,7 +50,7 @@
     border-radius: 5px;
     background-color: $--color-gray8;
 
-    @media (max-width: $--md)  {
+    @media (max-width: $--md) {
       max-width: 285px;
     }
   }
@@ -76,7 +76,7 @@
     @include fontSemiBold();
     gap: 14px;
 
-    @media (max-width: $--md)  {
+    @media (max-width: $--md) {
       position: unset;
     }
   }

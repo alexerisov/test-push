@@ -44,8 +44,6 @@
     }
   }
 
-
-
   &__icons {
     display: flex;
     flex-direction: column;
@@ -153,16 +151,16 @@
       text-align: center;
       border-radius: 50%;
       background: $--color-orange;
-      content: "\201C";
+      content: '\201C';
     }
     & blockquote:after {
-      position:absolute;
+      position: absolute;
       top: 20px;
       bottom: 20px;
       left: 70px;
       width: 4px;
       background: $--color-orange;
-      content: "";
+      content: '';
     }
     & blockquote p {
       margin-top: 0;
@@ -181,13 +179,13 @@
 
     & table {
       width: 100%;
-      font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+      font-family: 'Lucida Sans Unicode', 'Lucida Grande', Sans-Serif;
       color: #fff;
       text-align: left;
       border-spacing: 5px;
       border-collapse: separate;
       border-radius: 5px;
-      background: #ECE9E0;
+      background: #ece9e0;
     }
 
     & th {

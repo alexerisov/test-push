@@ -19,7 +19,7 @@ import Cookies from 'cookies';
 import ChefPencil from '@/api/ChefPencil.js';
 
 import classes from './id.module.scss';
-import SearchIcon from "@material-ui/icons/Search";
+import SearchIcon from '@material-ui/icons/Search';
 
 function RecipePage({ pencilData, notFound, absolutePath }) {
   const account = useSelector(state => state.account);
@@ -212,8 +212,7 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
             updateComments={getComments}
             addComment={uploadComment}
             uploadLikeHandler={uploadLike}
-            deleteCommentHandle={ChefPencil.deleteComment}
-          >
+            deleteCommentHandle={ChefPencil.deleteComment}>
             {/*<RatingComponent rating={rating ?? pencil?.avg_rating} handleRating={handleRating} />*/}
           </ResipeComments>
         </div>
