@@ -1,38 +1,8 @@
 import http from '../utils/http';
 
 export default {
-  upload: ({
-    title,
-    cooking_time,
-    cuisines,
-    cooking_skills,
-    cooking_methods,
-    diet_restrictions,
-    description,
-    preview_thumbnail_url,
-    preview_full_thumbnail_url,
-    preview_mp4_url,
-    preview_webm_url,
-    types,
-    // tags,
-    language,
-    caption,
-    ingredients,
-    calories,
-    proteins,
-    carbohydrates,
-    fats,
-    steps,
-    publish_status,
-    main_image},
-    images) => {
-    const formData = new FormData();
-    if (images.length !== 0) {
-      images.forEach((image, index) => {
-        formData.append(`images[${index}]`, image);
-      });
-    }
-    formData.append('data', JSON.stringify({
+  upload: (
+    {
       title,
       cooking_time,
       cuisines,
@@ -40,10 +10,7 @@ export default {
       cooking_methods,
       diet_restrictions,
       description,
-      preview_thumbnail_url,
-      preview_full_thumbnail_url,
-      preview_mp4_url,
-      preview_webm_url,
+      video,
       types,
       // tags,
       language,
@@ -56,53 +23,90 @@ export default {
       steps,
       publish_status,
       main_image
-    }));
-    return http.post(
-      `recipe/`,
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      },
+    },
+    images
+  ) => {
+    const formData = new FormData();
+    if (images.length !== 0) {
+      images.forEach((image, index) => {
+        formData.append(`images[${index}]`, image);
+      });
+    }
+    formData.append(
+      'data',
+      JSON.stringify({
+        title,
+        cooking_time,
+        cuisines,
+        cooking_skills,
+        cooking_methods,
+        diet_restrictions,
+        description,
+        video,
+        types,
+        // tags,
+        language,
+        caption,
+        ingredients,
+        calories,
+        proteins,
+        carbohydrates,
+        fats,
+        steps,
+        publish_status,
+        main_image
+      })
     );
+    return http.post(`recipe/`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
   },
 
-  uploadComments: ({
-    id,
-    text
-  }) => {
+  uploadVideoRecipe: (video, setProgressVideo) => {
+    const formData = new FormData();
+    formData.append(`video`, video);
+    return http.post(`/recipe/upload_video`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
+      onUploadProgress: data => {
+        setProgressVideo(Math.round((100 * data.loaded) / data.total));
+      }
+    });
+  },
+
+  getRecipeVideoByID: id => {
+    return http.get(`/recipe/video/${id}`);
+  },
+
+  uploadComments: ({ id, text }) => {
     return http.post(`recipe/${id}/comments`, {
       text
     });
   },
 
-  uploadCommentsLikes: ({
-    id,
-    type
-  }) => {
+  uploadCommentsLikes: ({ id, type }) => {
     if (type === 'dislike') {
-      return http.post(
-        `recipe/comment/${id}/like`,
-        {},
-        {params: {'dislike': 'Y'}});
+      return http.post(`recipe/comment/${id}/like`, {}, { params: { dislike: 'Y' } });
     }
 
     return http.post(`recipe/comment/${id}/like`, {});
   },
 
-  uploadLikesRecipe: (id) => {
+  uploadLikesRecipe: id => {
     return http.post(`/recipe/${id}/like`);
   },
 
-  uploadShareStatsForRecipe: (recipeId) => {
+  uploadShareStatsForRecipe: recipeId => {
     return http.post(`/stats/increment`, {
-      "key": "SHARES_COUNTER",
-      "content_type": "recipe",
-      "object_id": recipeId
+      key: 'SHARES_COUNTER',
+      content_type: 'recipe',
+      object_id: recipeId
     });
   },
-  
+
   getPinnedMeals: () => {
     return http.get(`/recipe/pinned_meals`);
   },
@@ -120,9 +124,9 @@ export default {
     title = null,
     types = null,
     ordering = null,
-    only_eatchefs_recipes = null,
+    only_eatchefs_recipes = null
   }) => {
-    const eatchefRecipesParams =  !only_eatchefs_recipes ? {} : {only_eatchefs_recipes: 'Y'};
+    const eatchefRecipesParams = !only_eatchefs_recipes ? {} : { only_eatchefs_recipes: 'Y' };
 
     return http.get(`/recipe`, {
       params: {
@@ -134,7 +138,7 @@ export default {
         types,
         ordering,
         ...eatchefRecipesParams
-      },
+      }
     });
   },
 
@@ -142,7 +146,7 @@ export default {
     return http.get(`/recipe/top_rated_meals`);
   },
 
-  getFavoriteCuisines: (id) => {
+  getFavoriteCuisines: id => {
     return http.get(`/recipe/favorite_cuisines?cuisine=${id}`);
   },
 
@@ -151,11 +155,11 @@ export default {
     return http.get(`/recipe/homepage_banners`);
   },
 
-  getMealOfWeek: (token) => {
-    if (token && token !== "{\"token\":null,\"refresh\":null}") {
+  getMealOfWeek: token => {
+    if (token && token !== '{"token":null,"refresh":null}') {
       return http.get(`/recipe/meal_of_the_week`, {
         headers: {
-          'Authorization': `Bearer ${JSON.parse(token).token}`
+          Authorization: `Bearer ${JSON.parse(token).token}`
         }
       });
     }
@@ -163,10 +167,10 @@ export default {
   },
 
   getRecipe: (id, token) => {
-    if (token && token !== "{\"token\":null,\"refresh\":null}") {
+    if (token && token !== '{"token":null,"refresh":null}') {
       return http.get(`/recipe/${id}`, {
         headers: {
-          'Authorization': `Bearer ${JSON.parse(token).token}`
+          Authorization: `Bearer ${JSON.parse(token).token}`
         }
       });
     }
@@ -174,76 +178,39 @@ export default {
   },
 
   getUploadRecipes: (pageSize, page) => {
-    return http.get(`/recipe/my`,
-      {
-        params: {
-          'page': `${page}`,
-          'page_size': `${pageSize}`,
-        }
-      });
+    return http.get(`/recipe/my`, {
+      params: {
+        page: `${page}`,
+        page_size: `${pageSize}`
+      }
+    });
   },
 
-  getUploadRecipesForTargetUser: ({query, id}) => {
-    return http.get(`/recipe/user/${id}`,
-      {
-        params: query
-      });
+  getUploadRecipesForTargetUser: ({ query, id }) => {
+    return http.get(`/recipe/user/${id}`, {
+      params: query
+    });
   },
 
-  getComments: ({recipeId, page}) => {
-    return http.get(
-      `/recipe/${recipeId}/comments`,
-      { params:
-          {
-            'page': `${page}`,
-            'page_size': 4,
-          }
-      });
+  getComments: ({ recipeId, page }) => {
+    return http.get(`/recipe/${recipeId}/comments`, {
+      params: {
+        page: `${page}`,
+        page_size: 4
+      }
+    });
   },
 
-  deleteComment: (id) => {
+  deleteComment: id => {
     return http.delete(`recipe/comment/${id}/delete`);
   },
 
-  deleteRecipe: (id) => {
+  deleteRecipe: id => {
     return http.delete(`/recipe/${id}`);
   },
 
-  
-  update: ({
-    title,
-    cooking_time,
-    cuisines,
-    cooking_skills,
-    cooking_methods,
-    diet_restrictions,
-    description,
-    preview_thumbnail_url,
-    preview_full_thumbnail_url,
-    preview_mp4_url,
-    preview_webm_url,
-    types,
-    // tags,
-    language,
-    caption,
-    ingredients,
-    calories,
-    proteins,
-    carbohydrates,
-    fats,
-    steps,
-    publish_status,
-    images_to_delete,
-    main_image},
-    images, id) => {
-    const formData = new FormData();
-    if (images.length !== 0) {
-      images.forEach((image, index) => {
-        formData.append(`images[${index}]`, image);
-      });
-    }
-
-    formData.append('data', JSON.stringify({
+  update: (
+    {
       title,
       cooking_time,
       cuisines,
@@ -251,10 +218,7 @@ export default {
       cooking_methods,
       diet_restrictions,
       description,
-      preview_thumbnail_url,
-      preview_full_thumbnail_url,
-      preview_mp4_url,
-      preview_webm_url,
+      video,
       types,
       // tags,
       language,
@@ -268,17 +232,49 @@ export default {
       publish_status,
       images_to_delete,
       main_image
-    }));
+    },
+    images,
+    id
+  ) => {
+    const formData = new FormData();
+    if (images.length !== 0) {
+      images.forEach((image, index) => {
+        formData.append(`images[${index}]`, image);
+      });
+    }
 
-    return http.patch(
-      `recipe/${id}`,
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      },
+    formData.append(
+      'data',
+      JSON.stringify({
+        title,
+        cooking_time,
+        cuisines,
+        cooking_skills,
+        cooking_methods,
+        diet_restrictions,
+        description,
+        video,
+        types,
+        // tags,
+        language,
+        caption,
+        ingredients,
+        calories,
+        proteins,
+        carbohydrates,
+        fats,
+        steps,
+        publish_status,
+        images_to_delete,
+        main_image
+      })
     );
+
+    return http.patch(`recipe/${id}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
   },
 
   getPopularRecipes: () => {
@@ -293,17 +289,17 @@ export default {
     return http.get(`/recipe/featured_meals`);
   },
 
-  postSavedRecipe: (id) => {
+  postSavedRecipe: id => {
     return http.post(`/recipe/saved_recipe/`, {
-      "recipe": id
+      recipe: id
     });
   },
-  
-  deleteSavedRecipe: (id) => {
+
+  deleteSavedRecipe: id => {
     return http.delete(`/recipe/saved_recipe/${id}`);
   },
 
-  getSavedRecipes: (query) => {
+  getSavedRecipes: query => {
     return http.get('/recipe/saved_recipe', {
       params: query
     });

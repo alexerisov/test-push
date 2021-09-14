@@ -178,28 +178,37 @@ export const absolutePaths = {
 
 export const notificationTypesText = {
   1: payload => {
-    let link = `/profile/account-settings`;
-    return {
-      link: link,
-      text: `Click to go to`,
-      textLink: 'profile settings'
-    };
+    if (payload.user_type === USER_TYPE.chefType) {
+      let link = `/recipe/upload`;
+      return {
+        text: `<p>Congratulations you just joined the Home Chef Community! Congratulations you just joined the Home Chef Community! <a href=${link}>Create your first recipe?</a></p>`
+      };
+    } else {
+      let link = `/search`;
+      return {
+        text: `<p>Welcome to EatChefs! Now you can enjoy a lot of recipes created by our team and</p><a href=${link}>Home Chef</a>`
+      };
+    }
   },
   2: payload => {
     let link = `/recipe/${payload?.id}`;
     return {
-      link: link,
-      text: `Click to view the recipe`,
-      textLink: `${payload?.title}`
+      text: `<p><a href=${link}>${payload?.title}</a> submitted successfully! Our team is reviewing and we will get back to you soon!</p>`
     };
   },
   3: payload => {
-    let link = `/recipe/${payload?.id}`;
-    return {
-      link: link,
-      text: `Click to view the recipe`,
-      textLink: `${payload?.title}`
-    };
+    if (payload?.status === 2) {
+      let link = `/recipe/${payload?.id}`;
+      return {
+        text: `<p><a href=${link}>${payload?.title}</a> submitted Published! You can check it here</p>`
+      };
+    }
+    if (payload?.status === 3) {
+      let link = `/recipe/editing/${payload?.id}`;
+      return {
+        text: `<p><a href=${link}>${payload?.title}</a> has some remarks! Please check it below: ${payload.rejection_reason}</p>`
+      };
+    }
   },
   4: payload => {
     let link = `/recipe/${payload?.id}`;
@@ -212,14 +221,18 @@ export const notificationTypesText = {
 };
 
 export const notificationTypesTitle = {
-  1: () => {
-    return 'The account has been created. Welcome to EatChefs!';
+  1: payload => {
+    if (payload.user_type === USER_TYPE.chefType) {
+      return 'New Chef Registration';
+    } else {
+      return 'New Customer Registration';
+    }
   },
   2: () => {
-    return 'Recipe created. Awaiting approval';
+    return 'Recipe Submission';
   },
   3: payload => {
-    return `Recipe ${APPROVED_STATUS[payload?.status].toLowerCase()}`;
+    return `Recipe ${APPROVED_STATUS[payload?.status]}`;
   },
   4: payload => {
     return `${payload.count} new comment in your recipe`;
