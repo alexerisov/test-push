@@ -16,7 +16,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import { modalActions } from '@/store/actions';
 
 const ChefPencilsPage = () => {
-  const matches = useMediaQuery('(max-width: 768px)');
+  const matches = useMediaQuery('(max-width: 992px)');
   const router = useRouter();
   const [query, setQuery] = useState();
 
@@ -27,7 +27,7 @@ const ChefPencilsPage = () => {
   const { open } = useActions(modalActions);
 
   // Pagination
-  const itemsPerPage = matches ? 3 : 3;
+  const itemsPerPage = matches ? 6 : 7;
   const [page, setPage] = useState(1);
   const [numberOfPages, setNumberOfPages] = useState();
 

@@ -89,6 +89,17 @@
   &__items{
     width: 100%;
     margin: 0 auto 40px;
+
+    @media (max-width: $--md) {
+      display: grid;
+      grid-template-columns: repeat(2, 285px);
+      grid-gap: 40px;
+      width: max-content;
+    }
+
+    @media (max-width: 650px) {
+      grid-template-columns: repeat(1, 285px);
+    }
   }
 
   &__pagination {
