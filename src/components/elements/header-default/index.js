@@ -101,11 +101,11 @@ const HeaderDefault = props => {
             </Link>
           </li>
 
-          {/*<li className={classes.mobileMenu__navItem} onClick={handleExpandingMobileMenu}>
-            <Link href="/">
+          <li className={classes.mobileMenu__navItem} onClick={handleExpandingMobileMenu}>
+            <Link href="/chef-pencil">
               <a>{`Chef's Pensil`}</a>
             </Link>
-          </li>*/}
+          </li>
         </nav>
 
         {!props.account.hasToken ? (
@@ -176,6 +176,9 @@ const HeaderDefault = props => {
         </Link>
         <Link href="/menu">
           <a className={classes.header__link}>Menu</a>
+        </Link>
+        <Link href="/chef-pencil">
+          <a className={classes.header__link}>{"Chef's Pencil"}</a>
         </Link>
       </nav>
       <NoSsr>
