@@ -3,8 +3,12 @@
 
 .createPencil {
   display: block;
-  max-width: 1000px;
   margin-bottom: 20px;
+
+  &__wrapper {
+    max-width: 1000px;;
+    margin: 0 auto;
+  }
 
   &__header {
     display: flex;
@@ -68,6 +72,7 @@
   line-height: 1.08;
 
   &_margin {
+    @extend .createPencilLabel;
     margin: 20px 0 40px;
   }
 

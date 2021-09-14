@@ -154,7 +154,10 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
     uploadChefPencil(data)
       .then(data => {
         setStatusSubmit('Submit');
-        return dispatch(modalActions.open('uploadSuccessful'));
+        return dispatch(modalActions.open('uploadSuccessful', {
+          handleClick: handleClickForModal,
+          handleCancel: handleCloseForModal
+        }));
       })
       .catch(err => {
         handleErrorScroll(err.response.data);
@@ -162,6 +165,17 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
         console.log(err);
       });
   }
+
+  const handleClickForModal = (e) => {
+    e.preventDefault();
+    router.push(`/`);
+    dispatch(modalActions.close());
+  };
+
+  const handleCloseForModal = () => {
+    router.push(`/`);
+    dispatch(modalActions.close());
+  };
 
   // Scroll to errors
   const handleErrorScroll = error => {
@@ -242,7 +256,7 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
   };*/
 
   return (
-    <>
+    <div className={classes.createPencil__wrapper}>
       <div className={classes.createPencil__header}>
         <h1 className={classes.createPencil__header__title}>Create Chef Pencil</h1>
       </div>
@@ -269,7 +283,7 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
           </div>
         </div>
 
-        <div className={classes.createPencilSection}>
+        <div className={classes.createPencilSection} id="chef-pencil-upload-image">
           <h2 className={!data?.image ? classes.createPencilLabel : classes.createPencilLabel_margin}>
             <span style={{ color: 'red' }}>* </span>Chef Pencil Image
           </h2>
@@ -305,8 +319,11 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
           </div>
         </div>
 
+        <h2 className={classes.createPencilLabel}>
+          <span style={{ color: 'red' }}>* </span>Description
+        </h2>
         <Editor data={data} initText={initData?.html_content} handleChange={onChangeEditorField} />
-        <div className={classes.fieldError}>
+        <div className={classes.fieldError} id="chef-pencil-editor">
           <FieldError errors={error} path="html_content" />
         </div>
       </form>
@@ -319,7 +336,7 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
           <p className={classes.createPencilButton__text}>Cancel</p>
         </button>
       </div>
-    </>
+    </div>
   );
 }
 

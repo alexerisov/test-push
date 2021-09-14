@@ -239,7 +239,9 @@ export const nameErrorRecipe = [
   { nameErrorResponse: 'diet_restrictions', nameDiv: 'create-diet-restrictions-select' },
   { nameErrorResponse: 'cuisines', nameDiv: 'create-cuisines-select' },
   { nameErrorResponse: 'cooking_skills', nameDiv: 'create-cooking-skills-select' },
-  { nameErrorResponse: 'cooking_methods', nameDiv: 'create-cooking-methods-select' }
+  { nameErrorResponse: 'cooking_methods', nameDiv: 'create-cooking-methods-select' },
+  { nameErrorResponse: 'image', nameDiv: 'chef-pencil-upload-image' },
+  { nameErrorResponse: 'html_content', nameDiv: 'chef-pencil-editor' }
 ];
 
 export const nameErrorProfile = [
