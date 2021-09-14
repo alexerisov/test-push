@@ -78,7 +78,7 @@ export default {
   },
 
   getUploadPencils: (pageSize, page) => {
-    return http.get(`/chef-pencil/my`, {
+    return http.get(`/chef_pencil/my`, {
       params: {
         page: `${page}`,
         page_size: `${pageSize}`
@@ -103,11 +103,29 @@ export default {
     return http.delete(`chef_pencil/comment/${id}/delete`);
   },
 
-  update: ({ title, html_content, attachments }, id) => {
-    return http.patch(`chef-pencil/${id}`, {
-      title,
-      html_content,
-      attachments
+  update: ({ title, html_content, image, id }) => {
+    const formData = new FormData();
+
+    if (image) {
+      formData.append('image', image);
+    }
+
+    formData.append(
+      'data',
+      JSON.stringify({
+        title,
+        html_content
+      })
+    );
+
+    return http.patch(`/chef_pencil/${id}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
     });
+  },
+
+  deletePencil: (id) => {
+    return http.delete(`chef_pencil/${id}`);
   }
 };
