@@ -75,26 +75,25 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
     };
   };
 
-  // TODO delete chef pencil function
-  /*const deletePencil = confirm => {
+  const deletePencil = confirm => {
     if (confirm) {
-      Recipe.deleteRecipe(recipeId)
+      ChefPencil.deletePencil(pencilId)
         .then(res => {
-          router.push('/my-recipes');
+          router.push('/my-pencils');
         })
         .catch(err => {
           console.log(err);
         });
     }
-  };*/
+  };
 
-  /*const handleClickDelete = name => {
+  const handleClickDelete = name => {
     return () => {
-      props.dispatch(modalActions.open(name)).then(result => {
-        deleteRecipe(result);
+      open(name).then(result => {
+        deletePencil(result);
       });
     };
-  };*/
+  };
 
   const redirectToHomeChefPage = () => {
     router.push(`/home-chef/${pencil?.user?.pk}`);
@@ -185,11 +184,10 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
                 </span>
               </p>
             </div>
-            {/*TODO добавить кнопки редактирования и удаления*/}
-            {/*<div className={classes.pencil__icons}>
+            <div className={classes.pencil__icons}>
               {pencil?.user?.pk === userId && (
                 <div>
-                  <Link href={`/pencil/editing/${pencilId}`}>
+                  <Link href={`/chef-pencil/editing/${pencilId}`}>
                     <a className={classes.pencil__linkEdit}>
                       <img src="/images/index/pencil-black.svg" />
                     </a>
@@ -199,7 +197,7 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
                   </button>
                 </div>
               )}
-            </div>*/}
+            </div>
           </div>
 
           <div className={classes.pencil__description}>
