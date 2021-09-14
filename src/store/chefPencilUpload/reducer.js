@@ -6,7 +6,8 @@ const initState = {
     title: '',
     html_content: '',
     attachments: null,
-    image: null
+    images: [],
+    main_image: null
   },
   isLoading: false,
   error: null

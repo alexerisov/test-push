@@ -50,7 +50,8 @@ export default {
           title: data?.title,
           html_content: data?.html_content,
           attachments: data?.attachments,
-          image: data?.image
+          images: data?.images,
+          main_image: data?.main_image
         });
         dispatch({ type: types.SEND_SUCCESS });
         return response.data;
@@ -70,6 +71,7 @@ export default {
           html_content: data?.html_content,
           attachments: data?.attachments,
           image: data?.image,
+          main_image: data?.main_image,
           id
         });
         dispatch({ type: types.SEND_SUCCESS });

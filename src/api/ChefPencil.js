@@ -1,11 +1,13 @@
 import http from '../utils/http';
 
 export default {
-  upload: ({ title, html_content, image }) => {
+  upload: ({ title, html_content, images }) => {
     const formData = new FormData();
 
-    if (image) {
-      formData.append('image', image);
+    if (images.length !== 0) {
+      images.forEach((image, index) => {
+        formData.append(`images[${index}]`, image);
+      });
     }
 
     formData.append(
