@@ -214,7 +214,7 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
             uploadLikeHandler={uploadLike}
             deleteCommentHandle={ChefPencil.deleteComment}
           >
-            <RatingComponent rating={rating ?? pencil?.avg_rating} handleRating={handleRating} />
+            {/*<RatingComponent rating={rating ?? pencil?.avg_rating} handleRating={handleRating} />*/}
           </ResipeComments>
         </div>
         <div className={classes.pencil__cards}>
