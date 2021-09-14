@@ -21,22 +21,26 @@ function UploadSuccessful (props) {
   const renderContent = () => {
     return <div className={classes.UploadSuccess}>
       <img src="/images/index/upload_success.svg" alt="Success"></img>
-      <h2 className={classes.UploadSuccess__title}>
+      {!props.handleClick && <h2 className={classes.UploadSuccess__title}>
         Recipe successfully edit
-      </h2>
+      </h2>}
+
+      {props.handleClick && <h2 className={classes.UploadSuccess__title}>
+        {"Chef's pencil successfully edit"}
+      </h2>}
       <button
         type="button"
         className={classes.UploadSuccess__button}
-        onClick={handleClick}
+        onClick={props.handleClick ?? handleClick}
       >
-        See recipe
+        {!props.handleClick ? "See recipe" : "See pencil"}
       </button>
     </div>;
   };
 
   return (
       <LayoutModal
-        onClose={onCancel}
+        onClose={props.handleCancel ?? onCancel}
         themeName="white_small"
       >
         {renderContent()}

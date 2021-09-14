@@ -19,7 +19,7 @@ const useStyles = makeStyles({
   }
 });
 
-const buttonUploadRecipe = () => {
+const buttonUpload = ({ link, linkText }) => {
   const classes = useStyles();
 
   return (
@@ -27,14 +27,14 @@ const buttonUploadRecipe = () => {
       <Button
         color="primary"
         variant="outlined"
-        href="/recipe/upload"
+        href={link}
         classes={{root: classes.root, outlinedPrimary: classes.outlinedPrimary}}
       >
           <img className={styles.icon} src={uploadIcon} alt="upload recipe icon"/>
-          <span className={styles.name}>Upload your recipe</span>
+          <span className={styles.name}>{linkText}</span>
       </Button>
     </>
   );
 };
 
-export default buttonUploadRecipe;
+export default buttonUpload;

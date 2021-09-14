@@ -34,6 +34,10 @@
     background-color: $--color-blue;
   }
 
+  &__rating {
+    margin-bottom: 30px;
+  }
+
   &__form {
     display: flex;
     flex-direction: column;

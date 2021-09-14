@@ -101,11 +101,11 @@ const HeaderDefault = props => {
             </Link>
           </li>
 
-          {/*<li className={classes.mobileMenu__navItem} onClick={handleExpandingMobileMenu}>
-            <Link href="/">
+          <li className={classes.mobileMenu__navItem} onClick={handleExpandingMobileMenu}>
+            <Link href="/chef-pencil">
               <a>{`Chef's Pensil`}</a>
             </Link>
-          </li>*/}
+          </li>
         </nav>
 
         {!props.account.hasToken ? (
@@ -131,13 +131,13 @@ const HeaderDefault = props => {
                   </Link>
                 </li>
 
-                {/*<li className={classes.mobileMenu__item} onClick={handleExpandingMobileMenu}>
-                  <Link href="/">
+                <li className={classes.mobileMenu__item} onClick={handleExpandingMobileMenu}>
+                  <Link href="/my-pencils">
                     <a>
                       My Pencils
                     </a>
                   </Link>
-                </li>*/}
+                </li>
               </>
             )}
 
@@ -177,6 +177,9 @@ const HeaderDefault = props => {
         <Link href="/menu">
           <a className={classes.header__link}>Menu</a>
         </Link>
+        <Link href="/chef-pencil">
+          <a className={classes.header__link}>{"Chef's Pencil"}</a>
+        </Link>
       </nav>
       <NoSsr>
         {!props.account.hasToken ? (
@@ -213,15 +216,15 @@ const HeaderDefault = props => {
                 </MenuItem>
               )}
 
-              {/*{props?.account?.profile?.user_type === USER_TYPE.chefType &&
+              {props?.account?.profile?.user_type === USER_TYPE.chefType &&
                 <MenuItem onClick={handleClose} classes={{root: separatorStyles.root}}>
-                  <Link href="/">
+                  <Link href="/my-pencils">
                     <a className={classes.header__link_place_menu}>
                       My Pencils
                     </a>
                   </Link>
                 </MenuItem>
-              }*/}
+              }
               <MenuItem onClick={handleClose} classes={{ root: separatorStyles.root }}>
                 <Link href="/saved-recipes">
                   <a className={classes.header__link_place_menu}>Saved Recipes</a>

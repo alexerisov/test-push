@@ -57,11 +57,15 @@
   &__links {
     display: flex;
     gap: 80px;
+
+    @media (max-width: $--md) {
+      gap: 20px;
+    }
   }
 
   @media (max-width: $--sm) {
     &__links {
-      gap: 38px;
+      gap: 10px;
     }
   }
 

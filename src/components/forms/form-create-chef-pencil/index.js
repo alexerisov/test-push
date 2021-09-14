@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { makeStyles } from '@material-ui/core/styles';
@@ -17,6 +17,7 @@ import { nameErrorRecipe } from '@/utils/datasets';
 
 import PhotoCameraOutlinedIcon from '@material-ui/icons/PhotoCameraOutlined';
 import classes from './form-create-chef-pencil.module.scss';
+import { useActions } from "@/customHooks/useActions";
 
 const useStyles = makeStyles({
   textField: {
@@ -33,17 +34,25 @@ const Editor = dynamic(() => import('@/components/blocks/Editor'), {
   ssr: false
 });
 
-function FormCreateChefPencil(props) {
+function FormCreateChefPencil({ id, isEditing, initData }) {
+  const router = useRouter();
   const dispatch = useDispatch();
   const { data, error } = useSelector(state => state.chefPencilUpload);
-  const router = useRouter();
   const classMarerialUi = useStyles();
+  const { open, close } = useActions(modalActions);
+  const {update, uploadChefPencil, updateError, updateChefPencil} = useActions(chefPencilUploadActions);
 
   // For uploading images
   const [isDragging, setIsDragging] = useState(false);
   const uploadImageLabel = useRef();
 
-  useEffect(() => {
+  useEffect(async () => {
+    if (isEditing) {
+      update(initData);
+      console.log(initData);
+      return;
+    }
+
     const newData = {
       ...data,
       title: '',
@@ -52,7 +61,7 @@ function FormCreateChefPencil(props) {
       error: null
     };
 
-    dispatch(chefPencilUploadActions.update(newData));
+    update(newData);
   }, []);
 
   const onChangeField = name => {
@@ -66,13 +75,12 @@ function FormCreateChefPencil(props) {
           ...getMaxLengthOfField(name)
         })}`
       };
-      dispatch(chefPencilUploadActions.update(newData));
-      dispatch(chefPencilUploadActions.updateError(newError));
+      update(newData);
+      updateError(newError);
     };
   };
 
-  const onChangeEditorField = useCallback(
-    value => {
+  const onChangeEditorField = value => {
       if (!value) {
         const newData = { ...data, html_content: value };
         const newError = {
@@ -91,9 +99,7 @@ function FormCreateChefPencil(props) {
       };
       dispatch(chefPencilUploadActions.update(newData));
       dispatch(chefPencilUploadActions.updateError(newError));
-    },
-    [data]
-  );
+  };
 
   //todo check getMaxLengthDescription
   const getMaxLengthOfField = name => {
@@ -107,76 +113,84 @@ function FormCreateChefPencil(props) {
 
   const handleClickPopupOpen = (name, params) => {
     return () => {
-      props.dispatch(modalActions.open(name, params));
+      open(name, params);
     };
   };
-
-  /*const uploadImageAttachment = (image) => {
-    dispatch(chefPencilUploadActions.uploadChefPencilImage(image))
-      .then(attachmentData => {
-        const newData = {...data, attachments: [attachmentData?.pk], image_url: attachmentData?.image };
-        return dispatch(chefPencilUploadActions.update(newData));
-      })
-      .catch(err => {
-        /!*handleErrorScroll(err.response.data);*!/
-        console.log(err);
-      });
-  };*/
 
   const handleAddImage = e => {
     // for drag and drop
     if (isDragging && e?.dataTransfer?.files?.length !== 0) {
       const newData = { ...data, image: e?.dataTransfer?.files[0] };
-      dispatch(chefPencilUploadActions.update(newData));
-      /*uploadImageAttachment(e?.dataTransfer?.files[0]);*/
+      update(newData);
     }
 
     if (!isDragging && e?.currentTarget?.files?.length !== 0) {
       const newData = { ...data, image: e?.currentTarget?.files[0] };
-      dispatch(chefPencilUploadActions.update(newData));
-      /*uploadImageAttachment(e?.currentTarget?.files[0]);*/
+      update(newData);
     }
   };
 
-  /*const handleUpdateImage = (e) => {
-    if (e.currentTarget?.files?.length !== 0) {
-      const newData = {...data, image: e?.currentTarget?.files[0]};
-      dispatch(chefPencilUploadActions.update(newData));
-      /!*uploadImageAttachment(e?.currentTarget?.files[0]);*!/
-    }
-  };*/
-
   const [statusSubmit, setStatusSubmit] = useState('Submit');
 
-  function uploadChefPencil(e) {
+  function uploadChefPencilHandler(e) {
     e.preventDefault();
     setStatusSubmit('Loading...');
 
-    dispatch(chefPencilUploadActions.uploadChefPencil(data))
+    if (isEditing) {
+      updateChefPencil(data, id)
+        .then(data => {
+          setStatusSubmit('Submit');
+          return open('editSuccessful', {
+            handleClick: (e) => handleClickForModal(e, id),
+            handleCancel: handleCloseForModal
+          });
+        })
+        .catch(err => {
+          handleErrorScroll(err.response.data);
+          setStatusSubmit('Submit');
+          console.log(err);
+        });
+
+      return;
+    }
+
+    uploadChefPencil(data)
       .then(data => {
         setStatusSubmit('Submit');
-        return dispatch(modalActions.open('uploadSuccessful', {
-          handleClick: handleClickForModal,
+        return open('uploadSuccessful', {
+          handleClick: (e) => handleClickForModal(e, data?.pk),
           handleCancel: handleCloseForModal
-        }));
+        });
       })
       .catch(err => {
         handleErrorScroll(err.response.data);
         setStatusSubmit('Submit');
         console.log(err);
       });
-    // }
   }
 
-  const handleClickForModal = (e) => {
+  const handleClickForModal = (e, id) => {
     e.preventDefault();
-    router.push(`/`);
-    dispatch(modalActions.close());
+
+    if (isEditing) {
+      router.push(`/chef-pencil/${id}`);
+      close();
+      return;
+    }
+
+    router.push(`/chef-pencil/${id}`);
+    close();
   };
 
   const handleCloseForModal = () => {
+    if (isEditing) {
+      router.push(`/chef-pencil/${id}`);
+      close();
+      return;
+    }
+
     router.push(`/`);
-    dispatch(modalActions.close());
+    close();
   };
 
   // Scroll to errors
@@ -290,7 +304,7 @@ function FormCreateChefPencil(props) {
             <span style={{ color: 'red' }}>* </span>Chef Pencil Image
           </h2>
           <div className={classes.createPencilUpload}>
-            {data?.image && <CardImageEditRecipe image={data?.image} src={URL.createObjectURL(data?.image)} />}
+            {data?.image && <CardImageEditRecipe image={data?.image} src={data?.image instanceof File ? URL.createObjectURL(data?.image) : data?.image} />}
             <>
               <label
                 htmlFor="create-images"
@@ -324,17 +338,17 @@ function FormCreateChefPencil(props) {
         <h2 className={classes.createPencilLabel}>
           <span style={{ color: 'red' }}>* </span>Description
         </h2>
-        <Editor data={data} handleChange={onChangeEditorField} />
+        <Editor data={data} initText={initData?.html_content} handleChange={onChangeEditorField} />
         <div className={classes.fieldError} id="chef-pencil-editor">
           <FieldError errors={error} path="html_content" />
         </div>
       </form>
 
       <div className={classes.createPencilbuttonContainer}>
-        <button className={classes.createPencilButton} onClick={uploadChefPencil}>
+        <button className={classes.createPencilButton} onClick={uploadChefPencilHandler}>
           <p className={classes.createPencilButton__text}>{statusSubmit}</p>
         </button>
-        <button className={classes.createPencilButton_color_gray} onClick={() => router.push('/')}>
+        <button className={classes.createPencilButton_color_gray} onClick={() => router.push('/my-pencils')}>
           <p className={classes.createPencilButton__text}>Cancel</p>
         </button>
       </div>

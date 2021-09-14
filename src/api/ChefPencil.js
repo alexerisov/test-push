@@ -1,7 +1,7 @@
 import http from '../utils/http';
 
 export default {
-  upload: ({ title, html_content, attachments, image }) => {
+  upload: ({ title, html_content, image }) => {
     const formData = new FormData();
 
     if (image) {
@@ -46,25 +46,52 @@ export default {
 
   uploadCommentsLikes: ({ id, type }) => {
     if (type === 'dislike') {
-      return http.post(`chef-pencil/comment/${id}/like`, {}, { params: { dislike: 'Y' } });
+      return http.post(`chef_pencil/comment/${id}/like`, { dislike: 'Y' });
     }
 
-    return http.post(`chef-pencil/comment/${id}/like`, {});
+    return http.post(`chef_pencil/comment/${id}/like`, {});
+  },
+
+  uploadRating: ({ value, id }) => {
+    return http.post(`/chef_pencil/${id}/rate`, {
+      rating: value
+    });
+  },
+
+  getChefPencils: (query = '') => {
+    return http.get(`/chef_pencil?${query}`);
+  },
+
+  getPencilSearchSuggestions: (query) => {
+    return http.get(`/chef_pencil/search_suggestions?${query}`);
   },
 
   getTargetChefPencil: (id, token) => {
     if (token && token !== '{"token":null,"refresh":null}') {
-      return http.get(`/chef-pencil/${id}`, {
+      return http.get(`/chef_pencil/${id}`, {
         headers: {
           Authorization: `Bearer ${JSON.parse(token).token}`
         }
       });
     }
-    return http.get(`/chef-pencil/${id}`);
+    return http.get(`/chef_pencil/${id}`);
+  },
+
+  getUploadPencils: (pageSize, page) => {
+    return http.get(`/chef_pencil/my`, {
+      params: {
+        page: `${page}`,
+        page_size: `${pageSize}`
+      }
+    });
+  },
+
+  getLatestPencils: () => {
+    return http.get(`/chef_pencil/latest_chef_pencils`);
   },
 
   getComments: ({ recipeId, page }) => {
-    return http.get(`/chef-pencil/${recipeId}/comments`, {
+    return http.get(`/chef_pencil/${recipeId}/comments`, {
       params: {
         page: `${page}`,
         page_size: 4
@@ -72,11 +99,33 @@ export default {
     });
   },
 
-  update: ({ title, html_content, attachments }, id) => {
-    return http.patch(`chef-pencil/${id}`, {
-      title,
-      html_content,
-      attachments
+  deleteComment: (id) => {
+    return http.delete(`chef_pencil/comment/${id}/delete`);
+  },
+
+  update: ({ title, html_content, image, id }) => {
+    const formData = new FormData();
+
+    if (image) {
+      formData.append('image', image);
+    }
+
+    formData.append(
+      'data',
+      JSON.stringify({
+        title,
+        html_content
+      })
+    );
+
+    return http.patch(`/chef_pencil/${id}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
     });
+  },
+
+  deletePencil: (id) => {
+    return http.delete(`chef_pencil/${id}`);
   }
 };
