@@ -21,7 +21,7 @@ import { recipePhotoSlider } from '@/store/actions';
 
 import classes from './id.module.scss';
 import SearchIcon from '@material-ui/icons/Search';
-import VideoImageCarousel from "@/components/blocks/video-image-carousel/video-image-carousel";
+import VideoImageCarousel from '@/components/blocks/video-image-carousel/video-image-carousel';
 
 function RecipePage({ pencilData, notFound, absolutePath }) {
   const account = useSelector(state => state.account);
@@ -204,10 +204,9 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
           </div>
 
           <div className={classes.pencil__description}>
-            {!pencil?.images?.length
-              ?
+            {!pencil?.images?.length ? (
               ''
-              :
+            ) : (
               <VideoImageCarousel>
                 {pencil?.images?.map(item => (
                   <img
@@ -218,7 +217,7 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
                   />
                 ))}
               </VideoImageCarousel>
-            }
+            )}
 
             <p dangerouslySetInnerHTML={{ __html: pencil?.html_content }} className={classes.pencil__descriptionText} />
           </div>
