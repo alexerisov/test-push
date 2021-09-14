@@ -1,23 +1,20 @@
 import reducer from '../../utils/reducer';
-import {types} from './actions.js';
+import { types } from './actions.js';
 
 const initState = {
   data: {
-    title: "",
-    cooking_time: "",
+    title: '',
+    cooking_time: '',
     cuisines: [],
-    cooking_skills: "",
+    cooking_skills: '',
     cooking_methods: [],
     diet_restrictions: [],
-    description: "",
-    preview_thumbnail_url: "",
-    preview_full_thumbnail_url: "",
-    preview_mp4_url: "",
-    preview_webm_url: "",
+    description: '',
+    video: '',
     types: [],
     // tags: null,
-    language: "",
-    caption: "",
+    language: '',
+    caption: '',
     ingredients: [],
     calories: null,
     proteins: null,
@@ -29,18 +26,17 @@ const initState = {
     main_image: null
   },
   isLoading: false,
-  error: null,
+  error: null
 };
 
 export default reducer(initState, {
-
   [types.UPDATE]: (state, action) => {
     return {
       ...state,
       data: {
         ...state.data,
-        ...action.payload,
-      },
+        ...action.payload
+      }
     };
   },
 
@@ -49,24 +45,24 @@ export default reducer(initState, {
       ...state,
       error: {
         ...state.error,
-        ...action.payload,
-      },
+        ...action.payload
+      }
     };
   },
 
-  [types.SEND]: (state) => {
+  [types.SEND]: state => {
     return {
       ...state,
       isLoading: true,
-      error: null,
+      error: null
     };
   },
 
-  [types.SEND_SUCCESS]: (state) => {
+  [types.SEND_SUCCESS]: state => {
     return {
       ...state,
       isLoading: false,
-      error: null,
+      error: null
     };
   },
 
@@ -74,8 +70,7 @@ export default reducer(initState, {
     return {
       ...state,
       isLoading: false,
-      error: action.error,
+      error: action.error
     };
-  },
-
+  }
 });
