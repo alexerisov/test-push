@@ -42,31 +42,62 @@
       flex-direction: column;
       justify-content: center;
     }
+  }
 
-    &__top {
+  &__logoContainer {
+    border: 1px solid #ffffff;
+    border-radius: 7px;
+    text-align: center;
+    padding: 13px 8px;
+
+    @media (max-width: $--lg) {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
+      gap: 0 20px;
       align-items: center;
-      margin-bottom: 33px;
+      margin: 0 auto 33px auto;
+      max-width: 396px;
+      padding: 19px 22px;
+    }
+
+    @media (max-width: $--sm - 1) {
+      flex-direction: column;
+      padding: 11px 22px;
     }
   }
 
   &__aboutCompanyText {
+    font-size: 14px;
+    line-height: 17px;
     max-width: 245px;
-  }
 
-  @media (max-width: $--lg) {
-    &__aboutCompanyText {
+    @media (max-width: $--lg) {
       max-width: 100%;
+      text-align: left;
+    }
+
+    @media (max-width: $--sm - 1) {
       text-align: center;
     }
   }
 
   &__titleList {
-    @include fontMontserratSemiBold();
-    font-size: 18px;
-    line-height: 42px;
-    margin: 0 0 20px 0;
+    @include fontSemiBold();
+    font-size: 22px;
+    line-height: 27px;
+    margin: 0 0 14px 0;
+  }
+
+  &__middleItem {
+    margin: 0 86px 0 0;
+
+    @media (max-width: $--gx) {
+      margin: 0 30px 0 0;
+    }
+
+    @media (max-width: $--sm - 1) {
+      margin: 0 0 0 30px;
+    }
   }
 
   @media (max-width: $--sm - 1) {
@@ -81,13 +112,19 @@
   }
 
   &__linkList {
-    font-size: 16px;
-    line-height: 35px;
-    margin: 0 35px 0 0;
+    font-size: 18px;
+    line-height: 22px;
+    margin: 0 35px 12px 0;
     color: $--color-white;
 
     &:hover {
       opacity: 0.6;
+    }
+
+    &_marginRightNull {
+      @media (max-width: $--gx) {
+        margin: 0 0 12px 0;
+      }
     }
   }
 
@@ -110,11 +147,13 @@
       flex-direction: row;
       justify-content: center;
       width: 100%;
+      margin-bottom: 25px;
     }
+  }
 
+  @media (max-width: $--gx) {
     &__middleItem {
-      order: 1;
-      margin-left: 30px;
+      margin: 0 49px 0 0;
     }
   }
 
@@ -123,6 +162,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      margin-bottom: 0;
     }
 
     &__middleItem {
@@ -136,6 +176,7 @@
 
     &__recipesBlock {
       justify-content: space-between;
+      width: 245px;
     }
 
     &__list_margin {
@@ -156,7 +197,7 @@
 
   &__logo {
     width: 94px;
-    margin: 0 0 16px 0;
+    margin: 0 0 12px 0;
   }
 
   &__socialItem {
@@ -173,11 +214,20 @@
 
   &__termsOfUse {
     text-align: center;
+    color: $--color-white;
+
+    @media (max-width: $--lg) {
+      color: $--color-gray15;
+    }
 
     &__link {
       font-size: 16px;
-      line-height: 35px;
+      line-height: 20px;
       color: $--color-white;
+
+      @media (max-width: $--lg) {
+        color: $--color-gray15;
+      }
 
       &:hover {
         opacity: 0.6;
@@ -204,20 +254,31 @@
   }
 
   &__copyright {
+    font-size: 16px;
+    line-height: 20px;
     text-align: center;
-    color: $--color-gray2;
+    color: $--color-white;
+
+    @media (max-width: $--lg) {
+      color: $--color-gray15;
+    }
   }
 
-  &__foodImg {
-    position: absolute;
-    right: 40px;
-    top: 140px;
-    width: 240px;
-  }
+  &__termsContainer {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 12px;
+    border-top: 1px solid #8f8f8f;
 
-  @media (max-width: $--lg) {
-    &__foodImg {
-      display: none;
+    @media (max-width: $--lg) {
+      border: none;
+      padding-top: 17px;
+      flex-direction: column;
+      gap: 6px 0;
+    }
+
+    @media (max-width: $--sm - 1px) {
+      gap: 9px 0;
     }
   }
 }
