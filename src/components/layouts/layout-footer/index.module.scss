@@ -1,223 +1,223 @@
-@import "~styles/mixins/mixins.scss";
+@import '~styles/mixins/mixins.scss';
 
 .footer {
-    width: 100%;
-    min-height: 390px;
-    background-color: $--color-gray3;
-    margin: 0;
-    padding: 50px 142px 40px 142px;
+  width: 100%;
+  min-height: 390px;
+  background-color: $--color-gray3;
+  margin: 0;
+  padding: 50px 142px 40px 142px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: $--color-white;
+  font-size: 16px;
+  @include fontMontserratLight();
+  position: relative;
+  overflow: hidden;
+
+  @media (max-width: $--lg) {
+    & {
+      padding: 50px 165px 40px;
+    }
+  }
+
+  @media (max-width: $--sm - 1) {
+    & {
+      padding: 50px 62px 40px;
+    }
+  }
+
+  &__list {
     display: flex;
     flex-direction: column;
+  }
+
+  &__container {
+    display: flex;
     justify-content: space-between;
-    color: $--color-white;
-    font-size: 16px;
-    @include fontMontserratLight();
-    position: relative;
-    overflow: hidden;
+  }
 
-    @media (max-width: $--lg) {
-        & {
-            padding: 50px 165px 40px;
-        }
-    }
-
-    @media (max-width: $--sm - 1) {
-        & {
-            padding: 50px 62px 40px;
-        }
-    }
-
-    &__list {
-        display: flex;
-        flex-direction: column;
-    }
-
+  @media (max-width: $--lg) {
     &__container {
-        display: flex;
-        justify-content: space-between;
+      flex-direction: column;
+      justify-content: center;
     }
 
-    @media (max-width: $--lg) {
-        &__container {
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        &__top {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 33px;
-        }
+    &__top {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 33px;
     }
+  }
 
+  &__aboutCompanyText {
+    max-width: 245px;
+  }
+
+  @media (max-width: $--lg) {
     &__aboutCompanyText {
-        max-width: 245px;
+      max-width: 100%;
+      text-align: center;
     }
+  }
 
-    @media (max-width: $--lg) {
-        &__aboutCompanyText {
-            max-width: 100%;
-            text-align: center;
-        }
+  &__titleList {
+    @include fontMontserratSemiBold();
+    font-size: 18px;
+    line-height: 42px;
+    margin: 0 0 20px 0;
+  }
+
+  @media (max-width: $--sm - 1) {
+    &__titleList__align {
+      text-align: center;
     }
 
     &__titleList {
-        @include fontMontserratSemiBold();
-        font-size: 18px;
-        line-height: 42px;
-        margin: 0 0 20px 0;
+      margin-bottom: 12px;
+      line-height: normal;
+    }
+  }
+
+  &__linkList {
+    font-size: 16px;
+    line-height: 35px;
+    margin: 0 35px 0 0;
+    color: $--color-white;
+
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+
+  &__RecipesList {
+    display: flex;
+  }
+
+  &__rowContainer {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__middle {
+    display: flex;
+  }
+
+  @media (max-width: $--lg) {
+    &__middle {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      width: 100%;
     }
 
-    @media (max-width: $--sm - 1) {
-        &__titleList__align {
-            text-align: center;
-        }
+    &__middleItem {
+      order: 1;
+      margin-left: 30px;
+    }
+  }
 
-        &__titleList {
-            margin-bottom: 12px;
-            line-height: normal;
-        }
+  @media (max-width: $--sm - 1) {
+    &__middle {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    &__middleItem {
+      order: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 239px;
+      margin: 0 0 18px 0;
+    }
+
+    &__recipesBlock {
+      justify-content: space-between;
+    }
+
+    &__list_margin {
+      margin-right: 20px;
     }
 
     &__linkList {
-        font-size: 16px;
-        line-height: 35px;
-        margin: 0 35px 0 0;
-        color: $--color-white;
-
-        &:hover {
-            opacity: 0.6;
-        }
+      margin: 0;
     }
 
-    &__RecipesList {
-        display: flex;
+    &__list_align {
+      display: grid;
+      grid-template-columns: max-content max-content;
+      justify-content: space-between;
+      width: 100%;
+    }
+  }
+
+  &__logo {
+    width: 94px;
+    margin: 0 0 16px 0;
+  }
+
+  &__socialItem {
+    margin-right: 20px;
+  }
+
+  &__socialItem:last-child {
+    margin-right: 0;
+  }
+
+  &__socialIcon {
+    width: 40px;
+  }
+
+  &__termsOfUse {
+    text-align: center;
+
+    &__link {
+      font-size: 16px;
+      line-height: 35px;
+      color: $--color-white;
+
+      &:hover {
+        opacity: 0.6;
+      }
+    }
+  }
+
+  @media (max-width: $--lg) {
+    &__bottom {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
+  @media (max-width: $--sm - 1) {
+    &__bottom {
+      margin-top: 23px;
     }
 
-    &__rowContainer {
-        display: flex;
-        flex-direction: row;
+    &__titleList_hidden {
+      display: none;
     }
+  }
 
-    &__middle {
-        display: flex;
-    }
+  &__copyright {
+    text-align: center;
+    color: $--color-gray2;
+  }
 
-    @media (max-width: $--lg) {
-        &__middle {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            width: 100%;
-        }
+  &__foodImg {
+    position: absolute;
+    right: 40px;
+    top: 140px;
+    width: 240px;
+  }
 
-        &__middleItem {
-            order: 1;
-            margin-left: 30px;
-        }
-    }
-
-    @media (max-width: $--sm - 1) {
-        &__middle {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        &__middleItem {
-            order: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 239px;
-            margin: 0 0 18px 0;
-        }
-
-        &__recipesBlock {
-            justify-content: space-between;
-        }
-
-        &__list_margin {
-            margin-right: 20px;
-        }
-
-        &__linkList {
-            margin: 0;
-        }
-
-        &__list_align {
-            display: grid;
-            grid-template-columns: max-content max-content;
-            justify-content: space-between;
-            width: 100%;
-        }
-    }
-
-    &__logo {
-        width: 94px;
-        margin: 0 0 16px 0;
-    }
-
-    &__socialItem {
-        margin-right: 20px;
-    }
-
-    &__socialItem:last-child {
-        margin-right: 0;
-    }
-
-    &__socialIcon {
-        width: 40px;
-    }
-
-    &__termsOfUse {
-        text-align: center;
-
-        &__link {
-            font-size: 16px;
-            line-height: 35px;
-            color: $--color-white;
-
-            &:hover {
-                opacity: 0.6;
-            }
-        }
-    }
-
-    @media (max-width: $--lg) {
-        &__bottom {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-    }
-
-    @media (max-width: $--sm - 1) {
-        &__bottom {
-            margin-top: 23px;
-        }
-
-        &__titleList_hidden {
-            display: none;
-        }
-    }
-
-    &__copyright {
-        text-align: center;
-        color: $--color-gray2;
-    }
-
+  @media (max-width: $--lg) {
     &__foodImg {
-        position: absolute;
-        right: 40px;
-        top: 140px;
-        width: 240px;
+      display: none;
     }
-
-    @media (max-width: $--lg) {
-        &__foodImg {
-            display: none;
-        }
-    }
+  }
 }
