@@ -14,6 +14,7 @@ const LayoutPage = ({ header, content }) => {
         <link rel="stylesheet" href="//cameratag.com/static/14/cameratag.css"></link>
         <script src="//cameratag.com/api/v14/js/cameratag.min.js"></script>
       </Head>
+      <div className={classes.wave}></div>
       <section className={classes.layout}>
         <header>{header ?? defaultHeader}</header>
         <main className={classes.layout__content}>{content}</main>
