@@ -7,6 +7,7 @@ import MealOfWeekBlock from '@/components/blocks/meal-of-the-week';
 import FavoriteCuisinesBlock from '@/components/blocks/favorite-cuisines';
 import PinnedMeals from '@/components/blocks/pinned-meals';
 import HighestRatedMealsBlock from '@/components/blocks/highest-rated-meals';
+import BlocksHomePage from '@/components/blocks/blocks-home-page';
 import Carousel from '@/components/elements/carusel';
 import { Button } from '@material-ui/core';
 import { connect } from 'react-redux';
@@ -84,6 +85,7 @@ const Home = props => {
       <PinnedMeals />
       <HighestRatedMealsBlock />
       {meal && <MealOfWeekBlock meal={meal} />}
+      <BlocksHomePage />
     </>
   );
 
