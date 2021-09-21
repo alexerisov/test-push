@@ -74,4 +74,9 @@
   @include fontRegular();
   font-size: 22px;
   line-height: 27px;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 0px 2px 9px #fff;
+  }
 }

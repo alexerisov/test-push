@@ -40,7 +40,7 @@ const BlocksHomePage = props => {
     });
   }, []);
 
-  return blocks ? (
+  return blocks && blocks.length !== 0 ? (
     <div className={classes.blocks}>
       <StyledCarousel
         infiniteLoop={true}
