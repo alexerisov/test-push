@@ -482,7 +482,8 @@ function FormCreateRecipe(props) {
   };
 
   return (
-    <div>
+    <div className={classes.createRecipeForm__wrap}>
+      <div className={classes.wave}></div>
       <div className={classes.createRecipeForm__header}>
         <h1 className={classes.createRecipeForm__header__title}>Create New Recipe</h1>
         <button className={classes.createRecipeForm__header__clear} onClick={handleClearForm}>

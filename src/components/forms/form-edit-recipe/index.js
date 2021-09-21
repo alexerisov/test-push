@@ -423,6 +423,7 @@ function FormEditRecipe(props) {
 
   return (
     <div>
+      <div className={classes.wave}></div>
       <form className={classes.createRecipeForm}>
         <div className={classes.createRecipeSection}>
           <h2 className={classes.createRecipeSubtitle}>Edit Recipe</h2>
