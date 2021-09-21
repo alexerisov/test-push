@@ -123,8 +123,21 @@ const HeaderDefault = props => {
                 <a>My Profile</a>
               </Link>
             </li>
+
             {props?.account?.profile?.user_type === USER_TYPE.chefType && (
               <>
+                <li
+                  className={`${classes.mobileMenu__item} ${classes.notification__wrap}`}
+                  onClick={handleExpandingMobileMenu}>
+                  {notificationAmount && notificationAmount !== 0 ? (
+                    <span className={classes.header__notifications__amount}>{notificationAmount}</span>
+                  ) : (
+                    <span />
+                  )}
+                  <Link href="/notifications">
+                    <a>Notifications</a>
+                  </Link>
+                </li>
                 <li className={classes.mobileMenu__item} onClick={handleExpandingMobileMenu}>
                   <Link href="/my-recipes">
                     <a>My Recipes</a>
@@ -188,7 +201,8 @@ const HeaderDefault = props => {
           </button>
         ) : (
           <div>
-            <Link href="/notifications">
+            {/* //myyyyyyyyyyyyyyyyyy */}
+            {/* <Link href="/notifications">
               <a className={classes.header__notifications}>
                 <img src="/images/index/icons-bell.png" />
                 {notificationAmount && notificationAmount !== 0 ? (
@@ -197,7 +211,7 @@ const HeaderDefault = props => {
                   <span />
                 )}
               </a>
-            </Link>
+            </Link> */}
             <button onClick={handleClick} className={classes.header__button}>
               {props?.account?.profile?.user_type === USER_TYPE.viewerType
                 ? `Hi, ${
@@ -268,7 +282,8 @@ const HeaderDefault = props => {
         {!mobile && defaultContent}
         {mobile && (
           <div>
-            {
+            {/* //myyyyyyyyyyyyy */}
+            {/* {
               <Link href="/notifications">
                 <a className={classes.header__notifications}>
                   <img src="/images/index/icons-bell.png" />
@@ -279,7 +294,7 @@ const HeaderDefault = props => {
                   )}
                 </a>
               </Link>
-            }
+            } */}
             {!isExpanded && <MenuIcon className={classes.header__burger} onClick={handleExpandingMobileMenu} />}
             {isExpanded && <CloseIcon className={classes.header__burger} onClick={handleExpandingMobileMenu} />}
           </div>

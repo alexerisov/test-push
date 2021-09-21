@@ -104,11 +104,6 @@
     }
 
     &__amount {
-      position: absolute;
-      top: -15px;
-      right: -8px;
-      width: 18px;
-      height: 18px;
       border-radius: 50%;
       background-color: $--color-orange;
       display: flex;
@@ -117,9 +112,17 @@
       color: $--color-white;
       font-size: 12px;
       max-width: 18px;
-      overflow: hidden;
+      width: 14px;
+      height: 14px;
+      margin-right: 4px;
     }
   }
+}
+
+.notification__wrap {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .mobileMenu {
