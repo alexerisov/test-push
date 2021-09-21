@@ -44,21 +44,9 @@ const Home = props => {
     }
   };
 
-  const handleClickSearch = name => {
-    return () => {
-      props.dispatch(modalActions.open(name)).then(result => {
-        // result when modal return promise and close
-      });
-    };
-  };
-
   const content = (
     <>
       <section className={classes.home}>
-        {/* <button className={classes.home__inputSearch} onClick={handleClickSearch('search')}>
-          <img src="/images/index/icon_search.svg" className={classes.home__iconSearch} />
-          Search for dish name
-        </button> */}
         <div className={classes.home__titleContainer}>
           <div className={classes.home__titleTextContainer}>
             <h1 className={classes.home__title}>Find the fame</h1>

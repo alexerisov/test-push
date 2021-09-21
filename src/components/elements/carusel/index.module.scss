@@ -24,6 +24,13 @@ $slide-width: 32rem;
     top: 280px;
     right: 10px;
     left: auto;
+    width: 320px;
+    height: 290px;
+  }
+
+  @media (min-width: $--xs) and (max-width: $--sm) {
+    top: 0;
+    left: 0;
   }
 
   @media (max-width: $--xs) {
