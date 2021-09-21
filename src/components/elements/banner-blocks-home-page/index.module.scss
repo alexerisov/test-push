@@ -1,0 +1,77 @@
+@import '~styles/variables.scss';
+@import '~styles/mixins/mixins.scss';
+
+.itemBlocks {
+  display: grid;
+  grid-template-columns: 20% 75%;
+  max-width: 1024px;
+  margin: 0 auto;
+  gap: 0 40px;
+  color: $--color-gray6;
+  text-align: left;
+
+  @media (max-width: $--lg) {
+    grid-template-columns: 25% 70%;
+  }
+
+  @media (max-width: 800px) {
+    display: grid;
+    grid-template-rows: 200px auto;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+
+  &__title {
+    font-size: 36px;
+    line-height: 44px;
+    @include fontSemiBold();
+    margin: 0 0 27px 0;
+
+    @media (max-width: 800px) {
+      margin: 27px 0;
+    }
+
+    @media (max-width: $--xs) {
+      font-size: 22px;
+      line-height: 27px;
+    }
+  }
+
+  &__description {
+    font-size: 20px;
+    line-height: 110%;
+    max-width: 730px;
+
+    @media (max-width: $--lg) {
+      max-width: 586px;
+    }
+
+    @media (max-width: $--xs) {
+      font-size: 16px;
+      line-height: 120%;
+    }
+  }
+
+  &__icon {
+    @media (max-width: 800px) {
+      max-height: 200px;
+      width: auto !important;
+    }
+  }
+}
+
+.blocksButtons {
+  background: #ffaa00;
+  box-shadow: 0px 2px 9px rgba(0, 0, 0, 0.14);
+  border-radius: 8px;
+  padding: 11px 35px;
+  margin: 38px 0 0 0;
+  width: auto;
+  height: auto;
+  border: none;
+  color: $--color-white;
+  @include fontRegular();
+  font-size: 22px;
+  line-height: 27px;
+}
