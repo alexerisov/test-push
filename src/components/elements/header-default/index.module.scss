@@ -34,6 +34,11 @@
     align-items: center;
   }
 
+  &__burgerWrap {
+    position: relative;
+    z-index: 1;
+  }
+
   &__burger {
     cursor: pointer;
   }
@@ -111,10 +116,30 @@
       align-items: center;
       color: $--color-white;
       font-size: 12px;
+      font-weight: 600;
       max-width: 18px;
       width: 14px;
       height: 14px;
       margin-right: 4px;
+
+      &_burger {
+        position: absolute;
+        top: -2px;
+        right: -4px;
+        z-index: 5;
+
+        font-size: 12px;
+        font-weight: 600;
+        max-width: 18px;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background-color: $--color-red1;
+        color: $--color-white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
     }
   }
 }

@@ -146,9 +146,7 @@ const HeaderDefault = props => {
 
                 <li className={classes.mobileMenu__item} onClick={handleExpandingMobileMenu}>
                   <Link href="/my-pencils">
-                    <a>
-                      My Pencils
-                    </a>
+                    <a>My Pencils</a>
                   </Link>
                 </li>
               </>
@@ -230,15 +228,13 @@ const HeaderDefault = props => {
                 </MenuItem>
               )}
 
-              {props?.account?.profile?.user_type === USER_TYPE.chefType &&
-                <MenuItem onClick={handleClose} classes={{root: separatorStyles.root}}>
+              {props?.account?.profile?.user_type === USER_TYPE.chefType && (
+                <MenuItem onClick={handleClose} classes={{ root: separatorStyles.root }}>
                   <Link href="/my-pencils">
-                    <a className={classes.header__link_place_menu}>
-                      My Pencils
-                    </a>
+                    <a className={classes.header__link_place_menu}>My Pencils</a>
                   </Link>
                 </MenuItem>
-              }
+              )}
               <MenuItem onClick={handleClose} classes={{ root: separatorStyles.root }}>
                 <Link href="/saved-recipes">
                   <a className={classes.header__link_place_menu}>Saved Recipes</a>
@@ -295,7 +291,16 @@ const HeaderDefault = props => {
                 </a>
               </Link>
             } */}
-            {!isExpanded && <MenuIcon className={classes.header__burger} onClick={handleExpandingMobileMenu} />}
+            {!isExpanded && (
+              <div className={classes.header__burgerWrap}>
+                <MenuIcon className={classes.header__burger} onClick={handleExpandingMobileMenu} />
+                {notificationAmount && notificationAmount !== 0 ? (
+                  <span className={classes.header__notifications__amount_burger}>{notificationAmount}</span>
+                ) : (
+                  <span />
+                )}
+              </div>
+            )}
             {isExpanded && <CloseIcon className={classes.header__burger} onClick={handleExpandingMobileMenu} />}
           </div>
         )}
