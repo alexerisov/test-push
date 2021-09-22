@@ -31,7 +31,7 @@ const useSeparatorStyles = makeStyles({
 });
 
 const HeaderDefault = props => {
-  const mobile = useMediaQuery('(max-width: 576px)');
+  const mobile = useMediaQuery('(max-width: 768px)');
   const [isExpanded, setExpanded] = React.useState(false);
   const separatorStyles = useSeparatorStyles();
   const handleClickLogin = name => {

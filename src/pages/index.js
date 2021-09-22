@@ -11,11 +11,24 @@ import BlocksHomePage from '@/components/blocks/blocks-home-page';
 import Carousel from '@/components/elements/carusel';
 import { Button } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { modalActions, profileActions, accountActions } from '@/store/actions';
+import { modalActions, profileActions } from '@/store/actions';
 import Recipe from '@/api/Recipe';
 import { getBaseUrl } from '@/utils/isTypeOfWindow';
+import { makeStyles } from '@material-ui/core/styles';
 import Head from 'next/head';
 import Cookies from 'cookies';
+
+const useStyles = makeStyles({
+  root: {
+    '@media (max-width:576px)': {
+      width: '160px !important',
+      height: '32px !important',
+      fontSize: '12px',
+      lineHeight: '14.6px',
+      fontWeight: '600'
+    }
+  }
+});
 
 const Home = props => {
   const router = useRouter();
@@ -23,7 +36,7 @@ const Home = props => {
     viewerType: 0,
     chefType: 1
   };
-
+  const btnStyles = useStyles(props);
   const chefType = USER_TYPE.chefType;
   const viewerType = USER_TYPE.viewerType;
   const [meal, setMeal] = React.useState(null);
@@ -55,11 +68,11 @@ const Home = props => {
         </div>
         <div className={classes.home__buttonUploud}>
           {props?.profile?.data?.user_type === chefType ? (
-            <Button variant="contained" color="primary" href="/recipe/upload">
+            <Button className={btnStyles.root} variant="contained" color="primary" href="/recipe/upload">
               Upload New Recipe!
             </Button>
           ) : (
-            <Button variant="contained" color="primary" onClick={handleChangeStatus}>
+            <Button className={btnStyles.root} variant="contained" color="primary" onClick={handleChangeStatus}>
               Become a home chef
             </Button>
           )}
