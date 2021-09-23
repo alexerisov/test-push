@@ -11,8 +11,8 @@ import { useRouter } from 'next/router';
 
 import { PUBLISH_STATUS, APPROVED_STATUS } from '@/utils/datasets';
 import logo from '../../../../public/images/index/logo.svg';
-import { CardControlPlay } from '../chef-icon';
-import { ChefIcon } from '../card-control-play';
+import CardControlPlay from '@/components/elements/card-control-play';
+import ChefIcon from '@/components/elements/chef-icon';
 
 const StyledCardMedia = styled(CardMedia)`
   .MuiCardMedia-root {
@@ -72,7 +72,7 @@ const CardHighestMeals = props => {
             </div>
             {props.hasVideo && <CardControlPlay />}
 
-            {props.isParced && props.publishStatus === 2 ? <ChefIcon /> : null}
+            {props.isParsed && props.publishStatus === 2 ? <ChefIcon /> : null}
 
             {props.publishStatus && <div className={classes.card__status}>{getStatusOfCard()}</div>}
           </div>

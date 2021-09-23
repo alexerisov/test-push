@@ -587,7 +587,7 @@ const Recipes = props => {
                     name={recipe?.user?.full_name}
                     city={recipe?.user?.city}
                     likes={recipe?.likes_number}
-                    isParced={recipe?.is_parsed}
+                    isParsed={recipe?.is_parsed}
                     publishStatus={recipe?.publish_status}
                     hasVideo={recipe?.video}
                     id={recipe.pk}

@@ -495,7 +495,7 @@ function RecipePage(props) {
                         id={recipe.pk}
                         publishStatus={recipe?.publish_status}
                         hasVideo={recipe?.video}
-                        isParced={recipe?.is_parsed}
+                        isParsed={recipe?.is_parsed}
                       />
                     );
                   })}

@@ -12,7 +12,8 @@ import { useRouter } from 'next/router';
 import { CardActionArea } from '@material-ui/core';
 import logo from '../../../../public/images/index/logo.svg';
 import Link from 'next/link';
-import { CardControlPlay, ChefIcon } from '../card-control-play';
+import CardControlPlay from '@/components/elements/card-control-play';
+import ChefIcon from '@/components/elements/chef-icon';
 
 const StyledCardMedia = styled(CardMedia)`
   .MuiCardMedia-root {
@@ -88,7 +89,7 @@ const CardLatestRecipes = props => {
 
               {props.hasVideo && <CardControlPlay />}
 
-              {props.isParced && props.publishStatus === 2 ? <ChefIcon /> : null}
+              {props.isParsed && props.publishStatus === 2 ? <ChefIcon /> : null}
             </div>
           </CardContent>
         </a>
