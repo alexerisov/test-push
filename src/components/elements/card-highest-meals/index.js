@@ -10,7 +10,7 @@ import { CardActionArea } from '@material-ui/core';
 import { useRouter } from 'next/router';
 
 import { PUBLISH_STATUS, APPROVED_STATUS } from '@/utils/datasets';
-import logo from "../../../../public/images/index/logo.svg";
+import logo from '../../../../public/images/index/logo.svg';
 
 const StyledCardMedia = styled(CardMedia)`
   .MuiCardMedia-root {
@@ -68,8 +68,14 @@ const CardHighestMeals = props => {
             <div className={classes.card__likeIcon}>
               <LikeIcon value={props.likes} />
             </div>
-            {props.publishStatus &&
-            <div className={classes.card__status}>{getStatusOfCard()}</div>}
+
+            {props.isParced && props.publishStatus === 2 ? (
+              <div className={classes.card__chefIconWrap}>
+                <img className={classes.card__chefIcon} src="/images/index/chef-hat2.svg" alt="chef-hat" />
+              </div>
+            ) : null}
+
+            {props.publishStatus && <div className={classes.card__status}>{getStatusOfCard()}</div>}
           </div>
         </StyledCardContent>
       </StyledCardActionArea>
