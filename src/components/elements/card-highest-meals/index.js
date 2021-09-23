@@ -11,6 +11,8 @@ import { useRouter } from 'next/router';
 
 import { PUBLISH_STATUS, APPROVED_STATUS } from '@/utils/datasets';
 import logo from '../../../../public/images/index/logo.svg';
+import { CardControlPlay } from '../chef-icon';
+import { ChefIcon } from '../card-control-play';
 
 const StyledCardMedia = styled(CardMedia)`
   .MuiCardMedia-root {
@@ -68,17 +70,9 @@ const CardHighestMeals = props => {
             <div className={classes.card__likeIcon}>
               <LikeIcon value={props.likes} />
             </div>
-            {props.hasVideo && (
-              <div className={classes.card__playIconWrap}>
-                <img className={classes.card__playIcon} src="/images/index/play.svg" alt="control-play" />
-              </div>
-            )}
+            {props.hasVideo && <CardControlPlay />}
 
-            {props.isParced && props.publishStatus === 2 ? (
-              <div className={classes.card__chefIconWrap}>
-                <img className={classes.card__chefIcon} src="/images/index/chef-hat2.svg" alt="chef-hat" />
-              </div>
-            ) : null}
+            {props.isParced && props.publishStatus === 2 ? <ChefIcon /> : null}
 
             {props.publishStatus && <div className={classes.card__status}>{getStatusOfCard()}</div>}
           </div>

@@ -476,7 +476,7 @@ function RecipePage(props) {
                   })}
                 </div>
               )}
-              <ResipeComments id={recipeId} userId={userId}/>
+              <ResipeComments id={recipeId} userId={userId} />
             </div>
             <div className={classes.recipe__cards}>
               {latestRecipes && (
@@ -493,6 +493,9 @@ function RecipePage(props) {
                         likes={recipe?.likes_number}
                         savedId={recipe?.user_saved_recipe}
                         id={recipe.pk}
+                        publishStatus={recipe?.publish_status}
+                        hasVideo={recipe?.video}
+                        isParced={recipe?.is_parsed}
                       />
                     );
                   })}

@@ -66,34 +66,6 @@
     margin: 0 0 14px 0;
     font-size: 14px;
   }
-  &__chefIconWrap {
-    border: 3px solid $--color-orange;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 35px;
-    height: 35px;
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-  }
-  &__chefIcon {
-    width: 26px;
-    height: 26px;
-  }
-
-  &__playIconWrap {
-    position: absolute;
-    top: 60px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  &__playIcon {
-    width: 52px;
-    height: 52px;
-  }
 
   &__likeIcon {
     margin: 10px 0 0 0;
