@@ -68,6 +68,11 @@ const CardHighestMeals = props => {
             <div className={classes.card__likeIcon}>
               <LikeIcon value={props.likes} />
             </div>
+            {props.hasVideo && (
+              <div className={classes.card__playIconWrap}>
+                <img className={classes.card__playIcon} src="/images/index/play.svg" alt="control-play" />
+              </div>
+            )}
 
             {props.isParced && props.publishStatus === 2 ? (
               <div className={classes.card__chefIconWrap}>

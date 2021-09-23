@@ -589,6 +589,7 @@ const Recipes = props => {
                     likes={recipe?.likes_number}
                     isParced={recipe?.is_parsed}
                     publishStatus={recipe?.publish_status}
+                    hasVideo={recipe?.video}
                     id={recipe.pk}
                   />
                 );

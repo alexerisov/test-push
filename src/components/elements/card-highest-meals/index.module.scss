@@ -83,6 +83,18 @@
     height: 26px;
   }
 
+  &__playIconWrap {
+    position: absolute;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &__playIcon {
+    width: 52px;
+    height: 52px;
+  }
+
   &__likeIcon {
     margin: 10px 0 0 0;
   }
