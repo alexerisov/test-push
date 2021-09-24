@@ -97,6 +97,7 @@
     margin: 0;
     padding: 0;
     cursor: pointer;
+    margin-left: 6px;
   }
 
   &__notifications {
@@ -110,7 +111,7 @@
 
     &__amount {
       border-radius: 50%;
-      background-color: $--color-orange;
+      background-color: $--color-red1;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -121,6 +122,24 @@
       width: 14px;
       height: 14px;
       margin-right: 4px;
+      line-height: 14.2;
+
+      &_desctop {
+        position: absolute;
+        top: -15px;
+        right: -8px;
+        width: 18px;
+        height: 18px;
+        overflow: hidden;
+        background-color: $--color-red1;
+        border-radius: 50%;
+        background-color: $--color-red1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: $--color-white;
+        font-size: 12px;
+      }
 
       &_burger {
         position: absolute;

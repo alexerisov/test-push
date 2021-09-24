@@ -199,17 +199,16 @@ const HeaderDefault = props => {
           </button>
         ) : (
           <div>
-            {/* //myyyyyyyyyyyyyyyyyy */}
-            {/* <Link href="/notifications">
+            <Link href="/notifications">
               <a className={classes.header__notifications}>
                 <img src="/images/index/icons-bell.png" />
                 {notificationAmount && notificationAmount !== 0 ? (
-                  <span className={classes.header__notifications__amount}>{notificationAmount}</span>
+                  <span className={classes.header__notifications__amount_desctop}>{notificationAmount}</span>
                 ) : (
                   <span />
                 )}
               </a>
-            </Link> */}
+            </Link>
             <button onClick={handleClick} className={classes.header__button}>
               {props?.account?.profile?.user_type === USER_TYPE.viewerType
                 ? `Hi, ${
