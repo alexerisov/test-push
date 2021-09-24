@@ -131,8 +131,21 @@ const HeaderDefault = props => {
                 <a>My Profile</a>
               </Link>
             </li>
+
             {props?.account?.profile?.user_type === USER_TYPE.chefType && (
               <>
+                <li
+                  className={`${classes.mobileMenu__item} ${classes.notification__wrap}`}
+                  onClick={handleExpandingMobileMenu}>
+                  {notificationAmount && notificationAmount !== 0 ? (
+                    <span className={classes.header__notifications__amount}>{notificationAmount}</span>
+                  ) : (
+                    <span />
+                  )}
+                  <Link href="/notifications">
+                    <a>Notifications</a>
+                  </Link>
+                </li>
                 <li className={classes.mobileMenu__item} onClick={handleExpandingMobileMenu}>
                   <Link href="/my-recipes">
                     <a>My Recipes</a>
@@ -198,7 +211,7 @@ const HeaderDefault = props => {
               <a className={classes.header__notifications}>
                 <img src="/images/index/icons-bell.png" />
                 {notificationAmount && notificationAmount !== 0 ? (
-                  <span className={classes.header__notifications__amount}>{notificationAmount}</span>
+                  <span className={classes.header__notifications__amount_desctop}>{notificationAmount}</span>
                 ) : (
                   <span />
                 )}
@@ -271,8 +284,9 @@ const HeaderDefault = props => {
 
         {!mobile && defaultContent}
         {mobile && (
-          <div className={classes.header__iconsWrap}>
-            {
+          <div>
+            {/* //myyyyyyyyyyyyy */}
+            {/* {
               <Link href="/notifications">
                 <a className={classes.header__notifications}>
                   <img src="/images/index/icons-bell.png" />
@@ -283,11 +297,17 @@ const HeaderDefault = props => {
                   )}
                 </a>
               </Link>
-            }
-            <button className={classes.header__btnSearch} onClick={handleClickSearch('search')}>
-              <img src="/images/index/icon_search.svg" className={classes.header__iconSearch} />
-            </button>
-            {!isExpanded && <MenuIcon className={classes.header__burger} onClick={handleExpandingMobileMenu} />}
+            } */}
+            {!isExpanded && (
+              <div className={classes.header__burgerWrap}>
+                <MenuIcon className={classes.header__burger} onClick={handleExpandingMobileMenu} />
+                {notificationAmount && notificationAmount !== 0 ? (
+                  <span className={classes.header__notifications__amount_burger}>{notificationAmount}</span>
+                ) : (
+                  <span />
+                )}
+              </div>
+            )}
             {isExpanded && <CloseIcon className={classes.header__burger} onClick={handleExpandingMobileMenu} />}
           </div>
         )}
