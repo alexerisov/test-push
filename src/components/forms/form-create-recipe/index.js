@@ -36,6 +36,8 @@ import InputTime from '@/components/elements/input/inputTime';
 import { recoveryLocalStorage } from '@/utils/web-storage/local';
 import Recipe from '@/api/Recipe';
 import LinearProgressWithLabel from '@/components/elements/linear-progress-with-label';
+import styled from 'styled-components';
+import logo from '/public/images/index/logo.svg';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -55,7 +57,8 @@ const useStyles = makeStyles(theme => ({
   },
   textField: {
     '& .MuiOutlinedInput-root': {
-      borderRadius: '10px'
+      borderRadius: '10px',
+      backgroundColor: '#ffffff'
     },
     '& .MuiInputBase-input': {
       height: 'auto'
@@ -385,11 +388,7 @@ function FormCreateRecipe(props) {
   };
 
   useEffect(() => {
-    if (videoRecipe) {
-      labelRefVideo.current.style.border = 'none';
-    } else {
-      labelRefVideo.current.style.border = '3px dashed #dfdfdf';
-    }
+    labelRefVideo.current.style.border = '3px dashed #dfdfdf';
   }, [videoRecipe]);
 
   function handleDropVideo(event) {
@@ -493,7 +492,7 @@ function FormCreateRecipe(props) {
       <form className={classes.createRecipeForm}>
         <div className={classes.createRecipeSection}>
           <h2 className={classes.createRecipeSubtitle}>Basic Details</h2>
-          <div>
+          <div className={classes.createRecipeInput_type_title}>
             <label htmlFor="create-title" className={classes.createRecipeLabel}>
               <span style={{ color: 'red' }}>* </span>Title
             </label>
@@ -512,7 +511,7 @@ function FormCreateRecipe(props) {
               />
             </NoSsr>
           </div>
-          <div>
+          <div className={classes.createRecipeInput_type_description}>
             <label htmlFor="create-description" className={classes.createRecipeLabel}>
               <span style={{ color: 'red' }}>* </span>Description
             </label>
@@ -533,6 +532,65 @@ function FormCreateRecipe(props) {
             </NoSsr>
           </div>
         </div>
+
+        <div className={classes.createRecipeSection}>
+          <h2 className={classes.createRecipeSubtitle}>
+            <span style={{ color: 'red' }}>* </span>Cooking images
+          </h2>
+          <ReactSortable
+            delayOnTouchOnly={false}
+            list={[...images, { id: 'not-draggable', filtered: true, chosen: true }]}
+            setList={sortList}
+            animation={200}
+            filter=".form-create-recipe_createRecipeLabel_type_addImage__17fDT"
+            draggable=".card-image_cardImage__yt16O"
+            preventOnFilter
+            className={classes.createRecipeSection__grid_type_cardImages}>
+            {getMarkUpForUploadedImages()}
+          </ReactSortable>
+          <FieldError errors={error?.images ? error : { images: errorDeleteImages }} path="images" id="error" />
+        </div>
+        <div className={classes.createRecipeSection}>
+          <h2 className={classes.createRecipeSubtitle_withoutInput}>Cooking Video</h2>
+          <div className={classes.createRecipeSection__video}>
+            <>
+              <div
+                onClick={videoRecipe ? handleDeleteVideo : e => onClickUploadVideo(e)}
+                className={classes.uploadVideoLabel}
+                onDrop={event => handleDropVideo(event)}
+                onDragOver={event => handleDragOverVideo(event)}
+                onDragEnter={event => handleDragEnterVideo(event)}
+                onDragLeave={event => handleDragLeaveVideo(event)}>
+                <div className={classes.uploadVideoLabel__border} ref={labelRefVideo}>
+                  <img className={classes.uploadVideoLabel__logo} src="/images/index/uploadIconGray.svg" />
+                  {(progressVideo === 0 || videoRecipe) && (
+                    <p className={classes.uploadVideoLabel__dragText}>{!videoRecipe ? 'Add video' : 'Delete video'}</p>
+                  )}
+                  {progressVideo !== 0 && !videoRecipe && <LinearProgressWithLabel value={progressVideo} />}
+                </div>
+              </div>
+              <input
+                type="file"
+                ref={inputRefVideo}
+                accept="video/*"
+                hidden
+                onChange={event => {
+                  handleAddVideo(event.currentTarget.files[0]);
+                }}></input>
+            </>
+
+            {videoRecipe && (
+              <div className={classes.recipe__video__watermark}>
+                <video width="288" controls="controls" className={classes.recipe__video}>
+                  <source src={videoRecipe?.video} type="video/mp4" />
+                </video>
+                <div className={classes.recipe__video__watermark__icon} />
+              </div>
+            )}
+          </div>
+          <FieldError errors={videoRecipeError} path="video" id="error" />
+        </div>
+
         <div className={classes.createRecipeSection}>
           <h2 className={classes.createRecipeSubtitle}>
             <span style={{ color: 'red' }}>* </span>Ingredients
@@ -555,12 +613,12 @@ function FormCreateRecipe(props) {
               onClick={handleClickPopupOpen('addIngredient')}
               className={classes.createRecipeButton_type_addIngredient}>
               <p className={classes.createRecipeButton_type_addIngredient__icon}>&#43;</p>
-              <p className={classes.createRecipeButton_type_addIngredient__text}>Add More</p>
+              <p className={classes.createRecipeButton_type_addIngredient__text}>Add</p>
             </button>
           </div>
           <FieldError errors={error} path="ingredients" id="error" />
         </div>
-        <div className={classes.createRecipeSection}>
+        <div className={classes.createRecipeSection_type_cardNutrition}>
           <h2 className={classes.createRecipeSubtitle}>Nutrition value</h2>
           <div className={classes.createRecipeSection__grid_type_cardNutrition}>
             {data?.calories ? (
@@ -599,7 +657,7 @@ function FormCreateRecipe(props) {
                 onClick={handleClickPopupOpen('addNutrition')}
                 className={classes.createRecipeButton_type_addNutrition}>
                 <p className={classes.createRecipeButton_type_addNutrition__icon}>&#43;</p>
-                <p className={classes.createRecipeButton_type_addNutrition__text}>Add More</p>
+                <p className={classes.createRecipeButton_type_addNutrition__text}>Add</p>
               </button>
             ) : (
               ''
@@ -650,102 +708,14 @@ function FormCreateRecipe(props) {
             <p className={classes.createRecipeButton_type_addStep__text}>Add More Steps</p>
           </button>
         </div>
+
         <div className={classes.createRecipeSection}>
-          <h2 className={classes.createRecipeSubtitle}>
-            <span style={{ color: 'red' }}>* </span>Cooking images
+          <h2
+            className={`${classes.createRecipeSubtitle_withoutInput} ${classes.createRecipeSubtitle_classifications}`}>
+            All Classifications
           </h2>
-          <ReactSortable
-            delayOnTouchOnly={false}
-            list={[...images, { id: 'not-draggable', filtered: true, chosen: true }]}
-            setList={sortList}
-            animation={200}
-            filter=".form-create-recipe_createRecipeLabel_type_addImage__17fDT"
-            draggable=".card-image_cardImage__yt16O"
-            preventOnFilter
-            className={classes.createRecipeSection__grid_type_cardImages}>
-            {getMarkUpForUploadedImages()}
-          </ReactSortable>
-          <FieldError errors={error?.images ? error : { images: errorDeleteImages }} path="images" id="error" />
-        </div>
-        <div className={classes.createRecipeSection}>
-          <h2 className={classes.createRecipeSubtitle_withoutInput}>Cooking Video</h2>
-          {!videoRecipe ? (
-            <>
-              <div
-                ref={labelRefVideo}
-                className={classes.uploadVideoLabel}
-                onDrop={event => handleDropVideo(event)}
-                onDragOver={event => handleDragOverVideo(event)}
-                onDragEnter={event => handleDragEnterVideo(event)}
-                onDragLeave={event => handleDragLeaveVideo(event)}>
-                <img className={classes.uploadVideoLabel__logo} src="/images/index/upload-icon.svg" />
-                {progressVideo === 0 ? (
-                  <>
-                    <p className={classes.uploadVideoLabel__dragText}>Drag and drop files here</p>
-                    <p className={classes.uploadVideoLabel__orText}>or</p>
-                    <button
-                      className={classes.uploadVideoLabel__browseFilesButton}
-                      onClick={e => onClickUploadVideo(e)}>
-                      Browse files
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <p className={classes.uploadVideoLabel__dragText}>Uploading...</p>
-                    <LinearProgressWithLabel value={progressVideo} />
-                  </>
-                )}
-              </div>
-              <input
-                type="file"
-                ref={inputRefVideo}
-                accept="video/*"
-                hidden
-                onChange={event => {
-                  handleAddVideo(event.currentTarget.files[0]);
-                }}></input>
-              <FieldError errors={videoRecipeError} path="video" id="error" />
-            </>
-          ) : (
-            <>
-              <div className={classes.recipe__video__watermark} ref={labelRefVideo}>
-                <video width="550" controls="controls" className={classes.recipe__video}>
-                  <source src={videoRecipe?.video} type="video/mp4" />
-                </video>
-                <div className={classes.recipe__video__watermark__icon} />
-              </div>
-              <button onClick={handleDeleteVideo} className={classes.recipe__video__button}>
-                Delete Video
-              </button>
-            </>
-          )}
-        </div>
-        <div className={classes.createRecipeSection}>
-          <div className={classes.createRecipeItem}>
-            <h3 className={classes.createRecipeItem__title}>
-              <span style={{ color: 'red' }}>* </span>Visibility
-            </h3>
-            <NoSsr>
-              <RadioGroup
-                aria-label="create-visibility"
-                name="create-visibility"
-                value={data?.publish_status}
-                onChange={onChangeFieldNumber('publish_status')}
-                error={error?.publish_status}
-                helperText={error?.publish_status ? 'This field is required' : ''}>
-                <FormControlLabel value={1} control={<Radio id="publish_status" />} label="Save" />
-                <FormControlLabel value={2} control={<Radio id="publish_status" />} label="Publish" />
-              </RadioGroup>
-            </NoSsr>
-            {error?.publish_status && (
-              <p className={classes.createRecipeItem__errorPublishStatus}>This field is required</p>
-            )}
-          </div>
-        </div>
-        <div className={classes.createRecipeSection}>
-          <h2 className={classes.createRecipeSubtitle_withoutInput}>All Classifications</h2>
           <div className={classes.createRecipeSection__grid_type_input}>
-            <div className={classes.createRecipeItem}>
+            <div className={classes.createRecipeItem__inputTime}>
               <label htmlFor="create-cooking_time" className={classes.createRecipeLabel}>
                 Preparation Time
               </label>
@@ -761,7 +731,9 @@ function FormCreateRecipe(props) {
             </div>
             <NoSsr>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
-                <label htmlFor="create-types-select" className={classes.createRecipeLabel}>
+                <label
+                  htmlFor="create-types-select"
+                  className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
                   Type
                 </label>
                 <Select
@@ -771,13 +743,18 @@ function FormCreateRecipe(props) {
                   fullWidth
                   error={error?.types}
                   MenuProps={MenuProps}
+                  IconComponent={() => (
+                    <img src={'/images/index/Polygon6.png'} className={classes.createRecipeSelectArrow} />
+                  )}
                   multiple>
                   {selectItemList(recipeTypes)}
                 </Select>
                 <FormHelperText>{error?.types ? 'This field is required' : ''}</FormHelperText>
               </FormControl>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
-                <label htmlFor="create-diet-restrictions-select" className={classes.createRecipeLabel}>
+                <label
+                  htmlFor="create-diet-restrictions-select"
+                  className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
                   <span style={{ color: 'red' }}>* </span>Lifestyle
                 </label>
                 <Select
@@ -787,13 +764,18 @@ function FormCreateRecipe(props) {
                   fullWidth
                   error={error?.diet_restrictions}
                   MenuProps={MenuProps}
+                  IconComponent={() => (
+                    <img src="/images/index/Polygon6.png" className={classes.createRecipeSelectArrow} />
+                  )}
                   multiple>
                   {selectItemList(dietaryrestrictions)}
                 </Select>
                 <FormHelperText>{error?.diet_restrictions ? 'This field is required' : ''}</FormHelperText>
               </FormControl>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
-                <label htmlFor="create-cuisines-select" className={classes.createRecipeLabel}>
+                <label
+                  htmlFor="create-cuisines-select"
+                  className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
                   <span style={{ color: 'red' }}>* </span>Cuisine
                 </label>
                 <Select
@@ -801,16 +783,20 @@ function FormCreateRecipe(props) {
                   value={data?.cuisines}
                   onChange={onChangeSelect('cuisines')}
                   fullWidth
-                  labelWidth={10}
                   error={error?.cuisines}
                   MenuProps={MenuProps}
+                  IconComponent={() => (
+                    <img src="/images/index/Polygon6.png" className={classes.createRecipeSelectArrow} />
+                  )}
                   multiple>
                   {selectItemList(cuisineList)}
                 </Select>
                 <FormHelperText>{error?.cuisines ? 'This field is required' : ''}</FormHelperText>
               </FormControl>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
-                <label htmlFor="create-cooking-methods-select" className={classes.createRecipeLabel}>
+                <label
+                  htmlFor="create-cooking-methods-select"
+                  className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
                   <span style={{ color: 'red' }}>* </span>Cooking Method
                 </label>
                 <Select
@@ -819,6 +805,9 @@ function FormCreateRecipe(props) {
                   onChange={onChangeSelect('cooking_methods')}
                   fullWidth
                   error={error?.cooking_methods}
+                  IconComponent={() => (
+                    <img src="/images/index/Polygon6.png" className={classes.createRecipeSelectArrow} />
+                  )}
                   MenuProps={MenuProps}
                   multiple>
                   {selectItemList(cookingMethods)}
@@ -826,21 +815,49 @@ function FormCreateRecipe(props) {
                 <FormHelperText>{error?.cooking_methods ? 'This field is required' : ''}</FormHelperText>
               </FormControl>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
-                <label htmlFor="create-cooking-skills-select" className={classes.createRecipeLabel}>
+                <label
+                  htmlFor="create-cooking-skills-select"
+                  className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
                   <span style={{ color: 'red' }}>* </span>Cooking Skills
                 </label>
                 <Select
                   id="create-cooking-skills-select"
                   value={data?.cooking_skills}
                   onChange={onChangeSelect('cooking_skills')}
-                  autoWidth
-                  error={error?.cooking_skills}
+                  fullWidth
+                  IconComponent={() => (
+                    <img src="/images/index/Polygon6.png" className={classes.createRecipeSelectArrow} />
+                  )}
+                  error={Boolean(error?.cooking_skills)}
                   MenuProps={MenuProps}>
                   {selectItemList(cookingSkill)}
                 </Select>
                 <FormHelperText>{error?.cooking_skills ? 'This field is required' : ''}</FormHelperText>
               </FormControl>
             </NoSsr>
+          </div>
+        </div>
+
+        <div className={`${classes.createRecipeSection} ${classes.createRecipeSection_visibility}`}>
+          <div className={classes.createRecipeItem}>
+            <h3 className={`${classes.createRecipeSubtitle} ${classes.createRecipeSubtitle_type_visibility}`}>
+              <span style={{ color: 'red' }}>* </span>Visibility
+            </h3>
+            <NoSsr>
+              <RadioGroup
+                row
+                aria-label="create-visibility"
+                name="create-visibility"
+                value={data?.publish_status}
+                onChange={onChangeFieldNumber('publish_status')}
+                error={error?.publish_status}>
+                <FormControlLabel value={1} control={<Radio id="publish_status" />} label="Save" />
+                <FormControlLabel value={2} control={<Radio id="publish_status" />} label="Publish" />
+              </RadioGroup>
+            </NoSsr>
+            {error?.publish_status && (
+              <p className={classes.createRecipeItem__errorPublishStatus}>This field is required</p>
+            )}
           </div>
         </div>
       </form>
