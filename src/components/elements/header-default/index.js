@@ -31,7 +31,7 @@ const useSeparatorStyles = makeStyles({
 });
 
 const HeaderDefault = props => {
-  const mobile = useMediaQuery('(max-width: 576px)');
+  const mobile = useMediaQuery('(max-width: 768px)');
   const [isExpanded, setExpanded] = React.useState(false);
   const separatorStyles = useSeparatorStyles();
   const handleClickLogin = name => {
@@ -77,6 +77,14 @@ const HeaderDefault = props => {
       Account.getNotifications().then(res => setNotificationAmount(res.data.length));
     }
   }, [props.account.hasToken]);
+
+  const handleClickSearch = name => {
+    return () => {
+      props.dispatch(modalActions.open(name)).then(result => {
+        // result when modal return promise and close
+      });
+    };
+  };
 
   const mobileMenu = (
     <div className={isExpanded ? classes.mobileMenu : classes.mobileMenu__dnone}>

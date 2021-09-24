@@ -55,12 +55,12 @@ const MyUploadsPage = () => {
       <div className={classes.uploads__header}>
         <h2 className={classes.uploads__title}>My Recipes</h2>
 
-        <ButtonUpload link="/recipe/upload" linkText="Upload your recipe"/>
+        <ButtonUpload link="/recipe/upload" linkText="Upload your recipe" />
       </div>
 
       <div className={classes.uploads__recipes}>
-        {uploadRecipes?.length
-          ? uploadRecipes.map(item => (
+        {uploadRecipes?.length ? (
+          uploadRecipes.map(item => (
             <CardHighestMeals
               key={`${item.pk + '1k0'}`}
               title={item.title}
@@ -73,19 +73,21 @@ const MyUploadsPage = () => {
               reviewStatus={item?.status}
             />
           ))
-          : <span>No upload recipes yet!</span>
-        }
+        ) : (
+          <span>No upload recipes yet!</span>
+        )}
       </div>
 
-      {uploadRecipes?.length !== 0 &&
-      <Pagination
-        classes={{ root: classes.uploads__pagination }}
-        count={numberOfPages}
-        size={matches ? 'small' : 'large'}
-        onChange={(event, number) => setPage(number)}
-        defaultPage={1}
-        siblingCount={matches ? 0 : 1}
-      />}
+      {uploadRecipes?.length !== 0 && (
+        <Pagination
+          classes={{ root: classes.uploads__pagination }}
+          count={numberOfPages}
+          size={matches ? 'small' : 'large'}
+          onChange={(event, number) => setPage(number)}
+          defaultPage={1}
+          siblingCount={matches ? 0 : 1}
+        />
+      )}
     </div>
   );
 

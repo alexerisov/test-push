@@ -1,5 +1,5 @@
-@import "~styles/variables.scss";
-@import "~styles/mixins/mixins.scss";
+@import '~styles/variables.scss';
+@import '~styles/mixins/mixins.scss';
 
 .card {
   position: relative;
@@ -8,10 +8,10 @@
   width: 338px;
   min-height: 320px;
   opacity: 1;
-	animation-name: fadeInOpacity;
-	animation-iteration-count: 1;
-	animation-timing-function: ease-in;
-	animation-duration: 0.5s;
+  animation-name: fadeInOpacity;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 0.5s;
 
   &__background {
     display: flex;
@@ -31,70 +31,70 @@
     width: 285px;
   }
 
-    &__content {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        font-size: 18px;
-        @include fontMedium();
-    }
+  &__content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 18px;
+    @include fontMedium();
+  }
 
-    &__media {
-        height: 173px;
-        width: 100%;
-        background-color: $--color-gray8;
-    }
+  &__media {
+    height: 173px;
+    width: 100%;
+    background-color: $--color-gray8;
+  }
 
-    a {
-        color: $--color-orange;
-    }
+  a {
+    color: $--color-orange;
+  }
 
-    p {
-        font-weight: 600;
-    }
+  p {
+    font-weight: 600;
+  }
 
-    &__name {
-        margin: 0 0 10px 0;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-        max-width: 265px;
-    }
+  &__name {
+    margin: 0 0 10px 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 265px;
+  }
 
-    &__location {
-        color: $--color-gray5;
-        margin: 0 0 14px 0;
-        font-size: 14px;
-    }
+  &__location {
+    color: $--color-gray5;
+    margin: 0 0 14px 0;
+    font-size: 14px;
+  }
 
-    &__likeIcon {
-        margin: 10px 0 0 0;
-    }
+  &__likeIcon {
+    margin: 10px 0 0 0;
+  }
 
-    &__status {
-      position: absolute;
-      right: 16px;
-      top: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 5px 5px;
-      color: #fff;
-      border-radius: 5px;
-      background: rgba(0, 0 , 0, 0.7);
-      opacity: 0.35;
-    }
+  &__status {
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 5px;
+    color: #fff;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.7);
+    opacity: 0.35;
+  }
 
-    &:hover .card__status {
-      opacity: 1;
-    }
+  &:hover .card__status {
+    opacity: 1;
+  }
 }
 
 @keyframes fadeInOpacity {
-	0% {
-		opacity: 0;
-	}
-	100% {
-		opacity: 1;
-	}
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

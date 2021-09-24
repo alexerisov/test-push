@@ -1,19 +1,19 @@
-@import "~styles/variables.scss";
-@import "~styles/mixins/mixins.scss";
+@import '~styles/variables.scss';
+@import '~styles/mixins/mixins.scss';
 
 .container {
-    @include fontRegular();
-    padding: 38px 90px 0 90px;
-    min-width: 350px;
+  @include fontRegular();
+  padding: 38px 90px 0 90px;
+  min-width: 350px;
 
-    @media (max-width: $--lg) {
-        padding: 38px 50px 0 20px;
-    }
+  @media (max-width: $--lg) {
+    padding: 0px 50px 0 20px;
+  }
 
-    ul {
-        max-width: max-content;
-        display: flex;
-        gap: 0 18px;
-        flex-direction: row;
-    }
+  ul {
+    max-width: max-content;
+    display: flex;
+    gap: 0 18px;
+    flex-direction: row;
+  }
 }
