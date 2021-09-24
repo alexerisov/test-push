@@ -284,20 +284,10 @@ const HeaderDefault = props => {
 
         {!mobile && defaultContent}
         {mobile && (
-          <div>
-            {/* //myyyyyyyyyyyyy */}
-            {/* {
-              <Link href="/notifications">
-                <a className={classes.header__notifications}>
-                  <img src="/images/index/icons-bell.png" />
-                  {notificationAmount && notificationAmount !== 0 ? (
-                    <span className={classes.header__notifications__amount}>{notificationAmount}</span>
-                  ) : (
-                    <span />
-                  )}
-                </a>
-              </Link>
-            } */}
+          <div className={classes.header__iconsWrap}>
+            <button className={classes.header__btnSearch} onClick={handleClickSearch('search')}>
+              <img src="/images/index/icon_search.svg" className={classes.header__iconSearch} />
+            </button>
             {!isExpanded && (
               <div className={classes.header__burgerWrap}>
                 <MenuIcon className={classes.header__burger} onClick={handleExpandingMobileMenu} />
@@ -308,6 +298,7 @@ const HeaderDefault = props => {
                 )}
               </div>
             )}
+
             {isExpanded && <CloseIcon className={classes.header__burger} onClick={handleExpandingMobileMenu} />}
           </div>
         )}
