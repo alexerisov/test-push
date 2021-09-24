@@ -72,7 +72,7 @@ const CardHighestMeals = props => {
             </div>
             {props.hasVideo && <CardControlPlay />}
 
-            {props.isParsed && props.publishStatus === 2 ? <ChefIcon /> : null}
+            {props.isParsed && props.publishStatus === PUBLISH_STATUS.published ? <ChefIcon /> : null}
 
             {props.publishStatus && <div className={classes.card__status}>{getStatusOfCard()}</div>}
           </div>
