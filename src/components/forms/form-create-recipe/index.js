@@ -36,6 +36,7 @@ import InputTime from '@/components/elements/input/inputTime';
 import { recoveryLocalStorage } from '@/utils/web-storage/local';
 import Recipe from '@/api/Recipe';
 import LinearProgressWithLabel from '@/components/elements/linear-progress-with-label';
+import styled from 'styled-components';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -55,7 +56,8 @@ const useStyles = makeStyles(theme => ({
   },
   textField: {
     '& .MuiOutlinedInput-root': {
-      borderRadius: '10px'
+      borderRadius: '10px',
+      backgroundColor: '#ffffff'
     },
     '& .MuiInputBase-input': {
       height: 'auto'
@@ -493,7 +495,7 @@ function FormCreateRecipe(props) {
       <form className={classes.createRecipeForm}>
         <div className={classes.createRecipeSection}>
           <h2 className={classes.createRecipeSubtitle}>Basic Details</h2>
-          <div>
+          <div className={classes.createRecipeInput_type_title}>
             <label htmlFor="create-title" className={classes.createRecipeLabel}>
               <span style={{ color: 'red' }}>* </span>Title
             </label>
@@ -512,7 +514,7 @@ function FormCreateRecipe(props) {
               />
             </NoSsr>
           </div>
-          <div>
+          <div className={classes.createRecipeInput_type_description}>
             <label htmlFor="create-description" className={classes.createRecipeLabel}>
               <span style={{ color: 'red' }}>* </span>Description
             </label>
@@ -533,123 +535,7 @@ function FormCreateRecipe(props) {
             </NoSsr>
           </div>
         </div>
-        <div className={classes.createRecipeSection}>
-          <h2 className={classes.createRecipeSubtitle}>
-            <span style={{ color: 'red' }}>* </span>Ingredients
-          </h2>
-          <div className={classes.createRecipeSection__grid_type_cardIngredients} id="create-ingredients">
-            {data?.ingredients.length !== 0
-              ? data?.ingredients.map((item, index) => (
-                  <CardIngredient
-                    delete={handleRemoveIngredient}
-                    key={index}
-                    title={item.title}
-                    quantity={item.quantity}
-                    unit={handleIngredientsUnit(item.unit)}
-                    id={index}
-                  />
-                ))
-              : ''}
-            <button
-              type="button"
-              onClick={handleClickPopupOpen('addIngredient')}
-              className={classes.createRecipeButton_type_addIngredient}>
-              <p className={classes.createRecipeButton_type_addIngredient__icon}>&#43;</p>
-              <p className={classes.createRecipeButton_type_addIngredient__text}>Add More</p>
-            </button>
-          </div>
-          <FieldError errors={error} path="ingredients" id="error" />
-        </div>
-        <div className={classes.createRecipeSection}>
-          <h2 className={classes.createRecipeSubtitle}>Nutrition value</h2>
-          <div className={classes.createRecipeSection__grid_type_cardNutrition}>
-            {data?.calories ? (
-              <CardNutrition id="calories" delete={handleRemoveNutrition} title="Calories" quantity={data?.calories} />
-            ) : (
-              ''
-            )}
-            {data?.proteins ? (
-              <CardNutrition
-                id="proteins"
-                delete={handleRemoveNutrition}
-                title="Protein"
-                quantity={`${data?.proteins}%`}
-              />
-            ) : (
-              ''
-            )}
-            {data?.fats ? (
-              <CardNutrition id="fats" delete={handleRemoveNutrition} title="Fat" quantity={`${data?.fats}%`} />
-            ) : (
-              ''
-            )}
-            {data?.carbohydrates ? (
-              <CardNutrition
-                id="carbohydrates"
-                delete={handleRemoveNutrition}
-                title="Carbs"
-                quantity={`${data?.carbohydrates}%`}
-              />
-            ) : (
-              ''
-            )}
-            {!data?.calories || !data?.proteins || !data?.fats || !data?.carbohydrates ? (
-              <button
-                type="button"
-                onClick={handleClickPopupOpen('addNutrition')}
-                className={classes.createRecipeButton_type_addNutrition}>
-                <p className={classes.createRecipeButton_type_addNutrition__icon}>&#43;</p>
-                <p className={classes.createRecipeButton_type_addNutrition__text}>Add More</p>
-              </button>
-            ) : (
-              ''
-            )}
-          </div>
-        </div>
-        <div className={classes.createRecipeSection}>
-          <h2 className={classes.createRecipeSubtitle_withoutInput}>Steps to make the recipe</h2>
-          <ul className={classes.createRecipeList}>
-            {data?.steps.length !== 0
-              ? data?.steps.map((item, index) => {
-                  return (
-                    <li key={index} className={classes.createRecipeList__item}>
-                      <div className={classes.createRecipeList__titleContainer}>
-                        <h3 className={classes.createRecipeList__title}>
-                          <span className={classes.createRecipeList__title_color}>{`Step ${item.num} : `}</span>
-                          {item.title}
-                        </h3>
-                        <button
-                          type="button"
-                          className={classes.createRecipeList__item__button}
-                          id={item.num}
-                          onClick={handleClickPopupOpen('addStep', {
-                            num: item.num,
-                            title: item.title,
-                            description: item.description
-                          })}>
-                          <EditIcon style={{ fontSize: 18 }} />
-                        </button>
-                        <button
-                          className={classes.createRecipeList__item__button}
-                          id={item.num}
-                          onClick={handleDeleteStep}>
-                          <DeleteIcon style={{ fontSize: 18 }} id={item.num} />
-                        </button>
-                      </div>
-                      <p className={classes.createRecipeList__text}>{item.description}</p>
-                    </li>
-                  );
-                })
-              : ''}
-          </ul>
-          <button
-            type="button"
-            onClick={handleClickPopupOpen('addStep')}
-            className={classes.createRecipeButton_type_addStep}>
-            <p className={classes.createRecipeButton_type_addStep__icon}>&#43;</p>
-            <p className={classes.createRecipeButton_type_addStep__text}>Add More Steps</p>
-          </button>
-        </div>
+
         <div className={classes.createRecipeSection}>
           <h2 className={classes.createRecipeSubtitle}>
             <span style={{ color: 'red' }}>* </span>Cooking images
@@ -720,28 +606,125 @@ function FormCreateRecipe(props) {
             </>
           )}
         </div>
+
         <div className={classes.createRecipeSection}>
-          <div className={classes.createRecipeItem}>
-            <h3 className={classes.createRecipeItem__title}>
-              <span style={{ color: 'red' }}>* </span>Visibility
-            </h3>
-            <NoSsr>
-              <RadioGroup
-                aria-label="create-visibility"
-                name="create-visibility"
-                value={data?.publish_status}
-                onChange={onChangeFieldNumber('publish_status')}
-                error={error?.publish_status}
-                helperText={error?.publish_status ? 'This field is required' : ''}>
-                <FormControlLabel value={1} control={<Radio id="publish_status" />} label="Save" />
-                <FormControlLabel value={2} control={<Radio id="publish_status" />} label="Publish" />
-              </RadioGroup>
-            </NoSsr>
-            {error?.publish_status && (
-              <p className={classes.createRecipeItem__errorPublishStatus}>This field is required</p>
+          <h2 className={classes.createRecipeSubtitle}>
+            <span style={{ color: 'red' }}>* </span>Ingredients
+          </h2>
+          <div className={classes.createRecipeSection__grid_type_cardIngredients} id="create-ingredients">
+            {data?.ingredients.length !== 0
+              ? data?.ingredients.map((item, index) => (
+                  <CardIngredient
+                    delete={handleRemoveIngredient}
+                    key={index}
+                    title={item.title}
+                    quantity={item.quantity}
+                    unit={handleIngredientsUnit(item.unit)}
+                    id={index}
+                  />
+                ))
+              : ''}
+            <button
+              type="button"
+              onClick={handleClickPopupOpen('addIngredient')}
+              className={classes.createRecipeButton_type_addIngredient}>
+              <p className={classes.createRecipeButton_type_addIngredient__icon}>&#43;</p>
+              <p className={classes.createRecipeButton_type_addIngredient__text}>Add</p>
+            </button>
+          </div>
+          <FieldError errors={error} path="ingredients" id="error" />
+        </div>
+        <div className={classes.createRecipeSection_type_cardNutrition}>
+          <h2 className={classes.createRecipeSubtitle}>Nutrition value</h2>
+          <div className={classes.createRecipeSection__grid_type_cardNutrition}>
+            {data?.calories ? (
+              <CardNutrition id="calories" delete={handleRemoveNutrition} title="Calories" quantity={data?.calories} />
+            ) : (
+              ''
+            )}
+            {data?.proteins ? (
+              <CardNutrition
+                id="proteins"
+                delete={handleRemoveNutrition}
+                title="Protein"
+                quantity={`${data?.proteins}%`}
+              />
+            ) : (
+              ''
+            )}
+            {data?.fats ? (
+              <CardNutrition id="fats" delete={handleRemoveNutrition} title="Fat" quantity={`${data?.fats}%`} />
+            ) : (
+              ''
+            )}
+            {data?.carbohydrates ? (
+              <CardNutrition
+                id="carbohydrates"
+                delete={handleRemoveNutrition}
+                title="Carbs"
+                quantity={`${data?.carbohydrates}%`}
+              />
+            ) : (
+              ''
+            )}
+            {!data?.calories || !data?.proteins || !data?.fats || !data?.carbohydrates ? (
+              <button
+                type="button"
+                onClick={handleClickPopupOpen('addNutrition')}
+                className={classes.createRecipeButton_type_addNutrition}>
+                <p className={classes.createRecipeButton_type_addNutrition__icon}>&#43;</p>
+                <p className={classes.createRecipeButton_type_addNutrition__text}>Add</p>
+              </button>
+            ) : (
+              ''
             )}
           </div>
         </div>
+        <div className={classes.createRecipeSection}>
+          <h2 className={classes.createRecipeSubtitle_withoutInput}>Steps to make the recipe</h2>
+          <ul className={classes.createRecipeList}>
+            {data?.steps.length !== 0
+              ? data?.steps.map((item, index) => {
+                  return (
+                    <li key={index} className={classes.createRecipeList__item}>
+                      <div className={classes.createRecipeList__titleContainer}>
+                        <h3 className={classes.createRecipeList__title}>
+                          <span className={classes.createRecipeList__title_color}>{`Step ${item.num} : `}</span>
+                          {item.title}
+                        </h3>
+                        <button
+                          type="button"
+                          className={classes.createRecipeList__item__button}
+                          id={item.num}
+                          onClick={handleClickPopupOpen('addStep', {
+                            num: item.num,
+                            title: item.title,
+                            description: item.description
+                          })}>
+                          <EditIcon style={{ fontSize: 18 }} />
+                        </button>
+                        <button
+                          className={classes.createRecipeList__item__button}
+                          id={item.num}
+                          onClick={handleDeleteStep}>
+                          <DeleteIcon style={{ fontSize: 18 }} id={item.num} />
+                        </button>
+                      </div>
+                      <p className={classes.createRecipeList__text}>{item.description}</p>
+                    </li>
+                  );
+                })
+              : ''}
+          </ul>
+          <button
+            type="button"
+            onClick={handleClickPopupOpen('addStep')}
+            className={classes.createRecipeButton_type_addStep}>
+            <p className={classes.createRecipeButton_type_addStep__icon}>&#43;</p>
+            <p className={classes.createRecipeButton_type_addStep__text}>Add More Steps</p>
+          </button>
+        </div>
+
         <div className={classes.createRecipeSection}>
           <h2 className={classes.createRecipeSubtitle_withoutInput}>All Classifications</h2>
           <div className={classes.createRecipeSection__grid_type_input}>
@@ -771,6 +754,9 @@ function FormCreateRecipe(props) {
                   fullWidth
                   error={error?.types}
                   MenuProps={MenuProps}
+                  IconComponent={() => (
+                    <img src={'/images/index/Polygon6.png'} className={classes.createRecipeSelectArrow} />
+                  )}
                   multiple>
                   {selectItemList(recipeTypes)}
                 </Select>
@@ -787,6 +773,9 @@ function FormCreateRecipe(props) {
                   fullWidth
                   error={error?.diet_restrictions}
                   MenuProps={MenuProps}
+                  IconComponent={() => (
+                    <img src="/images/index/Polygon6.png" className={classes.createRecipeSelectArrow} />
+                  )}
                   multiple>
                   {selectItemList(dietaryrestrictions)}
                 </Select>
@@ -801,9 +790,11 @@ function FormCreateRecipe(props) {
                   value={data?.cuisines}
                   onChange={onChangeSelect('cuisines')}
                   fullWidth
-                  labelWidth={10}
                   error={error?.cuisines}
                   MenuProps={MenuProps}
+                  IconComponent={() => (
+                    <img src="/images/index/Polygon6.png" className={classes.createRecipeSelectArrow} />
+                  )}
                   multiple>
                   {selectItemList(cuisineList)}
                 </Select>
@@ -819,6 +810,9 @@ function FormCreateRecipe(props) {
                   onChange={onChangeSelect('cooking_methods')}
                   fullWidth
                   error={error?.cooking_methods}
+                  IconComponent={() => (
+                    <img src="/images/index/Polygon6.png" className={classes.createRecipeSelectArrow} />
+                  )}
                   MenuProps={MenuProps}
                   multiple>
                   {selectItemList(cookingMethods)}
@@ -833,14 +827,40 @@ function FormCreateRecipe(props) {
                   id="create-cooking-skills-select"
                   value={data?.cooking_skills}
                   onChange={onChangeSelect('cooking_skills')}
-                  autoWidth
-                  error={error?.cooking_skills}
+                  fullWidth
+                  IconComponent={() => (
+                    <img src="/images/index/Polygon6.png" className={classes.createRecipeSelectArrow} />
+                  )}
+                  error={Boolean(error?.cooking_skills)}
                   MenuProps={MenuProps}>
                   {selectItemList(cookingSkill)}
                 </Select>
                 <FormHelperText>{error?.cooking_skills ? 'This field is required' : ''}</FormHelperText>
               </FormControl>
             </NoSsr>
+          </div>
+        </div>
+
+        <div className={classes.createRecipeSection}>
+          <div className={classes.createRecipeItem}>
+            <h3 className={`${classes.createRecipeSubtitle} ${classes.createRecipeSubtitle_type_visibility}`}>
+              <span style={{ color: 'red' }}>* </span>Visibility
+            </h3>
+            <NoSsr>
+              <RadioGroup
+                row
+                aria-label="create-visibility"
+                name="create-visibility"
+                value={data?.publish_status}
+                onChange={onChangeFieldNumber('publish_status')}
+                error={error?.publish_status}>
+                <FormControlLabel value={1} control={<Radio id="publish_status" />} label="Save" />
+                <FormControlLabel value={2} control={<Radio id="publish_status" />} label="Publish" />
+              </RadioGroup>
+            </NoSsr>
+            {error?.publish_status && (
+              <p className={classes.createRecipeItem__errorPublishStatus}>This field is required</p>
+            )}
           </div>
         </div>
       </form>
