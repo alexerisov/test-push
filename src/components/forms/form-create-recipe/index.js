@@ -577,7 +577,6 @@ function FormCreateRecipe(props) {
                 onChange={event => {
                   handleAddVideo(event.currentTarget.files[0]);
                 }}></input>
-              <FieldError errors={videoRecipeError} path="video" id="error" />
             </>
 
             {videoRecipe && (
@@ -589,6 +588,7 @@ function FormCreateRecipe(props) {
               </div>
             )}
           </div>
+          <FieldError errors={videoRecipeError} path="video" id="error" />
         </div>
 
         <div className={classes.createRecipeSection}>
@@ -710,9 +710,12 @@ function FormCreateRecipe(props) {
         </div>
 
         <div className={classes.createRecipeSection}>
-          <h2 className={classes.createRecipeSubtitle_withoutInput}>All Classifications</h2>
+          <h2
+            className={`${classes.createRecipeSubtitle_withoutInput} ${classes.createRecipeSubtitle_classifications}`}>
+            All Classifications
+          </h2>
           <div className={classes.createRecipeSection__grid_type_input}>
-            <div className={classes.createRecipeItem}>
+            <div className={classes.createRecipeItem__inputTime}>
               <label htmlFor="create-cooking_time" className={classes.createRecipeLabel}>
                 Preparation Time
               </label>
@@ -728,7 +731,9 @@ function FormCreateRecipe(props) {
             </div>
             <NoSsr>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
-                <label htmlFor="create-types-select" className={classes.createRecipeLabel}>
+                <label
+                  htmlFor="create-types-select"
+                  className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
                   Type
                 </label>
                 <Select
@@ -747,7 +752,9 @@ function FormCreateRecipe(props) {
                 <FormHelperText>{error?.types ? 'This field is required' : ''}</FormHelperText>
               </FormControl>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
-                <label htmlFor="create-diet-restrictions-select" className={classes.createRecipeLabel}>
+                <label
+                  htmlFor="create-diet-restrictions-select"
+                  className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
                   <span style={{ color: 'red' }}>* </span>Lifestyle
                 </label>
                 <Select
@@ -766,7 +773,9 @@ function FormCreateRecipe(props) {
                 <FormHelperText>{error?.diet_restrictions ? 'This field is required' : ''}</FormHelperText>
               </FormControl>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
-                <label htmlFor="create-cuisines-select" className={classes.createRecipeLabel}>
+                <label
+                  htmlFor="create-cuisines-select"
+                  className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
                   <span style={{ color: 'red' }}>* </span>Cuisine
                 </label>
                 <Select
@@ -785,7 +794,9 @@ function FormCreateRecipe(props) {
                 <FormHelperText>{error?.cuisines ? 'This field is required' : ''}</FormHelperText>
               </FormControl>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
-                <label htmlFor="create-cooking-methods-select" className={classes.createRecipeLabel}>
+                <label
+                  htmlFor="create-cooking-methods-select"
+                  className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
                   <span style={{ color: 'red' }}>* </span>Cooking Method
                 </label>
                 <Select
@@ -804,7 +815,9 @@ function FormCreateRecipe(props) {
                 <FormHelperText>{error?.cooking_methods ? 'This field is required' : ''}</FormHelperText>
               </FormControl>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
-                <label htmlFor="create-cooking-skills-select" className={classes.createRecipeLabel}>
+                <label
+                  htmlFor="create-cooking-skills-select"
+                  className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
                   <span style={{ color: 'red' }}>* </span>Cooking Skills
                 </label>
                 <Select
@@ -825,7 +838,7 @@ function FormCreateRecipe(props) {
           </div>
         </div>
 
-        <div className={classes.createRecipeSection}>
+        <div className={`${classes.createRecipeSection} ${classes.createRecipeSection_visibility}`}>
           <div className={classes.createRecipeItem}>
             <h3 className={`${classes.createRecipeSubtitle} ${classes.createRecipeSubtitle_type_visibility}`}>
               <span style={{ color: 'red' }}>* </span>Visibility

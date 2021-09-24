@@ -38,7 +38,8 @@
 
   @media (max-width: $--xs) {
     margin: 0 0 20px;
-    font-size: 25px;
+    font-size: 20px;
+    line-height: 24px;
   }
 
   &_type_visibility {
@@ -55,7 +56,14 @@
 
   @media (max-width: $--xs) {
     margin: 0 0 20px;
-    font-size: 25px;
+    font-size: 20px;
+    line-height: 24px;
+  }
+}
+
+.createRecipeSubtitle_classifications {
+  @media (max-width: $--xs) {
+    display: none;
   }
 }
 
@@ -80,7 +88,8 @@
       @include fontSemiBold();
 
       @media (max-width: $--xs) {
-        font-size: 25px;
+        font-size: 22px;
+        line-height: 27px;
       }
     }
 
@@ -94,7 +103,10 @@
       min-width: 90px;
 
       @media (max-width: $--xs) {
-        font-size: 18px;
+        font-size: 16px;
+        line-height: 20px;
+        height: max-content;
+        margin-top: auto;
       }
 
       &:hover {
@@ -107,6 +119,14 @@
     padding-top: 57px;
     max-width: 850px;
     margin: 0 auto;
+
+    @media (max-width: $--md) {
+      padding-top: 30px;
+    }
+
+    @media (max-width: $--xs) {
+      padding-top: 0;
+    }
   }
 }
 
@@ -119,8 +139,18 @@
     }
   }
 
+  @media (max-width: $--xs) {
+    padding-top: 25px;
+  }
+
   &_type_cardNutrition {
     padding-top: 15px;
+  }
+
+  &_visibility {
+    @media (max-width: $--xs) {
+      padding-top: 0;
+    }
   }
 }
 
@@ -151,6 +181,10 @@
   gap: 20px 16px;
   max-width: 1027px;
   margin: 20px 0 40px 0;
+
+  @media (max-width: $--xs) {
+    margin: 20px 0 0 0;
+  }
 }
 
 .createRecipeSection__grid_type_cardImages {
@@ -209,6 +243,18 @@
   &_type_addImage:hover {
     border: 1px dashed $--color-gray3 !important;
   }
+
+  @media (max-width: $--xs) {
+    font-size: 20px;
+    line-height: 24px;
+    @include fontSemiBold();
+  }
+
+  &_selects {
+    @media (max-width: $--xs) {
+      margin: 0 0 16px 0;
+    }
+  }
 }
 
 .createRecipeInput_type_addImage {
@@ -222,7 +268,7 @@
   margin-bottom: 40px;
 
   @media (max-width: $--xs) {
-    margin-bottom: 15px;
+    margin-bottom: 0;
   }
 
   &__title {
@@ -245,18 +291,32 @@
     }
   }
 }
+
+.createRecipeItem__inputTime {
+  margin-bottom: 40px;
+
+  @media (max-width: $--xs) {
+    margin-bottom: 20px;
+  }
+}
+
 .createRecipebuttonContainer {
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: row;
+  gap: 11px;
   max-width: 1080px;
-  margin: 22px 0 100px;
+  margin: 22px 0 30px;
+
+  @media (max-width: $--xs) {
+    width: max-content;
+    margin: 22px auto 30px auto;
+  }
 }
 
 .createRecipeButton {
-  width: 120px;
+  width: 146px;
   height: 40px;
   padding: 0;
-  font: 16px/22px 'Montserrat';
   color: $--color-white;
   text-align: center;
   cursor: pointer;
@@ -267,11 +327,9 @@
   transition: opacity 0.3s linear;
 
   &_color_gray {
-    width: 120px;
+    width: 146px;
     height: 40px;
-    margin-right: 16px;
     padding: 0;
-    font: 16px/22px 'Montserrat';
     color: $--color-white;
     text-align: center;
     cursor: pointer;
@@ -287,9 +345,9 @@
   }
 
   &__text {
-    font-size: 14px;
-    font-weight: 900;
-    line-height: 1.29;
+    font-size: 20px;
+    line-height: 24px;
+    @include fontSemiBold();
   }
 }
 
@@ -480,12 +538,6 @@
     }
   }
 
-  &__logo {
-    @media (max-width: $--xs) {
-      margin: 20px 0;
-    }
-  }
-
   &__dragText {
     @include fontSemiBold();
     color: $--color-blue-gray;
@@ -574,6 +626,12 @@
 .createRecipeSection__video {
   display: flex;
   gap: 16px;
+
+  @media (max-width: $--sm) {
+    flex-direction: column;
+    width: max-content;
+    margin: 0 auto;
+  }
 }
 
 .createRecipeSection__videoContainer {
