@@ -40,15 +40,24 @@ const BlocksHomePage = props => {
     });
   }, []);
 
+  const [intervalz, setIntervalz] = useState(5000);
+
+  const convertingSecondsIntoInterval = 1000;
+
+  const onChangeCarousel = (index, item) => {
+    setIntervalz(item.props.item.change_time * convertingSecondsIntoInterval);
+  };
+
   return blocks && blocks.length !== 0 ? (
     <div className={classes.blocks}>
       <StyledCarousel
+        onChange={onChangeCarousel}
+        interval={intervalz}
         infiniteLoop={true}
         showIndicators={true}
         showStatus={false}
         axis={'horizontal'}
         swipeable={true}
-        interval="5000"
         stopOnHover={true}
         autoPlay={true}
         showThumbs={false}
