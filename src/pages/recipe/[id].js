@@ -107,6 +107,14 @@ function RecipePage(props) {
     };
   };
 
+  const openUnregisterModal = name => {
+    return () => {
+      props.dispatch(modalActions.open(name)).then(result => {
+        // result when modal return promise and close
+      });
+    };
+  };
+
   const openShowRecipePhotosPopup = currentPhotoIndex => {
     return () => {
       props.dispatch(recipePhotoSlider.setCurrentItemIndex(0));
@@ -327,7 +335,7 @@ function RecipePage(props) {
                       leaveTouchDelay={2000}>
                       <button
                         className={classes.recipe__video__likes_last}
-                        onClick={!props.account.hasToken ? openRegisterPopup('register') : onClickLike}>
+                        onClick={!props.account.hasToken ? openUnregisterModal('unregisterActivity') : onClickLike}>
                         {!likeRecipe ? (
                           <img src="/images/index/Icon-awesome-heart-null.svg" alt="" />
                         ) : (
@@ -476,7 +484,7 @@ function RecipePage(props) {
                   })}
                 </div>
               )}
-              <ResipeComments id={recipeId} userId={userId}/>
+              <ResipeComments id={recipeId} userId={userId} />
             </div>
             <div className={classes.recipe__cards}>
               {latestRecipes && (
