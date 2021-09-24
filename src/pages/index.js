@@ -25,7 +25,8 @@ const useStyles = makeStyles({
       height: '32px !important',
       fontSize: '12px',
       lineHeight: '14.6px',
-      fontWeight: '600'
+      fontWeight: '600',
+      padding: 0
     }
   }
 });
