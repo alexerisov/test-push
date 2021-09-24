@@ -1,0 +1,20 @@
+@import '~styles/variables.scss';
+@import '~styles/mixins/mixins.scss';
+
+.iconWrap {
+  border: 3px solid $--color-orange;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+  height: 35px;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
+.icon {
+  width: 26px;
+  height: 26px;
+}
