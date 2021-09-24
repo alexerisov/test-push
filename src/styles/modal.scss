@@ -136,6 +136,21 @@
     }
   }
 
+  &_theme_white_medium {
+    background: $--color-white;
+    width: 581px;
+    min-height: 373px;
+    box-shadow: 0px 10px 25px #00000040;
+    border-radius: 10px;
+    height: auto;
+    max-width: 95vw;
+    top: 50%;
+    color: #000;
+
+    .LayoutModal__close {
+      background-image: url('/images/index/icons-delete-cross.svg');
+    }
+  }
   &_theme_white_small {
     background: $--color-white;
     width: 461px;

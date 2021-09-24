@@ -15,4 +15,5 @@ export { default as showRecipePhotos } from './showRecipePhotos';
 export { default as addRoleModel } from './addRoleModel';
 export { default as addOtherInformations } from './addOtherInformations';
 export { default as addExperience } from './addExperience';
+export { default as unregisterActivityModal } from './unregisterActivityModal';
 export { default as SearchModal } from './search-modal';

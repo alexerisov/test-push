@@ -335,7 +335,9 @@ function RecipePage(props) {
                       leaveTouchDelay={2000}>
                       <button
                         className={classes.recipe__video__likes_last}
-                        onClick={!props.account.hasToken ? openUnregisterModal('unregisterActivity') : onClickLike}>
+                        onClick={
+                          !props.account.hasToken ? openUnregisterModal('unregisterActivityModal') : onClickLike
+                        }>
                         {!likeRecipe ? (
                           <img src="/images/index/Icon-awesome-heart-null.svg" alt="" />
                         ) : (
