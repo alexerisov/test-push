@@ -36,6 +36,8 @@
 
   &__burger {
     cursor: pointer;
+    color: $--color-gray1;
+    margin-left: 12px;
   }
 
   &__phone {
@@ -94,6 +96,19 @@
     cursor: pointer;
   }
 
+  &__iconsWrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__iconSearch {
+    color: $--color-gray1;
+  }
+
+  &__btnSearch {
+    border: none;
+  }
   &__notifications {
     margin: 0 17px 0 0;
     position: relative;

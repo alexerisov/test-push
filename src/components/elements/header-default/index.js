@@ -31,7 +31,7 @@ const useSeparatorStyles = makeStyles({
 });
 
 const HeaderDefault = props => {
-  const mobile = useMediaQuery('(max-width: 576px)');
+  const mobile = useMediaQuery('(max-width: 768px)');
   const [isExpanded, setExpanded] = React.useState(false);
   const separatorStyles = useSeparatorStyles();
   const handleClickLogin = name => {
@@ -77,6 +77,14 @@ const HeaderDefault = props => {
       Account.getNotifications().then(res => setNotificationAmount(res.data.length));
     }
   }, [props.account.hasToken]);
+
+  const handleClickSearch = name => {
+    return () => {
+      props.dispatch(modalActions.open(name)).then(result => {
+        // result when modal return promise and close
+      });
+    };
+  };
 
   const mobileMenu = (
     <div className={isExpanded ? classes.mobileMenu : classes.mobileMenu__dnone}>
@@ -133,9 +141,7 @@ const HeaderDefault = props => {
 
                 <li className={classes.mobileMenu__item} onClick={handleExpandingMobileMenu}>
                   <Link href="/my-pencils">
-                    <a>
-                      My Pencils
-                    </a>
+                    <a>My Pencils</a>
                   </Link>
                 </li>
               </>
@@ -216,15 +222,13 @@ const HeaderDefault = props => {
                 </MenuItem>
               )}
 
-              {props?.account?.profile?.user_type === USER_TYPE.chefType &&
-                <MenuItem onClick={handleClose} classes={{root: separatorStyles.root}}>
+              {props?.account?.profile?.user_type === USER_TYPE.chefType && (
+                <MenuItem onClick={handleClose} classes={{ root: separatorStyles.root }}>
                   <Link href="/my-pencils">
-                    <a className={classes.header__link_place_menu}>
-                      My Pencils
-                    </a>
+                    <a className={classes.header__link_place_menu}>My Pencils</a>
                   </Link>
                 </MenuItem>
-              }
+              )}
               <MenuItem onClick={handleClose} classes={{ root: separatorStyles.root }}>
                 <Link href="/saved-recipes">
                   <a className={classes.header__link_place_menu}>Saved Recipes</a>
@@ -267,7 +271,7 @@ const HeaderDefault = props => {
 
         {!mobile && defaultContent}
         {mobile && (
-          <div>
+          <div className={classes.header__iconsWrap}>
             {
               <Link href="/notifications">
                 <a className={classes.header__notifications}>
@@ -280,6 +284,9 @@ const HeaderDefault = props => {
                 </a>
               </Link>
             }
+            <button className={classes.header__btnSearch} onClick={handleClickSearch('search')}>
+              <img src="/images/index/icon_search.svg" className={classes.header__iconSearch} />
+            </button>
             {!isExpanded && <MenuIcon className={classes.header__burger} onClick={handleExpandingMobileMenu} />}
             {isExpanded && <CloseIcon className={classes.header__burger} onClick={handleExpandingMobileMenu} />}
           </div>
