@@ -28,6 +28,10 @@
     min-height: 52px;
   }
 
+  &__iconsWrap {
+    display: flex;
+    justify-content: center;
+  }
   &__container {
     display: flex;
     justify-content: space-between;
@@ -114,6 +118,7 @@
 
   &__btnSearch {
     border: none;
+    margin-bottom: 3px;
   }
   &__notifications {
     margin: 0 17px 0 0;
