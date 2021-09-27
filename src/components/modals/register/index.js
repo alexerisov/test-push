@@ -27,6 +27,8 @@ function Register(props) {
     chefType: 1
   };
 
+  const { toChoiceRegister } = props;
+
   const viewerType = USER_TYPE.viewerType;
   const chefType = USER_TYPE.chefType;
   const PAGE_SELECTED_TYPES = {
@@ -142,6 +144,10 @@ function Register(props) {
       });
   };
 
+  useEffect(() => {
+    toChoiceRegister ? switchToPageRegisterChoice() : null;
+  }, [toChoiceRegister]);
+
   const renderContent = () => {
     switch (pageSelected) {
       case PAGE_SELECTED_TYPES.loginChoice:
@@ -219,5 +225,6 @@ export default connect(state => ({
   account: state.account,
   login: state.login,
   register: state.register,
-  restorePassword: state.restorePassword
+  restorePassword: state.restorePassword,
+  toChoiceRegister: state.modal.toRegister
 }))(Register);

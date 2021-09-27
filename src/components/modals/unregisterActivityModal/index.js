@@ -31,11 +31,13 @@ function UnregisterActivityModal(props) {
   const onCancel = () => {
     dispatch(modalActions.close());
   };
-  //HEREeeeeeeeeeeee
+
   const toRegister = () => {
-    dispatch(modalActions.open(''));
+    dispatch(modalActions.registerStatus(true));
+    dispatch(modalActions.open('register'));
   };
   const toLogin = () => {
+    dispatch(modalActions.registerStatus(false));
     dispatch(modalActions.open('register'));
   };
   const renderContent = () => {
