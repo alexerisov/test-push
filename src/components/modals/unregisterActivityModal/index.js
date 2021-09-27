@@ -45,10 +45,10 @@ function UnregisterActivityModal(props) {
         <p className={classes.modal__subtitle}>Join Eatchefs and Let Foodies Feast </p>
         <p className={classes.modal__subtitle}>Their Eyes on Your Skills</p>
         <Button classes={{ root: registationBtn.root }} variant="contained" color="primary" onClick={toRegister}>
-          Become an eatchef
+          Join EatChefs
         </Button>
         <Button classes={{ root: signInBtn.root }} variant="contained" color="primary" onClick={toLogin}>
-          Vote as a foodie
+          Sign In
         </Button>
       </div>
     );
