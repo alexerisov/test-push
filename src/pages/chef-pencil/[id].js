@@ -17,12 +17,23 @@ import Account from '@/api/Account.js';
 import { modalActions } from '@/store/actions';
 import Cookies from 'cookies';
 import ChefPencil from '@/api/ChefPencil.js';
-
 import classes from './id.module.scss';
+import Tooltip from '@material-ui/core/Tooltip';
 import SearchIcon from '@material-ui/icons/Search';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyledTooltip = makeStyles({
+  tooltip: {
+    padding: '5px 10px !important',
+    fontSize: '16px',
+    hyphens: 'auto',
+    maxWidth: '400px'
+  }
+});
 
 function RecipePage({ pencilData, notFound, absolutePath }) {
   const account = useSelector(state => state.account);
+  const toolTipStyles = useStyledTooltip();
 
   // Bind Modal action creators with dispatch
   const { open, close } = useActions(modalActions);
@@ -153,6 +164,20 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
       });
     };
   };
+  //myyyyyyyyyyy
+  const onClickLike = () => {
+    Recipe.uploadLikesRecipe(recipeId)
+      .then(res => {
+        if (res.data.like_status === 'deleted') {
+          setLikeRecipe(false);
+          likesNumber > 0 && setLikesNumber(likesNumber - 1);
+        } else {
+          setLikeRecipe(true);
+          setLikesNumber(likesNumber + 1);
+        }
+      })
+      .catch(err => console.log(err));
+  };
 
   const content = (
     <div className={classes.pencil}>
@@ -198,13 +223,29 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
               )}
             </div>
           </div>
-
           <div className={classes.pencil__description}>
             {pencil?.image && <img src={pencil?.image} className={classes.pencil__mainImage} alt="pencil image" />}
 
             <p dangerouslySetInnerHTML={{ __html: pencil?.html_content }} className={classes.pencil__descriptionText} />
           </div>
-
+          //myyyyyyy
+          <Tooltip
+            classes={!isMobileOrTablet && { tooltip: toolTipStyles.tooltip }}
+            title="Votes help recipe to get in production soon."
+            disableFocusListener
+            enterTouchDelay={200}
+            leaveTouchDelay={2000}>
+            <button
+              className={classes.recipe__video__likes_last}
+              onClick={!props.account.hasToken ? openRegisterPopup('register') : onClickLike}>
+              {!likeRecipe ? (
+                <img src="/images/index/Icon-awesome-heart-null.svg" alt="" />
+              ) : (
+                <img src="/images/index/Icon awesome-heart.svg" alt="" />
+              )}
+              <span>Vote</span>
+            </button>
+          </Tooltip>
           <ResipeComments
             id={pencilId}
             userId={userId}
