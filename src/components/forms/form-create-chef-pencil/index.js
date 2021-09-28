@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { makeStyles } from '@material-ui/core/styles';
 import { useRouter } from 'next/router';
-import { NoSsr } from '@material-ui/core';
+import { NoSsr, FormControl, Select, FormHelperText, MenuItem } from '@material-ui/core';
 import dynamic from 'next/dynamic';
 
 import { TextField } from '@material-ui/core';
@@ -17,9 +17,25 @@ import { nameErrorRecipe } from '@/utils/datasets';
 
 import PhotoCameraOutlinedIcon from '@material-ui/icons/PhotoCameraOutlined';
 import classes from './form-create-chef-pencil.module.scss';
-import { useActions } from "@/customHooks/useActions";
+import { useActions } from '@/customHooks/useActions';
+import { categoryList } from '@/utils/datasets';
 
 const useStyles = makeStyles({
+  formControl: {
+    margin: '0 0 20px',
+    minWidth: 250,
+    width: '100%',
+    '& .MuiInputBase-input': {
+      height: 'auto',
+      width: '100%'
+    },
+    '& .MuiOutlinedInput-root': {
+      borderRadius: '10px'
+    },
+    '& .MuiFormHelperText-root': {
+      color: '#FA0926'
+    }
+  },
   textField: {
     '& .MuiOutlinedInput-root': {
       borderRadius: '10px'
@@ -40,7 +56,7 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
   const { data, error } = useSelector(state => state.chefPencilUpload);
   const classMarerialUi = useStyles();
   const { open, close } = useActions(modalActions);
-  const {update, uploadChefPencil, updateError, updateChefPencil} = useActions(chefPencilUploadActions);
+  const { update, uploadChefPencil, updateError, updateChefPencil } = useActions(chefPencilUploadActions);
 
   // For uploading images
   const [isDragging, setIsDragging] = useState(false);
@@ -81,24 +97,24 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
   };
 
   const onChangeEditorField = value => {
-      if (!value) {
-        const newData = { ...data, html_content: value };
-        const newError = {
-          ...error,
-          html_content: 'Required field'
-        };
-        dispatch(chefPencilUploadActions.update(newData));
-        dispatch(chefPencilUploadActions.updateError(newError));
-        return;
-      }
-
+    if (!value) {
       const newData = { ...data, html_content: value };
       const newError = {
         ...error,
-        html_content: ''
+        html_content: 'Required field'
       };
-      dispatch(chefPencilUploadActions.update(newData));
-      dispatch(chefPencilUploadActions.updateError(newError));
+      dispatch(update(newData));
+      dispatch(updateError(newError));
+      return;
+    }
+
+    const newData = { ...data, html_content: value };
+    const newError = {
+      ...error,
+      html_content: ''
+    };
+    dispatch(chefPencilUploadActions.update(newData));
+    dispatch(chefPencilUploadActions.updateError(newError));
   };
 
   //todo check getMaxLengthDescription
@@ -141,7 +157,7 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
         .then(data => {
           setStatusSubmit('Submit');
           return open('editSuccessful', {
-            handleClick: (e) => handleClickForModal(e, id),
+            handleClick: e => handleClickForModal(e, id),
             handleCancel: handleCloseForModal
           });
         })
@@ -158,7 +174,7 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
       .then(data => {
         setStatusSubmit('Submit');
         return open('uploadSuccessful', {
-          handleClick: (e) => handleClickForModal(e, data?.pk),
+          handleClick: e => handleClickForModal(e, data?.pk),
           handleCancel: handleCloseForModal
         });
       })
@@ -271,6 +287,35 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
     router.reload();
   };*/
 
+  function onChangeSelect(name) {
+    return event => {
+      const newData = { ...data, [name]: event.target.value };
+      const newError = { ...error, [name]: '' };
+      dispatch(chefPencilUploadActions.update(newData));
+      dispatch(chefPencilUploadActions.updateError(newError));
+    };
+  }
+  const ITEM_HEIGHT = 48;
+  const ITEM_PADDING_TOP = 8;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 5 + ITEM_PADDING_TOP
+      }
+    }
+  };
+
+  const selectItemList = list => {
+    let itemList = [];
+    for (let key in list) {
+      itemList.push(
+        <MenuItem key={key} value={key}>
+          {list[key]}
+        </MenuItem>
+      );
+    }
+    return itemList;
+  };
   return (
     <div className={classes.createPencil__wrapper}>
       <div className={classes.createPencil__header}>
@@ -299,12 +344,35 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
           </div>
         </div>
 
+        <h2 className={classes.createPencilLabel}>
+          <span style={{ color: 'red' }}>* </span>Category
+        </h2>
+        <FormControl variant="outlined" className={classMarerialUi.formControl}>
+          <Select
+            id="create-category-select"
+            value={data?.category}
+            onChange={onChangeSelect('category')}
+            fullWidth
+            error={error?.category}
+            MenuProps={MenuProps}
+            IconComponent={() => <img src="/images/index/Polygon6.png" className={classes.createCategorySelectArrow} />}
+            multiple>
+            {selectItemList(categoryList)}
+          </Select>
+          <FormHelperText>{error?.category ? 'This field is required' : ''}</FormHelperText>
+        </FormControl>
+
         <div className={classes.createPencilSection} id="chef-pencil-upload-image">
           <h2 className={!data?.image ? classes.createPencilLabel : classes.createPencilLabel_margin}>
             <span style={{ color: 'red' }}>* </span>Chef Pencil Image
           </h2>
           <div className={classes.createPencilUpload}>
-            {data?.image && <CardImageEditRecipe image={data?.image} src={data?.image instanceof File ? URL.createObjectURL(data?.image) : data?.image} />}
+            {data?.image && (
+              <CardImageEditRecipe
+                image={data?.image}
+                src={data?.image instanceof File ? URL.createObjectURL(data?.image) : data?.image}
+              />
+            )}
             <>
               <label
                 htmlFor="create-images"

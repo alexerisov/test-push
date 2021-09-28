@@ -6,7 +6,7 @@
   margin-bottom: 20px;
 
   &__wrapper {
-    max-width: 1000px;;
+    max-width: 1000px;
     margin: 0 auto;
   }
 
@@ -182,4 +182,9 @@
 
 .fieldError {
   margin-top: 10px;
+}
+.createCategorySelectArrow {
+  pointer-events: none;
+  position: absolute;
+  right: 17px;
 }
