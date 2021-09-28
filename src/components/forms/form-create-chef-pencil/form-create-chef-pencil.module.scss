@@ -188,3 +188,18 @@
   position: absolute;
   right: 17px;
 }
+
+.createPencilSectionFlex {
+  display: flex;
+  justify-content: space-between;
+  @media (max-width: $--sm) {
+    flex-wrap: wrap;
+    flex-direction: column;
+  }
+}
+.createPencilItemWrap {
+  width: 49%;
+  @media (max-width: $--sm) {
+    width: 100%;
+  }
+}

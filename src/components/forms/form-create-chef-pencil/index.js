@@ -23,7 +23,7 @@ import { categoryList } from '@/utils/datasets';
 const useStyles = makeStyles({
   formControl: {
     margin: '0 0 20px',
-    minWidth: 250,
+    minWidth: 300,
     width: '100%',
     '& .MuiInputBase-input': {
       height: 'auto',
@@ -37,6 +37,7 @@ const useStyles = makeStyles({
     }
   },
   textField: {
+    minWidth: 300,
     '& .MuiOutlinedInput-root': {
       borderRadius: '10px'
     },
@@ -323,44 +324,52 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
       </div>
       <form className={classes.createPencil}>
         <div className={classes.createPencilSection}>
-          <div>
-            <label htmlFor="create-title" className={classes.createPencilLabel}>
-              <span style={{ color: 'red' }}>* </span>Title
-            </label>
-            <NoSsr>
-              <TextField
-                id="create-title"
-                type="text"
-                onChange={onChangeField('title')}
-                value={data?.title}
-                variant="outlined"
-                fullWidth
-                className={classMarerialUi.textField}
-                error={Boolean(error?.title)}
-                helperText={error?.title}
-                inputProps={{ maxLength: 50 }}
-              />
-            </NoSsr>
+          <div className={classes.createPencilSectionFlex}>
+            <div className={classes.createPencilItemWrap}>
+              <label htmlFor="create-title" className={classes.createPencilLabel}>
+                <span style={{ color: 'red' }}>* </span>Title
+              </label>
+
+              <NoSsr>
+                <TextField
+                  id="create-title"
+                  type="text"
+                  onChange={onChangeField('title')}
+                  value={data?.title}
+                  variant="outlined"
+                  fullWidth
+                  className={classMarerialUi.textField}
+                  error={Boolean(error?.title)}
+                  helperText={error?.title}
+                  inputProps={{ maxLength: 50 }}
+                />
+              </NoSsr>
+            </div>
+
+            <div className={classes.createPencilItemWrap}>
+              <label htmlFor="create-category-select" className={classes.createPencilLabel}>
+                <span style={{ color: 'red' }}>* </span>Category
+              </label>
+
+              <FormControl variant="outlined" className={classMarerialUi.formControl}>
+                <Select
+                  id="create-category-select"
+                  value={data?.category}
+                  onChange={onChangeSelect('category')}
+                  fullWidth
+                  error={error?.category}
+                  MenuProps={MenuProps}
+                  IconComponent={() => (
+                    <img src="/images/index/Polygon6.png" className={classes.createCategorySelectArrow} />
+                  )}
+                  multiple>
+                  {selectItemList(categoryList)}
+                </Select>
+                <FormHelperText>{error?.category ? 'This field is required' : ''}</FormHelperText>
+              </FormControl>
+            </div>
           </div>
         </div>
-
-        <h2 className={classes.createPencilLabel}>
-          <span style={{ color: 'red' }}>* </span>Category
-        </h2>
-        <FormControl variant="outlined" className={classMarerialUi.formControl}>
-          <Select
-            id="create-category-select"
-            value={data?.category}
-            onChange={onChangeSelect('category')}
-            fullWidth
-            error={error?.category}
-            MenuProps={MenuProps}
-            IconComponent={() => <img src="/images/index/Polygon6.png" className={classes.createCategorySelectArrow} />}
-            multiple>
-            {selectItemList(categoryList)}
-          </Select>
-          <FormHelperText>{error?.category ? 'This field is required' : ''}</FormHelperText>
-        </FormControl>
 
         <div className={classes.createPencilSection} id="chef-pencil-upload-image">
           <h2 className={!data?.image ? classes.createPencilLabel : classes.createPencilLabel_margin}>
