@@ -26,8 +26,8 @@ import CardLatestRecipes from '@/components/elements/card-latest-recipes';
 import CardPopularRecipes from '@/components/elements/card-popular-recipes';
 import RecipeNotFound from '@/components/elements/recipe-not-found';
 import { NextSeo } from 'next-seo';
-import savedStatus from './savedStatus.svg';
-import notSavedStatus from './notSavedStatus.svg';
+import savedStatus from '/public/images/index/savedStatus.svg';
+import notSavedStatus from '/public/images/index/notSavedStatus.svg';
 import Cookies from 'cookies';
 import Tooltip from '@material-ui/core/Tooltip';
 
