@@ -49,6 +49,7 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
   const [latestPencils, setLatestPencils] = useState();
   const [rating, setRating] = useState(null);
   const [likePencil, setLikePencil] = useState(false);
+  const [likesNumber, setLikesNumber] = useState(false);
   const [savedId, setSavedId] = useState();
 
   useEffect(() => {
@@ -66,7 +67,10 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
 
   useEffect(() => {
     ChefPencil.getLatestPencils().then(res => {
-      setLatestPencils(res.data);
+      console.log(res.data[0].images[0].url);
+      setLikePencil(res.data[0].user_liked);
+      setLikesNumber(res.data[0].likes_number);
+      setSavedId(res.data[0].user_saved_chef_pencil_record);
     });
   }, []);
 
@@ -169,33 +173,33 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
       });
     };
   };
-  //myyyyyyyyyyy
+
   const onClickLike = () => {
-    // Recipe.uploadLikesRecipe(recipeId)
-    //   .then(res => {
-    //     if (res.data.like_status === 'deleted') {
-    //       setLikeRecipe(false);
-    //       likesNumber > 0 && setLikesNumber(likesNumber - 1);
-    //     } else {
-    //       setLikeRecipe(true);
-    //       setLikesNumber(likesNumber + 1);
-    //     }
-    //   })
-    //   .catch(err => console.log(err));
+    ChefPencil.uploadLikesPencil(pencilId)
+      .then(res => {
+        if (res.data.like_status === 'deleted') {
+          setLikePencil(false);
+          likesNumber > 0 && setLikesNumber(likesNumber - 1);
+        } else {
+          setLikePencil(true);
+          setLikesNumber(likesNumber + 1);
+        }
+      })
+      .catch(err => console.log(err));
   };
   const handleSavePencil = () => {
-    // Recipe.postSavedRecipe(props.recipesData.pk)
-    //   .then(res => {
-    //     setSavedId(res.data.pk);
-    //   })
-    //   .catch(err => console.log(err));
+    ChefPencil.postSavedPencil(pencilData.pk)
+      .then(res => {
+        setSavedId(res.data.pk);
+      })
+      .catch(err => console.log(err));
   };
   const handleDeletePencilFromSaved = () => {
-    // Recipe.deleteSavedRecipe(savedId)
-    //   .then(res => {
-    //     setSavedId(false);
-    //   })
-    //   .catch(err => console.log(err));
+    ChefPencil.deleteSavedPencil(savedId)
+      .then(res => {
+        setSavedId(false);
+      })
+      .catch(err => console.log(err));
   };
   const content = (
     <div className={classes.pencil}>
@@ -249,14 +253,14 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
 
           <div className={classes.pencil__social}>
             <div className={classes.pencil__social_row}>
-              <div className={classes.pencil__social__views}>
+              {/* <div className={classes.pencil__social__views}>
                 <img src="/images/index/ionic-md-eye.svg" alt="" />
-                {/* <span>{pencil.views_number} Views</span> */}487 Views
-              </div>
+                <span>{pencil.views_number} Views</span>487 Views
+              </div> */}
 
               <div className={classes.pencil__social__likes}>
                 <img src="/images/index/Icon awesome-heart.svg" alt="" />
-                {/* <span>{Number(likesNumber)}</span> */}5
+                <span>{Number(likesNumber)}</span>
               </div>
             </div>
 
@@ -279,16 +283,12 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
                 </button>
               </Tooltip>
 
-              <ButtonShare
-              // pencilId={pencilId}
-              // pencilPhoto={pencil?.images[0]}
-              // pencilDescription={pencil?.description}
-              />
+              <ButtonShare id={pencilId} photo={latestPencils[0]?.images[0]?.url} />
 
               {!savedId ? (
                 <button
                   className={classes.pencil__social__saveStatus}
-                  onClick={account.hasToken ? openRegisterPopup('register') : handleSavePencil}>
+                  onClick={!account.hasToken ? openRegisterPopup('register') : handleSavePencil}>
                   <div className={classes.pencil__social___saveStatusImageWrapper}>
                     <img className={classes.pencil__social__saveStatusImage} src={notSavedStatus} alt="saved status" />
                   </div>
@@ -297,7 +297,7 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
               ) : (
                 <button
                   className={classes.pencil__social__saveStatus}
-                  onClick={account.hasToken ? openRegisterPopup('register') : handleDeletePencilFromSaved}>
+                  onClick={!account.hasToken ? openRegisterPopup('register') : handleDeletePencilFromSaved}>
                   <div className={classes.pencil__social___saveStatusImageWrapper}>
                     <img className={classes.pencil__social__saveStatusImage} src={savedStatus} alt="saved status" />
                   </div>

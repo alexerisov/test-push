@@ -336,11 +336,7 @@ function RecipePage(props) {
                         <span>Vote</span>
                       </button>
                     </Tooltip>
-                    <ButtonShare
-                      recipeId={recipeId}
-                      recipePhoto={recipe?.images[0]}
-                      recipeDescription={recipe?.description}
-                    />
+                    <ButtonShare id={recipeId} photo={recipe?.images[0]} description={recipe?.description} />
 
                     {!savedId ? (
                       <button
