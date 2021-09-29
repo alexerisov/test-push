@@ -344,7 +344,7 @@ function FormCreateRecipe(props) {
       const newData = {
         ...data,
         images: [],
-        main_image: {}
+        main_image: ''
       };
       recoveryLocalStorage.setCreateRecipe(newData);
     }
@@ -559,6 +559,11 @@ function FormCreateRecipe(props) {
             {getMarkUpForUploadedImages()}
           </ReactSortable>
           <FieldError errors={error?.images ? error : { images: errorDeleteImages }} path="images" id="error" />
+          <FieldError
+            errors={error?.main_image ? error : { main_image: errorDeleteImages }}
+            path="main_image"
+            id="error"
+          />
         </div>
         <div className={classes.createRecipeSection}>
           <h2 className={classes.createRecipeSubtitle_withoutInput}>Cooking Video</h2>

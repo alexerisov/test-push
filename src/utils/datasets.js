@@ -245,6 +245,7 @@ export const nameErrorRecipe = [
   { nameErrorResponse: 'ingredients', nameDiv: 'create-ingredients' },
   { nameErrorResponse: 'images', nameInput: 'create-images' },
   { nameErrorResponse: 'images_to_delete', nameInput: 'create-images' },
+  { nameErrorResponse: 'main_image', nameInput: 'create-images' },
   { nameErrorResponse: 'preview_mp4_url', nameDiv: 'DemoCamera' },
   { nameErrorResponse: 'publish_status', nameInput: 'publish_status' },
   { nameErrorResponse: 'caption', nameInput: 'create-caption' },
