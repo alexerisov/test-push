@@ -405,11 +405,7 @@ function FormEditRecipe(props) {
   };
 
   useEffect(() => {
-    if (videoRecipe) {
-      labelRefVideo.current.style.border = 'none';
-    } else {
-      labelRefVideo.current.style.border = '3px dashed #dfdfdf';
-    }
+    labelRefVideo.current.style.border = '3px dashed #dfdfdf';
   }, [videoRecipe]);
 
   function handleDropVideo(event) {
@@ -551,34 +547,25 @@ function FormEditRecipe(props) {
           </ReactSortable>
           <FieldError errors={error?.images ? error : { images: errorDeleteImages }} path="images" />
         </div>
+
         <div className={classes.createRecipeSection}>
           <h2 className={classes.createRecipeSubtitle_withoutInput}>Cooking Video</h2>
-          {!videoRecipe ? (
+          <div className={classes.createRecipeSection__video}>
             <>
               <div
-                ref={labelRefVideo}
+                onClick={videoRecipe ? handleDeleteVideo : e => onClickUploadVideo(e)}
                 className={classes.uploadVideoLabel}
                 onDrop={event => handleDropVideo(event)}
                 onDragOver={event => handleDragOverVideo(event)}
                 onDragEnter={event => handleDragEnterVideo(event)}
                 onDragLeave={event => handleDragLeaveVideo(event)}>
-                <img src="/images/index/upload-icon.svg" />
-                {progressVideo === 0 ? (
-                  <>
-                    <p className={classes.uploadVideoLabel__dragText}>Drag and drop files here</p>
-                    <p className={classes.uploadVideoLabel__orText}>or</p>
-                    <button
-                      className={classes.uploadVideoLabel__browseFilesButton}
-                      onClick={e => onClickUploadVideo(e)}>
-                      Browse files
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <p className={classes.uploadVideoLabel__dragText}>Uploading...</p>
-                    <LinearProgressWithLabel value={progressVideo} />
-                  </>
-                )}
+                <div className={classes.uploadVideoLabel__border} ref={labelRefVideo}>
+                  <img className={classes.uploadVideoLabel__logo} src="/images/index/uploadIconGray.svg" />
+                  {(progressVideo === 0 || videoRecipe) && (
+                    <p className={classes.uploadVideoLabel__dragText}>{!videoRecipe ? 'Add video' : 'Delete video'}</p>
+                  )}
+                  {progressVideo !== 0 && !videoRecipe && <LinearProgressWithLabel value={progressVideo} />}
+                </div>
               </div>
               <input
                 type="file"
@@ -590,19 +577,16 @@ function FormEditRecipe(props) {
                 }}></input>
               <FieldError errors={videoRecipeError} path="video" id="error" />
             </>
-          ) : (
-            <>
-              <div className={classes.recipe__video__watermark} ref={labelRefVideo}>
-                <video width="550" controls="controls" className={classes.recipe__video}>
+
+            {videoRecipe && (
+              <div className={classes.recipe__video__watermark}>
+                <video width="288" controls="controls" className={classes.recipe__video}>
                   <source src={videoRecipe?.video} type="video/mp4" />
                 </video>
                 <div className={classes.recipe__video__watermark__icon} />
               </div>
-              <button onClick={handleDeleteVideo} className={classes.recipe__video__button}>
-                Delete Video
-              </button>
-            </>
-          )}
+            )}
+          </div>
         </div>
 
         <div className={classes.createRecipeSection}>

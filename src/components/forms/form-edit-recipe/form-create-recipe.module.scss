@@ -474,25 +474,37 @@
 }
 
 .uploadVideoLabel {
-  width: 530px;
-  height: 300px;
+  width: 283px;
+  height: 164px;
   margin: 0;
   padding: 0 16px;
   font-size: 12px;
   line-height: 16px;
   text-align: center;
-  border: 3px dashed #dfdfdf;
-  border-radius: 12px;
+  border-radius: 5px;
   position: relative;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  background-color: $--color-white;
+  padding: 6px 9px;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.08);
 
   @media (max-width: $--xs) {
     max-width: 300px;
     max-height: 170px;
+  }
+
+  &__border {
+    height: 100%;
+    width: 100%;
+    border: 3px dashed #dfdfdf;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      border: 3px dashed $--color-blue !important;
+    }
   }
 
   &__logo {
@@ -501,31 +513,13 @@
     }
   }
 
-  &:hover {
-    border: 3px dashed $--color-blue !important;
-  }
-
   &__dragText {
     @include fontSemiBold();
     color: $--color-blue-gray;
-    font-size: 20px;
+    font-size: 18px;
     line-height: 22px;
-    margin: 25px 0 13px 0;
-
-    @media (max-width: $--xs) {
-      display: none;
-    }
-  }
-
-  &__orText {
-    color: $--color-blue-gray;
-    font-size: 16px;
-    line-height: 18px;
-    margin: 0 0 13px 0;
-
-    @media (max-width: $--xs) {
-      display: none;
-    }
+    margin: 14px 0 10px 0;
+    color: #aeaeae;
   }
 
   &__browseFilesButton {
@@ -551,14 +545,9 @@
 
 .recipe__video {
   display: block;
-  max-height: 310px;
-  min-height: 310px;
-
-  @media (max-width: $--xs) {
-    max-width: 300px;
-    max-height: 170px;
-    min-height: 170px;
-  }
+  max-width: 300px;
+  max-height: 165px;
+  min-height: 165px;
 
   &__button {
     width: 200px;
@@ -578,31 +567,19 @@
 
   &__watermark {
     position: relative;
-    height: 309px;
-
-    @media (max-width: $--xs) {
-      height: 170px;
-    }
+    height: 160px;
 
     &__icon {
       position: absolute;
-      bottom: 40px;
-      left: 40px;
-      width: 100px;
+      top: 0;
+      left: 10px;
+      width: 80px;
       height: 70px;
       background-image: url('/images/index/footer_logo.png');
       background-repeat: no-repeat;
       background-position: center;
-      background-size: 100px 70px;
+      background-size: 70px 50px;
       opacity: 0.5;
-
-      @media (max-width: $--xs) {
-        bottom: auto;
-        top: 10px;
-        left: 10px;
-        width: 80px;
-        background-size: 70px 50px;
-      }
     }
   }
 }
@@ -619,4 +596,14 @@
   pointer-events: none;
   position: absolute;
   right: 17px;
+}
+
+.createRecipeSection__video {
+  display: flex;
+  gap: 16px;
+}
+
+.createRecipeSection__videoContainer {
+  display: flex;
+  flex-direction: column;
 }
