@@ -217,6 +217,34 @@ export const notificationTypesText = {
       text: `Click to view the recipe`,
       textLink: `${payload?.title}`
     };
+  },
+  5: payload => {
+    let link = `/chef_pencil/${payload?.id}`;
+    return {
+      text: `<p><a href=${link}>${payload?.title}</a> submitted successfully! Our team is reviewing and we will get back to you soon!</p>`
+    };
+  },
+  6: payload => {
+    if (payload?.status === 2) {
+      let link = `/chef_pencil/${payload?.id}`;
+      return {
+        text: `<p><a href=${link}>${payload?.title}</a> submitted Published! You can check it here</p>`
+      };
+    }
+    if (payload?.status === 3) {
+      let link = `/chef_pencil/editing/${payload?.id}`;
+      return {
+        text: `<p><a href=${link}>${payload?.title}</a> has some remarks! Please check it below: ${payload.rejection_reason}</p>`
+      };
+    }
+  },
+  7: payload => {
+    let link = `/chef_pencil/${payload?.id}`;
+    return {
+      link: link,
+      text: `Click to view the chef pencil`,
+      textLink: `${payload?.title}`
+    };
   }
 };
 
@@ -236,6 +264,15 @@ export const notificationTypesTitle = {
   },
   4: payload => {
     return `${payload.count} new comment in your recipe`;
+  },
+  5: () => {
+    return 'Chef Pencil Record Submission';
+  },
+  6: payload => {
+    return `Chef Pencil ${APPROVED_STATUS[payload?.status]}`;
+  },
+  7: payload => {
+    return `${payload.count} new comment in your Chef Pencil Record`;
   }
 };
 
