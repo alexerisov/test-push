@@ -205,8 +205,6 @@ function FormEditRecipe(props) {
       newData.main_image = newData.images[0];
     }
 
-    console.log(newData.images);
-
     props.dispatch(recipeEditActions.update(newData));
 
     const newImageList = images.filter(image => (image.pk ?? image.id) !== id);
@@ -537,6 +535,7 @@ function FormEditRecipe(props) {
             <span style={{ color: 'red' }}>* </span>Cooking images
           </h2>
           <ReactSortable
+            disabled={mobile}
             delayOnTouchOnly={false}
             list={[...images, { id: 'not-draggable', filtered: true, chosen: true }]}
             setList={sortList}
