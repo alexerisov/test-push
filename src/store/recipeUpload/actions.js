@@ -32,32 +32,30 @@ export default {
       dispatch({ type: types.SEND });
 
       try {
-        const response = await Recipe.upload(
-          {
-            title: data?.title,
-            cooking_time: data?.cooking_time,
-            cuisines: data?.cuisines,
-            cooking_skills: data?.cooking_skills,
-            cooking_methods: data?.cooking_methods,
-            diet_restrictions: data?.diet_restrictions,
-            description: data?.description,
-            video: data?.video,
-            types: data?.types,
-            // tags,
-            language: data?.language,
-            caption: data?.caption,
-            ingredients: data?.ingredients,
-            calories: data?.calories,
-            proteins: data?.proteins,
-            carbohydrates: data?.carbohydrates,
-            fats: data?.fats,
-            steps: data?.steps,
-            publish_status: data?.publish_status,
-            images_to_delete: data?.images_to_delete,
-            main_image: data?.main_image
-          },
-          data?.images ?? null
-        );
+        const response = await Recipe.upload({
+          title: data?.title,
+          cooking_time: data?.cooking_time,
+          cuisines: data?.cuisines,
+          cooking_skills: data?.cooking_skills,
+          cooking_methods: data?.cooking_methods,
+          diet_restrictions: data?.diet_restrictions,
+          description: data?.description,
+          video: data?.video,
+          types: data?.types,
+          // tags,
+          language: data?.language,
+          caption: data?.caption,
+          ingredients: data?.ingredients,
+          calories: data?.calories,
+          proteins: data?.proteins,
+          carbohydrates: data?.carbohydrates,
+          fats: data?.fats,
+          steps: data?.steps,
+          publish_status: data?.publish_status,
+          images_to_delete: data?.images_to_delete,
+          main_image: data?.main_image,
+          images: data?.images
+        });
         dispatch({ type: types.SEND_SUCCESS });
         return response.data;
       } catch (e) {

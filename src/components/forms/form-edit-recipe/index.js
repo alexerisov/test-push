@@ -55,7 +55,8 @@ const useStyles = makeStyles(theme => ({
   },
   textField: {
     '& .MuiOutlinedInput-root': {
-      borderRadius: '10px'
+      borderRadius: '10px',
+      backgroundColor: '#ffffff'
     },
     '& .MuiInputBase-input': {
       height: 'auto'
@@ -111,35 +112,31 @@ function FormEditRecipe(props) {
       .then(res => {
         const newData = res.data;
         newData.id = recipeId;
-        newData.main_image = res.data.images[0];
         newData.images_to_delete = [];
+
         if (newData.video && newData.video !== '') {
           setVideoRecipe({
             video: res.data.video_url
           });
         }
+
+        const imagesRecipe = [];
+        setImages(res.data.images.reverse());
+        res.data.images.forEach(item => {
+          imagesRecipe.push(item.id);
+          if (item.main_image) {
+            newData.main_image = item.id;
+          }
+        });
+
+        newData.images = imagesRecipe;
+
         props.dispatch(recipeEditActions.update(newData));
       })
       .catch(err => {
         console.log(err);
       });
   }, [recipeId]);
-
-  // for Drag and Drop, because Sortable.js don't maintain File
-  useEffect(() => {
-    if (Array.isArray(data?.images)) {
-      const imagesData = data?.images?.map((item, index) => {
-        if (item instanceof File) {
-          return { id: index, image: item };
-        }
-
-        return item;
-      });
-
-      setImages(imagesData);
-      setErrorDeleteImages('');
-    }
-  }, [data]);
 
   function onChangeField(name) {
     return event => {
@@ -195,19 +192,23 @@ function FormEditRecipe(props) {
     props.dispatch(recipeEditActions.update(newData));
   }
 
-  function handleRemoveImage(id, pk) {
+  function handleRemoveImage(id) {
     if (data?.images?.length === 1) {
       setErrorDeleteImages('Your recipe must have at least one photo');
       return;
     }
 
-    const newImagetList = data?.images.filter((image, index) => index !== id);
-    const newData = { ...data, images: newImagetList, main_image: newImagetList[0] };
+    const newImagesIdList = data?.images.filter(image => image !== id);
+    const newData = { ...data, images: newImagesIdList };
 
-    // Filter for filtering new files
-    const newDataDelete = { ...newData, images_to_delete: [...data.images_to_delete, pk].filter(item => item) };
+    if (data.main_image === id) {
+      newData.main_image = newData.images[0];
+    }
 
-    props.dispatch(recipeEditActions.update(newDataDelete));
+    props.dispatch(recipeEditActions.update(newData));
+
+    const newImageList = images.filter(image => (image.pk ?? image.id) !== id);
+    setImages(newImageList);
   }
 
   function handleDeleteStep(e) {
@@ -226,32 +227,50 @@ function FormEditRecipe(props) {
   const handleAddImage = e => {
     // for drag and drop
     if (isDragging && e?.dataTransfer?.files?.length !== 0) {
-      const newImageList = [...data?.images, ...Object.values(e.dataTransfer.files)];
-      const newData = { ...data, images: newImageList };
-      props.dispatch(recipeEditActions.update(newData));
+      handleUploadNewImage(e.dataTransfer.files[0]);
     }
 
     if (!isDragging && e?.currentTarget?.files?.length !== 0) {
-      const newImageList = [...data?.images, ...Object.values(e.currentTarget.files)];
-      const newData = { ...data, images: newImageList };
-      props.dispatch(recipeEditActions.update(newData));
+      handleUploadNewImage(e.currentTarget.files[0]);
     }
+
+    setErrorDeleteImages('');
   };
 
-  const handleUpdateImage = (e, id) => {
-    if (e.currentTarget?.files?.length !== 0) {
-      const newImage = e.currentTarget.files[0];
-      const newImageList = data?.images.map((item, index) => {
-        return index === id ? newImage : item;
+  const handleUploadNewImage = file => {
+    Recipe.uploadImageRecipe(file)
+      .then(res => {
+        const newImageIdList = [...data?.images, res.data.pk];
+        const newData = { ...data, images: newImageIdList };
+
+        if (images.length === 0) {
+          newData.main_image = res.data.pk;
+        }
+
+        props.dispatch(recipeEditActions.update(newData));
+
+        const newImageList = [res.data, ...images];
+        setImages(newImageList);
+      })
+      .catch(err => {
+        console.log(err);
       });
-      const newData = { ...data, images: newImageList };
-      props.dispatch(recipeEditActions.update(newData));
-    }
   };
 
   const sortList = e => {
-    const imagesData = e.map(item => (item.image ? item.image : item));
-    const newData = { ...data, images: imagesData, main_image: imagesData[0] };
+    const imagesData = e.filter(item => !item.filtered);
+    setImages(imagesData);
+
+    const newImageIdList = [];
+    imagesData.forEach(item => {
+      newImageIdList.push(item.pk ?? item.id);
+    });
+    const newData = { ...data, images: newImageIdList.reverse() };
+    props.dispatch(recipeEditActions.update(newData));
+  };
+
+  const handleUpdateCoverImage = (e, id) => {
+    const newData = { ...data, main_image: id };
     props.dispatch(recipeEditActions.update(newData));
   };
 
@@ -259,20 +278,20 @@ function FormEditRecipe(props) {
     event.preventDefault();
     handleAddImage(event);
     setIsDragging(false);
-    uploadImageLabel.current.style.border = '1px dashed #DFDFDF';
+    uploadImageLabel.current.style.border = '2px dashed #DFDFDF';
     return undefined;
   }
 
   function handleDragOver(event) {
     event.preventDefault();
     setIsDragging(true);
-    uploadImageLabel.current.style.border = '1px dashed black';
+    uploadImageLabel.current.style.border = '2px dashed #ffaa00';
     return undefined;
   }
 
   function handleDragLeave() {
     setIsDragging(false);
-    uploadImageLabel.current.style.border = '1px dashed #DFDFDF';
+    uploadImageLabel.current.style.border = '2px dashed #DFDFDF';
     return undefined;
   }
 
@@ -297,12 +316,6 @@ function FormEditRecipe(props) {
     setStatusSubmit('Loading...');
     e.preventDefault();
     const clonedData = { ...data };
-
-    if (clonedData.main_image instanceof File) {
-      clonedData.main_image = clonedData.main_image.name;
-    } else {
-      clonedData.main_image = clonedData.main_image.id;
-    }
 
     props
       .dispatch(recipeEditActions.updateRecipe(clonedData))
@@ -392,11 +405,7 @@ function FormEditRecipe(props) {
   };
 
   useEffect(() => {
-    if (videoRecipe) {
-      labelRefVideo.current.style.border = 'none';
-    } else {
-      labelRefVideo.current.style.border = '3px dashed #dfdfdf';
-    }
+    labelRefVideo.current.style.border = '3px dashed #dfdfdf';
   }, [videoRecipe]);
 
   function handleDropVideo(event) {
@@ -421,13 +430,66 @@ function FormEditRecipe(props) {
     return undefined;
   }
 
+  const getMarkUpForUploadedImages = () => {
+    return (
+      <>
+        {images?.length !== 0
+          ? images?.map((item, index, array) => {
+              const card = (
+                <CardImageEditRecipe
+                  image={item}
+                  delete={handleRemoveImage}
+                  updateCoverImage={handleUpdateCoverImage}
+                  key={index}
+                  main_image={data.main_image}
+                  src={item.file ?? item.url}
+                  id={index}
+                  pk={item.pk ?? item.id}
+                />
+              );
+
+              if (index === array.length - 1) {
+                return <>{card}</>;
+              }
+
+              return card;
+            })
+          : ''}
+        <label
+          htmlFor="create-images"
+          className={classes.uploadPhotoLabel}
+          onDrop={event => handleDrop(event)}
+          onDragOver={event => handleDragOver(event)}
+          onDragEnter={event => handleDragEnter(event)}
+          onDragLeave={event => handleDragLeave(event)}>
+          <div className={classes.uploadPhotoLabel__border} ref={uploadImageLabel}>
+            <img className={classes.uploadPhotoLabel__logo} src="/images/index/uploadIconGray.svg" />
+            <p className={classes.uploadPhotoLabel__text}>Add Photoes</p>
+          </div>
+        </label>
+        <input
+          type="file"
+          id="create-images"
+          name="create-images"
+          accept="image/*"
+          multiple
+          onChange={handleAddImage}
+          className={classes.createRecipeInput_type_addImage}
+        />
+      </>
+    );
+  };
+
   return (
-    <div>
+    <div className={classes.createRecipeForm__wrap}>
       <div className={classes.wave}></div>
+      <div className={classes.createRecipeForm__header}>
+        <h1 className={classes.createRecipeForm__header__title}>Edit Recipe</h1>
+      </div>
       <form className={classes.createRecipeForm}>
         <div className={classes.createRecipeSection}>
-          <h2 className={classes.createRecipeSubtitle}>Edit Recipe</h2>
-          <div>
+          <h2 className={classes.createRecipeSubtitle}>Basic Details</h2>
+          <div className={classes.createRecipeInput_type_title}>
             <label htmlFor="create-title" className={classes.createRecipeLabel}>
               <span style={{ color: 'red' }}>* </span>Title
             </label>
@@ -446,7 +508,7 @@ function FormEditRecipe(props) {
               />
             </NoSsr>
           </div>
-          <div>
+          <div className={classes.createRecipeInput_type_description}>
             <label htmlFor="create-description" className={classes.createRecipeLabel}>
               <span style={{ color: 'red' }}>* </span>Description
             </label>
@@ -467,9 +529,71 @@ function FormEditRecipe(props) {
             </NoSsr>
           </div>
         </div>
+
         <div className={classes.createRecipeSection}>
           <h2 className={classes.createRecipeSubtitle}>
-            <span style={{ color: 'red' }}>* </span>Ingredients
+            <span style={{ color: 'red' }}>* </span>Cooking images
+          </h2>
+          <ReactSortable
+            disabled={mobile}
+            delayOnTouchOnly={false}
+            list={[...images, { id: 'not-draggable', filtered: true, chosen: true }]}
+            setList={sortList}
+            animation={200}
+            filter=".form-create-recipe_uploadPhotoLabel__2V-l0"
+            draggable=".card-image_cardImage__yt16O"
+            preventOnFilter
+            className={classes.createRecipeSection__grid_type_cardImages}>
+            {getMarkUpForUploadedImages()}
+          </ReactSortable>
+          <FieldError errors={error?.images ? error : { images: errorDeleteImages }} path="images" />
+        </div>
+
+        <div className={classes.createRecipeSection}>
+          <h2 className={classes.createRecipeSubtitle_withoutInput}>Cooking Video</h2>
+          <div className={classes.createRecipeSection__video}>
+            <>
+              <div
+                onClick={videoRecipe ? handleDeleteVideo : e => onClickUploadVideo(e)}
+                className={classes.uploadVideoLabel}
+                onDrop={event => handleDropVideo(event)}
+                onDragOver={event => handleDragOverVideo(event)}
+                onDragEnter={event => handleDragEnterVideo(event)}
+                onDragLeave={event => handleDragLeaveVideo(event)}>
+                <div className={classes.uploadVideoLabel__border} ref={labelRefVideo}>
+                  <img className={classes.uploadVideoLabel__logo} src="/images/index/uploadIconGray.svg" />
+                  {(progressVideo === 0 || videoRecipe) && (
+                    <p className={classes.uploadVideoLabel__dragText}>{!videoRecipe ? 'Add video' : 'Delete video'}</p>
+                  )}
+                  {progressVideo !== 0 && !videoRecipe && <LinearProgressWithLabel value={progressVideo} />}
+                </div>
+              </div>
+              <input
+                type="file"
+                ref={inputRefVideo}
+                accept="video/*"
+                hidden
+                onChange={event => {
+                  handleAddVideo(event.currentTarget.files[0]);
+                }}></input>
+            </>
+
+            {videoRecipe && (
+              <div className={classes.recipe__video__watermark}>
+                <video width="288" controls="controls" className={classes.recipe__video}>
+                  <source src={videoRecipe?.video} type="video/mp4" />
+                </video>
+                <div className={classes.recipe__video__watermark__icon} />
+              </div>
+            )}
+          </div>
+          <FieldError errors={videoRecipeError} path="video" id="error" />
+        </div>
+
+        <div className={classes.createRecipeSection}>
+          <h2 className={classes.createRecipeSubtitle}>
+            <span style={{ color: 'red' }}>* </span>Ingredients:
+            <span style={{ color: '#ffaa00' }}> {data?.ingredients.length ?? '0'}</span>
           </h2>
           <div className={classes.createRecipeSection__grid_type_cardIngredients} id="create-ingredients">
             {data?.ingredients.length !== 0
@@ -489,12 +613,12 @@ function FormEditRecipe(props) {
               onClick={handleClickPopupOpen('editIngredient')}
               className={classes.createRecipeButton_type_addIngredient}>
               <p className={classes.createRecipeButton_type_addIngredient__icon}>&#43;</p>
-              <p className={classes.createRecipeButton_type_addIngredient__text}>Add More</p>
+              <p className={classes.createRecipeButton_type_addIngredient__text}>Add</p>
             </button>
           </div>
           <FieldError errors={error} path="ingredients" id="error" />
         </div>
-        <div className={classes.createRecipeSection}>
+        <div className={classes.createRecipeSection_type_cardNutrition}>
           <h2 className={classes.createRecipeSubtitle}>Nutrition value</h2>
           <div className={classes.createRecipeSection__grid_type_cardNutrition}>
             {data?.calories ? (
@@ -533,7 +657,7 @@ function FormEditRecipe(props) {
                 onClick={handleClickPopupOpen('editNutrition')}
                 className={classes.createRecipeButton_type_addNutrition}>
                 <p className={classes.createRecipeButton_type_addNutrition__icon}>&#43;</p>
-                <p className={classes.createRecipeButton_type_addNutrition__text}>Add More</p>
+                <p className={classes.createRecipeButton_type_addNutrition__text}>Add</p>
               </button>
             ) : (
               ''
@@ -584,146 +708,14 @@ function FormEditRecipe(props) {
             <p className={classes.createRecipeButton_type_addStep__text}>Add More Steps</p>
           </button>
         </div>
+
         <div className={classes.createRecipeSection}>
-          <h2 className={classes.createRecipeSubtitle}>
-            <span style={{ color: 'red' }}>* </span>Cooking images
+          <h2
+            className={`${classes.createRecipeSubtitle_withoutInput} ${classes.createRecipeSubtitle_classifications}`}>
+            All Classifications
           </h2>
-          <ReactSortable
-            delayOnTouchOnly={false}
-            list={images}
-            setList={sortList}
-            animation={200}
-            filter=".form-create-recipe_createRecipeLabel_type_addImage__17fDT"
-            draggable=".card-image_cardImage__yt16O"
-            preventOnFilter
-            className={classes.createRecipeSection__grid_type_cardImages}>
-            {images?.length !== 0
-              ? images?.map((item, index, array) => {
-                  const card = (
-                    <CardImageEditRecipe
-                      image={item}
-                      delete={handleRemoveImage}
-                      update={handleUpdateImage}
-                      key={index}
-                      src={item.url ?? URL.createObjectURL(item.image)}
-                      id={index}
-                      pk={item.image ? null : item.id}
-                    />
-                  );
-
-                  if (index === array.length - 1) {
-                    return (
-                      <>
-                        {card}
-                        <label
-                          htmlFor="create-images"
-                          ref={uploadImageLabel}
-                          className={classes.createRecipeLabel_type_addImage}
-                          onDrop={event => handleDrop(event)}
-                          onDragOver={event => handleDragOver(event)}
-                          onDragEnter={event => handleDragEnter(event)}
-                          onDragLeave={event => handleDragLeave(event)}>
-                          <PhotoCameraOutlinedIcon fontSize={'small'} color={'action'} />
-                          <p className={classes.createRecipeLabel_type_addImage__text}>
-                            jpeg, png, webp, tif, less than 50 Mb
-                          </p>
-                          <p className={classes.createRecipeLabel_type_addImage__subtext}>Upload Photo</p>
-                        </label>
-                        <input
-                          type="file"
-                          id="create-images"
-                          name="create-images"
-                          accept="image/*"
-                          multiple
-                          onChange={handleAddImage}
-                          className={classes.createRecipeInput_type_addImage}
-                        />
-                      </>
-                    );
-                  }
-
-                  return card;
-                })
-              : ''}
-          </ReactSortable>
-          <FieldError errors={error?.images ? error : { images: errorDeleteImages }} path="images" />
-        </div>
-        <div className={classes.createRecipeSection}>
-          <h2 className={classes.createRecipeSubtitle_withoutInput}>Cooking Video</h2>
-          {!videoRecipe ? (
-            <>
-              <div
-                ref={labelRefVideo}
-                className={classes.uploadVideoLabel}
-                onDrop={event => handleDropVideo(event)}
-                onDragOver={event => handleDragOverVideo(event)}
-                onDragEnter={event => handleDragEnterVideo(event)}
-                onDragLeave={event => handleDragLeaveVideo(event)}>
-                <img src="/images/index/upload-icon.svg" />
-                {progressVideo === 0 ? (
-                  <>
-                    <p className={classes.uploadVideoLabel__dragText}>Drag and drop files here</p>
-                    <p className={classes.uploadVideoLabel__orText}>or</p>
-                    <button
-                      className={classes.uploadVideoLabel__browseFilesButton}
-                      onClick={e => onClickUploadVideo(e)}>
-                      Browse files
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <p className={classes.uploadVideoLabel__dragText}>Uploading...</p>
-                    <LinearProgressWithLabel value={progressVideo} />
-                  </>
-                )}
-              </div>
-              <input
-                type="file"
-                ref={inputRefVideo}
-                accept="video/*"
-                hidden
-                onChange={event => {
-                  handleAddVideo(event.currentTarget.files[0]);
-                }}></input>
-              <FieldError errors={videoRecipeError} path="video" id="error" />
-            </>
-          ) : (
-            <>
-              <div className={classes.recipe__video__watermark} ref={labelRefVideo}>
-                <video width="550" controls="controls" className={classes.recipe__video}>
-                  <source src={videoRecipe?.video} type="video/mp4" />
-                </video>
-                <div className={classes.recipe__video__watermark__icon} />
-              </div>
-              <button onClick={handleDeleteVideo} className={classes.recipe__video__button}>
-                Delete Video
-              </button>
-            </>
-          )}
-        </div>
-        <div className={classes.createRecipeSection}>
-          <div className={classes.createRecipeItem}>
-            <h3 className={classes.createRecipeItem__title}>
-              <span style={{ color: 'red' }}>* </span>Visibility
-            </h3>
-            <NoSsr>
-              <RadioGroup
-                aria-label="create-visibility"
-                name="create-visibility"
-                value={data?.publish_status}
-                onChange={onChangeFieldNumber('publish_status')}
-                error={error?.publish_status}
-                helperText={error?.publish_status ? 'This field is required' : ''}>
-                <FormControlLabel value={1} control={<Radio id="publish_status" />} label="Save" />
-                <FormControlLabel value={2} control={<Radio id="publish_status" />} label="Publish" />
-              </RadioGroup>
-            </NoSsr>
-          </div>
-        </div>
-        <div className={classes.createRecipeSection}>
-          <h2 className={classes.createRecipeSubtitle_withoutInput}>All Classifications</h2>
           <div className={classes.createRecipeSection__grid_type_input}>
-            <div className={classes.createRecipeItem}>
+            <div className={classes.createRecipeItem__inputTime}>
               <label htmlFor="create-cooking_time" className={classes.createRecipeLabel}>
                 Preparation Time
               </label>
@@ -739,7 +731,9 @@ function FormEditRecipe(props) {
             </div>
             <NoSsr>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
-                <label htmlFor="create-types-select" className={classes.createRecipeLabel}>
+                <label
+                  htmlFor="create-types-select"
+                  className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
                   Type
                 </label>
                 <Select
@@ -749,13 +743,18 @@ function FormEditRecipe(props) {
                   fullWidth
                   error={error?.types}
                   MenuProps={MenuProps}
+                  IconComponent={() => (
+                    <img src={'/images/index/Polygon6.png'} className={classes.createRecipeSelectArrow} />
+                  )}
                   multiple>
                   {selectItemList(recipeTypes)}
                 </Select>
                 <FormHelperText>{error?.types ? 'This field is required' : ''}</FormHelperText>
               </FormControl>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
-                <label htmlFor="create-diet-restrictions-select" className={classes.createRecipeLabel}>
+                <label
+                  htmlFor="create-diet-restrictions-select"
+                  className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
                   <span style={{ color: 'red' }}>* </span>Lifestyle
                 </label>
                 <Select
@@ -765,13 +764,18 @@ function FormEditRecipe(props) {
                   fullWidth
                   error={error?.diet_restrictions}
                   MenuProps={MenuProps}
+                  IconComponent={() => (
+                    <img src={'/images/index/Polygon6.png'} className={classes.createRecipeSelectArrow} />
+                  )}
                   multiple>
                   {selectItemList(dietaryrestrictions)}
                 </Select>
                 <FormHelperText>{error?.diet_restrictions ? 'This field is required' : ''}</FormHelperText>
               </FormControl>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
-                <label htmlFor="create-cuisines-select" className={classes.createRecipeLabel}>
+                <label
+                  htmlFor="create-cuisines-select"
+                  className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
                   <span style={{ color: 'red' }}>* </span>Cuisine
                 </label>
                 <Select
@@ -779,16 +783,20 @@ function FormEditRecipe(props) {
                   value={data?.cuisines}
                   onChange={onChangeSelect('cuisines')}
                   fullWidth
-                  labelWidth={10}
                   error={error?.cuisines}
                   MenuProps={MenuProps}
+                  IconComponent={() => (
+                    <img src={'/images/index/Polygon6.png'} className={classes.createRecipeSelectArrow} />
+                  )}
                   multiple>
                   {selectItemList(cuisineList)}
                 </Select>
                 <FormHelperText>{error?.cuisines ? 'This field is required' : ''}</FormHelperText>
               </FormControl>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
-                <label htmlFor="create-cooking-methods-select" className={classes.createRecipeLabel}>
+                <label
+                  htmlFor="create-cooking-methods-select"
+                  className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
                   <span style={{ color: 'red' }}>* </span>Cooking Method
                 </label>
                 <Select
@@ -798,26 +806,55 @@ function FormEditRecipe(props) {
                   fullWidth
                   error={error?.cooking_methods}
                   MenuProps={MenuProps}
+                  IconComponent={() => (
+                    <img src={'/images/index/Polygon6.png'} className={classes.createRecipeSelectArrow} />
+                  )}
                   multiple>
                   {selectItemList(cookingMethods)}
                 </Select>
                 <FormHelperText>{error?.cooking_methods ? 'This field is required' : ''}</FormHelperText>
               </FormControl>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
-                <label htmlFor="create-cooking-skills-select" className={classes.createRecipeLabel}>
+                <label
+                  htmlFor="create-cooking-skills-select"
+                  className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
                   <span style={{ color: 'red' }}>* </span>Cooking skills
                 </label>
                 <Select
                   id="create-cooking-skills-select"
                   value={data?.cooking_skills}
                   onChange={onChangeSelect('cooking_skills')}
-                  autoWidth
+                  fullWidth
                   error={error?.cooking_skills}
-                  MenuProps={MenuProps}>
+                  MenuProps={MenuProps}
+                  IconComponent={() => (
+                    <img src={'/images/index/Polygon6.png'} className={classes.createRecipeSelectArrow} />
+                  )}>
                   {selectItemList(cookingSkill)}
                 </Select>
                 <FormHelperText>{error?.cooking_skills ? 'This field is required' : ''}</FormHelperText>
               </FormControl>
+            </NoSsr>
+          </div>
+        </div>
+
+        <div className={`${classes.createRecipeSection} ${classes.createRecipeSection_visibility}`}>
+          <div className={classes.createRecipeItem}>
+            <h3 className={`${classes.createRecipeSubtitle} ${classes.createRecipeSubtitle_type_visibility}`}>
+              <span style={{ color: 'red' }}>* </span>Visibility
+            </h3>
+            <NoSsr>
+              <RadioGroup
+                row
+                aria-label="create-visibility"
+                name="create-visibility"
+                value={data?.publish_status}
+                onChange={onChangeFieldNumber('publish_status')}
+                error={error?.publish_status}
+                helperText={error?.publish_status ? 'This field is required' : ''}>
+                <FormControlLabel value={1} control={<Radio id="publish_status" />} label="Save" />
+                <FormControlLabel value={2} control={<Radio id="publish_status" />} label="Publish" />
+              </RadioGroup>
             </NoSsr>
           </div>
         </div>
