@@ -121,7 +121,7 @@ function FormEditRecipe(props) {
         }
 
         const imagesRecipe = [];
-        setImages(res.data.images);
+        setImages(res.data.images.reverse());
         res.data.images.forEach(item => {
           imagesRecipe.push(item.id);
           if (item.main_image) {
@@ -204,6 +204,8 @@ function FormEditRecipe(props) {
     if (data.main_image === id) {
       newData.main_image = newData.images[0];
     }
+
+    console.log(newData.images);
 
     props.dispatch(recipeEditActions.update(newData));
 
