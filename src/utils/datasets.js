@@ -217,25 +217,6 @@ export const notificationTypesText = {
       text: `Click to view the recipe`,
       textLink: `${payload?.title}`
     };
-  }
-};
-
-export const notificationTypesTitle = {
-  1: payload => {
-    if (payload.user_type === USER_TYPE.chefType) {
-      return 'New Chef Registration';
-    } else {
-      return 'New Customer Registration';
-    }
-  },
-  2: () => {
-    return 'Recipe Submission';
-  },
-  3: payload => {
-    return `Recipe ${APPROVED_STATUS[payload?.status]}`;
-  },
-  4: payload => {
-    return `${payload.count} new comment in your recipe`;
   },
   5: payload => {
     let link = `/chef_pencil/${payload?.id}`;
@@ -264,6 +245,34 @@ export const notificationTypesTitle = {
       text: `Click to view the chef pencil`,
       textLink: `${payload?.title}`
     };
+  }
+};
+
+export const notificationTypesTitle = {
+  1: payload => {
+    if (payload.user_type === USER_TYPE.chefType) {
+      return 'New Chef Registration';
+    } else {
+      return 'New Customer Registration';
+    }
+  },
+  2: () => {
+    return 'Recipe Submission';
+  },
+  3: payload => {
+    return `Recipe ${APPROVED_STATUS[payload?.status]}`;
+  },
+  4: payload => {
+    return `${payload.count} new comment in your recipe`;
+  },
+  5: () => {
+    return 'Chef Pencil Record Submission';
+  },
+  6: payload => {
+    return `Chef Pencil ${APPROVED_STATUS[payload?.status]}`;
+  },
+  7: payload => {
+    return `${payload.count} new comment in your Chef Pencil Record`;
   }
 };
 
