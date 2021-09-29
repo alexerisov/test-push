@@ -17,12 +17,26 @@ import Account from '@/api/Account.js';
 import { modalActions } from '@/store/actions';
 import Cookies from 'cookies';
 import ChefPencil from '@/api/ChefPencil.js';
-
 import classes from './id.module.scss';
+import Tooltip from '@material-ui/core/Tooltip';
 import SearchIcon from '@material-ui/icons/Search';
+import { makeStyles } from '@material-ui/core/styles';
+import { ButtonShare } from '@/components/elements/button';
+import savedStatus from '/public/images/index/savedStatus.svg';
+import notSavedStatus from '/public/images/index/notSavedStatus.svg';
+
+const useStyledTooltip = makeStyles({
+  tooltip: {
+    padding: '5px 10px !important',
+    fontSize: '16px',
+    hyphens: 'auto',
+    maxWidth: '400px'
+  }
+});
 
 function RecipePage({ pencilData, notFound, absolutePath }) {
   const account = useSelector(state => state.account);
+  const toolTipStyles = useStyledTooltip();
 
   // Bind Modal action creators with dispatch
   const { open, close } = useActions(modalActions);
@@ -34,6 +48,9 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
   const [userId, setUserId] = useState();
   const [latestPencils, setLatestPencils] = useState();
   const [rating, setRating] = useState(null);
+  const [likePencil, setLikePencil] = useState(false);
+  const [likesNumber, setLikesNumber] = useState(false);
+  const [savedId, setSavedId] = useState();
 
   useEffect(() => {
     setPencilId(router.query.id);
@@ -50,7 +67,10 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
 
   useEffect(() => {
     ChefPencil.getLatestPencils().then(res => {
-      setLatestPencils(res.data);
+      console.log(res.data[0].images[0].url);
+      setLikePencil(res.data[0].user_liked);
+      setLikesNumber(res.data[0].likes_number);
+      setSavedId(res.data[0].user_saved_chef_pencil_record);
     });
   }, []);
 
@@ -154,6 +174,33 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
     };
   };
 
+  const onClickLike = () => {
+    ChefPencil.uploadLikesPencil(pencilId)
+      .then(res => {
+        if (res.data.like_status === 'deleted') {
+          setLikePencil(false);
+          likesNumber > 0 && setLikesNumber(likesNumber - 1);
+        } else {
+          setLikePencil(true);
+          setLikesNumber(likesNumber + 1);
+        }
+      })
+      .catch(err => console.log(err));
+  };
+  const handleSavePencil = () => {
+    ChefPencil.postSavedPencil(pencilData.pk)
+      .then(res => {
+        setSavedId(res.data.pk);
+      })
+      .catch(err => console.log(err));
+  };
+  const handleDeletePencilFromSaved = () => {
+    ChefPencil.deleteSavedPencil(savedId)
+      .then(res => {
+        setSavedId(false);
+      })
+      .catch(err => console.log(err));
+  };
   const content = (
     <div className={classes.pencil}>
       <h2 className={classes.pencil__navbar}>
@@ -198,11 +245,66 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
               )}
             </div>
           </div>
-
           <div className={classes.pencil__description}>
             {pencil?.image && <img src={pencil?.image} className={classes.pencil__mainImage} alt="pencil image" />}
 
             <p dangerouslySetInnerHTML={{ __html: pencil?.html_content }} className={classes.pencil__descriptionText} />
+          </div>
+
+          <div className={classes.pencil__social}>
+            <div className={classes.pencil__social_row}>
+              {/* <div className={classes.pencil__social__views}>
+                <img src="/images/index/ionic-md-eye.svg" alt="" />
+                <span>{pencil.views_number} Views</span>487 Views
+              </div> */}
+
+              <div className={classes.pencil__social__likes}>
+                <img src="/images/index/Icon awesome-heart.svg" alt="" />
+                <span>{Number(likesNumber)}</span>
+              </div>
+            </div>
+
+            <div className={classes.pencil__social_row}>
+              <Tooltip
+                classes={!isMobileOrTablet && { tooltip: toolTipStyles.tooltip }}
+                title="Votes help recipe to get in production soon."
+                disableFocusListener
+                enterTouchDelay={200}
+                leaveTouchDelay={2000}>
+                <button
+                  className={classes.pencil__social__likes_last}
+                  onClick={!account.hasToken ? openRegisterPopup('register') : onClickLike}>
+                  {!likePencil ? (
+                    <img src="/images/index/Icon-awesome-heart-null.svg" alt="" />
+                  ) : (
+                    <img src="/images/index/Icon awesome-heart.svg" alt="" />
+                  )}
+                  <span className={classes.pencil__social}>Vote</span>
+                </button>
+              </Tooltip>
+
+              <ButtonShare id={pencilId} photo={latestPencils[0]?.images[0]?.url} />
+
+              {!savedId ? (
+                <button
+                  className={classes.pencil__social__saveStatus}
+                  onClick={!account.hasToken ? openRegisterPopup('register') : handleSavePencil}>
+                  <div className={classes.pencil__social___saveStatusImageWrapper}>
+                    <img className={classes.pencil__social__saveStatusImage} src={notSavedStatus} alt="saved status" />
+                  </div>
+                  <span className={classes.pencil__social__saveStatusLabel}>Save</span>
+                </button>
+              ) : (
+                <button
+                  className={classes.pencil__social__saveStatus}
+                  onClick={!account.hasToken ? openRegisterPopup('register') : handleDeletePencilFromSaved}>
+                  <div className={classes.pencil__social___saveStatusImageWrapper}>
+                    <img className={classes.pencil__social__saveStatusImage} src={savedStatus} alt="saved status" />
+                  </div>
+                  <span className={classes.pencil__social__saveStatusLabel}>Save</span>
+                </button>
+              )}
+            </div>
           </div>
 
           <ResipeComments
