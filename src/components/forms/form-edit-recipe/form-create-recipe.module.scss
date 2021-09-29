@@ -30,21 +30,27 @@
 }
 
 .createRecipeSubtitle {
-  margin: 0px 20px 0px;
-  font-size: 30px;
-  line-height: 1.08;
+  margin: 0px;
+  font-size: 24px;
+  line-height: 29px;
+  @include fontSemiBold();
   position: relative;
 
   @media (max-width: $--xs) {
     margin: 0 0 20px;
     font-size: 25px;
   }
+
+  &_type_visibility {
+    margin-bottom: 24px;
+  }
 }
 
 .createRecipeSubtitle_withoutInput {
-  margin: 0px 20px 20px;
-  font-size: 30px;
-  line-height: 1.08;
+  margin: 0 0 20px 0;
+  font-size: 24px;
+  line-height: 29px;
+  @include fontSemiBold();
   position: relative;
 
   @media (max-width: $--xs) {
@@ -56,7 +62,60 @@
 .createRecipeForm {
   display: block;
   max-width: 1000px;
-  margin: 122px auto 40px;
+  position: relative;
+
+  &__header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    @media (max-width: $--xs) {
+      padding: 0 0 30px;
+    }
+
+    &__title {
+      font-size: 30px;
+      line-height: 37px;
+      @include fontSemiBold();
+
+      @media (max-width: $--xs) {
+        font-size: 25px;
+      }
+    }
+
+    &__clear {
+      color: $--color-gray16;
+      font-size: 22px;
+      line-height: 27px;
+      cursor: pointer;
+      border: none;
+      @include fontRegular();
+      min-width: 90px;
+
+      @media (max-width: $--xs) {
+        font-size: 18px;
+      }
+
+      &:hover {
+        color: $--color-orange;
+      }
+    }
+  }
+
+  &__wrap {
+    padding-top: 57px;
+    max-width: 850px;
+    margin: 0 auto;
+
+    @media (max-width: $--md) {
+      padding-top: 30px;
+    }
+
+    @media (max-width: $--xs) {
+      padding-top: 0;
+    }
+  }
 }
 
 .createRecipeSection {
@@ -67,11 +126,15 @@
       padding-top: 0;
     }
   }
+
+  &_type_cardNutrition {
+    padding-top: 15px;
+  }
 }
 
 .createRecipeSection__grid_type_input {
   display: grid;
-  max-width: 829px;
+  max-width: 700px;
   grid-template-columns: 1fr 1fr;
   column-gap: 29px;
   row-gap: 0;
@@ -82,33 +145,20 @@
 }
 
 .createRecipeSection__grid_type_cardIngredients {
-  display: grid;
-  width: max-content;
   margin-top: 20px;
-  grid-template-columns: repeat(4, 1fr);
-  column-gap: 28px;
-  row-gap: 20px;
+  gap: 20px 16px;
   margin: 20px 0;
-
-  @media (max-width: $--md) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  @media (max-width: $--sm - 1px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (max-width: $--xs) {
-    grid-template-columns: repeat(1, 1fr);
-  }
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .createRecipeSection__grid_type_cardNutrition {
-  display: grid;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px 16px;
   max-width: 1027px;
-  margin-top: 20px;
-  grid-template-columns: repeat(auto-fill, 100px);
-  gap: 40px;
+  margin: 20px 0 40px 0;
 }
 
 .createRecipeSection__grid_type_cardImages {
@@ -129,8 +179,8 @@
   display: block;
   margin: 20px 0 10px;
   padding: 0;
-  font-size: 20px;
-  line-height: 1.08;
+  font-size: 22px;
+  line-height: 27px;
   position: relative;
 }
 
@@ -213,6 +263,10 @@
   }
 }
 
+.createRecipeItem__inputTime {
+  margin-bottom: 20px;
+}
+
 .createRecipebuttonContainer {
   display: flex;
   flex-direction: column;
@@ -275,26 +329,27 @@
 }
 
 .createRecipeButton_type_addIngredient {
-  width: 180px;
-  height: 94px;
-  padding: 20px 0;
-  font: 16px/22px 'Montserrat';
-  color: $--color-orange;
+  padding: 14px 18px;
+  color: $--color-gray17;
   text-align: center;
   cursor: pointer;
-  border: $--color-orange 1px solid;
-  border-radius: 10px;
   opacity: 0.7;
+  background-color: $--color-white;
+  border: 1px solid $--color-gray18;
+  box-sizing: border-box;
+  border-radius: 5px;
+  width: 66px !important;
+  height: 66px !important;
 
   &__text {
-    font-size: 20px;
-    font-weight: 900;
-    line-height: 1;
+    @include fontSemiBold();
+    font-size: 14px;
+    line-height: 17px;
     text-align: center;
   }
 
   &__icon {
-    font-size: 44px;
+    font-size: 30px;
     line-height: 0.7;
     text-align: center;
   }
@@ -306,27 +361,27 @@
 }
 
 .createRecipeButton_type_addNutrition {
-  width: 84px;
-  height: 68px;
-  padding: 10px 0;
-  font: 16px/22px 'Montserrat';
-  color: $--color-orange;
+  padding: 14px 18px;
+  color: $--color-gray17;
   text-align: center;
   cursor: pointer;
-  border: $--color-orange 1px solid;
-  border-radius: 6px;
   opacity: 0.7;
+  background-color: $--color-white;
+  border: 1px solid $--color-gray18;
+  box-sizing: border-box;
+  border-radius: 5px;
+  width: 66px !important;
+  height: 66px !important;
 
   &__text {
-    font-size: 13px;
-    font-weight: 900;
-    line-height: 1.23;
+    @include fontSemiBold();
+    font-size: 14px;
+    line-height: 17px;
     text-align: center;
   }
 
   &__icon {
-    margin-bottom: 7px;
-    font-size: 36px;
+    font-size: 30px;
     line-height: 0.7;
     text-align: center;
   }
@@ -341,12 +396,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 68px;
+  width: 206px;
+  height: 44px;
   margin-top: 20px;
-  padding: 22px 0;
   font: 16px/22px 'Montserrat';
-  color: $--color-orange;
+  color: $--color-white;
+  background-color: $--color-orange;
   text-align: center;
   cursor: pointer;
   border: $--color-orange 1px solid;
@@ -354,23 +409,22 @@
   opacity: 0.7;
 
   &__text {
-    font-size: 20px;
-    font-weight: 900;
-    line-height: 1;
+    font-size: 18px;
+    line-height: 22px;
+    @include fontSemiBold();
     text-align: center;
   }
 
   &__icon {
-    margin-right: 25px;
-    font-size: 36px;
-    line-height: 1;
+    margin-right: 5px;
+    font-size: 38px;
     text-align: center;
   }
 }
 
 .createRecipeButton_type_addStep:hover {
-  color: $--color-white;
-  background-color: $--color-orange;
+  color: $--color-orange;
+  background-color: $--color-white;
 }
 
 .createRecipeList {
@@ -551,4 +605,18 @@
       }
     }
   }
+}
+
+.createRecipeInput_type_title {
+  max-width: 583px;
+}
+
+.createRecipeInput_type_description {
+  max-width: 583px;
+}
+
+.createRecipeSelectArrow {
+  pointer-events: none;
+  position: absolute;
+  right: 17px;
 }
