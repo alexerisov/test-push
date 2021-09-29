@@ -1,4 +1,4 @@
-@import "~styles/mixins/mixins.scss";
+@import '~styles/mixins/mixins.scss';
 
 .comments {
   display: flex;
@@ -27,7 +27,7 @@
   }
 
   &__blueСircle {
-    margin: 0 0 0 5px ;
+    margin: 0 0 0 5px;
     width: 10px;
     height: 10px;
     border-radius: 24px;
@@ -41,6 +41,10 @@
   &__form {
     display: flex;
     flex-direction: column;
+    &__btnWrap {
+      max-width: 259px;
+      max-height: 56px;
+    }
   }
 
   &__input {

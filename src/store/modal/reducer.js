@@ -1,14 +1,21 @@
 import reducer from '../../utils/reducer';
-import {types} from './actions.js';
+import { types } from './actions.js';
 
 const initState = {
   show: false,
   name: null,
   params: null,
-  result: null
+  result: null,
+  toRegister: false
 };
 
 export default reducer(initState, {
+  [types.REGISTER_STATUS]: (state, action) => {
+    return {
+      ...state,
+      toRegister: action.payload
+    };
+  },
 
   [types.OPEN]: (state, action) => {
     return {

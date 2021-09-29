@@ -1,20 +1,14 @@
 import React, { useEffect } from 'react';
-import {LayoutModal} from '@/components/layouts';
-import { useMediaQuery } from "@material-ui/core";
-import {loginActions, modalActions, registerActions, restorePasswordActions} from '@/store/actions';
-import {
-  LoginChoice,
-  LoginSocial,
-  RegisterChoice,
-  RegisterSuccess,
-  ResetPasswordSuccess
-} from '@/components/elements';
-import {FormLogin, FormRegister, FormResetPassword} from '@/components/forms';
+import { LayoutModal } from '@/components/layouts';
+import { useMediaQuery } from '@material-ui/core';
+import { loginActions, modalActions, registerActions, restorePasswordActions } from '@/store/actions';
+import { LoginChoice, LoginSocial, RegisterChoice, RegisterSuccess, ResetPasswordSuccess } from '@/components/elements';
+import { FormLogin, FormRegister, FormResetPassword } from '@/components/forms';
 import { connect } from 'react-redux';
-import classes from "./register.module.scss";
+import classes from './register.module.scss';
 import { useRouter } from 'next/router';
 
-function Register (props) {
+function Register(props) {
   const router = useRouter();
   const isMobile = useMediaQuery('(max-width: 768px)');
 
@@ -28,11 +22,12 @@ function Register (props) {
     };
   }, [isMobile]);
 
-
   const USER_TYPE = {
     viewerType: 0,
     chefType: 1
   };
+
+  const { toChoiceRegister } = props;
 
   const viewerType = USER_TYPE.viewerType;
   const chefType = USER_TYPE.chefType;
@@ -49,8 +44,8 @@ function Register (props) {
 
   const [pageSelected, setPageSelected] = React.useState(PAGE_SELECTED_TYPES.loginChoice);
 
-  const {data: loginData, isLoading: loginIsLoading, error: loginError} = props.login;
-  const {data: registerData, isLoading: registerIsLoading, error: registerError} = props.register;
+  const { data: loginData, isLoading: loginIsLoading, error: loginError } = props.login;
+  const { data: registerData, isLoading: registerIsLoading, error: registerError } = props.register;
   const {
     data: restorePasswordData,
     isLoading: restorePasswordIsLoading,
@@ -59,8 +54,8 @@ function Register (props) {
 
   const onCancel = () => {
     props.dispatch(modalActions.close());
-    if (router.pathname === "/confirm/email/[code]") {
-      router.push("/");
+    if (router.pathname === '/confirm/email/[code]') {
+      router.push('/');
     }
   };
 
@@ -90,17 +85,13 @@ function Register (props) {
 
   const switchToPageRegisterViewer = () => {
     const data = { ...registerData, user_type: viewerType };
-    props.dispatch(
-        registerActions.update(data),
-    );
+    props.dispatch(registerActions.update(data));
     setPageSelected(PAGE_SELECTED_TYPES.registerPage);
   };
 
   const switchToPageRegisterChef = () => {
     const data = { ...registerData, user_type: chefType };
-    props.dispatch(
-        registerActions.update(data),
-    );
+    props.dispatch(registerActions.update(data));
     setPageSelected(PAGE_SELECTED_TYPES.registerPage);
   };
 
@@ -108,96 +99,109 @@ function Register (props) {
     setPageSelected(PAGE_SELECTED_TYPES.registerSuccess);
   };
 
-  const onChangeLogin = (data) => {
-    props.dispatch(
-        loginActions.update(data),
-    );
+  const onChangeLogin = data => {
+    props.dispatch(loginActions.update(data));
   };
 
-  const onChangeRegister = (data) => {
-    props.dispatch(
-        registerActions.update(data),
-    );
+  const onChangeRegister = data => {
+    props.dispatch(registerActions.update(data));
   };
 
-  const onChangeRestorePassword = (data) => {
-    props.dispatch(
-      restorePasswordActions.update(data),
-    );
+  const onChangeRestorePassword = data => {
+    props.dispatch(restorePasswordActions.update(data));
   };
 
-  const login = (data) => {
-    props.dispatch(loginActions.login(data)).then((res) => {
-      onCancel();
-    }).catch(e => {
-      console.log('error', e);
-    });
+  const login = data => {
+    props
+      .dispatch(loginActions.login(data))
+      .then(res => {
+        onCancel();
+      })
+      .catch(e => {
+        console.log('error', e);
+      });
   };
 
-  const register = (data) => {
-    props.dispatch(registerActions.register(data)).then((res) => {
-      switchToPageSuccess();
-    }).catch(e => {
-      console.log('error', e);
-    });
+  const register = data => {
+    props
+      .dispatch(registerActions.register(data))
+      .then(res => {
+        switchToPageSuccess();
+      })
+      .catch(e => {
+        console.log('error', e);
+      });
   };
 
-  const restorePassword = (data) => {
-    props.dispatch(restorePasswordActions.resetPassword(data)).then((res) => {
-      switchToPageResetSuccess();
-    }).catch(e => {
-      console.log('error', e);
-    });
+  const restorePassword = data => {
+    props
+      .dispatch(restorePasswordActions.resetPassword(data))
+      .then(res => {
+        switchToPageResetSuccess();
+      })
+      .catch(e => {
+        console.log('error', e);
+      });
   };
+
+  useEffect(() => {
+    toChoiceRegister ? switchToPageRegisterChoice() : null;
+  }, [toChoiceRegister]);
 
   const renderContent = () => {
     switch (pageSelected) {
       case PAGE_SELECTED_TYPES.loginChoice:
-        return <LoginChoice
-              loginEmail={switchToPageEmail}
-              loginSocial={switchToPageSocial}
-              register={switchToPageRegisterChoice}
-          />;
+        return (
+          <LoginChoice
+            loginEmail={switchToPageEmail}
+            loginSocial={switchToPageSocial}
+            register={switchToPageRegisterChoice}
+          />
+        );
       case PAGE_SELECTED_TYPES.loginEmail:
-        return <FormLogin
-              onClickReturn={switchToPageChoise}
-              onChange={onChangeLogin}
-              data={loginData}
-              errors={loginError}
-              onLogin={login}
-              onClickForgot={switchToPageForgot}
-          />;
+        return (
+          <FormLogin
+            onClickReturn={switchToPageChoise}
+            onChange={onChangeLogin}
+            data={loginData}
+            errors={loginError}
+            onLogin={login}
+            onClickForgot={switchToPageForgot}
+          />
+        );
       case PAGE_SELECTED_TYPES.loginSocial:
-        return <LoginSocial
-              onClickReturn={switchToPageChoise}
-          />;
+        return <LoginSocial onClickReturn={switchToPageChoise} />;
       case PAGE_SELECTED_TYPES.registerChoice:
-        return <RegisterChoice
-              registerViewer={switchToPageRegisterViewer}
-              registerChef={switchToPageRegisterChef}
-              onClickReturn={switchToPageChoise}
-              login={switchToPageChoise}
-          />;
+        return (
+          <RegisterChoice
+            registerViewer={switchToPageRegisterViewer}
+            registerChef={switchToPageRegisterChef}
+            onClickReturn={switchToPageChoise}
+            login={switchToPageChoise}
+          />
+        );
       case PAGE_SELECTED_TYPES.registerPage:
-        return <FormRegister
-              onClickReturn={switchToPageChoise}
-              onRegister={register}
-              onChange={onChangeRegister}
-              data={registerData}
-              errors={registerError}
-          />;
+        return (
+          <FormRegister
+            onClickReturn={switchToPageChoise}
+            onRegister={register}
+            onChange={onChangeRegister}
+            data={registerData}
+            errors={registerError}
+          />
+        );
       case PAGE_SELECTED_TYPES.registerSuccess:
-        return <RegisterSuccess
-              onClose={onCancel}
-          />;
+        return <RegisterSuccess onClose={onCancel} />;
       case PAGE_SELECTED_TYPES.resetPassword:
-        return <FormResetPassword
-              onClickReturn={switchToPageEmail}
-              onChange={onChangeRestorePassword}
-              data={restorePasswordData}
-              errors={restorePasswordError}
-              onResetPassword={restorePassword}
-          />;
+        return (
+          <FormResetPassword
+            onClickReturn={switchToPageEmail}
+            onChange={onChangeRestorePassword}
+            data={restorePasswordData}
+            errors={restorePasswordError}
+            onResetPassword={restorePassword}
+          />
+        );
       case PAGE_SELECTED_TYPES.resetPasswordSuccess:
         return <ResetPasswordSuccess />;
       default:
@@ -206,22 +210,21 @@ function Register (props) {
   };
 
   return (
-      <LayoutModal
-          onClose={onCancel}>
-        <div className={classes.register}>
-          <div className={classes.registerLogo}>
-            <img className={classes.registerImage} src="/images/index/logo.png"
-                 alt="Logo"></img>
-          </div>
-          {renderContent()}
+    <LayoutModal onClose={onCancel}>
+      <div className={classes.register}>
+        <div className={classes.registerLogo}>
+          <img className={classes.registerImage} src="/images/index/logo.png" alt="Logo"></img>
         </div>
-      </LayoutModal>
+        {renderContent()}
+      </div>
+    </LayoutModal>
   );
 }
 
-export default connect((state => ({
+export default connect(state => ({
   account: state.account,
   login: state.login,
   register: state.register,
   restorePassword: state.restorePassword,
-})))(Register);
+  toChoiceRegister: state.modal.toRegister
+}))(Register);
