@@ -168,6 +168,11 @@ export const APPROVED_STATUS = {
   3: 'Rejected'
 };
 
+export const IS_APPROVED = {
+  approved: 2,
+  rejected: 3
+};
+
 export const pageNames = {
   '/': 'Home',
   '/my-uploads': 'My recipe',
@@ -202,13 +207,13 @@ export const notificationTypesText = {
     };
   },
   3: payload => {
-    if (payload?.status === 2) {
+    if (payload?.status === IS_APPROVED.approved) {
       let link = `/recipe/${payload?.id}`;
       return {
         text: `<p><a href=${link}>${payload?.title}</a> submitted Published! You can check it here</p>`
       };
     }
-    if (payload?.status === 3) {
+    if (payload?.status === IS_APPROVED.rejected) {
       let link = `/recipe/editing/${payload?.id}`;
       return {
         text: `<p><a href=${link}>${payload?.title}</a> has some remarks! Please check it below: ${payload.rejection_reason}</p>`
@@ -230,13 +235,13 @@ export const notificationTypesText = {
     };
   },
   6: payload => {
-    if (payload?.status === 2) {
+    if (payload?.status === IS_APPROVED.approved) {
       let link = `/chef_pencil/${payload?.id}`;
       return {
         text: `<p><a href=${link}>${payload?.title}</a> submitted Published! You can check it here</p>`
       };
     }
-    if (payload?.status === 3) {
+    if (payload?.status === IS_APPROVED.rejected) {
       let link = `/chef_pencil/editing/${payload?.id}`;
       return {
         text: `<p><a href=${link}>${payload?.title}</a> has some remarks! Please check it below: ${payload.rejection_reason}</p>`
