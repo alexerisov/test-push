@@ -277,15 +277,11 @@
     @media (max-width: 890px) {
       max-width: 500px;
       width: 500px;
-      justify-content: flex-start;
-      flex-wrap: wrap;
-      flex-direction: column;
     }
 
     @media (max-width: 600px) {
       max-width: 100%;
       width: 100%;
-      flex-direction: column;
     }
 
     &_row {
