@@ -19,6 +19,11 @@ export const cuisineList = {
   18: 'Turkish'
 };
 
+export const categoryList = {
+  1: 'General',
+  2: 'Second'
+};
+
 export const recipeTypes = {
   1: 'Breakfast',
   2: 'Lunch',
