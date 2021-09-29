@@ -472,7 +472,6 @@ function FormEditRecipe(props) {
           id="create-images"
           name="create-images"
           accept="image/*"
-          multiple
           onChange={handleAddImage}
           className={classes.createRecipeInput_type_addImage}
         />
@@ -535,7 +534,6 @@ function FormEditRecipe(props) {
             <span style={{ color: 'red' }}>* </span>Cooking images
           </h2>
           <ReactSortable
-            disabled={mobile}
             delayOnTouchOnly={false}
             list={[...images, { id: 'not-draggable', filtered: true, chosen: true }]}
             setList={sortList}

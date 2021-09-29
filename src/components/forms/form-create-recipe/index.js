@@ -482,7 +482,6 @@ function FormCreateRecipe(props) {
           id="create-images"
           name="create-images"
           accept="image/*"
-          multiple
           onChange={handleAddImage}
           className={classes.createRecipeInput_type_addImage}
         />
