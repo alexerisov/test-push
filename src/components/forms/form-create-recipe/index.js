@@ -36,8 +36,6 @@ import InputTime from '@/components/elements/input/inputTime';
 import { recoveryLocalStorage } from '@/utils/web-storage/local';
 import Recipe from '@/api/Recipe';
 import LinearProgressWithLabel from '@/components/elements/linear-progress-with-label';
-import styled from 'styled-components';
-import logo from '/public/images/index/logo.svg';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -97,18 +95,6 @@ function FormCreateRecipe(props) {
   const uploadImageLabel = useRef();
   const [images, setImages] = useState([]);
   const [errorDeleteImages, setErrorDeleteImages] = useState('');
-
-  // for Drag and Drop, because Sortable.js don't maintain File
-  useEffect(() => {
-    if (Array.isArray(data?.images)) {
-      const imagesData = data?.images?.map((item, index) => {
-        return item instanceof File ? { id: index, image: item } : item;
-      });
-
-      setImages(imagesData);
-      setErrorDeleteImages('');
-    }
-  }, [data]);
 
   useEffect(() => {
     const newData = data;
@@ -176,10 +162,17 @@ function FormCreateRecipe(props) {
       return;
     }
 
-    const newImagesList = data?.images.filter((image, index) => index !== id);
-    const newData = { ...data, images: newImagesList };
+    const newImagesIdList = data?.images.filter(image => image !== id);
+    const newData = { ...data, images: newImagesIdList };
+
+    if (data.main_image === id) {
+      newData.main_image = newData.images[0];
+    }
 
     props.dispatch(recipeUploadActions.update(newData));
+
+    const newImageList = images.filter(image => image.pk !== id);
+    setImages(newImageList);
   }
 
   function handleDeleteStep(e) {
@@ -198,33 +191,51 @@ function FormCreateRecipe(props) {
   const handleAddImage = e => {
     // for drag and drop
     if (isDragging && e?.dataTransfer?.files?.length !== 0) {
-      const newImageList = [...data?.images, ...Object.values(e.dataTransfer.files)];
-      const newData = { ...data, images: newImageList };
-      props.dispatch(recipeUploadActions.update(newData));
+      handleUploadNewImage(e.dataTransfer.files[0]);
     }
 
     if (!isDragging && e?.currentTarget?.files?.length !== 0) {
-      const newImageList = [...data?.images, ...Object.values(e.currentTarget.files)];
-      const newData = { ...data, images: newImageList };
-      props.dispatch(recipeUploadActions.update(newData));
+      handleUploadNewImage(e.currentTarget.files[0]);
     }
+
+    setErrorDeleteImages('');
+  };
+
+  const handleUploadNewImage = file => {
+    Recipe.uploadImageRecipe(file)
+      .then(res => {
+        const newImageIdList = [...data?.images, res.data.pk];
+        const newData = { ...data, images: newImageIdList };
+
+        if (images.length === 0) {
+          newData.main_image = res.data.pk;
+        }
+
+        props.dispatch(recipeUploadActions.update(newData));
+
+        const newImageList = [res.data, ...images];
+        setImages(newImageList);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   const sortList = e => {
-    const imagesData = e.filter(item => !item.filtered).map(item => (item.image ? item.image : item));
-    const newData = { ...data, images: imagesData, main_image: imagesData[0] };
+    const imagesData = e.filter(item => !item.filtered);
+    setImages(imagesData);
+
+    const newImageIdList = [];
+    imagesData.forEach(item => {
+      newImageIdList.push(item.pk);
+    });
+    const newData = { ...data, images: newImageIdList.reverse() };
     props.dispatch(recipeUploadActions.update(newData));
   };
 
-  const handleUpdateImage = (e, id) => {
-    if (e.currentTarget?.files?.length !== 0) {
-      const newImage = e.currentTarget.files[0];
-      const newImageList = data?.images.map((item, index) => {
-        return index === id ? newImage : item;
-      });
-      const newData = { ...data, images: newImageList };
-      props.dispatch(recipeUploadActions.update(newData));
-    }
+  const handleUpdateCoverImage = (e, id) => {
+    const newData = { ...data, main_image: id };
+    props.dispatch(recipeUploadActions.update(newData));
   };
 
   const selectItemList = list => {
@@ -246,8 +257,6 @@ function FormCreateRecipe(props) {
     setStatusSubmit('Loading...');
     const clonedData = { ...data };
 
-    clonedData.main_image = data?.images?.[0];
-
     props
       .dispatch(recipeUploadActions.uploadRecipe(clonedData))
       .then(data => {
@@ -265,7 +274,6 @@ function FormCreateRecipe(props) {
         setStatusSubmit('Submit');
         console.log(err);
       });
-    // }
   }
 
   const handleErrorScroll = error => {
@@ -307,20 +315,20 @@ function FormCreateRecipe(props) {
     event.preventDefault();
     handleAddImage(event);
     setIsDragging(false);
-    uploadImageLabel.current.style.border = '1px dashed #DFDFDF';
+    uploadImageLabel.current.style.border = '2px dashed #DFDFDF';
     return undefined;
   }
 
   function handleDragOver(event) {
     event.preventDefault();
     setIsDragging(true);
-    uploadImageLabel.current.style.border = '1px dashed black';
+    uploadImageLabel.current.style.border = '2px dashed #ffaa00';
     return undefined;
   }
 
   function handleDragLeave() {
     setIsDragging(false);
-    uploadImageLabel.current.style.border = '1px dashed #DFDFDF';
+    uploadImageLabel.current.style.border = '2px dashed #DFDFDF';
     return undefined;
   }
 
@@ -335,7 +343,8 @@ function FormCreateRecipe(props) {
     if (restoreRecipeData) {
       const newData = {
         ...data,
-        images: []
+        images: [],
+        main_image: {}
       };
       recoveryLocalStorage.setCreateRecipe(newData);
     }
@@ -440,11 +449,12 @@ function FormCreateRecipe(props) {
                 <CardImageEditRecipe
                   image={item}
                   delete={handleRemoveImage}
-                  update={handleUpdateImage}
+                  updateCoverImage={handleUpdateCoverImage}
                   key={index}
-                  src={item.url ?? URL.createObjectURL(item.image)}
+                  main_image={data.main_image ?? false}
+                  src={item.file}
                   id={index}
-                  pk={item.id}
+                  pk={item.pk}
                 />
               );
 
@@ -457,15 +467,15 @@ function FormCreateRecipe(props) {
           : ''}
         <label
           htmlFor="create-images"
-          ref={uploadImageLabel}
-          className={classes.createRecipeLabel_type_addImage}
+          className={classes.uploadPhotoLabel}
           onDrop={event => handleDrop(event)}
           onDragOver={event => handleDragOver(event)}
           onDragEnter={event => handleDragEnter(event)}
           onDragLeave={event => handleDragLeave(event)}>
-          <PhotoCameraOutlinedIcon fontSize={'small'} color={'action'} />
-          <p className={classes.createRecipeLabel_type_addImage__text}>jpeg, png, webp, tif, less than 50 Mb</p>
-          <p className={classes.createRecipeLabel_type_addImage__subtext}>Upload Photo</p>
+          <div className={classes.uploadPhotoLabel__border} ref={uploadImageLabel}>
+            <img className={classes.uploadPhotoLabel__logo} src="/images/index/uploadIconGray.svg" />
+            <p className={classes.uploadPhotoLabel__text}>Add Photoes</p>
+          </div>
         </label>
         <input
           type="file"
@@ -542,7 +552,7 @@ function FormCreateRecipe(props) {
             list={[...images, { id: 'not-draggable', filtered: true, chosen: true }]}
             setList={sortList}
             animation={200}
-            filter=".form-create-recipe_createRecipeLabel_type_addImage__17fDT"
+            filter=".form-create-recipe_uploadPhotoLabel__2Xlbv"
             draggable=".card-image_cardImage__yt16O"
             preventOnFilter
             className={classes.createRecipeSection__grid_type_cardImages}>
