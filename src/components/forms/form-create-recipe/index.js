@@ -87,8 +87,15 @@ const MenuProps = {
 
 function FormCreateRecipe(props) {
   const router = useRouter();
+
   const classMarerialUi = useStyles();
   const { data, error } = props.recipeUpload;
+
+  useEffect(() => {
+    if (props?.account && !props.account.hasToken) {
+      router.push('/');
+    }
+  }, [props?.account]);
 
   // For uploading images
   const [isDragging, setIsDragging] = useState(false);
@@ -558,11 +565,7 @@ function FormCreateRecipe(props) {
             {getMarkUpForUploadedImages()}
           </ReactSortable>
           <FieldError errors={error?.images ? error : { images: errorDeleteImages }} path="images" id="error" />
-          <FieldError
-            errors={error?.main_image ? error : { main_image: errorDeleteImages }}
-            path="main_image"
-            id="error"
-          />
+          <FieldError errors={error} path="main_image" id="error" />
         </div>
         <div className={classes.createRecipeSection}>
           <h2 className={classes.createRecipeSubtitle_withoutInput}>Cooking Video</h2>
@@ -891,5 +894,6 @@ function FormCreateRecipe(props) {
 }
 
 export default connect(state => ({
-  recipeUpload: state.recipeUpload
+  recipeUpload: state.recipeUpload,
+  account: state.account
 }))(FormCreateRecipe);
