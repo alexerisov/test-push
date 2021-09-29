@@ -608,7 +608,8 @@ function FormCreateRecipe(props) {
 
         <div className={classes.createRecipeSection}>
           <h2 className={classes.createRecipeSubtitle}>
-            <span style={{ color: 'red' }}>* </span>Ingredients
+            <span style={{ color: 'red' }}>* </span>Ingredients:
+            <span style={{ color: '#ffaa00' }}> {data?.ingredients.length ?? '0'}</span>
           </h2>
           <div className={classes.createRecipeSection__grid_type_cardIngredients} id="create-ingredients">
             {data?.ingredients.length !== 0
