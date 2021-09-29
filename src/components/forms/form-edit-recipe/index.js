@@ -93,6 +93,13 @@ const MenuProps = {
 
 function FormEditRecipe(props) {
   const router = useRouter();
+
+  useEffect(() => {
+    if (props?.account && !props.account.hasToken) {
+      router.push('/');
+    }
+  }, [props?.account]);
+
   const classMarerialUi = useStyles();
   const AlertMaterialStyles = useAlertStyles();
   const { data, error } = props.recipeEdit;
@@ -882,5 +889,6 @@ function FormEditRecipe(props) {
 }
 
 export default connect(state => ({
-  recipeEdit: state.recipeEdit
+  recipeEdit: state.recipeEdit,
+  account: state.account
 }))(FormEditRecipe);
