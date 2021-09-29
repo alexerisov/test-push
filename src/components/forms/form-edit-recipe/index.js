@@ -111,35 +111,33 @@ function FormEditRecipe(props) {
       .then(res => {
         const newData = res.data;
         newData.id = recipeId;
-        newData.main_image = res.data.images[0];
         newData.images_to_delete = [];
+
         if (newData.video && newData.video !== '') {
           setVideoRecipe({
             video: res.data.video_url
           });
         }
+
+        const imagesRecipe = [];
+        setImages(res.data.images);
+        res.data.images.forEach(item => {
+          imagesRecipe.push(item.id);
+          if (item.main_image) {
+            newData.main_image = item.id;
+          }
+        });
+
+        newData.images = imagesRecipe;
+
+        console.log(newData);
+
         props.dispatch(recipeEditActions.update(newData));
       })
       .catch(err => {
         console.log(err);
       });
   }, [recipeId]);
-
-  // for Drag and Drop, because Sortable.js don't maintain File
-  useEffect(() => {
-    if (Array.isArray(data?.images)) {
-      const imagesData = data?.images?.map((item, index) => {
-        if (item instanceof File) {
-          return { id: index, image: item };
-        }
-
-        return item;
-      });
-
-      setImages(imagesData);
-      setErrorDeleteImages('');
-    }
-  }, [data]);
 
   function onChangeField(name) {
     return event => {
@@ -195,19 +193,25 @@ function FormEditRecipe(props) {
     props.dispatch(recipeEditActions.update(newData));
   }
 
-  function handleRemoveImage(id, pk) {
+  function handleRemoveImage(id) {
+    console.log(data);
+
     if (data?.images?.length === 1) {
       setErrorDeleteImages('Your recipe must have at least one photo');
       return;
     }
 
-    const newImagetList = data?.images.filter((image, index) => index !== id);
-    const newData = { ...data, images: newImagetList, main_image: newImagetList[0] };
+    const newImagesIdList = data?.images.filter(image => image !== id);
+    const newData = { ...data, images: newImagesIdList };
 
-    // Filter for filtering new files
-    const newDataDelete = { ...newData, images_to_delete: [...data.images_to_delete, pk].filter(item => item) };
+    if (data.main_image === id) {
+      newData.main_image = newData.images[0];
+    }
 
-    props.dispatch(recipeEditActions.update(newDataDelete));
+    props.dispatch(recipeEditActions.update(newData));
+
+    const newImageList = images.filter(image => (image.pk ?? image.id) !== id);
+    setImages(newImageList);
   }
 
   function handleDeleteStep(e) {
@@ -226,32 +230,50 @@ function FormEditRecipe(props) {
   const handleAddImage = e => {
     // for drag and drop
     if (isDragging && e?.dataTransfer?.files?.length !== 0) {
-      const newImageList = [...data?.images, ...Object.values(e.dataTransfer.files)];
-      const newData = { ...data, images: newImageList };
-      props.dispatch(recipeEditActions.update(newData));
+      handleUploadNewImage(e.dataTransfer.files[0]);
     }
 
     if (!isDragging && e?.currentTarget?.files?.length !== 0) {
-      const newImageList = [...data?.images, ...Object.values(e.currentTarget.files)];
-      const newData = { ...data, images: newImageList };
-      props.dispatch(recipeEditActions.update(newData));
+      handleUploadNewImage(e.currentTarget.files[0]);
     }
+
+    setErrorDeleteImages('');
   };
 
-  const handleUpdateImage = (e, id) => {
-    if (e.currentTarget?.files?.length !== 0) {
-      const newImage = e.currentTarget.files[0];
-      const newImageList = data?.images.map((item, index) => {
-        return index === id ? newImage : item;
+  const handleUploadNewImage = file => {
+    Recipe.uploadImageRecipe(file)
+      .then(res => {
+        const newImageIdList = [...data?.images, res.data.pk];
+        const newData = { ...data, images: newImageIdList };
+
+        if (images.length === 0) {
+          newData.main_image = res.data.pk;
+        }
+
+        props.dispatch(recipeEditActions.update(newData));
+
+        const newImageList = [res.data, ...images];
+        setImages(newImageList);
+      })
+      .catch(err => {
+        console.log(err);
       });
-      const newData = { ...data, images: newImageList };
-      props.dispatch(recipeEditActions.update(newData));
-    }
   };
 
   const sortList = e => {
-    const imagesData = e.map(item => (item.image ? item.image : item));
-    const newData = { ...data, images: imagesData, main_image: imagesData[0] };
+    const imagesData = e.filter(item => !item.filtered);
+    setImages(imagesData);
+
+    const newImageIdList = [];
+    imagesData.forEach(item => {
+      newImageIdList.push(item.pk ?? item.id);
+    });
+    const newData = { ...data, images: newImageIdList.reverse() };
+    props.dispatch(recipeEditActions.update(newData));
+  };
+
+  const handleUpdateCoverImage = (e, id) => {
+    const newData = { ...data, main_image: id };
     props.dispatch(recipeEditActions.update(newData));
   };
 
@@ -259,20 +281,20 @@ function FormEditRecipe(props) {
     event.preventDefault();
     handleAddImage(event);
     setIsDragging(false);
-    uploadImageLabel.current.style.border = '1px dashed #DFDFDF';
+    uploadImageLabel.current.style.border = '2px dashed #DFDFDF';
     return undefined;
   }
 
   function handleDragOver(event) {
     event.preventDefault();
     setIsDragging(true);
-    uploadImageLabel.current.style.border = '1px dashed black';
+    uploadImageLabel.current.style.border = '2px dashed #ffaa00';
     return undefined;
   }
 
   function handleDragLeave() {
     setIsDragging(false);
-    uploadImageLabel.current.style.border = '1px dashed #DFDFDF';
+    uploadImageLabel.current.style.border = '2px dashed #DFDFDF';
     return undefined;
   }
 
@@ -297,12 +319,6 @@ function FormEditRecipe(props) {
     setStatusSubmit('Loading...');
     e.preventDefault();
     const clonedData = { ...data };
-
-    if (clonedData.main_image instanceof File) {
-      clonedData.main_image = clonedData.main_image.name;
-    } else {
-      clonedData.main_image = clonedData.main_image.id;
-    }
 
     props
       .dispatch(recipeEditActions.updateRecipe(clonedData))
@@ -420,6 +436,56 @@ function FormEditRecipe(props) {
     event.preventDefault();
     return undefined;
   }
+
+  const getMarkUpForUploadedImages = () => {
+    return (
+      <>
+        {images?.length !== 0
+          ? images?.map((item, index, array) => {
+              const card = (
+                <CardImageEditRecipe
+                  image={item}
+                  delete={handleRemoveImage}
+                  updateCoverImage={handleUpdateCoverImage}
+                  key={index}
+                  main_image={data.main_image}
+                  src={item.file ?? item.url}
+                  id={index}
+                  pk={item.pk ?? item.id}
+                />
+              );
+
+              if (index === array.length - 1) {
+                return <>{card}</>;
+              }
+
+              return card;
+            })
+          : ''}
+        <label
+          htmlFor="create-images"
+          className={classes.uploadPhotoLabel}
+          onDrop={event => handleDrop(event)}
+          onDragOver={event => handleDragOver(event)}
+          onDragEnter={event => handleDragEnter(event)}
+          onDragLeave={event => handleDragLeave(event)}>
+          <div className={classes.uploadPhotoLabel__border} ref={uploadImageLabel}>
+            <img className={classes.uploadPhotoLabel__logo} src="/images/index/uploadIconGray.svg" />
+            <p className={classes.uploadPhotoLabel__text}>Add Photoes</p>
+          </div>
+        </label>
+        <input
+          type="file"
+          id="create-images"
+          name="create-images"
+          accept="image/*"
+          multiple
+          onChange={handleAddImage}
+          className={classes.createRecipeInput_type_addImage}
+        />
+      </>
+    );
+  };
 
   return (
     <div>
@@ -590,61 +656,14 @@ function FormEditRecipe(props) {
           </h2>
           <ReactSortable
             delayOnTouchOnly={false}
-            list={images}
+            list={[...images, { id: 'not-draggable', filtered: true, chosen: true }]}
             setList={sortList}
             animation={200}
-            filter=".form-create-recipe_createRecipeLabel_type_addImage__17fDT"
+            filter=".form-create-recipe_uploadPhotoLabel__2V-l0"
             draggable=".card-image_cardImage__yt16O"
             preventOnFilter
             className={classes.createRecipeSection__grid_type_cardImages}>
-            {images?.length !== 0
-              ? images?.map((item, index, array) => {
-                  const card = (
-                    <CardImageEditRecipe
-                      image={item}
-                      delete={handleRemoveImage}
-                      update={handleUpdateImage}
-                      key={index}
-                      src={item.url ?? URL.createObjectURL(item.image)}
-                      id={index}
-                      pk={item.image ? null : item.id}
-                    />
-                  );
-
-                  if (index === array.length - 1) {
-                    return (
-                      <>
-                        {card}
-                        <label
-                          htmlFor="create-images"
-                          ref={uploadImageLabel}
-                          className={classes.createRecipeLabel_type_addImage}
-                          onDrop={event => handleDrop(event)}
-                          onDragOver={event => handleDragOver(event)}
-                          onDragEnter={event => handleDragEnter(event)}
-                          onDragLeave={event => handleDragLeave(event)}>
-                          <PhotoCameraOutlinedIcon fontSize={'small'} color={'action'} />
-                          <p className={classes.createRecipeLabel_type_addImage__text}>
-                            jpeg, png, webp, tif, less than 50 Mb
-                          </p>
-                          <p className={classes.createRecipeLabel_type_addImage__subtext}>Upload Photo</p>
-                        </label>
-                        <input
-                          type="file"
-                          id="create-images"
-                          name="create-images"
-                          accept="image/*"
-                          multiple
-                          onChange={handleAddImage}
-                          className={classes.createRecipeInput_type_addImage}
-                        />
-                      </>
-                    );
-                  }
-
-                  return card;
-                })
-              : ''}
+            {getMarkUpForUploadedImages()}
           </ReactSortable>
           <FieldError errors={error?.images ? error : { images: errorDeleteImages }} path="images" />
         </div>
