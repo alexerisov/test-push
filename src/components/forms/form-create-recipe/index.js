@@ -13,7 +13,8 @@ import {
   FormControlLabel,
   Radio,
   FormHelperText,
-  NoSsr
+  NoSsr,
+  Checkbox
 } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -36,8 +37,16 @@ import InputTime from '@/components/elements/input/inputTime';
 import { recoveryLocalStorage } from '@/utils/web-storage/local';
 import Recipe from '@/api/Recipe';
 import LinearProgressWithLabel from '@/components/elements/linear-progress-with-label';
+import CheckboxIcon from '@/components/elements/checkbox-icon';
+import CheckboxIconUnchecked from '@/components/elements/checkbox-icon/checkbox-icon-unchecked';
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    width: '15px',
+    height: '15px',
+    opacity: 1,
+    position: 'relative'
+  },
   formControl: {
     margin: '0 0 20px',
     minWidth: 250,
@@ -867,8 +876,21 @@ function FormCreateRecipe(props) {
                 value={data?.publish_status}
                 onChange={onChangeFieldNumber('publish_status')}
                 error={error?.publish_status}>
-                <FormControlLabel value={1} control={<Radio id="publish_status" />} label="Save" />
-                <FormControlLabel value={2} control={<Radio id="publish_status" />} label="Publish" />
+                <FormControlLabel
+                  value={1}
+                  control={
+                    <Radio id="publish_status" icon={<CheckboxIconUnchecked />} checkedIcon={<CheckboxIcon />} />
+                  }
+                  label="Save"
+                />
+
+                <FormControlLabel
+                  value={2}
+                  control={
+                    <Radio id="publish_status" icon={<CheckboxIconUnchecked />} checkedIcon={<CheckboxIcon />} />
+                  }
+                  label="Publish"
+                />
               </RadioGroup>
             </NoSsr>
             {error?.publish_status && (
