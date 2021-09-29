@@ -38,7 +38,8 @@
 
   @media (max-width: $--xs) {
     margin: 0 0 20px;
-    font-size: 25px;
+    font-size: 20px;
+    line-height: 24px;
   }
 
   &_type_visibility {
@@ -55,7 +56,14 @@
 
   @media (max-width: $--xs) {
     margin: 0 0 20px;
-    font-size: 25px;
+    font-size: 20px;
+    line-height: 24px;
+  }
+}
+
+.createRecipeSubtitle_classifications {
+  @media (max-width: $--xs) {
+    display: none;
   }
 }
 
@@ -80,7 +88,8 @@
       @include fontSemiBold();
 
       @media (max-width: $--xs) {
-        font-size: 25px;
+        font-size: 22px;
+        line-height: 27px;
       }
     }
 
@@ -94,7 +103,10 @@
       min-width: 90px;
 
       @media (max-width: $--xs) {
-        font-size: 18px;
+        font-size: 16px;
+        line-height: 20px;
+        height: max-content;
+        margin-top: auto;
       }
 
       &:hover {
@@ -127,8 +139,18 @@
     }
   }
 
+  @media (max-width: $--xs) {
+    padding-top: 25px;
+  }
+
   &_type_cardNutrition {
     padding-top: 15px;
+  }
+
+  &_visibility {
+    @media (max-width: $--xs) {
+      padding-top: 0;
+    }
   }
 }
 
@@ -159,12 +181,15 @@
   gap: 20px 16px;
   max-width: 1027px;
   margin: 20px 0 40px 0;
+
+  @media (max-width: $--xs) {
+    margin: 20px 0 0 0;
+  }
 }
 
 .createRecipeSection__grid_type_cardImages {
   position: relative;
   display: flex;
-  flex: 1;
   flex-wrap: wrap;
   max-width: 800px;
   margin-top: 48px;
@@ -182,6 +207,54 @@
   font-size: 22px;
   line-height: 27px;
   position: relative;
+
+  &_type_addImage {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    width: 126px;
+    height: 126px;
+    margin: 0;
+    padding: 0 16px;
+    font-size: 12px;
+    line-height: 16px;
+    text-align: center;
+    cursor: pointer;
+    border: 1px dashed $--color-gray-9;
+    border-radius: 6px;
+
+    &__icon {
+      font-size: 48px;
+    }
+
+    &__text {
+      margin: 6px 0 2px;
+      font-weight: 600;
+      color: $--color-gray2;
+    }
+
+    &__subtext {
+      font-weight: 600;
+      color: $--color-orange;
+    }
+  }
+
+  &_type_addImage:hover {
+    border: 1px dashed $--color-gray3 !important;
+  }
+
+  @media (max-width: $--xs) {
+    font-size: 20px;
+    line-height: 24px;
+    @include fontSemiBold();
+  }
+
+  &_selects {
+    @media (max-width: $--xs) {
+      margin: 0 0 16px 0;
+    }
+  }
 }
 
 .uploadPhotoLabel {
@@ -239,7 +312,7 @@
   margin-bottom: 40px;
 
   @media (max-width: $--xs) {
-    margin-bottom: 15px;
+    margin-bottom: 0;
   }
 
   &__title {
@@ -264,18 +337,29 @@
 }
 
 .createRecipeItem__inputTime {
-  margin-bottom: 20px;
+  margin-bottom: 40px;
+
+  @media (max-width: $--xs) {
+    margin-bottom: 20px;
+  }
 }
 
 .createRecipebuttonContainer {
   display: flex;
   flex-direction: column;
-  margin: 22px auto 100px;
-  max-width: 1000px;
+  gap: 11px;
+  max-width: 1080px;
+  margin: 22px 0 30px;
+
+  @media (max-width: $--xs) {
+    width: max-content;
+    margin: 22px auto 30px auto;
+  }
 
   &__wrapper {
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: row;
+    gap: 11px;
   }
 
   &__alert {
@@ -284,10 +368,9 @@
 }
 
 .createRecipeButton {
-  width: 120px;
+  width: 146px;
   height: 40px;
   padding: 0;
-  font: 16px/22px 'Montserrat';
   color: $--color-white;
   text-align: center;
   cursor: pointer;
@@ -298,11 +381,9 @@
   transition: opacity 0.3s linear;
 
   &_color_gray {
-    width: 120px;
+    width: 146px;
     height: 40px;
-    margin-right: 16px;
     padding: 0;
-    font: 16px/22px 'Montserrat';
     color: $--color-white;
     text-align: center;
     cursor: pointer;
@@ -318,9 +399,9 @@
   }
 
   &__text {
-    font-size: 14px;
-    font-weight: 900;
-    line-height: 1.29;
+    font-size: 20px;
+    line-height: 24px;
+    @include fontSemiBold();
   }
 }
 
@@ -507,12 +588,6 @@
     }
   }
 
-  &__logo {
-    @media (max-width: $--xs) {
-      margin: 20px 0;
-    }
-  }
-
   &__dragText {
     @include fontSemiBold();
     color: $--color-blue-gray;
@@ -601,6 +676,12 @@
 .createRecipeSection__video {
   display: flex;
   gap: 16px;
+
+  @media (max-width: $--sm) {
+    flex-direction: column;
+    width: max-content;
+    margin: 0 auto;
+  }
 }
 
 .createRecipeSection__videoContainer {
