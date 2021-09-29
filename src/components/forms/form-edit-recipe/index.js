@@ -130,8 +130,6 @@ function FormEditRecipe(props) {
 
         newData.images = imagesRecipe;
 
-        console.log(newData);
-
         props.dispatch(recipeEditActions.update(newData));
       })
       .catch(err => {
@@ -194,8 +192,6 @@ function FormEditRecipe(props) {
   }
 
   function handleRemoveImage(id) {
-    console.log(data);
-
     if (data?.images?.length === 1) {
       setErrorDeleteImages('Your recipe must have at least one photo');
       return;
