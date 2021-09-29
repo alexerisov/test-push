@@ -612,18 +612,6 @@ function FormCreateRecipe(props) {
             <span style={{ color: '#ffaa00' }}> {data?.ingredients.length ?? '0'}</span>
           </h2>
           <div className={classes.createRecipeSection__grid_type_cardIngredients} id="create-ingredients">
-            {data?.ingredients.length !== 0
-              ? data?.ingredients.map((item, index) => (
-                  <CardIngredient
-                    delete={handleRemoveIngredient}
-                    key={index}
-                    title={item.title}
-                    quantity={item.quantity}
-                    unit={handleIngredientsUnit(item.unit)}
-                    id={index}
-                  />
-                ))
-              : ''}
             <button
               type="button"
               onClick={handleClickPopupOpen('addIngredient')}
@@ -631,12 +619,37 @@ function FormCreateRecipe(props) {
               <p className={classes.createRecipeButton_type_addIngredient__icon}>&#43;</p>
               <p className={classes.createRecipeButton_type_addIngredient__text}>Add</p>
             </button>
+            {data?.ingredients.length !== 0
+              ? JSON.parse(JSON.stringify(data.ingredients))
+                  .reverse()
+                  .map((item, index) => (
+                    <CardIngredient
+                      delete={handleRemoveIngredient}
+                      key={index}
+                      title={item.title}
+                      quantity={item.quantity}
+                      unit={handleIngredientsUnit(item.unit)}
+                      id={index}
+                    />
+                  ))
+              : ''}
           </div>
           <FieldError errors={error} path="ingredients" id="error" />
         </div>
         <div className={classes.createRecipeSection_type_cardNutrition}>
           <h2 className={classes.createRecipeSubtitle}>Nutrition value</h2>
           <div className={classes.createRecipeSection__grid_type_cardNutrition}>
+            {!data?.calories || !data?.proteins || !data?.fats || !data?.carbohydrates ? (
+              <button
+                type="button"
+                onClick={handleClickPopupOpen('addNutrition')}
+                className={classes.createRecipeButton_type_addNutrition}>
+                <p className={classes.createRecipeButton_type_addNutrition__icon}>&#43;</p>
+                <p className={classes.createRecipeButton_type_addNutrition__text}>Add</p>
+              </button>
+            ) : (
+              ''
+            )}
             {data?.calories ? (
               <CardNutrition id="calories" delete={handleRemoveNutrition} title="Calories" quantity={data?.calories} />
             ) : (
@@ -664,17 +677,6 @@ function FormCreateRecipe(props) {
                 title="Carbs"
                 quantity={`${data?.carbohydrates}%`}
               />
-            ) : (
-              ''
-            )}
-            {!data?.calories || !data?.proteins || !data?.fats || !data?.carbohydrates ? (
-              <button
-                type="button"
-                onClick={handleClickPopupOpen('addNutrition')}
-                className={classes.createRecipeButton_type_addNutrition}>
-                <p className={classes.createRecipeButton_type_addNutrition__icon}>&#43;</p>
-                <p className={classes.createRecipeButton_type_addNutrition__text}>Add</p>
-              </button>
             ) : (
               ''
             )}
