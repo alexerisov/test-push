@@ -6,6 +6,7 @@ const Unchecked = styled.div`
   border-radius: 2px;
   background-color: #dadada;
 `;
+
 const CheckboxIconUnchecked = () => {
   return <Unchecked />;
 };
