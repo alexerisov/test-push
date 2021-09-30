@@ -36,6 +36,8 @@ import { Alert, AlertTitle } from '@material-ui/lab';
 import { validator } from '@/utils/validator';
 import InputTime from '@/components/elements/input/inputTime';
 import LinearProgressWithLabel from '@/components/elements/linear-progress-with-label';
+import CheckboxIconUnchecked from '@/components/elements/checkbox-icon/checkbox-icon-unchecked';
+import CheckboxIcon from '@/components/elements/checkbox-icon';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -859,8 +861,20 @@ function FormEditRecipe(props) {
                 onChange={onChangeFieldNumber('publish_status')}
                 error={error?.publish_status}
                 helperText={error?.publish_status ? 'This field is required' : ''}>
-                <FormControlLabel value={1} control={<Radio id="publish_status" />} label="Save" />
-                <FormControlLabel value={2} control={<Radio id="publish_status" />} label="Publish" />
+                <FormControlLabel
+                  value={1}
+                  control={
+                    <Radio icon={<CheckboxIconUnchecked />} checkedIcon={<CheckboxIcon />} id="publish_status" />
+                  }
+                  label="Save"
+                />
+                <FormControlLabel
+                  value={2}
+                  control={
+                    <Radio icon={<CheckboxIconUnchecked />} checkedIcon={<CheckboxIcon />} id="publish_status" />
+                  }
+                  label="Publish"
+                />
               </RadioGroup>
             </NoSsr>
           </div>
