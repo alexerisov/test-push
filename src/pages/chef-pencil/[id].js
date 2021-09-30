@@ -52,9 +52,9 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
   const [userId, setUserId] = useState();
   const [latestPencils, setLatestPencils] = useState();
   const [rating, setRating] = useState(null);
-  const [likePencil, setLikePencil] = useState(false);
-  const [likesNumber, setLikesNumber] = useState(false);
-  const [savedId, setSavedId] = useState();
+  const [likePencil, setLikePencil] = useState(pencilData?.user_liked);
+  const [likesNumber, setLikesNumber] = useState(pencilData?.likes_number);
+  const [savedId, setSavedId] = useState(pencilData?.user_saved_chef_pencil_record);
 
   useEffect(() => {
     setPencilId(router.query.id);
@@ -73,9 +73,6 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
   useEffect(() => {
     ChefPencil.getLatestPencils().then(res => {
       setLatestPencils(res.data);
-      setLikePencil(res.data[0].user_liked);
-      setLikesNumber(res.data[0].likes_number);
-      setSavedId(res.data[0].user_saved_chef_pencil_record);
     });
   }, []);
 
@@ -301,7 +298,7 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
                 </button>
               </Tooltip>
 
-              <ButtonShare id={pencilId} photo={latestPencils[0]?.images[0]?.url} />
+              <ButtonShare id={pencilId} currentUrl={`${absolutePath}/chef-pencil/${pencilData?.pk}`}/>
 
               {!savedId ? (
                 <button

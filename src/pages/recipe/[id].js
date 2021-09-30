@@ -336,7 +336,12 @@ function RecipePage(props) {
                         <span>Vote</span>
                       </button>
                     </Tooltip>
-                    <ButtonShare id={recipeId} photo={recipe?.images[0]} description={recipe?.description} />
+                    <ButtonShare
+                      id={recipeId}
+                      photo={recipe?.images[0]}
+                      description={recipe?.description}
+                      currentUrl={`${props?.absolutePath}/recipe/${props?.recipesData?.pk}`}
+                    />
 
                     {!savedId ? (
                       <button
