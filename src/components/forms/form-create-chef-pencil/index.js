@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { makeStyles } from '@material-ui/core/styles';
 import { useRouter } from 'next/router';
-import { NoSsr, FormControl, Select, FormHelperText, MenuItem } from '@material-ui/core';
+import {NoSsr, FormControl, Select, FormHelperText, MenuItem, Card} from '@material-ui/core';
 import dynamic from 'next/dynamic';
 import { ReactSortable } from 'react-sortablejs';
 
 import { TextField } from '@material-ui/core';
 import FieldError from '../../elements/field-error';
-import { CardImageEditRecipe } from '@/components/elements/card';
+import { CardChefPencilEdit } from '@/components/elements/card';
 
 import {chefPencilUploadActions, modalActions, recipeEditActions, recipeUploadActions} from '@/store/actions';
 import { recoveryLocalStorage } from '@/utils/web-storage/local';
@@ -323,7 +323,7 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
         {images?.length !== 0
           ? images?.map((item, index, array) => {
             const card = (
-              <CardImageEditRecipe
+              <CardChefPencilEdit
                 image={item}
                 delete={handleRemoveImage}
                 update={handleUpdateImage}
@@ -403,7 +403,7 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
         {images?.length !== 0
           ? images?.map((item, index, array) => {
             const card = (
-              <CardImageEditRecipe
+              <CardChefPencilEdit
                 key={index}
                 image={item}
                 src={item.url ?? URL.createObjectURL(item.image)}
@@ -574,7 +574,7 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
               setList={sortList}
               animation={200}
               filter=".form-create-recipe_createRecipeLabel_type_addImage__17fDT"
-              draggable=".card-image_cardImage__yt16O"
+              draggable=".card-image_cardImage__1PcR-"
               preventOnFilter
               className={classes.createPencilSection__grid_type_cardImages}>
               {isEditing ? getMarkUpForEditingImages() : getMarkUpForUploadedImages()}
