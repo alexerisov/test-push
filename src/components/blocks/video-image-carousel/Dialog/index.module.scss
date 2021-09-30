@@ -56,6 +56,11 @@
       height: 100%;
       border-radius: 0;
     }
+
+    img {
+      object-fit: contain;
+      height: 100%;
+    }
   }
 
   &__video {
@@ -129,7 +134,7 @@
   &__thumbImage {
     width: 100%;
     height: 100%;
-    object-fit: cover ;
+    object-fit: cover;
     border-radius: 5px;
   }
 }
