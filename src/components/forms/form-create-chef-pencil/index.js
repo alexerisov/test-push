@@ -71,7 +71,7 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
       const newData = {...initData};
       newData.main_image = initData?.images?.[0];
       newData.images_to_delete = [];
-      update(initData);
+      update(newData);
       return;
     }
 
@@ -122,8 +122,8 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
         ...error,
         html_content: 'Required field'
       };
-      dispatch(update(newData));
-      dispatch(updateError(newError));
+      update(newData);
+      updateError(newError);
       return;
     }
 
@@ -177,9 +177,9 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
 
     if (isEditing) {
       if (clonedData.main_image instanceof File) {
-        clonedData.main_image = clonedData.main_image.name;
+        clonedData.main_image = clonedData?.main_image?.name;
       } else {
-        clonedData.main_image = clonedData.main_image.id;
+        clonedData.main_image = clonedData?.main_image?.id;
       }
 
       updateChefPencil(clonedData, id)
@@ -199,7 +199,7 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
       return;
     }
 
-    clonedData.main_image = clonedData?.images?.[0].name;
+    clonedData.main_image = clonedData?.images?.[0]?.name;
     uploadChefPencil(clonedData)
       .then(data => {
         setStatusSubmit('Submit');
