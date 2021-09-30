@@ -1,0 +1,84 @@
+@import '~styles/variables.scss';
+@import '~styles/mixins/mixins.scss';
+
+.blocks {
+  padding: 42px 0 60px 0;
+  position: relative;
+
+  &:before {
+    z-index: -2;
+    content: '';
+    width: calc(200vw);
+    left: -100vw;
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    background: $--color-orange-light2;
+    -webkit-transform: matrix(1, 0, 0, -1, 0, 0);
+    transform: matrix(1, 0, 0, -1, 0, 0);
+  }
+
+  &:hover {
+    & .carousel__btn {
+      opacity: 1;
+    }
+
+    & .control-dots {
+      opacity: 1;
+    }
+  }
+
+  &_none {
+    display: none;
+  }
+}
+
+.carousel {
+  &__btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    background-color: $--color-orange;
+    opacity: 0;
+
+    @media (max-width: $--sm) {
+      display: none;
+    }
+  }
+
+  &__prev {
+    @extend .carousel__btn;
+    left: 0;
+
+    @media (max-width: $--gx - 11px) {
+      left: -70px;
+    }
+
+    @media (max-width: $--lg) {
+      left: -50px;
+    }
+  }
+
+  &__next {
+    @extend .carousel__btn;
+    right: 0;
+
+    @media (max-width: $--gx - 11px) {
+      right: -70px;
+    }
+
+    @media (max-width: $--lg) {
+      right: -50px;
+    }
+  }
+}

@@ -28,14 +28,25 @@
     min-height: 52px;
   }
 
+  &__iconsWrap {
+    display: flex;
+    justify-content: center;
+  }
   &__container {
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
 
+  &__burgerWrap {
+    position: relative;
+    z-index: 1;
+  }
+
   &__burger {
     cursor: pointer;
+    color: $--color-gray1;
+    margin-left: 12px;
   }
 
   &__phone {
@@ -92,8 +103,23 @@
     margin: 0;
     padding: 0;
     cursor: pointer;
+    margin-left: 6px;
   }
 
+  &__iconsWrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__iconSearch {
+    color: $--color-gray1;
+  }
+
+  &__btnSearch {
+    border: none;
+    margin-bottom: 3px;
+  }
   &__notifications {
     margin: 0 17px 0 0;
     position: relative;
@@ -104,22 +130,63 @@
     }
 
     &__amount {
-      position: absolute;
-      top: -15px;
-      right: -8px;
-      width: 18px;
-      height: 18px;
       border-radius: 50%;
-      background-color: $--color-orange;
+      background-color: $--color-red1;
       display: flex;
       justify-content: center;
       align-items: center;
       color: $--color-white;
       font-size: 12px;
+      font-weight: 600;
       max-width: 18px;
-      overflow: hidden;
+      width: 14px;
+      height: 14px;
+      margin-right: 4px;
+      line-height: 14.2;
+
+      &_desctop {
+        position: absolute;
+        top: -15px;
+        right: -8px;
+        width: 18px;
+        height: 18px;
+        overflow: hidden;
+        background-color: $--color-red1;
+        border-radius: 50%;
+        background-color: $--color-red1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: $--color-white;
+        font-size: 12px;
+      }
+
+      &_burger {
+        position: absolute;
+        top: -2px;
+        right: -4px;
+        z-index: 5;
+
+        font-size: 12px;
+        font-weight: 600;
+        max-width: 18px;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background-color: $--color-red1;
+        color: $--color-white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
     }
   }
+}
+
+.notification__wrap {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .mobileMenu {

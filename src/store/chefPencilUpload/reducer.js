@@ -8,7 +8,8 @@ const initState = {
     attachments: null,
     images: [],
     main_image: null,
-    images_to_delete: []
+    images_to_delete: [],
+    category: []
   },
   isLoading: false,
   error: null

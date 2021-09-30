@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { makeStyles } from '@material-ui/core/styles';
 import { useRouter } from 'next/router';
-import { NoSsr } from '@material-ui/core';
+import { NoSsr, FormControl, Select, FormHelperText, MenuItem } from '@material-ui/core';
 import dynamic from 'next/dynamic';
 import { ReactSortable } from 'react-sortablejs';
 
@@ -18,10 +18,27 @@ import { nameErrorRecipe } from '@/utils/datasets';
 
 import PhotoCameraOutlinedIcon from '@material-ui/icons/PhotoCameraOutlined';
 import classes from './form-create-chef-pencil.module.scss';
-import { useActions } from "@/customHooks/useActions";
+import { useActions } from '@/customHooks/useActions';
+import { categoryList } from '@/utils/datasets';
 
 const useStyles = makeStyles({
+  formControl: {
+    margin: '0 0 20px',
+    minWidth: 300,
+    width: '100%',
+    '& .MuiInputBase-input': {
+      height: 'auto',
+      width: '100%'
+    },
+    '& .MuiOutlinedInput-root': {
+      borderRadius: '10px'
+    },
+    '& .MuiFormHelperText-root': {
+      color: '#FA0926'
+    }
+  },
   textField: {
+    minWidth: 300,
     '& .MuiOutlinedInput-root': {
       borderRadius: '10px'
     },
@@ -41,7 +58,7 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
   const { data, error } = useSelector(state => state.chefPencilUpload);
   const classMarerialUi = useStyles();
   const { open, close } = useActions(modalActions);
-  const {update, uploadChefPencil, updateError, updateChefPencil} = useActions(chefPencilUploadActions);
+  const { update, uploadChefPencil, updateError, updateChefPencil } = useActions(chefPencilUploadActions);
 
   // For uploading images
   const [isDragging, setIsDragging] = useState(false);
@@ -463,6 +480,35 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
     update(newDataWithDelete);
   }
 
+  function onChangeSelect(name) {
+    return event => {
+      const newData = { ...data, [name]: event.target.value };
+      const newError = { ...error, [name]: '' };
+      dispatch(chefPencilUploadActions.update(newData));
+      dispatch(chefPencilUploadActions.updateError(newError));
+    };
+  }
+  const ITEM_HEIGHT = 48;
+  const ITEM_PADDING_TOP = 8;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 5 + ITEM_PADDING_TOP
+      }
+    }
+  };
+
+  const selectItemList = list => {
+    let itemList = [];
+    for (let key in list) {
+      itemList.push(
+        <MenuItem key={key} value={key}>
+          {list[key]}
+        </MenuItem>
+      );
+    }
+    return itemList;
+  };
   return (
     <div className={classes.createPencil__wrapper}>
       <div className={classes.createPencil__header}>
@@ -470,24 +516,50 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
       </div>
       <form className={classes.createPencil}>
         <div className={classes.createPencilSection}>
-          <div>
-            <label htmlFor="create-title" className={classes.createPencilLabel}>
-              <span style={{ color: 'red' }}>* </span>Title
-            </label>
-            <NoSsr>
-              <TextField
-                id="create-title"
-                type="text"
-                onChange={onChangeField('title')}
-                value={data?.title}
-                variant="outlined"
-                fullWidth
-                className={classMarerialUi.textField}
-                error={Boolean(error?.title)}
-                helperText={error?.title}
-                inputProps={{ maxLength: 50 }}
-              />
-            </NoSsr>
+          <div className={classes.createPencilSectionFlex}>
+            <div className={classes.createPencilItemWrap}>
+              <label htmlFor="create-title" className={classes.createPencilLabel}>
+                <span style={{ color: 'red' }}>* </span>Title
+              </label>
+
+              <NoSsr>
+                <TextField
+                  id="create-title"
+                  type="text"
+                  onChange={onChangeField('title')}
+                  value={data?.title}
+                  variant="outlined"
+                  fullWidth
+                  className={classMarerialUi.textField}
+                  error={Boolean(error?.title)}
+                  helperText={error?.title}
+                  inputProps={{ maxLength: 50 }}
+                />
+              </NoSsr>
+            </div>
+
+            <div className={classes.createPencilItemWrap}>
+              <label htmlFor="create-category-select" className={classes.createPencilLabel}>
+                <span style={{ color: 'red' }}>* </span>Category
+              </label>
+
+              <FormControl variant="outlined" className={classMarerialUi.formControl}>
+                <Select
+                  id="create-category-select"
+                  value={data?.category}
+                  onChange={onChangeSelect('category')}
+                  fullWidth
+                  error={error?.category}
+                  MenuProps={MenuProps}
+                  IconComponent={() => (
+                    <img src="/images/index/Polygon6.png" className={classes.createCategorySelectArrow} />
+                  )}
+                  multiple>
+                  {selectItemList(categoryList)}
+                </Select>
+                <FormHelperText>{error?.category ? 'This field is required' : ''}</FormHelperText>
+              </FormControl>
+            </div>
           </div>
         </div>
 

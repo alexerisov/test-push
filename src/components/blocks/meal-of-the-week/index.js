@@ -22,7 +22,7 @@ const MealOfWeekBlock = props => {
   useEffect(() => {
     setLikeRecipe(props?.meal?.user_liked);
     setLikesNumber(props?.meal?.likes_number);
-    setIngredients(props?.meal?.ingredients.slice(0, 4));
+    setIngredients(props?.meal?.ingredients?.slice(0, 4));
   }, [props.meal]);
 
   const openRegisterPopup = name => {

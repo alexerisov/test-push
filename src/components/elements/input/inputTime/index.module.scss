@@ -1,0 +1,14 @@
+@import '~styles/variables.scss';
+
+.inputTime {
+  position: relative;
+
+  &__clock {
+    pointer-events: none;
+    position: absolute;
+    right: 14px;
+    top: 28%;
+    background-color: $--color-white;
+    cursor: pointer;
+  }
+}
