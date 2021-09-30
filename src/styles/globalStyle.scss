@@ -1,67 +1,63 @@
 @import './modal.scss';
-@import "~styles/variables.scss";
-@import "~styles/app.scss";
-@import "~styles/normalize.scss";
+@import '~styles/variables.scss';
+@import '~styles/app.scss';
+@import '~styles/normalize.scss';
 
-@import "~styles/mixins/mixins.scss";
-
+@import '~styles/mixins/mixins.scss';
 
 body {
-    [class*='MuiButton-root'] {
-        text-transform: none;
-        box-shadow: 0px 3px 6px #00000029;
-        border-radius: 5px;
-        width: 259px;
-        height: 56px;
-    }
+  [class*='MuiButton-root'] {
+    text-transform: none;
+    box-shadow: 0px 3px 6px #00000029;
+    border-radius: 5px;
+    width: 259px;
+    height: 56px;
+  }
 
-    [class*='MuiPaper-root'] {
-        box-shadow: 0 3px 6px rgb(0 0 0 / 16%);
-        border-radius: 5px;
-    }
+  [class*='MuiPaper-root'] {
+    box-shadow: 0 3px 6px rgb(0 0 0 / 16%);
+    border-radius: 5px;
+  }
 
-    [class*='MuiCardMedia-root'] {
-        background-size: auto;
-    }
+  [class*='MuiRating-root'] {
+    color: $--color-orange;
+  }
 
-    [class*='MuiRating-root'] {
-        color: $--color-orange;
-    }
+  [class*='MuiInputBase-input'] {
+    color: #6a6a6a;
+  }
 
-    [class*='MuiInputBase-input'] {
-        color: #6A6A6A;
-    }
+  [class*='MuiFormLabel-root'] {
+    @include fontSemiBold();
+    font-size: 16px;
+    color: $--color-black;
+  }
 
-    [class*='MuiFormLabel-root'] {
-        @include fontSemiBold();
-        font-size: 16px;
-        color: $--color-black;
-    }
+  [class*='MuiInputLabel-formControl'] {
+    transform: translate(0, 0) scale(1);
+  }
 
-    [class*='MuiInputLabel-formControl'] {
-        transform: translate(0, 0) scale(1);
-    }
+  [class*='MuiInput-underline'] {
+    border: 0;
+  }
 
-    [class*='MuiInput-underline'] {
-        border: 0;
-    }
+  [class*='MuiTab-root'] {
+    min-width: 0;
+    margin: 0 10px 0 0;
+  }
 
-    [class*='MuiTab-root'] {
-        min-width: 0;
-        margin: 0 10px 0 0;
-    }
-
-    [class*='MuiTooltip-popper'] {
-        z-index: 195;
-    }
+  [class*='MuiTooltip-popper'] {
+    z-index: 195;
+  }
 }
 
 // CKEditor
 .ck-content {
-    min-height: 450px;
+  min-height: 450px;
 }
 
-b, strong {
-    @include fontMedium();
-    font-weight: 700;
+b,
+strong {
+  @include fontMedium();
+  font-weight: 700;
 }
