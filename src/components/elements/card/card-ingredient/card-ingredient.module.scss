@@ -13,6 +13,7 @@
   border: 1px $--color-gray18 solid;
   border-radius: 5px;
   background-color: $--color-white;
+  min-width: max-content;
 
   &__title {
     font-size: 18px;

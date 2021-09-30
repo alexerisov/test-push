@@ -116,24 +116,24 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
   };
 
   const onChangeEditorField = value => {
-      if (!value) {
-        const newData = { ...data, html_content: value };
-        const newError = {
-          ...error,
-          html_content: 'Required field'
-        };
-        dispatch(chefPencilUploadActions.update(newData));
-        dispatch(chefPencilUploadActions.updateError(newError));
-        return;
-      }
-
+    if (!value) {
       const newData = { ...data, html_content: value };
       const newError = {
         ...error,
-        html_content: ''
+        html_content: 'Required field'
       };
-      dispatch(chefPencilUploadActions.update(newData));
-      dispatch(chefPencilUploadActions.updateError(newError));
+      dispatch(update(newData));
+      dispatch(updateError(newError));
+      return;
+    }
+
+    const newData = { ...data, html_content: value };
+    const newError = {
+      ...error,
+      html_content: ''
+    };
+    dispatch(chefPencilUploadActions.update(newData));
+    dispatch(chefPencilUploadActions.updateError(newError));
   };
 
   //todo check getMaxLengthDescription
@@ -186,7 +186,7 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
         .then(data => {
           setStatusSubmit('Submit');
           return open('editSuccessful', {
-            handleClick: (e) => handleClickForModal(e, id),
+            handleClick: e => handleClickForModal(e, id),
             handleCancel: handleCloseForModal
           });
         })
@@ -204,7 +204,7 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
       .then(data => {
         setStatusSubmit('Submit');
         return open('uploadSuccessful', {
-          handleClick: (e) => handleClickForModal(e, data?.pk),
+          handleClick: e => handleClickForModal(e, data?.pk),
           handleCancel: handleCloseForModal
         });
       })

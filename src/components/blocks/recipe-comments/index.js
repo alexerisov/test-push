@@ -5,10 +5,12 @@ import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
+import { modalActions } from '@/store/actions';
 import { CommentItem } from '@/components/elements/comment';
 import Recipe from '@/api/Recipe';
 
 import classes from './RecipeComments.module.scss';
+import { useDispatch } from 'react-redux';
 
 const ResipeComments = ({
   id,
@@ -20,6 +22,8 @@ const ResipeComments = ({
   deleteCommentHandle
 }) => {
   const isAuthorized = useSelector(state => state.account.hasToken);
+
+  const dispatch = useDispatch();
 
   const [comments, setComments] = useState();
 
@@ -120,6 +124,14 @@ const ResipeComments = ({
     }
   };
 
+  const openUnregisterModal = name => {
+    return () => {
+      dispatch(modalActions.open(name)).then(result => {
+        // result when modal return promise and close
+      });
+    };
+  };
+
   return (
     <div className={classes.comments}>
       <h2 className={classes.comments__title}>Write a comment</h2>
@@ -146,10 +158,13 @@ const ResipeComments = ({
         ) : null}
 
         {!isAuthorized && <div className={classes.comments__input__error}>{authError}</div>}
-
-        <Button type="submit" variant="contained" color="primary">
-          Submit
-        </Button>
+        <div
+          className={classes.comments__form__btnWrap}
+          onClick={!isAuthorized ? openUnregisterModal('unregisterActivityModal') : null}>
+          <Button type="submit" variant="contained" color="primary">
+            Submit
+          </Button>
+        </div>
       </form>
 
       <div className={classes.comments__body}>
