@@ -120,6 +120,18 @@
   opacity: 0;
 }
 
+.createPencilSection__grid_type_cardImages {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 714px;
+  gap: 16px;
+
+  @media (max-width: $--xs) {
+    margin: 48px auto 0;
+  }
+}
+
 .createPencilItem {
   margin-bottom: 40px;
 

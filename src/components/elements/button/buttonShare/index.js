@@ -15,11 +15,10 @@ import Recipe from '@/api/Recipe';
 
 import styles from './buttonShare.module.scss';
 
-const ButtonShare = ({ id, photo, description }) => {
+const ButtonShare = ({ id, photo, description, currentUrl }) => {
   const [openShareWindow, setOpenShareWindow] = useState(false);
   const [open, setOpen] = useState(false);
   const [isMobileOrTabletDevice] = useMobileDevice();
-  const currentUrl = window.location.href;
 
   const handleTooltipOpen = () => {
     setOpen(true);

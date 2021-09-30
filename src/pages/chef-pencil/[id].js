@@ -17,9 +17,12 @@ import Account from '@/api/Account.js';
 import { modalActions } from '@/store/actions';
 import Cookies from 'cookies';
 import ChefPencil from '@/api/ChefPencil.js';
+import { recipePhotoSlider } from '@/store/actions';
+
 import classes from './id.module.scss';
 import Tooltip from '@material-ui/core/Tooltip';
 import SearchIcon from '@material-ui/icons/Search';
+import VideoImageCarousel from '@/components/blocks/video-image-carousel/video-image-carousel';
 import { makeStyles } from '@material-ui/core/styles';
 import { ButtonShare } from '@/components/elements/button';
 import savedStatus from '/public/images/index/savedStatus.svg';
@@ -40,6 +43,7 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
 
   // Bind Modal action creators with dispatch
   const { open, close } = useActions(modalActions);
+  const { setItems: setImageCarouselItems } = useActions(recipePhotoSlider);
 
   const [isMobileOrTablet] = useMobileDevice();
   const router = useRouter();
@@ -48,9 +52,9 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
   const [userId, setUserId] = useState();
   const [latestPencils, setLatestPencils] = useState();
   const [rating, setRating] = useState(null);
-  const [likePencil, setLikePencil] = useState(false);
-  const [likesNumber, setLikesNumber] = useState(false);
-  const [savedId, setSavedId] = useState();
+  const [likePencil, setLikePencil] = useState(pencilData?.user_liked);
+  const [likesNumber, setLikesNumber] = useState(pencilData?.likes_number);
+  const [savedId, setSavedId] = useState(pencilData?.user_saved_chef_pencil_record);
 
   useEffect(() => {
     setPencilId(router.query.id);
@@ -63,14 +67,12 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
 
   useEffect(() => {
     setPencil(pencilData);
+    setImageCarouselItems(pencilData);
   }, [pencilId]);
 
   useEffect(() => {
     ChefPencil.getLatestPencils().then(res => {
-      console.log(res.data[0].images[0].url);
-      setLikePencil(res.data[0].user_liked);
-      setLikesNumber(res.data[0].likes_number);
-      setSavedId(res.data[0].user_saved_chef_pencil_record);
+      setLatestPencils(res.data);
     });
   }, []);
 
@@ -246,7 +248,20 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
             </div>
           </div>
           <div className={classes.pencil__description}>
-            {pencil?.image && <img src={pencil?.image} className={classes.pencil__mainImage} alt="pencil image" />}
+            {!pencil?.images?.length ? (
+              ''
+            ) : (
+              <VideoImageCarousel>
+                {pencil?.images?.map(item => (
+                  <img
+                    className={classes.recipe__carouselItem}
+                    key={`recipe-slider-${item?.pk}`}
+                    src={item?.url}
+                    alt="recipe photo"
+                  />
+                ))}
+              </VideoImageCarousel>
+            )}
 
             <p dangerouslySetInnerHTML={{ __html: pencil?.html_content }} className={classes.pencil__descriptionText} />
           </div>
@@ -283,7 +298,7 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
                 </button>
               </Tooltip>
 
-              <ButtonShare id={pencilId} photo={latestPencils[0]?.images[0]?.url} />
+              <ButtonShare id={pencilId} currentUrl={`${absolutePath}/chef-pencil/${pencilData?.pk}`}/>
 
               {!savedId ? (
                 <button

@@ -1,18 +1,21 @@
 import http from '../utils/http';
 
 export default {
-  upload: ({ title, html_content, image }) => {
+  upload: ({ title, html_content, images, main_image }) => {
     const formData = new FormData();
 
-    if (image) {
-      formData.append('image', image);
+    if (images.length !== 0) {
+      images.forEach((image, index) => {
+        formData.append(`images[${index}]`, image);
+      });
     }
 
     formData.append(
       'data',
       JSON.stringify({
         title,
-        html_content
+        html_content,
+        main_image
       })
     );
 
@@ -114,18 +117,22 @@ export default {
     return http.delete(`chef_pencil/comment/${id}/delete`);
   },
 
-  update: ({ title, html_content, image, id }) => {
+  update: ({ title, html_content, images, id, main_image, images_to_delete }) => {
     const formData = new FormData();
 
-    if (image) {
-      formData.append('image', image);
+    if (images.length !== 0) {
+      images.forEach((image, index) => {
+        formData.append(`images[${index}]`, image);
+      });
     }
 
     formData.append(
       'data',
       JSON.stringify({
         title,
-        html_content
+        html_content,
+        images_to_delete,
+        main_image
       })
     );
 

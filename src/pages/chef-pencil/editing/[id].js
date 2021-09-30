@@ -23,7 +23,7 @@ function CreateRecipe() {
         const newData = {
           title: response?.data.title,
           html_content: response?.data?.html_content,
-          image: response?.data?.image,
+          images: response?.data?.images,
           error: null
         };
 

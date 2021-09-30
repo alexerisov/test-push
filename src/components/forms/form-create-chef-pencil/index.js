@@ -5,12 +5,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useRouter } from 'next/router';
 import { NoSsr, FormControl, Select, FormHelperText, MenuItem } from '@material-ui/core';
 import dynamic from 'next/dynamic';
+import { ReactSortable } from 'react-sortablejs';
 
 import { TextField } from '@material-ui/core';
 import FieldError from '../../elements/field-error';
 import { CardImageEditRecipe } from '@/components/elements/card';
 
-import { chefPencilUploadActions, modalActions } from '@/store/actions';
+import {chefPencilUploadActions, modalActions, recipeEditActions, recipeUploadActions} from '@/store/actions';
 import { recoveryLocalStorage } from '@/utils/web-storage/local';
 import { validator } from '@/utils/validator';
 import { nameErrorRecipe } from '@/utils/datasets';
@@ -62,11 +63,15 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
   // For uploading images
   const [isDragging, setIsDragging] = useState(false);
   const uploadImageLabel = useRef();
+  const [errorDeleteImages, setErrorDeleteImages] = useState('');
+  const [images, setImages] = useState([]);
 
   useEffect(async () => {
     if (isEditing) {
+      const newData = {...initData};
+      newData.main_image = initData?.images?.[0];
+      newData.images_to_delete = [];
       update(initData);
-      console.log(initData);
       return;
     }
 
@@ -74,12 +79,25 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
       ...data,
       title: '',
       html_content: '',
-      image: null,
+      images: [],
+      main_image: null,
       error: null
     };
 
     update(newData);
   }, []);
+
+  // for Drag and Drop, because Sortable.js don't maintain File
+  useEffect(() => {
+    if (Array.isArray(data?.images)) {
+      const imagesData = data?.images?.map((item, index) => {
+        return item instanceof File ? { id: index, image: item } : item;
+      });
+
+      setImages(imagesData);
+      setErrorDeleteImages('');
+    }
+  }, [data]);
 
   const onChangeField = name => {
     return event => {
@@ -137,12 +155,14 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
   const handleAddImage = e => {
     // for drag and drop
     if (isDragging && e?.dataTransfer?.files?.length !== 0) {
-      const newData = { ...data, image: e?.dataTransfer?.files[0] };
+      const newImageList = [...data?.images, ...Object.values(e.dataTransfer.files)];
+      const newData = { ...data, images: newImageList };
       update(newData);
     }
 
     if (!isDragging && e?.currentTarget?.files?.length !== 0) {
-      const newData = { ...data, image: e?.currentTarget?.files[0] };
+      const newImageList = [...data?.images, ...Object.values(e.currentTarget.files)];
+      const newData = { ...data, images: newImageList };
       update(newData);
     }
   };
@@ -153,8 +173,16 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
     e.preventDefault();
     setStatusSubmit('Loading...');
 
+    const clonedData = { ...data };
+
     if (isEditing) {
-      updateChefPencil(data, id)
+      if (clonedData.main_image instanceof File) {
+        clonedData.main_image = clonedData.main_image.name;
+      } else {
+        clonedData.main_image = clonedData.main_image.id;
+      }
+
+      updateChefPencil(clonedData, id)
         .then(data => {
           setStatusSubmit('Submit');
           return open('editSuccessful', {
@@ -171,7 +199,8 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
       return;
     }
 
-    uploadChefPencil(data)
+    clonedData.main_image = clonedData?.images?.[0].name;
+    uploadChefPencil(clonedData)
       .then(data => {
         setStatusSubmit('Submit');
         return open('uploadSuccessful', {
@@ -288,6 +317,169 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
     router.reload();
   };*/
 
+  const getMarkUpForEditingImages = () => {
+    return (
+      <>
+        {images?.length !== 0
+          ? images?.map((item, index, array) => {
+            const card = (
+              <CardImageEditRecipe
+                image={item}
+                delete={handleRemoveImage}
+                update={handleUpdateImage}
+                key={index}
+                src={item.url ?? URL.createObjectURL(item.image)}
+                id={index}
+                pk={item.image ? null : item.id}
+              />
+            );
+
+            if (index === array.length - 1) {
+              return (
+                <>
+                  {card}
+                  <label
+                    htmlFor="create-images"
+                    ref={uploadImageLabel}
+                    className={classes.createPencilLabel_type_addImage}
+                    onDrop={event => handleDrop(event)}
+                    onDragOver={event => handleDragOver(event)}
+                    onDragEnter={event => handleDragEnter(event)}
+                    onDragLeave={event => handleDragLeave(event)}>
+                    <PhotoCameraOutlinedIcon fontSize={'small'} color={'action'} />
+                    <p className={classes.createPencilLabel_type_addImage__text}>
+                      jpeg, png, webp, tif, less than 50 Mb
+                    </p>
+                    <p className={classes.createPencilLabel_type_addImage__subtext}>Upload Photo</p>
+                  </label>
+                  <input
+                    type="file"
+                    id="create-images"
+                    name="create-images"
+                    accept="image/*"
+                    multiple
+                    onChange={handleAddImage}
+                    className={classes.createPencilInput_type_addImage}
+                  />
+                </>
+              );
+            }
+
+            return card;
+          })
+          :
+          <>
+            <label
+              htmlFor="create-images"
+              ref={uploadImageLabel}
+              className={classes.createPencilLabel_type_addImage}
+              onDrop={event => handleDrop(event)}
+              onDragOver={event => handleDragOver(event)}
+              onDragEnter={event => handleDragEnter(event)}
+              onDragLeave={event => handleDragLeave(event)}>
+              <PhotoCameraOutlinedIcon fontSize={'small'} color={'action'} />
+              <p className={classes.createRecipeLabel_type_addImage__text}>
+                jpeg, png, webp, tif, less than 50 Mb
+              </p>
+              <p className={classes.createPencilLabel_type_addImage__subtext}>Upload Photo</p>
+            </label>
+            <input
+              type="file"
+              id="create-images"
+              name="create-images"
+              accept="image/*"
+              multiple
+              onChange={handleAddImage}
+              className={classes.createPencilInput_type_addImage}
+            />
+          </>}
+      </>
+    );
+  };
+
+  const getMarkUpForUploadedImages = () => {
+    return (
+      <>
+        {images?.length !== 0
+          ? images?.map((item, index, array) => {
+            const card = (
+              <CardImageEditRecipe
+                key={index}
+                image={item}
+                src={item.url ?? URL.createObjectURL(item.image)}
+                delete={handleRemoveImage}
+                update={handleUpdateImage}
+                id={index}
+                pk={item?.id}
+              />
+            );
+
+            if (index === array.length - 1) {
+              return <>{card}</>;
+            }
+
+            return card;
+          })
+          : ''}
+        <label
+          htmlFor="create-images"
+          ref={uploadImageLabel}
+          className={classes.createPencilLabel_type_addImage}
+          onDrop={event => handleDrop(event)}
+          onDragOver={event => handleDragOver(event)}
+          onDragEnter={event => handleDragEnter(event)}
+          onDragLeave={event => handleDragLeave(event)}>
+          <PhotoCameraOutlinedIcon fontSize={'small'} color={'action'} />
+          <p className={classes.createPencilLabel_type_addImage__text}>jpeg, png, webp, tif, less than 50 Mb</p>
+          <p className={classes.createPencilLabel_type_addImage__subtext}>Upload Photo</p>
+        </label>
+        <input
+          type="file"
+          id="create-images"
+          name="create-images"
+          accept="image/*"
+          multiple
+          onChange={handleAddImage}
+          className={classes.createPencilInput_type_addImage}
+        />
+      </>
+    );
+  };
+
+  const sortList = e => {
+    const imagesData = e.filter(item => !item.filtered).map(item => (item.image ? item.image : item));
+    const newData = { ...data, images: imagesData, main_image: imagesData[0] };
+    update(newData);
+  };
+
+  const handleUpdateImage = (e, id) => {
+    if (e.currentTarget?.files?.length !== 0) {
+      const newImage = e.currentTarget.files[0];
+      const newImageList = data?.images.map((item, index) => {
+        return index === id ? newImage : item;
+      });
+      const newData = { ...data, images: newImageList };
+      update(newData);
+    }
+  };
+
+  function handleRemoveImage(id, pk) {
+    if (data?.images?.length === 1) {
+      setErrorDeleteImages('Your recipe must have at least one photo');
+      return;
+    }
+
+    const newImagesList = data?.images.filter((image, index) => index !== id);
+    const newData = { ...data, images: newImagesList };
+
+    // Filter for filtering new files
+    const newDataWithDelete = isEditing
+      ? {...newData, images_to_delete: []}
+      : { ...newData, images_to_delete: [...data.images_to_delete, pk].filter(item => item) };
+
+    update(newDataWithDelete);
+  }
+
   function onChangeSelect(name) {
     return event => {
       const newData = { ...data, [name]: event.target.value };
@@ -372,43 +564,24 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
         </div>
 
         <div className={classes.createPencilSection} id="chef-pencil-upload-image">
-          <h2 className={!data?.image ? classes.createPencilLabel : classes.createPencilLabel_margin}>
+          <h2 className={!data?.images?.length ? classes.createPencilLabel : classes.createPencilLabel_margin}>
             <span style={{ color: 'red' }}>* </span>Chef Pencil Image
           </h2>
           <div className={classes.createPencilUpload}>
-            {data?.image && (
-              <CardImageEditRecipe
-                image={data?.image}
-                src={data?.image instanceof File ? URL.createObjectURL(data?.image) : data?.image}
-              />
-            )}
-            <>
-              <label
-                htmlFor="create-images"
-                ref={uploadImageLabel}
-                className={classes.createPencilLabel_type_addImage}
-                onDrop={event => handleDrop(event)}
-                onDragOver={event => handleDragOver(event)}
-                onDragEnter={event => handleDragEnter(event)}
-                onDragLeave={event => handleDragLeave(event)}>
-                <PhotoCameraOutlinedIcon fontSize={'small'} color={'action'} />
-                <p className={classes.createPencilLabel_type_addImage__text}>jpeg, png, webp, tif, less than 50 Mb</p>
-                <p className={classes.createPencilLabel_type_addImage__subtext}>
-                  {!data?.image ? 'Upload Photo' : 'Update Photo'}
-                </p>
-              </label>
-              <input
-                type="file"
-                id="create-images"
-                name="create-images"
-                accept="image/*"
-                onChange={handleAddImage}
-                className={classes.createPencilInput_type_addImage}
-              />
-            </>
+            <ReactSortable
+              delayOnTouchOnly={false}
+              list={[...images, { id: 'not-draggable', filtered: true, chosen: true }]}
+              setList={sortList}
+              animation={200}
+              filter=".form-create-recipe_createRecipeLabel_type_addImage__17fDT"
+              draggable=".card-image_cardImage__yt16O"
+              preventOnFilter
+              className={classes.createPencilSection__grid_type_cardImages}>
+              {isEditing ? getMarkUpForEditingImages() : getMarkUpForUploadedImages()}
+            </ReactSortable>
           </div>
           <div className={classes.fieldError}>
-            <FieldError errors={error} path="image" />
+            <FieldError errors={error?.images ? error : { images: errorDeleteImages }} path="image" />
           </div>
         </div>
 
