@@ -55,17 +55,28 @@ export default {
     return http.post(`chef_pencil/comment/${id}/like`, {});
   },
 
+  uploadLikesPencil: id => {
+    return http.post(`/chef_pencil/${id}/like`);
+  },
+
   uploadRating: ({ value, id }) => {
     return http.post(`/chef_pencil/${id}/rate`, {
       rating: value
     });
   },
-
+  postSavedPencil: id => {
+    return http.post(`/chef_pencil/saved_chef_pencil_records/`, {
+      chef_pencil_record: id
+    });
+  },
+  deleteSavedPencil: id => {
+    return http.delete(`/chef_pencil/saved_chef_pencil_records/${id}`);
+  },
   getChefPencils: (query = '') => {
     return http.get(`/chef_pencil?${query}`);
   },
 
-  getPencilSearchSuggestions: (query) => {
+  getPencilSearchSuggestions: query => {
     return http.get(`/chef_pencil/search_suggestions?${query}`);
   },
 
@@ -102,7 +113,7 @@ export default {
     });
   },
 
-  deleteComment: (id) => {
+  deleteComment: id => {
     return http.delete(`chef_pencil/comment/${id}/delete`);
   },
 
@@ -132,7 +143,7 @@ export default {
     });
   },
 
-  deletePencil: (id) => {
+  deletePencil: id => {
     return http.delete(`chef_pencil/${id}`);
   }
 };
