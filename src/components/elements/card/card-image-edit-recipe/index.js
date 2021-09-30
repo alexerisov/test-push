@@ -3,6 +3,8 @@ import classes from './card-image.module.scss';
 import Fade from '@material-ui/core/Fade';
 import { makeStyles } from '@material-ui/core/styles';
 import { Checkbox } from '@material-ui/core';
+import CheckboxIcon from '../../checkbox-icon';
+import CheckboxIconUnchecked from '../../checkbox-icon/checkbox-icon-unchecked';
 
 const CardImageEditRecipe = props => {
   const { src, id, pk } = props;
@@ -29,11 +31,8 @@ const CardImageEditRecipe = props => {
         <img src={src} className={classes.cardImage__image} />
         <div className={classes.cardImage__inputCover}>
           <Checkbox
-            style={{
-              color: '#FFAA00',
-              padding: '0'
-            }}
-            size="small"
+            icon={<CheckboxIconUnchecked />}
+            checkedIcon={<CheckboxIcon />}
             checked={Boolean(props.main_image === pk)}
             value={id}
             onChange={e => {
