@@ -1,37 +1,30 @@
 import http from '../utils/http';
 
 export default {
-  upload: (
-    {
-      title,
-      cooking_time,
-      cuisines,
-      cooking_skills,
-      cooking_methods,
-      diet_restrictions,
-      description,
-      video,
-      types,
-      // tags,
-      language,
-      caption,
-      ingredients,
-      calories,
-      proteins,
-      carbohydrates,
-      fats,
-      steps,
-      publish_status,
-      main_image
-    },
+  upload: ({
+    title,
+    cooking_time,
+    cuisines,
+    cooking_skills,
+    cooking_methods,
+    diet_restrictions,
+    description,
+    video,
+    types,
+    // tags,
+    language,
+    caption,
+    ingredients,
+    calories,
+    proteins,
+    carbohydrates,
+    fats,
+    steps,
+    publish_status,
+    main_image,
     images
-  ) => {
+  }) => {
     const formData = new FormData();
-    if (images.length !== 0) {
-      images.forEach((image, index) => {
-        formData.append(`images[${index}]`, image);
-      });
-    }
     formData.append(
       'data',
       JSON.stringify({
@@ -54,7 +47,8 @@ export default {
         fats,
         steps,
         publish_status,
-        main_image
+        main_image,
+        images
       })
     );
     return http.post(`recipe/`, formData, {
@@ -73,6 +67,16 @@ export default {
       },
       onUploadProgress: data => {
         setProgressVideo(Math.round((100 * data.loaded) / data.total));
+      }
+    });
+  },
+
+  uploadImageRecipe: image => {
+    const formData = new FormData();
+    formData.append(`file`, image);
+    return http.post('recipe/upload_image', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
       }
     });
   },
@@ -231,17 +235,12 @@ export default {
       steps,
       publish_status,
       images_to_delete,
-      main_image
+      main_image,
+      images
     },
-    images,
     id
   ) => {
     const formData = new FormData();
-    if (images.length !== 0) {
-      images.forEach((image, index) => {
-        formData.append(`images[${index}]`, image);
-      });
-    }
 
     formData.append(
       'data',
@@ -266,7 +265,8 @@ export default {
         steps,
         publish_status,
         images_to_delete,
-        main_image
+        main_image,
+        images
       })
     );
 

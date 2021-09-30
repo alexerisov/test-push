@@ -172,6 +172,12 @@
   margin: 20px 0;
   display: flex;
   flex-wrap: wrap;
+
+  @media (max-width: $--xs) {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 10px 0;
+  }
 }
 
 .createRecipeSection__grid_type_cardNutrition {
@@ -183,7 +189,10 @@
   margin: 20px 0 40px 0;
 
   @media (max-width: $--xs) {
-    margin: 20px 0 0 0;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin: 0;
+    padding: 10px 0 10px 0;
   }
 }
 
@@ -191,12 +200,16 @@
   position: relative;
   display: flex;
   flex-wrap: wrap;
-  max-width: 714px;
+  max-width: 800px;
   margin-top: 48px;
   gap: 16px;
 
   @media (max-width: $--xs) {
-    margin: 48px auto 0;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 10px 0 35px 0;
+    margin: 0;
+    gap: 25px;
   }
 }
 
@@ -208,42 +221,6 @@
   line-height: 27px;
   position: relative;
 
-  &_type_addImage {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-    width: 126px;
-    height: 126px;
-    margin: 0;
-    padding: 0 16px;
-    font-size: 12px;
-    line-height: 16px;
-    text-align: center;
-    cursor: pointer;
-    border: 1px dashed $--color-gray-9;
-    border-radius: 6px;
-
-    &__icon {
-      font-size: 48px;
-    }
-
-    &__text {
-      margin: 6px 0 2px;
-      font-weight: 600;
-      color: $--color-gray2;
-    }
-
-    &__subtext {
-      font-weight: 600;
-      color: $--color-orange;
-    }
-  }
-
-  &_type_addImage:hover {
-    border: 1px dashed $--color-gray3 !important;
-  }
-
   @media (max-width: $--xs) {
     font-size: 20px;
     line-height: 24px;
@@ -253,6 +230,50 @@
   &_selects {
     @media (max-width: $--xs) {
       margin: 0 0 16px 0;
+    }
+  }
+}
+
+.uploadPhotoLabel {
+  width: 181px;
+  height: 134px;
+  min-width: 181px;
+  margin: 0;
+  padding: 5px 7px;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.08);
+  border-radius: 5px;
+  background-color: $--color-white;
+  order: -1;
+
+  &__logo {
+    width: 48px;
+    height: 48px;
+  }
+
+  &__text {
+    font-size: 14px;
+    line-height: 17px;
+    @include fontSemiBold();
+    color: $--color-gray19;
+    margin-top: 8px;
+  }
+
+  &__border {
+    height: 100%;
+    width: 100%;
+    border: 2px dashed #dfdfdf;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      border: 2px dashed $--color-orange !important;
     }
   }
 }
@@ -293,11 +314,7 @@
 }
 
 .createRecipeItem__inputTime {
-  margin-bottom: 40px;
-
-  @media (max-width: $--xs) {
-    margin-bottom: 20px;
-  }
+  margin-bottom: 20px;
 }
 
 .createRecipebuttonContainer {
