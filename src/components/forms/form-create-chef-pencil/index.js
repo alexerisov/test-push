@@ -11,7 +11,7 @@ import { TextField } from '@material-ui/core';
 import FieldError from '../../elements/field-error';
 import { CardImageEditRecipe } from '@/components/elements/card';
 
-import {chefPencilUploadActions, modalActions, recipeUploadActions} from '@/store/actions';
+import {chefPencilUploadActions, modalActions, recipeEditActions, recipeUploadActions} from '@/store/actions';
 import { recoveryLocalStorage } from '@/utils/web-storage/local';
 import { validator } from '@/utils/validator';
 import { nameErrorRecipe } from '@/utils/datasets';
@@ -51,7 +51,7 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
 
   useEffect(async () => {
     if (isEditing) {
-      const newData = initData;
+      const newData = {...initData};
       newData.main_image = initData?.images?.[0];
       newData.images_to_delete = [];
       update(initData);
@@ -156,8 +156,16 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
     e.preventDefault();
     setStatusSubmit('Loading...');
 
+    const clonedData = { ...data };
+
     if (isEditing) {
-      updateChefPencil(data, id)
+      if (clonedData.main_image instanceof File) {
+        clonedData.main_image = clonedData.main_image.name;
+      } else {
+        clonedData.main_image = clonedData.main_image.id;
+      }
+
+      updateChefPencil(clonedData, id)
         .then(data => {
           setStatusSubmit('Submit');
           return open('editSuccessful', {
@@ -174,7 +182,8 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
       return;
     }
 
-    uploadChefPencil(data)
+    clonedData.main_image = clonedData?.images?.[0].name;
+    uploadChefPencil(clonedData)
       .then(data => {
         setStatusSubmit('Submit');
         return open('uploadSuccessful', {
