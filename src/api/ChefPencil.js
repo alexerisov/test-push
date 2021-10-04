@@ -145,5 +145,10 @@ export default {
 
   deletePencil: id => {
     return http.delete(`chef_pencil/${id}`);
+  },
+  getSavedPencils: query => {
+    return http.get('/chef_pencil/saved_chef_pencil_records/', {
+      params: query
+    });
   }
 };
