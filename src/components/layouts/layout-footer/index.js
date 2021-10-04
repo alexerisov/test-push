@@ -75,6 +75,7 @@ const LayoutFooter = props => {
         </div>
       </div>
       <div className={classes.footer__termsContainer}>
+        <p className={classes.footer__copyright}>©EatChefs 2021. All right reserved</p>
         <p className={classes.footer__termsOfUse}>
           <Link href="/terms">
             <a className={classes.footer__termsOfUse__link}>Terms of use </a>
@@ -84,7 +85,6 @@ const LayoutFooter = props => {
             <a className={classes.footer__termsOfUse__link}> Privacy policy</a>
           </Link>
         </p>
-        <p className={classes.footer__copyright}>©EatChefs 2021. All right reserved</p>
       </div>
     </div>
   );
