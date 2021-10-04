@@ -242,9 +242,14 @@ const HeaderDefault = props => {
                   </Link>
                 </MenuItem>
               )}
-              <MenuItem onClick={handleClose} classes={{ root: separatorStyles.root }}>
+              <MenuItem onClick={handleClose}>
                 <Link href="/saved-recipes">
                   <a className={classes.header__link_place_menu}>Saved Recipes</a>
+                </Link>
+              </MenuItem>
+              <MenuItem onClick={handleClose} classes={{ root: separatorStyles.root }}>
+                <Link href="/saved-pencils">
+                  <a className={classes.header__link_place_menu}>Saved Pencils</a>
                 </Link>
               </MenuItem>
               {/*{props?.account?.profile?.user_type === USER_TYPE.viewerType && (
