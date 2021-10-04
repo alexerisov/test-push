@@ -78,6 +78,7 @@ const ChefPencilsPage = () => {
     }
   }, [query]);
 
+  useEffect(() => console.log(pencils.results), [pencils]);
   const handleClickSearch = name => {
     return () => {
       open(name).then(result => {
@@ -114,6 +115,7 @@ const ChefPencilsPage = () => {
               image={item?.image}
               id={item?.pk}
               description={item?.title}
+              publishStatus={item?.status}
             />
           ))
         ) : (
