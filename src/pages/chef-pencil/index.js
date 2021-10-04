@@ -114,6 +114,7 @@ const ChefPencilsPage = () => {
               image={item?.image}
               id={item?.pk}
               description={item?.title}
+              publishStatus={item?.status}
             />
           ))
         ) : (
