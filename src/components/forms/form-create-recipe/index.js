@@ -746,7 +746,7 @@ function FormCreateRecipe(props) {
           <div className={classes.createRecipeSection__grid_type_input}>
             <div className={classes.createRecipeItem__inputTime}>
               <label htmlFor="create-cooking_time" className={classes.createRecipeLabel}>
-                Preparation Time
+                Cooking Time
               </label>
               <NoSsr>
                 <InputTime
