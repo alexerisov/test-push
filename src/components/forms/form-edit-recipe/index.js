@@ -274,7 +274,8 @@ function FormEditRecipe(props) {
     imagesData.forEach(item => {
       newImageIdList.push(item.pk ?? item.id);
     });
-    const newData = { ...data, images: newImageIdList.reverse() };
+
+    const newData = { ...data, images: JSON.parse(JSON.stringify(newImageIdList)).reverse() };
     props.dispatch(recipeEditActions.update(newData));
   };
 
