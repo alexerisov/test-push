@@ -245,7 +245,7 @@ function FormCreateRecipe(props) {
     imagesData.forEach(item => {
       newImageIdList.push(item.pk);
     });
-    const newData = { ...data, images: newImageIdList.reverse() };
+    const newData = { ...data, images: JSON.parse(JSON.stringify(newImageIdList)).reverse() };
     props.dispatch(recipeUploadActions.update(newData));
   };
 
@@ -391,6 +391,7 @@ function FormCreateRecipe(props) {
   const [videoRecipeError, setVideoRecipeError] = useState();
 
   const handleAddVideo = files => {
+    handleDeleteVideo();
     Recipe.uploadVideoRecipe(files, setProgressVideo)
       .then(res => {
         setVideoRecipe(res.data);
@@ -581,7 +582,7 @@ function FormCreateRecipe(props) {
           <div className={classes.createRecipeSection__video}>
             <>
               <div
-                onClick={videoRecipe ? handleDeleteVideo : e => onClickUploadVideo(e)}
+                onClick={e => onClickUploadVideo(e)}
                 className={classes.uploadVideoLabel}
                 onDrop={event => handleDropVideo(event)}
                 onDragOver={event => handleDragOverVideo(event)}
@@ -590,7 +591,7 @@ function FormCreateRecipe(props) {
                 <div className={classes.uploadVideoLabel__border} ref={labelRefVideo}>
                   <img className={classes.uploadVideoLabel__logo} src="/images/index/uploadIconGray.svg" />
                   {(progressVideo === 0 || videoRecipe) && (
-                    <p className={classes.uploadVideoLabel__dragText}>{!videoRecipe ? 'Add video' : 'Delete video'}</p>
+                    <p className={classes.uploadVideoLabel__dragText}>{!videoRecipe ? 'Add Video' : 'Change Video'}</p>
                   )}
                   {progressVideo !== 0 && !videoRecipe && <LinearProgressWithLabel value={progressVideo} />}
                 </div>
@@ -611,6 +612,12 @@ function FormCreateRecipe(props) {
                   <source src={videoRecipe?.video} type="video/mp4" />
                 </video>
                 <div className={classes.recipe__video__watermark__icon} />
+                <button type="button" className={classes.buttonDelete} onClick={handleDeleteVideo}>
+                  <div>
+                    <div className={classes.buttonDelete__line}></div>
+                    <div className={classes.buttonDelete__line}></div>
+                  </div>
+                </button>
               </div>
             )}
           </div>

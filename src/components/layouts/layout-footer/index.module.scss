@@ -86,6 +86,7 @@
     font-size: 22px;
     line-height: 27px;
     margin: 0 0 14px 0;
+    color: #d0d0d0;
   }
 
   &__middleItem {
@@ -220,6 +221,11 @@
       color: $--color-gray15;
     }
 
+    @media (max-width: $--xs) {
+      order: -1;
+      color: #8f8f8f;
+    }
+
     &__link {
       font-size: 16px;
       line-height: 20px;
@@ -227,6 +233,10 @@
 
       @media (max-width: $--lg) {
         color: $--color-gray15;
+      }
+
+      @media (max-width: $--xs) {
+        color: #8f8f8f;
       }
 
       &:hover {
@@ -261,6 +271,12 @@
 
     @media (max-width: $--lg) {
       color: $--color-gray15;
+    }
+
+    @media (max-width: $--xs) {
+      max-width: 145px;
+      margin: 0 auto;
+      color: #8f8f8f;
     }
   }
 

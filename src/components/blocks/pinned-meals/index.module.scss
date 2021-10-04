@@ -5,15 +5,13 @@
   @include fontRegular();
   padding: 38px 90px 0 90px;
   min-width: 350px;
+  display: flex;
+  gap: 0 18px;
 
   @media (max-width: $--lg) {
     padding: 0px 50px 0 20px;
-  }
-
-  ul {
-    max-width: max-content;
-    display: flex;
-    gap: 0 18px;
-    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 10px;
   }
 }

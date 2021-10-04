@@ -644,14 +644,49 @@
   display: flex;
   gap: 16px;
 
-  @media (max-width: $--sm) {
+  @media (max-width: 630px) {
     flex-direction: column;
     width: max-content;
-    margin: 0 auto;
   }
 }
 
 .createRecipeSection__videoContainer {
   display: flex;
   flex-direction: column;
+}
+
+.buttonDelete {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: $--color-white;
+  border: 1px solid $--color-gray18;
+  outline: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__line {
+    width: 10px;
+    height: 2px;
+    background-color: #545454;
+    border-radius: 3px;
+
+    &:first-of-type {
+      transform: rotate(45deg);
+      position: relative;
+      bottom: -1px;
+    }
+
+    &:last-of-type {
+      transform: rotate(-45deg);
+      position: relative;
+      top: -1px;
+    }
+  }
 }
