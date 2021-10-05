@@ -223,9 +223,7 @@ export const notificationTypesText = {
   4: payload => {
     let link = `/recipe/${payload?.id}`;
     return {
-      link: link,
-      text: `Click to view the recipe`,
-      textLink: `${payload?.title}`
+      text: `<p>Click to view the recipe <a href=${link}>${payload?.title}</a></p>`
     };
   },
   5: payload => {
@@ -244,23 +242,21 @@ export const notificationTypesText = {
     if (payload?.status === IS_APPROVED.rejected) {
       let link = `/chef_pencil/editing/${payload?.id}`;
       return {
-        text: `<p><a href=${link}>${payload?.title}</a> has some remarks! Please check it below: ${payload.rejection_reason}</p>`
+        text: `<p><a href=${link}>${payload?.title}</a> has some remarks! Please check it below: ${payload?.rejection_reason}</p>`
       };
     }
   },
   7: payload => {
     let link = `/chef_pencil/${payload?.id}`;
     return {
-      link: link,
-      text: `Click to view the chef pencil`,
-      textLink: `${payload?.title}`
+      text: `<p>Click to view the chef pencil <a href=${link}>${payload?.title}</a></p>`
     };
   }
 };
 
 export const notificationTypesTitle = {
   1: payload => {
-    if (payload.user_type === USER_TYPE.chefType) {
+    if (payload?.user_type === USER_TYPE.chefType) {
       return 'New Chef Registration';
     } else {
       return 'New Customer Registration';
