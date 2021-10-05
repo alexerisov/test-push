@@ -71,7 +71,12 @@ const MealOfWeekBlock = props => {
             onMouseDown={() => false}
             style={{ backgroundImage: `url(${image})` }}>
             <img src="/images/index/go.svg" className={classes.meal__images__circle_play} />
-            <div className={classes.meal__images__circle__back} />
+            <div
+              unselectable="on"
+              onSelectStart={() => false}
+              onMouseDown={() => false}
+              className={classes.meal__images__circle__back}
+            />
           </div>
         </Link>
 

@@ -27,7 +27,7 @@
       left: 237px;
       top: 135px;
       position: absolute;
-      cursor: pointer;
+
       display: flex;
       align-items: center;
       justify-content: center;
@@ -38,6 +38,9 @@
       -webkit-touch-callout: none;
       user-select: none;
 
+      @media (min-width: $--md) {
+        cursor: pointer;
+      }
       &:hover {
         img {
           transform: scale(1.8);
