@@ -236,34 +236,37 @@ function FormEditRecipe(props) {
   const handleAddImage = e => {
     // for drag and drop
     if (isDragging && e?.dataTransfer?.files?.length !== 0) {
-      handleUploadNewImage(e.dataTransfer.files[0]);
+      handleUploadNewImage(e.dataTransfer.files);
     }
 
     if (!isDragging && e?.currentTarget?.files?.length !== 0) {
-      handleUploadNewImage(e.currentTarget.files[0]);
+      handleUploadNewImage(e.currentTarget.files);
     }
 
     setErrorDeleteImages('');
   };
 
-  const handleUploadNewImage = file => {
-    Recipe.uploadImageRecipe(file)
-      .then(res => {
-        const newImageIdList = [...data?.images, res.data.pk];
-        const newData = { ...data, images: newImageIdList };
+  const handleUploadNewImage = files => {
+    const arrayIdNewImages = JSON.parse(JSON.stringify(data?.images));
+    const arrayNewImages = JSON.parse(JSON.stringify(images));
+    const newData = JSON.parse(JSON.stringify(data));
 
-        if (images.length === 0) {
-          newData.main_image = res.data.pk;
-        }
+    Object.keys(files).forEach(async item => {
+      const res = await Recipe.uploadImageRecipe(files[item]);
+      arrayIdNewImages.push(res.data.pk);
 
-        props.dispatch(recipeEditActions.update(newData));
+      if (arrayNewImages.length === 0) {
+        newData.main_image = res.data.pk;
+      }
 
-        const newImageList = [res.data, ...images];
-        setImages(newImageList);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+      arrayNewImages.unshift(res.data);
+
+      newData.images = arrayIdNewImages;
+
+      props.dispatch(recipeEditActions.update(newData));
+
+      setImages(arrayNewImages);
+    });
   };
 
   const sortList = e => {
@@ -483,6 +486,7 @@ function FormEditRecipe(props) {
           id="create-images"
           name="create-images"
           accept="image/*"
+          multiple
           onChange={handleAddImage}
           className={classes.createRecipeInput_type_addImage}
         />
