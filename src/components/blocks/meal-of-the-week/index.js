@@ -64,7 +64,12 @@ const MealOfWeekBlock = props => {
         <div className={classes.meal__special}>Special</div>
 
         <Link href={`/recipe/${recipeId}`}>
-          <div className={classes.meal__images__circle} style={{ backgroundImage: `url(${image})` }}>
+          <div
+            className={classes.meal__images__circle}
+            unselectable="on"
+            onSelectStart={() => false}
+            onMouseDown={() => false}
+            style={{ backgroundImage: `url(${image})` }}>
             <img src="/images/index/go.svg" className={classes.meal__images__circle_play} />
             <div className={classes.meal__images__circle__back} />
           </div>
