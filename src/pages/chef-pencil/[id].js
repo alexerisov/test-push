@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import { useActions } from '@/customHooks/useActions';
@@ -44,6 +44,7 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
   // Bind Modal action creators with dispatch
   const { open, close } = useActions(modalActions);
   const { setItems: setImageCarouselItems } = useActions(recipePhotoSlider);
+  const [pencilImages, setPencilImages] = useState([]);
 
   const [isMobileOrTablet] = useMobileDevice();
   const router = useRouter();
@@ -77,6 +78,8 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
       ...pencilData,
       images: [mainImage, ...pencilImages]
     });
+
+    setPencilImages([mainImage, ...pencilImages]);
   }, [pencilId]);
 
   useEffect(() => {
@@ -212,6 +215,7 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
       })
       .catch(err => console.log(err));
   };
+
   const content = (
     <div className={classes.pencil}>
       <h2 className={classes.pencil__navbar}>
@@ -257,11 +261,11 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
             </div>
           </div>
           <div className={classes.pencil__description}>
-            {!pencil?.images?.length ? (
+            {!pencilImages?.length ? (
               ''
             ) : (
               <VideoImageCarousel>
-                {pencil?.images?.map(item => (
+                {pencilImages?.map(item => (
                   <img
                     className={classes.recipe__carouselItem}
                     key={`recipe-slider-${item?.pk}`}
