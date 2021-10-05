@@ -473,7 +473,7 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
     const newData = { ...data, images: newImagesList };
 
     // Filter for filtering new files
-    const newDataWithDelete = isEditing
+    const newDataWithDelete = !isEditing
       ? {...newData, images_to_delete: []}
       : { ...newData, images_to_delete: [...data.images_to_delete, pk].filter(item => item) };
 
