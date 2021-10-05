@@ -120,8 +120,11 @@ export default {
   update: ({ title, html_content, images, id, main_image, images_to_delete }) => {
     const formData = new FormData();
 
-    if (images.length !== 0) {
-      images.forEach((image, index) => {
+    const newImages = images.filter(item => item instanceof File);
+    const oldImages = images.filter(item => item?.url);
+
+    if (newImages.length !== 0) {
+      newImages.forEach((image, index) => {
         formData.append(`images[${index}]`, image);
       });
     }
@@ -132,7 +135,8 @@ export default {
         title,
         html_content,
         images_to_delete,
-        main_image
+        main_image,
+        images: oldImages
       })
     );
 
