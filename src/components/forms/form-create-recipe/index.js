@@ -491,7 +491,7 @@ function FormCreateRecipe(props) {
           onDragLeave={event => handleDragLeave(event)}>
           <div className={classes.uploadPhotoLabel__border} ref={uploadImageLabel}>
             <img className={classes.uploadPhotoLabel__logo} src="/images/index/uploadIconGray.svg" />
-            <p className={classes.uploadPhotoLabel__text}>Add Photoes</p>
+            <p className={classes.uploadPhotoLabel__text}>Add Photos</p>
           </div>
         </label>
         <input
