@@ -93,6 +93,7 @@ const SavedPencils = () => {
 
   useEffect(() => {
     setNumberOfPages(countPages(savedPencils?.count));
+    console.log(savedPencils);
   }, [savedPencils]);
 
   useEffect(() => {
@@ -128,15 +129,15 @@ const SavedPencils = () => {
             savedPencils.results.map(result => {
               return (
                 <CardHighestMeals
-                  key={result.chef_pencil_record.pk}
+                  key={result.chef_pencil_record?.pk}
                   image={result.chef_pencil_record?.images[0]?.url}
                   title={result.chef_pencil_record?.title}
                   rating={result.chef_pencil_record?.avg_rating}
                   name={result.chef_pencil_record?.user?.full_name}
                   city={result.chef_pencil_record?.user?.city}
                   likes={result.chef_pencil_record?.likes_number}
-                  id={result.chef_pencil_record.pk}
-                  isSavedByUser={result.chef_pencil_record.user_saved_chef_pencil_record}
+                  id={result.chef_pencil_record?.pk}
+                  isSavedByUser={result.chef_pencil_record?.user_saved_chef_pencil_record}
                 />
               );
             })
@@ -147,7 +148,6 @@ const SavedPencils = () => {
 
         {savedPencils?.results?.length > 0 && (
           <Pagination
-            classes={{ root: styles.sectionPencils__pagination }}
             count={numberOfPages}
             page={page}
             size={matches ? 'small' : 'large'}
