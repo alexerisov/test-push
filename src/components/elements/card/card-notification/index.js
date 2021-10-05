@@ -3,9 +3,9 @@ import classes from './index.module.scss';
 import { notificationTypesText, notificationTypesTitle } from '@/utils/datasets';
 
 const CardNotification = props => {
-  const { id, code, data, payload, onDelete } = props;
+  const { id, code, data, payload = null, onDelete } = props;
 
-  const { text } = notificationTypesText[code](payload);
+  const { text = '' } = notificationTypesText[code](payload);
 
   return (
     <div className={classes.card}>
