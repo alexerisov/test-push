@@ -11,8 +11,6 @@ import { CardActionArea } from '@material-ui/core';
 import logo from '../../../../../public/images/index/logo.svg';
 import classes from './index.module.scss';
 import Avatar from '@material-ui/core/Avatar';
-import { PUBLISH_STATUS } from '@/utils/datasets';
-import ChefIcon from '../../chef-icon';
 
 const StyledCardActionArea = styled(CardActionArea)({
   display: 'flex',
@@ -30,7 +28,7 @@ const StyledCardContent = styled(CardContent)({
   height: '100%'
 });
 
-const CardChefPencil = ({ image, title, chefName, id, description, isParsed, publishStatus }) => {
+const CardChefPencil = ({ image, title, chefName, id, description }) => {
   const router = useRouter();
   const pencilDescription = useRef();
 
@@ -61,12 +59,6 @@ const CardChefPencil = ({ image, title, chefName, id, description, isParsed, pub
             <Avatar />
             <span>{`by Chef ${chefName}`}</span>
           </div>
-          {publishStatus === PUBLISH_STATUS.published ? (
-            <div>
-              Published
-              <ChefIcon />
-            </div>
-          ) : null}
         </StyledCardContent>
       </StyledCardActionArea>
     </Card>
