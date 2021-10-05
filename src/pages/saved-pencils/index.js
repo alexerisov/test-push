@@ -93,7 +93,6 @@ const SavedPencils = () => {
 
   useEffect(() => {
     setNumberOfPages(countPages(savedPencils?.count));
-    console.log(savedPencils);
   }, [savedPencils]);
 
   useEffect(() => {
