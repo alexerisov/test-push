@@ -67,7 +67,16 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
 
   useEffect(() => {
     setPencil(pencilData);
-    setImageCarouselItems(pencilData);
+
+    // to get main image and create new array of pencil images in right order
+    const clonedPencilImages = [...pencilData?.images];
+    const mainImage = clonedPencilImages?.find(item => item.main_image);
+    const pencilImages = clonedPencilImages?.filter(item => !item.main_image);
+
+    setImageCarouselItems({
+      ...pencilData,
+      images: [mainImage, ...pencilImages]
+    });
   }, [pencilId]);
 
   useEffect(() => {
