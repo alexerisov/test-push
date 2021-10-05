@@ -154,5 +154,8 @@ export default {
     return http.get('/chef_pencil/saved_chef_pencil_records/', {
       params: query
     });
+  },
+  getCategories: () => {
+    return http.get('/chef_pencil/categories');
   }
 };
