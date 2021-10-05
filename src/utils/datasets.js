@@ -21,7 +21,11 @@ export const cuisineList = {
 
 export const categoryList = {
   1: 'General',
-  2: 'Second'
+  2: 'Second',
+  3: 'Breakfast',
+  4: 'Dinner',
+  5: 'Fish',
+  6: 'Meat'
 };
 
 export const recipeTypes = {

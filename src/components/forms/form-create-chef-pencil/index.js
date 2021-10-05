@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { makeStyles } from '@material-ui/core/styles';
 import { useRouter } from 'next/router';
-import {NoSsr, FormControl, Select, FormHelperText, MenuItem, Card} from '@material-ui/core';
+import { NoSsr, FormControl, Select, FormHelperText, MenuItem, Card } from '@material-ui/core';
 import dynamic from 'next/dynamic';
 import { ReactSortable } from 'react-sortablejs';
 
@@ -11,7 +11,7 @@ import { TextField } from '@material-ui/core';
 import FieldError from '../../elements/field-error';
 import { CardChefPencilEdit } from '@/components/elements/card';
 
-import {chefPencilUploadActions, modalActions, recipeEditActions, recipeUploadActions} from '@/store/actions';
+import { chefPencilUploadActions, modalActions, recipeEditActions, recipeUploadActions } from '@/store/actions';
 import { recoveryLocalStorage } from '@/utils/web-storage/local';
 import { validator } from '@/utils/validator';
 import { nameErrorRecipe } from '@/utils/datasets';
@@ -20,6 +20,7 @@ import PhotoCameraOutlinedIcon from '@material-ui/icons/PhotoCameraOutlined';
 import classes from './form-create-chef-pencil.module.scss';
 import { useActions } from '@/customHooks/useActions';
 import { categoryList } from '@/utils/datasets';
+import ChefPencil from '@/api/ChefPencil';
 
 const useStyles = makeStyles({
   formControl: {
@@ -66,9 +67,11 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
   const [errorDeleteImages, setErrorDeleteImages] = useState('');
   const [images, setImages] = useState([]);
 
+  const [categories, setCategories] = useState();
+
   useEffect(async () => {
     if (isEditing) {
-      const newData = {...initData};
+      const newData = { ...initData };
       newData.main_image = initData?.images?.[0];
       newData.images_to_delete = [];
       update(newData);
@@ -98,6 +101,15 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
       setErrorDeleteImages('');
     }
   }, [data]);
+
+  useEffect(async () => {
+    try {
+      const { data } = await ChefPencil.getCategories();
+      setCategories(data.results);
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
 
   const onChangeField = name => {
     return event => {
@@ -320,8 +332,8 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
   const getMarkUpForEditingImages = () => {
     return (
       <>
-        {images?.length !== 0
-          ? images?.map((item, index, array) => {
+        {images?.length !== 0 ? (
+          images?.map((item, index, array) => {
             const card = (
               <CardChefPencilEdit
                 image={item}
@@ -367,7 +379,7 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
 
             return card;
           })
-          :
+        ) : (
           <>
             <label
               htmlFor="create-images"
@@ -378,9 +390,7 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
               onDragEnter={event => handleDragEnter(event)}
               onDragLeave={event => handleDragLeave(event)}>
               <PhotoCameraOutlinedIcon fontSize={'small'} color={'action'} />
-              <p className={classes.createRecipeLabel_type_addImage__text}>
-                jpeg, png, webp, tif, less than 50 Mb
-              </p>
+              <p className={classes.createRecipeLabel_type_addImage__text}>jpeg, png, webp, tif, less than 50 Mb</p>
               <p className={classes.createPencilLabel_type_addImage__subtext}>Upload Photo</p>
             </label>
             <input
@@ -392,7 +402,8 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
               onChange={handleAddImage}
               className={classes.createPencilInput_type_addImage}
             />
-          </>}
+          </>
+        )}
       </>
     );
   };
@@ -402,24 +413,24 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
       <>
         {images?.length !== 0
           ? images?.map((item, index, array) => {
-            const card = (
-              <CardChefPencilEdit
-                key={index}
-                image={item}
-                src={item.url ?? URL.createObjectURL(item.image)}
-                delete={handleRemoveImage}
-                update={handleUpdateImage}
-                id={index}
-                pk={item?.id}
-              />
-            );
+              const card = (
+                <CardChefPencilEdit
+                  key={index}
+                  image={item}
+                  src={item.url ?? URL.createObjectURL(item.image)}
+                  delete={handleRemoveImage}
+                  update={handleUpdateImage}
+                  id={index}
+                  pk={item?.id}
+                />
+              );
 
-            if (index === array.length - 1) {
-              return <>{card}</>;
-            }
+              if (index === array.length - 1) {
+                return <>{card}</>;
+              }
 
-            return card;
-          })
+              return card;
+            })
           : ''}
         <label
           htmlFor="create-images"
@@ -474,7 +485,7 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
 
     // Filter for filtering new files
     const newDataWithDelete = !isEditing
-      ? {...newData, images_to_delete: []}
+      ? { ...newData, images_to_delete: [] }
       : { ...newData, images_to_delete: [...data.images_to_delete, pk].filter(item => item) };
 
     update(newDataWithDelete);
@@ -498,12 +509,12 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
     }
   };
 
-  const selectItemList = list => {
+  const selectItemList = (list = categoryList) => {
     let itemList = [];
     for (let key in list) {
       itemList.push(
-        <MenuItem key={key} value={key}>
-          {list[key]}
+        <MenuItem key={list[key].pk} value={list[key].title}>
+          {list[key].title}
         </MenuItem>
       );
     }
@@ -555,7 +566,7 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
                     <img src="/images/index/Polygon6.png" className={classes.createCategorySelectArrow} />
                   )}
                   multiple>
-                  {selectItemList(categoryList)}
+                  {selectItemList(categories)}
                 </Select>
                 <FormHelperText>{error?.category ? 'This field is required' : ''}</FormHelperText>
               </FormControl>
