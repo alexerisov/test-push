@@ -66,7 +66,6 @@ const MyUploadsPage = () => {
               title={item?.title}
               chefName={item?.user?.full_name}
               image={item?.image}
-              publishStatus={item?.publish_status}
               reviewStatus={item?.status}
               id={item?.pk}
             />

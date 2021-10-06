@@ -24,7 +24,7 @@ const StyledCardContent = styled(CardContent)({
   padding: '17px 26px 0 !important'
 });
 
-const CardChefPencil = ({ image, title, chefName, id, publishStatus, reviewStatus }) => {
+const CardChefPencil = ({ image, title, chefName, id, reviewStatus }) => {
   const router = useRouter();
   const pencilTitle = useRef();
 
@@ -37,10 +37,6 @@ const CardChefPencil = ({ image, title, chefName, id, publishStatus, reviewStatu
   };
 
   const getStatusOfCard = () => {
-    if (publishStatus === PUBLISH_STATUS.notPublished) {
-      return 'Saved';
-    }
-
     if (reviewStatus) {
       switch (reviewStatus) {
         case 1:
@@ -61,7 +57,7 @@ const CardChefPencil = ({ image, title, chefName, id, publishStatus, reviewStatu
             {title}
           </p>
           <p className={classes.card__author}>{`by Chef ${chefName}`}</p>
-          {publishStatus && <div className={classes.card__status}>{getStatusOfCard()}</div>}
+          {reviewStatus && <div className={classes.card__status}>{getStatusOfCard()}</div>}
         </StyledCardContent>
       </StyledCardActionArea>
     </Card>
