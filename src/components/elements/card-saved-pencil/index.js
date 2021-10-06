@@ -9,7 +9,7 @@ import { CardActionArea } from '@material-ui/core';
 import { useRouter } from 'next/router';
 
 import { PUBLISH_STATUS, APPROVED_STATUS } from '@/utils/datasets';
-import logo from '/public/images/index/logo.svg';
+import logo from '../../../../public/images/index/logo.svg';
 import CardControlPlay from '@/components/elements/card-control-play';
 import ChefIcon from '@/components/elements/chef-icon';
 
@@ -31,11 +31,11 @@ const StyledCardActionArea = styled(CardActionArea)({
   justifyContent: 'flex-start'
 });
 
-const CardHighestMeals = props => {
+const CardSavedPencil = props => {
   const router = useRouter();
 
   const redirectToRecipeCard = id => {
-    router.push(`/recipe/${id}`);
+    router.push(`/chef-pencil/${id}`);
   };
 
   const getStatusOfCard = () => {
@@ -81,4 +81,4 @@ const CardHighestMeals = props => {
   );
 };
 
-export default CardHighestMeals;
+export default CardSavedPencil;
