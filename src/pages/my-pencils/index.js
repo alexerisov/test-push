@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { ButtonUpload } from '@/components/elements/button';
 import { LayoutPage } from '@/components/layouts';
 import Pagination from '@material-ui/lab/Pagination';
-import { CardChefPencil } from "@/components/elements/card";
+import { CardChefPencil } from '@/components/elements/card';
 
 import ChefPencil from '@/api/ChefPencil';
 import { RedirectWithoutAuthAndByCheckingUserType } from '@/utils/authProvider';
@@ -66,6 +66,8 @@ const MyUploadsPage = () => {
               title={item?.title}
               chefName={item?.user?.full_name}
               image={item?.image}
+              publishStatus={item?.publish_status}
+              reviewStatus={item?.status}
               id={item?.pk}
             />
           ))

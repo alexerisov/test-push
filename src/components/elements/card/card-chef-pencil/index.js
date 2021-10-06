@@ -10,6 +10,7 @@ import { CardActionArea } from '@material-ui/core';
 
 import logo from '../../../../../public/images/index/logo.svg';
 import classes from './index.module.scss';
+import { APPROVED_STATUS, PUBLISH_STATUS } from '@/utils/datasets';
 
 const StyledCardActionArea = styled(CardActionArea)({
   display: 'flex',
@@ -23,7 +24,7 @@ const StyledCardContent = styled(CardContent)({
   padding: '17px 26px 0 !important'
 });
 
-const CardChefPencil = ({ image, title, chefName, id }) => {
+const CardChefPencil = ({ image, title, chefName, id, publishStatus, reviewStatus }) => {
   const router = useRouter();
   const pencilTitle = useRef();
 
@@ -35,6 +36,22 @@ const CardChefPencil = ({ image, title, chefName, id }) => {
     router.push(`/chef-pencil/${id}`);
   };
 
+  const getStatusOfCard = () => {
+    if (publishStatus === PUBLISH_STATUS.notPublished) {
+      return 'Saved';
+    }
+
+    if (reviewStatus) {
+      switch (reviewStatus) {
+        case 1:
+          return APPROVED_STATUS[1];
+        case 2:
+          return APPROVED_STATUS[2];
+        case 3:
+          return APPROVED_STATUS[3];
+      }
+    }
+  };
   return (
     <Card className={classes.card}>
       <StyledCardActionArea onClick={() => redirectToTargetPencil(id)}>
@@ -44,6 +61,7 @@ const CardChefPencil = ({ image, title, chefName, id }) => {
             {title}
           </p>
           <p className={classes.card__author}>{`by Chef ${chefName}`}</p>
+          {publishStatus && <div className={classes.card__status}>{getStatusOfCard()}</div>}
         </StyledCardContent>
       </StyledCardActionArea>
     </Card>
