@@ -63,8 +63,8 @@ const Home = props => {
       <section className={classes.home}>
         <div className={classes.home__titleContainer}>
           <div className={classes.home__titleTextContainer}>
-            <h1 className={classes.home__title}>Find the fame</h1>
-            <p className={classes.home__subtitle}>you deserve!</p>
+            <h1 className={classes.home__title}>Earn Royalties</h1>
+            <p className={classes.home__subtitle}>with Your Recipe</p>
           </div>
         </div>
         <div className={classes.home__buttonUploud}>

@@ -9,6 +9,10 @@
   flex-direction: column;
   position: relative;
 
+  @media (max-width: 1350px) {
+    padding: 38px 40px 0 40px;
+  }
+
   @media (max-width: $--lg) {
     padding: 20px 0 0 0;
   }
@@ -145,7 +149,7 @@
       line-height: 39px;
     }
 
-    @media (max-width: $--xs) {
+    @media (max-width: $--sm) {
       font-size: 28px;
       line-height: 30px;
     }
