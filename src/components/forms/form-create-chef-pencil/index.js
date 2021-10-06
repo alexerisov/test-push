@@ -84,7 +84,8 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
       html_content: '',
       images: [],
       main_image: null,
-      error: null
+      error: null,
+      categories: []
     };
 
     update(newData);
@@ -499,6 +500,7 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
       dispatch(chefPencilUploadActions.updateError(newError));
     };
   }
+
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
@@ -513,7 +515,7 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
     let itemList = [];
     for (let key in list) {
       itemList.push(
-        <MenuItem key={list[key].pk} value={list[key].title}>
+        <MenuItem key={list[key].pk} value={list[key].pk}>
           {list[key].title}
         </MenuItem>
       );
@@ -550,17 +552,17 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
             </div>
 
             <div className={classes.createPencilItemWrap}>
-              <label htmlFor="create-category-select" className={classes.createPencilLabel}>
+              <label htmlFor="create-categories-select" className={classes.createPencilLabel}>
                 <span style={{ color: 'red' }}>* </span>Category
               </label>
 
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
                 <Select
-                  id="create-category-select"
-                  value={data?.category}
-                  onChange={onChangeSelect('category')}
+                  id="create-categories-select"
+                  value={data?.categories}
+                  onChange={onChangeSelect('categories')}
                   fullWidth
-                  error={error?.category}
+                  error={error?.categories}
                   MenuProps={MenuProps}
                   IconComponent={() => (
                     <img src="/images/index/Polygon6.png" className={classes.createCategorySelectArrow} />
@@ -568,7 +570,7 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
                   multiple>
                   {selectItemList(categories)}
                 </Select>
-                <FormHelperText>{error?.category ? 'This field is required' : ''}</FormHelperText>
+                <FormHelperText>{error?.categories ? 'This field is required' : ''}</FormHelperText>
               </FormControl>
             </div>
           </div>

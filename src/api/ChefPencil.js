@@ -1,7 +1,7 @@
 import http from '../utils/http';
 
 export default {
-  upload: ({ title, html_content, images, main_image }) => {
+  upload: ({ title, html_content, images, main_image, categories }) => {
     const formData = new FormData();
 
     if (images.length !== 0) {
@@ -15,7 +15,8 @@ export default {
       JSON.stringify({
         title,
         html_content,
-        main_image
+        main_image,
+        categories
       })
     );
 

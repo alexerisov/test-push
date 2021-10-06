@@ -9,7 +9,7 @@ const initState = {
     images: [],
     main_image: null,
     images_to_delete: [],
-    category: []
+    categories: []
   },
   isLoading: false,
   error: null

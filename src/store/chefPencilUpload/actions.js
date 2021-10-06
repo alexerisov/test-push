@@ -51,7 +51,8 @@ export default {
           html_content: data?.html_content,
           attachments: data?.attachments,
           images: data?.images,
-          main_image: data?.main_image
+          main_image: data?.main_image,
+          categories: data?.categories
         });
         dispatch({ type: types.SEND_SUCCESS });
         return response.data;
@@ -72,7 +73,8 @@ export default {
           images: data?.images,
           main_image: data?.main_image,
           images_to_delete: data?.images_to_delete,
-          id
+          id,
+          categories: data?.categories
         });
         dispatch({ type: types.SEND_SUCCESS });
         return response.data;
