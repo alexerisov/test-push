@@ -13,6 +13,7 @@ import CardHighestMeals from '@/components/elements/card-highest-meals';
 
 import ChefPencil from '@/api/ChefPencil';
 import { DEFAULT_VALUE_TAB_STATE } from '@/utils/constants';
+import CardSavedPencil from '@/components/elements/card-saved-pencil';
 
 const StyledTabs = styled(Tabs)`
   width: 100%;
@@ -127,7 +128,7 @@ const SavedPencils = () => {
           {savedPencils?.results?.length ? (
             savedPencils.results.map(result => {
               return (
-                <CardHighestMeals
+                <CardSavedPencil
                   key={result.chef_pencil_record?.pk}
                   image={result.chef_pencil_record?.image}
                   title={result.chef_pencil_record?.title}
