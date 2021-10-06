@@ -129,7 +129,7 @@ const SavedPencils = () => {
               return (
                 <CardHighestMeals
                   key={result.chef_pencil_record?.pk}
-                  image={result.chef_pencil_record?.images[0]?.url}
+                  image={result.chef_pencil_record?.image}
                   title={result.chef_pencil_record?.title}
                   rating={result.chef_pencil_record?.avg_rating}
                   name={result.chef_pencil_record?.user?.full_name}
