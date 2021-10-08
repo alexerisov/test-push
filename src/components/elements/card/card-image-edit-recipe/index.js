@@ -1,48 +1,48 @@
 import React, { memo } from 'react';
 import classes from './card-image.module.scss';
-import AddIcon from '@material-ui/icons/Add';
-import ReplayIcon from '@material-ui/icons/Replay';
 import Fade from '@material-ui/core/Fade';
 import { makeStyles } from '@material-ui/core/styles';
-
-const useIconStyles = makeStyles({
-  root: {
-    fontSize: '1.15rem'
-  }
-});
+import { Checkbox } from '@material-ui/core';
+import CheckboxIcon from '../../checkbox-icon';
+import CheckboxIconUnchecked from '../../checkbox-icon/checkbox-icon-unchecked';
 
 const CardImageEditRecipe = props => {
-  const reloadIconStyles = useIconStyles();
   const { src, id, pk } = props;
 
   const handleDelete = () => {
-    props.delete(id, pk);
+    props.delete(pk);
   };
 
-  const handleUpdate = e => {
-    props.update(e, id);
+  const handleUpdateCoverImage = e => {
+    props.updateCoverImage(e, pk);
   };
 
   return (
     <Fade in={true}>
       <div className={classes.cardImage}>
-        {props.delete && <button type="button" className={classes.cardImage__button_delete} onClick={handleDelete}>
-          <AddIcon fontSize="small" className={classes.cardImage__button__deleteIcon} />
-        </button>}
-        {props.update && <label htmlFor={`update-images${id}`} className={classes.cardImage__reuploadWrapper}>
-          <div className={classes.cardImage__button_reload}>
-            <ReplayIcon className={classes.cardImage__button__reloadIcon} classes={{ root: reloadIconStyles.root }} />
-          </div>
-        </label>}
-        <input
-          type="file"
-          id={`update-images${id}`}
-          name={`update-images${id}`}
-          accept="image/*"
-          onChange={handleUpdate}
-          className={classes.cardImage__reupload}
-        />
+        {props.delete && (
+          <button type="button" className={classes.cardImage__button_delete} onClick={handleDelete}>
+            <div>
+              <div className={classes.cardImage__button_delete__line}></div>
+              <div className={classes.cardImage__button_delete__line}></div>
+            </div>
+          </button>
+        )}
         <img src={src} className={classes.cardImage__image} />
+        <div className={classes.cardImage__inputCover}>
+          <Checkbox
+            icon={<CheckboxIconUnchecked />}
+            checkedIcon={<CheckboxIcon />}
+            checked={Boolean(props.main_image === pk)}
+            value={id}
+            onChange={e => {
+              handleUpdateCoverImage(e);
+            }}
+            name="main_image"
+            color="primary"
+          />
+          <p className={classes.cardImage__inputCoverText}>Cover image</p>
+        </div>
       </div>
     </Fade>
   );

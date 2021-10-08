@@ -22,7 +22,7 @@ const MealOfWeekBlock = props => {
   useEffect(() => {
     setLikeRecipe(props?.meal?.user_liked);
     setLikesNumber(props?.meal?.likes_number);
-    setIngredients(props?.meal?.ingredients.slice(0, 4));
+    setIngredients(props?.meal?.ingredients?.slice(0, 4));
   }, [props.meal]);
 
   const openRegisterPopup = name => {
@@ -64,9 +64,19 @@ const MealOfWeekBlock = props => {
         <div className={classes.meal__special}>Special</div>
 
         <Link href={`/recipe/${recipeId}`}>
-          <div className={classes.meal__images__circle} style={{ backgroundImage: `url(${image})` }}>
+          <div
+            className={classes.meal__images__circle}
+            unselectable="on"
+            onSelectStart={() => false}
+            onMouseDown={() => false}
+            style={{ backgroundImage: `url(${image})` }}>
             <img src="/images/index/go.svg" className={classes.meal__images__circle_play} />
-            <div className={classes.meal__images__circle__back} />
+            <div
+              unselectable="on"
+              onSelectStart={() => false}
+              onMouseDown={() => false}
+              className={classes.meal__images__circle__back}
+            />
           </div>
         </Link>
 

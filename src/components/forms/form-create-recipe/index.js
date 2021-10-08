@@ -13,7 +13,8 @@ import {
   FormControlLabel,
   Radio,
   FormHelperText,
-  NoSsr
+  NoSsr,
+  Checkbox
 } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -36,8 +37,16 @@ import InputTime from '@/components/elements/input/inputTime';
 import { recoveryLocalStorage } from '@/utils/web-storage/local';
 import Recipe from '@/api/Recipe';
 import LinearProgressWithLabel from '@/components/elements/linear-progress-with-label';
+import CheckboxIcon from '@/components/elements/checkbox-icon';
+import CheckboxIconUnchecked from '@/components/elements/checkbox-icon/checkbox-icon-unchecked';
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    width: '15px',
+    height: '15px',
+    opacity: 1,
+    position: 'relative'
+  },
   formControl: {
     margin: '0 0 20px',
     minWidth: 250,
@@ -55,7 +64,8 @@ const useStyles = makeStyles(theme => ({
   },
   textField: {
     '& .MuiOutlinedInput-root': {
-      borderRadius: '10px'
+      borderRadius: '10px',
+      backgroundColor: '#ffffff'
     },
     '& .MuiInputBase-input': {
       height: 'auto'
@@ -86,26 +96,21 @@ const MenuProps = {
 
 function FormCreateRecipe(props) {
   const router = useRouter();
+
   const classMarerialUi = useStyles();
   const { data, error } = props.recipeUpload;
+
+  useEffect(() => {
+    if (props?.account && !props.account.hasToken) {
+      router.push('/');
+    }
+  }, [props?.account]);
 
   // For uploading images
   const [isDragging, setIsDragging] = useState(false);
   const uploadImageLabel = useRef();
   const [images, setImages] = useState([]);
   const [errorDeleteImages, setErrorDeleteImages] = useState('');
-
-  // for Drag and Drop, because Sortable.js don't maintain File
-  useEffect(() => {
-    if (Array.isArray(data?.images)) {
-      const imagesData = data?.images?.map((item, index) => {
-        return item instanceof File ? { id: index, image: item } : item;
-      });
-
-      setImages(imagesData);
-      setErrorDeleteImages('');
-    }
-  }, [data]);
 
   useEffect(() => {
     const newData = data;
@@ -173,10 +178,17 @@ function FormCreateRecipe(props) {
       return;
     }
 
-    const newImagesList = data?.images.filter((image, index) => index !== id);
-    const newData = { ...data, images: newImagesList };
+    const newImagesIdList = data?.images.filter(image => image !== id);
+    const newData = { ...data, images: newImagesIdList };
+
+    if (data.main_image === id) {
+      newData.main_image = newData.images[0];
+    }
 
     props.dispatch(recipeUploadActions.update(newData));
+
+    const newImageList = images.filter(image => image.pk !== id);
+    setImages(newImageList);
   }
 
   function handleDeleteStep(e) {
@@ -195,33 +207,54 @@ function FormCreateRecipe(props) {
   const handleAddImage = e => {
     // for drag and drop
     if (isDragging && e?.dataTransfer?.files?.length !== 0) {
-      const newImageList = [...data?.images, ...Object.values(e.dataTransfer.files)];
-      const newData = { ...data, images: newImageList };
-      props.dispatch(recipeUploadActions.update(newData));
+      handleUploadNewImage(e.dataTransfer.files);
     }
 
     if (!isDragging && e?.currentTarget?.files?.length !== 0) {
-      const newImageList = [...data?.images, ...Object.values(e.currentTarget.files)];
-      const newData = { ...data, images: newImageList };
-      props.dispatch(recipeUploadActions.update(newData));
+      handleUploadNewImage(e.currentTarget.files);
     }
+
+    setErrorDeleteImages('');
+  };
+
+  const handleUploadNewImage = files => {
+    const arrayIdNewImages = JSON.parse(JSON.stringify(data?.images));
+    const arrayNewImages = JSON.parse(JSON.stringify(images));
+    const newData = JSON.parse(JSON.stringify(data));
+
+    Object.keys(files).forEach(async item => {
+      const res = await Recipe.uploadImageRecipe(files[item]);
+      arrayIdNewImages.push(res.data.pk);
+
+      if (arrayNewImages.length === 0) {
+        newData.main_image = res.data.pk;
+      }
+
+      arrayNewImages.unshift(res.data);
+
+      newData.images = arrayIdNewImages;
+
+      props.dispatch(recipeUploadActions.update(newData));
+
+      setImages(arrayNewImages);
+    });
   };
 
   const sortList = e => {
-    const imagesData = e.filter(item => !item.filtered).map(item => (item.image ? item.image : item));
-    const newData = { ...data, images: imagesData, main_image: imagesData[0] };
+    const imagesData = e.filter(item => !item.filtered);
+    setImages(imagesData);
+
+    const newImageIdList = [];
+    imagesData.forEach(item => {
+      newImageIdList.push(item.pk);
+    });
+    const newData = { ...data, images: JSON.parse(JSON.stringify(newImageIdList)).reverse() };
     props.dispatch(recipeUploadActions.update(newData));
   };
 
-  const handleUpdateImage = (e, id) => {
-    if (e.currentTarget?.files?.length !== 0) {
-      const newImage = e.currentTarget.files[0];
-      const newImageList = data?.images.map((item, index) => {
-        return index === id ? newImage : item;
-      });
-      const newData = { ...data, images: newImageList };
-      props.dispatch(recipeUploadActions.update(newData));
-    }
+  const handleUpdateCoverImage = (e, id) => {
+    const newData = { ...data, main_image: id };
+    props.dispatch(recipeUploadActions.update(newData));
   };
 
   const selectItemList = list => {
@@ -243,8 +276,6 @@ function FormCreateRecipe(props) {
     setStatusSubmit('Loading...');
     const clonedData = { ...data };
 
-    clonedData.main_image = data?.images?.[0];
-
     props
       .dispatch(recipeUploadActions.uploadRecipe(clonedData))
       .then(data => {
@@ -262,7 +293,6 @@ function FormCreateRecipe(props) {
         setStatusSubmit('Submit');
         console.log(err);
       });
-    // }
   }
 
   const handleErrorScroll = error => {
@@ -304,20 +334,20 @@ function FormCreateRecipe(props) {
     event.preventDefault();
     handleAddImage(event);
     setIsDragging(false);
-    uploadImageLabel.current.style.border = '1px dashed #DFDFDF';
+    uploadImageLabel.current.style.border = '2px dashed #DFDFDF';
     return undefined;
   }
 
   function handleDragOver(event) {
     event.preventDefault();
     setIsDragging(true);
-    uploadImageLabel.current.style.border = '1px dashed black';
+    uploadImageLabel.current.style.border = '2px dashed #ffaa00';
     return undefined;
   }
 
   function handleDragLeave() {
     setIsDragging(false);
-    uploadImageLabel.current.style.border = '1px dashed #DFDFDF';
+    uploadImageLabel.current.style.border = '2px dashed #DFDFDF';
     return undefined;
   }
 
@@ -332,7 +362,8 @@ function FormCreateRecipe(props) {
     if (restoreRecipeData) {
       const newData = {
         ...data,
-        images: []
+        images: [],
+        main_image: ''
       };
       recoveryLocalStorage.setCreateRecipe(newData);
     }
@@ -363,6 +394,7 @@ function FormCreateRecipe(props) {
   const [videoRecipeError, setVideoRecipeError] = useState();
 
   const handleAddVideo = files => {
+    handleDeleteVideo();
     Recipe.uploadVideoRecipe(files, setProgressVideo)
       .then(res => {
         setVideoRecipe(res.data);
@@ -385,11 +417,7 @@ function FormCreateRecipe(props) {
   };
 
   useEffect(() => {
-    if (videoRecipe) {
-      labelRefVideo.current.style.border = 'none';
-    } else {
-      labelRefVideo.current.style.border = '3px dashed #dfdfdf';
-    }
+    labelRefVideo.current.style.border = '3px dashed #dfdfdf';
   }, [videoRecipe]);
 
   function handleDropVideo(event) {
@@ -441,11 +469,12 @@ function FormCreateRecipe(props) {
                 <CardImageEditRecipe
                   image={item}
                   delete={handleRemoveImage}
-                  update={handleUpdateImage}
+                  updateCoverImage={handleUpdateCoverImage}
                   key={index}
-                  src={item.url ?? URL.createObjectURL(item.image)}
+                  main_image={data.main_image ?? false}
+                  src={item.file}
                   id={index}
-                  pk={item.id}
+                  pk={item.pk}
                 />
               );
 
@@ -458,22 +487,22 @@ function FormCreateRecipe(props) {
           : ''}
         <label
           htmlFor="create-images"
-          ref={uploadImageLabel}
-          className={classes.createRecipeLabel_type_addImage}
+          className={classes.uploadPhotoLabel}
           onDrop={event => handleDrop(event)}
           onDragOver={event => handleDragOver(event)}
           onDragEnter={event => handleDragEnter(event)}
           onDragLeave={event => handleDragLeave(event)}>
-          <PhotoCameraOutlinedIcon fontSize={'small'} color={'action'} />
-          <p className={classes.createRecipeLabel_type_addImage__text}>jpeg, png, webp, tif, less than 50 Mb</p>
-          <p className={classes.createRecipeLabel_type_addImage__subtext}>Upload Photo</p>
+          <div className={classes.uploadPhotoLabel__border} ref={uploadImageLabel}>
+            <img className={classes.uploadPhotoLabel__logo} src="/images/index/uploadIconGray.svg" />
+            <p className={classes.uploadPhotoLabel__text}>Add Photos</p>
+          </div>
         </label>
         <input
           type="file"
+          multiple
           id="create-images"
           name="create-images"
           accept="image/*"
-          multiple
           onChange={handleAddImage}
           className={classes.createRecipeInput_type_addImage}
         />
@@ -482,7 +511,8 @@ function FormCreateRecipe(props) {
   };
 
   return (
-    <div>
+    <div className={classes.createRecipeForm__wrap}>
+      <div className={classes.wave}></div>
       <div className={classes.createRecipeForm__header}>
         <h1 className={classes.createRecipeForm__header__title}>Create New Recipe</h1>
         <button className={classes.createRecipeForm__header__clear} onClick={handleClearForm}>
@@ -492,7 +522,7 @@ function FormCreateRecipe(props) {
       <form className={classes.createRecipeForm}>
         <div className={classes.createRecipeSection}>
           <h2 className={classes.createRecipeSubtitle}>Basic Details</h2>
-          <div>
+          <div className={classes.createRecipeInput_type_title}>
             <label htmlFor="create-title" className={classes.createRecipeLabel}>
               <span style={{ color: 'red' }}>* </span>Title
             </label>
@@ -511,7 +541,7 @@ function FormCreateRecipe(props) {
               />
             </NoSsr>
           </div>
-          <div>
+          <div className={classes.createRecipeInput_type_description}>
             <label htmlFor="create-description" className={classes.createRecipeLabel}>
               <span style={{ color: 'red' }}>* </span>Description
             </label>
@@ -532,36 +562,116 @@ function FormCreateRecipe(props) {
             </NoSsr>
           </div>
         </div>
+
         <div className={classes.createRecipeSection}>
           <h2 className={classes.createRecipeSubtitle}>
-            <span style={{ color: 'red' }}>* </span>Ingredients
+            <span style={{ color: 'red' }}>* </span>Cooking images
+          </h2>
+          <ReactSortable
+            delayOnTouchOnly={false}
+            list={[...images, { id: 'not-draggable', filtered: true, chosen: true }]}
+            setList={sortList}
+            animation={200}
+            filter=".form-create-recipe_uploadPhotoLabel__2Xlbv"
+            draggable=".card-image_cardImage__yt16O"
+            preventOnFilter
+            className={classes.createRecipeSection__grid_type_cardImages}>
+            {getMarkUpForUploadedImages()}
+          </ReactSortable>
+          <FieldError errors={error?.images ? error : { images: errorDeleteImages }} path="images" id="error" />
+          <FieldError errors={error} path="main_image" id="error" />
+        </div>
+        <div className={classes.createRecipeSection}>
+          <h2 className={classes.createRecipeSubtitle_withoutInput}>Cooking Video</h2>
+          <div className={classes.createRecipeSection__video}>
+            <>
+              <div
+                onClick={e => onClickUploadVideo(e)}
+                className={classes.uploadVideoLabel}
+                onDrop={event => handleDropVideo(event)}
+                onDragOver={event => handleDragOverVideo(event)}
+                onDragEnter={event => handleDragEnterVideo(event)}
+                onDragLeave={event => handleDragLeaveVideo(event)}>
+                <div className={classes.uploadVideoLabel__border} ref={labelRefVideo}>
+                  <img className={classes.uploadVideoLabel__logo} src="/images/index/uploadIconGray.svg" />
+                  {(progressVideo === 0 || videoRecipe) && (
+                    <p className={classes.uploadVideoLabel__dragText}>{!videoRecipe ? 'Add Video' : 'Change Video'}</p>
+                  )}
+                  {progressVideo !== 0 && !videoRecipe && <LinearProgressWithLabel value={progressVideo} />}
+                </div>
+              </div>
+              <input
+                type="file"
+                ref={inputRefVideo}
+                accept="video/*"
+                hidden
+                onChange={event => {
+                  handleAddVideo(event.currentTarget.files[0]);
+                }}></input>
+            </>
+
+            {videoRecipe && (
+              <div className={classes.recipe__video__watermark}>
+                <video width="288" controls="controls" className={classes.recipe__video}>
+                  <source src={videoRecipe?.video} type="video/mp4" />
+                </video>
+                <div className={classes.recipe__video__watermark__icon} />
+                <button type="button" className={classes.buttonDelete} onClick={handleDeleteVideo}>
+                  <div>
+                    <div className={classes.buttonDelete__line}></div>
+                    <div className={classes.buttonDelete__line}></div>
+                  </div>
+                </button>
+              </div>
+            )}
+          </div>
+          <FieldError errors={videoRecipeError} path="video" id="error" />
+        </div>
+
+        <div className={classes.createRecipeSection}>
+          <h2 className={classes.createRecipeSubtitle}>
+            <span style={{ color: 'red' }}>* </span>Ingredients:
+            <span style={{ color: '#ffaa00' }}> {data?.ingredients.length ?? '0'}</span>
           </h2>
           <div className={classes.createRecipeSection__grid_type_cardIngredients} id="create-ingredients">
-            {data?.ingredients.length !== 0
-              ? data?.ingredients.map((item, index) => (
-                  <CardIngredient
-                    delete={handleRemoveIngredient}
-                    key={index}
-                    title={item.title}
-                    quantity={item.quantity}
-                    unit={handleIngredientsUnit(item.unit)}
-                    id={index}
-                  />
-                ))
-              : ''}
             <button
               type="button"
               onClick={handleClickPopupOpen('addIngredient')}
               className={classes.createRecipeButton_type_addIngredient}>
               <p className={classes.createRecipeButton_type_addIngredient__icon}>&#43;</p>
-              <p className={classes.createRecipeButton_type_addIngredient__text}>Add More</p>
+              <p className={classes.createRecipeButton_type_addIngredient__text}>Add</p>
             </button>
+            {data?.ingredients.length !== 0
+              ? JSON.parse(JSON.stringify(data.ingredients))
+                  .reverse()
+                  .map((item, index) => (
+                    <CardIngredient
+                      delete={handleRemoveIngredient}
+                      key={index}
+                      title={item.title}
+                      quantity={item.quantity}
+                      unit={handleIngredientsUnit(item.unit)}
+                      id={index}
+                    />
+                  ))
+              : ''}
           </div>
           <FieldError errors={error} path="ingredients" id="error" />
         </div>
-        <div className={classes.createRecipeSection}>
+        <div className={classes.createRecipeSection_type_cardNutrition}>
           <h2 className={classes.createRecipeSubtitle}>Nutrition value</h2>
           <div className={classes.createRecipeSection__grid_type_cardNutrition}>
+            {!data?.calories || !data?.proteins || !data?.fats || !data?.carbohydrates ? (
+              <button
+                type="button"
+                onClick={handleClickPopupOpen('addNutrition')}
+                className={classes.createRecipeButton_type_addNutrition}>
+                <p className={classes.createRecipeButton_type_addNutrition__icon}>&#43;</p>
+                <p className={classes.createRecipeButton_type_addNutrition__text}>Add</p>
+              </button>
+            ) : (
+              ''
+            )}
             {data?.calories ? (
               <CardNutrition id="calories" delete={handleRemoveNutrition} title="Calories" quantity={data?.calories} />
             ) : (
@@ -589,17 +699,6 @@ function FormCreateRecipe(props) {
                 title="Carbs"
                 quantity={`${data?.carbohydrates}%`}
               />
-            ) : (
-              ''
-            )}
-            {!data?.calories || !data?.proteins || !data?.fats || !data?.carbohydrates ? (
-              <button
-                type="button"
-                onClick={handleClickPopupOpen('addNutrition')}
-                className={classes.createRecipeButton_type_addNutrition}>
-                <p className={classes.createRecipeButton_type_addNutrition__icon}>&#43;</p>
-                <p className={classes.createRecipeButton_type_addNutrition__text}>Add More</p>
-              </button>
             ) : (
               ''
             )}
@@ -649,104 +748,16 @@ function FormCreateRecipe(props) {
             <p className={classes.createRecipeButton_type_addStep__text}>Add More Steps</p>
           </button>
         </div>
+
         <div className={classes.createRecipeSection}>
-          <h2 className={classes.createRecipeSubtitle}>
-            <span style={{ color: 'red' }}>* </span>Cooking images
+          <h2
+            className={`${classes.createRecipeSubtitle_withoutInput} ${classes.createRecipeSubtitle_classifications}`}>
+            All Classifications
           </h2>
-          <ReactSortable
-            delayOnTouchOnly={false}
-            list={[...images, { id: 'not-draggable', filtered: true, chosen: true }]}
-            setList={sortList}
-            animation={200}
-            filter=".form-create-recipe_createRecipeLabel_type_addImage__17fDT"
-            draggable=".card-image_cardImage__yt16O"
-            preventOnFilter
-            className={classes.createRecipeSection__grid_type_cardImages}>
-            {getMarkUpForUploadedImages()}
-          </ReactSortable>
-          <FieldError errors={error?.images ? error : { images: errorDeleteImages }} path="images" id="error" />
-        </div>
-        <div className={classes.createRecipeSection}>
-          <h2 className={classes.createRecipeSubtitle_withoutInput}>Cooking Video</h2>
-          {!videoRecipe ? (
-            <>
-              <div
-                ref={labelRefVideo}
-                className={classes.uploadVideoLabel}
-                onDrop={event => handleDropVideo(event)}
-                onDragOver={event => handleDragOverVideo(event)}
-                onDragEnter={event => handleDragEnterVideo(event)}
-                onDragLeave={event => handleDragLeaveVideo(event)}>
-                <img className={classes.uploadVideoLabel__logo} src="/images/index/upload-icon.svg" />
-                {progressVideo === 0 ? (
-                  <>
-                    <p className={classes.uploadVideoLabel__dragText}>Drag and drop files here</p>
-                    <p className={classes.uploadVideoLabel__orText}>or</p>
-                    <button
-                      className={classes.uploadVideoLabel__browseFilesButton}
-                      onClick={e => onClickUploadVideo(e)}>
-                      Browse files
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <p className={classes.uploadVideoLabel__dragText}>Uploading...</p>
-                    <LinearProgressWithLabel value={progressVideo} />
-                  </>
-                )}
-              </div>
-              <input
-                type="file"
-                ref={inputRefVideo}
-                accept="video/*"
-                hidden
-                onChange={event => {
-                  handleAddVideo(event.currentTarget.files[0]);
-                }}></input>
-              <FieldError errors={videoRecipeError} path="video" id="error" />
-            </>
-          ) : (
-            <>
-              <div className={classes.recipe__video__watermark} ref={labelRefVideo}>
-                <video width="550" controls="controls" className={classes.recipe__video}>
-                  <source src={videoRecipe?.video} type="video/mp4" />
-                </video>
-                <div className={classes.recipe__video__watermark__icon} />
-              </div>
-              <button onClick={handleDeleteVideo} className={classes.recipe__video__button}>
-                Delete Video
-              </button>
-            </>
-          )}
-        </div>
-        <div className={classes.createRecipeSection}>
-          <div className={classes.createRecipeItem}>
-            <h3 className={classes.createRecipeItem__title}>
-              <span style={{ color: 'red' }}>* </span>Visibility
-            </h3>
-            <NoSsr>
-              <RadioGroup
-                aria-label="create-visibility"
-                name="create-visibility"
-                value={data?.publish_status}
-                onChange={onChangeFieldNumber('publish_status')}
-                error={error?.publish_status}
-                helperText={error?.publish_status ? 'This field is required' : ''}>
-                <FormControlLabel value={1} control={<Radio id="publish_status" />} label="Save" />
-                <FormControlLabel value={2} control={<Radio id="publish_status" />} label="Publish" />
-              </RadioGroup>
-            </NoSsr>
-            {error?.publish_status && (
-              <p className={classes.createRecipeItem__errorPublishStatus}>This field is required</p>
-            )}
-          </div>
-        </div>
-        <div className={classes.createRecipeSection}>
-          <h2 className={classes.createRecipeSubtitle_withoutInput}>All Classifications</h2>
           <div className={classes.createRecipeSection__grid_type_input}>
-            <div className={classes.createRecipeItem}>
+            <div className={classes.createRecipeItem__inputTime}>
               <label htmlFor="create-cooking_time" className={classes.createRecipeLabel}>
-                Preparation Time
+                Cooking Time
               </label>
               <NoSsr>
                 <InputTime
@@ -760,7 +771,9 @@ function FormCreateRecipe(props) {
             </div>
             <NoSsr>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
-                <label htmlFor="create-types-select" className={classes.createRecipeLabel}>
+                <label
+                  htmlFor="create-types-select"
+                  className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
                   Type
                 </label>
                 <Select
@@ -770,13 +783,18 @@ function FormCreateRecipe(props) {
                   fullWidth
                   error={error?.types}
                   MenuProps={MenuProps}
+                  IconComponent={() => (
+                    <img src={'/images/index/Polygon6.png'} className={classes.createRecipeSelectArrow} />
+                  )}
                   multiple>
                   {selectItemList(recipeTypes)}
                 </Select>
                 <FormHelperText>{error?.types ? 'This field is required' : ''}</FormHelperText>
               </FormControl>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
-                <label htmlFor="create-diet-restrictions-select" className={classes.createRecipeLabel}>
+                <label
+                  htmlFor="create-diet-restrictions-select"
+                  className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
                   <span style={{ color: 'red' }}>* </span>Lifestyle
                 </label>
                 <Select
@@ -786,13 +804,18 @@ function FormCreateRecipe(props) {
                   fullWidth
                   error={error?.diet_restrictions}
                   MenuProps={MenuProps}
+                  IconComponent={() => (
+                    <img src="/images/index/Polygon6.png" className={classes.createRecipeSelectArrow} />
+                  )}
                   multiple>
                   {selectItemList(dietaryrestrictions)}
                 </Select>
                 <FormHelperText>{error?.diet_restrictions ? 'This field is required' : ''}</FormHelperText>
               </FormControl>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
-                <label htmlFor="create-cuisines-select" className={classes.createRecipeLabel}>
+                <label
+                  htmlFor="create-cuisines-select"
+                  className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
                   <span style={{ color: 'red' }}>* </span>Cuisine
                 </label>
                 <Select
@@ -800,16 +823,20 @@ function FormCreateRecipe(props) {
                   value={data?.cuisines}
                   onChange={onChangeSelect('cuisines')}
                   fullWidth
-                  labelWidth={10}
                   error={error?.cuisines}
                   MenuProps={MenuProps}
+                  IconComponent={() => (
+                    <img src="/images/index/Polygon6.png" className={classes.createRecipeSelectArrow} />
+                  )}
                   multiple>
                   {selectItemList(cuisineList)}
                 </Select>
                 <FormHelperText>{error?.cuisines ? 'This field is required' : ''}</FormHelperText>
               </FormControl>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
-                <label htmlFor="create-cooking-methods-select" className={classes.createRecipeLabel}>
+                <label
+                  htmlFor="create-cooking-methods-select"
+                  className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
                   <span style={{ color: 'red' }}>* </span>Cooking Method
                 </label>
                 <Select
@@ -818,6 +845,9 @@ function FormCreateRecipe(props) {
                   onChange={onChangeSelect('cooking_methods')}
                   fullWidth
                   error={error?.cooking_methods}
+                  IconComponent={() => (
+                    <img src="/images/index/Polygon6.png" className={classes.createRecipeSelectArrow} />
+                  )}
                   MenuProps={MenuProps}
                   multiple>
                   {selectItemList(cookingMethods)}
@@ -825,21 +855,62 @@ function FormCreateRecipe(props) {
                 <FormHelperText>{error?.cooking_methods ? 'This field is required' : ''}</FormHelperText>
               </FormControl>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
-                <label htmlFor="create-cooking-skills-select" className={classes.createRecipeLabel}>
+                <label
+                  htmlFor="create-cooking-skills-select"
+                  className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
                   <span style={{ color: 'red' }}>* </span>Cooking Skills
                 </label>
                 <Select
                   id="create-cooking-skills-select"
                   value={data?.cooking_skills}
                   onChange={onChangeSelect('cooking_skills')}
-                  autoWidth
-                  error={error?.cooking_skills}
+                  fullWidth
+                  IconComponent={() => (
+                    <img src="/images/index/Polygon6.png" className={classes.createRecipeSelectArrow} />
+                  )}
+                  error={Boolean(error?.cooking_skills)}
                   MenuProps={MenuProps}>
                   {selectItemList(cookingSkill)}
                 </Select>
                 <FormHelperText>{error?.cooking_skills ? 'This field is required' : ''}</FormHelperText>
               </FormControl>
             </NoSsr>
+          </div>
+        </div>
+
+        <div className={`${classes.createRecipeSection} ${classes.createRecipeSection_visibility}`}>
+          <div className={classes.createRecipeItem}>
+            <h3 className={`${classes.createRecipeSubtitle} ${classes.createRecipeSubtitle_type_visibility}`}>
+              <span style={{ color: 'red' }}>* </span>Visibility
+            </h3>
+            <NoSsr>
+              <RadioGroup
+                row
+                aria-label="create-visibility"
+                name="create-visibility"
+                value={data?.publish_status}
+                onChange={onChangeFieldNumber('publish_status')}
+                error={error?.publish_status}>
+                <FormControlLabel
+                  value={1}
+                  control={
+                    <Radio id="publish_status" icon={<CheckboxIconUnchecked />} checkedIcon={<CheckboxIcon />} />
+                  }
+                  label="Save"
+                />
+
+                <FormControlLabel
+                  value={2}
+                  control={
+                    <Radio id="publish_status" icon={<CheckboxIconUnchecked />} checkedIcon={<CheckboxIcon />} />
+                  }
+                  label="Publish"
+                />
+              </RadioGroup>
+            </NoSsr>
+            {error?.publish_status && (
+              <p className={classes.createRecipeItem__errorPublishStatus}>This field is required</p>
+            )}
           </div>
         </div>
       </form>
@@ -856,5 +927,6 @@ function FormCreateRecipe(props) {
 }
 
 export default connect(state => ({
-  recipeUpload: state.recipeUpload
+  recipeUpload: state.recipeUpload,
+  account: state.account
 }))(FormCreateRecipe);

@@ -7,14 +7,29 @@ import MealOfWeekBlock from '@/components/blocks/meal-of-the-week';
 import FavoriteCuisinesBlock from '@/components/blocks/favorite-cuisines';
 import PinnedMeals from '@/components/blocks/pinned-meals';
 import HighestRatedMealsBlock from '@/components/blocks/highest-rated-meals';
+import BlocksHomePage from '@/components/blocks/blocks-home-page';
 import Carousel from '@/components/elements/carusel';
 import { Button } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { modalActions, profileActions, accountActions } from '@/store/actions';
+import { modalActions, profileActions } from '@/store/actions';
 import Recipe from '@/api/Recipe';
 import { getBaseUrl } from '@/utils/isTypeOfWindow';
+import { makeStyles } from '@material-ui/core/styles';
 import Head from 'next/head';
 import Cookies from 'cookies';
+
+const useStyles = makeStyles({
+  root: {
+    '@media (max-width:576px)': {
+      width: '160px !important',
+      height: '32px !important',
+      fontSize: '12px',
+      lineHeight: '14.6px',
+      fontWeight: '600',
+      padding: 0
+    }
+  }
+});
 
 const Home = props => {
   const router = useRouter();
@@ -22,7 +37,7 @@ const Home = props => {
     viewerType: 0,
     chefType: 1
   };
-
+  const btnStyles = useStyles(props);
   const chefType = USER_TYPE.chefType;
   const viewerType = USER_TYPE.viewerType;
   const [meal, setMeal] = React.useState(null);
@@ -43,34 +58,22 @@ const Home = props => {
     }
   };
 
-  const handleClickSearch = name => {
-    return () => {
-      props.dispatch(modalActions.open(name)).then(result => {
-        // result when modal return promise and close
-      });
-    };
-  };
-
   const content = (
     <>
       <section className={classes.home}>
-        <button className={classes.home__inputSearch} onClick={handleClickSearch('search')}>
-          <img src="/images/index/icon_search.svg" className={classes.home__iconSearch} />
-          Search for dish name
-        </button>
         <div className={classes.home__titleContainer}>
           <div className={classes.home__titleTextContainer}>
-            <h1 className={classes.home__title}>Find the fame</h1>
-            <p className={classes.home__subtitle}>you deserve!</p>
+            <h1 className={classes.home__title}>Earn Royalties</h1>
+            <p className={classes.home__subtitle}>with Your Recipe</p>
           </div>
         </div>
         <div className={classes.home__buttonUploud}>
           {props?.profile?.data?.user_type === chefType ? (
-            <Button variant="contained" color="primary" href="/recipe/upload">
+            <Button className={btnStyles.root} variant="contained" color="primary" href="/recipe/upload">
               Upload New Recipe!
             </Button>
           ) : (
-            <Button variant="contained" color="primary" onClick={handleChangeStatus}>
+            <Button className={btnStyles.root} variant="contained" color="primary" onClick={handleChangeStatus}>
               Become a home chef
             </Button>
           )}
@@ -84,6 +87,7 @@ const Home = props => {
       <PinnedMeals />
       <HighestRatedMealsBlock />
       {meal && <MealOfWeekBlock meal={meal} />}
+      <BlocksHomePage />
     </>
   );
 

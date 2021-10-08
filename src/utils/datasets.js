@@ -19,6 +19,15 @@ export const cuisineList = {
   18: 'Turkish'
 };
 
+export const categoryList = {
+  1: 'General',
+  2: 'Second',
+  3: 'Breakfast',
+  4: 'Dinner',
+  5: 'Fish',
+  6: 'Meat'
+};
+
 export const recipeTypes = {
   1: 'Breakfast',
   2: 'Lunch',
@@ -163,10 +172,16 @@ export const APPROVED_STATUS = {
   3: 'Rejected'
 };
 
+export const IS_APPROVED = {
+  approved: 2,
+  rejected: 3
+};
+
 export const pageNames = {
   '/': 'Home',
   '/my-uploads': 'My recipe',
-  '/saved-recipes': 'Saved recipes'
+  '/saved-recipes': 'Saved recipes',
+  '/chef-pencil': "Chef's pencil"
 };
 
 export const absolutePaths = {
@@ -196,13 +211,13 @@ export const notificationTypesText = {
     };
   },
   3: payload => {
-    if (payload?.status === 2) {
+    if (payload?.status === IS_APPROVED.approved) {
       let link = `/recipe/${payload?.id}`;
       return {
         text: `<p><a href=${link}>${payload?.title}</a> submitted Published! You can check it here</p>`
       };
     }
-    if (payload?.status === 3) {
+    if (payload?.status === IS_APPROVED.rejected) {
       let link = `/recipe/editing/${payload?.id}`;
       return {
         text: `<p><a href=${link}>${payload?.title}</a> has some remarks! Please check it below: ${payload.rejection_reason}</p>`
@@ -212,16 +227,40 @@ export const notificationTypesText = {
   4: payload => {
     let link = `/recipe/${payload?.id}`;
     return {
-      link: link,
-      text: `Click to view the recipe`,
-      textLink: `${payload?.title}`
+      text: `<p>Click to view the recipe <a href=${link}>${payload?.title}</a></p>`
+    };
+  },
+  5: payload => {
+    let link = `/chef_pencil/${payload?.id}`;
+    return {
+      text: `<p><a href=${link}>${payload?.title}</a> submitted successfully! Our team is reviewing and we will get back to you soon!</p>`
+    };
+  },
+  6: payload => {
+    if (payload?.status === IS_APPROVED.approved) {
+      let link = `/chef_pencil/${payload?.id}`;
+      return {
+        text: `<p><a href=${link}>${payload?.title}</a> submitted Published! You can check it here</p>`
+      };
+    }
+    if (payload?.status === IS_APPROVED.rejected) {
+      let link = `/chef_pencil/editing/${payload?.id}`;
+      return {
+        text: `<p><a href=${link}>${payload?.title}</a> has some remarks! Please check it below: ${payload?.rejection_reason}</p>`
+      };
+    }
+  },
+  7: payload => {
+    let link = `/chef_pencil/${payload?.id}`;
+    return {
+      text: `<p>Click to view the chef pencil <a href=${link}>${payload?.title}</a></p>`
     };
   }
 };
 
 export const notificationTypesTitle = {
   1: payload => {
-    if (payload.user_type === USER_TYPE.chefType) {
+    if (payload?.user_type === USER_TYPE.chefType) {
       return 'New Chef Registration';
     } else {
       return 'New Customer Registration';
@@ -235,6 +274,15 @@ export const notificationTypesTitle = {
   },
   4: payload => {
     return `${payload.count} new comment in your recipe`;
+  },
+  5: () => {
+    return 'Chef Pencil Record Submission';
+  },
+  6: payload => {
+    return `Chef Pencil ${APPROVED_STATUS[payload?.status]}`;
+  },
+  7: payload => {
+    return `${payload.count} new comment in your Chef Pencil Record`;
   }
 };
 
@@ -244,6 +292,7 @@ export const nameErrorRecipe = [
   { nameErrorResponse: 'ingredients', nameDiv: 'create-ingredients' },
   { nameErrorResponse: 'images', nameInput: 'create-images' },
   { nameErrorResponse: 'images_to_delete', nameInput: 'create-images' },
+  { nameErrorResponse: 'main_image', nameInput: 'create-images' },
   { nameErrorResponse: 'preview_mp4_url', nameDiv: 'DemoCamera' },
   { nameErrorResponse: 'publish_status', nameInput: 'publish_status' },
   { nameErrorResponse: 'caption', nameInput: 'create-caption' },

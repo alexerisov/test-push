@@ -9,12 +9,21 @@
   flex-direction: column;
   position: relative;
 
+  @media (max-width: 1350px) {
+    padding: 38px 40px 0 40px;
+  }
+
   @media (max-width: $--lg) {
     padding: 20px 0 0 0;
   }
 
+  @media (min-width: $--xs) and (max-width: $--sm) {
+    min-height: 510px;
+  }
+
   @media (max-width: $--xs) {
     min-height: 400px;
+    padding: 0px;
   }
 
   &__inputSearch {
@@ -51,22 +60,31 @@
 
   &__titleContainer {
     display: flex;
+
     margin: 67px 0 38px 0;
 
     @media (max-width: $--lg) {
       margin: 20px 0 38px 0;
     }
+    @media (max-width: $--sm) {
+      justify-content: flex-end;
+      margin: 0 0 10px 0;
+    }
   }
 
   &__titleContainer::before {
-    content: '';
-    border: 1px solid $--color-gray;
-    border-radius: 7px;
-    width: 8px;
-    background: $--color-gray3 0% 0% no-repeat padding-box;
-
+    @media (min-width: $--xs) {
+      content: '';
+      border: 1px solid $--color-gray;
+      border-radius: 7px;
+      width: 8px;
+      background: $--color-gray3 0% 0% no-repeat padding-box;
+    }
     @media (max-width: $--xs) {
       width: 1px;
+    }
+    @media (min-width: 360px) and (max-width: $--md) {
+      display: none;
     }
   }
 
@@ -85,6 +103,7 @@
 
     @media (max-width: $--sm) {
       margin: 0 0 0 6px;
+      align-items: flex-end;
     }
   }
 
@@ -115,8 +134,8 @@
     }
 
     @media (max-width: $--xs) {
-      font-size: 28px;
-      line-height: 30px;
+      font-size: 32px;
+      line-height: 39px;
     }
   }
 
@@ -126,11 +145,11 @@
     color: $--color-black;
 
     @media (max-width: $--lg) {
-      font-size: 30px;
-      line-height: 32px;
+      font-size: 32px;
+      line-height: 39px;
     }
 
-    @media (max-width: $--xs) {
+    @media (max-width: $--sm) {
       font-size: 28px;
       line-height: 30px;
     }
@@ -163,8 +182,9 @@
   }
 
   &__buttonUploud {
-    @media (max-width: $--xs) {
-      display: none;
+    @media (max-width: $--sm) {
+      display: flex;
+      justify-content: flex-end;
     }
   }
 }
@@ -175,6 +195,10 @@
   left: -60px;
   top: 20px;
   z-index: -1;
+
+  @media (max-width: 1350px) {
+    left: -100px;
+  }
 
   @media (max-width: $--lg) {
     left: 28%;
@@ -188,7 +212,8 @@
 
   @media (max-width: $--xs) {
     top: 200px;
-    left: -110px;
+    right: -110px;
+    left: auto;
   }
 }
 
@@ -198,6 +223,14 @@
   bottom: 0;
   left: -40px;
   z-index: -1;
+
+  @media (max-width: 1350px) {
+    left: -80px;
+  }
+
+  @media (max-width: $--lg) {
+    left: -40px;
+  }
 
   @media (max-width: $--sm) {
     left: -70px;
@@ -219,9 +252,17 @@
 
   @media (max-width: $--sm) {
     bottom: auto;
-    top: -100px;
+    top: -108px;
     right: -10px;
     z-index: 2;
+  }
+  @media (max-width: $--xs) {
+    bottom: -250px;
+    left: -30px;
+    transform: rotate(280deg);
+  }
+  @media (min-width: $--xs) and (max-width: $--md) {
+    display: none;
   }
 }
 
@@ -232,11 +273,11 @@
   bottom: 0;
   z-index: -2;
 
-  @media (max-width: $--sm) {
+  @media (max-width: $--xs) {
     transform: rotate(-70deg);
     bottom: auto;
     top: -70px;
-    right: -80px;
+    left: -80px;
     z-index: 1;
   }
 }

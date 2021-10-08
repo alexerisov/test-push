@@ -5,36 +5,35 @@ export const types = {
   UPDATE_ERROR: Symbol('UPDATE_ERROR'),
   SEND: Symbol('SEND'),
   SEND_SUCCESS: Symbol('SEND_SUCCESS'),
-  SEND_FAILURE: Symbol('SEND_FAILURE'),
+  SEND_FAILURE: Symbol('SEND_FAILURE')
 };
 
 export default {
-
-  update: (data) => {
+  update: data => {
     return dispatch => {
       dispatch({
         type: types.UPDATE,
-        payload: data,
+        payload: data
       });
     };
   },
 
-  updateError: (error) => {
+  updateError: error => {
     return dispatch => {
       dispatch({
         type: types.UPDATE_ERROR,
-        payload: error,
+        payload: error
       });
     };
   },
 
-  uploadChefPencilImage: (image) => {
+  uploadChefPencilImage: image => {
     return async dispatch => {
       dispatch({ type: types.SEND });
 
       try {
         const response = await ChefPencil.uploadAttachment(image);
-        dispatch({ type: types.SEND_SUCCESS});
+        dispatch({ type: types.SEND_SUCCESS });
         return response?.data;
       } catch (e) {
         dispatch({ type: types.SEND_FAILURE, error: e.response.data });
@@ -43,19 +42,19 @@ export default {
     };
   },
 
-  uploadChefPencil: (data) => {
+  uploadChefPencil: data => {
     return async dispatch => {
       dispatch({ type: types.SEND });
       try {
-        const response = await ChefPencil.upload(
-          {
-            title: data?.title,
-            html_content: data?.html_content,
-            attachments: data?.attachments,
-            image: data?.image
-          }
-        );
-        dispatch({ type: types.SEND_SUCCESS});
+        const response = await ChefPencil.upload({
+          title: data?.title,
+          html_content: data?.html_content,
+          attachments: data?.attachments,
+          images: data?.images,
+          main_image: data?.main_image,
+          categories: data?.categories
+        });
+        dispatch({ type: types.SEND_SUCCESS });
         return response.data;
       } catch (e) {
         dispatch({ type: types.SEND_FAILURE, error: e.response.data });
@@ -63,4 +62,26 @@ export default {
       }
     };
   },
+
+  updateChefPencil: (data, id) => {
+    return async dispatch => {
+      dispatch({ type: types.SEND });
+      try {
+        const response = await ChefPencil.update({
+          title: data?.title,
+          html_content: data?.html_content,
+          images: data?.images,
+          main_image: data?.main_image,
+          images_to_delete: data?.images_to_delete,
+          id,
+          categories: data?.categories
+        });
+        dispatch({ type: types.SEND_SUCCESS });
+        return response.data;
+      } catch (e) {
+        dispatch({ type: types.SEND_FAILURE, error: e.response.data });
+        throw e;
+      }
+    };
+  }
 };

@@ -31,7 +31,7 @@ const useSeparatorStyles = makeStyles({
 });
 
 const HeaderDefault = props => {
-  const mobile = useMediaQuery('(max-width: 576px)');
+  const mobile = useMediaQuery('(max-width: 768px)');
   const [isExpanded, setExpanded] = React.useState(false);
   const separatorStyles = useSeparatorStyles();
   const handleClickLogin = name => {
@@ -78,6 +78,14 @@ const HeaderDefault = props => {
     }
   }, [props.account.hasToken]);
 
+  const handleClickSearch = name => {
+    return () => {
+      props.dispatch(modalActions.open(name)).then(result => {
+        // result when modal return promise and close
+      });
+    };
+  };
+
   const mobileMenu = (
     <div className={isExpanded ? classes.mobileMenu : classes.mobileMenu__dnone}>
       <div className={classes.mobileMenu__separator}></div>
@@ -101,11 +109,11 @@ const HeaderDefault = props => {
             </Link>
           </li>
 
-          {/*<li className={classes.mobileMenu__navItem} onClick={handleExpandingMobileMenu}>
-            <Link href="/">
+          <li className={classes.mobileMenu__navItem} onClick={handleExpandingMobileMenu}>
+            <Link href="/chef-pencil">
               <a>{`Chef's Pensil`}</a>
             </Link>
-          </li>*/}
+          </li>
         </nav>
 
         {!props.account.hasToken ? (
@@ -123,21 +131,32 @@ const HeaderDefault = props => {
                 <a>My Profile</a>
               </Link>
             </li>
+
             {props?.account?.profile?.user_type === USER_TYPE.chefType && (
               <>
+                <li
+                  className={`${classes.mobileMenu__item} ${classes.notification__wrap}`}
+                  onClick={handleExpandingMobileMenu}>
+                  {notificationAmount && notificationAmount !== 0 ? (
+                    <span className={classes.header__notifications__amount}>{notificationAmount}</span>
+                  ) : (
+                    <span />
+                  )}
+                  <Link href="/notifications">
+                    <a>Notifications</a>
+                  </Link>
+                </li>
                 <li className={classes.mobileMenu__item} onClick={handleExpandingMobileMenu}>
                   <Link href="/my-recipes">
                     <a>My Recipes</a>
                   </Link>
                 </li>
 
-                {/*<li className={classes.mobileMenu__item} onClick={handleExpandingMobileMenu}>
-                  <Link href="/">
-                    <a>
-                      My Pencils
-                    </a>
+                <li className={classes.mobileMenu__item} onClick={handleExpandingMobileMenu}>
+                  <Link href="/my-pencils">
+                    <a>My Pencils</a>
                   </Link>
-                </li>*/}
+                </li>
               </>
             )}
 
@@ -177,6 +196,9 @@ const HeaderDefault = props => {
         <Link href="/menu">
           <a className={classes.header__link}>Menu</a>
         </Link>
+        <Link href="/chef-pencil">
+          <a className={classes.header__link}>{"Chef's Pencil"}</a>
+        </Link>
       </nav>
       <NoSsr>
         {!props.account.hasToken ? (
@@ -189,7 +211,7 @@ const HeaderDefault = props => {
               <a className={classes.header__notifications}>
                 <img src="/images/index/icons-bell.png" />
                 {notificationAmount && notificationAmount !== 0 ? (
-                  <span className={classes.header__notifications__amount}>{notificationAmount}</span>
+                  <span className={classes.header__notifications__amount_desctop}>{notificationAmount}</span>
                 ) : (
                   <span />
                 )}
@@ -213,18 +235,21 @@ const HeaderDefault = props => {
                 </MenuItem>
               )}
 
-              {/*{props?.account?.profile?.user_type === USER_TYPE.chefType &&
-                <MenuItem onClick={handleClose} classes={{root: separatorStyles.root}}>
-                  <Link href="/">
-                    <a className={classes.header__link_place_menu}>
-                      My Pencils
-                    </a>
+              {props?.account?.profile?.user_type === USER_TYPE.chefType && (
+                <MenuItem onClick={handleClose} classes={{ root: separatorStyles.root }}>
+                  <Link href="/my-pencils">
+                    <a className={classes.header__link_place_menu}>My Pencils</a>
                   </Link>
                 </MenuItem>
-              }*/}
-              <MenuItem onClick={handleClose} classes={{ root: separatorStyles.root }}>
+              )}
+              <MenuItem onClick={handleClose}>
                 <Link href="/saved-recipes">
                   <a className={classes.header__link_place_menu}>Saved Recipes</a>
+                </Link>
+              </MenuItem>
+              <MenuItem onClick={handleClose} classes={{ root: separatorStyles.root }}>
+                <Link href="/saved-pencils">
+                  <a className={classes.header__link_place_menu}>Saved Pencils</a>
                 </Link>
               </MenuItem>
               {/*{props?.account?.profile?.user_type === USER_TYPE.viewerType && (
@@ -264,20 +289,21 @@ const HeaderDefault = props => {
 
         {!mobile && defaultContent}
         {mobile && (
-          <div>
-            {
-              <Link href="/notifications">
-                <a className={classes.header__notifications}>
-                  <img src="/images/index/icons-bell.png" />
-                  {notificationAmount && notificationAmount !== 0 ? (
-                    <span className={classes.header__notifications__amount}>{notificationAmount}</span>
-                  ) : (
-                    <span />
-                  )}
-                </a>
-              </Link>
-            }
-            {!isExpanded && <MenuIcon className={classes.header__burger} onClick={handleExpandingMobileMenu} />}
+          <div className={classes.header__iconsWrap}>
+            <button className={classes.header__btnSearch} onClick={handleClickSearch('search')}>
+              <img src="/images/index/icon_search.svg" className={classes.header__iconSearch} />
+            </button>
+            {!isExpanded && (
+              <div className={classes.header__burgerWrap}>
+                <MenuIcon className={classes.header__burger} onClick={handleExpandingMobileMenu} />
+                {notificationAmount && notificationAmount !== 0 ? (
+                  <span className={classes.header__notifications__amount_burger}>{notificationAmount}</span>
+                ) : (
+                  <span />
+                )}
+              </div>
+            )}
+
             {isExpanded && <CloseIcon className={classes.header__burger} onClick={handleExpandingMobileMenu} />}
           </div>
         )}

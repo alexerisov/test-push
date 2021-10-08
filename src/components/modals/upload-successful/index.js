@@ -43,7 +43,7 @@ function UploadSuccessful (props) {
         className={classes.UploadSuccess__button}
         onClick={props.handleClick ?? handleClick}
       >
-        {props.handleClick ? "Return to home" : "See preview" }
+        See preview
       </button>
     </div>;
   };

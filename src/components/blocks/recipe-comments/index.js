@@ -5,13 +5,25 @@ import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
+import { modalActions } from '@/store/actions';
 import { CommentItem } from '@/components/elements/comment';
 import Recipe from '@/api/Recipe';
 
 import classes from './RecipeComments.module.scss';
+import { useDispatch } from 'react-redux';
 
-const ResipeComments = ({ recipeId, userId }) => {
+const ResipeComments = ({
+  id,
+  userId,
+  children,
+  updateComments,
+  addComment,
+  uploadLikeHandler,
+  deleteCommentHandle
+}) => {
   const isAuthorized = useSelector(state => state.account.hasToken);
+
+  const dispatch = useDispatch();
 
   const [comments, setComments] = useState();
 
@@ -39,14 +51,21 @@ const ResipeComments = ({ recipeId, userId }) => {
   });
 
   useEffect(() => {
-    if (recipeId) {
+    if (id) {
       getComments();
     }
-  }, [page, recipeId]);
+  }, [page, id]);
 
   const getComments = async () => {
     try {
-      const response = await Recipe.getComments({ recipeId, page });
+      let response;
+
+      if (updateComments) {
+        response = await updateComments({ recipeId: id, page });
+      } else {
+        response = await Recipe.getComments({ recipeId: id, page });
+      }
+
       setNumberOfPages(countCommentsPages(response.data.count));
       setComments(response.data);
     } catch (e) {
@@ -55,7 +74,7 @@ const ResipeComments = ({ recipeId, userId }) => {
   };
 
   const countCommentsPages = count => {
-    const isRemainExists = (count % itemsPerPage) > 0;
+    const isRemainExists = count % itemsPerPage > 0;
     let pages = Math.floor(count / itemsPerPage);
     return isRemainExists ? ++pages : pages;
   };
@@ -67,10 +86,16 @@ const ResipeComments = ({ recipeId, userId }) => {
 
     try {
       const targetComment = {
-        id: +recipeId,
+        id: +id,
         text: textarea
       };
-      const response = await Recipe.uploadComments(targetComment);
+
+      let response;
+      if (updateComments) {
+        response = await addComment(targetComment);
+      } else {
+        response = await Recipe.uploadComments(targetComment);
+      }
 
       if (response.status === 201) {
         getComments();
@@ -83,7 +108,13 @@ const ResipeComments = ({ recipeId, userId }) => {
 
   const deleteComment = async commentId => {
     try {
-      const response = await Recipe.deleteComment(commentId);
+      let response;
+
+      if (deleteCommentHandle) {
+        response = await deleteCommentHandle(commentId);
+      } else {
+        response = await Recipe.deleteComment(commentId);
+      }
 
       if (response.status === 204) {
         getComments();
@@ -93,6 +124,14 @@ const ResipeComments = ({ recipeId, userId }) => {
     }
   };
 
+  const openUnregisterModal = name => {
+    return () => {
+      dispatch(modalActions.open(name)).then(result => {
+        // result when modal return promise and close
+      });
+    };
+  };
+
   return (
     <div className={classes.comments}>
       <h2 className={classes.comments__title}>Write a comment</h2>
@@ -100,6 +139,8 @@ const ResipeComments = ({ recipeId, userId }) => {
         <span className={classes.comments__yellowLine} />
         <span className={classes.comments__blueСircle} />
       </span>
+
+      {children && <div className={classes.comments__rating}>{children}</div>}
 
       <form className={classes.comments__form} onSubmit={formik.handleSubmit}>
         <textarea
@@ -117,16 +158,19 @@ const ResipeComments = ({ recipeId, userId }) => {
         ) : null}
 
         {!isAuthorized && <div className={classes.comments__input__error}>{authError}</div>}
-
-        <Button type="submit" variant="contained" color="primary">
-          Submit
-        </Button>
+        <div
+          className={classes.comments__form__btnWrap}
+          onClick={!isAuthorized ? openUnregisterModal('unregisterActivityModal') : null}>
+          <Button type="submit" variant="contained" color="primary">
+            Submit
+          </Button>
+        </div>
       </form>
 
       <div className={classes.comments__body}>
         <h3 className={classes.comments__subtitle}>Comments ({comments && comments.count})</h3>
 
-        {comments &&
+        {comments?.results?.length !== 0 &&
           comments?.results.map((comment, index) => {
             return (
               <CommentItem
@@ -139,16 +183,18 @@ const ResipeComments = ({ recipeId, userId }) => {
                 commentId={comment?.pk}
                 createdAt={comment?.created_at}
                 deleteComment={deleteComment}
+                uploadLikeHandler={uploadLikeHandler}
               />
             );
-          })
-        }
+          })}
 
-        <Pagination
-          classes={{ root: classes.comments__pagination }}
-          count={numberOfPages}
-          onChange={(event, page) => setPage(page)}
-        />
+        {comments?.results?.length !== 0 && (
+          <Pagination
+            classes={{ root: classes.comments__pagination }}
+            count={numberOfPages}
+            onChange={(event, page) => setPage(page)}
+          />
+        )}
       </div>
     </div>
   );

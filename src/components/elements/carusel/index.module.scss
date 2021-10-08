@@ -24,13 +24,21 @@ $slide-width: 32rem;
     top: 280px;
     right: 10px;
     left: auto;
+    width: 320px;
+    height: 290px;
+  }
+
+  @media (min-width: $--xs) and (max-width: $--sm) {
+    top: 0;
+    left: 0;
   }
 
   @media (max-width: $--xs) {
+    transform: rotate(11deg);
     width: 240px;
     height: 220px;
-    right: -20px;
-    top: 170px;
+    left: 0px;
+    top: 140px;
   }
 }
 

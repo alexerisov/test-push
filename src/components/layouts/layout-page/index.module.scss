@@ -1,10 +1,14 @@
-@import "~styles/variables.scss";
+@import '~styles/variables.scss';
 
 .layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
     overflow: hidden;
-    
+
     &__content {
-        margin: 122px 0 0 0;
+      flex: 1;
+      margin: 122px 0 0 0;
 
       @media (max-width: $--xs) {
         margin-top: 90px;

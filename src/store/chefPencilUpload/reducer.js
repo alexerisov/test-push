@@ -6,7 +6,10 @@ const initState = {
     title: '',
     html_content: '',
     attachments: null,
-    image: null
+    images: [],
+    main_image: null,
+    images_to_delete: [],
+    categories: []
   },
   isLoading: false,
   error: null

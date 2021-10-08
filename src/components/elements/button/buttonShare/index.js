@@ -15,11 +15,10 @@ import Recipe from '@/api/Recipe';
 
 import styles from './buttonShare.module.scss';
 
-const ButtonShare = ({ recipeId, recipePhoto, recipeDescription }) => {
+const ButtonShare = ({ id, photo, description, currentUrl }) => {
   const [openShareWindow, setOpenShareWindow] = useState(false);
   const [open, setOpen] = useState(false);
   const [isMobileOrTabletDevice] = useMobileDevice();
-  const currentUrl = window.location.href;
 
   const handleTooltipOpen = () => {
     setOpen(true);
@@ -69,7 +68,7 @@ const ButtonShare = ({ recipeId, recipePhoto, recipeDescription }) => {
 
   const uploadShareStats = () => {
     try {
-      Recipe.uploadShareStatsForRecipe(Number(recipeId));
+      Recipe.uploadShareStatsForRecipe(Number(id));
     } catch (e) {
       console.error(e);
     }
@@ -99,8 +98,7 @@ const ButtonShare = ({ recipeId, recipePhoto, recipeDescription }) => {
         title="Link successfully copied!">
         <div
           className={styles.shareBtn}
-          onClick={isMobileOrTabletDevice ? mobileHandler : e => handleOpenShareWindow(e)}
-        >
+          onClick={isMobileOrTabletDevice ? mobileHandler : e => handleOpenShareWindow(e)}>
           <div className={styles.shareBtn__icon}>
             <ShareIcon fontSize="inherit" />
 

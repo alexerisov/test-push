@@ -26,8 +26,8 @@ import CardLatestRecipes from '@/components/elements/card-latest-recipes';
 import CardPopularRecipes from '@/components/elements/card-popular-recipes';
 import RecipeNotFound from '@/components/elements/recipe-not-found';
 import { NextSeo } from 'next-seo';
-import savedStatus from './savedStatus.svg';
-import notSavedStatus from './notSavedStatus.svg';
+import savedStatus from '/public/images/index/savedStatus.svg';
+import notSavedStatus from '/public/images/index/notSavedStatus.svg';
 import Cookies from 'cookies';
 import Tooltip from '@material-ui/core/Tooltip';
 
@@ -100,6 +100,14 @@ function RecipePage(props) {
   };
 
   const openRegisterPopup = name => {
+    return () => {
+      props.dispatch(modalActions.open(name)).then(result => {
+        // result when modal return promise and close
+      });
+    };
+  };
+
+  const openUnregisterModal = name => {
     return () => {
       props.dispatch(modalActions.open(name)).then(result => {
         // result when modal return promise and close
@@ -327,7 +335,9 @@ function RecipePage(props) {
                       leaveTouchDelay={2000}>
                       <button
                         className={classes.recipe__video__likes_last}
-                        onClick={!props.account.hasToken ? openRegisterPopup('register') : onClickLike}>
+                        onClick={
+                          !props.account.hasToken ? openUnregisterModal('unregisterActivityModal') : onClickLike
+                        }>
                         {!likeRecipe ? (
                           <img src="/images/index/Icon-awesome-heart-null.svg" alt="" />
                         ) : (
@@ -337,9 +347,10 @@ function RecipePage(props) {
                       </button>
                     </Tooltip>
                     <ButtonShare
-                      recipeId={recipeId}
-                      recipePhoto={recipe?.images[0]}
-                      recipeDescription={recipe?.description}
+                      id={recipeId}
+                      photo={recipe?.images[0]}
+                      description={recipe?.description}
+                      currentUrl={`${props?.absolutePath}/recipe/${props?.recipesData?.pk}`}
                     />
 
                     {!savedId ? (
@@ -476,7 +487,7 @@ function RecipePage(props) {
                   })}
                 </div>
               )}
-              <ResipeComments recipeId={recipeId} userId={userId} />
+              <ResipeComments id={recipeId} userId={userId} />
             </div>
             <div className={classes.recipe__cards}>
               {latestRecipes && (
@@ -493,6 +504,9 @@ function RecipePage(props) {
                         likes={recipe?.likes_number}
                         savedId={recipe?.user_saved_recipe}
                         id={recipe.pk}
+                        publishStatus={recipe?.publish_status}
+                        hasVideo={recipe?.video}
+                        isParsed={recipe?.is_parsed}
                       />
                     );
                   })}

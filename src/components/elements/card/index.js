@@ -6,3 +6,6 @@ export { default as CardFavoriteDishes } from './card-favourite-dishes';
 export { default as CardRoleModels } from './card-role-models';
 export { default as CardMenu } from './card-menu';
 export { default as CardNotification } from './card-notification';
+export { default as CardChefPencil } from './card-chef-pencil';
+export { default as MainCardChefPencil } from './main-page-card-chef-pencil';
+export { default as CardChefPencilEdit } from './card-chef-pencil-edit';

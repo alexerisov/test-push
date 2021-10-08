@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import classes from './index.module.scss';
+
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -48,17 +50,20 @@ const InputTime = props => {
   };
 
   return (
-    <TextField
-      {...props}
-      className={textFieldStyles.textField}
-      type="time"
-      variant="outlined"
-      inputProps={{
-        'data-placeholder': inputTimePlaceholder
-      }}
-      onFocus={handleFocusOnPreparationTime}
-      onBlur={handleBlurOnPreparationTime}
-    />
+    <div className={classes.inputTime}>
+      <TextField
+        {...props}
+        className={textFieldStyles.textField}
+        type="time"
+        variant="outlined"
+        inputProps={{
+          'data-placeholder': inputTimePlaceholder
+        }}
+        onFocus={handleFocusOnPreparationTime}
+        onBlur={handleBlurOnPreparationTime}
+      />
+      <img src="/images/index/clockSelect.svg" className={classes.inputTime__clock} />
+    </div>
   );
 };
 

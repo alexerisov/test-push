@@ -27,21 +27,16 @@
       left: 237px;
       top: 135px;
       position: absolute;
-      cursor: pointer;
+
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
-
-      &:hover {
-        img {
-          transform: scale(1.8);
-        }
-
-        div {
-          transform: scale(5);
-        }
-      }
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+      -webkit-touch-callout: none;
+      user-select: none;
 
       &_play {
         width: 93px;
@@ -49,10 +44,17 @@
         z-index: 1;
         position: absolute;
         transition: transform 0.25s;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
+        -ms-user-select: none;
+        user-select: none;
+        border-radius: 50%;
 
         @media (max-width: $--md) {
           width: 70px;
           height: 70px;
+          border-radius: 50%;
         }
       }
 
@@ -64,13 +66,36 @@
         z-index: 1;
         opacity: 0.4;
         transition: transform 0.25s;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
+        -ms-user-select: none;
+        user-select: none;
 
         @media (max-width: $--md) {
           width: 60px;
           height: 60px;
+          border-radius: 50%;
         }
       }
 
+      @media (min-width: $--md) {
+        cursor: pointer;
+        &:hover {
+          img {
+            transform: scale(1.8);
+            margin-left: 10px;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+          }
+
+          div {
+            transform: scale(5);
+          }
+        }
+      }
       @media (max-width: 1400px) {
         left: 0;
       }
@@ -80,6 +105,17 @@
         height: 284px;
         top: 80px;
         left: -30px;
+        cursor: none;
+        border-radius: 50%;
+        &:hover {
+          img {
+            border-radius: 50%;
+          }
+          div {
+            opacity: 0.8;
+            border-radius: 50%;
+          }
+        }
       }
 
       @media (max-width: $--sm - 1px) {
