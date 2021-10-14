@@ -74,7 +74,7 @@ const Home = props => {
             </Button>
           ) : (
             <Button className={btnStyles.root} variant="contained" color="primary" onClick={handleChangeStatus}>
-              Become a home chef
+              Upload New Recipe!
             </Button>
           )}
         </div>
