@@ -1,27 +1,43 @@
-# Next SEO example
+# EATCHEFS FRONTEND
 
-This example shows how you integrate [next-seo](https://github.com/garmeeh/next-seo), a plugin to help manage your SEO in Next.js.
+[Install Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable)
 
-## Preview
+# Local installation
 
-Preview the example live on [StackBlitz](http://stackblitz.com/):
+### 1. INSTALLATION
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-next-seo)
+(after git clone)
 
-## Deploy your own
+Installing dependencies:
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-next-seo&project-name=with-next-seo&repository-name=with-next-seo)
-
-## How to use
-
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
-
-```bash
-npx create-next-app --example with-next-seo next-seo-app
-# or
-yarn create next-app --example with-next-seo next-seo-app
+```
+yarn
 ```
 
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+### 2. RUN FRONTEND
+
+Running the application in development mode:
+
+```
+yarn dev
+```
+
+The application will be available via the link: http://localhost:8030
+
+# Stage installation
+
+[Install python >= 3.9](https://www.python.org/downloads/release/python-395/)
+
+```
+cd /services/eatchef_client/ci/stage
+python3 scripts.py deploy  # containers will be built and started
+```
+
+# Production installation
+
+[Install python >= 3.9](https://www.python.org/downloads/release/python-395/)
+
+```
+cd /services/eatchef_client/ci/production
+python3 scripts.py deploy  # containers will be built and started
+```
