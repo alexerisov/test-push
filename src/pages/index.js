@@ -17,6 +17,7 @@ import { getBaseUrl } from '@/utils/isTypeOfWindow';
 import { makeStyles } from '@material-ui/core/styles';
 import Head from 'next/head';
 import Cookies from 'cookies';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const useStyles = makeStyles({
   root: {
@@ -41,6 +42,7 @@ const Home = props => {
   const chefType = USER_TYPE.chefType;
   const viewerType = USER_TYPE.viewerType;
   const [meal, setMeal] = React.useState(null);
+  const mobile = useMediaQuery('(max-width: 768px)');
 
   React.useEffect(() => {
     setMeal(props?.mealOfTheWeek);
@@ -58,9 +60,21 @@ const Home = props => {
     }
   };
 
+  const handleClickSearch = name => {
+    return () => {
+      props.dispatch(modalActions.open(name)).then(result => {
+        // result when modal return promise and close
+      });
+    };
+  };
+
   const content = (
     <>
       <section className={classes.home}>
+        {!mobile && <button className={classes.home__inputSearch} onClick={handleClickSearch('search')}>
+          <img src="/images/index/icon_search.svg" className={classes.home__iconSearch} />
+          Search for dish name
+        </button>}
         <div className={classes.home__titleContainer}>
           <div className={classes.home__titleTextContainer}>
             <h1 className={classes.home__title}>Earn Royalties</h1>
@@ -119,7 +133,7 @@ export async function getServerSideProps(context) {
     const response = await Recipe.getMealOfWeek(token);
     const banners = await Recipe.getHomepageCarouselItems();
 
-    const mealOfWeekBlock = response?.data?.length ? response?.data[0] : null;
+    const mealOfWeekBlock = response?.data?.length ? response?.data?.[0] : null;
 
     return {
       props: {
