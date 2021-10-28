@@ -67,7 +67,7 @@ const InputSearchComponent = (props) => {
           id="search"
           name="search"
           value={formik.values.search}
-          placeholder="Search for dish name"
+          placeholder="Search Recipes"
           onChange={(e) => {
             formik.handleChange(e);
             onChangeInputSearch(e.target.value);
