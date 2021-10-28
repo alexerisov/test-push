@@ -60,6 +60,16 @@ function SearchBanner (props) {
     return !!router?.query?.['only_eatchefs_recipes']?.includes('Y');
   };
 
+  const getPlaceholder = () => {
+    if (router && router?.pathname === '/' ) {
+      return 'Search Recipes';
+    }
+
+    return 'Search for Dish Name';
+  };
+
+  getPlaceholder();
+
   const renderContent = () => {
     return <div className={classes.search}>
       <form className={classes.search__form} onSubmit={formik.handleSubmit}>
@@ -67,7 +77,7 @@ function SearchBanner (props) {
             id="search"
             name="search"
             value={formik.values.search}
-            placeholder="Search Recipes"
+            placeholder={getPlaceholder()}
             onChange={(e) => {
               formik.handleChange(e);
               onChangeInputSearch(e.target.value);
