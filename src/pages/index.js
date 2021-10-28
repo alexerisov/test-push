@@ -71,9 +71,8 @@ const Home = props => {
   const content = (
     <>
       <section className={classes.home}>
-        {!mobile && <button className={classes.home__inputSearch} onClick={handleClickSearch('search')}>
-          <img src="/images/index/icon_search.svg" className={classes.home__iconSearch} />
-          Search for dish name
+        {!mobile && <button className={classes.btnSearch} onClick={handleClickSearch('search')}>
+          <img src="/images/index/icon_search.svg" className={classes.btnSearch__icon} />
         </button>}
         <div className={classes.home__titleContainer}>
           <div className={classes.home__titleTextContainer}>

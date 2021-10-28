@@ -290,3 +290,19 @@
   right: 0;
   z-index: -1;
 }
+
+.btnSearch {
+  position: absolute;
+  top: 45px;
+  right: 0;
+  border: none;
+  margin-bottom: 3px;
+
+  @media (max-width: $--lg) {
+    top: 0;
+  }
+
+  &__icon {
+    color: $--color-gray1;
+  }
+}
