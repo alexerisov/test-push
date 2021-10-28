@@ -2,12 +2,16 @@
 @import "~styles/mixins/mixins.scss";
 
 .menu {
-  width: max-content;
-  padding-top: 40px;
-  margin: 0 auto 50px auto;
+  position: relative;
 
-  @media (max-width: $--lg) {
-    padding-top: 0;
+  &__wrapper {
+    width: max-content;
+    padding-top: 40px;
+    margin: 0 auto 50px auto;
+
+    @media (max-width: $--lg) {
+      padding-top: 0;
+    }
   }
 
   &__navbar {
@@ -68,5 +72,22 @@
     @media (max-width: 673px) {
       grid-template-columns: 1fr;
     }
+  }
+}
+
+.btnSearch {
+  position: absolute;
+  top: 45px;
+  right: 0;
+  border: none;
+  margin-bottom: 3px;
+  cursor: pointer;
+
+  @media (max-width: $--lg) {
+    top: 0;
+  }
+
+  &__icon {
+    color: $--color-gray1;
   }
 }
