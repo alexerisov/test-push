@@ -22,7 +22,7 @@ const LayoutFooter = props => {
               <Link href="/search">
                 <a className={classes.footer__linkList}>Recipes</a>
               </Link>
-              <Link href="/get-inspired?include_eatchefs_recipes=Y">
+              <Link href="/search?&only_eatchefs_recipes=Y">
                 <a className={classes.footer__linkList}>Get Inspired!</a>
               </Link>
             </div>
