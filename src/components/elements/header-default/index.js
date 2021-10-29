@@ -91,23 +91,23 @@ const HeaderDefault = props => {
       <div className={classes.mobileMenu__separator}></div>
       <ul className={isExpanded ? classes.mobileMenu__list : classes.mobileMenu__listHidden}>
         <nav className={classes.mobileMenu__nav}>
-          <li className={classes.mobileMenu__navItem} onClick={handleExpandingMobileMenu}>
+          {/*<li className={classes.mobileMenu__navItem} onClick={handleExpandingMobileMenu}>
             <Link href="/search?title=">
               <a>Recipes</a>
             </Link>
-          </li>
+          </li>*/}
 
-          <li className={classes.mobileMenu__navItem} onClick={handleExpandingMobileMenu}>
+          {/*<li className={classes.mobileMenu__navItem} onClick={handleExpandingMobileMenu}>
             <Link href="/search?&only_eatchefs_recipes=Y">
               <a>Get Inspired!</a>
             </Link>
-          </li>
+          </li>*/}
 
-          <li className={classes.mobileMenu__navItem} onClick={handleExpandingMobileMenu}>
+          {/*<li className={classes.mobileMenu__navItem} onClick={handleExpandingMobileMenu}>
             <Link href="/menu">
               <a>Menu</a>
             </Link>
-          </li>
+          </li>*/}
 
           <li className={classes.mobileMenu__navItem} onClick={handleExpandingMobileMenu}>
             <Link href="/chef-pencil">
@@ -187,17 +187,29 @@ const HeaderDefault = props => {
   const defaultContent = (
     <>
       <nav className={classes.header__links}>
-        <Link href="/search?title=">
+        {/*original links order*/}
+        {/*<Link href="/search?title=">
           <a className={classes.header__link}>Recipes</a>
-        </Link>
-        <Link href="/search?&only_eatchefs_recipes=Y">
+        </Link>*/}
+        {/*<Link href="/search?&only_eatchefs_recipes=Y">
           <a className={classes.header__link}>Get Inspired!</a>
-        </Link>
-        <Link href="/menu">
+        </Link>*/}
+        {/*<Link href="/menu">
           <a className={classes.header__link}>Menu</a>
-        </Link>
+        </Link>*/}
         <Link href="/chef-pencil">
           <a className={classes.header__link}>{"Chef's Pencil"}</a>
+        </Link>
+
+        {/*delete three links below, if you will add recipes, get inspired, menu, it made for only hide links*/}
+        <Link href="/search?title=">
+          <a className={classes.header__link_hide}>Recipes</a>
+        </Link>
+        <Link href="/search?&only_eatchefs_recipes=Y" className={classes.header__link_hide}>
+          <a className={classes.header__link_hide}>Get Inspired!</a>
+        </Link>
+        <Link href="/menu" className={classes.header__link_hide}>
+          <a className={classes.header__link_hide}>Menu</a>
         </Link>
       </nav>
       <NoSsr>
