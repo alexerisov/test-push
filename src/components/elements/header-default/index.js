@@ -187,6 +187,7 @@ const HeaderDefault = props => {
   const defaultContent = (
     <>
       <nav className={classes.header__links}>
+        {/*original links order*/}
         {/*<Link href="/search?title=">
           <a className={classes.header__link}>Recipes</a>
         </Link>*/}
@@ -198,6 +199,17 @@ const HeaderDefault = props => {
         </Link>*/}
         <Link href="/chef-pencil">
           <a className={classes.header__link}>{"Chef's Pencil"}</a>
+        </Link>
+
+        {/*delete three links below, if you will add recipes, get inspired, menu, it made for only hide links*/}
+        <Link href="/search?title=">
+          <a className={classes.header__link_hide}>Recipes</a>
+        </Link>
+        <Link href="/search?&only_eatchefs_recipes=Y" className={classes.header__link_hide}>
+          <a className={classes.header__link_hide}>Get Inspired!</a>
+        </Link>
+        <Link href="/menu" className={classes.header__link_hide}>
+          <a className={classes.header__link_hide}>Menu</a>
         </Link>
       </nav>
       <NoSsr>

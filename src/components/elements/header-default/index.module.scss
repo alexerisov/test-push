@@ -85,6 +85,12 @@
     font-size: 16px;
     text-decoration: none;
 
+    &_hide {
+      opacity: 0;
+      font-size: 16px;
+      pointer-events: none;
+    }
+
     &_place_menu {
       padding: 10px 20px 5px 20px;
       color: $--color-gray1;
