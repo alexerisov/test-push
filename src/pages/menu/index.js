@@ -6,6 +6,7 @@ import { CardMenu } from '@/components/elements/card';
 import { modalActions } from '@/store/actions';
 import { useDispatch } from 'react-redux';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { withRedirectTo404ForHidePage } from '@/utils/withHidePage';
 
 const Menu = () => {
   const dispatch = useDispatch();
@@ -88,4 +89,4 @@ const Menu = () => {
   return <LayoutPage content={content} />;
 };
 
-export default Menu;
+export default withRedirectTo404ForHidePage(Menu, true);
