@@ -1,0 +1,141 @@
+@import '~styles/variables.scss';
+@import '~styles/mixins/mixins.scss';
+
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  animation-name: fadeInOpacity;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 0.5s;
+  width: 315px;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 18px;
+    @include fontRegular();
+  }
+
+  &__title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 600 !important;
+    font-size: 24px !important;
+    line-height: 29px !important;
+    cursor: pointer;
+  }
+
+  &__media {
+    width: 100%;
+    min-height: 162px;
+    background-color: $--color-gray8;
+    cursor: pointer;
+  }
+
+  &__price {
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 32px;
+    margin-bottom: 18px;
+  }
+
+  &__dollar_symbol {
+    color: #969696;
+  }
+
+  @media (max-width: 1280px) {
+    width: 277px;
+
+    &__media {
+      min-height: 143px;
+    }
+
+    &__title {
+      font-size: 21px !important;
+      line-height: 26px !important;
+    }
+
+    &__content {
+      padding-top: 35px !important;
+    }
+
+    &__price {
+      font-size: 22px;
+      line-height: 27px;
+      margin-bottom: 15px;
+    }
+
+  }
+
+  @media (max-width: 960px) {
+    width: 277px;
+
+    &__media {
+      min-height: 108px;
+    }
+
+    &__author {
+      font-size: 12px;
+      line-height: 15px;
+    }
+
+    &__title {
+      font-size: 16px !important;
+      line-height: 20px !important;
+    }
+
+    &__content {
+      padding-top: 27px !important;
+    }
+
+    &__content2 {
+      width: 79px;
+      padding-top: 27px !important;
+    }
+
+    &__price {
+      font-size: 16px;
+      line-height: 20px;
+      margin-bottom: 11px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    width: 100%;
+
+    &__media {
+      min-height: 140px;
+    }
+
+    &__title {
+      font-size: 18px !important;
+      line-height: 22px !important;
+    }
+
+    &__content {
+      width: 100%;
+    }
+
+    &__price {
+      font-size: 26px;
+      line-height: 32px;
+      margin-bottom: 0;
+    }
+  }
+}
+
+@keyframes fadeInOpacity {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
