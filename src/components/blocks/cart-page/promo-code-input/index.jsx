@@ -51,8 +51,8 @@ const useStyles = makeStyles(theme => ({
 export const PromoCodeInput = props => {
   const [value, setValue] = useState('');
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+  const handleChange = event => {
+    setValue(event.target.value);
   };
 
   const styles = useStyles();

@@ -1,13 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { CartItemRecipe } from '@/components/blocks/cart-page/cart-item-recipe';
 import TabPanel from '@/components/elements/tab-panel-cuisines';
-import Recipe from '@/api/Recipe';
-import { useFetch } from '@/customHooks/useFetch';
-import { CardItemIngredients } from '@/components/blocks/cart-page/cart-item-ingredients';
-import { List, ListItem } from '@material-ui/core';
+import { CartItemIngredients } from '@/components/blocks/cart-page/cart-item-ingredients';
 import classes from './index.module.scss';
-import Cart from '@/api/Cart';
 
 const useStyles = makeStyles(theme => ({
   tab_content: {
@@ -57,29 +53,33 @@ export const TabContent = props => {
   const { selectedTab, products } = props;
   const styles = useStyles();
 
-  // const { data, isLoading } = useFetch({
-  //   request: Cart.getProductList,
-  //   query: {
-  //     page: 1,
-  //     page_size: 50
-  //   }
-  // });
+  console.log('tabcontent', products);
 
   return (
     <div className={styles.tab_content}>
       <TabPanel className={styles.tab_dishes} value={selectedTab} index={1}>
-        {console.log(products)}
-        {products?.length > 0 && products.map(item => <CartItemRecipe key={`${item.pk + '1k0'}`} id={item.pk} />)}
+        {products?.length > 0 &&
+          products.map(item => (
+            <CartItemRecipe
+              key={`${item.pk + '1k0'}`}
+              author={item.user.full_name}
+              title={item.title}
+              image={item.images[0]?.url}
+              id={item.pk}
+            />
+          ))}
       </TabPanel>
       <TabPanel className={classes.tab_ingredients} value={selectedTab} index={2}>
-        <List className={classes.tab_ingredients__list}>
-          {products?.length > 0 &&
-            products.map(item => (
-              <ListItem key={`${item.pk + '1k0'}`} style={{ margin: 0, padding: 0 }}>
-                <CardItemIngredients id={item.pk} />
-              </ListItem>
-            ))}
-        </List>
+        {products?.length > 0 &&
+          products.map(item => (
+            <CartItemIngredients
+              key={`${item.pk + '1k0'}`}
+              ingredients={item.ingredients}
+              title={item.title}
+              image={item.images[0]?.url}
+              id={item.pk}
+            />
+          ))}
       </TabPanel>
     </div>
   );

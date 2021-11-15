@@ -1,0 +1,39 @@
+@import '~styles/variables.scss';
+@import '~styles/mixins/mixins.scss';
+
+
+.container {
+  display: flex;
+  align-self: stretch;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 92px;
+  background: #ECECEC;
+  border-radius: 0px 0px 5px 5px;
+
+
+  & .label {
+    margin: 4px 0;
+    @include fontSemiBold();
+  }
+
+  & .input {
+    & [class*='MuiInput-underline']::before {
+      border: none !important;
+    }
+    & [class*='MuiInput-input'] {
+      width: 186px;
+      height: 34px;
+      font-size: 18px;
+      line-height: 22px;
+      background: white;
+      border-radius: 7px;
+      border: none !important;
+      text-align: center;
+      @include fontSemiBold();
+      color: #242424;
+    }
+  }
+}
+

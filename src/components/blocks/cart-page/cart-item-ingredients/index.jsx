@@ -1,17 +1,17 @@
-import React from 'react';
-import { styled, useTheme } from '@material-ui/core/styles';
+import React, { useState } from 'react';
+import { styled } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import logo from '../../../../../public/images/index/logo.svg';
-import { Button, CardActionArea, CardActions } from '@material-ui/core';
+import { Accordion, AccordionDetails, CardActions } from '@material-ui/core';
 import { useRouter } from 'next/router';
-import ChefIcon from '@/components/elements/chef-icon';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import classes from './index.module.scss';
-import { CounterButton } from '@/components/blocks/cart-page/button-counter';
 import Typography from '@material-ui/core/Typography';
-import { useFetch } from '@/customHooks/useFetch';
-import Recipe from '@/api/Recipe';
+import { ButtonOrderNow } from '@/components/blocks/cart-page/button-order-now';
+import { PortionsInput } from '@/components/blocks/cart-page/portions-input';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
 
 const StyledCardMedia = styled(CardMedia)`
   .MuiCardMedia-root {
@@ -19,8 +19,10 @@ const StyledCardMedia = styled(CardMedia)`
   }
 `;
 
-export const CardItemIngredients = props => {
-  const { id } = props;
+export const CartItemIngredients = props => {
+  const { id, title, image, ingredients } = props;
+  const [isOrderButtonDisabled, setIsOrderButtonDisabled] = useState(true);
+  const [portionsInputValue, setPortionsInputValue] = useState('');
 
   const price = 100;
   const router = useRouter();
@@ -29,52 +31,81 @@ export const CardItemIngredients = props => {
     router.push(`/recipe/${id}`);
   };
 
-  const { data, isLoading } = useFetch({
-    request: Recipe.getPopularRecipes
-  });
-
-  const title = data[0].title;
-  const image = data[0].images[0]?.url;
-  const ingredients = data[0].ingredients;
-
   const Ingredient = props => {
     const { pk, title, quantity, unit } = props;
 
     return (
-      <div className={classes.card__ingredient_wrapper}>
-        <Typography className={classes.card__ingredient_title}>{title}</Typography>
-        <Typography className={classes.card__ingredient_amount}>
-          {quantity}
-          {unit}
-        </Typography>
+      <div className={classes.card__ingredient}>
+        <div className={classes.card__ingredient_title}>{title}</div>
+        <div className={classes.card__ingredient_amount}>{`${quantity} ${unit}`}</div>
       </div>
     );
   };
 
+  const handleOrderButtonClick = () => {
+    console.log('OrderButton clicked');
+  };
+
+  const handlePortionsInputChange = event => {
+    const newValue = event.target.value;
+    console.log(portionsInputValue);
+    if (newValue?.length === 0) {
+      setIsOrderButtonDisabled(true);
+    } else {
+      setIsOrderButtonDisabled(false);
+    }
+    setPortionsInputValue(newValue);
+  };
+
+  const portionsInputProps = {
+    value: portionsInputValue,
+    onChangeHandler: handlePortionsInputChange
+  };
+
+  const orderButtonProps = {
+    price,
+    isDisabled: isOrderButtonDisabled,
+    onClickHandler: handleOrderButtonClick
+  };
+
   return (
-    isLoading && (
-      <Card className={classes.card}>
-        <StyledCardMedia
-          className={classes.card__media}
-          onClick={() => redirectToRecipeCard(id)}
-          image={image ?? logo}
-          title="img"
-        />
-        <CardContent className={classes.card__content}>
-          <div>
-            <Typography
-              variant="h6"
-              noWrap
-              className={classes.card__title}
-              onClick={() => redirectToRecipeCard(id)}
-              title={title}>
-              {title}
-            </Typography>
-            {console.log(ingredients)}
-            {ingredients && ingredients.map(ingredient => <Ingredient key={ingredient.pk} {...ingredient} />)}
-          </div>
-        </CardContent>
-      </Card>
-    )
+    <Card className={classes.card}>
+      <StyledCardMedia
+        className={classes.card__media}
+        onClick={() => redirectToRecipeCard(id)}
+        image={image ?? logo}
+        title="img"
+      />
+      <CardContent className={classes.card__content}>
+        <div>
+          <Typography
+            variant="h6"
+            className={classes.card__title}
+            onClick={() => redirectToRecipeCard(id)}
+            title={title}>
+            {title}
+          </Typography>
+          {/*<Accordion elevation="0" className={classes.card__accordion}>*/}
+          {/*  <AccordionSummary*/}
+          {/*    classes={{ root: classes.card__accordion_summary }}*/}
+          {/*    expandIcon={<ExpandMoreIcon />}*/}
+          {/*    aria-controls="panel1a-content"*/}
+          {/*    id="panel1a-header">*/}
+          {/*    <div className={classes.card__accordion_header}>Show ingredients</div>*/}
+          {/*  </AccordionSummary>*/}
+          {/*  <AccordionDetails className={classes.card__accordion_details}>*/}
+          {/*    <div>*/}
+          {/*      {ingredients && ingredients.map(ingredient => <Ingredient key={ingredient.pk} {...ingredient} />)}*/}
+          {/*    </div>*/}
+          {/*  </AccordionDetails>*/}
+          {/*</Accordion>*/}
+          {ingredients && ingredients.map(ingredient => <Ingredient key={ingredient.pk} {...ingredient} />)}
+        </div>
+      </CardContent>
+      <CardActions disableSpacing className={classes.card__actions}>
+        <PortionsInput {...portionsInputProps} />
+        <ButtonOrderNow {...orderButtonProps} />
+      </CardActions>
+    </Card>
   );
 };

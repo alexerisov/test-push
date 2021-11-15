@@ -3,18 +3,32 @@
 
 
 .card {
+  flex: 1 1 calc((100% / 2) - 2rem);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   opacity: 1;
   animation-name: fadeInOpacity;
   animation-iteration-count: 1;
   animation-timing-function: ease-in;
   animation-duration: 0.5s;
-  width: 315px;
+
+  &__accordion {
+    margin-top: 3px;
+
+    &_summary {
+    }
+
+    &_details {
+    }
+
+    &_header {
+    }
+  }
 
   &__content {
+    width: 100% !important;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -22,10 +36,17 @@
     @include fontRegular();
   }
 
+  &__actions {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    padding: 0 !important;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
   &__title {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     font-weight: 600 !important;
     font-size: 24px !important;
     line-height: 29px !important;
@@ -50,8 +71,30 @@
     color: #969696;
   }
 
+  &__ingredient {
+    margin: 0.5em 0;
+    &_title {
+      @include fontSemiBold();
+      font-size: 18px;
+      line-height: 22px;
+      text-align: center;
+
+      &:first-letter {
+        text-transform: uppercase;
+      }
+    }
+
+    &_amount {
+      @include fontMedium();
+      font-size: 14px;
+      line-height: 17px;
+      text-align: center;
+      color: #8A8A8A;
+    }
+  }
+
   @media (max-width: 1280px) {
-    width: 277px;
+    //width: 277px;
 
     &__media {
       min-height: 143px;
@@ -75,7 +118,6 @@
   }
 
   @media (max-width: 960px) {
-    width: 277px;
 
     &__media {
       min-height: 108px;
@@ -108,6 +150,7 @@
   }
 
   @media (max-width: 600px) {
+    flex: 1 1 100%;
     width: 100%;
 
     &__media {

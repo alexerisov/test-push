@@ -2,8 +2,9 @@
 @import '~styles/mixins/mixins.scss';
 
 .tab_ingredients {
-  overflow: auto;
-
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
   &::-webkit-scrollbar {
     width: 1em;
   }
@@ -18,17 +19,8 @@
     background: $--color-orange;
   }
 
-  &__list {
-    display: flex;
-    flex-direction: row;
-    padding: 0;
-    margin: 0;
-  }
 
   @media (max-width: 600px) {
-    &__list {
-      flex-direction: column;
-    }
-    overflow: hidden;
+
   }
   }

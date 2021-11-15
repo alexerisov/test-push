@@ -5,7 +5,14 @@ export default {
     return http.get(`cart/info`);
   },
 
-  getProductList: () => {
+  getProductList: token => {
+    if (token && token !== '{"token":null,"refresh":null}') {
+      return http.get(`/cart/product/list`, {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(token).token}`
+        }
+      });
+    }
     return http.get(`/cart/product/list`);
   },
 
