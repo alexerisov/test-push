@@ -8,6 +8,8 @@ import { useRouter } from 'next/router';
 import classes from './index.module.scss';
 import { CounterButton } from '@/components/blocks/cart-page/button-counter';
 import Typography from '@material-ui/core/Typography';
+import { useDispatch } from 'react-redux';
+import { removeFromCart } from '@/store/cart/actions';
 
 const StyledCardMedia = styled(CardMedia)`
   .MuiCardMedia-root {
@@ -16,12 +18,16 @@ const StyledCardMedia = styled(CardMedia)`
 `;
 
 export const CartItemRecipe = props => {
-  const { id, author, title, image } = props;
-  console.log(props.products);
+  const { cartItemId, cartItemAmount, recipeId, author, title, image } = props;
 
   const price = 100;
 
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  const onDeleteHandler = () => {
+    dispatch(removeFromCart(cartItemId));
+  };
 
   const redirectToRecipeCard = id => {
     router.push(`/recipe/${id}`);
@@ -31,7 +37,7 @@ export const CartItemRecipe = props => {
     <Card className={classes.card}>
       <StyledCardMedia
         className={classes.card__media}
-        onClick={() => redirectToRecipeCard(id)}
+        onClick={() => redirectToRecipeCard(recipeId)}
         image={image ?? logo}
         title="img"
       />
@@ -41,12 +47,14 @@ export const CartItemRecipe = props => {
             variant="h6"
             noWrap
             className={classes.card__title}
-            onClick={() => redirectToRecipeCard(id)}
+            onClick={() => redirectToRecipeCard(recipeId)}
             title={title}>
             {title}
           </Typography>
           <p className={classes.card__author}>{`by Chef ${author}`}</p>
-          <Typography className={classes.card__delete}>Delete</Typography>
+          <Typography onClick={onDeleteHandler} className={classes.card__delete}>
+            Delete
+          </Typography>
         </div>
       </CardContent>
       <CardContent className={classes.card__content2}>
@@ -54,7 +62,7 @@ export const CartItemRecipe = props => {
           <span className={classes.card__dollar_symbol}>$</span>
           {price}
         </span>
-        <CounterButton />
+        <CounterButton count={cartItemAmount} id={cartItemId} />
       </CardContent>
     </Card>
   );

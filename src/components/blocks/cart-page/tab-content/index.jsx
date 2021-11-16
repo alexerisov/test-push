@@ -4,6 +4,7 @@ import { CartItemRecipe } from '@/components/blocks/cart-page/cart-item-recipe';
 import TabPanel from '@/components/elements/tab-panel-cuisines';
 import { CartItemIngredients } from '@/components/blocks/cart-page/cart-item-ingredients';
 import classes from './index.module.scss';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles(theme => ({
   tab_content: {
@@ -53,19 +54,20 @@ export const TabContent = props => {
   const { selectedTab, products } = props;
   const styles = useStyles();
 
-  console.log('tabcontent', products);
-
   return (
     <div className={styles.tab_content}>
+      {!products && <Typography variant="h4">You have no items in your shopping cart. </Typography>}
       <TabPanel className={styles.tab_dishes} value={selectedTab} index={1}>
         {products?.length > 0 &&
           products.map(item => (
             <CartItemRecipe
-              key={`${item.pk + '1k0'}`}
-              author={item.user.full_name}
-              title={item.title}
-              image={item.images[0]?.url}
-              id={item.pk}
+              key={`${item.object.pk + '1k0'}`}
+              author={item.object.user.full_name}
+              title={item.object.title}
+              image={item.object.images[0]?.url}
+              recipeId={item.object.pk}
+              cartItemId={item.pk}
+              cartItemAmount={item.count}
             />
           ))}
       </TabPanel>
@@ -73,13 +75,15 @@ export const TabContent = props => {
         {products?.length > 0 &&
           products.map(item => (
             <CartItemIngredients
-              key={`${item.pk + '1k0'}`}
-              ingredients={item.ingredients}
-              title={item.title}
-              image={item.images[0]?.url}
-              id={item.pk}
+              key={`${item.object.pk + '1k0'}`}
+              ingredients={item.object.ingredients}
+              title={item.object.title}
+              image={item.object.images[0]?.url}
+              recipeId={item.object.pk}
+              cartItemId={item.pk}
             />
           ))}
+        {products && <Typography variant="h4">You have no items in your shopping cart. </Typography>}
       </TabPanel>
     </div>
   );

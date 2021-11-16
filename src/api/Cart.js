@@ -16,15 +16,15 @@ export default {
     return http.get(`/cart/product/list`);
   },
 
-  addItem: ({ itemType, id }) => {
+  addItem: (itemType, id) => {
     return http.post(`/cart/product/add/${itemType}/${id}`, {});
   },
 
-  deleteItem: ({ id }) => {
+  deleteItem: id => {
     return http.delete(`/cart/product/${id}`);
   },
 
-  updateItem: ({ id, count }) => {
+  updateItem: (id, count) => {
     return http.patch(`/cart/product/${id}`, {
       count
     });

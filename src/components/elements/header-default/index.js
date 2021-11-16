@@ -3,7 +3,7 @@ import classes from './index.module.scss';
 import Link from 'next/link';
 import { makeStyles } from '@material-ui/core/styles';
 import { modalActions, accountActions } from '@/store/actions';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import styled from 'styled-components';
@@ -16,6 +16,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Account from '@/api/Account';
 
 import logo from './logo.svg';
+import Cart from '@/api/Cart';
 
 const StyledMenu = styled(Menu)`
   margin: 40px 0 0 0;
@@ -71,6 +72,7 @@ const HeaderDefault = props => {
   };
 
   const [notificationAmount, setNotificationAmount] = useState(null);
+  const cartItemsAmount = useSelector(state => state.cart.cart?.length);
 
   useEffect(() => {
     if (props.account.hasToken) {
@@ -219,6 +221,16 @@ const HeaderDefault = props => {
           </button>
         ) : (
           <div>
+            <Link href="/cart">
+              <a className={classes.header__notifications}>
+                <img src="/images/index/icons-cart.png" />
+                {cartItemsAmount && cartItemsAmount !== 0 ? (
+                  <span className={classes.header__notifications__amount_desctop}>{cartItemsAmount}</span>
+                ) : (
+                  <span />
+                )}
+              </a>
+            </Link>
             <Link href="/notifications">
               <a className={classes.header__notifications}>
                 <img src="/images/index/icons-bell.png" />

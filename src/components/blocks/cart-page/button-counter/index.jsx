@@ -1,31 +1,23 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import { IconButton, TextField } from '@material-ui/core';
+import { IconButton } from '@material-ui/core';
 import AddRoundedIcon from '@material-ui/icons/AddRounded';
 import RemoveRoundedIcon from '@material-ui/icons/RemoveRounded';
 import classes from './index.module.scss';
 import Typography from '@material-ui/core/Typography';
+import { useDispatch } from 'react-redux';
+import { updateCartItem } from '@/store/cart/actions';
 
-export const CounterButton = () => {
-  const [count, setCount] = React.useState(1);
+export const CounterButton = props => {
+  const { id, count } = props;
+  // const [count, setCount] = React.useState(1);
+  const dispatch = useDispatch();
 
   const handleIncrement = () => {
-    if (!count) {
-      setCount(1);
-    }
-
-    setCount(count + 1);
+    dispatch(updateCartItem(id, count + 1));
   };
 
   const handleDecrement = () => {
-    if (!count) {
-      setCount(1);
-    }
-
-    if (count > 0) {
-      setCount(count - 1);
-    }
+    dispatch(updateCartItem(id, count - 1));
   };
 
   const CountButton = props => (

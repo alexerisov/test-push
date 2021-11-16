@@ -7,6 +7,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Cookies from 'cookies';
 import Recipe from '@/api/Recipe';
 import Cart from '@/api/Cart';
+import { connect, useDispatch, useSelector } from 'react-redux';
+import { setCart } from '@/store/cart/actions';
+import { useRouter } from 'next/router';
+import Account from '@/api/Account';
 
 const useStyles = makeStyles(theme => ({
   tabs: {
@@ -24,20 +28,28 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const CartPage = props => {
+  const router = useRouter();
+  const dispatch = useDispatch();
   const styles = useStyles();
   const [selectedTab, setSelectedTab] = useState(1);
-  const [data, setData] = useState(null);
+  const data = useSelector(state => state.cart.cart);
 
   const [basketPrice, setBasketPrice] = useState();
   const [basketDiscount, setBasketDiscount] = useState(10);
   const [basketTotal, setBasketTotal] = useState(null);
 
   useEffect(() => {
-    setData(props?.data);
+    if (!props.isAuthenticated) {
+      router.replace('/');
+    }
+  }, [router]);
+
+  useEffect(() => {
+    dispatch(setCart(props.data));
   }, []);
 
   useEffect(() => {
-    const summary = data?.reduce((acc, val) => acc + 100, 0); // TODO Заменить заглушку на цену из api
+    const summary = data?.reduce((acc, val) => acc + 100 * val?.count, 0); // TODO Заменить заглушку на цену из api
     const total = summary * (1 - basketDiscount / 100);
     setBasketPrice(summary);
     setBasketTotal(total);
@@ -45,6 +57,7 @@ const CartPage = props => {
 
   const onTabChange = (event, newValue) => {
     setSelectedTab(newValue);
+    router.replace(router.asPath);
   };
 
   const tabsProps = {
@@ -61,40 +74,40 @@ const CartPage = props => {
 
   let content = (
     <div className={styles.tabs}>
-      {data?.length > 0 && (
-        <>
-          <CartTabs {...tabsProps} />
-          <div className={styles.content}>
-            <TabContent products={data} selectedTab={selectedTab} />
-            <Basket {...basketProps} />
-          </div>
-        </>
-      )}
+      <CartTabs {...tabsProps} />
+      <div className={styles.content}>
+        <TabContent products={data} selectedTab={selectedTab} />
+        <Basket {...basketProps} />
+      </div>
     </div>
   );
 
   return <LayoutPage content={content} />;
 };
 
-export default CartPage;
+export default connect(state => ({
+  account: state.account
+}))(CartPage);
 
 export async function getServerSideProps(context) {
   const cookies = new Cookies(context.req, context.res);
   const targetCookies = cookies.get('aucr');
   const token = !targetCookies ? undefined : decodeURIComponent(cookies.get('aucr'));
+  const isAuthenticated = Boolean(token);
 
   try {
     const response = await Cart.getProductList(token);
     const cartList = await response.data.results;
     const productsData = await Promise.all(
       cartList.map(async item => {
-        let itemResponse = await Recipe.getRecipe(item.object_id, token);
-        return await itemResponse.data;
+        let itemResponse = await Recipe.getRecipe(item.object_id);
+        return { ...item, object: itemResponse.data };
       })
     );
     return {
       props: {
         data: productsData,
+        isAuthenticated,
         absolutePath: context.req.headers.host
       }
     };
