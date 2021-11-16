@@ -9,8 +9,8 @@ import Recipe from '@/api/Recipe';
 import Cart from '@/api/Cart';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { setCart } from '@/store/cart/actions';
-import { useRouter } from 'next/router';
-import Account from '@/api/Account';
+import { useRouter, withRouter } from 'next/router';
+import { withAuth } from '@/utils/authProvider';
 
 const useStyles = makeStyles(theme => ({
   tabs: {
@@ -37,12 +37,6 @@ const CartPage = props => {
   const [basketPrice, setBasketPrice] = useState();
   const [basketDiscount, setBasketDiscount] = useState(10);
   const [basketTotal, setBasketTotal] = useState(null);
-
-  useEffect(() => {
-    if (!props.isAuthenticated) {
-      router.replace('/');
-    }
-  }, [router]);
 
   useEffect(() => {
     dispatch(setCart(props.data));
@@ -85,9 +79,11 @@ const CartPage = props => {
   return <LayoutPage content={content} />;
 };
 
-export default connect(state => ({
+const connector = connect(state => ({
   account: state.account
 }))(CartPage);
+
+export default withRouter(withAuth(connector));
 
 export async function getServerSideProps(context) {
   const cookies = new Cookies(context.req, context.res);

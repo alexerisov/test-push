@@ -46,7 +46,6 @@ export const CartItemIngredients = props => {
 
   const handlePortionsInputChange = event => {
     const newValue = event.target.value;
-    console.log(portionsInputValue);
     if (newValue?.length === 0) {
       setIsOrderButtonDisabled(true);
     } else {

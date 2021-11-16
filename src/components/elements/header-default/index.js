@@ -17,6 +17,7 @@ import Account from '@/api/Account';
 
 import logo from './logo.svg';
 import Cart from '@/api/Cart';
+import { getCart } from '@/store/cart/actions';
 
 const StyledMenu = styled(Menu)`
   margin: 40px 0 0 0;
@@ -73,6 +74,10 @@ const HeaderDefault = props => {
 
   const [notificationAmount, setNotificationAmount] = useState(null);
   const cartItemsAmount = useSelector(state => state.cart.cart?.length);
+
+  useEffect(() => {
+    return cartItemsAmount ?? props.dispatch(getCart());
+  });
 
   useEffect(() => {
     if (props.account.hasToken) {

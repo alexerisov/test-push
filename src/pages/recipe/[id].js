@@ -63,7 +63,7 @@ function RecipePage(props) {
   const [latestRecipes, setLatestRecipes] = useState();
   const [featuredMeals, setFeaturedMeals] = useState();
   const [notFound, setNotFound] = useState(false);
-  const isRecipeInCart = useSelector(state => state.cart.cart.some(el => el.object_id == recipeId));
+  const isRecipeInCart = useSelector(state => state.cart.cart?.some(el => el.object_id == recipeId));
 
   useEffect(() => {
     getRecipe();
@@ -230,7 +230,6 @@ function RecipePage(props) {
   }, []);
 
   const getVideoMarkupForCarousel = () => {
-    console.log(recipe);
     if (!recipe?.video_url) {
       return [];
     }
