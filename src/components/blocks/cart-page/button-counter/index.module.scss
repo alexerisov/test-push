@@ -1,0 +1,75 @@
+@import '~styles/variables.scss';
+@import '~styles/mixins/mixins.scss';
+
+
+.container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 71px;
+  max-height: 29px;
+  border: 1px solid #DCDCDC;
+  border-radius: 5px;
+  font-variant-numeric: tabular-nums;
+
+  &__input {
+    font-family: 'Gotham Pro', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 15px;
+    text-align: center;
+    color: #333;
+  }
+
+  &__button {
+    height: 29px;
+    padding: 0;
+
+  }
+
+  @media (max-width: 1280px) {
+      max-width: 62px;
+      max-height: 26px;
+
+  &__input {
+    font-size: 14px;
+    line-height: 13px;
+  }
+
+  &__button {
+
+  }
+  }
+
+  @media (max-width: 960px) {
+    max-width: 62px;
+    max-height: 26px;
+
+  &__input {
+    font-size: 11px;
+    line-height: 10px;
+  }
+
+  &__button {
+
+  }
+  }
+
+  @media (max-width: 600px) {
+      max-width: 61px;
+      max-height: 25px;
+
+  &__input {
+    font-size: 14px;
+    line-height: 13px;
+  }
+
+  &__button {
+
+  }
+  }
+
+}
+
