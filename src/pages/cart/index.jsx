@@ -17,12 +17,25 @@ const useStyles = makeStyles(theme => ({
     width: '100%'
   },
   content: {
-    display: 'flex',
+    display: 'grid',
+    gridTemplateColumns: '640px 400px',
     marginBottom: '2rem;'
+  },
+  [theme.breakpoints.up('md')]: {
+    content: {
+      gridTemplateColumns: '640px 400px',
+      columnGap: '40px',
+      marginBottom: '2rem'
+    }
+  },
+  [theme.breakpoints.only('sm')]: {
+    content: {
+      gridTemplateColumns: '385 400px'
+    }
   },
   [theme.breakpoints.only('xs')]: {
     content: {
-      flexDirection: 'column'
+      gridTemplateColumns: '1fr'
     }
   }
 }));
@@ -34,8 +47,6 @@ const CartPage = props => {
   const [selectedTab, setSelectedTab] = useState(1);
   const data = useSelector(state => state.cart.cart);
 
-  const [basketPrice, setBasketPrice] = useState();
-  const [basketDiscount, setBasketDiscount] = useState(10);
   const [basketTotal, setBasketTotal] = useState(null);
 
   useEffect(() => {
@@ -43,10 +54,8 @@ const CartPage = props => {
   }, []);
 
   useEffect(() => {
-    const summary = data?.reduce((acc, val) => acc + 100 * val?.count, 0); // TODO Заменить заглушку на цену из api
-    const total = summary * (1 - basketDiscount / 100);
-    setBasketPrice(summary);
-    setBasketTotal(total);
+    const summary = data?.reduce((acc, val) => acc + val.object.price * val?.count, 0);
+    setBasketTotal(summary);
   }, [data]);
 
   const onTabChange = (event, newValue) => {
@@ -59,19 +68,12 @@ const CartPage = props => {
     onTabChange
   };
 
-  const basketProps = {
-    count: data?.length,
-    price: basketPrice,
-    discount: basketDiscount,
-    total: basketTotal
-  };
-
   let content = (
     <div className={styles.tabs}>
       <CartTabs {...tabsProps} />
       <div className={styles.content}>
         <TabContent products={data} selectedTab={selectedTab} />
-        <Basket {...basketProps} />
+        <Basket withButton products={data} total={basketTotal} />
       </div>
     </div>
   );

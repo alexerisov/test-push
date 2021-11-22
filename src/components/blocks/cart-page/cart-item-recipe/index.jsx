@@ -18,9 +18,7 @@ const StyledCardMedia = styled(CardMedia)`
 `;
 
 export const CartItemRecipe = props => {
-  const { cartItemId, cartItemAmount, recipeId, author, title, image } = props;
-
-  const price = 100;
+  const { cartItemId, cartItemAmount, recipeId, author, title, image, price } = props;
 
   const router = useRouter();
   const dispatch = useDispatch();

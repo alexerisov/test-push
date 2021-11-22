@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import { NoSsr } from '@material-ui/core';
@@ -48,8 +48,6 @@ const StyledTabs = withStyles(theme => ({
     alignItems: 'center',
     [theme.breakpoints.only('xs')]: {
       padding: '2px 0 24px 0 ',
-      flexDirection: 'column',
-      justifyContent: 'center',
       alignItems: 'center',
       gap: 6
     },
@@ -68,17 +66,17 @@ const StyledTabs = withStyles(theme => ({
 const StyledTab = withStyles(theme => ({
   root: {
     opacity: 1,
-    padding: '0 20px',
-    borderStyle: 'solid',
-    borderWidth: 2,
-    borderColor: theme.palette.primary.main,
-    borderRadius: '11px',
+    padding: '0 20px !important',
+    borderStyle: 'solid !important',
+    borderWidth: '2px !important',
+    borderColor: '#FFAA00 !important',
+    borderRadius: '11px !important',
     textTransform: 'none',
     fontStyle: 'normal',
     fontWeight: theme.typography.fontWeightMedium,
-    color: theme.palette.secondary.main,
+    color: '#14181F !important',
     '&:hover': {
-      color: theme.palette.primary.main
+      color: '#FFAA00 !important'
     },
     [theme.breakpoints.only('xs')]: {
       lineHeight: '16px',
@@ -101,11 +99,11 @@ const StyledTab = withStyles(theme => ({
     }
   },
   selected: {
-    cursor: 'default',
-    backgroundColor: theme.palette.primary.main,
-    color: 'white',
+    cursor: 'default !important',
+    backgroundColor: '#FFAA00 !important',
+    color: 'white !important',
     '&:hover': {
-      color: 'white'
+      color: 'white !important'
     }
   }
 }))(props => <Tab disableRipple {...props} />);
