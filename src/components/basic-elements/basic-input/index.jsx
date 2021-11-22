@@ -4,8 +4,9 @@ import { InputAdornment, InputLabel, TextField } from '@material-ui/core';
 import SuccessIcon from '../../../../public/images/index/icons-complete.svg';
 import ErrorIcon from '../../../../public/images/index/icons-clear.svg';
 
-export const FormInput = props => {
-  const { name, label, placeholder, formik } = props;
+export const BasicInput = props => {
+  const { name, label, placeholder, formik, size } = props;
+  const gap = '20px';
 
   const defineFocusedStyle = () => {
     if (formik.dirty && formik.isValid) {
@@ -15,20 +16,24 @@ export const FormInput = props => {
     return classes.focused;
   };
 
+  const defineWidth = () => {
+    return `1 1 calc((100% * ${size ?? 1}) - ${gap})`;
+  };
+
   const defineAdornment = () => {
     if (formik.dirty && formik.isValid) {
-      return <img alt="" src={SuccessIcon} />;
+      return <img alt="success-icon" src={SuccessIcon} />;
     }
 
     if (formik.touched[name] && Boolean(formik.errors[name])) {
-      return <img alt="" src={ErrorIcon} />;
+      return <img alt="clear-icon" src={ErrorIcon} />;
     }
 
     return false;
   };
 
   return (
-    <>
+    <div style={{ flex: defineWidth() }}>
       <InputLabel className={classes.label}>{label}</InputLabel>
       <TextField
         InputProps={{
@@ -38,7 +43,6 @@ export const FormInput = props => {
             focused: defineFocusedStyle()
           },
           disableUnderline: false,
-          // notched: false,
           endAdornment: <InputAdornment position="end">{defineAdornment()}</InputAdornment>
         }}
         variant="outlined"
@@ -52,6 +56,6 @@ export const FormInput = props => {
         error={formik.touched[name] && Boolean(formik.errors[name])}
         helperText={formik.touched[name] && formik.errors[name]}
       />
-    </>
+    </div>
   );
 };
