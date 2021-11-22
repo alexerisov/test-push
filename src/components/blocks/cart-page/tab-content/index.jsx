@@ -20,32 +20,18 @@ const useStyles = makeStyles(theme => ({
     overflowX: 'scroll'
   },
   [theme.breakpoints.up('lg')]: {
-    tab_content: {
-      maxWidth: 759
-    },
     tab_dishes: {
       gap: 20
     }
   },
   [theme.breakpoints.only('md')]: {
-    tab_content: {
-      maxWidth: 666
-    },
     tab_dishes: {
       gap: 17
     }
   },
   [theme.breakpoints.only('sm')]: {
-    tab_content: {
-      maxWidth: 504
-    },
     tab_dishes: {
       gap: 13
-    }
-  },
-  [theme.breakpoints.only('xs')]: {
-    tab_content: {
-      maxWidth: '100%'
     }
   }
 }));
@@ -68,6 +54,7 @@ export const TabContent = props => {
               recipeId={item.object.pk}
               cartItemId={item.pk}
               cartItemAmount={item.count}
+              price={item.object.price}
             />
           ))}
       </TabPanel>
@@ -81,6 +68,7 @@ export const TabContent = props => {
               image={item.object.images[0]?.url}
               recipeId={item.object.pk}
               cartItemId={item.pk}
+              price={item.object.price}
             />
           ))}
       </TabPanel>

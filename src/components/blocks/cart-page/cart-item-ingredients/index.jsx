@@ -18,11 +18,10 @@ const StyledCardMedia = styled(CardMedia)`
 `;
 
 export const CartItemIngredients = props => {
-  const { cartItemId, recipeId, title, image, ingredients } = props;
+  const { cartItemId, recipeId, title, image, ingredients, price } = props;
   const [isOrderButtonDisabled, setIsOrderButtonDisabled] = useState(true);
   const [portionsInputValue, setPortionsInputValue] = useState('');
 
-  const price = 100;
   const router = useRouter();
 
   const redirectToRecipeCard = id => {
