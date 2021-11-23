@@ -583,6 +583,18 @@
           opacity: 0.5;
         }
 
+        &:disabled {
+          cursor: default;
+
+          span {
+            opacity: 0.5;
+          }
+
+          &:hover {
+            opacity: 1;
+          }
+        }
+
         span {
           margin: 2px 0 0 0;
         }

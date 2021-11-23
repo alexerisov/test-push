@@ -59,7 +59,7 @@ export const withAuth = WrappedComponent => {
     useEffect(async () => {
       const { token } = AuthCookieStorage.auth;
       if (!token) {
-        router.replace('/login');
+        router.replace('/');
       } else {
         setVerified(true);
       }

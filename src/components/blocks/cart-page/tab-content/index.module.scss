@@ -1,0 +1,26 @@
+@import '~styles/variables.scss';
+@import '~styles/mixins/mixins.scss';
+
+.tab_ingredients {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  &::-webkit-scrollbar {
+    width: 1em;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $--color-orange-light;
+    border-radius: 0.5em;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 0.5em;
+    background: $--color-orange;
+  }
+
+
+  @media (max-width: 600px) {
+
+  }
+  }

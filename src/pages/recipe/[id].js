@@ -30,10 +30,13 @@ import savedStatus from '/public/images/index/savedStatus.svg';
 import notSavedStatus from '/public/images/index/notSavedStatus.svg';
 import Cookies from 'cookies';
 import Tooltip from '@material-ui/core/Tooltip';
+import AddShoppingCartRoundedIcon from '@material-ui/icons/AddShoppingCartRounded';
+import ShoppingCartRoundedIcon from '@material-ui/icons/ShoppingCartRounded';
 
 import VideoImageCarousel from '@/components/blocks/video-image-carousel/video-image-carousel';
 import { makeStyles } from '@material-ui/core/styles';
 import { useMobileDevice } from '@/customHooks/useMobileDevice';
+import { addToCart, getCart } from '@/store/cart/actions';
 
 dayjs.extend(customParseFormat);
 
@@ -59,8 +62,8 @@ function RecipePage(props) {
   const [popularRecipes, setPopularRecipes] = useState();
   const [latestRecipes, setLatestRecipes] = useState();
   const [featuredMeals, setFeaturedMeals] = useState();
-
   const [notFound, setNotFound] = useState(false);
+  const isRecipeInCart = useSelector(state => state.cart.cart?.some(el => el.object_id == recipeId));
 
   useEffect(() => {
     getRecipe();
@@ -85,6 +88,8 @@ function RecipePage(props) {
       Recipe.getFeaturedMeals(userId).then(res => setFeaturedMeals(res.data));
     }
   }, [userId]);
+
+  useEffect(() => {}, []);
 
   const getRecipe = async () => {
     if (props?.recipesData) {
@@ -225,7 +230,6 @@ function RecipePage(props) {
   }, []);
 
   const getVideoMarkupForCarousel = () => {
-    console.log(recipe);
     if (!recipe?.video_url) {
       return [];
     }
@@ -327,6 +331,25 @@ function RecipePage(props) {
                     </div>
                   </div>
                   <div className={classes.recipe__video__player_row}>
+                    {props.account.hasToken && (
+                      <button
+                        className={classes.recipe__video__likes_last}
+                        disabled={isRecipeInCart}
+                        onClick={() => props.dispatch(addToCart(recipeId))}>
+                        {!isRecipeInCart ? (
+                          <>
+                            <AddShoppingCartRoundedIcon />
+                            <span>Add to cart</span>
+                          </>
+                        ) : (
+                          <>
+                            <ShoppingCartRoundedIcon />
+                            <span>Added to cart</span>
+                          </>
+                        )}
+                      </button>
+                    )}
+
                     <Tooltip
                       classes={!isMobileOrTablet && { tooltip: toolTipStyles.tooltip }}
                       title="Votes help recipe to get in production soon."
