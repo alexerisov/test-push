@@ -6,7 +6,6 @@ import { useRouter } from 'next/router';
 export const Basket = props => {
   const { products, total, withButton } = props;
   const router = useRouter();
-  console.log(products);
 
   const handleOrderClick = () => {
     if (typeof window !== 'undefined') {
