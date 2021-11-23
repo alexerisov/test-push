@@ -18,16 +18,14 @@ export default function App({ Component, pageProps }) {
   http.init(store);
 
   return (
-    <StylesProvider injectFirst>
-      <Provider store={store}>
-        <AuthProvider>
-          <ThemeProvider theme={theme}>
-            <DefaultSeo {...SEO} />
-            <Component {...pageProps} />
-            <Modals />
-          </ThemeProvider>
-        </AuthProvider>
-      </Provider>
-    </StylesProvider>
+    <Provider store={store}>
+      <AuthProvider>
+        <ThemeProvider theme={theme}>
+          <DefaultSeo {...SEO} />
+          <Component {...pageProps} />
+          <Modals />
+        </ThemeProvider>
+      </AuthProvider>
+    </Provider>
   );
 }
