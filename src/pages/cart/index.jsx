@@ -45,18 +45,11 @@ const CartPage = props => {
   const dispatch = useDispatch();
   const styles = useStyles();
   const [selectedTab, setSelectedTab] = useState(1);
-  const data = useSelector(state => state.cart.cart);
-
-  const [basketTotal, setBasketTotal] = useState(null);
+  const data = useSelector(state => state.cart);
 
   useEffect(() => {
     dispatch(setCart(props.data));
   }, []);
-
-  useEffect(() => {
-    const summary = data?.reduce((acc, val) => acc + val.object.price * val?.count, 0);
-    setBasketTotal(summary);
-  }, [data]);
 
   const onTabChange = (event, newValue) => {
     setSelectedTab(newValue);
@@ -72,8 +65,8 @@ const CartPage = props => {
     <div className={styles.tabs}>
       <CartTabs {...tabsProps} />
       <div className={styles.content}>
-        <TabContent products={data} selectedTab={selectedTab} />
-        <Basket withButton products={data} total={basketTotal} />
+        <TabContent products={data.products} selectedTab={selectedTab} />
+        <Basket withButton products={data.products} total={data.total} />
       </div>
     </div>
   );
@@ -102,9 +95,10 @@ export async function getServerSideProps(context) {
         return { ...item, object: itemResponse.data };
       })
     );
+    const total = productsData?.reduce((acc, val) => acc + val.object.price * val?.count, 0);
     return {
       props: {
-        data: productsData,
+        data: { products: productsData, total },
         isAuthenticated,
         absolutePath: context.req.headers.host
       }

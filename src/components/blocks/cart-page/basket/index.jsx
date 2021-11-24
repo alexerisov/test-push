@@ -8,10 +8,6 @@ export const Basket = props => {
   const router = useRouter();
 
   const handleOrderClick = () => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('products', JSON.stringify(products));
-      localStorage.setItem('total', total);
-    }
     router.push('/order-confirm');
   };
 
