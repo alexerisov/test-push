@@ -63,7 +63,7 @@ const OrderConfirmPage = () => {
           </InputsBlock>
           <Divider m="48px 0" />
           <InputsBlock title="Shipping">
-            <InputsBlock.Tabs>
+            <InputsBlock.Tabs isTabs>
               <InputsBlock.Tab label="courier" />
               <InputsBlock.Tab label="self-delivery" />
             </InputsBlock.Tabs>
@@ -87,7 +87,7 @@ const OrderConfirmPage = () => {
           </InputsBlock>
           <Divider m="48px 0" />
           <InputsBlock title="Pay with">
-            <InputsBlock.Tabs>
+            <InputsBlock.Tabs isTabs>
               <InputsBlock.Tab label="Tikkie" />
               <InputsBlock.Tab disabled label="Credit card" />
             </InputsBlock.Tabs>
