@@ -19,9 +19,11 @@ export const InputsBlock = props => {
   const BlockTabs = [];
   const BlockBody = [];
 
+  console.log('this', self);
+
   props.children.forEach(el => {
     console.log(el.type.name);
-    if (el.type.name === 'InputsBlockTabs') {
+    if (el.props.isTabs) {
       BlockTabs.push(el);
     } else {
       BlockBody.push(el);
