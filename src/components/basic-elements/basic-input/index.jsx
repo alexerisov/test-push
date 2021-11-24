@@ -9,7 +9,7 @@ export const BasicInput = props => {
   const gap = '20px';
 
   const defineFocusedStyle = () => {
-    if (formik.dirty && formik.isValid) {
+    if (formik.dirty && !formik.errors[name]) {
       return classes.success;
     }
 
@@ -21,7 +21,7 @@ export const BasicInput = props => {
   };
 
   const defineAdornment = () => {
-    if (formik.dirty && formik.isValid) {
+    if (formik.dirty && !formik.errors[name]) {
       return <img alt="success-icon" src={SuccessIcon} />;
     }
 
