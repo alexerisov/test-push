@@ -88,11 +88,11 @@ const OrderConfirmPage = () => {
           <Divider m="48px 0" />
           <InputsBlock title="Pay with">
             <InputsBlock.Tabs>
-              <InputsBlock.Tab label="Paypal" />
-              <InputsBlock.Tab label="Credit card" />
+              <InputsBlock.Tab label="Tikkie" />
+              <InputsBlock.Tab disabled label="Credit card" />
             </InputsBlock.Tabs>
             <InputsBlock.TabPanel index={0}>
-              <div>Pay Pal</div>
+              <div>Tikkie</div>
             </InputsBlock.TabPanel>
             <InputsBlock.TabPanel index={1}>
               <div>Credit card</div>

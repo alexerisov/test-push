@@ -71,6 +71,7 @@ const InputsBlockTabs = props => {
         props.children.map((tab, i) => (
           <Tab
             key={i}
+            disabled={tab.props.disabled}
             label={tab.props.label}
             {...a11yProps(i)}
             disableRipple
