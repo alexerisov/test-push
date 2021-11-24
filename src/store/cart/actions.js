@@ -35,10 +35,12 @@ export const getCart = () => {
       const productsData = await Promise.all(
         cartList.map(async item => {
           let itemResponse = await Recipe.getRecipe(item.object_id);
+          console.log(total);
           return { ...item, object: itemResponse.data };
         })
       );
-      dispatch({ type: types.GET_CART_SUCCESS, payload: productsData });
+      const total = productsData?.reduce((acc, val) => acc + val.object.price * val?.count, 0);
+      dispatch({ type: types.GET_CART_SUCCESS, payload: { productsData, total } });
     } catch (e) {
       console.error(e);
       dispatch({ type: types.GET_CART_FAILED, payload: e });

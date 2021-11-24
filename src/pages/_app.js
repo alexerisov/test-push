@@ -21,11 +21,9 @@ export default function App({ Component, pageProps }) {
     <Provider store={store}>
       <AuthProvider>
         <ThemeProvider theme={theme}>
-          <StylesProvider injectFirst>
-            <DefaultSeo {...SEO} />
-            <Component {...pageProps} />
-            <Modals />
-          </StylesProvider>
+          <DefaultSeo {...SEO} />
+          <Component {...pageProps} />
+          <Modals />
         </ThemeProvider>
       </AuthProvider>
     </Provider>

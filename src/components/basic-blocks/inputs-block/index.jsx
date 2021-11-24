@@ -20,6 +20,7 @@ export const InputsBlock = props => {
   const BlockBody = [];
 
   props.children.forEach(el => {
+    console.log(el.type.name);
     if (el.type.name === 'InputsBlockTabs') {
       BlockTabs.push(el);
     } else {
@@ -32,7 +33,7 @@ export const InputsBlock = props => {
     setTimeout(() => {
       setValue(newValue);
       setIsTabWillChange(true);
-    }, 100);
+    }, 300);
   };
 
   return (
@@ -49,7 +50,7 @@ export const InputsBlock = props => {
 };
 
 const InputsBlockTab = props => {
-  return <>{props.children}</>;
+  return <></>;
 };
 
 const InputsBlockTabs = props => {
@@ -70,6 +71,7 @@ const InputsBlockTabs = props => {
         props.children.map((tab, i) => (
           <Tab
             key={i}
+            disabled={tab.props.disabled}
             label={tab.props.label}
             {...a11yProps(i)}
             disableRipple
@@ -86,7 +88,7 @@ const InputsBlockTabPanel = props => {
   const context = React.useContext(TabContext);
 
   return (
-    <Collapse direction="down" in={context.isTabWillChange} mountOnEnter unmountOnExit>
+    <Collapse direction="down" in={context.isTabWillChange} timeout={300} mountOnEnter unmountOnExit>
       <div
         className={classes.block__body}
         role="tabpanel"

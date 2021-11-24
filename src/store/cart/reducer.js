@@ -10,7 +10,7 @@ export default reducer(initState, {
   [types.SET_CART]: (state, action) => {
     return {
       ...state,
-      cart: action.payload
+      ...action.payload
     };
   },
 
@@ -26,7 +26,8 @@ export default reducer(initState, {
   [types.GET_CART_SUCCESS]: (state, action) => {
     return {
       ...state,
-      cart: action.payload,
+      products: action.payload.productsData,
+      total: action.payload.total,
       isLoading: false
     };
   },
@@ -50,11 +51,11 @@ export default reducer(initState, {
 
   [types.UPDATE_CART_ITEM_SUCCESS]: (state, action) => {
     const updatedItem = action.payload;
-    const updatedCart = state.cart.map(el => (el.pk === updatedItem.pk ? { ...el, count: updatedItem.count } : el));
+    const updatedCart = state.products.map(el => (el.pk === updatedItem.pk ? { ...el, count: updatedItem.count } : el));
 
     return {
       ...state,
-      cart: updatedCart,
+      products: updatedCart,
       isLoading: true
     };
   },
