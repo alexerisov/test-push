@@ -18,17 +18,17 @@ const phoneRegExp = /^\d-\(\d{3}\)-\d{3}-\d{2}-\d{2}$/;
 const zipcodeRegExp = /^\d{4}[a-zA-Z]{2}|\d{4}\s[a-zA-Z]{2}$/;
 
 const validationSchema = yup.object({
-  // email: yup.string('Enter your email').email('Enter a valid email').required('Email is required'),
-  // name: yup.string('Enter your name').required('Name is required'),
-  // phone: yup.string().matches(phoneRegExp, 'Phone number is not valid').required('Phone is required'),
-  // city: yup.string('Enter your city').required('City is required'),
-  // street: yup.string('Enter your street').required('Street is required'),
-  // house: yup.string('Enter your house').required('House is required'),
-  // flat: yup.string('Enter your flat').required('Flat is required'),
-  // zipcode: yup
-  //   .string('Enter your zipcode')
-  //   .matches(zipcodeRegExp, 'Zipcode is not valid')
-  //   .required('Zipcode is required')
+  email: yup.string('Enter your email').email('Enter a valid email').required('Email is required'),
+  name: yup.string('Enter your name').required('Name is required'),
+  phone: yup.string().matches(phoneRegExp, 'Phone number is not valid').required('Phone is required'),
+  city: yup.string('Enter your city').required('City is required'),
+  street: yup.string('Enter your street').required('Street is required'),
+  house: yup.string('Enter your house').required('House is required'),
+  flat: yup.string('Enter your flat').required('Flat is required'),
+  zipcode: yup
+    .string('Enter your zipcode')
+    .matches(zipcodeRegExp, 'Zipcode is not valid')
+    .required('Zipcode is required')
 });
 
 const OrderConfirmPage = () => {
@@ -39,6 +39,28 @@ const OrderConfirmPage = () => {
   useEffect(() => {
     dispatch(getCart());
   }, []);
+
+  const handleSumbit = values => {
+    const addressData = {
+      zipcode: values.zipcode,
+      address_first: values.city,
+      address_second: values.street,
+      house_number: values.house,
+      phone_number: values.phone
+      // zipcode: '1234aa',
+      // address_first: 'string',
+      // address_second: 'string',
+      // house_number: 0,
+      // city: 'Amsterdam',
+      // phone_number: '909909909'
+    };
+    Cart.postAddress(addressData).then(res => {
+      Cart.postOrder().then(r => {
+        const url = r.data.url;
+        router.push(url);
+      });
+    });
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -52,25 +74,7 @@ const OrderConfirmPage = () => {
       zipcode: ''
     },
     validationSchema: validationSchema,
-    onSubmit: async values => {
-      const addressData = {
-        // zipcode: values.zipcode,
-        // address_first: values.city,
-        // address_second: values.street,
-        // house_number: values.house,
-        // phone_number: values.phone
-        zipcode: '1234aa',
-        address_first: 'string',
-        address_second: 'string',
-        house_number: 0,
-        city: 'Amsterdam',
-        phone_number: '909909909'
-      };
-      await Cart.postAddress(addressData);
-      const response = await Cart.postOrder();
-      const url = response.data.url;
-      window.location.assign('https://duckduckgo.com/');
-    }
+    onSubmit: values => handleSumbit(values)
   });
 
   let content = (
