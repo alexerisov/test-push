@@ -97,3 +97,28 @@
     color: #566481;
   }
 }
+
+.payment {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__title {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    color: #353E50;
+  }
+  &__image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 30px;
+    overflow: hidden;
+  }
+
+}
+

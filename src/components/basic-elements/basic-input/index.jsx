@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import classes from './index.module.scss';
 import { InputAdornment, InputLabel, TextField } from '@material-ui/core';
 import SuccessIcon from '../../../../public/images/index/icons-complete.svg';
 import ErrorIcon from '../../../../public/images/index/icons-clear.svg';
+import InputMask from 'react-input-mask';
 
 export const BasicInput = props => {
-  const { name, label, placeholder, formik, size } = props;
+  const { name, label, placeholder, formik, size, mask } = props;
   const gap = '20px';
 
   const defineFocusedStyle = () => {
@@ -35,27 +36,56 @@ export const BasicInput = props => {
   return (
     <div style={{ flex: defineWidth() }}>
       <InputLabel className={classes.label}>{label}</InputLabel>
-      <TextField
-        InputProps={{
-          classes: {
-            root: classes.input,
-            error: classes.error,
-            focused: defineFocusedStyle()
-          },
-          disableUnderline: false,
-          endAdornment: <InputAdornment position="end">{defineAdornment()}</InputAdornment>
-        }}
-        variant="outlined"
-        fullWidth
-        id={name}
-        name={name}
-        placeholder={placeholder}
-        value={formik.values[name]}
-        onBlur={formik.handleBlur}
-        onChange={formik.handleChange}
-        error={formik.touched[name] && Boolean(formik.errors[name])}
-        helperText={formik.touched[name] && formik.errors[name]}
-      />
+      {mask && (
+        <InputMask
+          mask={mask}
+          maskChar="_"
+          value={formik.values[name]}
+          id={name}
+          name={name}
+          placeholder={placeholder}
+          onBlur={formik.handleBlur}
+          onChange={formik.handleChange}
+          error={formik.touched[name] && Boolean(formik.errors[name])}
+          helperText={formik.touched[name] && formik.errors[name]}
+          InputProps={{
+            classes: {
+              root: classes.input,
+              error: classes.error,
+              focused: defineFocusedStyle()
+            },
+            disableUnderline: false,
+            endAdornment: <InputAdornment position="end">{defineAdornment()}</InputAdornment>
+          }}
+          variant="outlined"
+          fullWidth>
+          {inputProps => <TextField {...inputProps} />}
+        </InputMask>
+      )}
+
+      {!mask && (
+        <TextField
+          value={formik.values[name]}
+          id={name}
+          name={name}
+          placeholder={placeholder}
+          onBlur={formik.handleBlur}
+          onChange={formik.handleChange}
+          error={formik.touched[name] && Boolean(formik.errors[name])}
+          helperText={formik.touched[name] && formik.errors[name]}
+          InputProps={{
+            classes: {
+              root: classes.input,
+              error: classes.error,
+              focused: defineFocusedStyle()
+            },
+            disableUnderline: false,
+            endAdornment: <InputAdornment position="end">{defineAdornment()}</InputAdornment>
+          }}
+          variant="outlined"
+          fullWidth
+        />
+      )}
     </div>
   );
 };
