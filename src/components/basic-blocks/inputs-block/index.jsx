@@ -19,10 +19,7 @@ export const InputsBlock = props => {
   const BlockTabs = [];
   const BlockBody = [];
 
-  console.log('this', self);
-
   props.children.forEach(el => {
-    console.log(el.type.name);
     if (el.props.isTabs) {
       BlockTabs.push(el);
     } else {
@@ -90,7 +87,13 @@ const InputsBlockTabPanel = props => {
   const context = React.useContext(TabContext);
 
   return (
-    <Collapse direction="down" in={context.isTabWillChange} timeout={300} mountOnEnter unmountOnExit>
+    <Collapse
+      classes={{ root: classes.collapse }}
+      direction="down"
+      in={context.isTabWillChange}
+      timeout={300}
+      mountOnEnter
+      unmountOnExit>
       <div
         className={classes.block__body}
         role="tabpanel"

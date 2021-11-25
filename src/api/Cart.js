@@ -28,5 +28,13 @@ export default {
     return http.patch(`/cart/product/${id}`, {
       count
     });
+  },
+
+  postAddress: data => {
+    return http.post(`/cart/address`, data);
+  },
+
+  postOrder: () => {
+    return http.post(`/cart/order`, { description: 'string' });
   }
 };
