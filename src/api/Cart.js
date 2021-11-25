@@ -35,6 +35,6 @@ export default {
   },
 
   postOrder: () => {
-    return http.post(`/cart/order`, { description: 'string' });
+    return http.post(`/cart/order`, {});
   }
 };
