@@ -6,7 +6,7 @@ import ErrorIcon from '../../../../public/images/index/icons-clear.svg';
 import InputMask from 'react-input-mask';
 
 export const BasicInput = props => {
-  const { name, label, placeholder, formik, size, mask } = props;
+  const { name, label, placeholder, formik, size, disabled, mask } = props;
   const gap = '20px';
 
   const defineFocusedStyle = () => {
@@ -39,6 +39,7 @@ export const BasicInput = props => {
       {mask && (
         <InputMask
           mask={mask}
+          disabled={disabled}
           maskChar="_"
           value={formik.values[name]}
           id={name}
@@ -83,6 +84,7 @@ export const BasicInput = props => {
             endAdornment: <InputAdornment position="end">{defineAdornment()}</InputAdornment>
           }}
           variant="outlined"
+          disabled={disabled}
           fullWidth
         />
       )}
