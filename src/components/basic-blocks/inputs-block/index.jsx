@@ -74,7 +74,7 @@ const InputsBlockTabs = props => {
             label={tab.props.label}
             {...a11yProps(i)}
             disableRipple
-            classes={{ root: classes.tab, selected: classes.tab__selected }}
+            classes={{ root: classes.tab, selected: classes.tab__selected, disabled: classes.tab__disabled }}
           />
         ))}
     </Tabs>

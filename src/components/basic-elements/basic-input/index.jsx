@@ -1,12 +1,13 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import classes from './index.module.scss';
 import { InputAdornment, InputLabel, TextField } from '@material-ui/core';
 import SuccessIcon from '../../../../public/images/index/icons-complete.svg';
 import ErrorIcon from '../../../../public/images/index/icons-clear.svg';
-import InputMask from 'react-input-mask';
+import dynamic from 'next/dynamic';
+const MuiPhoneNumber = dynamic(import('material-ui-phone-number'), { ssr: false });
 
 export const BasicInput = props => {
-  const { name, label, placeholder, formik, size, disabled, mask } = props;
+  const { name, label, placeholder, formik, size, disabled, phone } = props;
   const gap = '20px';
 
   const defineFocusedStyle = () => {
@@ -36,11 +37,8 @@ export const BasicInput = props => {
   return (
     <div style={{ flex: defineWidth() }}>
       <InputLabel className={classes.label}>{label}</InputLabel>
-      {mask && (
-        <InputMask
-          mask={mask}
-          disabled={disabled}
-          maskChar="_"
+      {!phone && (
+        <TextField
           value={formik.values[name]}
           id={name}
           name={name}
@@ -59,19 +57,22 @@ export const BasicInput = props => {
             endAdornment: <InputAdornment position="end">{defineAdornment()}</InputAdornment>
           }}
           variant="outlined"
-          fullWidth>
-          {inputProps => <TextField {...inputProps} />}
-        </InputMask>
+          disabled={disabled}
+          fullWidth
+        />
       )}
-
-      {!mask && (
-        <TextField
+      {phone && (
+        <MuiPhoneNumber
+          disableAreaCodes
+          autoFormat
+          data-cy="phone"
+          defaultCountry={'nl'}
           value={formik.values[name]}
           id={name}
           name={name}
           placeholder={placeholder}
           onBlur={formik.handleBlur}
-          onChange={formik.handleChange}
+          onChange={value => formik.setFieldValue('phone', value)}
           error={formik.touched[name] && Boolean(formik.errors[name])}
           helperText={formik.touched[name] && formik.errors[name]}
           InputProps={{

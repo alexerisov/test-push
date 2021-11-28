@@ -72,6 +72,10 @@
     background: #14181F !important;
     color: #FCFCFD !important;
   }
+
+  &__disabled {
+    display: none !important;
+  }
 }
 
 .divider {
