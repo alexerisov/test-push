@@ -11,7 +11,8 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import { theme } from '@/utils/themeProvider';
 import '~styles/globalStyle.scss';
 import Modals from '@/components/modals';
-import { StylesProvider } from '@material-ui/core';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DayjsUtils from '@date-io/dayjs';
 
 export default function App({ Component, pageProps }) {
   const store = useStore(pageProps.initialReduxState);
@@ -20,11 +21,13 @@ export default function App({ Component, pageProps }) {
   return (
     <Provider store={store}>
       <AuthProvider>
-        <ThemeProvider theme={theme}>
-          <DefaultSeo {...SEO} />
-          <Component {...pageProps} />
-          <Modals />
-        </ThemeProvider>
+        <MuiPickersUtilsProvider utils={DayjsUtils}>
+          <ThemeProvider theme={theme}>
+            <DefaultSeo {...SEO} />
+            <Component {...pageProps} />
+            <Modals />
+          </ThemeProvider>
+        </MuiPickersUtilsProvider>
       </AuthProvider>
     </Provider>
   );

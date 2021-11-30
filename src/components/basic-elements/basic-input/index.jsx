@@ -72,7 +72,7 @@ export const BasicInput = props => {
           name={name}
           placeholder={placeholder}
           onBlur={formik.handleBlur}
-          onChange={value => formik.setFieldValue('phone', value)}
+          onChange={value => formik.setFieldValue(name, value)}
           error={formik.touched[name] && Boolean(formik.errors[name])}
           helperText={formik.touched[name] && formik.errors[name]}
           InputProps={{

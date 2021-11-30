@@ -29,7 +29,7 @@ export const Basket = props => {
       <div className={classes.basket__title}>Order Summary</div>
       <hr className={classes.divider} />
       <div className={classes.basket__items_amount}>Meals</div>
-      {products?.length &&
+      {products?.length > 0 &&
         products.map((el, id) => (
           <TextElement key={id} text={el.object.title} count={el.count}>
             ${el.count * el.object.price}

@@ -63,7 +63,7 @@ function RecipePage(props) {
   const [latestRecipes, setLatestRecipes] = useState();
   const [featuredMeals, setFeaturedMeals] = useState();
   const [notFound, setNotFound] = useState(false);
-  const isRecipeInCart = useSelector(state => state.cart.cart?.some(el => el.object_id == recipeId));
+  const isRecipeInCart = useSelector(state => state.cart.products?.some(el => el.object_id == recipeId));
 
   useEffect(() => {
     getRecipe();
@@ -331,7 +331,7 @@ function RecipePage(props) {
                     </div>
                   </div>
                   <div className={classes.recipe__video__player_row}>
-                    {props.account.hasToken && (
+                    {props.account.hasToken && recipe.status === 5 && (
                       <button
                         className={classes.recipe__video__likes_last}
                         disabled={isRecipeInCart}
@@ -339,12 +339,12 @@ function RecipePage(props) {
                         {!isRecipeInCart ? (
                           <>
                             <AddShoppingCartRoundedIcon />
-                            <span>Add to cart</span>
+                            <span style={{ whiteSpace: 'nowrap' }}>Add to cart</span>
                           </>
                         ) : (
                           <>
                             <ShoppingCartRoundedIcon />
-                            <span>Added to cart</span>
+                            <span style={{ whiteSpace: 'nowrap' }}>Added to cart</span>
                           </>
                         )}
                       </button>
