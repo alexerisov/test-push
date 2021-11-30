@@ -49,15 +49,14 @@ const OrderConfirmPage = () => {
       zipcode: values.zipcode,
       city: values.city,
       street: values.street,
-      house: values.house,
-      phone_number: values.phone.replaceAll(/[\s+()-]/g, '')
+      house: values.house
     };
 
     Cart.postAddress(addressData).then(res => {
       const orderData = {
         address: res.data.pk,
         customer_name: values.name,
-        phone_number: values.phone,
+        phone_number: values.phone.replaceAll(/[^\d]/g, ''),
         delivery_date: values.date.toISOString()
       };
 
