@@ -74,7 +74,7 @@ const OrderConfirmPage = () => {
       email: '',
       name: '',
       phone: '',
-      city: '',
+      city: 'Amsterdam',
       street: '',
       house: '',
       flat: '',
