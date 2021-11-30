@@ -56,6 +56,8 @@ const OrderConfirmPage = () => {
     Cart.postAddress(addressData).then(res => {
       const orderData = {
         address: res.data.pk,
+        customer_name: values.name,
+        phone_number: values.phone,
         delivery_date: values.date.toISOString()
       };
 
