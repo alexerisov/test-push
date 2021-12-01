@@ -4,7 +4,7 @@ import { Button } from '@material-ui/core';
 import { useRouter } from 'next/router';
 
 export const Basket = props => {
-  const { products, total, withButton } = props;
+  const { products, total, deliveryPrice } = props.cart;
   const router = useRouter();
 
   const handleOrderClick = () => {
@@ -36,13 +36,13 @@ export const Basket = props => {
           </TextElement>
         ))}
 
-      <TextElement text="Delivery">delivery</TextElement>
+      <TextElement text="Delivery">{deliveryPrice}</TextElement>
 
       <div className={classes.basket__total}>
         <TextElement text="Total">${total ?? 0}</TextElement>
       </div>
 
-      {withButton && (
+      {props.withButton && (
         <Button fullWidth className={classes.button} onClick={handleOrderClick}>
           Order
         </Button>

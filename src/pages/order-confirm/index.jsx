@@ -60,25 +60,27 @@ const OrderConfirmPage = () => {
         delivery_date: values.date.toISOString()
       };
 
-      Cart.postOrder(orderData).then(r => {
+      Cart.postOrder(orderData).then(async r => {
         const url = r.data.url;
         console.log(r);
-        window.open(url, '_ blank');
+        await localStorage.setItem('order', JSON.stringify(r.data));
+        await localStorage.setItem('cart', JSON.stringify(cart));
         router.push('/order-congratulation');
+        window.open(url, '_ blank');
       });
     });
   };
 
   const formik = useFormik({
     initialValues: {
-      email: '',
-      name: '',
-      phone: '',
+      email: 'example@mail.com',
+      name: 'Name',
+      phone: '790990999',
       city: 'Amsterdam',
-      street: '',
-      house: '',
-      flat: '',
-      zipcode: '',
+      street: 'Street',
+      house: 'house',
+      flat: 'flat',
+      zipcode: '1234aa',
       date: new Date()
     },
     validationSchema: validationSchema,
@@ -146,7 +148,7 @@ const OrderConfirmPage = () => {
         </form>
       </div>
       <div className={classes.content__column2}>
-        <Basket products={cart.products} total={cart.total} />
+        <Basket cart={cart} />
       </div>
     </div>
   );

@@ -66,7 +66,7 @@ const CartPage = props => {
       <CartTabs {...tabsProps} />
       <div className={styles.content}>
         <TabContent products={data.products} selectedTab={selectedTab} />
-        <Basket withButton products={data.products} total={data.total} />
+        <Basket cart={data} withButton />
       </div>
     </div>
   );
@@ -87,8 +87,12 @@ export async function getServerSideProps(context) {
   const isAuthenticated = Boolean(token);
 
   try {
+    const delivery = await Cart.getDeliveryPrice();
+    const deliveryPrice = delivery.data.price;
+
     const response = await Cart.getProductList(token);
     const cartList = await response.data.results;
+
     const productsData = await Promise.all(
       cartList.map(async item => {
         let itemResponse = await Recipe.getRecipe(item.object_id);
@@ -98,7 +102,7 @@ export async function getServerSideProps(context) {
     const total = productsData?.reduce((acc, val) => acc + val.object.price * val?.count, 0);
     return {
       props: {
-        data: { products: productsData, total },
+        data: { products: productsData, total, deliveryPrice },
         isAuthenticated,
         absolutePath: context.req.headers.host
       }

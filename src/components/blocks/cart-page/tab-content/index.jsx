@@ -42,9 +42,9 @@ export const TabContent = props => {
 
   return (
     <div className={styles.tab_content}>
-      {!products?.length && <Typography variant="h4">You have no items in your shopping cart. </Typography>}
+      {!products?.length > 0 && <Typography variant="h4">You have no items in your shopping cart. </Typography>}
       <TabPanel className={styles.tab_dishes} value={selectedTab} index={1}>
-        {products?.length &&
+        {products?.length > 0 &&
           products.map(item => (
             <CartItemRecipe
               key={`${item.object.pk + '1k0'}`}
@@ -59,7 +59,7 @@ export const TabContent = props => {
           ))}
       </TabPanel>
       <TabPanel className={classes.tab_ingredients} value={selectedTab} index={2}>
-        {products?.length &&
+        {products?.length > 0 &&
           products.map(item => (
             <CartItemIngredients
               key={`${item.object.pk + '1k0'}`}

@@ -5,6 +5,10 @@ export default {
     return http.get(`cart/info`);
   },
 
+  getDeliveryPrice: () => {
+    return http.get(`/order/delivery_price`);
+  },
+
   getProductList: token => {
     if (token && token !== '{"token":null,"refresh":null}') {
       return http.get(`/cart/product/list`, {

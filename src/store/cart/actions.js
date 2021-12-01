@@ -30,6 +30,9 @@ export const getCart = () => {
     dispatch({ type: types.GET_CART_REQUESTED });
 
     try {
+      const delivery = await Cart.getDeliveryPrice();
+      const deliveryPrice = delivery.data.price;
+
       const response = await Cart.getProductList();
       const cartList = await response.data.results;
       const productsData = await Promise.all(
@@ -40,7 +43,7 @@ export const getCart = () => {
         })
       );
       const total = productsData?.reduce((acc, val) => acc + val.object.price * val?.count, 0);
-      dispatch({ type: types.GET_CART_SUCCESS, payload: { productsData, total } });
+      dispatch({ type: types.GET_CART_SUCCESS, payload: { productsData, total, deliveryPrice } });
     } catch (e) {
       console.error(e);
       dispatch({ type: types.GET_CART_FAILED, payload: e });

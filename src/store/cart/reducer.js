@@ -28,6 +28,7 @@ export default reducer(initState, {
       ...state,
       products: action.payload.productsData,
       total: action.payload.total,
+      deliveryPrice: action.payload.deliveryPrice,
       isLoading: false
     };
   },
