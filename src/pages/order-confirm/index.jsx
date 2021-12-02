@@ -60,12 +60,11 @@ const OrderConfirmPage = () => {
         customer_name: values.name,
         phone_number: values.phone.replaceAll(/[^\d]/g, ''),
         delivery_date: values.date.toISOString(),
-        dont_keep_address: values.save_address
+        keep_address: values.save_address
       };
 
       Cart.postOrder(orderData).then(async r => {
         const url = r.data.url;
-        console.log(r);
         await localStorage.setItem('order', JSON.stringify(r.data));
         await localStorage.setItem('cart', JSON.stringify(cart));
         router.push('/order-congratulation');
