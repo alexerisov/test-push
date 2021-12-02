@@ -58,9 +58,9 @@ const OrderCongratulationPage = () => {
         <Divider m="32px 0" />
         <div className={classes.info}>
           <div className={classes.info__header}>Delivery details</div>
-          <TextWithIcon icon={HandCartIcon} text="Booking code:" value={order?.paymentRequestToken} />
-          <TextWithIcon icon={CalendarIcon} text="Date:" value="1 December, 2021" />
-          <TextWithIcon icon={RecipeIcon} text="Total:" value={'$' + order?.amountInCents} />
+          <TextWithIcon icon={HandCartIcon} text="Booking code:" value={order?.pk} />
+          <TextWithIcon icon={CalendarIcon} text="Date:" value={dayjs(order?.delivery_date).format('D MMM, YYYY')} />
+          <TextWithIcon icon={RecipeIcon} text="Total:" value={'$' + order?.total_price} />
           <TextWithIcon icon={WalletIcon} text="Payment methdd:" value="Tikkie" />
           <div className={classes.button_group}>
             <Button onClick={ordersButtonHandler} className={classes.button__orders}>
