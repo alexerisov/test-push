@@ -73,14 +73,14 @@ const OrderConfirmPage = () => {
 
   const formik = useFormik({
     initialValues: {
-      email: 'example@mail.com',
-      name: 'Name',
-      phone: '790990999',
+      email: '',
+      name: '',
+      phone: '',
       city: 'Amsterdam',
-      street: 'Street',
-      house: 'house',
-      flat: 'flat',
-      zipcode: '1234aa',
+      street: '',
+      house: '',
+      flat: '',
+      zipcode: '',
       date: new Date()
     },
     validationSchema: validationSchema,
@@ -110,7 +110,7 @@ const OrderConfirmPage = () => {
               <BasicInput formik={formik} size={0.5} label="House" name="house" placeholder="Enter your house" />
               <BasicInput formik={formik} size={0.5} label="Flat" name="flat" placeholder="Enter your flat" />
               <BasicInput formik={formik} label="Zipcode" name="zipcode" placeholder="Enter your zipcode" />
-              <BasicDatePicker formik={formik} label="Date" />
+              <BasicDatePicker formik={formik} label="Date" name="date" />
             </InputsBlock.TabPanel>
             <InputsBlock.TabPanel index={1}>
               <div className={classes.address__container}>

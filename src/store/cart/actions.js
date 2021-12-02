@@ -42,7 +42,8 @@ export const getCart = () => {
           return { ...item, object: itemResponse.data };
         })
       );
-      const total = productsData?.reduce((acc, val) => acc + val.object.price * val?.count, 0);
+      const productsSum = productsData?.reduce((acc, val) => acc + val.object.price * val?.count, 0);
+      const total = productsSum + deliveryPrice;
       dispatch({ type: types.GET_CART_SUCCESS, payload: { productsData, total, deliveryPrice } });
     } catch (e) {
       console.error(e);

@@ -99,7 +99,9 @@ export async function getServerSideProps(context) {
         return { ...item, object: itemResponse.data };
       })
     );
-    const total = productsData?.reduce((acc, val) => acc + val.object.price * val?.count, 0);
+    const productsSum = productsData?.reduce((acc, val) => acc + val.object.price * val?.count, 0);
+    const total = productsSum + deliveryPrice;
+
     return {
       props: {
         data: { products: productsData, total, deliveryPrice },
