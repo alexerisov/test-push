@@ -21,15 +21,15 @@ if (process.env.NODE_ENV === 'production') {
 } else if (process.env.NODE_ENV === 'stage') {
   envs = {
     fbClientId: '161418379213740',
-    googleClientId: '245264013276-avgqsj1umm7sc07sk2dtdgkpmqmn0p42.apps.googleusercontent.com',
+    googleClientId: '245264013276-sbkrl06fu1e7d6m0d3724or58hvdmpej.apps.googleusercontent.com',
     NODE_ENV: 'development',
     BASE_URL: 'https://api.eatchefs.goodbit.dev',
     DEBUG: true
   };
 } else {
   envs = {
-    fbClientId: '161418379213740',
-    googleClientId: '245264013276-avgqsj1umm7sc07sk2dtdgkpmqmn0p42.apps.googleusercontent.com',
+    fbClientId: '3044235379228131',
+    googleClientId: '655496569198-f4akmc86kndanpb2p10uk80h5al1sg4l.apps.googleusercontent.com',
     NODE_ENV: 'development',
     BASE_URL: 'http://localhost:4096',
     DEBUG: true
