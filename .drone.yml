@@ -1,0 +1,173 @@
+name: stage_frontend
+
+kind: pipeline      # https://docs.drone.io/pipeline/configuration/
+type: docker
+
+steps:
+
+  - name: notify_about_start
+    image: appleboy/drone-discord
+    settings:
+      webhook_id: 893162254147666031
+      webhook_token: xnAA0lVEfRLaijBHufOhxqhWN_Ps-w-xzGr92bME3T_PjTijJBSvkELfc1QYiv-lNt4x
+      username: drone.io
+      message: >
+       ⚙️ [Build {{build.number}}](<{{ build.link }}/1/3>) of `{{repo.name}}`:`{{commit.branch}}` started.
+
+       Latest [commit](<https://github.com/GoodBitDev/{{repo.name}}/commit/${DRONE_COMMIT_SHA:0:7}>) by {{commit.author}} on `{{commit.branch}}`:
+       ```{{commit.message}}```
+       [Image](<https://hub.docker.com/repository/docker/goodbitdev/builds>): `goodbitdev/builds:build-ec-client-stage-${DRONE_COMMIT_SHA:0:7}`
+    when:
+      event: [push]  # pull_request
+      branch: [development]
+      # event: tag # in case of new git tag added
+
+  # or this can be done via drone.io docker plugin, not using list of commands
+  - name: build
+    image: docker:latest
+    environment:
+      DOCKER_HUB_USERNAME:
+        from_secret: DOCKER_HUB_USERNAME # from org secrets
+      DOCKER_HUB_PASSWORD:
+        from_secret: DOCKER_HUB_PASSWORD # from org secrets
+      MAIN_IMAGE: goodbitdev/builds:build-ec-client-stage-${DRONE_COMMIT_SHA:0:7}
+    volumes:
+      - name: docker_sock
+        path: /var/run/docker.sock
+    commands:
+      - df -h
+      - docker images  # for debug purpose
+      - docker build --build-arg DJANGO_SECRET_KEY=$DJANGO_SECRET_KEY -t $MAIN_IMAGE .
+      - docker run $MAIN_IMAGE
+      - docker logout  # for some reason required
+      - echo $DOCKER_HUB_PASSWORD | docker login docker.io -u $DOCKER_HUB_USERNAME --password-stdin
+      - echo $MAIN_IMAGE
+      - docker push $MAIN_IMAGE
+      - docker container prune --force --filter "until=36h"
+      - docker image prune -a --force --filter "until=36h"
+    when:
+      event: [push]
+      branch: [development]
+      # event: tag # in case of new git tag
+
+  - name: notify_after_build
+    image: appleboy/drone-discord
+    settings:
+      webhook_id: 893162254147666031
+      webhook_token: xnAA0lVEfRLaijBHufOhxqhWN_Ps-w-xzGr92bME3T_PjTijJBSvkELfc1QYiv-lNt4x
+      username: drone.io
+      message: >
+       {{#success build.status}}
+         ✅ Build {{build.number}} of '{{repo.name}}':{{commit.branch}}. Status: OK.
+       {{else}}
+         ❌ Build {{build.number}} of '{{repo.name}}'. Status: FAIL.
+       {{/success}}
+    when:
+      event: [push]  # pull_request
+      branch: [development]
+      # event: tag # in case of new git tag
+      status:
+      - success
+      - failure
+
+  - name: deploy_stage-1
+    image: appleboy/drone-ssh
+    environment:
+      DOCKER_HUB_USERNAME:
+        from_secret: DOCKER_HUB_USERNAME # from org secrets
+      DOCKER_HUB_PASSWORD:
+        from_secret: DOCKER_HUB_PASSWORD # from org secrets
+    settings:
+      host: eatchefs.goodbit.dev
+      username: drone
+      password:
+        # TODO: ssh key to authorize didn't work for some reason
+        from_secret: EATCHEFS_STAGE_PASSWORD_FOR_DRONE_USER # from org secret
+      port: 22
+      script:
+        # - whoami
+        - echo $DOCKER_HUB_PASSWORD | docker login docker.io -u $DOCKER_HUB_USERNAME --password-stdin
+        # test: - docker pull goodbitdev/builds:build-ec-client-stage-004abf9
+        - cd /home/nitsenko94/services/eatchef_client/ci/stage
+        - python3 scripts.py deploy goodbitdev/builds:build-ec-client-stage-${DRONE_COMMIT_SHA:0:7}
+        - docker image prune -a --force --filter "until=72h"  # 3 days
+    when:
+      event: [push]  # pull_request
+      branch: [development]
+      # event: tag # in case of new git tag
+      status:
+      - success
+
+  - name: notify_after_deploy_stage-1
+    image: appleboy/drone-discord
+    settings:
+      webhook_id: 893162254147666031
+      webhook_token: xnAA0lVEfRLaijBHufOhxqhWN_Ps-w-xzGr92bME3T_PjTijJBSvkELfc1QYiv-lNt4x
+      username: drone.io
+      message: >
+       {{#success build.status}}
+         ✅ Deploy of [build {{build.number}}](<{{ build.link }}/1/3>) to stage-1 [eatchefs.goodbit.dev](<https://eatchefs.goodbit.dev/>). Status: OK.
+       {{else}}
+         ❌ Deploy of [build {{build.number}}](<{{ build.link }}/1/3>) to stage-1 [eatchefs.goodbit.dev](<https://eatchefs.goodbit.dev/>). Status: FAIL.
+       {{/success}}
+    when:
+      event: [push]  # pull_request
+      branch: [development]
+      # event: tag # in case of new git tag
+      status:
+      - success
+      - failure
+
+  # just a copy of deploy_stage-1
+  - name: deploy_stage-2
+    image: appleboy/drone-ssh
+    environment:
+      DOCKER_HUB_USERNAME:
+        from_secret: DOCKER_HUB_USERNAME # from org secrets
+      DOCKER_HUB_PASSWORD:
+        from_secret: DOCKER_HUB_PASSWORD # from org secrets
+    settings:
+      host: eatchefs2.goodbit.dev
+      username: drone
+      password:
+        # TODO: ssh key to authorize didn't work for some reason
+        from_secret: EATCHEFS_STAGE_PASSWORD_FOR_DRONE_USER # from org secret
+      port: 22
+      script:
+        # - whoami
+        - echo $DOCKER_HUB_PASSWORD | docker login docker.io -u $DOCKER_HUB_USERNAME --password-stdin
+        # test: - docker pull goodbitdev/builds:build-ec-client-stage-004abf9
+        - cd /home/nitsenko94/services/eatchef_client/ci/stage
+        - python3 scripts.py deploy goodbitdev/builds:build-ec-client-stage-${DRONE_COMMIT_SHA:0:7}
+        - docker image prune -a --force --filter "until=72h"  # 3 days
+    when:
+      event: [push]  # pull_request
+      branch: [development]
+      # event: tag # in case of new git tag
+      status:
+      - success
+
+  - name: notify_after_deploy_stage-2
+    image: appleboy/drone-discord
+    settings:
+      webhook_id: 893162254147666031
+      webhook_token: xnAA0lVEfRLaijBHufOhxqhWN_Ps-w-xzGr92bME3T_PjTijJBSvkELfc1QYiv-lNt4x
+      username: drone.io
+      message: >
+       {{#success build.status}}
+         ✅ Deploy of [build {{build.number}}](<{{ build.link }}/1/3>) to test [test.eatchefs.com](<https://test.eatchefs.com/>). Status: OK.
+       {{else}}
+         ❌ Deploy of [build {{build.number}}](<{{ build.link }}/1/3>) to test [test.eatchefs.com](<https://test.eatchefs.com/>). Status: FAIL.
+       {{/success}}
+    when:
+      event: [push]  # pull_request
+      branch: [development]
+      # event: tag # in case of new git tag
+      status:
+      - success
+      - failure
+
+volumes:
+  - name: docker_sock
+    host:
+      path: /var/run/docker.sock
