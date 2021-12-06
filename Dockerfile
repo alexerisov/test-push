@@ -3,6 +3,8 @@ FROM node:14.15
 
 ARG NODE_ENV=production
 
+RUN echo "NODE_ENV $NODE_ENV"
+
 # set working directory
 WORKDIR /app
 
@@ -15,7 +17,11 @@ RUN yarn install
 COPY . ./
 RUN yarn build
 
-HEALTHCHECK --interval=12s --timeout=12s --start-period=10s \
- CMD curl --fail http://localhost:3000/health || exit 1
-# start app
-CMD ["yarn", "start"]
+RUN if [ -z "$BUILD_ONLY" ] ; then \
+    HEALTHCHECK --interval=12s --timeout=12s --start-period=10s \
+     CMD curl --fail http://localhost:3000/health || exit 1 \
+    # start app
+    CMD ["yarn", "start"] \
+  else \
+    RUN echo "ONLY BUILD" \
+  fi
