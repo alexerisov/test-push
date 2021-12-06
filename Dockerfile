@@ -18,10 +18,6 @@ COPY . ./
 RUN yarn build
 
 RUN if [ -z "$BUILD_ONLY" ] ; then \
-    HEALTHCHECK --interval=12s --timeout=12s --start-period=10s \
-     CMD curl --fail http://localhost:3000/health || exit 1 \
-    # start app
-    CMD ["yarn", "start"] \
-  else \
-    RUN echo "ONLY BUILD" \
-  fi
+    HEALTHCHECK --interval=12s --timeout=12s --start-period=10s CMD curl --fail http://localhost:3000/health || exit 1; \
+    CMD ["yarn", "start"]; \
+ fi
