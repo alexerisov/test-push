@@ -5,6 +5,8 @@ export const theme = responsiveFontSizes(
     typography: {
       fontFamily: `"Montserrat", "Roboto", "Helvetica", "Arial", sans-serif`,
       // fontSize: 16,
+      lineHeight: '160%',
+      letterSpacing: '0.01em',
       fontWeightLight: 300,
       fontWeightRegular: 400,
       fontWeightMedium: 500,

@@ -4,192 +4,151 @@
 
 .card {
   display: grid;
-  grid-template-columns: auto max(321px) auto;
+  position: relative;
+  grid-template-columns: auto auto;
   opacity: 1;
   animation-name: fadeInOpacity;
   animation-iteration-count: 1;
   animation-timing-function: ease-in;
   animation-duration: 0.5s;
-  max-height: 162px;
+  min-height: 254px;
+  background: #FCFCFD;
+  border: 1px solid #E6E8EC !important;
+  box-sizing: border-box;
+  border-radius: 24px !important;
+  box-shadow: none !important;
+  flex-wrap: wrap !important;
 
 
-  &__delete {
-    flex-shrink: 1;
-    color: #888;
-
-    &:hover {
-      cursor: pointer;
-      opacity: 0.7;
-    }
-
+  &__media {
+    min-height: 100%;
+    min-width: 242px;
   }
 
-  &__author {
-    font-size: 18px;
-    line-height: 22px;
-    margin-bottom: 9px;
+  &__content_root {
+    padding: 32px !important;
   }
 
   &__content {
-    flex: 1 1 fit-content !important;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    font-size: 18px;
-    padding-top: 40px !important;
-    @include fontRegular();
+
   }
 
   &__content2 {
-    justify-self: flex-end;
-    flex: 1 1 fit-content !important;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    //width: 123px;
-    padding-top: 40px !important;
   }
 
   &__title {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    & a:focus, & a:hover, & a:visited, & a:link, & a:active {
+      color: inherit;
+    }
     font-weight: 600 !important;
-    font-size: 24px !important;
-    line-height: 29px !important;
-    cursor: pointer;
+    font-size: 18px !important;
+    line-height: 160% !important;
+    letter-spacing: 0.01em !important;
+    color: #141416 !important;
   }
 
-  &__media {
-    min-height: 162px;
-    background-color: $--color-gray8;
-    min-width: 215px;
-    cursor: pointer;
-    flex: 2 1 300px !important;
+  &__author {
+
+  }
+
+  &__delete {
+    position: absolute !important;
+    right: 0 !important;
+    top: 0 !important;
+    z-index: 999 !important;
+    margin: 32px !important;
+  }
+
+  &__ingredients {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    &__title {
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 160%;
+      letter-spacing: 0.01em;
+      color: #14181F;
+      display: flex;
+      align-items: center;
+    }
+
+    &__items {
+      max-width: 186px;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 160%;
+      letter-spacing: 0.01em;
+      color: #566481;
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: right;
+    }
+
+    &__button {
+      white-space: nowrap;
+      height: auto !important;
+      width: auto !important;
+      border: none !important;
+      box-shadow: none !important;
+      font-style: normal;
+      font-weight: 600 !important;
+      font-size: 14px !important;
+      line-height: 160%;
+      letter-spacing: 0.01em !important;
+      color: #FFAA00 !important;
+    }
+  }
+
+  &__price_container {
+    display: flex;
+    justify-content: space-between;
   }
 
   &__price {
+    font-style: normal;
     font-weight: 600;
-    font-size: 26px;
-    line-height: 32px;
-    margin-bottom: 18px;
-  }
-
-  &__dollar_symbol {
-    color: #969696;
-  }
-
-  @media (max-width: 1280px) {
-    grid-template-columns: auto max(281px) auto;
-    max-height: 143px;
-
-    &__media {
-      min-height: 143px;
-      //min-width: 277px;
-    }
-
-    &__author {
-      font-size: 16px;
-      line-height: 20px;
-    }
-
-    &__title {
-      font-size: 21px !important;
-      line-height: 26px !important;
-    }
-
-    &__content {
-      padding-top: 35px !important;
-    }
-
-    &__content2 {
-      //width: 108px;
-      padding-top: 35px !important;
-    }
-
-    &__price {
-      font-size: 22px;
-      line-height: 27px;
-      margin-bottom: 15px;
-    }
-
+    font-size: 18px;
+    line-height: 160%;
+    letter-spacing: 0.01em;
+    color: #353E50;
   }
 
   @media (max-width: 960px) {
-    grid-template-columns: auto max(194px) auto;
-    max-height: 108px;
+    grid-template-columns: 1fr;
+
+    &__ingredients {
+      &__items {
+        max-width: 173px;
+      }
+    }
+
+    &__delete {
+      margin: 16px !important;
+     background-color: white !important;
+    }
 
     &__media {
-      min-height: 108px;
-      //min-width: 211px;
-    }
-
-    &__author {
-      font-size: 12px;
-      line-height: 15px;
-    }
-
-    &__title {
-      font-size: 16px !important;
-      line-height: 20px !important;
-    }
-
-    &__content {
-      padding-top: 27px !important;
-    }
-
-    &__content2 {
-      //width: 79px;
-      padding-top: 27px !important;
-    }
-
-    &__price {
-      font-size: 16px;
-      line-height: 20px;
-      margin-bottom: 11px;
+      min-height: 210px;
     }
   }
 
   @media (max-width: 600px) {
-    max-height: 261px;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    grid-template-columns: 1fr;
+    &__ingredients {
+      &__items {
+        display: none;
+      }
+    }
 
     &__media {
-      width: 100%;
-      min-height: 140px;
-    }
-
-    &__author {
-      font-size: 14px;
-      line-height: 17px;
-    }
-
-    &__title {
-      font-size: 18px !important;
-      line-height: 22px !important;
-    }
-
-    &__delete {
-      display: none;
-    }
-
-    &__content {
-      width: 100%;
-    }
-
-    &__content2 {
-      flex-direction: row;
-      width: 100%;
-    }
-
-    &__price {
-      font-size: 26px;
-      line-height: 32px;
-      margin-bottom: 0;
+      min-height: 311px;
     }
   }
 
@@ -205,4 +164,25 @@
   100% {
     opacity: 1;
   }
+}
+
+.element_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.element_text {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 160%;
+  letter-spacing: 0.01em;
+  color: #566481;
+}
+
+.categories {
+  display: flex;
+  margin-top: 16px;
+  column-gap: 50px;
 }

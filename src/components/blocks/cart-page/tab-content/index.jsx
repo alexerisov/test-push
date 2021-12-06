@@ -48,27 +48,9 @@ export const TabContent = props => {
           products.map(item => (
             <CartItemRecipe
               key={`${item.object.pk + '1k0'}`}
-              author={item.object.user.full_name}
-              title={item.object.title}
-              image={item.object.images[0]?.url}
-              recipeId={item.object.pk}
               cartItemId={item.pk}
               cartItemAmount={item.count}
-              price={item.object.price}
-            />
-          ))}
-      </TabPanel>
-      <TabPanel className={classes.tab_ingredients} value={selectedTab} index={2}>
-        {products?.length > 0 &&
-          products.map(item => (
-            <CartItemIngredients
-              key={`${item.object.pk + '1k0'}`}
-              ingredients={item.object.ingredients}
-              title={item.object.title}
-              image={item.object.images[0]?.url}
-              recipeId={item.object.pk}
-              cartItemId={item.pk}
-              price={item.object.price}
+              recipe={item.object}
             />
           ))}
       </TabPanel>

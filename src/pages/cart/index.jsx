@@ -11,6 +11,7 @@ import { connect, useDispatch, useSelector } from 'react-redux';
 import { setCart } from '@/store/cart/actions';
 import { useRouter, withRouter } from 'next/router';
 import { withAuth } from '@/utils/authProvider';
+import classes from './index.module.scss';
 
 const useStyles = makeStyles(theme => ({
   tabs: {
@@ -18,19 +19,19 @@ const useStyles = makeStyles(theme => ({
   },
   content: {
     display: 'grid',
-    gridTemplateColumns: '640px 400px',
+    gridTemplateColumns: 'auto 400px',
     marginBottom: '2rem;'
   },
   [theme.breakpoints.up('md')]: {
     content: {
-      gridTemplateColumns: '640px 400px',
+      gridTemplateColumns: 'auto 400px',
       columnGap: '40px',
       marginBottom: '2rem'
     }
   },
   [theme.breakpoints.only('sm')]: {
     content: {
-      gridTemplateColumns: '385 400px'
+      gridTemplateColumns: '1fr'
     }
   },
   [theme.breakpoints.only('xs')]: {
@@ -63,7 +64,7 @@ const CartPage = props => {
 
   let content = (
     <div className={styles.tabs}>
-      <CartTabs {...tabsProps} />
+      <div className={classes.header}>Your Cart</div>
       <div className={styles.content}>
         <TabContent products={data.products} selectedTab={selectedTab} />
         <Basket cart={data} withButton />

@@ -137,6 +137,7 @@
     "@storybook/builder-webpack5": "^6.3.12",
     "@storybook/manager-webpack5": "^6.3.12",
     "@storybook/react": "^6.3.12",
+    "@svgr/webpack": "^6.1.1",
     "eslint-config-next": "^11.0.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
