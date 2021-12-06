@@ -37,8 +37,7 @@ steps:
     commands:
       - df -h
       - docker images  # for debug purpose
-      - docker build --build-arg DJANGO_SECRET_KEY=$DJANGO_SECRET_KEY -t $MAIN_IMAGE .
-      - docker run $MAIN_IMAGE
+      - docker build --build-arg NODE_ENV=stage -t $MAIN_CLIENT_IMAGE .
       - docker logout  # for some reason required
       - echo $DOCKER_HUB_PASSWORD | docker login docker.io -u $DOCKER_HUB_USERNAME --password-stdin
       - echo $MAIN_IMAGE
