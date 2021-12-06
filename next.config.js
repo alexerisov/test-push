@@ -16,23 +16,23 @@ if (process.env.NODE_ENV === 'production') {
     googleClientId: '245264013276-avgqsj1umm7sc07sk2dtdgkpmqmn0p42.apps.googleusercontent.com',
     NODE_ENV: 'production',
     BASE_URL: 'https://api.eatchefs.com',
-    DEBUG: JSON.stringify(process.env.DEBUG ?? false),
+    DEBUG: JSON.stringify(process.env.DEBUG ?? false)
   };
 } else if (process.env.NODE_ENV === 'stage') {
   envs = {
-    fbClientId: '553583208994808',
-    googleClientId: '245264013276-sbkrl06fu1e7d6m0d3724or58hvdmpej.apps.googleusercontent.com',
+    fbClientId: '161418379213740',
+    googleClientId: '245264013276-avgqsj1umm7sc07sk2dtdgkpmqmn0p42.apps.googleusercontent.com',
     NODE_ENV: 'development',
     BASE_URL: 'https://api.eatchefs.goodbit.dev',
-    DEBUG: true,
+    DEBUG: true
   };
 } else {
   envs = {
-    fbClientId: '3044235379228131',
-    googleClientId: '655496569198-f4akmc86kndanpb2p10uk80h5al1sg4l.apps.googleusercontent.com',
+    fbClientId: '161418379213740',
+    googleClientId: '245264013276-avgqsj1umm7sc07sk2dtdgkpmqmn0p42.apps.googleusercontent.com',
     NODE_ENV: 'development',
     BASE_URL: 'http://localhost:4096',
-    DEBUG: true,
+    DEBUG: true
   };
 }
 
@@ -45,10 +45,10 @@ module.exports = {
           {
             loader: 'file-loader',
             options: {
-              name: 'static/images/[name].[contenthash].[ext]',
-            },
-          },
-        ],
+              name: 'static/images/[name].[contenthash].[ext]'
+            }
+          }
+        ]
       },
       {
         test: /\.(swf|otf|eot|ttf|woff|woff2)(\?.*)?$/,
@@ -57,10 +57,10 @@ module.exports = {
             loader: 'url-loader',
             options: {
               limit: false,
-              name: '_next/static/assets/[name].[contenthash].[ext]',
-            },
-          },
-        ],
+              name: '_next/static/assets/[name].[contenthash].[ext]'
+            }
+          }
+        ]
       }
     );
     config.plugins.push(new webpack.EnvironmentPlugin(envs));
@@ -73,16 +73,16 @@ module.exports = {
       '@': path.join(__dirname, 'src'),
       '~styles': path.join(__dirname, 'src/styles'),
       '~src': path.join(__dirname, 'src'),
-      '~npm': path.join(__dirname, 'node_modules'),
+      '~npm': path.join(__dirname, 'node_modules')
     },
     extensions: ['.js', '.jsx'],
-    modules: [path.resolve(__dirname, 'src'), 'node_modules'],
+    modules: [path.resolve(__dirname, 'src'), 'node_modules']
   },
   webpack5: true,
   sassOptions: {
-    includePaths: [path.join(__dirname, 'styles')],
+    includePaths: [path.join(__dirname, 'styles')]
   },
   eslint: {
-    ignoreDuringBuilds: true,
-  },
+    ignoreDuringBuilds: true
+  }
 };
