@@ -7,13 +7,15 @@ import { withAuth } from '@/utils/authProvider';
 import { BasicInput } from '@/components/basic-elements/basic-input';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { Button } from '@material-ui/core';
+import { Button, Checkbox } from '@material-ui/core';
 import { InputsBlock } from '@/components/basic-blocks/inputs-block';
 import classes from './index.module.scss';
 import { Divider } from '@/components/basic-elements/divider';
 import { getCart } from '@/store/cart/actions';
 import Cart from '@/api/Cart';
 import { BasicDatePicker } from '@/components/basic-elements/basic-date-picker';
+import CheckboxIconUnchecked from '@/components/elements/checkbox-icon/checkbox-icon-unchecked';
+import CheckboxIcon from '@/components/elements/checkbox-icon';
 
 const zipcodeRegExp = /^\d{4}[a-zA-Z]{2}|\d{4}\s[a-zA-Z]{2}$/;
 
@@ -57,12 +59,12 @@ const OrderConfirmPage = () => {
         address: res.data.pk,
         customer_name: values.name,
         phone_number: values.phone.replaceAll(/[^\d]/g, ''),
-        delivery_date: values.date.toISOString()
+        delivery_date: values.date.toISOString(),
+        keep_address: values.save_address
       };
 
       Cart.postOrder(orderData).then(async r => {
         const url = r.data.url;
-        console.log(r);
         await localStorage.setItem('order', JSON.stringify(r.data));
         await localStorage.setItem('cart', JSON.stringify(cart));
         router.push('/order-congratulation');
@@ -73,15 +75,16 @@ const OrderConfirmPage = () => {
 
   const formik = useFormik({
     initialValues: {
-      email: 'example@mail.com',
-      name: 'Name',
-      phone: '790990999',
+      email: '',
+      name: '',
+      phone: '',
       city: 'Amsterdam',
-      street: 'Street',
-      house: 'house',
-      flat: 'flat',
-      zipcode: '1234aa',
-      date: new Date()
+      street: '',
+      house: '',
+      flat: '',
+      zipcode: '',
+      date: new Date(),
+      save_address: false
     },
     validationSchema: validationSchema,
     onSubmit: values => handleSumbit(values)
@@ -110,7 +113,22 @@ const OrderConfirmPage = () => {
               <BasicInput formik={formik} size={0.5} label="House" name="house" placeholder="Enter your house" />
               <BasicInput formik={formik} size={0.5} label="Flat" name="flat" placeholder="Enter your flat" />
               <BasicInput formik={formik} label="Zipcode" name="zipcode" placeholder="Enter your zipcode" />
-              <BasicDatePicker formik={formik} label="Date" />
+              <BasicDatePicker formik={formik} label="Date" name="date" />
+              <div className={classes.checkbox_wrapper}>
+                <Checkbox
+                  icon={<CheckboxIconUnchecked />}
+                  checkedIcon={<CheckboxIcon />}
+                  checked={formik.values.save_address}
+                  value={formik.values.save_address}
+                  onChange={formik.handleChange}
+                  id="save_address"
+                  name="save_address"
+                  color="primary"
+                />
+                <label className={classes.checkbox_label} htmlFor="save_address">
+                  Save address
+                </label>
+              </div>
             </InputsBlock.TabPanel>
             <InputsBlock.TabPanel index={1}>
               <div className={classes.address__container}>

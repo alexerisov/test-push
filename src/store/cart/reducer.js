@@ -52,11 +52,15 @@ export default reducer(initState, {
 
   [types.UPDATE_CART_ITEM_SUCCESS]: (state, action) => {
     const updatedItem = action.payload;
+
     const updatedCart = state.products.map(el => (el.pk === updatedItem.pk ? { ...el, count: updatedItem.count } : el));
+    const updatedSum = updatedCart?.reduce((acc, val) => acc + val.object.price * val?.count, 0);
+    const updatedTotal = updatedSum + state.deliveryPrice;
 
     return {
       ...state,
       products: updatedCart,
+      total: updatedTotal,
       isLoading: true
     };
   },
