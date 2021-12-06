@@ -30,7 +30,7 @@ steps:
         from_secret: DOCKER_HUB_USERNAME # from org secrets
       DOCKER_HUB_PASSWORD:
         from_secret: DOCKER_HUB_PASSWORD # from org secrets
-      MAIN_IMAGE: goodbitdev/builds:build-ec-client-stage-${DRONE_COMMIT_SHA:0:7}
+      MAIN_CLIENT_IMAGE: goodbitdev/builds:build-ec-client-stage-${DRONE_COMMIT_SHA:0:7}
     volumes:
       - name: docker_sock
         path: /var/run/docker.sock
@@ -40,8 +40,8 @@ steps:
       - docker build --build-arg NODE_ENV=stage -t $MAIN_CLIENT_IMAGE .
       - docker logout  # for some reason required
       - echo $DOCKER_HUB_PASSWORD | docker login docker.io -u $DOCKER_HUB_USERNAME --password-stdin
-      - echo $MAIN_IMAGE
-      - docker push $MAIN_IMAGE
+      - echo $MAIN_CLIENT_IMAGE
+      - docker push $MAIN_CLIENT_IMAGE
       - docker container prune --force --filter "until=36h"
       - docker image prune -a --force --filter "until=36h"
     when:
