@@ -13,8 +13,11 @@ def build():
     return
 
 
-def deploy():
-    build()
+def deploy(docker_image=''):
+    if docker_image:
+        pull_main_client_image_by_name(docker_image)
+    else:
+        build()
     stop_and_up_services()
     return
 
@@ -50,6 +53,14 @@ def check_network():
 
 def pull_main_client_image():
     os.system(f'docker pull "{os.environ.get("MAIN_CLIENT_IMAGE")}"')
+    return
+
+
+def pull_main_client_image_by_name(docker_image):
+    os.system(f'docker pull "{docker_image}"')
+    os.environ.update(dict(
+        MAIN_CLIENT_IMAGE=docker_image
+    ))
     return
 
 
