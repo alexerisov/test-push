@@ -20,4 +20,6 @@ RUN yarn build
 HEALTHCHECK --interval=12s --timeout=12s --start-period=10s \
  CMD curl --fail http://localhost:3000/health || exit 1
 
-RUN if [ -z "$BUILD_ONLY" ] ; then yarn start ; fi
+RUN echo "BUILD_ONLY $BUILD_ONLY"
+
+RUN if [[ -z "$BUILD_ONLY" ]] ; then yarn start ; fi
