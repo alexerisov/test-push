@@ -32,14 +32,14 @@ export const Basket = props => {
       {products?.length > 0 &&
         products.map((el, id) => (
           <TextElement key={id} text={el.object.title} count={el.count}>
-            ${el.count * el.object.price}
+            ${Number.parseFloat(el.count * el.object.price).toFixed(2)}
           </TextElement>
         ))}
 
-      <TextElement text="Delivery">{deliveryPrice}</TextElement>
+      <TextElement text="Delivery">{Number.parseFloat(deliveryPrice).toFixed(2)}</TextElement>
 
       <div className={classes.basket__total}>
-        <TextElement text="Total">${total ?? 0}</TextElement>
+        <TextElement text="Total">${Number.parseFloat(total).toFixed(2) ?? 0}</TextElement>
       </div>
 
       {props.withButton && (

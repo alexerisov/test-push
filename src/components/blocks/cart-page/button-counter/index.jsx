@@ -29,11 +29,11 @@ export const CounterButton = props => {
 
   return (
     <div className={classes.container} size="small" aria-label="counter">
-      <CountButton className={classes.button} disabled={count <= 1} onClick={handleDecrement}>
+      <CountButton className={classes.container__button} disabled={count <= 1} onClick={handleDecrement}>
         <RemoveRoundedIcon />
       </CountButton>
-      <Typography className={classes.input}>{count}</Typography>
-      <CountButton className={classes.button} onClick={handleIncrement}>
+      <Typography className={classes.container__input}>{count}</Typography>
+      <CountButton className={classes.container__button} onClick={handleIncrement}>
         <AddRoundedIcon />
       </CountButton>
     </div>

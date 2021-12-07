@@ -23,7 +23,7 @@ const CookiesBanner = props => {
 
   return !isVisible && !account.hasToken ? (
     <div className={classes.cookiesBanner}>
-      <Alert severity="info">
+      <Alert severity="info" className={classes.alert}>
         <div className={classes.cookiesBanner__container}>
           <p>
             Eatchefs and selected partners use cookies for to help out site function properly for you. In addition to

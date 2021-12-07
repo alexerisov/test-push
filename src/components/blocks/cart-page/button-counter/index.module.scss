@@ -3,73 +3,30 @@
 
 
 .container {
-  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  max-width: 71px;
-  max-height: 29px;
+  width: 128px !important;
+  height: 42px !important;
   border: 1px solid #DCDCDC;
-  border-radius: 5px;
+  border-radius: 21px;
   font-variant-numeric: tabular-nums;
 
   &__input {
-    font-family: 'Gotham Pro', sans-serif;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 15px;
-    text-align: center;
-    color: #333;
+    flex: 1;
+    font-family: 'Gotham Pro', sans-serif !important;
+    font-style: normal !important;
+    font-weight: 600 !important;
+    font-size: 16px !important;
+    line-height: 15px !important;
+    text-align: center !important;
+    color: #333 !important;
   }
 
   &__button {
-    height: 29px;
-    padding: 0;
-
+    flex: 1 1 40px !important;
+    border-radius: 21px !important;
+    height: 42px !important;
   }
-
-  @media (max-width: 1280px) {
-      max-width: 62px;
-      max-height: 26px;
-
-  &__input {
-    font-size: 14px;
-    line-height: 13px;
-  }
-
-  &__button {
-
-  }
-  }
-
-  @media (max-width: 960px) {
-    max-width: 62px;
-    max-height: 26px;
-
-  &__input {
-    font-size: 11px;
-    line-height: 10px;
-  }
-
-  &__button {
-
-  }
-  }
-
-  @media (max-width: 600px) {
-      max-width: 61px;
-      max-height: 25px;
-
-  &__input {
-    font-size: 14px;
-    line-height: 13px;
-  }
-
-  &__button {
-
-  }
-  }
-
 }
 

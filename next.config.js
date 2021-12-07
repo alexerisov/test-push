@@ -43,6 +43,9 @@ module.exports = {
         test: /\.(svg|png|jpe?g|gif)$/i,
         use: [
           {
+            loader: require.resolve('@svgr/webpack')
+          },
+          {
             loader: 'file-loader',
             options: {
               name: 'static/images/[name].[contenthash].[ext]'
