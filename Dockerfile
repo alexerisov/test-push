@@ -2,7 +2,6 @@
 FROM node:14.15
 
 ARG NODE_ENV=production
-ARG BUILD_ONLY=N
 
 RUN echo "NODE_ENV $NODE_ENV"
 
@@ -21,6 +20,4 @@ RUN yarn build
 HEALTHCHECK --interval=12s --timeout=12s --start-period=10s \
  CMD curl --fail http://localhost:3000/health || exit 1
 
-RUN echo "BUILD_ONLY $BUILD_ONLY"
-
-RUN if [ "$BUILD_ONLY" = 'N' ] ; then yarn start ; fi
+CMD ["yarn", "start"]
