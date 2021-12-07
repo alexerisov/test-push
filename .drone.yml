@@ -171,4 +171,3 @@ volumes:
     host:
       path: /var/run/docker.sock
 
-# test deploy
