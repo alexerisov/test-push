@@ -3,7 +3,7 @@ FROM node:14.15
 
 ARG NODE_ENV=production
 
-RUN echo "NODE_ENV $NODE_ENV"
+RUN echo "NODE_ENV ${NODE_ENV}"
 
 # set working directory
 WORKDIR /app
