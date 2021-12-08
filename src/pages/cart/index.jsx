@@ -8,10 +8,11 @@ import Cookies from 'cookies';
 import Recipe from '@/api/Recipe';
 import Cart from '@/api/Cart';
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { setCart } from '@/store/cart/actions';
+import { getCart, setCart } from '@/store/cart/actions';
 import { useRouter, withRouter } from 'next/router';
 import { withAuth } from '@/utils/authProvider';
 import classes from './index.module.scss';
+import { IngredientsModal } from '@/components/basic-blocks/ingredients-modal';
 
 const useStyles = makeStyles(theme => ({
   tabs: {
@@ -19,19 +20,18 @@ const useStyles = makeStyles(theme => ({
   },
   content: {
     display: 'grid',
-    gridTemplateColumns: 'auto 400px',
     marginBottom: '2rem;'
   },
   [theme.breakpoints.up('md')]: {
     content: {
       gridTemplateColumns: 'auto 400px',
-      columnGap: '40px',
-      marginBottom: '2rem'
+      columnGap: '56px'
     }
   },
   [theme.breakpoints.only('sm')]: {
     content: {
-      gridTemplateColumns: '1fr'
+      gridTemplateColumns: '1fr 1fr',
+      columnGap: '56px'
     }
   },
   [theme.breakpoints.only('xs')]: {
@@ -41,34 +41,45 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+export const CartContext = React.createContext({});
+
 const CartPage = props => {
   const router = useRouter();
   const dispatch = useDispatch();
   const styles = useStyles();
-  const [selectedTab, setSelectedTab] = useState(1);
   const data = useSelector(state => state.cart);
+  const [ingredientsModalData, setIngredientsModalData] = useState();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    dispatch(setCart(props.data));
+    dispatch(getCart());
   }, []);
 
-  const onTabChange = (event, newValue) => {
-    setSelectedTab(newValue);
-    router.replace(router.asPath);
+  const openModalHandler = () => {
+    setIsModalOpen(true);
   };
 
-  const tabsProps = {
-    selectedTab,
-    onTabChange
+  const closeModalHandler = () => {
+    setIsModalOpen(false);
+  };
+
+  const modalProps = {
+    setIngredientsModalData,
+    isModalOpen,
+    openModalHandler,
+    closeModalHandler
   };
 
   let content = (
     <div className={styles.tabs}>
       <div className={classes.header}>Your Cart</div>
       <div className={styles.content}>
-        <TabContent products={data.products} selectedTab={selectedTab} />
+        <CartContext.Provider value={{ setIngredientsModalData, openModalHandler }}>
+          <TabContent products={data.products} />
+        </CartContext.Provider>
         <Basket cart={data} withButton />
       </div>
+      <IngredientsModal data={ingredientsModalData} {...modalProps} />
     </div>
   );
 
@@ -82,30 +93,13 @@ const connector = connect(state => ({
 export default withRouter(withAuth(connector));
 
 export async function getServerSideProps(context) {
-  const cookies = new Cookies(context.req, context.res);
-  const targetCookies = cookies.get('aucr');
-  const token = !targetCookies ? undefined : decodeURIComponent(cookies.get('aucr'));
-  const isAuthenticated = Boolean(token);
-
   try {
-    const delivery = await Cart.getDeliveryPrice();
-    const deliveryPrice = delivery.data.price;
-
-    const response = await Cart.getProductList(token);
-    const cartList = await response.data.results;
-
-    const productsData = await Promise.all(
-      cartList.map(async item => {
-        let itemResponse = await Recipe.getRecipe(item.object_id);
-        return { ...item, object: itemResponse.data };
-      })
-    );
-    const productsSum = productsData?.reduce((acc, val) => acc + val.object.price * val?.count, 0);
-    const total = productsSum + deliveryPrice;
-
+    const cookies = new Cookies(context.req, context.res);
+    const targetCookies = cookies.get('aucr');
+    const token = !targetCookies ? undefined : decodeURIComponent(cookies.get('aucr'));
+    const isAuthenticated = Boolean(token);
     return {
       props: {
-        data: { products: productsData, total, deliveryPrice },
         isAuthenticated,
         absolutePath: context.req.headers.host
       }

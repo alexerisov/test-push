@@ -1,8 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { CartItemRecipe } from '@/components/blocks/cart-page/cart-item-recipe';
-import TabPanel from '@/components/elements/tab-panel-cuisines';
-import { CartItemIngredients } from '@/components/blocks/cart-page/cart-item-ingredients';
 import classes from './index.module.scss';
 import Typography from '@material-ui/core/Typography';
 
@@ -37,13 +35,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const TabContent = props => {
-  const { selectedTab, products } = props;
+  const { products } = props;
   const styles = useStyles();
-
   return (
     <div className={styles.tab_content}>
       {!products?.length > 0 && <Typography variant="h4">You have no items in your shopping cart. </Typography>}
-      <TabPanel className={styles.tab_dishes} value={selectedTab} index={1}>
+      <div className={styles.tab_dishes}>
         {products?.length > 0 &&
           products.map(item => (
             <CartItemRecipe
@@ -53,7 +50,7 @@ export const TabContent = props => {
               recipe={item.object}
             />
           ))}
-      </TabPanel>
+      </div>
     </div>
   );
 };

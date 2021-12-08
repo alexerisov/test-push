@@ -5,7 +5,7 @@
 .card {
   display: grid;
   position: relative;
-  grid-template-columns: auto auto;
+  grid-template-columns: 1fr 2fr;
   opacity: 1;
   animation-name: fadeInOpacity;
   animation-iteration-count: 1;
@@ -22,7 +22,6 @@
 
   &__media {
     min-height: 100%;
-    min-width: 242px;
   }
 
   &__content_root {
@@ -39,6 +38,10 @@
   }
 
   &__title {
+    max-width: 310px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     & a:focus, & a:hover, & a:visited, & a:link, & a:active {
       color: inherit;
     }
