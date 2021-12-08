@@ -78,10 +78,9 @@ steps:
         from_secret: DOCKER_HUB_PASSWORD # from org secrets
     settings:
       host: eatchefs.goodbit.dev
-      username: drone
-      password:
-        # TODO: ssh key to authorize didn't work for some reason
-        from_secret: EATCHEFS_STAGE_PASSWORD_FOR_DRONE_USER # from org secret
+      username: nitsenko94
+      key:
+          from_secret: SSH_PRIVATE_KEY  # from org secrets
       port: 22
       script:
         # - whoami
@@ -126,11 +125,10 @@ steps:
       DOCKER_HUB_PASSWORD:
         from_secret: DOCKER_HUB_PASSWORD # from org secrets
     settings:
-      host: eatchefs2.goodbit.dev
-      username: drone
-      password:
-        # TODO: ssh key to authorize didn't work for some reason
-        from_secret: EATCHEFS_STAGE_PASSWORD_FOR_DRONE_USER # from org secret
+      host: test.eatchefs.com
+      username: nitsenko94
+      key:
+          from_secret: SSH_PRIVATE_KEY  # from org secrets
       port: 22
       script:
         # - whoami
