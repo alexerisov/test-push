@@ -172,6 +172,13 @@ export const APPROVED_STATUS = {
   3: 'Rejected'
 };
 
+export const SALE_STATUS = {
+  4: 'Awaiting action',
+  5: 'Approved for production',
+  6: 'Rejected for production',
+  7: 'No sale'
+};
+
 export const IS_APPROVED = {
   approved: 2,
   rejected: 3
@@ -283,6 +290,9 @@ export const notificationTypesTitle = {
   },
   7: payload => {
     return `${payload.count} new comment in your Chef Pencil Record`;
+  },
+  8: payload => {
+    return `Recipe ${SALE_STATUS[payload?.status]}`;
   }
 };
 

@@ -17,6 +17,7 @@ import { Divider } from '@/components/basic-elements/divider';
 import { Button, IconButton, SvgIcon } from '@material-ui/core';
 import { cookingSkill, recipeTypes } from '@/utils/datasets';
 import Link from 'next/link';
+import { CartContext } from '@/pages/cart';
 
 const StyledCardMedia = styled(CardMedia)`
   .MuiCardMedia-root {
@@ -27,17 +28,18 @@ const StyledCardMedia = styled(CardMedia)`
 export const CartItemRecipe = props => {
   const { cartItemId, cartItemAmount, recipe } = props;
   const title = recipe.title;
-  const image = recipe.images[0]?.url;
+  const image = recipe.images?.[0]?.url;
   const price = recipe.price;
 
   const dispatch = useDispatch();
-
+  const context = React.useContext(CartContext);
   const onDeleteHandler = () => {
     dispatch(removeFromCart(cartItemId));
   };
 
   const viewAllHandler = () => {
-    console.log('view all');
+    context.setIngredientsModalData({ cartItemId });
+    context.openModalHandler();
   };
 
   return (
@@ -61,12 +63,10 @@ export const CartItemRecipe = props => {
           <div className={classes.categories}>
             <div className={classes.element_container}>
               <IceCreamIcon style={{ marginRight: 10 }} />
-              {recipe.types.length !== 0 &&
-                recipe.types.map((item, index) => (
-                  <span className={classes.element_text} key={index}>
-                    {recipeTypes[item]}
-                  </span>
-                ))}
+
+              <span className={classes.element_text}>
+                {recipe.types.length > 0 ? recipe.types.map(item => recipeTypes?.[item] + ' ') : 'Not defined'}
+              </span>
             </div>
             <div className={classes.element_container}>
               <HatChefIcon style={{ marginRight: 10 }} />

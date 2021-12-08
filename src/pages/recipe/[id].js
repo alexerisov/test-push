@@ -331,7 +331,7 @@ function RecipePage(props) {
                     </div>
                   </div>
                   <div className={classes.recipe__video__player_row}>
-                    {props.account.hasToken && recipe.status === 5 && (
+                    {props.account.hasToken && recipe.sale_status === 5 && (
                       <button
                         className={classes.recipe__video__likes_last}
                         disabled={isRecipeInCart}

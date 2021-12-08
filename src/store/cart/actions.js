@@ -38,12 +38,11 @@ export const getCart = () => {
       const productsData = await Promise.all(
         cartList.map(async item => {
           let itemResponse = await Recipe.getRecipe(item.object_id);
-          console.log(total);
           return { ...item, object: itemResponse.data };
         })
       );
       const productsSum = productsData?.reduce((acc, val) => acc + val.object.price * val?.count, 0);
-      const total = productsSum + deliveryPrice;
+      const total = (productsSum + deliveryPrice).toFixed(2);
       dispatch({ type: types.GET_CART_SUCCESS, payload: { productsData, total, deliveryPrice } });
     } catch (e) {
       console.error(e);
