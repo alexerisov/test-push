@@ -46,7 +46,7 @@ const OrderConfirmPage = () => {
     dispatch(getCart());
   }, []);
 
-  const handleSumbit = values => {
+  const handleSumbit = async values => {
     const addressData = {
       zipcode: values.zipcode,
       city: values.city,
@@ -54,23 +54,21 @@ const OrderConfirmPage = () => {
       house: values.house
     };
 
-    Cart.postAddress(addressData).then(res => {
-      const orderData = {
+    const orderData = await Cart.postAddress(addressData).then(res => {
+      return {
         address: res.data.pk,
         customer_name: values.name,
         phone_number: values.phone.replaceAll(/[^\d]/g, ''),
         delivery_date: values.date.toISOString(),
         keep_address: values.save_address
       };
-
-      Cart.postOrder(orderData).then(async r => {
-        const url = r.data.url;
-        await localStorage.setItem('order', JSON.stringify(r.data));
-        await localStorage.setItem('cart', JSON.stringify(cart));
-        router.push('/order-congratulation');
-        window.open(url, '_ blank');
-      });
     });
+
+    const order = await Cart.postOrder(orderData).then(r => r.data);
+    await localStorage.setItem('order', JSON.stringify(order));
+    await localStorage.setItem('cart', JSON.stringify(cart));
+    window.open(order.url, '_ blank');
+    router.push('/order-congratulation');
   };
 
   const formik = useFormik({
