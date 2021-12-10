@@ -76,7 +76,8 @@ module.exports = {
       '@': path.join(__dirname, 'src'),
       '~styles': path.join(__dirname, 'src/styles'),
       '~src': path.join(__dirname, 'src'),
-      '~npm': path.join(__dirname, 'node_modules')
+      '~npm': path.join(__dirname, 'node_modules'),
+      '~public': path.join(__dirname, 'public')
     },
     extensions: ['.js', '.jsx'],
     modules: [path.resolve(__dirname, 'src'), 'node_modules']
