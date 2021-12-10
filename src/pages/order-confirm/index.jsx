@@ -7,7 +7,7 @@ import { withAuth } from '@/utils/authProvider';
 import { BasicInput } from '@/components/basic-elements/basic-input';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { Button, Checkbox } from '@material-ui/core';
+import { Button, Checkbox, CircularProgress } from '@material-ui/core';
 import { InputsBlock } from '@/components/basic-blocks/inputs-block';
 import classes from './index.module.scss';
 import { Divider } from '@/components/basic-elements/divider';
@@ -41,12 +41,14 @@ const OrderConfirmPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const cart = useSelector(state => state.cart);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     dispatch(getCart());
   }, []);
 
-  const handleSumbit = async values => {
+  const handleSubmit = async values => {
+    await setIsLoading(true);
     const addressData = {
       zipcode: values.zipcode,
       city: values.city,
@@ -54,21 +56,32 @@ const OrderConfirmPage = () => {
       house: values.house
     };
 
-    const orderData = await Cart.postAddress(addressData).then(res => {
-      return {
-        address: res.data.pk,
-        customer_name: values.name,
-        phone_number: values.phone.replaceAll(/[^\d]/g, ''),
-        delivery_date: values.date.toISOString(),
-        keep_address: values.save_address
-      };
-    });
+    const orderData = await Cart.postAddress(addressData)
+      .then(res => {
+        return {
+          address: res.data.pk,
+          customer_name: values.name,
+          phone_number: values.phone.replaceAll(/[^\d]/g, ''),
+          delivery_date: values.date.toISOString(),
+          keep_address: values.save_address
+        };
+      })
+      .catch(e => {
+        setIsLoading(false);
+        return e;
+      });
 
-    const order = await Cart.postOrder(orderData).then(r => r.data);
+    const order = await Cart.postOrder(orderData)
+      .then(r => r.data)
+      .catch(e => {
+        setIsLoading(false);
+        return e;
+      });
     await localStorage.setItem('order', JSON.stringify(order));
     await localStorage.setItem('cart', JSON.stringify(cart));
     window.open(order.url, '_ blank');
     router.push('/order-congratulation');
+    setIsLoading(false);
   };
 
   const formik = useFormik({
@@ -85,8 +98,10 @@ const OrderConfirmPage = () => {
       save_address: false
     },
     validationSchema: validationSchema,
-    onSubmit: values => handleSumbit(values)
+    onSubmit: values => handleSubmit(values)
   });
+
+  const ButtonSpinner = () => <CircularProgress color="white" />;
 
   let content = (
     <div className={classes.content}>
@@ -158,8 +173,8 @@ const OrderConfirmPage = () => {
               <div>Credit card</div>
             </InputsBlock.TabPanel>
           </InputsBlock>
-          <Button type="submit" className={classes.content__button}>
-            Confirm and Pay
+          <Button startIcon={isLoading && <ButtonSpinner />} type="submit" className={classes.content__button}>
+            Confirm and pay
           </Button>
         </form>
       </div>
