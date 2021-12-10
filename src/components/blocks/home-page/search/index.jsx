@@ -8,8 +8,10 @@ import Recipe from '@/api/Recipe';
 import { modalActions } from '@/store/actions';
 import TextField from '@material-ui/core/TextField';
 import Link from 'next/link';
+import { useDispatch } from 'react-redux';
 
 const SearchInput = () => {
+  const dispatch = useDispatch();
   const router = useRouter();
   const [result, setResult] = useState([]);
 
@@ -28,6 +30,14 @@ const SearchInput = () => {
       );
     }
   });
+
+  const handleClickSearch = name => {
+    return () => {
+      dispatch(modalActions.open(name)).then(result => {
+        // result when modal return promise and close
+      });
+    };
+  };
 
   const onChangeInputSearch = search => {
     if (!search.length) {
@@ -90,7 +100,11 @@ const SearchInput = () => {
           ) : (
             <div className={classes.search__grid} />
           )}
-          <Button type="submit" variant="contained" color="primary" className={classes.search__buttonSubmit}>
+          <Button
+            onClick={handleClickSearch('search')}
+            variant="contained"
+            color="primary"
+            className={classes.search__buttonSubmit}>
             Submit
           </Button>
         </div>

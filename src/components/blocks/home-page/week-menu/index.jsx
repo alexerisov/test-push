@@ -13,33 +13,7 @@ import { cookingSkill, recipeTypes } from '@/utils/datasets';
 import { ReactComponent as HatChefIcon } from '../../../../../public/icons/Hat Chef/Line.svg';
 import { Divider } from '@/components/basic-elements/divider';
 import { CounterButton } from '@/components/blocks/cart-page/button-counter';
-
-const RecipeCard = props => {
-  const { recipe } = props;
-  const title = recipe.title;
-  const image = recipe.images?.[0]?.url;
-  const price = recipe.price;
-
-  return (
-    <Card className={classes.card} variant="outlined">
-      <Link href={`/recipe/${recipe.pk}`}>
-        <a>
-          <CardMedia className={classes.card__media} image={image ?? logo} title={title} />
-        </a>
-      </Link>
-      <CardContent className={classes.card__content_root}>
-        <div className={classes.card__content}>
-          <Typography variant="h6" noWrap className={classes.card__title} title={title}>
-            <Link href={`/recipe/${recipe.pk}`}>
-              <a>{title}</a>
-            </Link>
-          </Typography>
-        </div>
-        <Divider m="20px 0" />
-      </CardContent>
-    </Card>
-  );
-};
+import { RecipeCard } from '@/components/basic-blocks/recipe-card';
 
 const RecipeSlider = () => {
   const [recipes, setRecipes] = useState([]);

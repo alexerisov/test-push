@@ -63,14 +63,6 @@ const Home = props => {
     }
   };
 
-  const handleClickSearch = name => {
-    return () => {
-      props.dispatch(modalActions.open(name)).then(result => {
-        // result when modal return promise and close
-      });
-    };
-  };
-
   const content = (
     <>
       <SearchBlock />

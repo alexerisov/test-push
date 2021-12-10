@@ -5,6 +5,16 @@
 .container {
   padding: 60px 0;
 
+  .card {
+    display: flex;
+    flex-direction: column;
+
+    &_media {
+      width: 100%;
+      height: auto;
+    }
+  }
+
   .slider {
     &_title {
       font-style: normal;
@@ -14,6 +24,7 @@
       letter-spacing: 0.01em;
       color: #14181F;
     }
+
     &_subtitle {
       font-style: normal;
       font-weight: normal;
@@ -28,7 +39,9 @@
 
       &_list{
         display: flex;
+        height: auto;
         flex-direction: row;
+        overflow-x: scroll;
       }
     }
   }
