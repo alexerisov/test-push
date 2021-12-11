@@ -5,16 +5,6 @@
 .container {
   padding: 60px 0;
 
-  .card {
-    display: flex;
-    flex-direction: column;
-
-    &_media {
-      width: 100%;
-      height: auto;
-    }
-  }
-
   .slider {
     &_title {
       font-style: normal;
@@ -24,7 +14,6 @@
       letter-spacing: 0.01em;
       color: #14181F;
     }
-
     &_subtitle {
       font-style: normal;
       font-weight: normal;
@@ -32,16 +21,29 @@
       line-height: 160%;
       letter-spacing: 0.01em;
       color: #566481;
+      margin-bottom: 73px;
+    }
+
+    &_arrows_container {
     }
 
     &_body {
-      height: 355px;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+
+      [class*="control-arrow"] {
+        display: none;
+      }
+
+      ul {
+        display: flex;
+
+      }
 
       &_list{
         display: flex;
-        height: auto;
         flex-direction: row;
-        overflow-x: scroll;
       }
     }
   }
