@@ -5,6 +5,7 @@ import HeaderDefault from '@/components/elements/header-default';
 import Head from 'next/head';
 import CookiesBanner from '@/components/banners/cookies-banner';
 import Header from '@/components/basic-blocks/header';
+import { Footer } from '@/components/basic-blocks/footer';
 
 const LayoutPage = ({ header, content }) => {
   const defaultHeader = <Header />;
@@ -20,7 +21,7 @@ const LayoutPage = ({ header, content }) => {
         <header>{header ?? defaultHeader}</header>
         <main className={classes.layout__content}>{content}</main>
         <footer>
-          <LayoutFooter />
+          <Footer />
         </footer>
       </section>
       <CookiesBanner />

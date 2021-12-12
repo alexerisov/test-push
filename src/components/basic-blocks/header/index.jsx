@@ -16,6 +16,7 @@ import { getCart } from '@/store/cart/actions';
 import Account from '@/api/Account';
 import Link from 'next/link';
 import { USER_TYPE } from '@/utils/datasets';
+
 const Header = props => {
   const useSeparatorStyles = makeStyles({
     root: {
@@ -39,8 +40,6 @@ const Header = props => {
 
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
-    console.log(event.currentTarget);
-    console.log(event.target);
   };
 
   useEffect(() => {

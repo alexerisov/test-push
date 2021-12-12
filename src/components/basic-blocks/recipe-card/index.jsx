@@ -8,11 +8,12 @@ import { useRouter } from 'next/router';
 import classes from './index.module.scss';
 import { CounterButton } from '@/components/blocks/cart-page/button-counter';
 import Typography from '@material-ui/core/Typography';
-import { useDispatch } from 'react-redux';
-import { removeFromCart } from '@/store/cart/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart, removeFromCart } from '@/store/cart/actions';
 import { Divider } from '@/components/basic-elements/divider';
 import { ReactComponent as CartIcon } from '../../../../public/icons/Shopping Cart/Line.svg';
 import { Button } from '@material-ui/core';
+import { modalActions } from '@/store/actions';
 
 const StyledCardMedia = styled(CardMedia)`
   .MuiCardMedia-root {
@@ -30,6 +31,18 @@ export const RecipeCard = props => {
 
   const router = useRouter();
   const dispatch = useDispatch();
+
+  const isAuthorized = useSelector(state => state.account.hasToken);
+  const isRecipeInCart = useSelector(state => state.cart.products?.some(el => el.object_id == recipe?.pk));
+  const isRecipeNotSale = recipe?.price === 0 || recipe?.sale_status !== 5;
+
+  const handleClick = name => {
+    return () => {
+      dispatch(modalActions.open(name)).then(result => {
+        // result when modal return promise and close
+      });
+    };
+  };
 
   const redirectToRecipeCard = id => {
     router.push(`/recipe/${id}`);
@@ -52,8 +65,14 @@ export const RecipeCard = props => {
           <p className={classes.card__author}>{`by Chef ${author}`}</p>
         </div>
       </CardContent>
-      <Button className={classes.card_button} startIcon={<CartIcon />}>
-        ${price}
+      <Button
+        disabled={isRecipeInCart || isRecipeNotSale}
+        onClick={isAuthorized ? dispatch(addToCart(recipe?.pk)) : handleClick('register')}
+        className={classes.card_button}
+        startIcon={<CartIcon />}>
+        {!isRecipeInCart && !isRecipeNotSale && `$${price}`}
+        {isRecipeNotSale && `Not sale`}
+        {isRecipeInCart && `Added`}
       </Button>
     </Card>
   );

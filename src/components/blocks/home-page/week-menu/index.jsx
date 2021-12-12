@@ -12,17 +12,15 @@ const Arrows = props => {
   return (
     <div className={classes.slider_arrows_container}>
       <IconButton
-        disabled={currentSlide === 1}
         className={classes.arrows_button}
         size="22px"
-        onClick={() => setSlide((currentSlide - 1) % recipes?.length)}>
+        onClick={() => setSlide((currentSlide - 5) % recipes?.length)}>
         <ArrowLeftIcon />
       </IconButton>
       <IconButton
-        disabled={currentSlide === recipes?.length - 2}
         className={classes.arrows_button}
         size="22px"
-        onClick={() => setSlide((currentSlide + 1) % recipes?.length)}>
+        onClick={() => setSlide((currentSlide + 5) % recipes?.length)}>
         <ArrowRightIcon />
       </IconButton>
     </div>
@@ -39,7 +37,6 @@ const RecipeSlider = props => {
         showArrows={false}
         showThumbs={false}
         centerMode
-        emulateTouch
         swipeable
         infiniteLoop
         centerSlidePercentage={100 / displayCount}
