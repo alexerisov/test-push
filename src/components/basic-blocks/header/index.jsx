@@ -113,11 +113,11 @@ const Header = props => {
   );
 
   const UserAvatar = () => {
-    const avatar = useSelector(state => state?.profile.data?.avatar);
+    const avatar = useSelector(state => state?.account?.profile?.avatar);
     return (
       <span>
         <div className={classes.button_avatar}>
-          <Avatar alt="User" src={avatar && '/public/icons/Shopping Cart/Line.svg'} />
+          <Avatar alt="User" src={avatar} />
           {!notificationAmount?.length > 0 && <RedCircle />}
         </div>
       </span>
@@ -168,7 +168,7 @@ const Header = props => {
             </span>
           )}
           <StyledMenu c id="simple-menu" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
-            <MenuListItem text="Account Settings" icon={<UserIcon />} path="/account-settings" />
+            <MenuListItem text="Account Settings" icon={<UserIcon />} path="/profile/account-settings" />
             <MenuListItem
               text="Notifications"
               icon={<BellIcon />}
