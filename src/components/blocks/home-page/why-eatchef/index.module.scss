@@ -3,6 +3,7 @@
 
 
 .layout {
+  padding: 60px 160px !important;
   display: grid;
   grid-template-columns: minmax(128px, auto) minmax(640px, auto);
   min-height: 959px;
@@ -118,6 +119,7 @@
 
   @media (max-width: 960px) {
     .layout {
+      padding: 60px 80px !important;
       &_column1 {
 
       }
@@ -135,6 +137,7 @@
 
   @media (max-width: 600px) {
     .layout {
+      padding: 60px 32px !important;
       grid-template-columns: 1fr;
 
       &_column1 {
@@ -146,7 +149,7 @@
       }
 
       .three_images {
-        width: 100%;
+        width: 300px !important;
         height: auto;
         object-position: center;
       }

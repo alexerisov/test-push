@@ -1,0 +1,21 @@
+@import '~styles/variables.scss';
+
+.layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100%;
+    overflow: hidden;
+
+    &__content {
+      box-sizing: border-box;
+      margin-top: 122px;
+      max-width: 1440px;
+      flex: 1;
+      background-color: yellow;
+    }
+}
+
+
+
+
