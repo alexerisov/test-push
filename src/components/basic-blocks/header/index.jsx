@@ -116,9 +116,10 @@ const Header = props => {
     const avatar = useSelector(state => state?.account?.profile?.avatar);
     return (
       <span>
+        {console.log('notifications', notificationAmount)}
         <div className={classes.button_avatar}>
           <Avatar alt="User" src={avatar} />
-          {!notificationAmount?.length > 0 && <RedCircle />}
+          {notificationAmount && notificationAmount !== 0 ? <RedCircle /> : false}
         </div>
       </span>
     );
