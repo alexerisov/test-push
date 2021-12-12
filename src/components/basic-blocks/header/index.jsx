@@ -17,17 +17,14 @@ import Link from 'next/link';
 import { USER_TYPE } from '@/utils/datasets';
 import MenuItem from '@material-ui/core/MenuItem';
 
-const Header = props => {
-  const StyledMenu = styled(Menu)`
-    margin: 40px 0 0 0;
-    position: absolute;
-    top: 0;
-    right: 0;
-    li {
-      padding: 0;
-    }
-  `;
+const StyledMenu = styled(Menu)`
+  margin: 40px 0 0 0;
+  li {
+    padding: 0;
+  }
+`;
 
+const Header = props => {
   const useSeparatorStyles = makeStyles({
     root: {
       borderBottom: '2px solid #f8f8f8'
@@ -37,6 +34,7 @@ const Header = props => {
   const mobile = useMediaQuery('(max-width: 768px)');
   const [isExpanded, setExpanded] = React.useState(false);
   const separatorStyles = useSeparatorStyles();
+
   const handleClickLogin = name => {
     return () => {
       props.dispatch(modalActions.open(name)).then(result => {
@@ -49,6 +47,8 @@ const Header = props => {
 
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
+    console.log(event.currentTarget);
+    console.log(event.target);
   };
 
   useEffect(() => {
@@ -67,10 +67,6 @@ const Header = props => {
 
   const handleClose = () => {
     setAnchorEl(null);
-  };
-
-  const handleExpandingMobileMenu = () => {
-    setExpanded(!isExpanded);
   };
 
   const [notificationAmount, setNotificationAmount] = useState(null);
@@ -118,55 +114,9 @@ const Header = props => {
   );
 
   const UserAvatar = () => (
-    <span className={classes.button_avatar} onClick={handleClick}>
+    <span onClick={handleClick} className={classes.button_avatar}>
       <Avatar alt="User" src="/public/icons/User/Line.svg" />
       {notificationAmount?.length > 0 && <RedCircle />}
-      <StyledMenu id="simple-menu" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
-        {props?.account?.profile?.user_type === USER_TYPE.chefType && (
-          <MenuItem onClick={handleClose}>
-            <Link href="/my-recipes">
-              <a className={classes.header__link_place_menu}>My Recipes</a>
-            </Link>
-          </MenuItem>
-        )}
-
-        {props?.account?.profile?.user_type === USER_TYPE.chefType && (
-          <MenuItem onClick={handleClose} classes={{ root: separatorStyles.root }}>
-            <Link href="/my-pencils">
-              <a className={classes.header__link_place_menu}>My Pencils</a>
-            </Link>
-          </MenuItem>
-        )}
-        <MenuItem onClick={handleClose}>
-          <Link href="/saved-recipes">
-            <a className={classes.header__link_place_menu}>Saved Recipes</a>
-          </Link>
-        </MenuItem>
-        <MenuItem onClick={handleClose} classes={{ root: separatorStyles.root }}>
-          <Link href="/saved-pencils">
-            <a className={classes.header__link_place_menu}>Saved Pencils</a>
-          </Link>
-        </MenuItem>
-        {/*{props?.account?.profile?.user_type === USER_TYPE.viewerType && (
-                <MenuItem onClick={handleClose}>
-                  <Link href="/">
-                    <a className={classes.header__link_place_menu}>History</a>
-                  </Link>
-                </MenuItem>
-              )}*/}
-        <MenuItem onClick={handleClose}>
-          <Link href="/profile/account-settings">
-            <a className={classes.header__link_place_menu}>My Profile</a>
-          </Link>
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Link href="#">
-            <a className={classes.header__link_place_menu} onClick={handleLogout}>
-              Logout
-            </a>
-          </Link>
-        </MenuItem>
-      </StyledMenu>
     </span>
   );
 
@@ -179,7 +129,57 @@ const Header = props => {
           {!isAuthorized && <LoginButton />}
           {isAuthorized && <UploadRecipeButton />}
           {isAuthorized && <CartButton />}
-          {isAuthorized && <UserAvatar />}
+          {isAuthorized && (
+            <span onClick={handleClick}>
+              <UserAvatar />
+            </span>
+          )}
+          <StyledMenu id="simple-menu" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+            {props?.account?.profile?.user_type === USER_TYPE.chefType && (
+              <MenuItem onClick={handleClose}>
+                <Link href="/my-recipes">
+                  <a className={classes.header__link_place_menu}>My Recipes</a>
+                </Link>
+              </MenuItem>
+            )}
+
+            {props?.account?.profile?.user_type === USER_TYPE.chefType && (
+              <MenuItem onClick={handleClose} classes={{ root: separatorStyles.root }}>
+                <Link href="/my-pencils">
+                  <a className={classes.header__link_place_menu}>My Pencils</a>
+                </Link>
+              </MenuItem>
+            )}
+            <MenuItem onClick={handleClose}>
+              <Link href="/saved-recipes">
+                <a className={classes.header__link_place_menu}>Saved Recipes</a>
+              </Link>
+            </MenuItem>
+            <MenuItem onClick={handleClose} classes={{ root: separatorStyles.root }}>
+              <Link href="/saved-pencils">
+                <a className={classes.header__link_place_menu}>Saved Pencils</a>
+              </Link>
+            </MenuItem>
+            {/*{props?.account?.profile?.user_type === USER_TYPE.viewerType && (
+                <MenuItem onClick={handleClose}>
+                  <Link href="/">
+                    <a className={classes.header__link_place_menu}>History</a>
+                  </Link>
+                </MenuItem>
+              )}*/}
+            <MenuItem onClick={handleClose}>
+              <Link href="/profile/account-settings">
+                <a className={classes.header__link_place_menu}>My Profile</a>
+              </Link>
+            </MenuItem>
+            <MenuItem onClick={handleClose}>
+              <Link href="#">
+                <a className={classes.header__link_place_menu} onClick={handleLogout}>
+                  Logout
+                </a>
+              </Link>
+            </MenuItem>
+          </StyledMenu>
         </div>
       </div>
     </div>
