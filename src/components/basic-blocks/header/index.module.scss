@@ -24,6 +24,7 @@
 }
 
 .header {
+  background: #FCFCFD;
   top:0;
   left: 0;
   width: 100%;
@@ -119,6 +120,11 @@
       flex: 1;
       position: relative;
     }
+
+    &_burger {
+      display: none;
+    }
+
   }
 
   @media (max-width: 1280px) {
@@ -130,7 +136,19 @@
   }
 
   @media (max-width: 600px) {
+      .button {
+        &_upload {
+          display: none;
+        }
 
+        &_recipes {
+          display: none;
+        }
+
+        &_burger {
+          display: block;
+        }
+      }
   }
 
 }

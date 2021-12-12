@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import classes from './index.module.scss';
 import { ReactComponent as Logo } from '../../../../public/images/Header Logo/Laag 1.svg';
 import { ReactComponent as CartIcon } from '../../../../public/icons/Shopping Cart/Line.svg';
+import { ReactComponent as MenuIcon } from '../../../../public/icons/Menu/Line.svg';
 import { Button, IconButton, NoSsr } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
 import { connect, useSelector } from 'react-redux';
@@ -15,15 +16,6 @@ import { getCart } from '@/store/cart/actions';
 import Account from '@/api/Account';
 import Link from 'next/link';
 import { USER_TYPE } from '@/utils/datasets';
-import MenuItem from '@material-ui/core/MenuItem';
-
-const StyledMenu = styled(Menu)`
-  margin: 40px 0 0 0;
-  li {
-    padding: 0;
-  }
-`;
-
 const Header = props => {
   const useSeparatorStyles = makeStyles({
     root: {
@@ -114,10 +106,18 @@ const Header = props => {
   );
 
   const UserAvatar = () => (
-    <span onClick={handleClick} className={classes.button_avatar}>
-      <Avatar alt="User" src="/public/icons/User/Line.svg" />
-      {notificationAmount?.length > 0 && <RedCircle />}
+    <span>
+      <span className={classes.button_avatar}>
+        <Avatar alt="User" src="/public/icons/User/Line.svg" />
+        {notificationAmount?.length > 0 && <RedCircle />}
+      </span>
     </span>
+  );
+
+  const BurgerButton = () => (
+    <IconButton>
+      <MenuIcon />
+    </IconButton>
   );
 
   return (
@@ -132,6 +132,11 @@ const Header = props => {
           {isAuthorized && (
             <span onClick={handleClick}>
               <UserAvatar />
+            </span>
+          )}
+          {isAuthorized && (
+            <span className={classes.button_burger} onClick={handleClick}>
+              <BurgerButton />
             </span>
           )}
           <StyledMenu id="simple-menu" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
@@ -185,6 +190,15 @@ const Header = props => {
     </div>
   );
 };
+
+import MenuItem from '@material-ui/core/MenuItem';
+
+const StyledMenu = styled(Menu)`
+  margin: 40px 0 0 0;
+  li {
+    padding: 0;
+  }
+`;
 
 export default connect(state => ({
   account: state.account
