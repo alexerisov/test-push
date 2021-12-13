@@ -37,14 +37,82 @@ const validationSchema = yup.object({
     .required('Zipcode is required')
 });
 
+const defaultFormValues = {
+  email: '',
+  name: '',
+  phone: '',
+  city: 'Amsterdam',
+  street: '',
+  house: '',
+  flat: '',
+  zipcode: '',
+  date: new Date(),
+  save_address: false
+};
+
+const getFormValuesFromProfile = profile => {
+  return {
+    email: profile?.email,
+    name: profile?.full_name,
+    phone: profile?.phone_number
+  };
+};
+
+const getFormValuesFromLastOrder = async () => {
+  const lastOrder = await JSON.parse(localStorage.getItem('last-order'));
+  if (lastOrder === null) return {};
+  const addressFromLastOrder = lastOrder.address
+    ? await Cart.getAddress(lastOrder.address)
+    : { city, street: null, house: null, flat: null, zipcode: null };
+  const { email, customer_name, phone_number, city, street, house, flat, zipcode } = {
+    ...lastOrder,
+    ...addressFromLastOrder?.data
+  };
+  // await localStorage.removeItem('last-order');
+  return {
+    email,
+    name: customer_name,
+    phone: phone_number,
+    city,
+    street,
+    house,
+    flat,
+    zipcode
+  };
+};
+
+const mergeFormValues = (defaultData, lastOrderData, profileData) => {
+  return {
+    email: lastOrderData?.email || profileData?.email || defaultData?.email,
+    name: lastOrderData?.name || profileData?.name || defaultData?.name,
+    phone: lastOrderData?.phone || profileData?.phone || defaultData?.phone,
+    city: lastOrderData?.city || defaultData?.city,
+    street: lastOrderData?.street || defaultData?.street,
+    house: lastOrderData?.house || defaultData?.house,
+    flat: lastOrderData?.flat || defaultData?.flat,
+    zipcode: lastOrderData?.zipcode || defaultData?.zipcode,
+    date: new Date(),
+    save_address: false
+  };
+};
+
 const OrderConfirmPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const cart = useSelector(state => state.cart);
   const [isLoading, setIsLoading] = useState(false);
+  const [formValues, setFormValues] = useState({});
+  const profile = useSelector(state => state.account?.profile);
 
   useEffect(() => {
     dispatch(getCart());
+  }, []);
+
+  useEffect(async () => {
+    const lastOrderData = await getFormValuesFromLastOrder();
+    const profileData = getFormValuesFromProfile(profile);
+    const mergedValues = mergeFormValues(defaultFormValues, lastOrderData, profileData);
+    setFormValues(mergedValues);
   }, []);
 
   const handleSubmit = async values => {
@@ -60,6 +128,7 @@ const OrderConfirmPage = () => {
       .then(res => {
         return {
           address: res.data.pk,
+          email: values.email,
           customer_name: values.name,
           phone_number: values.phone.replaceAll(/[^\d]/g, ''),
           delivery_date: values.date.toISOString(),
@@ -85,20 +154,10 @@ const OrderConfirmPage = () => {
   };
 
   const formik = useFormik({
-    initialValues: {
-      email: '',
-      name: '',
-      phone: '',
-      city: 'Amsterdam',
-      street: '',
-      house: '',
-      flat: '',
-      zipcode: '',
-      date: new Date(),
-      save_address: false
-    },
+    initialValues: formValues,
     validationSchema: validationSchema,
-    onSubmit: values => handleSubmit(values)
+    onSubmit: values => handleSubmit(values),
+    enableReinitialize: true
   });
 
   const ButtonSpinner = () => <CircularProgress color="white" />;

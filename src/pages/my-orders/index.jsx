@@ -116,8 +116,9 @@ const MyOrdersPage = props => {
       setIsCollapsed(!isCollapsed);
     };
 
-    const reorderButtonHandler = () => {
+    const reorderButtonHandler = async () => {
       dispatch(retryOrder(order));
+      await localStorage.setItem('last-order', JSON.stringify(order));
       router.push('/cart');
     };
 
