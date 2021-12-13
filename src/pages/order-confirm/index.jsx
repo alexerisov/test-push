@@ -185,7 +185,7 @@ const OrderConfirmPage = () => {
               <BasicInput formik={formik} size={0.5} label="House" name="house" placeholder="Enter your house" />
               <BasicInput formik={formik} size={0.5} label="Flat" name="flat" placeholder="Enter your flat" />
               <BasicInput formik={formik} label="Zipcode" name="zipcode" placeholder="Enter your zipcode" />
-              <BasicDatePicker formik={formik} label="Date" name="date" />
+              <BasicDatePicker formik={formik} label="Date" name="date" minDate={new Date()} />
               <div className={classes.checkbox_wrapper}>
                 <Checkbox
                   icon={<CheckboxIconUnchecked />}
