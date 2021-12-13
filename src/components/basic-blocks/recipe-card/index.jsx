@@ -52,7 +52,10 @@ export const RecipeCard = props => {
     <Card variant="outlined" className={classes.card}>
       <StyledCardMedia
         className={classes.card__media}
-        onClick={() => redirectToRecipeCard(recipe.pk)}
+        onClick={event => {
+          redirectToRecipeCard(recipe.pk);
+          event.stopPropagation();
+        }}
         image={image ?? logo}
         title="img"
       />
@@ -67,7 +70,14 @@ export const RecipeCard = props => {
       </CardContent>
       <Button
         disabled={isRecipeInCart || isRecipeNotSale}
-        onClick={isAuthorized ? dispatch(addToCart(recipe?.pk)) : handleClick('register')}
+        onClick={
+          isAuthorized
+            ? event => {
+                dispatch(addToCart(recipe?.pk));
+                event.stopPropagation();
+              }
+            : handleClick('register')
+        }
         className={classes.card_button}
         startIcon={<CartIcon />}>
         {!isRecipeInCart && !isRecipeNotSale && `$${price}`}

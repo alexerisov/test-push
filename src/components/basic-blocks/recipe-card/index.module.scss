@@ -33,6 +33,8 @@
   }
 
   &_button {
+    cursor: pointer !important;
+    pointer-events: auto !important;
     box-shadow: none !important;
     padding: 16px 24px !important;
     width: auto !important;
@@ -58,6 +60,7 @@
   }
 
   &__media {
+    pointer-events: auto !important;
     min-height: 198px;
     min-width: 198px;
     background-color: $--color-gray8;

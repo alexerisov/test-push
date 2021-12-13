@@ -108,7 +108,7 @@ const Header = props => {
   const CartButton = () => (
     <IconButton href="/cart" className={classes.button_cart}>
       <CartIcon />
-      {!cartItemsAmount?.length > 0 && <OrangeCircle />}
+      {cartItemsAmount && cartItemsAmount !== 0 ? <OrangeCircle /> : false}
     </IconButton>
   );
 
@@ -116,7 +116,6 @@ const Header = props => {
     const avatar = useSelector(state => state?.account?.profile?.avatar);
     return (
       <span>
-        {console.log('notifications', notificationAmount)}
         <div className={classes.button_avatar}>
           <Avatar alt="User" src={avatar} />
           {notificationAmount && notificationAmount !== 0 ? <RedCircle /> : false}

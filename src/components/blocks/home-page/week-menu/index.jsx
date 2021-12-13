@@ -42,6 +42,8 @@ const RecipeSlider = props => {
         centerSlidePercentage={100 / displayCount}
         showStatus={false}
         showIndicators={false}
+        onClickThumb={() => console.log('clicked')}
+        onClickItem={() => console.log('clicked')}
         selectedItem={currentSlide}>
         {recipes?.length > 0 && recipes.map(recipe => <RecipeCard key={recipe.pk} recipe={recipe} />)}
       </Carousel>
