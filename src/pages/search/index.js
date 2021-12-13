@@ -376,12 +376,19 @@ const Recipes = props => {
     formik.handleSubmit();
   };
 
+  const handleCloseSearchQuery = () => {
+    setTitle('');
+  };
+
   const searchField = (
     <div className={classes.search__header}>
       {title ? (
-        <p>
-          Search results for : <span>"{title}"</span>
-        </p>
+        <div className={classes.search__header__text__wrap}>
+          <p className={classes.search__header__text}>{title}</p>
+          <button className={classes.search__closeButton} onClick={handleCloseSearchQuery}>
+            <img src="icons/Close-Circle/Line.svg" />
+          </button>
+        </div>
       ) : (
         <p></p>
       )}
