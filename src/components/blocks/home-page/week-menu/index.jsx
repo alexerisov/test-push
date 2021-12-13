@@ -1,48 +1,64 @@
 import React, { useEffect, useState } from 'react';
 import classes from './index.module.scss';
 import Recipe from '@/api/Recipe';
-import { Button, CardMedia, IconButton, List, ListItem } from '@material-ui/core';
-import Card from '@material-ui/core/Card';
-import Link from 'next/link';
-import logo from '../../../../../public/images/index/logo.svg';
-import CardContent from '@material-ui/core/CardContent';
-import ClearRoundedIcon from '@material-ui/icons/ClearRounded';
-import Typography from '@material-ui/core/Typography';
-import { ReactComponent as IceCreamIcon } from '../../../../../public/icons/Ice Cream/Line.svg';
-import { cookingSkill, recipeTypes } from '@/utils/datasets';
-import { ReactComponent as HatChefIcon } from '../../../../../public/icons/Hat Chef/Line.svg';
-import { Divider } from '@/components/basic-elements/divider';
-import { CounterButton } from '@/components/blocks/cart-page/button-counter';
+import { Box, IconButton } from '@material-ui/core';
+import { RecipeCard } from '@/components/basic-blocks/recipe-card';
+import { ReactComponent as ArrowLeftIcon } from '../../../../../public/icons/Arrow Left 2/Line.svg';
+import { ReactComponent as ArrowRightIcon } from '../../../../../public/icons/Arrow Right 2/Line.svg';
+import { Carousel } from 'react-responsive-carousel';
 
-const RecipeCard = props => {
-  const { recipe } = props;
-  const title = recipe.title;
-  const image = recipe.images?.[0]?.url;
-  const price = recipe.price;
-
+const Arrows = props => {
+  const { recipes, setSlide, currentSlide } = props;
   return (
-    <Card className={classes.card} variant="outlined">
-      <Link href={`/recipe/${recipe.pk}`}>
-        <a>
-          <CardMedia className={classes.card__media} image={image ?? logo} title={title} />
-        </a>
-      </Link>
-      <CardContent className={classes.card__content_root}>
-        <div className={classes.card__content}>
-          <Typography variant="h6" noWrap className={classes.card__title} title={title}>
-            <Link href={`/recipe/${recipe.pk}`}>
-              <a>{title}</a>
-            </Link>
-          </Typography>
-        </div>
-        <Divider m="20px 0" />
-      </CardContent>
-    </Card>
+    <div className={classes.slider_arrows_container}>
+      <IconButton
+        className={classes.arrows_button}
+        size="22px"
+        onClick={() => setSlide((currentSlide - 5) % recipes?.length)}>
+        <ArrowLeftIcon />
+      </IconButton>
+      <IconButton
+        className={classes.arrows_button}
+        size="22px"
+        onClick={() => setSlide((currentSlide + 5) % recipes?.length)}>
+        <ArrowRightIcon />
+      </IconButton>
+    </div>
   );
 };
 
-const RecipeSlider = () => {
+const RecipeSlider = props => {
+  const { recipes, currentSlide } = props;
+  const displayCount = 5;
+
+  return (
+    <div className={classes.slider_body}>
+      <Carousel
+        showArrows={false}
+        showThumbs={false}
+        centerMode
+        swipeable
+        infiniteLoop
+        centerSlidePercentage={100 / displayCount}
+        showStatus={false}
+        showIndicators={false}
+        selectedItem={currentSlide}>
+        {recipes?.length > 0 && recipes.map(recipe => <RecipeCard key={recipe.pk} recipe={recipe} />)}
+      </Carousel>
+    </div>
+  );
+};
+
+export const WeekMenuBlock = () => {
   const [recipes, setRecipes] = useState([]);
+  const [currentSlide, setSlide] = useState(1);
+
+  const arrowsProps = {
+    recipes,
+    setRecipes,
+    currentSlide,
+    setSlide
+  };
 
   useEffect(() => {
     Recipe.getTopRatedMeals().then(data => {
@@ -51,25 +67,13 @@ const RecipeSlider = () => {
   }, []);
 
   return (
-    <div className={classes.slider_body}>
-      <List className={classes.slider_body_list}>
-        {recipes?.length > 0 &&
-          recipes.map(recipe => (
-            <ListItem key={recipe.pk}>
-              <RecipeCard recipe={recipe} />
-            </ListItem>
-          ))}
-      </List>
-    </div>
-  );
-};
-
-export const WeekMenuBlock = () => {
-  return (
     <section className={classes.container}>
-      <div className={classes.slider_title}>Browse Weekmenu</div>
+      <Box display="flex" flexDirection="row" justifyContent="space-between">
+        <span className={classes.slider_title}>Browse Weekmenu</span>
+        <Arrows {...arrowsProps} />
+      </Box>
       <div className={classes.slider_subtitle}>Let's go to meet new sensations</div>
-      <RecipeSlider />
+      <RecipeSlider recipes={recipes} currentSlide={currentSlide} />
     </section>
   );
 };

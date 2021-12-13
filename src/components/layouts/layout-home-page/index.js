@@ -7,7 +7,7 @@ import CookiesBanner from '@/components/banners/cookies-banner';
 import Header from '@/components/basic-blocks/header';
 import { Footer } from '@/components/basic-blocks/footer';
 
-const LayoutPage = ({ header, content }) => {
+const LayoutHomePage = ({ header, content }) => {
   const defaultHeader = <Header />;
 
   return (
@@ -29,4 +29,4 @@ const LayoutPage = ({ header, content }) => {
   );
 };
 
-export default LayoutPage;
+export default LayoutHomePage;

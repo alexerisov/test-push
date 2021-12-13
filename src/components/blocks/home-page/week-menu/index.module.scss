@@ -3,7 +3,8 @@
 
 
 .container {
-  padding: 60px 0;
+  width: auto !important;
+  padding: 60px 160px !important;
 
   .slider {
     &_title {
@@ -21,10 +22,25 @@
       line-height: 160%;
       letter-spacing: 0.01em;
       color: #566481;
+      margin-bottom: 73px;
+    }
+
+    &_arrows_container {
     }
 
     &_body {
-      height: 355px;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+
+      [class*="control-arrow"] {
+        display: none;
+      }
+
+      ul {
+        display: flex;
+
+      }
 
       &_list{
         display: flex;
@@ -34,11 +50,11 @@
   }
 
   @media (max-width: 960px) {
-
+    padding: 60px 80px !important;
   }
 
   @media (max-width: 600px) {
-
+    padding: 60px 32px !important;
   }
 
 }

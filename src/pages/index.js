@@ -3,24 +3,16 @@ import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 import classes from './index.module.scss';
 import LayoutPage from '@/components/layouts/layout-page';
-import MealOfWeekBlock from '@/components/blocks/meal-of-the-week';
-import FavoriteCuisinesBlock from '@/components/blocks/favorite-cuisines';
-import PinnedMeals from '@/components/blocks/pinned-meals';
-import HighestRatedMealsBlock from '@/components/blocks/highest-rated-meals';
-import BlocksHomePage from '@/components/blocks/blocks-home-page';
-import Carousel from '@/components/elements/carusel';
-import { Button } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { modalActions, profileActions } from '@/store/actions';
 import Recipe from '@/api/Recipe';
-import { getBaseUrl } from '@/utils/isTypeOfWindow';
 import { makeStyles } from '@material-ui/core/styles';
-import Head from 'next/head';
 import Cookies from 'cookies';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { WhyEatchefBlock } from '@/components/blocks/home-page/why-eatchef';
 import { SearchBlock } from '@/components/blocks/home-page/search';
 import { WeekMenuBlock } from '@/components/blocks/home-page/week-menu';
+import LayoutHomePage from '@/components/layouts/layout-home-page';
 
 const useStyles = makeStyles({
   root: {
@@ -63,14 +55,6 @@ const Home = props => {
     }
   };
 
-  const handleClickSearch = name => {
-    return () => {
-      props.dispatch(modalActions.open(name)).then(result => {
-        // result when modal return promise and close
-      });
-    };
-  };
-
   const content = (
     <>
       <SearchBlock />
@@ -88,7 +72,7 @@ const Home = props => {
           title: 'Homemade food'
         }}
       />
-      <LayoutPage content={content} />
+      <LayoutHomePage content={content} />
     </div>
   );
 };
