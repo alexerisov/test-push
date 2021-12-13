@@ -7,6 +7,7 @@ import { ReactComponent as UserIcon } from '../../../../public/icons/User/Menu.s
 import { ReactComponent as BellIcon } from '../../../../public/icons/Bell/Menu.svg';
 import { ReactComponent as ListIcon } from '../../../../public/icons/List/Menu.svg';
 import { ReactComponent as MegaphoneIcon } from '../../../../public/icons/Megaphone/Menu.svg';
+import { ReactComponent as HistoryIcon } from '../../../../public/icons/History/Menu.svg';
 import { ReactComponent as BookmarkIcon } from '../../../../public/icons/Bookmark/Menu.svg';
 import { Button, IconButton, ListItemIcon, NoSsr } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
@@ -177,6 +178,7 @@ const Header = props => {
             />
             {isChef && <MenuListItem text="My Recipes" icon={<ListIcon />} path="/my-recipes" />}
             <MenuListItem text="Market" icon={<MegaphoneIcon />} path="/search" />
+            <MenuListItem text="History" icon={<HistoryIcon />} path="/my-orders" />
             <MenuListItem text="Saved Recipes" icon={<BookmarkIcon />} path="/saved-recipes" />
 
             <LogoutMenuItem onClick={handleClose}>
