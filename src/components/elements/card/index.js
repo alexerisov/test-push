@@ -9,3 +9,4 @@ export { default as CardNotification } from './card-notification';
 export { default as CardChefPencil } from './card-chef-pencil';
 export { default as MainCardChefPencil } from './main-page-card-chef-pencil';
 export { default as CardChefPencilEdit } from './card-chef-pencil-edit';
+export { default as CardSearch } from './card-search-page';
