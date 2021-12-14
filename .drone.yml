@@ -82,6 +82,7 @@ steps:
       key:
           from_secret: SSH_PRIVATE_KEY  # from org secrets
       port: 22
+      envs: [DOCKER_HUB_USERNAME, DOCKER_HUB_PASSWORD]
       script:
         # - whoami
         - echo $DOCKER_HUB_PASSWORD | docker login docker.io -u $DOCKER_HUB_USERNAME --password-stdin
@@ -130,6 +131,7 @@ steps:
       key:
           from_secret: SSH_PRIVATE_KEY  # from org secrets
       port: 22
+      envs: [DOCKER_HUB_USERNAME, DOCKER_HUB_PASSWORD]
       script:
         # - whoami
         - echo $DOCKER_HUB_PASSWORD | docker login docker.io -u $DOCKER_HUB_USERNAME --password-stdin
