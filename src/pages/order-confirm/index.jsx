@@ -68,7 +68,7 @@ const getFormValuesFromLastOrder = async () => {
     ...lastOrder,
     ...addressFromLastOrder?.data
   };
-  // await localStorage.removeItem('last-order');
+  await localStorage.removeItem('last-order');
   return {
     email,
     name: customer_name,
