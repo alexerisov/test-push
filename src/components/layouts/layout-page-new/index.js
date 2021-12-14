@@ -1,15 +1,11 @@
 import React from 'react';
 import classes from './index.module.scss';
-import LayoutFooter from '@/components/layouts/layout-footer';
-import HeaderDefault from '@/components/elements/header-default';
 import Head from 'next/head';
 import CookiesBanner from '@/components/banners/cookies-banner';
 import Header from '@/components/basic-blocks/header';
 import { Footer } from '@/components/basic-blocks/footer';
 
-const LayoutHomePage = ({ header, content }) => {
-  const defaultHeader = <Header />;
-
+const LayoutPageNew = ({ content }) => {
   return (
     <>
       <Head>
@@ -18,8 +14,12 @@ const LayoutHomePage = ({ header, content }) => {
       </Head>
 
       <section className={classes.layout}>
-        <header>{header ?? defaultHeader}</header>
+        <header>
+          <Header />
+        </header>
+
         <main className={classes.layout__content}>{content}</main>
+
         <footer>
           <Footer />
         </footer>
@@ -29,4 +29,4 @@ const LayoutHomePage = ({ header, content }) => {
   );
 };
 
-export default LayoutHomePage;
+export default LayoutPageNew;

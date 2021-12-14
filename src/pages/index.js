@@ -12,7 +12,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { WhyEatchefBlock } from '@/components/blocks/home-page/why-eatchef';
 import { SearchBlock } from '@/components/blocks/home-page/search';
 import { WeekMenuBlock } from '@/components/blocks/home-page/week-menu';
-import LayoutHomePage from '@/components/layouts/layout-home-page';
+import LayoutPageNew from '@/components/layouts/layout-page-new';
 
 const useStyles = makeStyles({
   root: {
@@ -72,7 +72,7 @@ const Home = props => {
           title: 'Homemade food'
         }}
       />
-      <LayoutHomePage content={content} />
+      <LayoutPageNew content={content} />
     </div>
   );
 };
