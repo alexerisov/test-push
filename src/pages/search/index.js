@@ -5,10 +5,18 @@ import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import Recipe from '@/api/Recipe.js';
 import CardHighestMeals from '@/components/elements/card-highest-meals';
-import { recipeTypes, cookingMethods, dietaryrestrictions, cookingSkill, ordering } from '@/utils/datasets';
+import {
+  recipeTypes,
+  cookingMethods,
+  dietaryrestrictions,
+  cookingSkill,
+  ordering,
+  recommendedList,
+  recipeTypesImg
+} from '@/utils/datasets';
 import { modalActions } from '@/store/actions';
 import { connect } from 'react-redux';
-import { NoSsr } from '@material-ui/core';
+import { Button, NoSsr, Slider } from '@material-ui/core';
 
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -31,6 +39,31 @@ import { makeStyles } from '@material-ui/core/styles';
 import SearchDrawer from '@/components/elements/search-drawer';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { InputSearch } from '@/components/elements/input';
+import { CardSearch } from '@/components/elements/card';
+import Weekmenu from '@/components/blocks/weekmenu';
+
+const MySlider = styled(Slider)(() => ({
+  color: '#FFAA00',
+  height: 2,
+
+  '& .MuiSlider-thumb': {
+    height: 20,
+    width: 20,
+    backgroundColor: '#FFAA00',
+    marginTop: '-9px',
+    border: '3px solid #fff',
+    '&:hover': {
+      boxShadow: '0 0 0 8px rgba(58, 133, 137, 0.16)'
+    }
+  },
+  '& .MuiSlider-track': {
+    height: 2
+  },
+  '& .MuiSlider-rail': {
+    color: '#E6E8EC',
+    height: 2
+  }
+}));
 
 const StyledAccordion = styled(Accordion)`
   p {
@@ -89,7 +122,9 @@ const Recipes = props => {
   const [page, setPage] = useState(1);
   const [data, setData] = useState();
   const [result, setResult] = useState([]);
-  const [typeSelection, setTypeSelection] = useState('Food');
+  const [range, setRange] = useState(0);
+  const [isDropdownActive, setIsDropdownActive] = useState(false);
+  // const [typeSelection, setTypeSelection] = useState('Food');
 
   // Accordion
   const [expanded, setExpanded] = useState(false);
@@ -121,7 +156,24 @@ const Recipes = props => {
 
     setDrawerOpened({ ...isDrawerOpened, [anchor]: open });
   };
-
+  const handleChangeRange = name => {
+    return event => {
+      event.preventDefault();
+      switch (name) {
+        case 'Easy':
+          setRange(0);
+          break;
+        case 'Medium':
+          setRange(50);
+          break;
+        case 'Complex':
+          setRange(100);
+          break;
+        default:
+          return;
+      }
+    };
+  };
   // formik
   const createQueryParams = data => {
     const queryParams = new URLSearchParams();
@@ -160,9 +212,9 @@ const Recipes = props => {
       values.title = title;
       values.page = page;
 
-      if (typeSelection === 'Beverages') {
-        values.types = [5];
-      }
+      // if (typeSelection === 'Beverages') {
+      //   values.types = [5];
+      // }
 
       router.push(
         {
@@ -201,7 +253,7 @@ const Recipes = props => {
         control={
           <Checkbox
             style={{
-              color: '#FFAA00'
+              color: formik.initialValues['diet_restrictions'].includes(String(i)) ? '#FFAA00' : '#E6E8EC'
             }}
             checked={formik.initialValues['diet_restrictions'].includes(String(i))}
             value={i}
@@ -249,14 +301,14 @@ const Recipes = props => {
   }
 
   for (let i = 1; i <= Object.keys(recipeTypes).length; i++) {
-    if (i !== 5) {
-      recipeTypesList.push(
-        <FormControlLabel
-          key={i}
-          control={
+    recipeTypesList.push(
+      <FormControlLabel
+        key={i}
+        control={
+          <>
             <Checkbox
               style={{
-                color: '#FFAA00'
+                color: formik.initialValues['types'].includes(String(i)) ? '#FFAA00' : '#E6E8EC'
               }}
               checked={formik.initialValues['types'].includes(String(i))}
               value={i}
@@ -266,15 +318,21 @@ const Recipes = props => {
               name="types"
               color="primary"
             />
-          }
-          label={getLabelByStatusOfCheckbox({
-            fieldName: 'types',
-            value: i,
-            dataList: recipeTypes
-          })}
-        />
-      );
-    }
+            <img
+              style={{
+                marginRight: '12px'
+              }}
+              src={recipeTypesImg[i]}
+            />
+          </>
+        }
+        label={getLabelByStatusOfCheckbox({
+          fieldName: 'types',
+          value: i,
+          dataList: recipeTypes
+        })}
+      />
+    );
   }
 
   for (let i = 1; i <= Object.keys(cookingMethods).length; i++) {
@@ -284,7 +342,7 @@ const Recipes = props => {
         control={
           <Checkbox
             style={{
-              color: '#FFAA00'
+              color: formik.initialValues['cooking_methods'].includes(String(i)) ? '#FFAA00' : '#E6E8EC'
             }}
             checked={formik.initialValues['cooking_methods'].includes(String(i))}
             value={i}
@@ -356,21 +414,6 @@ const Recipes = props => {
     setTimeout(router.reload, 100);
   };
 
-  const setTypeSelectionFood = event => {
-    event.preventDefault();
-    setPage(1);
-    setTypeSelection('Food');
-    formik.values.types = [];
-    formik.handleSubmit();
-  };
-
-  const setTypeSelectionBeverages = event => {
-    event.preventDefault();
-    setPage(1);
-    setTypeSelection('Beverages');
-    formik.handleSubmit();
-  };
-
   const handleChangePage = (event, value) => {
     setPage(value);
     formik.handleSubmit();
@@ -379,6 +422,11 @@ const Recipes = props => {
   const handleCloseSearchQuery = () => {
     setTitle('');
   };
+  const recommendedListMap = Object.keys(recommendedList).map((el, ind) => (
+    <li className={classes.search__dropdown__item} key={`r${ind}`}>
+      {recommendedList[el]}
+    </li>
+  ));
 
   const searchField = (
     <div className={classes.search__header}>
@@ -386,14 +434,14 @@ const Recipes = props => {
         <div className={classes.search__header__text__wrap}>
           <p className={classes.search__header__text}>{title}</p>
           <button className={classes.search__closeButton} onClick={handleCloseSearchQuery}>
-            <img src="icons/Close-Circle/Line.svg" />
+            <img src="icons/Close-Circle/Line.svg" alt="close-icon" />
           </button>
         </div>
       ) : (
         <p></p>
       )}
       <button className={classes.search__searchButton} onClick={handleClickSearch('search')}>
-        <img src="/images/index/icon_search.svg" />
+        <img src="/images/index/icon_search.svg" alt="search-icon" />
       </button>
     </div>
   );
@@ -423,62 +471,41 @@ const Recipes = props => {
   const searchFilter = (
     <>
       <div className={classes.search__filter} onSubmit={formik.handleSubmit}>
-        <div className={classes.search__filterHeader_left}>
+        <Button className={classes.search__uploadButton} variant="outlined" color="primary">
+          Upload Recipe
+        </Button>
+        <div className={classes.search__filter__line} />
+        {/* <div className={classes.search__filterHeader_left}>
           <p className={classes.search__filter__title}>Filter</p>
           {!mobile && (
             <button type="reset" onClick={handleClickClearAll} className={classes.search__clearButton}>
               Clear all
             </button>
           )}
-          {/* <Link href="/search"><a>Clear all</a></Link> */}
-        </div>
-        <div className={classes.search__filter__button__wrapper}>
-          <button
-            type="submit"
-            className={`${classes.search__filter__button} ${
-              typeSelection === 'Food' && classes.search__filter__button_active
-            }`}
-            onClick={event => setTypeSelectionFood(event)}>
-            Food
-          </button>
-          <button
-            type="submit"
-            className={`${classes.search__filter__button} ${
-              typeSelection === 'Beverages' && classes.search__filter__button_active
-            }`}
-            onClick={event => setTypeSelectionBeverages(event)}>
-            Beverages
-          </button>
-        </div>
+        </div> */}
+
         <NoSsr>
-          <div className={classes.search__filter__label}>
-            <FormControlLabel
-              key={'only_eatchefs_recipes'}
-              control={
-                <Checkbox
-                  style={{
-                    color: '#FFAA00'
-                  }}
-                  value={'Y'}
-                  checked={formik.initialValues['only_eatchefs_recipes'].includes('Y')}
-                  onChange={e => {
-                    onChangeCheckboxInput(e);
-                  }}
-                  name="only_eatchefs_recipes"
-                  color="primary"
-                />
-              }
-              label={<span className={classes.search__filter__primaryLabel}>Get Inspired!</span>}
-            />
-            {tooltipForGetInspiredCheckbox}
+          <div
+            className={`${isDropdownActive ? classes.search__dropdown_active : classes.search__dropdown}`}
+            onClick={() => setIsDropdownActive(!isDropdownActive)}>
+            <span>Recommended</span>
+            <div className={classes.search__dropdown__circle}>
+              <img src="icons/Arrow Down Simple/Line.svg" />
+            </div>
           </div>
-          {typeSelection !== 'Beverages' && (
+          {isDropdownActive && (
+            <ul className={classes.search__dropdown__list}>
+              <li className={classes.search__dropdown__item}>Recommended</li>
+              {recommendedListMap}
+            </ul>
+          )}
+
+          {
             <StyledAccordion expanded={expanded === 'panel1'} onChange={handleAnchorAccordion('panel1')}>
               <AccordionSummary
                 expandIcon={
                   <div className={classes.search__clickList}>
-                    <div></div>
-                    <div className={classes.search__clickList__active}></div>
+                    <img src="icons/Arrow Down Simple/Line.svg" />
                   </div>
                 }
                 aria-controls="panel1a-content"
@@ -489,29 +516,36 @@ const Recipes = props => {
                 <div className={classes.search__filter__list}>{recipeTypesList}</div>
               </AccordionDetails>
             </StyledAccordion>
-          )}
-          <StyledAccordion expanded={expanded === 'panel2'} onChange={handleAnchorAccordion('panel2')}>
-            <AccordionSummary
-              expandIcon={
-                <div className={classes.search__clickList}>
-                  <div></div>
-                  <div className={classes.search__clickList__active}></div>
-                </div>
-              }
-              aria-controls="panel2a-content"
-              id="panel2a-header">
-              <Typography className={classes.search__filter__title}>Cooking Skills</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <div className={classes.search__filter__list}>{cookingSkillList}</div>
-            </AccordionDetails>
-          </StyledAccordion>
+          }
+          <div className={classes.search__line_botMargin} />
+
+          <Typography className={classes.search__filter__title}>Cooking Skills</Typography>
+          <MySlider
+            defaultValue={50}
+            min={0}
+            max={100}
+            step={50}
+            value={range}
+            onChange={(event, value) => setRange(value)}
+          />
+          <div className={classes.search__cookingSkills}>
+            <button className={classes.search__cookingSkills__firstItem} onClick={handleChangeRange('Easy')}>
+              Easy
+            </button>
+            <button className={classes.search__cookingSkills__secondItem} onClick={handleChangeRange('Medium')}>
+              Medium
+            </button>
+            <button className={classes.search__cookingSkills__thirdItem} onClick={handleChangeRange('Complex')}>
+              Complex
+            </button>
+          </div>
+          <div className={classes.search__line_topMargin} />
+
           <StyledAccordion expanded={expanded === 'panel3'} onChange={handleAnchorAccordion('panel3')}>
             <AccordionSummary
               expandIcon={
                 <div className={classes.search__clickList}>
-                  <div></div>
-                  <div className={classes.search__clickList__active}></div>
+                  <img src="icons/Arrow Down Simple/Line.svg" />
                 </div>
               }
               aria-controls="panel3a-content"
@@ -522,12 +556,13 @@ const Recipes = props => {
               <div className={classes.search__filter__list}>{cookingMethodsList}</div>
             </AccordionDetails>
           </StyledAccordion>
+          <div className={classes.search__line} />
+
           <StyledAccordion expanded={expanded === 'panel4'} onChange={handleAnchorAccordion('panel4')}>
             <AccordionSummary
               expandIcon={
                 <div className={classes.search__clickList}>
-                  <div></div>
-                  <div className={classes.search__clickList__active}></div>
+                  <img src="icons/Arrow Down Simple/Line.svg" />
                 </div>
               }
               aria-controls="panel4a-content"
@@ -538,6 +573,11 @@ const Recipes = props => {
               <div className={classes.search__filter__list}>{dietaryrestrictionsList}</div>
             </AccordionDetails>
           </StyledAccordion>
+          <div className={classes.search__line} />
+
+          <button type="reset" onClick={handleClickClearAll} className={classes.search__clearButton}>
+            <img src="icons/Close-Circle/Shape.svg" alt="close-icon" /> Reset filter
+          </button>
         </NoSsr>
       </div>
       {mobile && (
@@ -569,7 +609,7 @@ const Recipes = props => {
               </SearchDrawer>
             </div>
           )}
-          <div className={classes.search__sorting}>
+          {/* <div className={classes.search__sorting}>
             <InputLabel htmlFor="age-native-simple">Sort by</InputLabel>
             <Select
               MenuProps={MenuProps}
@@ -582,12 +622,14 @@ const Recipes = props => {
               }}>
               {orderingList}
             </Select>
-          </div>
+          </div> */}
           <div className={classes.search__result__container}>
+            <Weekmenu result={result} />
+
             {result.length !== 0 ? (
               result.map((recipe, index) => {
                 return (
-                  <CardHighestMeals
+                  <CardSearch
                     key={`${recipe.pk}-${index}`}
                     title={recipe?.title}
                     image={recipe?.images[0]?.url}
@@ -597,6 +639,10 @@ const Recipes = props => {
                     isParsed={recipe?.is_parsed}
                     publishStatus={recipe?.publish_status}
                     hasVideo={recipe?.video}
+                    cookingTime={recipe?.cooking_time}
+                    cookingSkill={recipe?.cooking_skills}
+                    cookingTypes={recipe?.types}
+                    price={recipe?.price}
                     id={recipe.pk}
                   />
                 );
