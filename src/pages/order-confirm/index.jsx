@@ -7,7 +7,7 @@ import { withAuth } from '@/utils/authProvider';
 import { BasicInput } from '@/components/basic-elements/basic-input';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { Button, Checkbox } from '@material-ui/core';
+import { Button, Checkbox, CircularProgress } from '@material-ui/core';
 import { InputsBlock } from '@/components/basic-blocks/inputs-block';
 import classes from './index.module.scss';
 import { Divider } from '@/components/basic-elements/divider';
@@ -37,16 +37,86 @@ const validationSchema = yup.object({
     .required('Zipcode is required')
 });
 
+const defaultFormValues = {
+  email: '',
+  name: '',
+  phone: '',
+  city: 'Amsterdam',
+  street: '',
+  house: '',
+  flat: '',
+  zipcode: '',
+  date: new Date(),
+  save_address: false
+};
+
+const getFormValuesFromProfile = profile => {
+  return {
+    email: profile?.email,
+    name: profile?.full_name,
+    phone: profile?.phone_number
+  };
+};
+
+const getFormValuesFromLastOrder = async () => {
+  const lastOrder = await JSON.parse(localStorage.getItem('last-order'));
+  if (lastOrder === null) return {};
+  const addressFromLastOrder = lastOrder.address
+    ? await Cart.getAddress(lastOrder.address)
+    : { city, street: null, house: null, flat: null, zipcode: null };
+  const { email, customer_name, phone_number, city, street, house, flat, zipcode } = {
+    ...lastOrder,
+    ...addressFromLastOrder?.data
+  };
+  await localStorage.removeItem('last-order');
+  return {
+    email,
+    name: customer_name,
+    phone: phone_number,
+    city,
+    street,
+    house,
+    flat,
+    zipcode
+  };
+};
+
+const mergeFormValues = (defaultData, lastOrderData, profileData) => {
+  return {
+    email: lastOrderData?.email || profileData?.email || defaultData?.email,
+    name: lastOrderData?.name || profileData?.name || defaultData?.name,
+    phone: lastOrderData?.phone || profileData?.phone || defaultData?.phone,
+    city: lastOrderData?.city || defaultData?.city,
+    street: lastOrderData?.street || defaultData?.street,
+    house: lastOrderData?.house || defaultData?.house,
+    flat: lastOrderData?.flat || defaultData?.flat,
+    zipcode: lastOrderData?.zipcode || defaultData?.zipcode,
+    date: new Date(),
+    save_address: false
+  };
+};
+
 const OrderConfirmPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const cart = useSelector(state => state.cart);
+  const [isLoading, setIsLoading] = useState(false);
+  const [formValues, setFormValues] = useState({});
+  const profile = useSelector(state => state.account?.profile);
 
   useEffect(() => {
     dispatch(getCart());
   }, []);
 
-  const handleSumbit = async values => {
+  useEffect(async () => {
+    const lastOrderData = await getFormValuesFromLastOrder();
+    const profileData = getFormValuesFromProfile(profile);
+    const mergedValues = mergeFormValues(defaultFormValues, lastOrderData, profileData);
+    setFormValues(mergedValues);
+  }, []);
+
+  const handleSubmit = async values => {
+    await setIsLoading(true);
     const addressData = {
       zipcode: values.zipcode,
       city: values.city,
@@ -54,39 +124,43 @@ const OrderConfirmPage = () => {
       house: values.house
     };
 
-    const orderData = await Cart.postAddress(addressData).then(res => {
-      return {
-        address: res.data.pk,
-        customer_name: values.name,
-        phone_number: values.phone.replaceAll(/[^\d]/g, ''),
-        delivery_date: values.date.toISOString(),
-        keep_address: values.save_address
-      };
-    });
+    const orderData = await Cart.postAddress(addressData)
+      .then(res => {
+        return {
+          address: res.data.pk,
+          email: values.email,
+          customer_name: values.name,
+          phone_number: values.phone.replaceAll(/[^\d]/g, ''),
+          delivery_date: values.date.toISOString(),
+          keep_address: values.save_address
+        };
+      })
+      .catch(e => {
+        setIsLoading(false);
+        return e;
+      });
 
-    const order = await Cart.postOrder(orderData).then(r => r.data);
+    const order = await Cart.postOrder(orderData)
+      .then(r => r.data)
+      .catch(e => {
+        setIsLoading(false);
+        return e;
+      });
     await localStorage.setItem('order', JSON.stringify(order));
     await localStorage.setItem('cart', JSON.stringify(cart));
     window.open(order.url, '_ blank');
     router.push('/order-congratulation');
+    setIsLoading(false);
   };
 
   const formik = useFormik({
-    initialValues: {
-      email: '',
-      name: '',
-      phone: '',
-      city: 'Amsterdam',
-      street: '',
-      house: '',
-      flat: '',
-      zipcode: '',
-      date: new Date(),
-      save_address: false
-    },
+    initialValues: formValues,
     validationSchema: validationSchema,
-    onSubmit: values => handleSumbit(values)
+    onSubmit: values => handleSubmit(values),
+    enableReinitialize: true
   });
+
+  const ButtonSpinner = () => <CircularProgress color="white" />;
 
   let content = (
     <div className={classes.content}>
@@ -111,7 +185,7 @@ const OrderConfirmPage = () => {
               <BasicInput formik={formik} size={0.5} label="House" name="house" placeholder="Enter your house" />
               <BasicInput formik={formik} size={0.5} label="Flat" name="flat" placeholder="Enter your flat" />
               <BasicInput formik={formik} label="Zipcode" name="zipcode" placeholder="Enter your zipcode" />
-              <BasicDatePicker formik={formik} label="Date" name="date" />
+              <BasicDatePicker formik={formik} label="Date" name="date" minDate={new Date()} />
               <div className={classes.checkbox_wrapper}>
                 <Checkbox
                   icon={<CheckboxIconUnchecked />}
@@ -158,8 +232,8 @@ const OrderConfirmPage = () => {
               <div>Credit card</div>
             </InputsBlock.TabPanel>
           </InputsBlock>
-          <Button type="submit" className={classes.content__button}>
-            Confirm and Pay
+          <Button startIcon={isLoading && <ButtonSpinner />} type="submit" className={classes.content__button}>
+            Confirm and pay
           </Button>
         </form>
       </div>

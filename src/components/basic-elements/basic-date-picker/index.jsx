@@ -5,7 +5,7 @@ import { InputAdornment } from '@material-ui/core';
 import CalendarIcon from '../../../../public/icons/Calendar/Line.svg';
 
 export const BasicDatePicker = props => {
-  const { formik, label, name } = props;
+  const { formik, label, name, ...otherProps } = props;
   const [inputStyle, setInputStyle] = useState(classes.input);
   return (
     <DatePicker
@@ -41,6 +41,7 @@ export const BasicDatePicker = props => {
       onChange={value => formik.setFieldValue(name, value)}
       fullWidth
       autoOk
+      {...otherProps}
     />
   );
 };

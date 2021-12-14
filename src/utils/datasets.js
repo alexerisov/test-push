@@ -166,6 +166,15 @@ export const PUBLISH_STATUS = {
   published: 2
 };
 
+export const ORDER_STATUS = {
+  1: 'Not paid', // # created - initial state
+  2: 'Placed', // # added by the consumer - paid
+  3: 'Received by chef', // # order received/in progress (received by the cloud kitchen chef).
+  4: 'Ready', // # finished and ready to be delivered to the distribution team
+  5: 'On the way', // # delivered to the distribution team
+  6: 'Delivered'
+};
+
 export const APPROVED_STATUS = {
   1: 'Awaiting',
   2: 'Approved',

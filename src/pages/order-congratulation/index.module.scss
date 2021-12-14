@@ -117,7 +117,7 @@
 .button__orders {
   box-shadow: none !important;
   padding: 16px 24px !important;
-  width: 137px !important;
+  width: auto !important;
   height: 54px !important;
   text-transform: none !important;
   border: 2px solid #E0E4EB !important;
@@ -140,10 +140,9 @@
 
 .button__explore {
   box-shadow: none !important;
-
   padding: 16px 24px !important;
   height: 54px !important;
-  width: 215px !important;
+  width: auto !important;
   text-transform: none !important;
   border-radius: 90px !important;
   background: #FFAA00 !important;

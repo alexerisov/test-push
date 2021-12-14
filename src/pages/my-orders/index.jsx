@@ -1,36 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { LayoutPage } from '@/components/layouts';
-import { Basket } from '@/components/blocks/cart-page/basket';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { useRouter, withRouter } from 'next/router';
 import { withAuth } from '@/utils/authProvider';
-import { BasicInput } from '@/components/basic-elements/basic-input';
-import { useFormik } from 'formik';
-import * as yup from 'yup';
-import { Box, Button, IconButton } from '@material-ui/core';
-import { InputsBlock } from '@/components/basic-blocks/inputs-block';
+import { Box, Button, Collapse } from '@material-ui/core';
 import classes from './index.module.scss';
 import { Divider } from '@/components/basic-elements/divider';
-import { getCart } from '@/store/cart/actions';
 import HandCartIcon from '../../../public/icons/Hand Cart/Line.svg';
 import CalendarIcon from '../../../public/icons/Calendar/Line.svg';
 import RecipeIcon from '../../../public/icons/Receipt/Line.svg';
 import WalletIcon from '../../../public/icons/Wallet/Line.svg';
+import CheckIcon from '../../../public/icons/Check/Line.svg';
 import { ProfileMenu } from '@/components/basic-blocks/profile-menu';
 import Cookies from 'cookies';
-import Cart from '@/api/Cart';
-import Typography from '@material-ui/core/Typography';
 import { ReactComponent as IceCreamIcon } from '../../../public/icons/Ice Cream/Line.svg';
-import { cookingSkill, recipeTypes } from '@/utils/datasets';
+import { cookingSkill, ORDER_STATUS, recipeTypes } from '@/utils/datasets';
 import { ReactComponent as HatChefIcon } from '../../../public/icons/Hat Chef/Line.svg';
-import ClearRoundedIcon from '@material-ui/icons/ClearRounded';
 import Order from '@/api/Order';
 import dayjs from 'dayjs';
+import Typography from '@material-ui/core/Typography';
+import { addManyToCart, clearCart, retryOrder } from '@/store/cart/actions';
 
 const MyOrdersPage = props => {
   const dispatch = useDispatch();
   const router = useRouter();
   const [orders, setOrders] = useState();
+  const historyOrders = orders?.results?.filter(order => order?.status === 6);
+  const activeOrders = orders?.results?.filter(order => order?.status !== 6);
 
   useEffect(async () => {
     const response = await Order.getOrderList();
@@ -40,10 +36,43 @@ const MyOrdersPage = props => {
   const TextWithIcon = props => {
     const { icon, text, value } = props;
     return (
-      <div className={classes.element_wrapper}>
+      <div className={classes.order__bill__wrapper}>
         <img src={icon} alt="icon" />
-        <div className={classes.element_text}>{text}</div>
-        <div className={classes.element_value}>{value}</div>
+        <div className={classes.order__bill__text}>{text}</div>
+        <div className={classes.order__bill__value}>{value}</div>
+      </div>
+    );
+  };
+
+  const ProductCategories = props => {
+    const { recipe } = props;
+    const recipeTypesList = recipe?.types;
+    const recipeCookingSkills = recipe?.cooking_skills;
+    return (
+      <div className={classes.categories}>
+        <div className={classes.categories_container}>
+          <IceCreamIcon style={{ marginRight: 10 }} />
+          <span className={classes.element_text}>
+            {recipeTypesList?.length > 0 ? recipeTypesList.map(item => recipeTypes?.[item] + ' ') : 'Not defined'}
+          </span>
+        </div>
+        <div className={classes.categories_container}>
+          <HatChefIcon style={{ marginRight: 10 }} />
+          <div className={classes.element_text}>{cookingSkill?.[recipeCookingSkills] || 'Not defined'}</div>
+        </div>
+      </div>
+    );
+  };
+
+  const OrderBill = props => {
+    const { order } = props;
+    return (
+      <div className={classes.order__bill}>
+        <TextWithIcon icon={HandCartIcon} text="Booking code:" value={order?.pk} />
+        <TextWithIcon icon={CalendarIcon} text="Date:" value={dayjs(order?.delivery_date).format('D MMM, YYYY')} />
+        <TextWithIcon icon={RecipeIcon} text="Total:" value={'$' + order?.total_price} />
+        <TextWithIcon icon={WalletIcon} text="Payment method:" value="Tikkie" />
+        <TextWithIcon icon={CheckIcon} text="Status:" value={ORDER_STATUS?.[order?.status]} />
       </div>
     );
   };
@@ -54,46 +83,69 @@ const MyOrdersPage = props => {
     const title = recipe?.title;
     const image = recipe?.images[0]?.url;
     const price = recipe?.price;
-    const recipeTypesList = recipe?.types;
-    const recipeCookingSkills = recipe?.cooking_skills;
     const ingredients = recipe?.ingredients;
 
     return (
-      <Box display="flex" alignItems="flex-start" gridColumnGap="24px" marginBottom="20px">
-        <img className={classes.image} src={image} alt="image" />
+      <div className={classes.product}>
+        <img className={classes.product__image} src={image} alt="image" />
         <Box flex="1" display="flex" flexDirection="column" justifyContent="center">
-          <Typography variant="h6" noWrap className={classes.title}>
-            {title}
-          </Typography>
-          <div className={classes.categories}>
-            <div className={classes.element_container}>
-              <IceCreamIcon style={{ marginRight: 10 }} />
-              <span className={classes.element_text}>
-                {recipeTypesList?.length > 0 ? recipeTypesList.map(item => recipeTypes?.[item] + ' ') : 'Not defined'}
-              </span>
-            </div>
-            <div className={classes.element_container}>
-              <HatChefIcon style={{ marginRight: 10 }} />
-              <div className={classes.element_text}>{cookingSkill?.[recipeCookingSkills] || 'Not defined'}</div>
-            </div>
-          </div>
+          <div className={classes.product__title}>{title}</div>
+          <ProductCategories recipe={recipe} />
           {isLastElement && (
             <>
               <Divider m="20px 0" />
-              <div className={classes.info}>
-                <TextWithIcon icon={HandCartIcon} text="Booking code:" value={order?.pk} />
-                <TextWithIcon
-                  icon={CalendarIcon}
-                  text="Date:"
-                  value={dayjs(order?.delivery_date).format('D MMM, YYYY')}
-                />
-                <TextWithIcon icon={RecipeIcon} text="Total:" value={'$' + order?.total_price} />
-                <TextWithIcon icon={WalletIcon} text="Payment method:" value="Tikkie" />
-              </div>
+              <OrderBill order={order} />
             </>
           )}
         </Box>
-      </Box>
+      </div>
+    );
+  };
+
+  const HistoryProductElement = props => {
+    const { product: recipe, isLastElement, isFirstElement, order } = props;
+
+    const title = recipe?.title;
+    const image = recipe?.images[0]?.url;
+    const price = recipe?.price;
+    const ingredients = recipe?.ingredients;
+
+    const [isCollapsed, setIsCollapsed] = useState(true);
+
+    const showDetailsHandler = () => {
+      setIsCollapsed(!isCollapsed);
+    };
+
+    const reorderButtonHandler = async () => {
+      dispatch(retryOrder(order));
+      await localStorage.setItem('last-order', JSON.stringify(order));
+      router.push('/cart');
+    };
+
+    return (
+      <div className={classes.history__product}>
+        <img className={classes.history__product__image} src={image} alt="image" />
+        <Box flex="1" display="flex" flexDirection="column" justifyContent="space-between">
+          <div className={classes.history__product__title}>{title}</div>
+          {isLastElement && (
+            <>
+              <Collapse in={!isCollapsed}>
+                <div className={classes.history__order__collapse}>
+                  <OrderBill order={order} />
+                </div>
+              </Collapse>
+              <Button onClick={showDetailsHandler} className={classes.history__order__details__button} variant="text">
+                {isCollapsed ? 'Show Details' : 'Hide Details'}
+              </Button>
+            </>
+          )}
+        </Box>
+        {isFirstElement && (
+          <Button onClick={reorderButtonHandler} className={classes.history__order__reorder__button}>
+            Reorder
+          </Button>
+        )}
+      </div>
     );
   };
 
@@ -108,15 +160,39 @@ const MyOrdersPage = props => {
     );
   };
 
+  const HistoryOrderCard = props => {
+    const { order } = props;
+    return (
+      <div className={classes.history__order}>
+        {order?.products.map((product, i, arr) => (
+          <>
+            <HistoryProductElement
+              key={product.pk}
+              product={product}
+              isLastElement={arr.length - 1 === i}
+              isFirstElement={i === 0}
+              order={order}
+            />
+            {arr.length - 1 === i && <Divider m="16px 0" />}
+          </>
+        ))}
+      </div>
+    );
+  };
+
   let content = (
-    <div className={classes.content}>
-      <div className={classes.content__column1}>
+    <div className={classes.layout}>
+      <div className={classes.layout__column1}>
         <ProfileMenu />
       </div>
-      <div className={classes.content__column2}>
-        <div className={classes.title}>Orders</div>
-        <div className={classes.subtitle}>Active</div>
-        {orders?.results?.length > 0 && orders.results.map(order => <OrderCard key={order.pk} order={order} />)}
+      <div className={classes.layout__column2}>
+        <div className={classes.layout__column2__title}>Orders</div>
+        <div className={classes.layout__column2__subtitle}>Active</div>
+        {activeOrders?.length > 0 && activeOrders.map(order => <OrderCard key={order.pk} order={order} />)}
+        <Divider m="32px 0" />
+        <div className={classes.layout__column2__subtitle}>History</div>
+        {historyOrders?.length > 0 && historyOrders.map(order => <HistoryOrderCard key={order.pk} order={order} />)}
+        {!historyOrders?.length > 0 && <Typography variant="h6">You have not delivered orders yet</Typography>}
       </div>
     </div>
   );

@@ -1,0 +1,62 @@
+@import '~styles/variables.scss';
+@import '~styles/mixins/mixins.scss';
+
+
+.container {
+  width: auto !important;
+  padding: 60px 160px !important;
+
+  .slider {
+    &_title {
+      font-style: normal;
+      font-weight: bold;
+      font-size: 48px;
+      line-height: 140%;
+      letter-spacing: 0.01em;
+      color: #14181F;
+    }
+    &_subtitle {
+      font-style: normal;
+      font-weight: normal;
+      font-size: 24px;
+      line-height: 160%;
+      letter-spacing: 0.01em;
+      color: #566481;
+      margin-bottom: 73px;
+    }
+
+    &_arrows_container {
+    }
+
+    &_body {
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      pointer-events: none;
+
+      [class*="control-arrow"] {
+        display: none;
+      }
+
+      ul {
+        display: flex;
+
+      }
+
+      &_list{
+        display: flex;
+        flex-direction: row;
+      }
+    }
+  }
+
+  @media (max-width: 960px) {
+    padding: 60px 80px !important;
+  }
+
+  @media (max-width: 600px) {
+    padding: 60px 32px !important;
+  }
+
+}
+

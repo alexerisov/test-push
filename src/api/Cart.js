@@ -38,6 +38,10 @@ export default {
     return http.post(`/cart/address`, data);
   },
 
+  getAddress: id => {
+    return http.get(`/cart/address/${id}`);
+  },
+
   postOrder: data => {
     return http.post(`/cart/order`, data);
   }

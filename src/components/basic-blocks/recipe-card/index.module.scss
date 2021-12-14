@@ -1,0 +1,129 @@
+@import '~styles/variables.scss';
+@import '~styles/mixins/mixins.scss';
+
+
+.card {
+  flex-direction: column;
+  opacity: 1;
+  animation-name: fadeInOpacity;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 0.5s;
+  width: 198px;
+  height: auto;
+  box-shadow: none !important;
+  border: none !important;
+
+  &__author {
+    font-size: 12px;
+    line-height: 15px;
+    color: #14181F;
+  }
+
+  &__title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: #14181F;
+  }
+
+  &_button {
+    cursor: pointer !important;
+    pointer-events: auto !important;
+    box-shadow: none !important;
+    padding: 16px 24px !important;
+    width: auto !important;
+    height: 42px !important;
+    text-transform: none !important;
+    border: 2px solid #FFAA00 !important;
+    border-radius: 90px !important;
+    background: transparent !important;
+    color: #353E50 !important;
+
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 160%;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.01em;
+    color: #353E50;
+
+    &:hover {
+      background: #FFF6EB !important;
+    }
+
+  }
+
+  &__media {
+    pointer-events: auto !important;
+    min-height: 198px;
+    min-width: 198px;
+    background-color: $--color-gray8;
+    cursor: pointer;
+    border-radius: 24px;
+  }
+
+  &__price {
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 32px;
+    margin-bottom: 18px;
+  }
+
+  &__dollar_symbol {
+    color: #969696;
+  }
+
+
+  @media (max-width: 960px) {
+
+    &__media {
+      min-height: 108px;
+      //min-width: 211px;
+    }
+
+    &__title {
+      font-size: 16px !important;
+      line-height: 20px !important;
+    }
+  }
+
+  @media (max-width: 600px) {
+
+
+    &__media {
+      width: 100%;
+      min-height: 140px;
+    }
+
+    &__author {
+      font-size: 14px;
+      line-height: 17px;
+    }
+
+    &__title {
+      font-size: 18px !important;
+      line-height: 22px !important;
+    }
+
+    &__price {
+      font-size: 26px;
+      line-height: 32px;
+      margin-bottom: 0;
+    }
+  }
+}
+
+@keyframes fadeInOpacity {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

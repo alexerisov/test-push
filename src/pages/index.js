@@ -3,21 +3,16 @@ import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 import classes from './index.module.scss';
 import LayoutPage from '@/components/layouts/layout-page';
-import MealOfWeekBlock from '@/components/blocks/meal-of-the-week';
-import FavoriteCuisinesBlock from '@/components/blocks/favorite-cuisines';
-import PinnedMeals from '@/components/blocks/pinned-meals';
-import HighestRatedMealsBlock from '@/components/blocks/highest-rated-meals';
-import BlocksHomePage from '@/components/blocks/blocks-home-page';
-import Carousel from '@/components/elements/carusel';
-import { Button } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { modalActions, profileActions } from '@/store/actions';
 import Recipe from '@/api/Recipe';
-import { getBaseUrl } from '@/utils/isTypeOfWindow';
 import { makeStyles } from '@material-ui/core/styles';
-import Head from 'next/head';
 import Cookies from 'cookies';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { WhyEatchefBlock } from '@/components/blocks/home-page/why-eatchef';
+import { SearchBlock } from '@/components/blocks/home-page/search';
+import { WeekMenuBlock } from '@/components/blocks/home-page/week-menu';
+import LayoutPageNew from '@/components/layouts/layout-page-new';
 
 const useStyles = makeStyles({
   root: {
@@ -60,47 +55,11 @@ const Home = props => {
     }
   };
 
-  const handleClickSearch = name => {
-    return () => {
-      props.dispatch(modalActions.open(name)).then(result => {
-        // result when modal return promise and close
-      });
-    };
-  };
-
   const content = (
     <>
-      <section className={classes.home}>
-        {!mobile && <button className={classes.btnSearch} onClick={handleClickSearch('search')}>
-          <img src="/images/index/icon_search.svg" className={classes.btnSearch__icon} />
-        </button>}
-        <div className={classes.home__titleContainer}>
-          <div className={classes.home__titleTextContainer}>
-            <h1 className={classes.home__title}>Earn Royalties</h1>
-            <p className={classes.home__subtitle}>with Your Recipe</p>
-          </div>
-        </div>
-        <div className={classes.home__buttonUploud}>
-          {props?.profile?.data?.user_type === chefType ? (
-            <Button className={btnStyles.root} variant="contained" color="primary" href="/recipe/upload">
-              Upload New Recipe!
-            </Button>
-          ) : (
-            <Button className={btnStyles.root} variant="contained" color="primary" onClick={handleChangeStatus}>
-              Upload New Recipe!
-            </Button>
-          )}
-        </div>
-        <img src="/images/index/mint.png" className={classes.imgMint1} />
-        <img src="/images/index/mint.png" className={classes.imgMint2} />
-        <img src="/images/index/broccoli.png" className={classes.imgBroccoli} />
-        <img src="/images/index/carrot.png" className={classes.imgCarrot} />
-        <Carousel images={props?.carouselItems} />
-      </section>
-      <PinnedMeals />
-      <HighestRatedMealsBlock />
-      {meal && <MealOfWeekBlock meal={meal} />}
-      <BlocksHomePage />
+      <SearchBlock />
+      <WeekMenuBlock />
+      <WhyEatchefBlock />
     </>
   );
 
@@ -113,7 +72,7 @@ const Home = props => {
           title: 'Homemade food'
         }}
       />
-      <LayoutPage content={content} />
+      <LayoutPageNew content={content} />
     </div>
   );
 };

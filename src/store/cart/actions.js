@@ -95,3 +95,51 @@ export const updateCartItem = (itemCartId, newCount) => {
     }
   };
 };
+
+export const clearCart = () => {
+  return async dispatch => {
+    try {
+      const response = await Cart.getProductList();
+      const cartList = await response.data.results;
+      const productsData = await Promise.all(
+        cartList.map(async item => {
+          return await Cart.deleteItem(item.pk);
+        })
+      );
+      dispatch(getCart());
+    } catch (e) {
+      console.error(e);
+    }
+  };
+};
+
+export const addManyToCart = itemIdArray => {
+  return async dispatch => {
+    dispatch({ type: types.ADD_TO_CART_REQUESTED });
+
+    try {
+      const productsData = await Promise.all(
+        itemIdArray.map(async item => {
+          return await Cart.addItem('recipe', item);
+        })
+      );
+      dispatch({ type: types.ADD_TO_CART_SUCCESS });
+      dispatch(getCart());
+    } catch (e) {
+      console.error(e);
+      dispatch({ type: types.ADD_TO_CART_FAILED, payload: e });
+    }
+  };
+};
+
+export const retryOrder = order => {
+  return async dispatch => {
+    try {
+      const orderProductsIds = order.products.map(el => el.pk);
+      dispatch(clearCart());
+      dispatch(addManyToCart(orderProductsIds));
+    } catch (e) {
+      console.error(e);
+    }
+  };
+};

@@ -12,6 +12,11 @@ body {
     border-radius: 5px;
     width: 259px;
     height: 56px;
+
+  }
+
+  [class*='MuiButton-label'] {
+    white-space: nowrap;
   }
 
   [class*='MuiPaper-root'] {
