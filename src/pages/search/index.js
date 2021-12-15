@@ -12,7 +12,10 @@ import {
   cookingSkill,
   ordering,
   recommendedList,
-  recipeTypesImg
+  recipeTypesImg,
+  recipeTypesCount,
+  dietaryrestrictionsCount,
+  cookingMethodsCount
 } from '@/utils/datasets';
 import { modalActions } from '@/store/actions';
 import { connect } from 'react-redux';
@@ -41,6 +44,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { InputSearch } from '@/components/elements/input';
 import { CardSearch } from '@/components/elements/card';
 import Weekmenu from '@/components/blocks/weekmenu';
+import { numberWithCommas } from '@/utils/converter';
 
 const MySlider = styled(Slider)(() => ({
   color: '#FFAA00',
@@ -122,7 +126,7 @@ const Recipes = props => {
   const [page, setPage] = useState(1);
   const [data, setData] = useState();
   const [result, setResult] = useState([]);
-  const [range, setRange] = useState(0);
+  const [range, setRange] = useState(50);
   const [isDropdownActive, setIsDropdownActive] = useState(false);
   // const [typeSelection, setTypeSelection] = useState('Food');
 
@@ -156,6 +160,7 @@ const Recipes = props => {
 
     setDrawerOpened({ ...isDrawerOpened, [anchor]: open });
   };
+
   const handleChangeRange = name => {
     return event => {
       event.preventDefault();
@@ -165,9 +170,11 @@ const Recipes = props => {
           break;
         case 'Medium':
           setRange(50);
+
           break;
         case 'Complex':
           setRange(100);
+
           break;
         default:
           return;
@@ -301,65 +308,69 @@ const Recipes = props => {
   }
 
   for (let i = 1; i <= Object.keys(recipeTypes).length; i++) {
-    recipeTypesList.push(
-      <FormControlLabel
-        key={i}
-        control={
-          <>
+    if (i !== 5) {
+      recipeTypesList.push(
+        <FormControlLabel
+          key={i}
+          control={
+            <>
+              <Checkbox
+                style={{
+                  color: formik.initialValues['types'].includes(String(i)) ? '#FFAA00' : '#E6E8EC'
+                }}
+                checked={formik.initialValues['types'].includes(String(i))}
+                value={i}
+                onChange={e => {
+                  onChangeCheckboxInput(e);
+                }}
+                name="types"
+                color="primary"
+              />
+              <img
+                style={{
+                  marginRight: '12px'
+                }}
+                src={recipeTypesImg[i]}
+              />
+            </>
+          }
+          label={getLabelByStatusOfCheckbox({
+            fieldName: 'types',
+            value: i,
+            dataList: recipeTypes
+          })}
+        />
+      );
+    }
+  }
+
+  for (let i = 1; i <= Object.keys(cookingMethods).length; i++) {
+    if (i !== 6) {
+      cookingMethodsList.push(
+        <FormControlLabel
+          key={i}
+          control={
             <Checkbox
               style={{
-                color: formik.initialValues['types'].includes(String(i)) ? '#FFAA00' : '#E6E8EC'
+                color: formik.initialValues['cooking_methods'].includes(String(i)) ? '#FFAA00' : '#E6E8EC'
               }}
-              checked={formik.initialValues['types'].includes(String(i))}
+              checked={formik.initialValues['cooking_methods'].includes(String(i))}
               value={i}
               onChange={e => {
                 onChangeCheckboxInput(e);
               }}
-              name="types"
+              name="cooking_methods"
               color="primary"
             />
-            <img
-              style={{
-                marginRight: '12px'
-              }}
-              src={recipeTypesImg[i]}
-            />
-          </>
-        }
-        label={getLabelByStatusOfCheckbox({
-          fieldName: 'types',
-          value: i,
-          dataList: recipeTypes
-        })}
-      />
-    );
-  }
-
-  for (let i = 1; i <= Object.keys(cookingMethods).length; i++) {
-    cookingMethodsList.push(
-      <FormControlLabel
-        key={i}
-        control={
-          <Checkbox
-            style={{
-              color: formik.initialValues['cooking_methods'].includes(String(i)) ? '#FFAA00' : '#E6E8EC'
-            }}
-            checked={formik.initialValues['cooking_methods'].includes(String(i))}
-            value={i}
-            onChange={e => {
-              onChangeCheckboxInput(e);
-            }}
-            name="cooking_methods"
-            color="primary"
-          />
-        }
-        label={getLabelByStatusOfCheckbox({
-          fieldName: 'cooking_methods',
-          value: i,
-          dataList: cookingMethods
-        })}
-      />
-    );
+          }
+          label={getLabelByStatusOfCheckbox({
+            fieldName: 'cooking_methods',
+            value: i,
+            dataList: cookingMethods
+          })}
+        />
+      );
+    }
   }
 
   ordering.forEach((item, index) => {
@@ -513,7 +524,19 @@ const Recipes = props => {
                 <Typography className={classes.search__filter__title}>Type</Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <div className={classes.search__filter__list}>{recipeTypesList}</div>
+                <div className={classes.search__filter__list__wrap}>
+                  <div className={classes.search__filter__list}>{recipeTypesList}</div>
+                  <div className={classes.search__filter__list}>
+                    {Object.values(recipeTypesCount).map(
+                      (el, ind) =>
+                        data && (
+                          <div key={`${el}-${ind}`} className={classes.search__filter__list_item}>
+                            {numberWithCommas(`${data[el]}`)}
+                          </div>
+                        )
+                    )}
+                  </div>
+                </div>
               </AccordionDetails>
             </StyledAccordion>
           }
@@ -526,7 +549,12 @@ const Recipes = props => {
             max={100}
             step={50}
             value={range}
-            onChange={(event, value) => setRange(value)}
+            onChange={(event, value) => {
+              setRange(value);
+              formik.handleChange;
+            }}
+            name="cooking_skills"
+            id="cooking_skills"
           />
           <div className={classes.search__cookingSkills}>
             <button className={classes.search__cookingSkills__firstItem} onClick={handleChangeRange('Easy')}>
@@ -553,7 +581,19 @@ const Recipes = props => {
               <Typography className={classes.search__filter__title}>Cooking Method</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <div className={classes.search__filter__list}>{cookingMethodsList}</div>
+              <div className={classes.search__filter__list__wrap}>
+                <div className={classes.search__filter__list}>{cookingMethodsList}</div>
+                <div className={classes.search__filter__list}>
+                  {Object.values(cookingMethodsCount).map(
+                    (el, ind) =>
+                      data && (
+                        <div key={`${el}-${ind}`} className={classes.search__filter__list_item}>
+                          {numberWithCommas(`${data[el]}`)}
+                        </div>
+                      )
+                  )}
+                </div>
+              </div>
             </AccordionDetails>
           </StyledAccordion>
           <div className={classes.search__line} />
@@ -570,7 +610,19 @@ const Recipes = props => {
               <Typography className={classes.search__filter__title}>Dietary Restrictions</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <div className={classes.search__filter__list}>{dietaryrestrictionsList}</div>
+              <div className={classes.search__filter__list__wrap}>
+                <div className={classes.search__filter__list}>{dietaryrestrictionsList} </div>
+                <div className={classes.search__filter__list}>
+                  {Object.values(dietaryrestrictionsCount).map(
+                    (el, ind) =>
+                      data && (
+                        <div key={`${el}-${ind}`} className={classes.search__filter__list_item}>
+                          {numberWithCommas(`${data[el]}`)}
+                        </div>
+                      )
+                  )}
+                </div>
+              </div>
             </AccordionDetails>
           </StyledAccordion>
           <div className={classes.search__line} />
@@ -676,6 +728,16 @@ const Recipes = props => {
     </>
   );
 };
+// export async function getServerSideProps(context) {
+//   try {
+//     const weekmenu = await Recipe.getWeekmenu();
+//     return {
+//       props: { weekmenu } // will be passed to the page component as props
+//     };
+//   } catch (e) {
+//     console.error(e);
+//   }
+// }
 
 export default connect(state => ({
   search: state.search

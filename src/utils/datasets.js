@@ -33,9 +33,20 @@ export const recipeTypes = {
   2: 'Lunch',
   3: 'Dinner',
   4: 'Dessert',
+  5: '',
   6: 'Appetizer',
   7: 'Salad',
   8: 'Bread'
+};
+
+export const recipeTypesCount = {
+  Breakfast: 'breakfast_num',
+  Lunch: 'lunch_num',
+  Dinner: 'dinner_num',
+  Dessert: 'dessert_num',
+  Appetizer: 'appetizer_num',
+  Salad: 'salad_num',
+  Bread: 'bread_num'
 };
 
 export const recipeTypesImg = {
@@ -43,9 +54,10 @@ export const recipeTypesImg = {
   2: 'icons/Serving Plate/Line.svg',
   3: 'icons/Soup/Line.svg',
   4: 'icons/Ice Cream/Line.svg',
-  5: 'icons/French Fries/Line.svg',
-  6: 'icons/Carrot/Line.svg',
-  7: 'icons/Donut/Line.svg'
+  5: '',
+  6: 'icons/French Fries/Line.svg',
+  7: 'icons/Carrot/Line.svg',
+  8: 'icons/Donut/Line.svg'
 };
 
 export const recommendedList = {
@@ -66,11 +78,25 @@ export const cookingMethods = {
   3: 'Roasting',
   4: 'Baking',
   5: 'Sauteing',
+  6: '',
   7: 'Simmering',
   8: 'Boiling',
   9: 'Steaming',
   10: 'Braising',
   11: 'Stewing'
+};
+
+export const cookingMethodsCount = {
+  Broiling: 'broiling_num',
+  Grilling: 'grilling_num',
+  Roasting: 'roasting_num',
+  Baking: 'baking_num',
+  Sauteing: 'sauteing_num',
+  Simmering: 'simmering_num',
+  Boiling: 'boiling_num',
+  Steaming: 'steaming_num',
+  Braising: 'braising_num',
+  Stewing: 'stewing_num'
 };
 
 export const dietaryrestrictions = {
@@ -92,7 +118,24 @@ export const dietaryrestrictions = {
   15: 'Low FODMAP',
   16: 'High FODMAP'
 };
-
+export const dietaryrestrictionsCount = {
+  Vegan: 'vegan_num',
+  Vegetarian: 'vegetarian_num',
+  Pescetarian: 'pescetarian_num',
+  'Gluten Free': 'gluten_free_num',
+  'Grain Free': 'grain_free_num',
+  'Dairy Free': 'dairy_free_num',
+  'High Protein': 'high_protein_num',
+  'Low Sodium': 'low_sodium_num',
+  'Low Carb': 'low_carb_num',
+  Paleo: 'paleo_num',
+  Primal: 'primal_num',
+  Ketogenic: 'ketogenic_num',
+  FODMAP: 'fodmap_num',
+  'Whole 30': 'whole_30_num',
+  'Low FODMAP': 'low_fodmap_num',
+  'High FODMAP': 'high_fodmap_num'
+};
 export const units = {
   0: '',
   1: 'bag(s)',
