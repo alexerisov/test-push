@@ -33,9 +33,9 @@ export const recipeTypes = {
   2: 'Lunch',
   3: 'Dinner',
   4: 'Dessert',
-  5: 'Appetizer',
-  6: 'Salad',
-  7: 'Bread'
+  6: 'Appetizer',
+  7: 'Salad',
+  8: 'Bread'
 };
 
 export const recipeTypesImg = {
@@ -66,11 +66,11 @@ export const cookingMethods = {
   3: 'Roasting',
   4: 'Baking',
   5: 'Sauteing',
-  6: 'Simmering',
-  7: 'Boiling',
-  8: 'Steaming',
-  9: 'Braising',
-  10: 'Stewing'
+  7: 'Simmering',
+  8: 'Boiling',
+  9: 'Steaming',
+  10: 'Braising',
+  11: 'Stewing'
 };
 
 export const dietaryrestrictions = {

@@ -23,6 +23,38 @@
     background-color: $--color-gray8;
   }
 
+  &__label {
+    color: #566481;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 160%;
+    @include fontMedium();
+    display: flex;
+    align-items: center;
+
+    img {
+      margin-right: 8px;
+    }
+    &_right {
+      color: #566481;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 160%;
+      @include fontMedium();
+      display: flex;
+      align-items: flex-start;
+      width: 50%;
+      img {
+        margin-right: 8px;
+      }
+    }
+    &_left {
+      width: 50%;
+    }
+  }
+  &__labels {
+    display: flex;
+  }
   &__logo {
     width: 40px !important;
     height: auto;
@@ -101,6 +133,11 @@
     overflow: hidden;
     white-space: nowrap;
     max-width: 265px;
+    color: #14181f;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 160%;
+    @include fontMedium();
   }
 
   &__location {

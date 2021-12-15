@@ -623,9 +623,12 @@ const Recipes = props => {
               {orderingList}
             </Select>
           </div> */}
+          <Weekmenu result={result} />
+          <div className={classes.search__result__text}>
+            <img src="icons/Coin/Line.svg" alt="close-icon" />
+            <p>You can order all the ingredients</p>
+          </div>
           <div className={classes.search__result__container}>
-            <Weekmenu result={result} />
-
             {result.length !== 0 ? (
               result.map((recipe, index) => {
                 return (

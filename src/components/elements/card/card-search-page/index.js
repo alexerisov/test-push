@@ -8,7 +8,7 @@ import { styled } from '@material-ui/core/styles';
 import { CardActionArea, Button } from '@material-ui/core';
 import { useRouter } from 'next/router';
 
-import { PUBLISH_STATUS, APPROVED_STATUS } from '@/utils/datasets';
+import { PUBLISH_STATUS, APPROVED_STATUS, recipeTypes, recipeTypesImg, cookingSkill } from '@/utils/datasets';
 import logo from '/public/images/index/logo.svg';
 import CardControlPlay from '@/components/elements/card-control-play';
 import ChefIcon from '@/components/elements/chef-icon';
@@ -66,13 +66,27 @@ const CardSearch = props => {
             <p className={classes.card__name} title={props.title}>
               {props.title}
             </p>
-            <p className={classes.card__author}>{`by Chef ${props.name}`}</p>
-            <p className={classes.card__location}>{props.city}</p>
+            {/* <p className={classes.card__author}>{`by Chef ${props.name}`}</p> */}
+            {/* <p className={classes.card__location}>{props.city}</p> */}
             {/* <div className={classes.card__likeIcon}>
               <LikeIcon value={props.likes} />
             </div> */}
             {/* {props.hasVideo && <CardControlPlay />} */}
-            {props.cookingTypes.map(el => el)} {props.cookingSkill}
+            <div className={classes.card__labels}>
+              <div className={classes.card__label_left}>
+                {props.cookingTypes.map((el, ind) => (
+                  <div className={classes.card__label} key={`${el}-${ind}`}>
+                    <img src={recipeTypesImg[el]} alt="type-icon" />
+                    {recipeTypes[el]}
+                  </div>
+                ))}
+              </div>
+              <div className={classes.card__label_right}>
+                {props.cookingSkill && <img className={classes.icon} src="icons/Hat Chef/Line.svg" alt="chef-hat" />}
+                {cookingSkill[props.cookingSkill]}
+              </div>
+            </div>
+
             <Button className={classes.card__uploadButton} variant="outlined" color="primary">
               <img src="icons/Shopping Cart/Line.svg" alt="cart" /> {`$${props.price}`}
             </Button>
