@@ -22,7 +22,31 @@
     border-radius: 50%;
     background-color: $--color-gray8;
   }
-
+  &__line {
+    display: block;
+    height: 1px;
+    width: 100%;
+    background-color: #e6e8ec;
+    margin: 16px 0;
+  }
+  &__socialStat {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &__item {
+      display: flex;
+      align-items: center;
+      font-size: 12px;
+      line-height: 160%;
+      color: #566481;
+      @include fontMedium();
+      img {
+        margin-right: 7px;
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
   &__label {
     color: #566481;
     font-weight: 500;
@@ -54,6 +78,7 @@
   }
   &__labels {
     display: flex;
+    min-height: 30px;
   }
   &__logo {
     width: 40px !important;

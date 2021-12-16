@@ -12,6 +12,9 @@ import { PUBLISH_STATUS, APPROVED_STATUS, recipeTypes, recipeTypesImg, cookingSk
 import logo from '/public/images/index/logo.svg';
 import CardControlPlay from '@/components/elements/card-control-play';
 import ChefIcon from '@/components/elements/chef-icon';
+import { numberWithCommas } from '@/utils/converter';
+import { addToCart } from '@/store/cart/actions';
+import { SavedIcon } from '../..';
 
 const StyledCardMedia = styled(CardMedia)`
   .MuiCardMedia-root {
@@ -55,12 +58,17 @@ const CardSearch = props => {
       }
     }
   };
-
+  const addToCart = () => {};
   return (
     <Card className={classes.card}>
       <StyledCardActionArea onClick={() => redirectToRecipeCard(props.id)}>
         <StyledCardMedia className={classes.card__media} image={props.image ?? logo} title="" />
-        {props.isParsed && props.publishStatus === PUBLISH_STATUS.published ? <ChefIcon type="common" /> : null}
+        {}
+        {props.user_saved_recipe === 1 ? (
+          <SavedIcon />
+        ) : props.isParsed && props.publishStatus === PUBLISH_STATUS.published ? (
+          <ChefIcon type="common" />
+        ) : null}
         <StyledCardContent className={classes.card__content}>
           <div className={classes.card__wrap}>
             <p className={classes.card__name} title={props.title}>
@@ -86,10 +94,29 @@ const CardSearch = props => {
                 {cookingSkill[props.cookingSkill]}
               </div>
             </div>
-
-            <Button className={classes.card__uploadButton} variant="outlined" color="primary">
-              <img src="icons/Shopping Cart/Line.svg" alt="cart" /> {`$${props.price}`}
-            </Button>
+            {props.price > 0 ? (
+              <Button
+                className={classes.card__uploadButton}
+                variant="outlined"
+                color="primary"
+                onClick={() => (props.token ? addToCart() : null)}>
+                <img src="icons/Shopping Cart/Line.svg" alt="cart" /> {`$${props.price}`}
+              </Button>
+            ) : (
+              <>
+                <div className={classes.card__line} />
+                <div className={classes.card__socialStat}>
+                  <div className={classes.card__socialStat__item}>
+                    <img src="icons/Like.svg" alt="likes" />
+                    {numberWithCommas(`${props.likes}`)}
+                  </div>
+                  <div className={classes.card__socialStat__item}>
+                    <img src="icons/Comment/Line.svg" alt="comment" />
+                    {numberWithCommas(`${props.comments_number}`)}
+                  </div>
+                </div>
+              </>
+            )}
             {props.cookingTime && (
               <div className={classes.card__timeWrap}>
                 <img src="icons/Stopwatch/Line.svg" alt="stopwatch" />
