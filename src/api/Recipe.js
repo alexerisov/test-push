@@ -150,6 +150,10 @@ export default {
     return http.get(`/recipe/top_rated_meals`);
   },
 
+  getWeekmenu: () => {
+    return http.get(`/settings/weekmenus`);
+  },
+
   getFavoriteCuisines: id => {
     return http.get(`/recipe/favorite_cuisines?cuisine=${id}`);
   },

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel';
 import classes from './index.module.scss';
 import { CardSearch } from '@/components/elements/card';
@@ -12,14 +12,27 @@ const StyledSlider = styled(Slider)`
   width: auto;
 `;
 
-const Weekmenu = ({ result }) => {
+const Weekmenu = ({ result, token }) => {
+  const [widthWindow, setWidthWindow] = useState();
+  useEffect(() => {
+    const { innerWidth: width, innerHeight: height } = window;
+    setWidthWindow(innerWidth);
+  }, []);
+
+  const visibleSlides = () => {
+    if (widthWindow > 1400) {
+      return 3.5;
+    } else if (widthWindow <= 1400) {
+      return 2.5;
+    }
+  };
   return (
     <div className={classes.weekmenu}>
       <CarouselProvider
         naturalSlideWidth={265}
         naturalSlideHeight={350}
         step={2}
-        visibleSlides={result.length > 2 ? 2.5 : result.length}
+        visibleSlides={visibleSlides()}
         totalSlides={result.length}>
         <div className={classes.weekmenu__row}>
           <h2 className={classes.weekmenu__title}>Weekmenu</h2>
@@ -39,6 +52,7 @@ const Weekmenu = ({ result }) => {
                 return (
                   <Slide key={`${recipe.pk}-${index}`}>
                     <CardSearch
+                      token={token}
                       title={recipe?.title}
                       image={recipe?.images[0]?.url}
                       name={recipe?.user?.full_name}

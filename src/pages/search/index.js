@@ -20,6 +20,7 @@ import {
 import { modalActions } from '@/store/actions';
 import { connect } from 'react-redux';
 import { Button, NoSsr, Slider } from '@material-ui/core';
+import Image from 'next/image';
 
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -126,9 +127,23 @@ const Recipes = props => {
   const [page, setPage] = useState(1);
   const [data, setData] = useState();
   const [result, setResult] = useState([]);
-  const [range, setRange] = useState(50);
+  const [range, setRange] = useState(1);
   const [isDropdownActive, setIsDropdownActive] = useState(false);
+  const [weekmenu, setWeekmenu] = useState();
+  const [salableResults, setSalableResults] = useState();
+  const [resultsWithPrice, setResultsWithPrice] = useState();
+  const [resultsWithoutPrice, setResultsWithoutPrice] = useState();
+  const [isViewAll, setIsViewAll] = useState(true);
   // const [typeSelection, setTypeSelection] = useState('Food');
+
+  useEffect(async () => {
+    try {
+      const weekmenu = await Recipe.getWeekmenu();
+      setWeekmenu(weekmenu.data);
+    } catch (e) {
+      console.error(e);
+    }
+  }, []);
 
   // Accordion
   const [expanded, setExpanded] = useState(false);
@@ -167,14 +182,21 @@ const Recipes = props => {
       switch (name) {
         case 'Easy':
           setRange(0);
+          setPage(1);
+          formik.setFieldValue('cooking_skills', 0);
+          formik.handleSubmit();
           break;
         case 'Medium':
-          setRange(50);
-
+          setRange(1);
+          setPage(1);
+          formik.setFieldValue('cooking_skills', 1);
+          formik.handleSubmit();
           break;
         case 'Complex':
-          setRange(100);
-
+          setRange(2);
+          setPage(1);
+          formik.setFieldValue('cooking_skills', 2);
+          formik.handleSubmit();
           break;
         default:
           return;
@@ -232,6 +254,9 @@ const Recipes = props => {
       );
     }
   });
+  useEffect(() => {
+    formik.setFieldValue({ types: range });
+  }, [range]);
 
   const dietaryrestrictionsList = [];
   const cookingMethodsList = [];
@@ -399,6 +424,22 @@ const Recipes = props => {
         .then(res => {
           setResult(res.data.results);
           setData(res.data);
+          // setResultsWithPrice(res.data.results.filter(item => item.price && item.price > 0));
+          // setResultsWithoutPrice(res.data.results.filter(item => !item.price || item.price === '0.00'));
+
+          if (!res?.data?.results?.length) {
+            setExpanded(false);
+          }
+        })
+        .catch(e => {
+          console.log('error', e);
+        });
+      Recipe.getSearchResult({ ...query, ordering: 'sale_status=5' })
+        .then(res => {
+          setSalableResults(res.data);
+
+          // setResultsWithPrice(res.data.results.filter(item => item.price && item.price > 0));
+          // setResultsWithoutPrice(res.data.results.filter(item => !item.price || item.price === '0.00'));
 
           if (!res?.data?.results?.length) {
             setExpanded(false);
@@ -482,10 +523,15 @@ const Recipes = props => {
   const searchFilter = (
     <>
       <div className={classes.search__filter} onSubmit={formik.handleSubmit}>
-        <Button className={classes.search__uploadButton} variant="outlined" color="primary">
-          Upload Recipe
-        </Button>
-        <div className={classes.search__filter__line} />
+        {props.userType === 1 && (
+          <>
+            <Button className={classes.search__uploadButton} variant="outlined" color="primary">
+              Upload Recipe
+            </Button>
+            <div className={classes.search__filter__line} />
+          </>
+        )}
+
         {/* <div className={classes.search__filterHeader_left}>
           <p className={classes.search__filter__title}>Filter</p>
           {!mobile && (
@@ -544,14 +590,16 @@ const Recipes = props => {
 
           <Typography className={classes.search__filter__title}>Cooking Skills</Typography>
           <MySlider
-            defaultValue={50}
+            defaultValue={1}
             min={0}
-            max={100}
-            step={50}
+            max={2}
+            step={1}
             value={range}
             onChange={(event, value) => {
               setRange(value);
-              formik.handleChange;
+              setPage(1);
+              formik.setFieldValue('cooking_skills', value);
+              formik.handleSubmit();
             }}
             name="cooking_skills"
             id="cooking_skills"
@@ -675,38 +723,82 @@ const Recipes = props => {
               {orderingList}
             </Select>
           </div> */}
-          <Weekmenu result={result} />
+          <Weekmenu result={result} token={props.token} />
           <div className={classes.search__result__text}>
             <img src="icons/Coin/Line.svg" alt="close-icon" />
             <p>You can order all the ingredients</p>
           </div>
           <div className={classes.search__result__container}>
             {result.length !== 0 ? (
-              result.map((recipe, index) => {
-                return (
-                  <CardSearch
-                    key={`${recipe.pk}-${index}`}
-                    title={recipe?.title}
-                    image={recipe?.images[0]?.url}
-                    name={recipe?.user?.full_name}
-                    city={recipe?.user?.city}
-                    likes={recipe?.likes_number}
-                    isParsed={recipe?.is_parsed}
-                    publishStatus={recipe?.publish_status}
-                    hasVideo={recipe?.video}
-                    cookingTime={recipe?.cooking_time}
-                    cookingSkill={recipe?.cooking_skills}
-                    cookingTypes={recipe?.types}
-                    price={recipe?.price}
-                    id={recipe.pk}
-                  />
-                );
-              })
+              <>
+                {result.map((recipe, index) => {
+                  if (index < 3) {
+                    return (
+                      <CardSearch
+                        key={`${recipe.pk}-${index}`}
+                        title={recipe?.title}
+                        image={recipe?.images[0]?.url}
+                        name={recipe?.user?.full_name}
+                        city={recipe?.user?.city}
+                        likes={recipe?.likes_number}
+                        isParsed={recipe?.is_parsed}
+                        publishStatus={recipe?.publish_status}
+                        hasVideo={recipe?.video}
+                        cookingTime={recipe?.cooking_time}
+                        cookingSkill={recipe?.cooking_skills}
+                        cookingTypes={recipe?.types}
+                        user_saved_recipe={recipe?.user_saved_recipe}
+                        price={recipe?.price}
+                        id={recipe.pk}
+                      />
+                    );
+                  }
+                })}
+                {isViewAll ? (
+                  <div className={classes.search__buttonViewWrap}>
+                    <button className={classes.search__viewAll}>
+                      View All {<span>({salableResults?.count})</span>}
+                    </button>
+                  </div>
+                ) : (
+                  <div className={classes.search__buttonViewWrap}>
+                    <button className={classes.search__viewAll}>View Less</button>
+                  </div>
+                )}
+              </>
             ) : (
-              <p className={classes.search__NoResult}>No Recipes Found</p>
+              <div className={classes.search__NoResult__wrap}>
+                <Image src="/images/index/pic_nothing_found.png" width={155} height={140} alt="not found" />
+                <p className={classes.search__NoResult}>Nothing Found</p>
+              </div>
             )}
           </div>
-          <div>
+          <div className={classes.search__result__container}>
+            {result.length !== 0
+              ? result.map((recipe, index) => {
+                  return (
+                    <CardSearch
+                      key={`${recipe.pk}-${index}`}
+                      title={recipe?.title}
+                      image={recipe?.images[0]?.url}
+                      name={recipe?.user?.full_name}
+                      city={recipe?.user?.city}
+                      likes={recipe?.likes_number}
+                      isParsed={recipe?.is_parsed}
+                      publishStatus={recipe?.publish_status}
+                      hasVideo={recipe?.video}
+                      cookingTime={recipe?.cooking_time}
+                      cookingSkill={recipe?.cooking_skills}
+                      cookingTypes={recipe?.types}
+                      user_saved_recipe={recipe?.user_saved_recipe}
+                      price={recipe?.price}
+                      id={recipe.pk}
+                    />
+                  );
+                })
+              : null}
+          </div>
+          {/* <div>
             {data?.results?.length !== 0 && data?.count && (
               <Pagination
                 count={Math.ceil(data.count / numberCardsDisplayed)}
@@ -716,7 +808,7 @@ const Recipes = props => {
                 size={mobile ? 'small' : 'large'}
               />
             )}
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
@@ -728,9 +820,22 @@ const Recipes = props => {
     </>
   );
 };
-// export async function getServerSideProps(context) {
+
+export default connect(state => ({
+  search: state.search,
+  token: state.account.hasToken,
+  userType: state.account?.profile?.user_type
+}))(Recipes);
+
+// export async function getServerSideProps() {
 //   try {
-//     const weekmenu = await Recipe.getWeekmenu();
+//     const res = await Recipe.getWeekmenu();
+//     const weekmenu = await res.json(res);
+//     if (!weekmenu) {
+//       return {
+//         notFound: true
+//       };
+//     }
 //     return {
 //       props: { weekmenu } // will be passed to the page component as props
 //     };
@@ -738,7 +843,3 @@ const Recipes = props => {
 //     console.error(e);
 //   }
 // }
-
-export default connect(state => ({
-  search: state.search
-}))(Recipes);
