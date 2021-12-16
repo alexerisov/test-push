@@ -121,7 +121,7 @@ const Recipes = props => {
   const mobile = useMediaQuery('(max-width: 992px)');
   const router = useRouter();
   const classMarerialUi = useStyles();
-
+  const [recommendedFilter, setRecommendedFilter] = useState('');
   const [query, setQuery] = useState();
   const [title, setTitle] = useState();
   const [page, setPage] = useState(1);
@@ -234,7 +234,8 @@ const Recipes = props => {
       cooking_skills: [...getInitialValuesForFormik('cooking_skills')],
       types: [...getInitialValuesForFormik('types')],
       ordering: [getInitialValuesForFormik('ordering')],
-      only_eatchefs_recipes: [...getInitialValuesForFormik('only_eatchefs_recipes')]
+      only_eatchefs_recipes: [...getInitialValuesForFormik('only_eatchefs_recipes')],
+      recipe_set: [...getInitialValuesForFormik('recipe_set')]
     },
     enableReinitialize: true,
     onSubmit: values => {
@@ -254,9 +255,6 @@ const Recipes = props => {
       );
     }
   });
-  useEffect(() => {
-    formik.setFieldValue({ types: range });
-  }, [range]);
 
   const dietaryrestrictionsList = [];
   const cookingMethodsList = [];
@@ -475,7 +473,16 @@ const Recipes = props => {
     setTitle('');
   };
   const recommendedListMap = Object.keys(recommendedList).map((el, ind) => (
-    <li className={classes.search__dropdown__item} key={`r${ind}`}>
+    <li
+      className={classes.search__dropdown__item}
+      key={`r${ind}`}
+      onClick={() => {
+        setRecommendedFilter(`${recommendedList[el]}`);
+        setIsDropdownActive(false);
+        formik.setFieldValue('recipe_set', `${recommendedList[el]}`.toLowerCase());
+
+        formik.handleSubmit();
+      }}>
       {recommendedList[el]}
     </li>
   ));
@@ -545,12 +552,12 @@ const Recipes = props => {
           <div
             className={`${isDropdownActive ? classes.search__dropdown_active : classes.search__dropdown}`}
             onClick={() => setIsDropdownActive(!isDropdownActive)}>
-            <span>Recommended</span>
+            {recommendedFilter ? <span>{recommendedFilter}</span> : <span>Recommended</span>}
             <div className={classes.search__dropdown__circle}>
               <img src="icons/Arrow Down Simple/Line.svg" />
             </div>
           </div>
-          {isDropdownActive && (
+          {isDropdownActive === true && (
             <ul className={classes.search__dropdown__list}>
               <li className={classes.search__dropdown__item}>Recommended</li>
               {recommendedListMap}
