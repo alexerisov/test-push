@@ -326,6 +326,27 @@
       color: #e0e4eb !important;
     }
   }
+  &__scrollBtn {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff6eb;
+    border: 2px solid $--color-orange;
+    border-radius: 50%;
+    position: fixed;
+    left: 25px;
+    bottom: 29px;
+    cursor: pointer;
+    -moz-user-select: none;
+    -o-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    z-index: 500;
+  }
   &__buttonViewWrap {
     width: 100%;
     display: flex;

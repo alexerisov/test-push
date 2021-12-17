@@ -46,6 +46,7 @@ import { InputSearch } from '@/components/elements/input';
 import { CardSearch } from '@/components/elements/card';
 import Weekmenu from '@/components/blocks/weekmenu';
 import { numberWithCommas } from '@/utils/converter';
+import { windowScroll } from '@/utils/windowScroll';
 
 const MySlider = styled(Slider)(() => ({
   color: '#FFAA00',
@@ -130,10 +131,13 @@ const Recipes = props => {
   const [range, setRange] = useState(1);
   const [isDropdownActive, setIsDropdownActive] = useState(false);
   const [weekmenu, setWeekmenu] = useState();
-  const [salableResults, setSalableResults] = useState();
-  const [resultsWithPrice, setResultsWithPrice] = useState();
-  const [resultsWithoutPrice, setResultsWithoutPrice] = useState();
+  const [salableResults, setSalableResults] = useState([]);
+  const [unsalableResults, setUnsalableResults] = useState([]);
+  const [resultsWithPrice, setResultsWithPrice] = useState([]);
+  const [resultsWithoutPrice, setResultsWithoutPrice] = useState([]);
   const [isViewAll, setIsViewAll] = useState(true);
+  const [hasMoreUnsalableResults, setHasMoreUnsalableResults] = useState(true);
+  const [showScrollBtn, setShowScrollBtn] = useState(false);
   // const [typeSelection, setTypeSelection] = useState('Food');
 
   useEffect(async () => {
@@ -145,6 +149,9 @@ const Recipes = props => {
     }
   }, []);
 
+  useEffect(async () => {
+    page > 1 && setShowScrollBtn(true);
+  }, [page]);
   // Accordion
   const [expanded, setExpanded] = useState(false);
 
@@ -432,7 +439,9 @@ const Recipes = props => {
         .catch(e => {
           console.log('error', e);
         });
-      Recipe.getSearchResult({ ...query, ordering: 'sale_status=5' })
+
+      //SalableResults
+      Recipe.getSearchResult({ ...query, sale_status: 5 })
         .then(res => {
           setSalableResults(res.data);
 
@@ -446,8 +455,24 @@ const Recipes = props => {
         .catch(e => {
           console.log('error', e);
         });
+
+      //UnsalableResults
+      Recipe.getSearchResult({ ...query, sale_status: '4,6,7', page_size: 12, page })
+        .then(res => {
+          if (res.data.next) {
+            setUnsalableResults([...unsalableResults, ...res.data.results]);
+          } else {
+            setHasMoreUnsalableResults(false);
+          }
+          if (!res?.data?.results?.length) {
+            setExpanded(false);
+          }
+        })
+        .catch(e => {
+          console.log('error', e);
+        });
     }
-  }, [query]);
+  }, [query, page]);
 
   // search banner
 
@@ -532,7 +557,11 @@ const Recipes = props => {
       <div className={classes.search__filter} onSubmit={formik.handleSubmit}>
         {props.userType === 1 && (
           <>
-            <Button className={classes.search__uploadButton} variant="outlined" color="primary">
+            <Button
+              onClick={() => router.push('/recipe/upload')}
+              className={classes.search__uploadButton}
+              variant="outlined"
+              color="primary">
               Upload Recipe
             </Button>
             <div className={classes.search__filter__line} />
@@ -736,9 +765,9 @@ const Recipes = props => {
             <p>You can order all the ingredients</p>
           </div>
           <div className={classes.search__result__container}>
-            {result.length !== 0 ? (
+            {salableResults?.results?.length !== 0 ? (
               <>
-                {result.map((recipe, index) => {
+                {salableResults?.results?.map((recipe, index) => {
                   if (index < 3) {
                     return (
                       <CardSearch
@@ -781,8 +810,8 @@ const Recipes = props => {
             )}
           </div>
           <div className={classes.search__result__container}>
-            {result.length !== 0
-              ? result.map((recipe, index) => {
+            {unsalableResults.length !== 0
+              ? unsalableResults.map((recipe, index) => {
                   return (
                     <CardSearch
                       key={`${recipe.pk}-${index}`}
@@ -799,12 +828,22 @@ const Recipes = props => {
                       cookingTypes={recipe?.types}
                       user_saved_recipe={recipe?.user_saved_recipe}
                       price={recipe?.price}
+                      comments_number={recipe?.comments_number}
                       id={recipe.pk}
+                      unsalable={true}
                     />
                   );
                 })
               : null}
           </div>
+          {hasMoreUnsalableResults && (
+            <div className={classes.search__buttonViewWrap}>
+              <button className={classes.search__viewAll} onClick={() => setPage(page + 1)}>
+                {/* <Spinner /> */}
+                Show More
+              </button>
+            </div>
+          )}
           {/* <div>
             {data?.results?.length !== 0 && data?.count && (
               <Pagination
@@ -816,6 +855,16 @@ const Recipes = props => {
               />
             )}
           </div> */}
+          {showScrollBtn ? (
+            <button
+              className={classes.search__scrollBtn}
+              onClick={() => {
+                windowScroll();
+                setShowScrollBtn(false);
+              }}>
+              <img src="icons/Arrow Up Simple/Line.svg" alt="arrow-icon" />
+            </button>
+          ) : null}
         </div>
       </div>
     </div>
