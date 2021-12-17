@@ -271,6 +271,12 @@ export const notificationTypesText = {
     return {
       text: `<p>Click to view the chef pencil <a href=${link}>${payload?.title}</a></p>`
     };
+  },
+  8: payload => {
+    let link = `/recipe/${payload?.id}`;
+    return {
+      text: `<p>Click to view the recipe <a href=${link}>${payload?.title}</a></p>`
+    };
   }
 };
 
@@ -301,7 +307,7 @@ export const notificationTypesTitle = {
     return `${payload.count} new comment in your Chef Pencil Record`;
   },
   8: payload => {
-    return `Recipe ${SALE_STATUS[payload?.status]}`;
+    return `Recipe ${SALE_STATUS[payload?.sale_status]}`;
   }
 };
 
