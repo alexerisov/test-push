@@ -1,687 +1,158 @@
+@import '~styles/variables.scss';
 @import '~styles/mixins/mixins.scss';
 
-.recipe {
-  padding: 40px 0 0 0;
-  width: max-content;
-  margin: 0 auto;
-  max-width: 80vw;
+@mixin column1 {
+  grid-column: 1 / 2;
+}
 
-  @media (max-width: 600px) {
-    width: auto;
-    padding: 0;
+@mixin column2 {
+  grid-column: 2 / 3
+}
+
+@mixin bothColumns {
+  grid-column: 1 / 3;
+}
+
+
+
+.layout {
+  width: 100% !important;
+  padding: 0 160px;
+
+  background-color: darkred;
+
+  display: grid;
+  grid-template-columns: 1fr .73fr;
+  column-gap: 64px;
+
+  &_column1 {
+    //max-width: 608px;
+    @include column1();
   }
 
-  &__description {
-    max-width: 700px;
-    word-break: break-all;
-
-    @media (max-width: 900px) {
-      max-width: 500px;
-    }
-
-    @media (max-width: 600px) {
-      max-width: 350px;
-    }
-  }
-
-  &__navbar {
-    font-size: 20px;
-    font-weight: 300;
-    line-height: 45px;
-
-    span {
-      color: $--color-orange;
-    }
-
-    a,
-    a:active,
-    a:visited {
-      font-size: 20px;
-      font-weight: 300;
-      line-height: 45px;
-      color: $--color-gray6;
-    }
-
-    &__link:hover {
-      color: $--color-orange;
-    }
-
-    &__link:hover:visited {
-      color: $--color-orange;
-    }
-  }
-
-  &__icons {
-    min-height: 130px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-end;
-
-    @media (max-width: 600px) {
-      flex-direction: row;
-      align-items: center;
-      min-height: auto;
-      width: 100%;
-    }
-  }
-
-  &__linkEdit {
-    cursor: pointer;
-    margin: 0 6px 0 0;
-
-    img {
-      width: 28px;
-    }
-
-    &:hover {
-      opacity: 0.5;
-    }
-  }
-
-  &__deleteButton {
-    border: none;
-    cursor: pointer;
-
-    &:hover {
-      opacity: 0.5;
-    }
-
-    img {
-      width: 30px;
-    }
-  }
-
-  &__title {
-    max-width: 600px;
-    font-size: 30px;
-    @include fontMedium();
-    margin: 0 0 30px 0;
-    line-height: 40px;
-    word-break: break-all;
-
-    @media (max-width: $--md) {
-      max-width: 450px;
-    }
-  }
-
-  &__content {
-    display: grid;
-    grid-template-columns: 715px 340px;
-    margin: 50px 0;
-    gap: 0 35px;
-
-    @media (max-width: 1300px) {
-      grid-template-columns: 1fr;
-    }
-
-    @media (max-width: 600px) {
-      margin: 15px 0;
-    }
-  }
-
-  &__cards {
-    display: flex;
-    flex-direction: column;
-    gap: 30px 0;
-    width: 100%;
-
-    @media (max-width: 1300px) {
-      display: none;
-    }
-
-    &__title {
-      font-size: 20px;
-      line-height: 58px;
-      color: $--color-black;
-      @include fontSemiBold();
-    }
-  }
-
-  &__author {
-    font-size: 18px;
-    @include fontMedium();
-  }
-
-  &__authorText:hover {
-    @extend .recipe__author;
-    color: $--color-orange;
-    cursor: pointer;
-  }
-
-  &__location {
-    color: $--color-gray5;
-    margin: 0 0 17px 0;
-    font-size: 14px;
-    @include fontMedium();
-  }
-
-  &__recipeContent {
-    display: flex;
-    flex-direction: column;
-    gap: 30px 0;
-  }
-
-  &__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-
-    @media (max-width: 600px) {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  }
-
-  &__time {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: auto;
-    gap: 4px 0;
-    color: $--color-orange;
-
-    @media (max-width: 600px) {
-      margin-left: auto;
-    }
-  }
-
-  &__subtitle {
-    @include fontMedium();
-    font-size: 20px;
-    color: $--color-black;
-    margin: 0 0 13px 0;
-  }
-
-  &__classification {
-    &__grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 30px 0;
-
-      @media (max-width: 600px) {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      p {
-        @include fontMedium();
-        color: $--color-gray7;
-      }
-    }
-  }
-
-  &__gridPhoto {
-    display: grid;
-    grid-template-columns: 230px 230px 230px;
-    grid-auto-rows: 154px;
-    gap: 10px;
-    margin: 0 0 20px 0;
-
-    @media (max-width: 890px) {
-      grid-template-columns: 230px 230px;
-    }
-
-    @media (max-width: 600px) {
-      grid-template-columns: 230px;
-      width: max-content;
-      margin: 0 auto 20px auto;
-    }
-  }
-
-  &__nutritionContainer {
-    margin: 15px 0 43px 0;
-    display: flex;
-    gap: 0 59px;
-
-    @media (max-width: 600px) {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px 30px;
-      width: max-content;
-    }
-  }
-
-  &__nutritionItem {
-    width: 84px;
-    height: 68px;
-    background: $--color-milk 0% 0% no-repeat padding-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-
-  &__nutritionsQuantity {
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 20px;
-  }
-
-  &__nutritionsName {
-    color: $--color-gray7;
-  }
-
-  &__step {
-    display: flex;
-    flex-direction: column;
-    margin: 0 0 30px 0;
-    font-size: 18px;
-
-    h3 {
-      @include fontMedium();
-      font-size: 20px;
-      margin: 0 0 10px 0;
-    }
-
-    span {
-      color: $--color-orange;
-    }
-  }
-
-  &__banner {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    padding: 87px 0 90px 0;
-    color: $--color-gray7;
-    @include fontMedium();
-    position: relative;
-
-    &__title {
-      font-size: 30px;
-      line-height: 46px;
-      padding: 0 0 30px 0;
-      max-width: 420px;
-
-      span {
-        color: $--color-orange;
-      }
-    }
-
-    &__subtitle {
-      font-size: 18px;
-      line-height: 20px;
-      margin: 0 0 41px 0;
-    }
-
-    &__inputEmail {
-      margin: 0 0 70px 10px;
-      max-width: 250px;
-      border: 0;
-      @include fontMedium();
-      font-size: 18px;
-      line-height: 20px;
-
-      &::placeholder {
-        color: #cecece;
-        @include fontMedium();
-        font-size: 18px;
-        line-height: 20px;
-      }
-    }
-
-    &__photo {
-      position: absolute;
-      right: -50px;
-      bottom: 30px;
-
-      @media (max-width: 1300px) {
-        display: none;
-      }
-    }
-
-    &:before {
-      z-index: -2;
-      content: '';
-      width: calc(200vw);
-      left: -100vw;
-      top: 0;
-      bottom: 0;
-      position: absolute;
-      background: #f3f4f7;
-      -webkit-transform: matrix(1, 0, 0, -1, 0, 0);
-      transform: matrix(1, 0, 0, -1, 0, 0);
-    }
-  }
-
-  &__carousel {
-    position: relative;
-    width: 715px;
-    max-height: 472px;
-
-    &Item {
-      object-fit: contain;
-      max-height: 100%;
-    }
-
-    &__wrapper {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 715px;
-      height: 472px;
-      border-radius: 5px;
-    }
-
-    &__back {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: black;
-      opacity: 0.1;
-    }
-
-    &__info {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      z-index: 5;
-      display: flex;
-      min-width: 220px;
-      min-height: 40px;
-      max-height: 40px;
-    }
-
-    &__fullscreen {
-      position: absolute;
-      z-index: 1;
-      top: 6px;
-      right: 6px;
-      display: flex;
-      border-radius: 4px;
-      background-color: #fff;
-      cursor: pointer;
-    }
-
-    &__counter {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 5px;
-      color: #fff;
-      background-color: $--color-gray-11;
-      cursor: pointer;
-
-      &:hover {
-        background-color: $--color-gray-12;
-      }
-    }
-
-    &__statusCounter {
-      padding: 3px;
-      background-color: $--color-gray-11;
-      color: #fff !important;
-      font-size: 12px !important;
-      border-radius: 4px;
-    }
-
-    &__image {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    &:hover .recipe__carousel__btn {
-      display: flex;
-    }
-
-    &__btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 10;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      width: 32px;
-      height: 32px;
-      border: none;
-      border-radius: 4px;
-      color: $--color-gray-11;
-      background: $--color-gray-14;
-      cursor: pointer;
-
-      &:hover {
-        background-color: $--color-orange;
-        color: #fff;
-      }
-    }
-
-    &__prev {
-      @extend .recipe__carousel__btn;
-      left: 16px;
-    }
-
-    &__next {
-      @extend .recipe__carousel__btn;
-      right: 16px;
-    }
-  }
-
-  &__video {
-    width: 100%;
-    max-width: 715px;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-
-    @media (max-width: 890px) {
-      max-width: 500px;
-      width: 500px;
-    }
-
-    @media (max-width: 600px) {
-      max-width: 100%;
-      width: 100%;
-    }
-
-    &__watermark {
-      height: 402px;
-      position: relative;
-      width: max-content;
-
-      @media (max-width: 890px) {
-        height: 280px;
-      }
-
-      @media (max-width: 600px) {
-        height: 168px;
-      }
-
-      &__icon {
-        position: absolute;
-        background-image: url('/images/index/footer_logo.png');
-        background-position: center;
-        background-size: 100px 70px;
-        background-repeat: no-repeat;
-        width: 100px;
-        height: 70px;
-        bottom: 45px;
-        left: 43px;
-        opacity: 0.5;
-      }
-    }
-
-    &__video {
-      max-height: 402px;
-
-      @media (max-width: 890px) {
-        width: 100%;
-        max-height: 292px;
-      }
-
-      @media (max-width: 600px) {
-        width: 100%;
-        max-height: 192px;
-      }
-    }
-
-    &__player {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      gap: 20px;
-      border: 1px #e1e1e1 solid;
-      width: 100%;
-      height: 60px;
-      padding: 18px 20px 10px 20px;
-      border-bottom-left-radius: 10px;
-      border-bottom-right-radius: 10px;
-
-      @media (max-width: 890px) {
-        height: max-content;
-        flex-direction: column;
-      }
-
-      @media (max-width: 600px) {
-        padding: 18px 10px 10px 10px;
-      }
-
-      &_row {
-        display: flex;
-        gap: 20px;
-      }
-    }
-
-    &__views {
-      display: flex;
-      display: flex;
-      gap: 10px;
-      min-width: 100px;
-
-      img {
-        margin: 4px 0 0 0;
-        width: 20px;
-        height: 14px;
-      }
-    }
-
-    &__likes {
-      display: flex;
-      display: flex;
-      gap: 8px;
-      min-width: 100px;
-
-      &_last {
-        display: flex;
-        align-items: flex-start;
-        margin-left: auto;
-        border: none;
-        @include fontMedium();
-        padding: 0;
-        cursor: pointer;
-
-        @media (max-width: 890px) {
-          margin-left: 0;
-        }
-
-        &:hover {
-          opacity: 0.5;
-        }
-
-        &:disabled {
-          cursor: default;
-
-          span {
-            opacity: 0.5;
-          }
-
-          &:hover {
-            opacity: 1;
-          }
-        }
-
-        span {
-          margin: 2px 0 0 0;
-        }
-
-        img {
-          margin: 4px 8px 0 0;
-          width: 20px;
-          height: 18px;
-        }
-      }
-
-      img {
-        margin: 3px 0 0 0;
-        width: 20px;
-        height: 18px;
-      }
-    }
-
-    p,
-    span {
-      color: $--color-gray3;
-      font-size: 16px;
-      font-weight: 600;
-    }
-
-    &__saveStatus {
-      display: flex;
-      border: none;
-      color: black;
-      outline: none;
-      cursor: pointer;
-    }
-
-    &__saveStatus:hover {
-      opacity: 0.5;
-    }
-
-    &__saveStatusImage {
-      margin: 4px 8px 0 0;
-    }
-
-    &__saveStatusImageWrapper {
-      display: inline-block;
-    }
-
-    &__saveStatusLabel {
-      margin-top: 2px;
-      @include fontRegular();
-      color: $--color-gray3;
-      font-size: 16px;
-      font-weight: 600;
-    }
+  &_column2 {
+    //max-width: 448px;
+    @include column2();
   }
 }
 
-.cardImage {
-  margin: 0;
-  border: none;
-  width: 230px;
-  height: 155px;
-  position: relative;
-  padding: 0;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  cursor: pointer;
+.title {
+  @include bothColumns();
+  height: 155px; //TODO delete test height
+  background-color: gold;
+  margin-bottom: 48px;
+}
 
-  &:hover {
-    box-shadow: 0px 10px 25px #00000040;
+.image {
+  height: 382px;
+  margin-bottom: 80px;
+
+  background-color: green; //TODO delete test color
+}
+
+.related_recipes {
+  @include column2();
+  height: 382px;
+
+  background-color: green; //TODO delete test color
+}
+
+.classification {
+  background-color: green; //TODO delete test color
+  height: 500px; //TODO delete test height
+
+
+  margin-bottom: 64px;
+}
+
+.description {
+
+  background-color: green; //TODO delete test color
+  height: 700px; //TODO delete test height
+  margin-bottom: 64px;
+}
+
+.cooking_steps {
+  margin-bottom: 80px;
+
+  background-color: green; //TODO delete test color
+  height: 900px; //TODO delete test height
+}
+
+.ingredients {
+  grid-row: 3 / 4;
+
+  height: 800px; //TODO delete test height
+
+}
+
+.comments {
+
+  height: 500px; //TODO delete test height
+  background-color: green; //TODO delete test color
+
+  margin-bottom: 80px;
+}
+
+.popular_recipes {
+  @include bothColumns();
+
+  height: 500px; //TODO delete test height
+  background-color: green; //TODO delete test color
+}
+
+@media (max-width: 1025px) {
+  .layout {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 48px;
+
+    padding: 0 80px;
   }
 
-  &__button {
-    position: absolute;
-    top: -16px;
-    right: -16px;
-    width: 32px;
-    height: 32px;
-    font-size: 20px;
-    border-radius: 50%;
-    background-color: $--color-white;
-    border: none;
-    outline: none;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-bottom: 5px;
-    cursor: pointer;
+
+  .image {
+    @include bothColumns();
+
+    height: 555px;
+  }
+
+  .related_recipes {
+    display: none;
+  }
+
+  .comments {
+    margin-bottom: 64px;
+  }
+}
+
+@media (max-width: 600px) {
+  .layout {
+    grid-template-columns: 1fr;
+    padding: 0 16px;
+  }
+
+  .title {
+    margin-bottom: 32px;
+  }
+
+  .image {
+    height: 300px;
+    margin-bottom: 32px;
+  }
+
+  .classification {
+    margin-bottom: 32px;
+  }
+
+  .description {
+    margin-bottom: 32px;
+  }
+
+  .cooking_steps {
+    margin-bottom: 48px;
+  }
+
+  .comments {
+    margin-bottom: 56px;
   }
 }
