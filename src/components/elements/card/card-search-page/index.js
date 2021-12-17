@@ -63,7 +63,7 @@ const CardSearch = props => {
     <Card className={classes.card}>
       <StyledCardActionArea onClick={() => redirectToRecipeCard(props.id)}>
         <StyledCardMedia className={classes.card__media} image={props.image ?? logo} title="" />
-        {}
+
         {props.user_saved_recipe === 1 ? (
           <SavedIcon />
         ) : props.isParsed && props.publishStatus === PUBLISH_STATUS.published ? (
@@ -94,15 +94,7 @@ const CardSearch = props => {
                 {cookingSkill[props.cookingSkill]}
               </div>
             </div>
-            {props.price > 0 ? (
-              <Button
-                className={classes.card__uploadButton}
-                variant="outlined"
-                color="primary"
-                onClick={() => (props.token ? addToCart() : null)}>
-                <img src="icons/Shopping Cart/Line.svg" alt="cart" /> {`$${props.price}`}
-              </Button>
-            ) : (
+            {props.unsalable === true ? (
               <>
                 <div className={classes.card__line} />
                 <div className={classes.card__socialStat}>
@@ -116,7 +108,15 @@ const CardSearch = props => {
                   </div>
                 </div>
               </>
-            )}
+            ) : props.price > 0 ? (
+              <Button
+                className={classes.card__uploadButton}
+                variant="outlined"
+                color="primary"
+                onClick={() => (props.token ? addToCart() : null)}>
+                <img src="icons/Shopping Cart/Line.svg" alt="cart" /> {`$${props.price}`}
+              </Button>
+            ) : null}
             {props.cookingTime && (
               <div className={classes.card__timeWrap}>
                 <img src="icons/Stopwatch/Line.svg" alt="stopwatch" />

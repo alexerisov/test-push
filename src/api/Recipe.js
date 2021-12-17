@@ -128,6 +128,8 @@ export default {
     title = null,
     types = null,
     ordering = null,
+    sale_status = null,
+    page_size = null,
     only_eatchefs_recipes = null
   }) => {
     const eatchefRecipesParams = !only_eatchefs_recipes ? {} : { only_eatchefs_recipes: 'Y' };
@@ -138,9 +140,11 @@ export default {
         cooking_skills,
         diet_restrictions,
         page,
+        page_size,
         title,
         types,
         ordering,
+        sale_status,
         ...eatchefRecipesParams
       }
     });
