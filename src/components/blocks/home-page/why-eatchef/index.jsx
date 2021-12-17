@@ -6,6 +6,7 @@ import { ReactComponent as ArrowIcon } from '../../../../../public/icons/Arrow R
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { accountActions, modalActions } from '@/store/actions';
 import { useFormik } from 'formik';
+import Image from 'next/image';
 
 const CircleButton = () => {
   return (
@@ -74,8 +75,14 @@ const ThreeImages = () => {
 
   return (
     <div>
-      {!isAuthorized && <img src="/images/index/three-images.png" alt="image3" className={classes.three_images} />}
-      {isAuthorized && <img src="/images/index/two-images.png" alt="image3" className={classes.three_images} />}
+      {/*{!isAuthorized && <img src="/images/index/three-images.png" alt="image3" className={classes.three_images} />}*/}
+      {/*{isAuthorized && <img src="/images/index/two-images.png" alt="image3" className={classes.three_images} />}*/}
+      {!isAuthorized && (
+        <Image src="/images/index/three-images.png" alt="image3" width={447} height={502} layout="responsive" />
+      )}
+      {isAuthorized && (
+        <Image src="/images/index/two-images.png" alt="image3" width={447} height={502} layout="responsive" />
+      )}
     </div>
   );
 };

@@ -61,3 +61,19 @@
   font-style: normal;
   font-weight: 700;
 }
+
+@mixin no_scrollbar {
+  &::-webkit-scrollbar {
+    width: 0 !important;
+    height: 0 !important;
+    display: none !important;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    display: none !important;
+  }
+
+  &::-webkit-scrollbar-track {
+    display: none !important;
+  }
+}

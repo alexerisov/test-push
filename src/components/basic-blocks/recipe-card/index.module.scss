@@ -43,15 +43,13 @@
     border: 2px solid #FFAA00 !important;
     border-radius: 90px !important;
     background: transparent !important;
-    color: #353E50 !important;
 
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 160%;
-    display: flex;
-    align-items: center;
-    letter-spacing: 0.01em;
-    color: #353E50;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    line-height: 160% !important;
+    align-items: center !important;
+    letter-spacing: 0.01em !important;
+    color: #353E50 !important;
 
     &:hover {
       background: #FFF6EB !important;
@@ -81,10 +79,11 @@
 
 
   @media (max-width: 960px) {
+    width: 256px;
 
     &__media {
-      min-height: 108px;
-      //min-width: 211px;
+      min-height: 256px;
+      min-width: 256px;
     }
 
     &__title {
@@ -97,8 +96,8 @@
 
 
     &__media {
-      width: 100%;
-      min-height: 140px;
+      //width: 100%;
+      //min-height: 198px;
     }
 
     &__author {

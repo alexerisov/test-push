@@ -11,9 +11,10 @@ import Link from 'next/link';
 import { useDispatch } from 'react-redux';
 import Image from 'next/image';
 import { Autocomplete } from '@material-ui/lab';
-import { ReactComponent as SearchIcon } from '../../../../../public/icons/Search/Line.svg';
-import { ReactComponent as CloseIcon } from '../../../../../public/icons/Close Circle/Line.svg';
-import { ReactComponent as RecipeIcon } from '../../../../../public/icons/Receipt/Line.svg';
+import SearchImage from '@/../public/images/index/search-block.png';
+import { ReactComponent as SearchIcon } from '@/../public/icons/Search/Line.svg';
+import { ReactComponent as CloseIcon } from '@/../public/icons/Close Circle/Line.svg';
+import { ReactComponent as RecipeIcon } from '@/../public/icons/Receipt/Line.svg';
 
 const SearchInput = () => {
   const dispatch = useDispatch();
@@ -81,7 +82,8 @@ const SearchInput = () => {
           classes={{
             root: classes.search_autocomplete_root,
             paper: classes.search_autocomplete_paper,
-            listbox: classes.search_autocomplete_no_scrollbar
+            listbox: classes.search_autocomplete_listbox,
+            endAdornment: classes.search_autocomplete_close_icon
           }}
           fullWidth
           id="combo-box-demo"
@@ -128,7 +130,11 @@ export const SearchBlock = () => {
       <div className={classes.search_image_wrapper}>
         <Image src="/images/index/search-block.png" alt="Head picture" layout="fill" />
         <div className={classes.search_image_text_wrapper}>
-          <div className={classes.search_image_text_title}>{'Find the fame \n you deserve!'}</div>
+          <div className={classes.search_image_text_title}>
+            Find the fame
+            <br />
+            you deserve!
+          </div>
           <div className={classes.search_image_text_subtitle}>Find a great recipe.</div>
         </div>
       </div>
