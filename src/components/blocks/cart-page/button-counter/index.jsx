@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import { updateCartItem } from '@/store/cart/actions';
 
 export const CounterButton = props => {
-  const { id, count } = props;
+  const { id, count = 0 } = props;
   // const [count, setCount] = React.useState(1);
   const dispatch = useDispatch();
 

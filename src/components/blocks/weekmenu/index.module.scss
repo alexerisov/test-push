@@ -1,0 +1,49 @@
+@import '~styles/variables.scss';
+@import '~styles/mixins/mixins.scss';
+
+.weekmenu {
+  width: 100%;
+  height: 485px;
+  color: black;
+  background-color: #fff6eb;
+  border-radius: 24px;
+  padding-left: 40px;
+  @media (max-width: $--xs) {
+    margin-top: 20px;
+  }
+  &__title {
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 1.6;
+    @include fontMedium();
+  }
+  &__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 46px;
+    margin-right: 40px;
+    margin-bottom: 22px;
+  }
+  &__controls {
+    display: flex;
+
+    button {
+      border: 0;
+      width: 40px;
+      height: 40px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &:hover {
+        border: 2px solid #ffd49e;
+        border-radius: 50%;
+      }
+    }
+  }
+}
+.carousel__inner-slide {
+  width: calc(100% - 40px);
+  height: calc(100% - 40px);
+}
