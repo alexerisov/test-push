@@ -29,7 +29,7 @@ const Weekmenu = ({ weekmenu, token }) => {
         naturalSlideWidth={261}
         naturalSlideHeight={339}
         step={mobile ? 1 : tablet ? 2 : 2}
-        visibleSlides={mobile ? 1.1 : tablet ? 2 : 2.7}
+        visibleSlides={mobile ? 1.1 : tablet ? 2 : 2.8}
         totalSlides={recipe?.length}>
         <div className={classes.weekmenu__row}>
           <h2 className={classes.weekmenu__title}>Weekmenu</h2>
