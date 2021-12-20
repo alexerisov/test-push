@@ -8,6 +8,9 @@
   background-color: #fff6eb;
   border-radius: 24px;
   padding-left: 40px;
+  @media (max-width: $--xs) {
+    margin-top: 20px;
+  }
   &__title {
     font-weight: 600;
     font-size: 24px;
