@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classes from './index.module.scss';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -14,7 +14,10 @@ import CardControlPlay from '@/components/elements/card-control-play';
 import ChefIcon from '@/components/elements/chef-icon';
 import { numberWithCommas } from '@/utils/converter';
 import { addToCart } from '@/store/cart/actions';
+import { modalActions } from '@/store/actions';
 import { SavedIcon } from '../..';
+import { CounterButton } from '@/components/blocks/cart-page/button-counter';
+import { useDispatch, useSelector } from 'react-redux';
 
 const StyledCardMedia = styled(CardMedia)`
   .MuiCardMedia-root {
@@ -36,8 +39,10 @@ const StyledCardActionArea = styled(CardActionArea)({
 });
 
 const CardSearch = props => {
+  const dispatch = useDispatch();
   const router = useRouter();
-
+  const [showCounter, setShowCounter] = useState(false);
+  const [counter, setCounter] = useState(1);
   const redirectToRecipeCard = id => {
     router.push(`/recipe/${id}`);
   };
@@ -58,7 +63,24 @@ const CardSearch = props => {
       }
     }
   };
-  const addToCart = () => {};
+
+  //Cart
+  const cartItem = useSelector(state => state.cart.products?.find(el => el.object.pk === props.id));
+  const isRecipeInCart = useSelector(state => state.cart.products?.some(el => el.object_id == props.id));
+  const cartItemId = cartItem?.pk;
+  const cartItemAmount = cartItem?.count;
+
+  const handleClickBtn = e => {
+    if (props.token === true) {
+      e.stopPropagation();
+      setShowCounter(true);
+      if (!isRecipeInCart) dispatch(addToCart(props.id));
+    } else {
+      e.stopPropagation();
+      dispatch(modalActions.open('register'));
+    }
+  };
+
   return (
     <Card className={classes.card}>
       <StyledCardActionArea onClick={() => redirectToRecipeCard(props.id)}>
@@ -108,14 +130,19 @@ const CardSearch = props => {
                   </div>
                 </div>
               </>
-            ) : props.price > 0 ? (
+            ) : props.price > 0 && !showCounter ? (
               <Button
                 className={classes.card__uploadButton}
                 variant="outlined"
                 color="primary"
-                onClick={() => (props.token ? addToCart() : null)}>
+                onClick={handleClickBtn}>
                 <img src="icons/Shopping Cart/Line.svg" alt="cart" /> {`$${props.price}`}
               </Button>
+            ) : showCounter === true ? (
+              <div onClick={e => e.stopPropagation()} className={classes.card__counterWrap}>
+                {`$${props.price}`}
+                <CounterButton count={cartItemAmount} id={cartItemId} />
+              </div>
             ) : null}
             {props.cookingTime && (
               <div className={classes.card__timeWrap}>
