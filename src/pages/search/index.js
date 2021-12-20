@@ -47,6 +47,7 @@ import { CardSearch } from '@/components/elements/card';
 import Weekmenu from '@/components/blocks/weekmenu';
 import { numberWithCommas } from '@/utils/converter';
 import { windowScroll } from '@/utils/windowScroll';
+import LayoutPageNew from '@/components/layouts/layout-page-new';
 
 const MySlider = styled(Slider)(() => ({
   color: '#FFAA00',
@@ -119,26 +120,34 @@ const MenuProps = {
 
 const Recipes = props => {
   const TooltipStyles = useStyledTooltip();
-  const mobile = useMediaQuery('(max-width: 992px)');
+  const tablet = useMediaQuery('(max-width: 1025px)');
+  const mobile = useMediaQuery('(max-width: 576px)');
   const router = useRouter();
   const classMarerialUi = useStyles();
+  //Recommended filter
   const [recommendedFilter, setRecommendedFilter] = useState('');
+  const [isDropdownActive, setIsDropdownActive] = useState(false);
+
   const [query, setQuery] = useState();
   const [title, setTitle] = useState();
-  const [page, setPage] = useState(1);
+  const [range, setRange] = useState(1);
   const [data, setData] = useState();
   const [result, setResult] = useState([]);
-  const [range, setRange] = useState(1);
-  const [isDropdownActive, setIsDropdownActive] = useState(false);
   const [weekmenu, setWeekmenu] = useState();
-  const [salableResults, setSalableResults] = useState([]);
-  const [unsalableResults, setUnsalableResults] = useState([]);
-  const [resultsWithPrice, setResultsWithPrice] = useState([]);
-  const [resultsWithoutPrice, setResultsWithoutPrice] = useState([]);
-  const [isViewAll, setIsViewAll] = useState(true);
-  const [hasMoreUnsalableResults, setHasMoreUnsalableResults] = useState(true);
   const [showScrollBtn, setShowScrollBtn] = useState(false);
-  // const [typeSelection, setTypeSelection] = useState('Food');
+  const [page, setPage] = useState(1);
+  const [showFilters, setShowFilters] = useState(false);
+
+  //UnsalableRecipes
+  const [unsalableResults, setUnsalableResults] = useState([]);
+  const [hasMoreUnsalableResults, setHasMoreUnsalableResults] = useState(true);
+  const [pageUnsalable, setPageUnsalable] = useState(1);
+
+  //SalableRecipes
+  const [salableResults, setSalableResults] = useState([]);
+  const [firstClickToSalableMore, setFirstClickToSalableMore] = useState(false);
+  const [hasMoreSalableResults, setHasMoreSalableResults] = useState(true);
+  const [pageSalable, setPageSalable] = useState(1);
 
   useEffect(async () => {
     try {
@@ -150,8 +159,8 @@ const Recipes = props => {
   }, []);
 
   useEffect(async () => {
-    page > 1 && setShowScrollBtn(true);
-  }, [page]);
+    pageUnsalable > 1 && setShowScrollBtn(true);
+  }, [pageUnsalable]);
   // Accordion
   const [expanded, setExpanded] = useState(false);
 
@@ -189,19 +198,22 @@ const Recipes = props => {
       switch (name) {
         case 'Easy':
           setRange(0);
-          setPage(1);
+          setPageSalable(1);
+          setPageUnsalable(1);
           formik.setFieldValue('cooking_skills', 0);
           formik.handleSubmit();
           break;
         case 'Medium':
           setRange(1);
-          setPage(1);
+          setPageSalable(1);
+          setPageUnsalable(1);
           formik.setFieldValue('cooking_skills', 1);
           formik.handleSubmit();
           break;
         case 'Complex':
           setRange(2);
-          setPage(1);
+          setPageSalable(1);
+          setPageUnsalable(1);
           formik.setFieldValue('cooking_skills', 2);
           formik.handleSubmit();
           break;
@@ -216,6 +228,7 @@ const Recipes = props => {
     Object.entries(data).forEach(([key, value]) => {
       queryParams.set(key, value ?? '');
     });
+
     return queryParams;
   };
 
@@ -248,11 +261,8 @@ const Recipes = props => {
     onSubmit: values => {
       values.title = title;
       values.page = page;
-
-      // if (typeSelection === 'Beverages') {
-      //   values.types = [5];
-      // }
-
+      setSalableResults([]);
+      setUnsalableResults([]);
       router.push(
         {
           search: `?${createQueryParams(values).toString()}`
@@ -269,8 +279,6 @@ const Recipes = props => {
   const cookingSkillList = [];
 
   const orderingList = [];
-
-  const numberCardsDisplayed = 10;
 
   const getLabelByStatusOfCheckbox = useCallback(
     ({ fieldName, value, dataList }) => {
@@ -412,7 +420,8 @@ const Recipes = props => {
   });
 
   const onChangeCheckboxInput = e => {
-    setPage(1);
+    setPageSalable(1);
+    setPageUnsalable(1);
     formik.handleChange(e);
     formik.handleSubmit();
   };
@@ -425,42 +434,17 @@ const Recipes = props => {
 
   useEffect(() => {
     if (query) {
-      Recipe.getSearchResult(query)
-        .then(res => {
-          setResult(res.data.results);
-          setData(res.data);
-          // setResultsWithPrice(res.data.results.filter(item => item.price && item.price > 0));
-          // setResultsWithoutPrice(res.data.results.filter(item => !item.price || item.price === '0.00'));
-
-          if (!res?.data?.results?.length) {
-            setExpanded(false);
-          }
-        })
-        .catch(e => {
-          console.log('error', e);
-        });
-
-      //SalableResults
-      Recipe.getSearchResult({ ...query, sale_status: 5 })
-        .then(res => {
-          setSalableResults(res.data);
-
-          // setResultsWithPrice(res.data.results.filter(item => item.price && item.price > 0));
-          // setResultsWithoutPrice(res.data.results.filter(item => !item.price || item.price === '0.00'));
-
-          if (!res?.data?.results?.length) {
-            setExpanded(false);
-          }
-        })
-        .catch(e => {
-          console.log('error', e);
-        });
-
       //UnsalableResults
-      Recipe.getSearchResult({ ...query, sale_status: '4,6,7', page_size: 12, page })
+      Recipe.getSearchResult({
+        ...query,
+        ordering: 'user_saved_recipe=true',
+        sale_status: '4,6,7',
+        page_size: 12,
+        page: pageUnsalable
+      })
         .then(res => {
           if (res.data.next) {
-            setUnsalableResults([...unsalableResults, ...res.data.results]);
+            setUnsalableResults(unsalableResults.concat(res.data.results));
           } else {
             setHasMoreUnsalableResults(false);
           }
@@ -472,8 +456,28 @@ const Recipes = props => {
           console.log('error', e);
         });
     }
-  }, [query, page]);
+  }, [query, pageUnsalable]);
 
+  //SalableResults
+  useEffect(() => {
+    if (query) {
+      Recipe.getSearchResult({ ...query, sale_status: 5, page_size: 9, page: pageSalable })
+        .then(res => {
+          setData(res.data);
+          if (res.data.next) {
+            setSalableResults(salableResults.concat(res.data.results));
+          } else {
+            setHasMoreSalableResults(false);
+          }
+          if (!res?.data?.results?.length) {
+            setExpanded(false);
+          }
+        })
+        .catch(e => {
+          console.log('error', e);
+        });
+    }
+  }, [query, pageSalable]);
   // search banner
 
   const handleClickSearch = name => {
@@ -728,23 +732,187 @@ const Recipes = props => {
       )}
     </>
   );
+  const mobileFilters = (
+    <div className={classes.search__mobileFilters}>
+      <NoSsr>
+        {
+          <StyledAccordion expanded={expanded === 'panel1'} onChange={handleAnchorAccordion('panel1')}>
+            <AccordionSummary
+              expandIcon={
+                <div className={classes.search__clickList}>
+                  <img src="icons/Arrow Down Simple/Line.svg" />
+                </div>
+              }
+              aria-controls="panel1a-content"
+              id="panel1a-header">
+              <Typography className={classes.search__filter__title}>Type</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <div className={classes.search__filter__list__wrap}>
+                <div className={classes.search__filter__list}>{recipeTypesList}</div>
+                <div className={classes.search__filter__list}>
+                  {Object.values(recipeTypesCount).map(
+                    (el, ind) =>
+                      data && (
+                        <div key={`${el}-${ind}`} className={classes.search__filter__list_item}>
+                          {numberWithCommas(`${data[el]}`)}
+                        </div>
+                      )
+                  )}
+                </div>
+              </div>
+            </AccordionDetails>
+          </StyledAccordion>
+        }
+        <div className={classes.search__line_botMargin} />
 
+        <Typography className={classes.search__filter__title}>Cooking Skills</Typography>
+        <MySlider
+          defaultValue={1}
+          min={0}
+          max={2}
+          step={1}
+          value={range}
+          onChange={(event, value) => {
+            setRange(value);
+            setPage(1);
+            formik.setFieldValue('cooking_skills', value);
+            formik.handleSubmit();
+          }}
+          name="cooking_skills"
+          id="cooking_skills"
+        />
+        <div className={classes.search__cookingSkills}>
+          <button className={classes.search__cookingSkills__firstItem} onClick={handleChangeRange('Easy')}>
+            Easy
+          </button>
+          <button className={classes.search__cookingSkills__secondItem} onClick={handleChangeRange('Medium')}>
+            Medium
+          </button>
+          <button className={classes.search__cookingSkills__thirdItem} onClick={handleChangeRange('Complex')}>
+            Complex
+          </button>
+        </div>
+        <div className={classes.search__line_topMargin} />
+
+        <StyledAccordion expanded={expanded === 'panel3'} onChange={handleAnchorAccordion('panel3')}>
+          <AccordionSummary
+            expandIcon={
+              <div className={classes.search__clickList}>
+                <img src="icons/Arrow Down Simple/Line.svg" />
+              </div>
+            }
+            aria-controls="panel3a-content"
+            id="panel3a-header">
+            <Typography className={classes.search__filter__title}>Cooking Method</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <div className={classes.search__filter__list__wrap}>
+              <div className={classes.search__filter__list}>{cookingMethodsList}</div>
+              <div className={classes.search__filter__list}>
+                {Object.values(cookingMethodsCount).map(
+                  (el, ind) =>
+                    data && (
+                      <div key={`${el}-${ind}`} className={classes.search__filter__list_item}>
+                        {numberWithCommas(`${data[el]}`)}
+                      </div>
+                    )
+                )}
+              </div>
+            </div>
+          </AccordionDetails>
+        </StyledAccordion>
+        <div className={classes.search__line} />
+
+        <StyledAccordion expanded={expanded === 'panel4'} onChange={handleAnchorAccordion('panel4')}>
+          <AccordionSummary
+            expandIcon={
+              <div className={classes.search__clickList}>
+                <img src="icons/Arrow Down Simple/Line.svg" />
+              </div>
+            }
+            aria-controls="panel4a-content"
+            id="panel4a-header">
+            <Typography className={classes.search__filter__title}>Dietary Restrictions</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <div className={classes.search__filter__list__wrap}>
+              <div className={classes.search__filter__list}>{dietaryrestrictionsList} </div>
+              <div className={classes.search__filter__list}>
+                {Object.values(dietaryrestrictionsCount).map(
+                  (el, ind) =>
+                    data && (
+                      <div key={`${el}-${ind}`} className={classes.search__filter__list_item}>
+                        {numberWithCommas(`${data[el]}`)}
+                      </div>
+                    )
+                )}
+              </div>
+            </div>
+          </AccordionDetails>
+        </StyledAccordion>
+        <div className={classes.search__line} />
+
+        <button type="reset" onClick={handleClickClearAll} className={classes.search__clearButton}>
+          <img src="icons/Close-Circle/Shape.svg" alt="close-icon" /> Reset filter
+        </button>
+      </NoSsr>
+    </div>
+  );
   const content = (
     <div className={classes.search}>
-      {!mobile && searchField}
+      {searchField}
       <div className={classes.search__content}>
         {!mobile && <form>{searchFilter}</form>}
 
         <div className={classes.search__result}>
           {mobile && (
-            <div className={classes.search__wrapper}>
-              {mobile ? <InputSearch /> : searchField}
+            <>
+              {/* //{' '}
+              <div className={classes.search__wrapper}>
+                // {mobile ? <InputSearch /> : searchField}
+                //{' '}
+                <SearchDrawer toggleDrawer={(anchor, open) => toggleDrawer(anchor, open)} toggleValue={isDrawerOpened}>
+                  // {searchFilter}
+                  //{' '}
+                </SearchDrawer>
+                //{' '}
+              </div> */}
 
-              <SearchDrawer toggleDrawer={(anchor, open) => toggleDrawer(anchor, open)} toggleValue={isDrawerOpened}>
-                {searchFilter}
-              </SearchDrawer>
-            </div>
+              <div
+                className={`${isDropdownActive ? classes.search__dropdown_active : classes.search__dropdown}`}
+                onClick={() => setIsDropdownActive(!isDropdownActive)}>
+                {recommendedFilter ? <span>{recommendedFilter}</span> : <span>Recommended</span>}
+                <div className={classes.search__dropdown__circle}>
+                  <img src="icons/Arrow Down Simple/Line.svg" />
+                </div>
+              </div>
+              {isDropdownActive === true && (
+                <ul className={classes.search__dropdown__list}>
+                  <li className={classes.search__dropdown__item}>Recommended</li>
+                  {recommendedListMap}
+                </ul>
+              )}
+              <Button
+                onClick={() => setShowFilters(prevState => !prevState)}
+                className={classes.search__moreFiltersButton}
+                variant="outlined"
+                color="primary">
+                Advanced filter
+              </Button>
+              {showFilters && mobileFilters}
+              <div className={classes.search__line_mobile} />
+              <Button
+                onClick={() => router.push('/recipe/upload')}
+                className={classes.search__uploadButton}
+                variant="outlined"
+                color="primary">
+                <img src="icons/File Upload/Shape.svg" alt="upload icon" />
+                Upload Recipe
+              </Button>
+            </>
           )}
+
           {/* <div className={classes.search__sorting}>
             <InputLabel htmlFor="age-native-simple">Sort by</InputLabel>
             <Select
@@ -759,48 +927,75 @@ const Recipes = props => {
               {orderingList}
             </Select>
           </div> */}
-          <Weekmenu result={result} token={props.token} />
+          <Weekmenu weekmenu={weekmenu} token={props.token} />
+
           <div className={classes.search__result__text}>
             <img src="icons/Coin/Line.svg" alt="close-icon" />
             <p>You can order all the ingredients</p>
           </div>
+
           <div className={classes.search__result__container}>
-            {salableResults?.results?.length !== 0 ? (
+            {salableResults?.length !== 0 ? (
               <>
-                {salableResults?.results?.map((recipe, index) => {
-                  if (index < 3) {
-                    return (
-                      <CardSearch
-                        key={`${recipe.pk}-${index}`}
-                        title={recipe?.title}
-                        image={recipe?.images[0]?.url}
-                        name={recipe?.user?.full_name}
-                        city={recipe?.user?.city}
-                        likes={recipe?.likes_number}
-                        isParsed={recipe?.is_parsed}
-                        publishStatus={recipe?.publish_status}
-                        hasVideo={recipe?.video}
-                        cookingTime={recipe?.cooking_time}
-                        cookingSkill={recipe?.cooking_skills}
-                        cookingTypes={recipe?.types}
-                        user_saved_recipe={recipe?.user_saved_recipe}
-                        price={recipe?.price}
-                        id={recipe.pk}
-                      />
-                    );
-                  }
-                })}
-                {isViewAll ? (
-                  <div className={classes.search__buttonViewWrap}>
-                    <button className={classes.search__viewAll}>
-                      View All {<span>({salableResults?.count})</span>}
-                    </button>
-                  </div>
-                ) : (
-                  <div className={classes.search__buttonViewWrap}>
-                    <button className={classes.search__viewAll}>View Less</button>
-                  </div>
-                )}
+                {!firstClickToSalableMore
+                  ? salableResults.map((recipe, index) => {
+                      if (index < 3) {
+                        return (
+                          <CardSearch
+                            key={`${recipe.pk}-${index}`}
+                            title={recipe?.title}
+                            image={recipe?.images[0]?.url}
+                            name={recipe?.user?.full_name}
+                            city={recipe?.user?.city}
+                            likes={recipe?.likes_number}
+                            isParsed={recipe?.is_parsed}
+                            publishStatus={recipe?.publish_status}
+                            hasVideo={recipe?.video}
+                            cookingTime={recipe?.cooking_time}
+                            cookingSkill={recipe?.cooking_skills}
+                            cookingTypes={recipe?.types}
+                            user_saved_recipe={recipe?.user_saved_recipe}
+                            price={recipe?.price}
+                            token={props.token}
+                            id={recipe.pk}
+                          />
+                        );
+                      }
+                    })
+                  : salableResults.map((recipe, index) => {
+                      return (
+                        <CardSearch
+                          key={`${recipe.pk}-${index}`}
+                          title={recipe?.title}
+                          image={recipe?.images[0]?.url}
+                          name={recipe?.user?.full_name}
+                          city={recipe?.user?.city}
+                          likes={recipe?.likes_number}
+                          isParsed={recipe?.is_parsed}
+                          publishStatus={recipe?.publish_status}
+                          hasVideo={recipe?.video}
+                          cookingTime={recipe?.cooking_time}
+                          cookingSkill={recipe?.cooking_skills}
+                          cookingTypes={recipe?.types}
+                          user_saved_recipe={recipe?.user_saved_recipe}
+                          price={recipe?.price}
+                          token={props.token}
+                          id={recipe.pk}
+                        />
+                      );
+                    })}
+
+                <div className={classes.search__buttonViewWrap}>
+                  <button
+                    className={classes.search__viewAll}
+                    disabled={hasMoreSalableResults === true ? false : true}
+                    onClick={() => {
+                      setFirstClickToSalableMore(true);
+                      firstClickToSalableMore ? setPageSalable(pageSalable + 1) : null;
+                    }}>
+                    Show More
+                  </button>
+                </div>
               </>
             ) : (
               <div className={classes.search__NoResult__wrap}>
@@ -836,25 +1031,17 @@ const Recipes = props => {
                 })
               : null}
           </div>
-          {hasMoreUnsalableResults && (
-            <div className={classes.search__buttonViewWrap}>
-              <button className={classes.search__viewAll} onClick={() => setPage(page + 1)}>
-                {/* <Spinner /> */}
-                Show More
-              </button>
-            </div>
-          )}
-          {/* <div>
-            {data?.results?.length !== 0 && data?.count && (
-              <Pagination
-                count={Math.ceil(data.count / numberCardsDisplayed)}
-                color="primary"
-                page={page && page}
-                onChange={(event, value) => handleChangePage(event, value)}
-                size={mobile ? 'small' : 'large'}
-              />
-            )}
-          </div> */}
+
+          <div className={classes.search__buttonViewWrap}>
+            <button
+              disabled={hasMoreUnsalableResults === true ? false : true}
+              className={classes.search__viewAll}
+              onClick={() => setPageUnsalable(pageUnsalable + 1)}>
+              {/* <Spinner /> */}
+              Show More
+            </button>
+          </div>
+
           {showScrollBtn ? (
             <button
               className={classes.search__scrollBtn}
@@ -872,7 +1059,7 @@ const Recipes = props => {
 
   return (
     <>
-      <LayoutPage content={content} />
+      <LayoutPageNew content={content} />
     </>
   );
 };

@@ -16,14 +16,23 @@
     box-shadow: 0px 40px 64px -32px rgba(15, 15, 15, 0.1);
     border: 1px solid #f4f5f6;
     border-radius: 24px;
-    margin-bottom: 48px;
+    margin: 0 3% 48px 3%;
     padding-left: 40px;
     padding-right: 30px;
+
+    @media (max-width: $--xs) {
+      margin: 0 24px 48px;
+      height: 96px;
+    }
     &__text {
       @include fontSemiBold;
       font-size: 24px;
       line-height: 1.6;
       margin-right: 12px;
+      @media (max-width: $--xs) {
+        font-size: 16px;
+        line-height: 24px;
+      }
       &__wrap {
         display: flex;
         align-items: center;
@@ -45,6 +54,13 @@
     height: 1px;
     width: 100%;
     background-color: #e6e8ec;
+    &_mobile {
+      display: block;
+      height: 1px;
+      width: 311px;
+      background-color: #e6e8ec;
+      margin: 32px 0;
+    }
     &_topMargin {
       display: block;
       height: 1px;
@@ -91,19 +107,30 @@
     gap: 34px;
     margin: 35px 0 0 0;
 
-    @media (max-width: $--md) {
+    @media (min-width: $--xs) {
+      margin: 35px 3% 0 3%;
+    }
+    @media (max-width: $--sm) {
       grid-template-columns: 1fr;
       justify-items: center;
     }
   }
-
+  &__mobileFilters {
+    display: flex;
+    flex-direction: column;
+    gap: 10px 0;
+    width: 311px;
+    margin-top: 15px;
+  }
   &__filter {
     display: flex;
     flex-direction: column;
     gap: 10px 0;
     max-width: 240px;
-
-    @media (max-width: $--md) {
+    @media (min-width: $--xs) and (max-width: 1025px) {
+      width: 400px;
+    }
+    @media (max-width: $--xs) {
       height: calc(100% - 33px);
       overflow-y: scroll;
       gap: 0;
@@ -361,7 +388,10 @@
     background-color: $--color-orange;
     border-radius: 50%;
     border: none;
-
+    @media (max-width: $--xs) {
+      height: 56px;
+      width: 56px;
+    }
     img {
       fill: #fcfcfd;
     }
@@ -371,10 +401,31 @@
     border-width: 2px !important;
     font-size: 14px !important;
     line-height: 16px !important;
-    color: #23262f !important;
+    color: $--sc--color-neutrals2 !important;
     font-weight: 700 !important;
     font-family: 'Montserrat', 'Montserrat-Bold', 'Montserrat-Bold', sans-serif !important;
+    img {
+      margin-right: 14px;
+    }
+    @media (max-width: $--sm) {
+      width: 311px !important;
+    }
   }
+  &__moreFiltersButton {
+    border-radius: 90px !important;
+    border: 2px solid $--sc--color-neutrals6 !important;
+    font-size: 14px !important;
+    line-height: 16px !important;
+    color: $--sc--color-neutrals2 !important;
+    font-weight: 700 !important;
+    font-family: 'Montserrat', 'Montserrat-Bold', 'Montserrat-Bold', sans-serif !important;
+
+    @media (max-width: $--sm) {
+      width: 311px !important;
+      margin-top: 48px !important;
+    }
+  }
+
   &__closeButton {
     cursor: pointer;
     width: 24px;
@@ -402,6 +453,9 @@
     -ms-user-select: none;
     user-select: none;
 
+    @media (max-width: $--xs) {
+      width: 311px;
+    }
     &_active {
       display: flex;
       align-items: center;
@@ -420,6 +474,9 @@
       -webkit-user-select: none;
       -ms-user-select: none;
       user-select: none;
+      @media (max-width: $--sm) {
+        width: 311px;
+      }
       span {
         margin-left: 16px;
       }
@@ -445,6 +502,10 @@
       border: 1px solid $--sc--color-neutrals6;
       box-shadow: 0px 40px 32px -24px rgba(15, 15, 15, 0.16);
       border-radius: 20px;
+      @media (max-width: $--sm) {
+        width: 311px;
+        margin-top: 16px;
+      }
     }
     &__item {
       border-radius: 24px;
@@ -461,6 +522,7 @@
       -webkit-user-select: none;
       -ms-user-select: none;
       user-select: none;
+
       &:hover {
         background: rgba(255, 170, 0, 0.2);
         color: $--sc--color-orange;
