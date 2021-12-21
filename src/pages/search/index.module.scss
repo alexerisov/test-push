@@ -330,7 +330,7 @@
       flex-wrap: wrap;
       align-items: flex-start;
       width: 100%;
-      gap: 16px 34px;
+      gap: 24px 24px;
       margin: 0 0 40px 0;
 
       @media (max-width: $--md) {
@@ -339,6 +339,9 @@
     }
   }
   &__viewAll {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 90px;
     border-width: 2px;
     font-size: 14px;
@@ -351,6 +354,25 @@
     cursor: pointer;
     span {
       color: #e0e4eb !important;
+    }
+    img {
+      margin-right: 12px;
+    }
+    &_disabled {
+      background: #e0e4eb;
+      border-radius: 90px;
+      border-width: 2px;
+      font-size: 14px;
+      line-height: 16px;
+      color: #14181f;
+      font-weight: 700;
+      font-family: 'Montserrat', 'Montserrat-Bold', 'Montserrat-Bold', sans-serif;
+      border: 2px solid #e0e4eb;
+      padding: 16px 49px;
+      cursor: pointer;
+      span {
+        color: #e0e4eb !important;
+      }
     }
   }
   &__scrollBtn {

@@ -43,32 +43,30 @@ const Weekmenu = ({ weekmenu, token }) => {
           </div>
         </div>
         <StyledSlider>
-          {recipe && recipe?.length !== 0 ? (
-            recipe?.map((recipe, index) => {
-              return (
-                <Slide key={`${recipe.pk}-${index}`}>
-                  <CardSearch
-                    token={token}
-                    title={recipe?.title}
-                    image={recipe?.images[0]?.url}
-                    name={recipe?.user?.full_name}
-                    city={recipe?.user?.city}
-                    likes={recipe?.likes_number}
-                    isParsed={recipe?.is_parsed}
-                    publishStatus={recipe?.publish_status}
-                    hasVideo={recipe?.video}
-                    cookingTime={recipe?.cooking_time}
-                    cookingSkill={recipe?.cooking_skills}
-                    cookingTypes={recipe?.types}
-                    price={recipe?.price}
-                    id={recipe.pk}
-                  />
-                </Slide>
-              );
-            })
-          ) : (
-            <p className={classes.search__NoResult}>No Recipes Found</p>
-          )}
+          {recipe && recipe?.length !== 0
+            ? recipe?.map((recipe, index) => {
+                return (
+                  <Slide key={`${recipe.pk}-${index}`}>
+                    <CardSearch
+                      token={token}
+                      title={recipe?.title}
+                      image={recipe?.images[0]?.url}
+                      name={recipe?.user?.full_name}
+                      city={recipe?.user?.city}
+                      likes={recipe?.likes_number}
+                      isParsed={recipe?.is_parsed}
+                      publishStatus={recipe?.publish_status}
+                      hasVideo={recipe?.video}
+                      cookingTime={recipe?.cooking_time}
+                      cookingSkill={recipe?.cooking_skills}
+                      cookingTypes={recipe?.types}
+                      price={recipe?.price}
+                      id={recipe.pk}
+                    />
+                  </Slide>
+                );
+              })
+            : null}
         </StyledSlider>
       </CarouselProvider>
     </div>
