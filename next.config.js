@@ -37,6 +37,9 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 module.exports = {
+  images: {
+    domains: ['localhost', 'eatchefs.goodbit.dev', 'eatchefs.com']
+  },
   webpack: (config, options) => {
     config.module.rules.push(
       {

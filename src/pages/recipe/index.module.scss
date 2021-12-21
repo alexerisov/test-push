@@ -1,6 +1,7 @@
 @import '~styles/variables.scss';
 @import '~styles/mixins/mixins.scss';
 
+
 @mixin column1 {
   grid-column: 1 / 2;
 }
@@ -14,12 +15,11 @@
 }
 
 
-
 .layout {
   width: 100% !important;
   padding: 0 160px;
 
-  background-color: darkred;
+  //background-color: darkred;
 
   display: grid;
   grid-template-columns: 1fr .73fr;
@@ -37,50 +37,322 @@
 }
 
 .title {
+  flex: 1;
   @include bothColumns();
-  height: 155px; //TODO delete test height
-  background-color: gold;
   margin-bottom: 48px;
+  padding-top: 48px;
+
+  display: flex;
+
+  &_wrapper {
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    row-gap: 16px;
+    justify-content: space-between;
+  }
+
+  &_back_button {
+    display: none;
+    flex-direction: row;
+    width: min-content;
+  }
+
+  &_name {
+    width: 80%;
+
+    font-style: normal;
+    font-weight: 600;
+    font-size: 48px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+    color: #14181F;
+  }
+
+  &_buttons {
+
+    width: 20%;
+    height: min-content;
+    display: flex;
+    justify-content: flex-end;
+    column-gap: 16px;
+  }
+
+  &_rating {
+    flex-wrap: wrap;
+    display: flex;
+    align-items: center;
+    column-gap: 20px;
+
+    &_avatar {
+      width: 24px !important;
+      height: 24px !important;
+    }
+
+    &_stars {
+      display: flex;
+      align-items: center;
+      column-gap: 10px;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 160%;
+      letter-spacing: 0.01em;
+      color: #14181F;
+    }
+
+    &_reviews {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 160%;
+      letter-spacing: 0.01em;
+      color: #566481;
+    }
+  }
 }
 
-.image {
+.image_wrapper {
+  @include bothColumns();
   height: 382px;
   margin-bottom: 80px;
+  position: relative;
 
-  background-color: green; //TODO delete test color
+
+
+  & * {
+    background-color: lightgray;
+    border-radius: 16px !important;
+  }
 }
 
 .related_recipes {
   @include column2();
   height: 382px;
+  display: none;
 
   background-color: green; //TODO delete test color
 }
 
 .classification {
-  background-color: green; //TODO delete test color
   height: 500px; //TODO delete test height
 
 
   margin-bottom: 64px;
+
+  &_icon_wrapper {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    column-gap: 20px;
+  }
+
+  &_icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: 2px solid #92A5EF;
+    box-sizing: border-box;
+    border-radius: 40px;
+    width: 48px;
+    height: 48px;
+  }
+
+  &_icons_container {
+    display: flex;
+    row-gap: 32px;
+    flex-wrap: wrap;
+    padding-bottom: 64px;
+  }
+
+  &_text {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 160%;
+    letter-spacing: 0.01em;
+    color: #566481;
+  }
+
+  &_calories {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 48px 0;
+
+    &_wrapper {
+      width: 25%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    &_title {
+      font-style: normal;
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 160%;
+      text-align: center;
+      letter-spacing: 0.01em;
+      color: #353E50;
+    }
+
+    &_value {
+      font-family: Montserrat;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 160%;
+      text-align: center;
+      letter-spacing: 0.01em;
+      color: #566481;
+    }
+  }
 }
 
 .description {
-
-  background-color: green; //TODO delete test color
-  height: 700px; //TODO delete test height
   margin-bottom: 64px;
+
+
+
+  &_text {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 160%;
+    letter-spacing: 0.01em;
+    color: #566481;
+  }
+
 }
 
 .cooking_steps {
   margin-bottom: 80px;
 
-  background-color: green; //TODO delete test color
-  height: 900px; //TODO delete test height
+  &_wrapper {
+    display: flex;
+    align-items: center;
+    column-gap: 20px;
+  }
+
+  &_number {
+    border: 2px solid #E0E4EB;
+    box-sizing: border-box;
+    border-radius: 40px;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 160%;
+    text-align: center;
+    letter-spacing: 0.01em;
+    color: #566481;
+  }
+
+  &_text {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 180%;
+    letter-spacing: 0.01em;
+    color: #353E50;
+  }
+
 }
 
 .ingredients {
   grid-row: 3 / 4;
+
+  background: #FCFCFD;
+  border: 1px solid #E6E8EC;
+  box-sizing: border-box;
+  box-shadow: 0px 64px 64px -48px rgba(15, 15, 15, 0.08);
+  border-radius: 24px;
+
+
+  .ingredient {
+
+    &_container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 17px 0;
+      border: 1px solid #E6E8EC;
+      border-left: none;
+      border-right: none;
+    }
+
+    &_name {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 160%;
+      letter-spacing: 0.01em;
+      color: #14181F;
+      max-width: 60%;
+    }
+
+    &_amount {
+      font-style: normal;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 160%;
+      text-align: right;
+      letter-spacing: 0.01em;
+      color: #AFB8CA;
+      white-space: nowrap;
+    }
+  }
+
+  &_list {
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &_suppliers {
+    padding: 32px;
+  }
+
+  &_title {
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 160%;
+    letter-spacing: 0.01em;
+    color: #14181F;
+    margin-bottom: 12px;
+  }
+
+  &_button {
+    align-self: center;
+    margin-top: 32px !important;
+
+    width: auto !important;
+    padding: 12px 24px !important;
+    border: 2px solid #E0E4EB !important;
+    box-sizing: border-box !important;
+    border-radius: 90px !important;
+    box-shadow: none !important;
+
+    font-style: normal !important;
+    font-weight: bold !important;
+    font-size: 14px !important;
+    line-height: 160% !important;
+    text-align: center !important;
+    letter-spacing: 0.01em !important;
+    color: #14181F !important;
+
+    &_amount {
+      font-style: normal;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 160%;
+      text-align: right;
+      letter-spacing: 0.01em;
+      color: #AFB8CA;
+    }
+  }
 
   height: 800px; //TODO delete test height
 
@@ -88,17 +360,29 @@
 
 .comments {
 
-  height: 500px; //TODO delete test height
-  background-color: green; //TODO delete test color
-
   margin-bottom: 80px;
 }
 
 .popular_recipes {
   @include bothColumns();
 
-  height: 500px; //TODO delete test height
-  background-color: green; //TODO delete test color
+}
+
+.button {
+  padding: 6px !important;
+  border: 2px solid #E0E4EB !important;
+  box-sizing: border-box !important;
+  box-shadow: 0px 64px 64px -48px rgba(31, 47, 70, 0.12) !important;
+  border-radius: 48px !important;
+}
+
+.block_title {
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 140%;
+  letter-spacing: 0.01em;
+  color: #14181F;
+  margin-bottom: 32px;
 }
 
 @media (max-width: 1025px) {
@@ -110,7 +394,7 @@
   }
 
 
-  .image {
+  .image_wrapper {
     @include bothColumns();
 
     height: 555px;
@@ -123,28 +407,83 @@
   .comments {
     margin-bottom: 64px;
   }
+
+  .classification {
+    &_icons_container {
+      padding-bottom: 32px;
+    }
+
+    &_calories {
+      &_wrapper {
+        width: 1/2;
+      }
+    }
+  }
 }
 
 @media (max-width: 600px) {
   .layout {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    //grid-template-columns: 1fr;
     padding: 0 16px;
+    row-gap: 20px;
+
+    &_column1, &_column2 {
+      //@include bothColumns();
+    }
   }
 
   .title {
     margin-bottom: 32px;
+    padding-top: 32px;
+
+    &_back_button {
+      display: block;
+    }
+
+    &_name {
+      width: 100%;
+      font-size: 32px;
+    }
+
+    &_buttons {
+      width: auto;
+      order: 1;
+    }
+
+    &_rating {
+      &_reviews {
+        display: none;
+      }
+    }
   }
 
-  .image {
+  .image_wrapper {
     height: 300px;
     margin-bottom: 32px;
   }
 
   .classification {
     margin-bottom: 32px;
+
+    &_icon_wrapper {
+      width: 100%;
+    }
+
+    &_icons_container {
+      row-gap: 16px;
+    }
+
+    &_calories {
+      &_wrapper {
+        width: 50%;
+      }
+    }
   }
 
   .description {
+
     margin-bottom: 32px;
   }
 
@@ -154,5 +493,9 @@
 
   .comments {
     margin-bottom: 56px;
+  }
+
+  .block_title {
+    font-size: 24px;
   }
 }
