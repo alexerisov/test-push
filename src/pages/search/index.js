@@ -144,13 +144,14 @@ const Recipes = props => {
   const [hasMoreUnsalableResults, setHasMoreUnsalableResults] = useState(true);
   const [pageUnsalable, setPageUnsalable] = useState(1);
   const [unsalableLoading, setUnsalableLoading] = useState(false);
+  const [firstSearchUnsalableByTitle, setFirstSearchUnsalableByTitle] = useState(true);
   //SalableRecipes
   const [salableResults, setSalableResults] = useState([]);
   const [firstClickToSalableMore, setFirstClickToSalableMore] = useState(false);
   const [hasMoreSalableResults, setHasMoreSalableResults] = useState(true);
   const [pageSalable, setPageSalable] = useState(1);
+  const [firstSearchSalableByTitle, setFirstSearchSalableByTitle] = useState(true);
   const [salableLoading, setSalableLoading] = useState(false);
-
   useEffect(async () => {
     try {
       const weekmenu = await Recipe.getWeekmenu();
@@ -265,6 +266,7 @@ const Recipes = props => {
       values.page = page;
       setSalableResults([]);
       setUnsalableResults([]);
+
       router.push(
         {
           search: `?${createQueryParams(values).toString()}`
@@ -430,8 +432,12 @@ const Recipes = props => {
   };
 
   useEffect(() => {
+    setFirstSearchUnsalableByTitle(true);
+    setFirstSearchSalableByTitle(true);
     setTitle(router.query.title);
     setPage(router.query.page ? Number(router.query.page) : 1);
+    setPageUnsalable(router.query.page ? Number(router.query.page) : 1);
+    setPageSalable(router.query.page ? Number(router.query.page) : 1);
     setQuery(router.query);
   }, [router]);
   useEffect(() => {
@@ -463,8 +469,9 @@ const Recipes = props => {
           } else {
             setHasMoreUnsalableResults(false);
           }
-          if (title) {
+          if (title && firstSearchUnsalableByTitle) {
             setUnsalableResults(res.data.results);
+            setFirstSearchUnsalableByTitle(false);
           }
           if (!res?.data?.results?.length) {
             setExpanded(false);
@@ -498,12 +505,14 @@ const Recipes = props => {
           } else {
             setHasMoreSalableResults(false);
           }
-          if (title) {
+          if (title && firstSearchSalableByTitle) {
             setSalableResults(res.data.results);
+            setFirstSearchSalableByTitle(false);
           }
           if (!res?.data?.results?.length) {
             setExpanded(false);
           }
+
           setSalableLoading(false);
         })
         .catch(e => {
