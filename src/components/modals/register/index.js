@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { LayoutModal } from '@/components/layouts';
-import { useMediaQuery } from '@material-ui/core';
+import { Link, useMediaQuery } from '@material-ui/core';
 import { loginActions, modalActions, registerActions, restorePasswordActions } from '@/store/actions';
 import { LoginChoice, LoginSocial, RegisterChoice, RegisterSuccess, ResetPasswordSuccess } from '@/components/elements';
 import { FormLogin, FormRegister, FormResetPassword } from '@/components/forms';
@@ -216,6 +216,12 @@ function Register(props) {
           <img className={classes.registerImage} src="/images/index/logo.png" alt="Logo"></img>
         </div>
         {renderContent()}
+        <Link className={classes.register__links_text} href="/terms">
+          <a>Terms of use</a>
+        </Link>
+        <Link className={classes.register__links_text} href="/privacy-policy">
+          <a>Privacy Policy</a>
+        </Link>
       </div>
     </LayoutModal>
   );

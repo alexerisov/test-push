@@ -1,8 +1,17 @@
-@import "~styles/variables.scss";
+@import '~styles/variables.scss';
 
 .register {
   // height: 56vh;
   // height: 430px;
+  &__links_text {
+    text-decoration: none;
+    margin-left: 20px !important;
+    &:hover {
+      text-decoration: none !important;
+
+      color: white;
+    }
+  }
 }
 
 .registerLogo {
