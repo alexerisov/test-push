@@ -3,8 +3,11 @@
 
 
 .container {
-  width: auto !important;
+  width: 100% !important;
   padding: 60px 160px !important;
+  overflow: hidden;
+  max-width: 1440px;
+  box-sizing: border-box;
 
   .slider {
     &_title {

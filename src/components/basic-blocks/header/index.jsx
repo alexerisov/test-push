@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import classes from './index.module.scss';
-import { ReactComponent as Logo } from '../../../../public/images/Header Logo/Laag 1.svg';
+import logo from '../../../../public/images/Header Logo/Line.svg';
 import { ReactComponent as CartIcon } from '../../../../public/icons/Shopping Cart/Line.svg';
 import { ReactComponent as MenuIcon } from '../../../../public/icons/Menu/Line.svg';
 import { ReactComponent as UserIcon } from '../../../../public/icons/User/Menu.svg';
@@ -9,7 +9,7 @@ import { ReactComponent as ListIcon } from '../../../../public/icons/List/Menu.s
 import { ReactComponent as MegaphoneIcon } from '../../../../public/icons/Megaphone/Menu.svg';
 import { ReactComponent as HistoryIcon } from '../../../../public/icons/History/Menu.svg';
 import { ReactComponent as BookmarkIcon } from '../../../../public/icons/Bookmark/Menu.svg';
-import { Button, IconButton, ListItemIcon, NoSsr } from '@material-ui/core';
+import { Button, IconButton, ListItemIcon, NoSsr, SvgIcon } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
 import { connect, useSelector } from 'react-redux';
 import styled from 'styled-components';
@@ -31,7 +31,7 @@ const Header = props => {
     }
   });
 
-  const mobile = useMediaQuery('(max-width: 768px)');
+  const isMobile = useMediaQuery('(max-width: 600px)');
   const [isExpanded, setExpanded] = React.useState(false);
   const separatorStyles = useSeparatorStyles();
 
@@ -150,7 +150,7 @@ const Header = props => {
       <div className={classes.header_elements_wrapper}>
         <Link href="/">
           <a>
-            <Logo />
+            <img className={classes.header_logo} src={logo} alt="Eatchef Header Logo" />
           </a>
         </Link>
         <div className={classes.button_group}>
