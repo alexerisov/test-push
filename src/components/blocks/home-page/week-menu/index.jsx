@@ -63,10 +63,14 @@ export const WeekMenuBlock = () => {
     setSlide
   };
 
-  useEffect(() => {
-    Recipe.getTopRatedMeals().then(data => {
-      setRecipes(data.data);
-    });
+  useEffect(async () => {
+    try {
+      const weekmenu = await Recipe.getWeekmenu();
+      const result = weekmenu.data?.reduce((acc, val) => [...acc, ...val.recipes], []);
+      setRecipes(result);
+    } catch (e) {
+      console.error(e);
+    }
   }, []);
 
   return (
@@ -76,6 +80,7 @@ export const WeekMenuBlock = () => {
         <span className={classes.slider_title}>Browse Weekmenu</span>
       </Box>
       <div className={classes.slider_subtitle}>Let's go to meet new sensations</div>
+      {console.log(recipes)}
       <RecipeSlider recipes={recipes} currentSlide={currentSlide} />
     </section>
   );
