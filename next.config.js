@@ -38,8 +38,7 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   images: {
-    disableStaticImages: true,
-    domains: ['localhost', 'eatchefs.goodbit.dev', 'eatchefs.com']
+    disableStaticImages: true
   },
   webpack: (config, options) => {
     config.module.rules.push(
