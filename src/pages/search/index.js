@@ -48,6 +48,7 @@ import Weekmenu from '@/components/blocks/weekmenu';
 import { numberWithCommas } from '@/utils/converter';
 import { windowScroll } from '@/utils/windowScroll';
 import LayoutPageNew from '@/components/layouts/layout-page-new';
+import { Spinner } from '@/components/elements';
 
 const MySlider = styled(Slider)(() => ({
   color: '#FFAA00',
@@ -142,12 +143,13 @@ const Recipes = props => {
   const [unsalableResults, setUnsalableResults] = useState([]);
   const [hasMoreUnsalableResults, setHasMoreUnsalableResults] = useState(true);
   const [pageUnsalable, setPageUnsalable] = useState(1);
-
+  const [unsalableLoading, setUnsalableLoading] = useState(false);
   //SalableRecipes
   const [salableResults, setSalableResults] = useState([]);
   const [firstClickToSalableMore, setFirstClickToSalableMore] = useState(false);
   const [hasMoreSalableResults, setHasMoreSalableResults] = useState(true);
   const [pageSalable, setPageSalable] = useState(1);
+  const [salableLoading, setSalableLoading] = useState(false);
 
   useEffect(async () => {
     try {
@@ -446,6 +448,7 @@ const Recipes = props => {
   useEffect(() => {
     if (query) {
       //UnsalableResults
+      setUnsalableLoading(true);
       Recipe.getSearchResult({
         ...query,
         ordering: 'user_saved_recipe=true',
@@ -466,9 +469,11 @@ const Recipes = props => {
           if (!res?.data?.results?.length) {
             setExpanded(false);
           }
+          setUnsalableLoading(false);
         })
         .catch(e => {
           console.log('error', e);
+          setUnsalableLoading(false);
         });
     }
   }, [query, pageUnsalable]);
@@ -483,10 +488,11 @@ const Recipes = props => {
         .catch(e => {
           console.log('error', e);
         });
-
+      setSalableLoading(true);
       Recipe.getSearchResult({ ...query, sale_status: 5, page_size: 9, page: pageSalable })
         .then(res => {
           setSalableResults(salableResults.concat(res.data.results));
+
           if (res.data.next) {
             setHasMoreSalableResults(true);
           } else {
@@ -498,9 +504,11 @@ const Recipes = props => {
           if (!res?.data?.results?.length) {
             setExpanded(false);
           }
+          setSalableLoading(false);
         })
         .catch(e => {
           console.log('error', e);
+          setSalableLoading(false);
         });
     }
   }, [query, pageSalable]);
@@ -1016,12 +1024,15 @@ const Recipes = props => {
 
                 <div className={classes.search__buttonViewWrap}>
                   <button
-                    className={classes.search__viewAll}
+                    className={
+                      hasMoreSalableResults === true ? classes.search__viewAll : classes.search__viewAll_disabled
+                    }
                     disabled={hasMoreSalableResults === true ? false : true}
                     onClick={() => {
                       setFirstClickToSalableMore(true);
                       firstClickToSalableMore ? setPageSalable(pageSalable + 1) && setPage(page + 1) : null;
                     }}>
+                    {salableLoading ? <Spinner /> : null}
                     Show More
                   </button>
                 </div>
@@ -1064,9 +1075,9 @@ const Recipes = props => {
           <div className={classes.search__buttonViewWrap}>
             <button
               disabled={hasMoreUnsalableResults === true ? false : true}
-              className={classes.search__viewAll}
+              className={hasMoreUnsalableResults === true ? classes.search__viewAll : classes.search__viewAll_disabled}
               onClick={() => setPageUnsalable(pageUnsalable + 1) && setPage(page + 1)}>
-              {/* <Spinner /> */}
+              {unsalableLoading ? <Spinner /> : null}
               Show More
             </button>
           </div>
