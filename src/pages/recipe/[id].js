@@ -363,24 +363,24 @@ function RecipePage(props) {
               <Supplier image="/images/index/walmart.png" name="Walmart" value="walmart" />
               <Supplier image="/images/index/target.png" name="Target" value="target" />
               <Supplier image="/images/index/bakery.png" name="Bakery" value="bakery" />
+              <Divider />
+              <Button
+                fullWidth
+                disabled={isRecipeInCart || isRecipeNotSale}
+                onClick={
+                  isAuthorized
+                    ? event => {
+                        dispatch(addToCart(recipe?.pk));
+                        event.stopPropagation();
+                      }
+                    : handleClick('register')
+                }
+                className={classes.ingredients_suppliers_order_button}
+                endIcon={<BasicIcon icon={CartIcon} color="white" />}>
+                {!isRecipeInCart && !isRecipeNotSale && `Add To Cart`}
+                {isRecipeInCart && `Added`}
+              </Button>
             </div>
-            <Divider />
-            <Button
-              disabled={isRecipeInCart || isRecipeNotSale}
-              onClick={
-                isAuthorized
-                  ? event => {
-                      dispatch(addToCart(recipe?.pk));
-                      event.stopPropagation();
-                    }
-                  : handleClick('register')
-              }
-              className={classes.card_button}
-              startIcon={<CartIcon />}>
-              {!isRecipeInCart && !isRecipeNotSale && `$${price}`}
-              {isRecipeNotSale && `Not sale`}
-              {isRecipeInCart && `Added`}
-            </Button>
           </>
         )}
       </div>
