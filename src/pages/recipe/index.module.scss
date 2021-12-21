@@ -111,6 +111,11 @@
   }
 }
 
+.image {
+  object-fit: fill;
+  object-position: center;
+}
+
 .image_wrapper {
   @include bothColumns();
   height: 382px;

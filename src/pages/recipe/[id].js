@@ -150,15 +150,7 @@ function RecipePage(props) {
   const Media = () => {
     return (
       <div className={classes.image_wrapper}>
-        <Image
-          src={image || logo}
-          alt="Recipe Image"
-          layout="fill"
-          objectFit={image ? 'cover' : 'contain'}
-          objectPosition="center"
-          placeholder="blur"
-          blurDataURL={logo}
-        />
+        <img src={image} alt="Recipe Image" className={classes.image} />
       </div>
     );
   };
@@ -357,7 +349,7 @@ function RecipePage(props) {
           )}
         </div>
         <Divider />
-        {!isRecipeInProduction && (
+        {isRecipeInProduction && (
           <>
             <div className={classes.ingredients_suppliers}>
               <Supplier image="/images/index/walmart.png" name="Walmart" value="walmart" />
