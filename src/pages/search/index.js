@@ -197,24 +197,24 @@ const Recipes = props => {
       event.preventDefault();
       switch (name) {
         case 'Easy':
-          setRange(0);
-          setPageSalable(1);
-          setPageUnsalable(1);
-          formik.setFieldValue('cooking_skills', 0);
-          formik.handleSubmit();
-          break;
-        case 'Medium':
           setRange(1);
           setPageSalable(1);
           setPageUnsalable(1);
           formik.setFieldValue('cooking_skills', 1);
           formik.handleSubmit();
           break;
-        case 'Complex':
+        case 'Medium':
           setRange(2);
           setPageSalable(1);
           setPageUnsalable(1);
           formik.setFieldValue('cooking_skills', 2);
+          formik.handleSubmit();
+          break;
+        case 'Complex':
+          setRange(3);
+          setPageSalable(1);
+          setPageUnsalable(1);
+          formik.setFieldValue('cooking_skills', 3);
           formik.handleSubmit();
           break;
         default:
@@ -420,6 +420,7 @@ const Recipes = props => {
   });
 
   const onChangeCheckboxInput = e => {
+    setPage(1);
     setPageSalable(1);
     setPageUnsalable(1);
     formik.handleChange(e);
@@ -431,7 +432,17 @@ const Recipes = props => {
     setPage(router.query.page ? Number(router.query.page) : 1);
     setQuery(router.query);
   }, [router]);
-
+  useEffect(() => {
+    if (query) {
+      Recipe.getSearchResult(query)
+        .then(res => {
+          setData(res.data);
+        })
+        .catch(e => {
+          console.log('error', e);
+        });
+    }
+  }, [query, pageSalable, pageUnsalable, title]);
   useEffect(() => {
     if (query) {
       //UnsalableResults
@@ -443,10 +454,14 @@ const Recipes = props => {
         page: pageUnsalable
       })
         .then(res => {
+          setUnsalableResults(unsalableResults.concat(res.data.results));
           if (res.data.next) {
-            setUnsalableResults(unsalableResults.concat(res.data.results));
+            setHasMoreUnsalableResults(true);
           } else {
             setHasMoreUnsalableResults(false);
+          }
+          if (title) {
+            setUnsalableResults(res.data.results);
           }
           if (!res?.data?.results?.length) {
             setExpanded(false);
@@ -461,13 +476,24 @@ const Recipes = props => {
   //SalableResults
   useEffect(() => {
     if (query) {
-      Recipe.getSearchResult({ ...query, sale_status: 5, page_size: 9, page: pageSalable })
+      Recipe.getSearchResult(query)
         .then(res => {
           setData(res.data);
+        })
+        .catch(e => {
+          console.log('error', e);
+        });
+
+      Recipe.getSearchResult({ ...query, sale_status: 5, page_size: 9, page: pageSalable })
+        .then(res => {
+          setSalableResults(salableResults.concat(res.data.results));
           if (res.data.next) {
-            setSalableResults(salableResults.concat(res.data.results));
+            setHasMoreSalableResults(true);
           } else {
             setHasMoreSalableResults(false);
+          }
+          if (title) {
+            setSalableResults(res.data.results);
           }
           if (!res?.data?.results?.length) {
             setExpanded(false);
@@ -500,6 +526,8 @@ const Recipes = props => {
 
   const handleCloseSearchQuery = () => {
     setTitle('');
+    setQuery('');
+    formik.handleSubmit();
   };
   const recommendedListMap = Object.keys(recommendedList).map((el, ind) => (
     <li
@@ -630,9 +658,9 @@ const Recipes = props => {
 
           <Typography className={classes.search__filter__title}>Cooking Skills</Typography>
           <MySlider
-            defaultValue={1}
-            min={0}
-            max={2}
+            defaultValue={2}
+            min={1}
+            max={3}
             step={1}
             value={range}
             onChange={(event, value) => {
@@ -935,6 +963,7 @@ const Recipes = props => {
           </div>
 
           <div className={classes.search__result__container}>
+            {console.log(salableResults)}
             {salableResults?.length !== 0 ? (
               <>
                 {!firstClickToSalableMore
@@ -991,7 +1020,7 @@ const Recipes = props => {
                     disabled={hasMoreSalableResults === true ? false : true}
                     onClick={() => {
                       setFirstClickToSalableMore(true);
-                      firstClickToSalableMore ? setPageSalable(pageSalable + 1) : null;
+                      firstClickToSalableMore ? setPageSalable(pageSalable + 1) && setPage(page + 1) : null;
                     }}>
                     Show More
                   </button>
@@ -1036,7 +1065,7 @@ const Recipes = props => {
             <button
               disabled={hasMoreUnsalableResults === true ? false : true}
               className={classes.search__viewAll}
-              onClick={() => setPageUnsalable(pageUnsalable + 1)}>
+              onClick={() => setPageUnsalable(pageUnsalable + 1) && setPage(page + 1)}>
               {/* <Spinner /> */}
               Show More
             </button>
