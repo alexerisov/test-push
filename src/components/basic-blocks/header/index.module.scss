@@ -36,6 +36,11 @@
   justify-content: center;
   padding: 0 10%;
 
+  &_logo {
+    width: 97px;
+    height: 49px;
+  }
+
   &_elements_wrapper {
     flex: 1;
     max-width: 1440px;
@@ -150,11 +155,12 @@
 
   }
 
-  @media (max-width: 1280px) {
-
-  }
 
   @media (max-width: 1025px) {
+    &_logo {
+      width: 80px;
+      height: 48px;
+    }
 
   }
 
