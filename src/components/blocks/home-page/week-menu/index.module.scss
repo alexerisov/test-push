@@ -5,11 +5,8 @@
 .container {
   width: auto !important;
   padding: 60px 160px !important;
-  position: relative;
-
 
   .slider {
-    overflow: hidden !important;
     &_title {
       font-style: normal;
       font-weight: bold;
@@ -29,29 +26,13 @@
     }
 
     &_arrows_container {
-      padding: inherit;
-      position: absolute;
-      inset: 0 0 auto auto;
     }
 
     &_body {
-      width: 1280px;
+      width: 100%;
       position: relative;
-      overflow: scroll;
-
-      &::-webkit-scrollbar {
-        width: 0 !important;
-        height: 0 !important;
-        display: none !important;
-      }
-
-      &::-webkit-scrollbar-thumb {
-        display: none !important;
-      }
-
-      &::-webkit-scrollbar-track {
-        display: none !important;
-      }
+      overflow: hidden;
+      pointer-events: none;
 
       [class*="control-arrow"] {
         display: none;
@@ -69,25 +50,12 @@
     }
   }
 
-  @media (max-width: 960px) {
-    .slider {
-      &_body {
-        width: 1408px;
-      }
-    }
+  @media (max-width: 1025px) {
     padding: 60px 80px !important;
   }
 
   @media (max-width: 600px) {
-    padding: 60px 32px 144px !important;
-
-    .slider {
-      &_arrows_container {
-        padding-bottom: 50px;
-        inset: auto auto 0 0;
-      }
-    }
-
+    padding: 60px 32px !important;
   }
 
 }
