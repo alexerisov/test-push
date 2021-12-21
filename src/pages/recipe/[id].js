@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import classes from './index.module.scss';
 import Recipe from '@/api/Recipe.js';
 import RecipeNotFound from '@/components/elements/recipe-not-found';
@@ -17,13 +17,16 @@ import { ReactComponent as ServingPlateIcon } from '@/../public/icons/Serving Pl
 import { ReactComponent as ForkAndKnifeIcon } from '@/../public/icons/Fork and Knife/Line.svg';
 import { ReactComponent as HatChefIcon } from '@/../public/icons/Hat Chef/Line.svg';
 import { ReactComponent as SaltShakerIcon } from '@/../public/icons/Salt Shaker/Line.svg';
-import { Avatar, Button, Collapse, IconButton } from '@material-ui/core';
+import { Avatar, Button, Collapse, IconButton, Radio } from '@material-ui/core';
 import Image from 'next/image';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { cookingMethods, cookingSkill, recipeTypes } from '@/utils/datasets';
 import { Divider } from '@/components/basic-elements/divider';
 import { WeekMenuBlock } from '@/components/blocks/home-page/week-menu';
+import { addToCart } from '@/store/cart/actions';
+import { ReactComponent as CartIcon } from '../../../public/icons/Shopping Cart/Line.svg';
+import { modalActions } from '@/store/actions';
 
 dayjs.extend(customParseFormat);
 
@@ -49,9 +52,19 @@ function RecipePage(props) {
   const proteins = recipe?.proteins;
   const fats = recipe?.fats;
   const carbohydrates = recipe?.carbohydrates;
+  const deliveryPrice = useSelector(state => state.cart?.deliveryPrice);
+  const isRecipeInProduction = recipe?.sale_status === 5;
+
+  const isAuthorized = useSelector(state => state.account.hasToken);
+  const isRecipeInCart = useSelector(state => state.cart.products?.some(el => el.object_id == recipe?.pk));
+  const isRecipeNotSale = recipe?.price === 0 || recipe?.sale_status !== 5;
+
   const [isRecipeSaved, setIsRecipeSaved] = useState(recipe?.user_saved_recipe);
   const [isRecipeLiked, setIsRecipeLiked] = useState(recipe?.user_liked);
   const [likesNumber, setLikesNumber] = useState(recipe?.likes_number);
+  const [selectedSupplier, setSelectedSupplier] = React.useState('walmart');
+
+  const dispatch = useDispatch();
 
   const parseTime = time => {
     const parsedTime = dayjs(time, 'HH-mm');
@@ -65,6 +78,14 @@ function RecipePage(props) {
     }
 
     return `${parsedTime['$H'] * 60 + parsedTime['$m']} minutes`;
+  };
+
+  const handleClick = name => {
+    return () => {
+      dispatch(modalActions.open(name)).then(result => {
+        // result when modal return promise and close
+      });
+    };
   };
 
   const Title = () => {
@@ -265,7 +286,50 @@ function RecipePage(props) {
     };
 
     const Supplier = props => {
-      return <div className={classes.ingredients_supplier_wrapper}></div>;
+      const { image, name, value } = props;
+      const isSelected = selectedSupplier === value;
+      const [isSupplierWillChange, setIsSupplierWillChange] = React.useState(isSelected);
+
+      const handleChange = event => {
+        // setIsSupplierWillChange(true);
+        // setTimeout(() => {
+        setSelectedSupplier(event.target.value);
+        //   setIsSupplierWillChange(false);
+        // }, 300);
+      };
+
+      return (
+        <div className={classes.supplier_wrapper} style={{ border: isSelected ? '1px solid #FB8C00;' : 'none' }}>
+          <div className={classes.supplier_header}>
+            <Radio
+              classes={{ root: classes.supplier_radio, checked: classes.supplier_radio_checked }}
+              checked={isSelected}
+              onChange={handleChange}
+              value={value}
+            />
+            <img src={image} alt={'image'} />
+            <h5 className={classes.supplier_name}>{name}</h5>
+          </div>
+          <Collapse in={isSelected} direction="down" mountOnEnter unmountOnExit>
+            <p className={classes.supplier_text_wrapper}>
+              <span className={classes.supplier_text}>Ingredients</span>
+              <span className={classes.supplier_value}>${Number.parseFloat(price).toFixed(2) ?? 0}</span>
+            </p>
+            <p className={classes.supplier_text_wrapper}>
+              <span className={classes.supplier_text}>Delivery</span>
+              <span className={classes.supplier_value}>{Number.parseFloat(deliveryPrice).toFixed(2)}</span>
+            </p>
+            <p className={classes.supplier_text_wrapper}>
+              <span className={classes.supplier_text}>
+                <span className={classes.supplier_text_total}>Total</span> (USD)
+              </span>
+              <span className={classes.supplier_value}>
+                ${Number.parseFloat(price + deliveryPrice).toFixed(2) ?? 0}
+              </span>
+            </p>
+          </Collapse>
+        </div>
+      );
     };
 
     return (
@@ -282,13 +346,43 @@ function RecipePage(props) {
                   'There are no ingredients'}
               </Collapse>
               <Button className={classes.ingredients_button} onClick={viewAllHandler}>
-                {'View All '} <span className={classes.ingredients_button_amount}>({ingredients?.length})</span>
+                {!isIngredientsExpanded && (
+                  <span>
+                    {'View All '} <span className={classes.ingredients_button_amount}>({ingredients?.length})</span>
+                  </span>
+                )}
+                {isIngredientsExpanded && <span>{'View Less '}</span>}
               </Button>
             </>
           )}
         </div>
         <Divider />
-        <div className={classes.ingredients_suppliers}></div>
+        {!isRecipeInProduction && (
+          <>
+            <div className={classes.ingredients_suppliers}>
+              <Supplier image="/images/index/walmart.png" name="Walmart" value="walmart" />
+              <Supplier image="/images/index/target.png" name="Target" value="target" />
+              <Supplier image="/images/index/bakery.png" name="Bakery" value="bakery" />
+            </div>
+            <Divider />
+            <Button
+              disabled={isRecipeInCart || isRecipeNotSale}
+              onClick={
+                isAuthorized
+                  ? event => {
+                      dispatch(addToCart(recipe?.pk));
+                      event.stopPropagation();
+                    }
+                  : handleClick('register')
+              }
+              className={classes.card_button}
+              startIcon={<CartIcon />}>
+              {!isRecipeInCart && !isRecipeNotSale && `$${price}`}
+              {isRecipeNotSale && `Not sale`}
+              {isRecipeInCart && `Added`}
+            </Button>
+          </>
+        )}
       </div>
     );
   };

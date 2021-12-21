@@ -37,7 +37,8 @@ const RecipeSlider = props => {
         showArrows={false}
         showThumbs={false}
         centerMode
-        swipeable
+        swipeable={false}
+        emulateTouch={false}
         infiniteLoop
         centerSlidePercentage={100 / displayCount}
         showStatus={false}
@@ -51,8 +52,7 @@ const RecipeSlider = props => {
   );
 };
 
-export const WeekMenuBlock = props => {
-  const { title, subtitle } = props;
+export const WeekMenuBlock = () => {
   const [recipes, setRecipes] = useState([]);
   const [currentSlide, setSlide] = useState(1);
 
@@ -71,11 +71,11 @@ export const WeekMenuBlock = props => {
 
   return (
     <section className={classes.container}>
+      <Arrows {...arrowsProps} />
       <Box display="flex" flexDirection="row" justifyContent="space-between">
-        <span className={classes.slider_title}>{title || 'Browse Weekmenu'}</span>
-        <Arrows {...arrowsProps} />
+        <span className={classes.slider_title}>Browse Weekmenu</span>
       </Box>
-      <div className={classes.slider_subtitle}>{subtitle || "Let's go to meet new sensations"}</div>
+      <div className={classes.slider_subtitle}>Let's go to meet new sensations</div>
       <RecipeSlider recipes={recipes} currentSlide={currentSlide} />
     </section>
   );

@@ -36,7 +36,7 @@ export const Basket = props => {
           </TextElement>
         ))}
 
-      <TextElement text="Delivery">{Number.parseFloat(deliveryPrice).toFixed(2)}</TextElement>
+      <TextElement text="Delivery">${Number.parseFloat(deliveryPrice).toFixed(2)}</TextElement>
 
       <div className={classes.basket__total}>
         <TextElement text="Total">${Number.parseFloat(total).toFixed(2) ?? 0}</TextElement>

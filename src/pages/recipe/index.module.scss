@@ -313,6 +313,9 @@
 
   &_suppliers {
     padding: 32px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
   }
 
   &_title {
@@ -354,8 +357,6 @@
     }
   }
 
-  height: 800px; //TODO delete test height
-
 }
 
 .comments {
@@ -383,6 +384,70 @@
   letter-spacing: 0.01em;
   color: #14181F;
   margin-bottom: 32px;
+}
+
+.supplier {
+  &_wrapper {
+    background: #F4F5F6;
+    border: 1px solid #FB8C00;
+    box-sizing: border-box;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &_radio {
+    color: #E0E4EB !important;
+    &_checked {
+      color: #FFAA00 !important;
+    }
+  }
+
+  &_header {
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+  }
+
+  &_name {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 160%;
+    letter-spacing: 0.01em;
+    color: #14181F;
+  }
+
+  &_text_wrapper {
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &_text {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 160%;
+    letter-spacing: 0.01em;
+    color: #566481;
+
+    &_total {
+      color: #14181F;
+    }
+
+  }
+
+  &_value {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 160%;
+    text-align: right;
+    letter-spacing: 0.01em;
+    color: #14181F;
+  }
 }
 
 @media (max-width: 1025px) {
