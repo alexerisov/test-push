@@ -44,7 +44,18 @@ module.exports = {
   webpack: (config, options) => {
     config.module.rules.push(
       {
-        test: /\.(svg|png|jpe?g|gif)$/i,
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'static/images/[name].[contenthash].[ext]'
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(svg)$/i,
         use: [
           {
             loader: require.resolve('@svgr/webpack')
