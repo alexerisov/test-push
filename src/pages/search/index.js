@@ -271,23 +271,20 @@ const Recipes = props => {
   const [firstSearchSalableByTitle, setFirstSearchSalableByTitle] = useState(true);
   const [salableLoading, setSalableLoading] = useState(false);
 
-  useEffect(async () => {
-    try {
-      const res = await Recipe.getWeekmenu(title);
-      setWeekmenu(res.data);
+  useEffect(() => {
+    if (weekmenu.length !== 0) {
+      const recipesArray = weekmenu.map(el => el.recipes);
+      setWeekmenuRessults(recipesArray.flat());
+    }
+  }, [weekmenu, setWeekmenu]);
 
-      if (title && setFirstSearchWeekmenuByTitle(true)) {
-        setWeekmenu([]);
-        setWeekmenuRessults([]);
-
-        setWeekmenu(res.data);
-        setFirstSearchWeekmenuByTitle(false);
-      }
-      weekmenu.forEach(el => setWeekmenuRessults(weekmenuResults.concat(el.recipes)));
-      console.log(`results ${weekmenuResults}`);
-      console.log(weekmenu);
-    } catch (e) {
-      console.error(e);
+  useEffect(() => {
+    if (query) {
+      Recipe.getWeekmenu(title ? title : '')
+        .then(res => {
+          setWeekmenu(res.data);
+        })
+        .catch(e => console.error(e));
     }
   }, [query, title]);
 
@@ -396,7 +393,7 @@ const Recipes = props => {
       values.page = page;
       setSalableResults([]);
       setUnsalableResults([]);
-      setWeekmenuRessults([]);
+      // setWeekmenuRessults([]);
       setWeekmenu([]);
       router.push(
         {

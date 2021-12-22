@@ -687,7 +687,9 @@
     box-shadow: 0px 40px 32px -24px rgba(15, 15, 15, 0.12) !important;
     border-radius: 24px !important;
   }
-
+  &_close_icon {
+    top: auto !important;
+  }
   &_no_scrollbar {
     &::-webkit-scrollbar {
       display: none !important;
