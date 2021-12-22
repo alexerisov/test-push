@@ -34,7 +34,7 @@ function RecipePage(props) {
   const { notFound, recipe } = props;
 
   const title = recipe?.title;
-  const image = recipe?.images[0]?.url;
+  const image = recipe?.images?.[0]?.url;
   const price = recipe?.price;
   const recipeTypesList = recipe?.types;
   const recipeCookingSkills = recipe?.cooking_skills;
@@ -424,7 +424,7 @@ function RecipePage(props) {
             description: `${props?.recipesData?.description?.split('.').slice(0, 4).join('.')}`,
             images: [
               {
-                url: `${props?.recipesData?.images[0]?.url}`,
+                url: `${props?.recipesData?.images?.[0]?.url}`,
                 width: 800,
                 height: 600,
                 alt: 'recipe image'

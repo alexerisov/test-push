@@ -17,7 +17,7 @@ export const IngredientsModal = props => {
   const recipe = cartItem?.object;
 
   const title = recipe?.title;
-  const image = recipe?.images[0]?.url;
+  const image = recipe?.images?.[0]?.url;
   const price = recipe?.price;
   const recipeTypesList = recipe?.types;
   const recipeCookingSkills = recipe?.cooking_skills;

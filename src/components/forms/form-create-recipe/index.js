@@ -182,7 +182,7 @@ function FormCreateRecipe(props) {
     const newData = { ...data, images: newImagesIdList };
 
     if (data.main_image === id) {
-      newData.main_image = newData.images[0];
+      newData.main_image = newData.images?.[0];
     }
 
     props.dispatch(recipeUploadActions.update(newData));

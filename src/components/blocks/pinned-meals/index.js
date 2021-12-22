@@ -38,7 +38,7 @@ const PinnedMeals = () => {
         pk={item.pk}
         title={item.title}
         raitingValue={item.avg_rating}
-        avatar={item?.images[0]?.url}
+        avatar={item?.images?.[0]?.url}
         id={item?.pk}
       />
     );

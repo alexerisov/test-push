@@ -25,9 +25,9 @@ import 'pure-react-carousel/dist/react-carousel.es.css';
 
 const useAvatarStyles = makeStyles({
   root: {
-      position: 'absolute',
-      width: '114px !important',
-      height: '114px !important'
+    position: 'absolute',
+    width: '114px !important',
+    height: '114px !important'
   }
 });
 
@@ -183,9 +183,8 @@ const HomePageOfTargetChef = () => {
               {!chefInfo?.experience?.length
                 ? '-'
                 : chefInfo?.experience?.map(item => {
-                  return <p className={`${styles.value} ${styles.experience__value}`}>{`- ${item}`}</p>;
-                })
-              }
+                    return <p className={`${styles.value} ${styles.experience__value}`}>{`- ${item}`}</p>;
+                  })}
             </div>
           </div>
         </div>
@@ -241,7 +240,7 @@ const HomePageOfTargetChef = () => {
                 chefInfo?.favorite_recipes?.map(item => {
                   return (
                     <Slide key={`card-favorite-dish-${item.pk}`} className={styles.favDishesCarousel__item} index={1}>
-                      <CardFavouriteDishes recipeId={item.pk} title={item.title} image={item.images[0].url} />
+                      <CardFavouriteDishes recipeId={item.pk} title={item.title} image={item.images?.[0].url} />
                     </Slide>
                   );
                 })
@@ -306,7 +305,7 @@ const HomePageOfTargetChef = () => {
                     key={`${item.pk + '1k0'}`}
                     name={item.user.full_name}
                     title={item.title}
-                    image={item.images[0]?.url}
+                    image={item.images?.[0]?.url}
                     city={item.city}
                     id={item.pk}
                     likes={item?.['likes_number']}

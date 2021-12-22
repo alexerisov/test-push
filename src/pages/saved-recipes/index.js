@@ -131,7 +131,7 @@ const SavedRecipesPage = () => {
               return (
                 <CardHighestMeals
                   key={result.recipe.pk}
-                  image={result.recipe?.images[0]?.url}
+                  image={result.recipe?.images?.[0]?.url}
                   title={result.recipe?.title}
                   rating={result.recipe?.avg_rating}
                   name={result.recipe?.user?.full_name}
