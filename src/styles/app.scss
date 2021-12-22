@@ -1,6 +1,6 @@
-@import "~styles/normalize.scss";
-@import "~styles/mixins/mixins.scss";
-@import "~styles/variables.scss";
+@import '~styles/normalize.scss';
+@import '~styles/mixins/mixins.scss';
+@import '~styles/variables.scss';
 
 @font-face {
   @include fontMontserratRegular();
@@ -18,6 +18,10 @@
   @include fontMontserratMedium();
 }
 
+@font-face {
+  font-family: DMSansBold;
+  src: local('DMSans Bold'), url('/fonts/DM_Suns/DMSans-Bold.ttf') format('ttf');
+}
 html,
 body,
 #__next {
@@ -26,5 +30,5 @@ body,
   position: relative;
   padding: 0;
   margin: 0;
-  font: 16px/22px "Montserrat";
+  font: 16px/22px 'Montserrat';
 }
