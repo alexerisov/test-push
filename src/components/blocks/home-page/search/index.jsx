@@ -79,6 +79,12 @@ const SearchInput = () => {
     );
   };
 
+  const handleOptionChange = (_, newOption) => {
+    console.log(newOption);
+    formik.setFieldValue('search', newOption);
+    formik.submitForm();
+  };
+
   return (
     <div className={classes.search_input_wrapper}>
       <form className={classes.search_form} onSubmit={formik.handleSubmit}>
@@ -93,7 +99,7 @@ const SearchInput = () => {
           id="home-page-search"
           options={result?.map(option => option.result)}
           freeSolo
-          onChange={() => formik.submitForm()}
+          onChange={handleOptionChange}
           renderOption={renderOption}
           closeIcon={<BasicIcon icon={CloseIcon} color="#B1B5C3" size="32px" />}
           renderInput={params => (
