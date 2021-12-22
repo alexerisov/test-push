@@ -129,12 +129,8 @@ export const SearchBlock = () => {
     <section className={classes.container}>
       <div className={classes.search_image_wrapper}>
         <div className={classes.search_image_text_wrapper}>
-          <div className={classes.search_image_text_title}>
-            Find a
-            <br />
-            great recipe
-          </div>
-          <div className={classes.search_image_text_subtitle}>Find Homechef Power.</div>
+          <div className={classes.search_image_text_title}>Eat Personal</div>
+          <div className={classes.search_image_text_subtitle}>Find a great Recipe</div>
         </div>
         <img src="/images/index/search-block.png" alt="Head picture" className={classes.search_image} />
       </div>
