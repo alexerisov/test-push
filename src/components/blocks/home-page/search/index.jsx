@@ -15,17 +15,13 @@ import SearchImage from '@/../public/images/index/search-block.png';
 import { ReactComponent as SearchIcon } from '@/../public/icons/Search/Line.svg';
 import { ReactComponent as CloseIcon } from '@/../public/icons/Close Circle/Line.svg';
 import { ReactComponent as RecipeIcon } from '@/../public/icons/Receipt/Line.svg';
-import { BasicIcon } from '@/components/basic-elements/basic-icon';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const SearchInput = () => {
-  const isMobile = useMediaQuery('(max-width: 600px)');
   const dispatch = useDispatch();
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
   const [result, setResult] = useState([]);
   const loading = open && result?.length === 0;
-  const [isSearchFocused, setIsSearchFocused] = useState(false);
 
   const validationSchema = yup.object({
     search: yup.string('Search for dish name')
@@ -90,20 +86,17 @@ const SearchInput = () => {
             endAdornment: classes.search_autocomplete_close_icon
           }}
           fullWidth
-          id="home-page-search"
+          id="combo-box-demo"
           options={result?.map(option => option.result)}
           freeSolo
-          onChange={() => formik.submitForm()}
           renderOption={renderOption}
-          closeIcon={<BasicIcon icon={CloseIcon} color="#B1B5C3" size="32px" />}
+          closeIcon={<CloseIcon />}
           renderInput={params => (
             <TextField
               {...params}
               id="search"
               name="search"
               variant="filled"
-              onFocus={() => setIsSearchFocused(true)}
-              onBlur={() => setIsSearchFocused(false)}
               InputProps={{
                 ...params.InputProps,
                 classes: { root: classes.search_input, focused: classes.search_input_focused },
@@ -122,9 +115,9 @@ const SearchInput = () => {
         <IconButton
           type="submit"
           className={classes.search_button}
-          style={{ background: '#FFAA00', color: 'white', display: isSearchFocused && isMobile ? 'none' : 'block' }}
+          style={{ background: '#FFAA00', color: 'white' }}
           size="32px">
-          <BasicIcon icon={SearchIcon} color="white" />
+          <SearchIcon className={classes.search_button_icon} />
         </IconButton>
       </form>
     </div>
