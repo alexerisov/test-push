@@ -23,22 +23,6 @@
   &__column2 {
     order: 2;
   }
-
-  @media (max-width: 1025px) {
-    grid-template-columns: 385px 400px;
-  }
-
-  @media (max-width: 600px) {
-    grid-template-columns: 1fr;
-    &__column2 {
-      order: -1;
-    }
-
-    &__button {
-      width: 100%
-    }
-  }
-
 }
 
 
@@ -61,7 +45,7 @@
 }
 
 .info {
-  width: 100%;
+  flex: 1;
   margin-bottom: 160px;
 }
 
@@ -157,5 +141,33 @@
   &:hover {
     background: #FB8C00 !important;
   }
+
+}
+
+
+@media (max-width: 960px) {
+  .content {
+    grid-template-columns: 385px 400px;
+  }
+}
+
+@media (max-width: 600px) {
+  .content {
+    &_column1 {
+      padding: 0;
+    }
+
+    &__button {
+      width: 100%
+    }
+  }
+  .info__header {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+  }
+
 
 }
