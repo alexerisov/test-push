@@ -70,7 +70,7 @@ def up_main_client(pods=4):
 
 
 def stop_main_client():
-    os.system(f'docker-compose  -f services/main_client.yml up -d')
+    os.system(f'docker-compose  -f services/main_client.yml stop')
     return
 
 
