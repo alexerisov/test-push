@@ -130,7 +130,7 @@ const SearchInput = () => {
   const [open, setOpen] = React.useState(false);
   const [result, setResult] = useState([]);
   const loading = open && result?.length === 0;
-
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
   const validationSchema = yup.object({
     search: yup.string('Search for dish name')
   });
@@ -194,15 +194,16 @@ const SearchInput = () => {
             endAdornment: classes.search_autocomplete_close_icon
           }}
           fullWidth
-          id="combo-box-demo"
+          id="home-page-search"
           options={result?.map(option => option.result)}
           freeSolo
+          onChange={() => formik.submitForm()}
           renderOption={renderOption}
           closeIcon={<CloseIcon />}
           renderInput={params => (
             <TextField
               {...params}
-              id="search"
+              id="home-page-search"
               name="search"
               variant="filled"
               InputProps={{
@@ -210,6 +211,8 @@ const SearchInput = () => {
                 classes: { root: classes.search_input, focused: classes.search_input_focused },
                 disableUnderline: true
               }}
+              onFocus={() => setIsSearchFocused(true)}
+              onBlur={() => setIsSearchFocused(false)}
               value={formik.values.search}
               placeholder="What do you want to eat?"
               onChange={e => {
