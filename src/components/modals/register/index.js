@@ -216,10 +216,10 @@ function Register(props) {
           <img className={classes.registerImage} src="/images/index/logo.png" alt="Logo"></img>
         </div>
         {renderContent()}
-        <Link className={classes.register__links_text} href="/terms">
+        <Link className={classes.register__links_text} href="/terms" target="_blank">
           <a>Terms of use</a>
         </Link>
-        <Link className={classes.register__links_text} href="/privacy-policy">
+        <Link className={classes.register__links_text} href="/privacy-policy" target="_blank">
           <a>Privacy Policy</a>
         </Link>
       </div>
