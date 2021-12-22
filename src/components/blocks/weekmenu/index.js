@@ -17,6 +17,7 @@ const Weekmenu = ({ weekmenu, token }) => {
   const tablet = useMediaQuery('(max-width: 1025px)');
   const mobile = useMediaQuery('(max-width: 576px)');
   const [recipe, setRecipe] = useState([]);
+
   useEffect(() => {
     if (weekmenu) {
       weekmenu.map(el => el.recipes.map(elem => recipe.push(elem)));

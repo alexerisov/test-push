@@ -112,15 +112,19 @@
 }
 
 .image {
-  object-fit: fill;
+  height: 100%;
+  width:  100%;
+  object-fit: cover;
   object-position: center;
 }
 
 .image_wrapper {
   @include bothColumns();
+  max-width: 100%;
   height: 382px;
   margin-bottom: 80px;
   position: relative;
+  overflow: hidden;
 
 
 
@@ -527,7 +531,7 @@
     padding-top: 32px;
 
     &_back_button {
-      display: block;
+      display: none;
     }
 
     &_name {

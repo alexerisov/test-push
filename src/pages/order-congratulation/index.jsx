@@ -61,7 +61,7 @@ const OrderCongratulationPage = () => {
           <TextWithIcon icon={HandCartIcon} text="Booking code:" value={order?.pk} />
           <TextWithIcon icon={CalendarIcon} text="Date:" value={dayjs(order?.delivery_date).format('D MMM, YYYY')} />
           <TextWithIcon icon={RecipeIcon} text="Total:" value={'$' + order?.total_price} />
-          <TextWithIcon icon={WalletIcon} text="Payment methdd:" value="Tikkie" />
+          <TextWithIcon icon={WalletIcon} text="Payment method:" value="Tikkie" />
           <div className={classes.button_group}>
             <Button onClick={ordersButtonHandler} className={classes.button__orders}>
               Your Orders

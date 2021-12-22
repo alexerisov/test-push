@@ -154,7 +154,7 @@ export default {
     return http.get(`/recipe/top_rated_meals`);
   },
 
-  getWeekmenu: () => {
+  getWeekmenu: search => {
     return http.get(`/settings/weekmenus`);
   },
 
