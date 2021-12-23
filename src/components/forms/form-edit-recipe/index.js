@@ -211,7 +211,7 @@ function FormEditRecipe(props) {
     const newData = { ...data, images: newImagesIdList };
 
     if (data.main_image === id) {
-      newData.main_image = newData.images[0];
+      newData.main_image = newData.images?.[0];
     }
 
     props.dispatch(recipeEditActions.update(newData));

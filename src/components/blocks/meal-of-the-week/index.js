@@ -47,7 +47,7 @@ const MealOfWeekBlock = props => {
       .catch(err => console.log(err));
   };
 
-  const image = props?.meal?.images[0].url ? props?.meal?.images[0].url : '';
+  const image = props?.meal?.images?.[0].url ? props?.meal?.images?.[0].url : '';
   return (
     <section className={classes.meal}>
       <div className={classes.meal__title}>

@@ -24,15 +24,15 @@ const StyledCardMedia = styled(CardMedia)`
 export const RecipeCard = props => {
   const { recipe } = props;
 
-  const title = recipe.title;
-  const image = recipe.images?.[0]?.url;
-  const price = recipe.price;
-  const author = recipe.user.full_name;
+  const title = recipe?.title;
+  const image = recipe?.images?.[0]?.url;
+  const price = recipe?.price;
+  const author = recipe?.user?.full_name;
 
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const isAuthorized = useSelector(state => state.account.hasToken);
+  const isAuthorized = useSelector(state => state.account?.hasToken);
   const isRecipeInCart = useSelector(state => state.cart.products?.some(el => el.object_id == recipe?.pk));
   const isRecipeNotSale = recipe?.price === 0 || recipe?.sale_status !== 5;
 
@@ -61,7 +61,7 @@ export const RecipeCard = props => {
       />
       <CardContent className={classes.card__content}>
         <div>
-          <div className={classes.card__title} onClick={() => redirectToRecipeCard(recipe.pk)}>
+          <div className={classes.card__title} onClick={() => redirectToRecipeCard(recipe?.pk)}>
             {title}
           </div>
           <Divider m="8px 0" color="#FFAA00" width="33%" />

@@ -542,7 +542,7 @@
       font-weight: bold;
       font-size: 14px;
       line-height: 16px;
-      @include fontBold();
+      font-family: DMSansBold, sans-serif;
       color: $--sc--color-neutrals4;
       -moz-user-select: none;
       -o-user-select: none;

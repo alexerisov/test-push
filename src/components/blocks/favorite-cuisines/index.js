@@ -1,6 +1,6 @@
 import React from 'react';
-import classes from "./index.module.scss";
-import CardHighestMeals from "@/components/elements/card-highest-meals";
+import classes from './index.module.scss';
+import CardHighestMeals from '@/components/elements/card-highest-meals';
 
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -11,24 +11,23 @@ import { NoSsr } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import Recipe from '@/api/Recipe.js';
 
-const StyledTabs = styled(Tabs)`   
-    width: max-content;
-    font: normal normal 600 20px/58px Montserrat;
-    padding: 0 25px 0 143px;
-    background: white 0% 0% no-repeat padding-box;
-    box-shadow: 0px 3px 6px #00000029;
-    border-radius: 13px;
-    display: flex;
-    flex-direction: row;
-    gap: 40px;
-    margin: 0 0 51px 0;
+const StyledTabs = styled(Tabs)`
+  width: max-content;
+  font: normal normal 600 20px/58px Montserrat;
+  padding: 0 25px 0 143px;
+  background: white 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #00000029;
+  border-radius: 13px;
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  margin: 0 0 51px 0;
 
-    .MuiTabs-indicator {
-      background-color: #FFAA00;
-      height: 6px;
-      border-radius: 13px;
-    }
-    
+  .MuiTabs-indicator {
+    background-color: #ffaa00;
+    height: 6px;
+    border-radius: 13px;
+  }
 `;
 
 const StyledTab = styled(Tab)`
@@ -52,7 +51,6 @@ const StyledTabPanel = styled(TabPanel)`
 `;
 
 const FavoriteCuisinesBlock = () => {
-
   const lengthFavoriteCuisinesMenu = 6;
   const DEFAULT_VALUE_TAB_STATE = 0;
   // To do change method indentifing coisines ID
@@ -69,13 +67,13 @@ const FavoriteCuisinesBlock = () => {
   StyledTabPanel.propTypes = {
     children: PropTypes.node,
     index: PropTypes.any.isRequired,
-    value: PropTypes.any.isRequired,
+    value: PropTypes.any.isRequired
   };
 
   function a11yProps(index) {
     return {
       id: `simple-tab-${index}`,
-      'aria-controls': `simple-tabpanel-${index}`,
+      'aria-controls': `simple-tabpanel-${index}`
     };
   }
 
@@ -87,16 +85,15 @@ const FavoriteCuisinesBlock = () => {
   };
 
   const slideTabRight = () => {
-    (valueTab < lengthFavoriteCuisinesMenu ) && setValueTab(valueTab + 1);
+    valueTab < lengthFavoriteCuisinesMenu && setValueTab(valueTab + 1);
   };
 
   const slideTabLeft = () => {
-    (valueTab > DEFAULT_VALUE_TAB_STATE ) && setValueTab(valueTab - 1);
+    valueTab > DEFAULT_VALUE_TAB_STATE && setValueTab(valueTab - 1);
   };
 
   React.useEffect(() => {
-    Recipe.getFavoriteCuisines(cousineID[valueTab])
-    .then((data) => {
+    Recipe.getFavoriteCuisines(cousineID[valueTab]).then(data => {
       setCards(data.data);
     });
   }, [valueTab]);
@@ -111,17 +108,17 @@ const FavoriteCuisinesBlock = () => {
         </span>
       </div>
       <div className={classes.cuisines__menu}>
-      <NoSsr>
-        <StyledTabs value={valueTab} onChange={handleChange} aria-label="simple tabs example">
-          <StyledTab label="Indian" {...a11yProps(0)} />
-          <StyledTab label="Indonesian" {...a11yProps(1)} />
-          <StyledTab label="Turkish" {...a11yProps(2)} />
-          <StyledTab label="Thai" {...a11yProps(3)} />
-          <StyledTab label="Spanish" {...a11yProps(4)} />
-          <StyledTab label="Moroccan" {...a11yProps(5)} />
-          <StyledTab label="Japanese" {...a11yProps(6)} />
-        </StyledTabs>
-      </NoSsr>
+        <NoSsr>
+          <StyledTabs value={valueTab} onChange={handleChange} aria-label="simple tabs example">
+            <StyledTab label="Indian" {...a11yProps(0)} />
+            <StyledTab label="Indonesian" {...a11yProps(1)} />
+            <StyledTab label="Turkish" {...a11yProps(2)} />
+            <StyledTab label="Thai" {...a11yProps(3)} />
+            <StyledTab label="Spanish" {...a11yProps(4)} />
+            <StyledTab label="Moroccan" {...a11yProps(5)} />
+            <StyledTab label="Japanese" {...a11yProps(6)} />
+          </StyledTabs>
+        </NoSsr>
         <button className={classes.cuisines__slideButton} onClick={slideTabLeft}>
           <div className={classes.cuisines__slideButtonArrow_left} />
         </button>
@@ -130,114 +127,121 @@ const FavoriteCuisinesBlock = () => {
         </button>
       </div>
       <NoSsr>
-      <StyledTabPanel value={valueTab} index={0}>
-        {
-          cards.map((card) => {
-            return <CardHighestMeals
-                      key={card.pk}
-                      image={card?.images[0]?.url}
-                      title={card?.title}
-                      rating={card?.avg_rating}
-                      name={card?.user?.full_name}
-                      city={card?.user?.city}
-                      likes={card?.likes_number}
-                      id={card.pk}/>;
-          })
-        }
-      </StyledTabPanel>
-      <StyledTabPanel value={valueTab} index={1}>
-        {
-          cards.map((card) => {
-            return <CardHighestMeals
-                    key={card.pk}
-                    image={card?.images[0]?.url}
-                    title={card?.title}
-                    rating={card?.avg_rating}
-                    name={card?.user?.full_name}
-                    city={card?.user?.city}
-                    likes={card?.likes_number}
-                    id={card.pk}/>;
-          })
-        }
-      </StyledTabPanel>
-      <StyledTabPanel value={valueTab} index={2}>
-        {
-          cards.map((card) => {
-            return <CardHighestMeals
-                    key={card.pk}
-                    image={card?.images[0]?.url}
-                    title={card?.title}
-                    rating={card?.avg_rating}
-                    name={card?.user?.full_name}
-                    city={card?.user?.city}
-                    likes={card?.likes_number}
-                    id={card.pk}/>;
-          })
-        }
-      </StyledTabPanel>
-      <StyledTabPanel value={valueTab} index={3}>
-        {
-          cards.map((card) => {
-            return <CardHighestMeals
-                    key={card.pk}
-                    image={card?.images[0]?.url}
-                    title={card?.title}
-                    rating={card?.avg_rating}
-                    name={card?.user?.full_name}
-                    city={card?.user?.city}
-                    likes={card?.likes_number}
-                    id={card.pk}/>;
-          })
-        }
-      </StyledTabPanel>
-      <StyledTabPanel value={valueTab} index={4}>
-        {
-          cards.map((card) => {
-            return <CardHighestMeals
-                      key={card.pk}
-                      image={card?.images[0]?.url}
-                      title={card?.title}
-                      rating={card?.avg_rating}
-                      name={card?.user?.full_name}
-                      city={card?.user?.city}
-                      likes={card?.likes_number}
-                      id={card.pk}/>;
-          })
-        }
-      </StyledTabPanel>
-      <StyledTabPanel value={valueTab} index={5}>
-        {
-          cards.map((card) => {
-            return <CardHighestMeals
-                      key={card.pk}
-                      image={card?.images[0]?.url}
-                      title={card?.title}
-                      rating={card?.avg_rating}
-                      name={card?.user?.full_name}
-                      city={card?.user?.city}
-                      likes={card?.likes_number}
-                      id={card.pk}/>;
-          })
-        }
-      </StyledTabPanel>
-      <StyledTabPanel value={valueTab} index={6}>
-        {
-          cards.map((card) => {
-            return <CardHighestMeals
-                      key={card.pk}
-                      image={card?.images[0]?.url}
-                      title={card?.title}
-                      rating={card?.avg_rating}
-                      name={card?.user?.full_name}
-                      city={card?.user?.city}
-                      likes={card?.likes_number}
-                      id={card.pk}/>;
-          })
-        }
-      </StyledTabPanel>
+        <StyledTabPanel value={valueTab} index={0}>
+          {cards.map(card => {
+            return (
+              <CardHighestMeals
+                key={card.pk}
+                image={card?.images?.[0]?.url}
+                title={card?.title}
+                rating={card?.avg_rating}
+                name={card?.user?.full_name}
+                city={card?.user?.city}
+                likes={card?.likes_number}
+                id={card.pk}
+              />
+            );
+          })}
+        </StyledTabPanel>
+        <StyledTabPanel value={valueTab} index={1}>
+          {cards.map(card => {
+            return (
+              <CardHighestMeals
+                key={card.pk}
+                image={card?.images?.[0]?.url}
+                title={card?.title}
+                rating={card?.avg_rating}
+                name={card?.user?.full_name}
+                city={card?.user?.city}
+                likes={card?.likes_number}
+                id={card.pk}
+              />
+            );
+          })}
+        </StyledTabPanel>
+        <StyledTabPanel value={valueTab} index={2}>
+          {cards.map(card => {
+            return (
+              <CardHighestMeals
+                key={card.pk}
+                image={card?.images?.[0]?.url}
+                title={card?.title}
+                rating={card?.avg_rating}
+                name={card?.user?.full_name}
+                city={card?.user?.city}
+                likes={card?.likes_number}
+                id={card.pk}
+              />
+            );
+          })}
+        </StyledTabPanel>
+        <StyledTabPanel value={valueTab} index={3}>
+          {cards.map(card => {
+            return (
+              <CardHighestMeals
+                key={card.pk}
+                image={card?.images?.[0]?.url}
+                title={card?.title}
+                rating={card?.avg_rating}
+                name={card?.user?.full_name}
+                city={card?.user?.city}
+                likes={card?.likes_number}
+                id={card.pk}
+              />
+            );
+          })}
+        </StyledTabPanel>
+        <StyledTabPanel value={valueTab} index={4}>
+          {cards.map(card => {
+            return (
+              <CardHighestMeals
+                key={card.pk}
+                image={card?.images?.[0]?.url}
+                title={card?.title}
+                rating={card?.avg_rating}
+                name={card?.user?.full_name}
+                city={card?.user?.city}
+                likes={card?.likes_number}
+                id={card.pk}
+              />
+            );
+          })}
+        </StyledTabPanel>
+        <StyledTabPanel value={valueTab} index={5}>
+          {cards.map(card => {
+            return (
+              <CardHighestMeals
+                key={card.pk}
+                image={card?.images?.[0]?.url}
+                title={card?.title}
+                rating={card?.avg_rating}
+                name={card?.user?.full_name}
+                city={card?.user?.city}
+                likes={card?.likes_number}
+                id={card.pk}
+              />
+            );
+          })}
+        </StyledTabPanel>
+        <StyledTabPanel value={valueTab} index={6}>
+          {cards.map(card => {
+            return (
+              <CardHighestMeals
+                key={card.pk}
+                image={card?.images?.[0]?.url}
+                title={card?.title}
+                rating={card?.avg_rating}
+                name={card?.user?.full_name}
+                city={card?.user?.city}
+                likes={card?.likes_number}
+                id={card.pk}
+              />
+            );
+          })}
+        </StyledTabPanel>
       </NoSsr>
     </section>
   );
-  };
-  
+};
+
 export default FavoriteCuisinesBlock;
