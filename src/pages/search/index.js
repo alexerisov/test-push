@@ -249,11 +249,14 @@ const Recipes = props => {
   const [range, setRange] = useState(1);
   const [data, setData] = useState();
   const [result, setResult] = useState([]);
-  const [weekmenu, setWeekmenu] = useState();
   const [showScrollBtn, setShowScrollBtn] = useState(false);
   const [page, setPage] = useState(1);
   const [showFilters, setShowFilters] = useState(false);
 
+  //WeekMenu
+  const [weekmenu, setWeekmenu] = useState([]);
+  const [weekmenuResults, setWeekmenuRessults] = useState([]);
+  const [firstSearchWeekmenuByTitle, setFirstSearchWeekmenuByTitle] = useState(true);
   //UnsalableRecipes
   const [unsalableResults, setUnsalableResults] = useState([]);
   const [hasMoreUnsalableResults, setHasMoreUnsalableResults] = useState(true);
@@ -268,14 +271,22 @@ const Recipes = props => {
   const [firstSearchSalableByTitle, setFirstSearchSalableByTitle] = useState(true);
   const [salableLoading, setSalableLoading] = useState(false);
 
-  useEffect(async () => {
-    try {
-      const weekmenu = await Recipe.getWeekmenu(title);
-      setWeekmenu(weekmenu.data);
-    } catch (e) {
-      console.error(e);
+  useEffect(() => {
+    if (weekmenu.length !== 0) {
+      const recipesArray = weekmenu.map(el => el.recipes);
+      setWeekmenuRessults(recipesArray.flat());
     }
-  }, []);
+  }, [weekmenu, setWeekmenu]);
+
+  useEffect(() => {
+    if (query) {
+      Recipe.getWeekmenu(title ? title : '')
+        .then(res => {
+          setWeekmenu(res.data);
+        })
+        .catch(e => console.error(e));
+    }
+  }, [query, title]);
 
   useEffect(async () => {
     pageUnsalable > 1 && setShowScrollBtn(true);
@@ -382,7 +393,8 @@ const Recipes = props => {
       values.page = page;
       setSalableResults([]);
       setUnsalableResults([]);
-
+      // setWeekmenuRessults([]);
+      setWeekmenu([]);
       router.push(
         {
           search: `?${createQueryParams(values).toString()}`
@@ -550,6 +562,7 @@ const Recipes = props => {
   useEffect(() => {
     setFirstSearchUnsalableByTitle(true);
     setFirstSearchSalableByTitle(true);
+    setFirstSearchWeekmenuByTitle(true);
     setTitle(router.query.title);
     setPage(router.query.page ? Number(router.query.page) : 1);
     setPageUnsalable(router.query.page ? Number(router.query.page) : 1);
@@ -1096,7 +1109,7 @@ const Recipes = props => {
               {orderingList}
             </Select>
           </div> */}
-          <Weekmenu weekmenu={weekmenu} token={props.token} />
+          <Weekmenu weekmenu={weekmenuResults} token={props.token} />
 
           <div className={classes.search__result__text}>
             <img src="icons/Coin/Line.svg" alt="close-icon" />
@@ -1104,7 +1117,6 @@ const Recipes = props => {
           </div>
 
           <div className={classes.search__result__container}>
-            {console.log(salableResults)}
             {salableResults?.length !== 0 ? (
               <>
                 {!firstClickToSalableMore
