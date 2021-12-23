@@ -238,9 +238,9 @@ function RecipePage(props) {
     const Step = props => {
       const { number, text } = props;
       return (
-        <div className={classes.cooking_steps_wrapper}>
-          <span className={classes.cooking_steps_number}>{number}</span>
-          <span className={classes.cooking_steps_text}>{text}</span>
+        <div className={classes.cooking_steps_element_wrapper}>
+          <span className={classes.cooking_steps_number}>{number || 'N/A'}</span>
+          <span className={classes.cooking_steps_text}>{text || 'Not defined'}</span>
         </div>
       );
     };
@@ -250,7 +250,9 @@ function RecipePage(props) {
         <h2 className={classes.block_title}>Preparation Steps</h2>
         <div className={classes.cooking_steps_wrapper}>
           {recipeCookingSteps?.length > 0
-            ? recipeCookingSteps.map((step, index) => <Step number={index + 1} text={step} key={'step' + index} />)
+            ? recipeCookingSteps.map((step, index) => (
+                <Step number={step?.num} text={step?.title} key={'step' + index} />
+              ))
             : 'There is no cooking steps yet'}
         </div>
       </div>
