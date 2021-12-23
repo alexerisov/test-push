@@ -141,9 +141,13 @@ const SearchInput = () => {
     },
     validationSchema: validationSchema,
     onSubmit: values => {
-      router.push(
-        `search?title=${values.search}&${!isOnlyEatchefRecipesQueryExist() ? '' : 'only_eatchefs_recipes=Y'}`
-      );
+      if (!values.search) {
+        router.push(`search?`);
+      } else {
+        router.push(
+          `search?title=${values.search}&${!isOnlyEatchefRecipesQueryExist() ? '' : 'only_eatchefs_recipes=Y'}`
+        );
+      }
     }
   });
 
@@ -183,6 +187,12 @@ const SearchInput = () => {
     );
   };
 
+  const handleOptionChange = (_, newOption) => {
+    console.log(newOption);
+    formik.setFieldValue('search', newOption);
+    formik.submitForm();
+  };
+
   return (
     <div className={classes.search_input_wrapper}>
       <form className={classes.search_form} onSubmit={formik.handleSubmit}>
@@ -197,9 +207,9 @@ const SearchInput = () => {
           id="home-page-search"
           options={result?.map(option => option.result)}
           freeSolo
-          onChange={() => formik.submitForm()}
           renderOption={renderOption}
           closeIcon={<CloseIcon />}
+          onChange={handleOptionChange}
           renderInput={params => (
             <TextField
               {...params}
