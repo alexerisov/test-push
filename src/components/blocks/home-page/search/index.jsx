@@ -75,6 +75,12 @@ const SearchInput = () => {
     );
   };
 
+  const handleOptionChange = (_, newOption) => {
+    console.log(newOption);
+    formik.setFieldValue('search', newOption);
+    formik.submitForm();
+  };
+
   return (
     <div className={classes.search_input_wrapper}>
       <form className={classes.search_form} onSubmit={formik.handleSubmit}>
@@ -89,6 +95,7 @@ const SearchInput = () => {
           id="combo-box-demo"
           options={result?.map(option => option.result)}
           freeSolo
+          onChange={handleOptionChange}
           renderOption={renderOption}
           closeIcon={<CloseIcon />}
           renderInput={params => (
