@@ -26,5 +26,7 @@ services:
       - traefik.http.routers.main_client.rule=Host(`www.eatchefs.com`,`eatchefs.com`)
       - traefik.http.routers.main_client.tls=true
       - traefik.http.routers.main_client.tls.certresolver=letsencrypt
+      - traefik.http.routers.main_client.middlewares=auth
       - traefik.http.routers.main_client.service=main_client_service
       - traefik.http.services.main_client_service.loadbalancer.server.port=3000
+
