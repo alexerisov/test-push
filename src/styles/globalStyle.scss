@@ -19,10 +19,10 @@ body {
     white-space: nowrap;
   }
 
-  [class*='MuiPaper-root'] {
-    box-shadow: 0 3px 6px rgb(0 0 0 / 16%);
-    border-radius: 5px;
-  }
+  //[class*='MuiPaper-root'] {
+  //  box-shadow: 0 3px 6px rgb(0 0 0 / 16%);
+  //  border-radius: 5px;
+  //}
 
   [class*='MuiRating-root'] {
     color: $--color-orange;
