@@ -17,7 +17,7 @@ import { ReactComponent as ServingPlateIcon } from '@/../public/icons/Serving Pl
 import { ReactComponent as ForkAndKnifeIcon } from '@/../public/icons/Fork and Knife/Line.svg';
 import { ReactComponent as HatChefIcon } from '@/../public/icons/Hat Chef/Line.svg';
 import { ReactComponent as SaltShakerIcon } from '@/../public/icons/Salt Shaker/Line.svg';
-import { Avatar, Button, Collapse, IconButton, Radio } from '@material-ui/core';
+import { Avatar, Button, Collapse, IconButton, Radio, useMediaQuery } from '@material-ui/core';
 import Image from 'next/image';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
@@ -26,12 +26,41 @@ import { Divider } from '@/components/basic-elements/divider';
 import { WeekMenuBlock } from '@/components/blocks/home-page/week-menu';
 import { addToCart } from '@/store/cart/actions';
 import { ReactComponent as CartIcon } from '../../../public/icons/Shopping Cart/Line.svg';
+import { ImageIcon } from '@/components/elements';
 import { modalActions } from '@/store/actions';
+import styled from 'styled-components';
+import { windowScroll } from '@/utils/windowScroll';
+import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel';
 
+const StyledSlider = styled(Slider)`
+  display: flex;
+  flex-direction: row;
+  width: auto;
+  max-height: 400px;
+  overflow-y: clip;
+  & ul {
+    display: flex !important;
+    flex-direction: row !important;
+    width: fit-content !important;
+  }
+  li {
+    margin: 0 16px;
+    width: 298px !important;
+    img {
+      border-radius: 16px !important;
+    }
+  }
+`;
+
+const MyPicture = styled(ImageIcon)`
+  margin-right: 12px;
+  background-color: #fcfcfd;
+`;
 dayjs.extend(customParseFormat);
 
 function RecipePage(props) {
   const { notFound, recipe } = props;
+  const mobile = useMediaQuery('(max-width:576px)');
 
   const title = recipe?.title;
   const image = recipe?.images?.[0]?.url;
@@ -64,6 +93,7 @@ function RecipePage(props) {
   const [likesNumber, setLikesNumber] = useState(recipe?.likes_number);
   const [selectedSupplier, setSelectedSupplier] = React.useState('walmart');
 
+  const [viewAllImages, setViewAllImages] = useState(false);
   const dispatch = useDispatch();
 
   const parseTime = time => {
@@ -151,10 +181,92 @@ function RecipePage(props) {
     return (
       <div className={classes.image_wrapper}>
         <img src={image} alt="Recipe Image" className={classes.image} />
+        {recipe?.images?.length > 1 && !viewAllImages ? (
+          <button className={classes.media__button} onClick={() => setViewAllImages(true)}>
+            <MyPicture />
+            {`Show all materials (${recipe?.images?.length})`}
+          </button>
+        ) : null}
       </div>
     );
   };
 
+  const MediaSlider = () => {
+    return (
+      recipe?.images?.length > 0 && (
+        <CarouselProvider
+          naturalSlideWidth={298}
+          naturalSlideHeight={400}
+          step={1}
+          visibleSlides={1}
+          totalSlides={recipe?.images?.length}>
+          <StyledSlider>
+            {recipe?.images && recipe?.images?.length !== 0
+              ? recipe?.images.map((el, index) => {
+                  return (
+                    <Slide key={el.url} index={index}>
+                      <div className={classes.recipe__slider__item}>
+                        <img src={el.url} />
+                      </div>
+                    </Slide>
+                  );
+                })
+              : null}
+          </StyledSlider>
+          <div className={classes.recipe__slider__row}>
+            <div className={classes.recipe__slider__controls}>
+              <ButtonBack>
+                <img src="/icons/Arrow Left 2/Line.svg" alt="arrow-back" />
+              </ButtonBack>
+              <ButtonNext>
+                <img src="/icons/Arrow Right 2/Line.svg" alt="arrow-next" />
+              </ButtonNext>
+            </div>
+          </div>
+        </CarouselProvider>
+      )
+    );
+  };
+  const Galery = () => {
+    return (
+      <div className={classes.galery}>
+        <div className={classes.galery__container}>
+          <div className={classes.galery__column}>
+            {recipe?.images?.map((el, ind) => {
+              if (ind % 2 === 0 && !el.main_image) {
+                return (
+                  <div key={el.url} className={classes.galery__item}>
+                    <img src={el.url} />
+                  </div>
+                );
+              }
+            })}
+          </div>
+          <div className={classes.galery__column}>
+            {recipe?.images?.map((el, ind) => {
+              if (ind % 2 === 1 && !el.main_image) {
+                return (
+                  <div key={el.url} className={classes.galery__item}>
+                    <img src={el.url} />
+                  </div>
+                );
+              }
+            })}
+          </div>
+        </div>
+        <div className={classes.galery__close}>
+          <IconButton
+            size="medium"
+            onClick={() => {
+              windowScroll(0);
+              setViewAllImages(false);
+            }}>
+            <img src="/icons/Close/Line.svg" />
+          </IconButton>
+        </div>
+      </div>
+    );
+  };
   const RelatedRecipes = () => {
     return <div className={classes.related_recipes}>related_recipes</div>;
   };
@@ -399,21 +511,41 @@ function RecipePage(props) {
   };
 
   const content = (
-    <div className={classes.layout}>
-      <Title />
-      <Media />
-      <RelatedRecipes />
-      <div className={classes.layout_column1}>
-        <Classification />
-        <Description />
-        <CookingSteps />
-        <Comments />
-      </div>
-      <div className={classes.layout_column2}>
-        <Ingredients />
-      </div>
-      <PopularRecipes />
-    </div>
+    <>
+      {mobile ? (
+        <>
+          <div className={classes.layout}>
+            <Title />
+          </div>
+
+          <MediaSlider />
+          <div className={classes.layout}>
+            <PopularRecipes />
+          </div>
+        </>
+      ) : (
+        <div className={classes.layout}>
+          <Title />
+          <Media />
+          {viewAllImages && <Galery />}
+          {!viewAllImages && (
+            <div className={classes.layout__content}>
+              <RelatedRecipes />
+              <div className={classes.layout_column1}>
+                <Classification />
+                <Description />
+                <CookingSteps />
+                <Comments />
+              </div>
+              <div className={classes.layout_column2}>
+                <Ingredients />
+              </div>
+            </div>
+          )}
+          <PopularRecipes />
+        </div>
+      )}
+    </>
   );
 
   return (
