@@ -59,7 +59,7 @@ function RecipePage(props) {
   const isRecipeInCart = useSelector(state => state.cart.products?.some(el => el.object_id == recipe?.pk));
   const isRecipeNotSale = recipe?.price === 0 || recipe?.sale_status !== 5;
 
-  const [isRecipeSaved, setIsRecipeSaved] = useState(recipe?.user_saved_recipe);
+  const [recipeSavedId, setRecipeSavedId] = useState(recipe?.user_saved_recipe);
   const [isRecipeLiked, setIsRecipeLiked] = useState(recipe?.user_liked);
   const [likesNumber, setLikesNumber] = useState(recipe?.likes_number);
   const [selectedSupplier, setSelectedSupplier] = React.useState('walmart');
@@ -92,21 +92,21 @@ function RecipePage(props) {
     const handleSaveRecipe = () => {
       Recipe.postSavedRecipe(recipeId)
         .then(res => {
-          isRecipeSaved(res.data.pk);
+          setRecipeSavedId(res.data.pk);
         })
         .catch(err => console.log(err));
     };
 
     const handleDeleteRecipeFromSaved = () => {
-      Recipe.deleteSavedRecipe(isRecipeSaved)
+      Recipe.deleteSavedRecipe(recipeSavedId)
         .then(res => {
-          setIsRecipeSaved(false);
+          setRecipeSavedId(false);
         })
         .catch(err => console.log(err));
     };
 
     const onClickLike = () => {
-      Recipe.uploadLikesRecipe()
+      Recipe.uploadLikesRecipe(recipeId)
         .then(res => {
           if (res.data.like_status === 'deleted') {
             setIsRecipeLiked(false);
@@ -126,13 +126,16 @@ function RecipePage(props) {
           <div className={classes.title_name}>{title}</div>
           <div className={classes.title_buttons}>
             <IconButton
-              onClick={isRecipeSaved ? () => handleDeleteRecipeFromSaved() : () => handleSaveRecipe()}
+              onClick={recipeSavedId ? () => handleDeleteRecipeFromSaved() : () => handleSaveRecipe()}
               className={classes.button}>
-              <BasicIcon icon={ShareIcon} color={isRecipeSaved ? 'red' : '#353E50'} />
+              <BasicIcon icon={ShareIcon} color={recipeSavedId ? '#FF582E' : '#353E50'} />
             </IconButton>
-            <IconButton onClick={() => onClickLike()} className={classes.button}>
-              <BasicIcon icon={LikeIcon} color={isRecipeLiked ? 'red' : '#353E50'} />
-            </IconButton>
+            <div className={classes.like_wrapper}>
+              <IconButton onClick={() => onClickLike()} className={classes.button} size="24px">
+                <BasicIcon icon={LikeIcon} color={isRecipeLiked ? '#FF582E' : '#353E50'} />
+              </IconButton>
+              {likesNumber}
+            </div>
           </div>
           <span className={classes.title_rating}>
             <Avatar src={recipeAuthorAvatar} alt="Recipe Author Avatar" className={classes.title_rating_avatar} />
