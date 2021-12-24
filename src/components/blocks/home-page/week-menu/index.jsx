@@ -6,6 +6,17 @@ import { RecipeCard } from '@/components/basic-blocks/recipe-card';
 import { ReactComponent as ArrowLeftIcon } from '../../../../../public/icons/Arrow Left 2/Line.svg';
 import { ReactComponent as ArrowRightIcon } from '../../../../../public/icons/Arrow Right 2/Line.svg';
 import { Carousel } from 'react-responsive-carousel';
+import { ButtonBack, ButtonNext, CarouselProvider, Slide, Slider } from 'pure-react-carousel';
+import { CardSearch } from '@/components/elements/card';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import styled from 'styled-components';
+import Cookies from 'cookies';
+
+const StyledSlider = styled(Slider)`
+  display: flex;
+  flex-direction: row;
+  width: auto;
+`;
 
 const Arrows = props => {
   const { recipes, setSlide, currentSlide } = props;
@@ -29,6 +40,10 @@ const Arrows = props => {
 
 const RecipeSlider = props => {
   const { recipes, currentSlide } = props;
+
+  const tablet = useMediaQuery('(max-width: 1025px)');
+  const mobile = useMediaQuery('(max-width: 576px)');
+
   const displayCount = 5;
 
   return (
@@ -53,8 +68,21 @@ const RecipeSlider = props => {
 };
 
 export const WeekMenuBlock = () => {
+  // const { weekmenu } = props;
   const [recipes, setRecipes] = useState([]);
-  const [currentSlide, setSlide] = useState(1);
+  const [currentSlide, setSlide] = useState(0);
+
+  // const recipesArray = weekmenu?.map(el => el.recipes)?.flat();
+
+  useEffect(async () => {
+    try {
+      const weekmenu = await Recipe.getWeekmenu('');
+      const recipesArray = weekmenu?.data?.map(el => el.recipes);
+      setRecipes(recipesArray?.flat()?.filter(el => el?.pk));
+    } catch (e) {
+      console.error(e);
+    }
+  }, []);
 
   const arrowsProps = {
     recipes,
@@ -63,16 +91,6 @@ export const WeekMenuBlock = () => {
     setSlide
   };
 
-  useEffect(async () => {
-    try {
-      const weekmenu = await Recipe.getWeekmenu();
-      const result = weekmenu.data?.reduce((acc, val) => [...acc, ...val.recipes], []);
-      setRecipes(result);
-    } catch (e) {
-      console.error(e);
-    }
-  }, []);
-
   return (
     <section className={classes.container}>
       <Arrows {...arrowsProps} />
@@ -80,8 +98,7 @@ export const WeekMenuBlock = () => {
         <span className={classes.slider_title}>Browse Weekmenu</span>
       </Box>
       <div className={classes.slider_subtitle}>Let's go to meet new sensations</div>
-      {console.log(recipes)}
-      <RecipeSlider recipes={recipes} currentSlide={currentSlide} />
+      <RecipeSlider recipes={recipes} />
     </section>
   );
 };

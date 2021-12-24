@@ -406,12 +406,30 @@
   @include bothColumns();
 }
 
+.like_wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 8px;
+
+
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 160%;
+  letter-spacing: 0.01em;
+  color: #14181F;
+  font-variant-numeric: tabular-nums;
+}
+
 .button {
-  padding: 6px !important;
-  border: 2px solid #e0e4eb !important;
+  width: auto !important;
+  padding: 0 !important;
+
   box-sizing: border-box !important;
   box-shadow: 0px 64px 64px -48px rgba(31, 47, 70, 0.12) !important;
   border-radius: 48px !important;
+
 }
 
 .block_title {
