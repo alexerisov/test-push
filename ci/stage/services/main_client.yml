@@ -16,6 +16,8 @@ services:
       - proxy
     environment:
       - NODE_ENV=${NODE_ENV:-production}
+    env_file:
+      - ../.client.env
     expose:
       - 3000
     labels:
