@@ -26,6 +26,14 @@ if (process.env.NODE_ENV === 'production') {
     BASE_URL: 'https://api.eatchefs.goodbit.dev',
     DEBUG: true
   };
+} else if (process.env.NODE_ENV === 'test') {
+  envs = {
+    fbClientId: '161418379213740',
+    googleClientId: '245264013276-sbkrl06fu1e7d6m0d3724or58hvdmpej.apps.googleusercontent.com',
+    NODE_ENV: 'development',
+    BASE_URL: 'https://api.test.eatchefs.com',
+    DEBUG: true
+  };
 } else {
   envs = {
     fbClientId: '3044235379228131',

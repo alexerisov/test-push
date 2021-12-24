@@ -38,7 +38,6 @@ steps:
       - df -h
       - docker images  # for debug purpose
       - docker build --build-arg NODE_ENV=stage -t $MAIN_CLIENT_IMAGE .
-      - docker logout  # for some reason required
       - echo $DOCKER_HUB_PASSWORD | docker login docker.io -u $DOCKER_HUB_USERNAME --password-stdin
       - echo $MAIN_CLIENT_IMAGE
       - docker push $MAIN_CLIENT_IMAGE
@@ -117,8 +116,54 @@ steps:
       - success
       - failure
 
-  # just a copy of deploy_stage-1
-  - name: deploy_stage-2
+# TEST
+
+  - name: build
+    image: docker:latest
+    environment:
+      DOCKER_HUB_USERNAME:
+        from_secret: DOCKER_HUB_USERNAME # from org secrets
+      DOCKER_HUB_PASSWORD:
+        from_secret: DOCKER_HUB_PASSWORD # from org secrets
+      MAIN_CLIENT_IMAGE: goodbitdev/builds:build-ec-client-test-${DRONE_COMMIT_SHA:0:7}
+    volumes:
+      - name: docker_sock
+        path: /var/run/docker.sock
+    commands:
+      - df -h
+      - docker images  # for debug purpose
+      - docker build --build-arg NODE_ENV=test -t $MAIN_CLIENT_IMAGE .
+      - echo $DOCKER_HUB_PASSWORD | docker login docker.io -u $DOCKER_HUB_USERNAME --password-stdin
+      - echo $MAIN_CLIENT_IMAGE
+      - docker push $MAIN_CLIENT_IMAGE
+      - docker container prune --force --filter "until=36h"
+      - docker image prune -a --force --filter "until=36h"
+    when:
+      event: [push]
+      branch: [development]
+      # event: tag # in case of new git tag
+
+  - name: notify_after_build
+    image: appleboy/drone-discord
+    settings:
+      webhook_id: 893421615042404383
+      webhook_token: 64sAhkacw9k-eiDHh2ttp1aZ6Q1dN2UjNCOAGeyP2qV5YN8wuRxMlC7xDChPbzrRsiPG
+      username: drone.io
+      message: >
+       {{#success build.status}}
+         ✅ Build {{build.number}} of '{{repo.name}}':{{commit.branch}}. Status: OK.
+       {{else}}
+         ❌ Build {{build.number}} of '{{repo.name}}'. Status: FAIL.
+       {{/success}}
+    when:
+      event: [push]  # pull_request
+      branch: [development]
+      # event: tag # in case of new git tag
+      status:
+      - success
+      - failure
+
+  - name: deploy_test
     image: appleboy/drone-ssh
     environment:
       DOCKER_HUB_USERNAME:
@@ -135,9 +180,8 @@ steps:
       script:
         # - whoami
         - echo $DOCKER_HUB_PASSWORD | docker login docker.io -u $DOCKER_HUB_USERNAME --password-stdin
-        # test: - docker pull goodbitdev/builds:build-ec-client-stage-004abf9
         - cd /home/nitsenko94/services/eatchef_client/ci/stage
-        - python3 scripts.py deploy goodbitdev/builds:build-ec-client-stage-${DRONE_COMMIT_SHA:0:7}
+        - python3 scripts.py deploy goodbitdev/builds:build-ec-client-test-${DRONE_COMMIT_SHA:0:7}
         - docker image prune -a --force --filter "until=72h"  # 3 days
     when:
       event: [push]  # pull_request
@@ -146,7 +190,7 @@ steps:
       status:
       - success
 
-  - name: notify_after_deploy_stage-2
+  - name: notify_after_deploy_test
     image: appleboy/drone-discord
     settings:
       webhook_id: 893421615042404383
