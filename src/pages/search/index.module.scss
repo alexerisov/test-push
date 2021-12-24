@@ -574,7 +574,7 @@
     line-height: 16px;
     border: none;
     cursor: pointer;
-    @include fontBold();
+    font-family: Montserrat-Bold, sans-serif;
     color: $--sc--color-neutrals4;
 
     @media (max-width: $--md) {
