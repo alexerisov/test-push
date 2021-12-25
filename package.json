@@ -143,7 +143,6 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
     "prettier": "^2.3.2",
-    "storybook-addon-outline": "^1.4.1",
-    "typescript": "^4.5.4"
+    "storybook-addon-outline": "^1.4.1"
   }
 }
