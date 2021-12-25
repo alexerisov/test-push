@@ -118,6 +118,8 @@ function RecipePage(props) {
     };
   };
 
+  console.log(process.env.BASE_URL);
+
   const Title = () => {
     const handleSaveRecipe = () => {
       Recipe.postSavedRecipe(recipeId)
