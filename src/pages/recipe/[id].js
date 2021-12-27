@@ -44,7 +44,7 @@ const StyledSlider = styled(Slider)`
     width: fit-content !important;
   }
   li {
-    margin: 0 16px;
+    margin: 0 16px !important;
     width: 298px !important;
     img {
       border-radius: 16px !important;
@@ -205,11 +205,11 @@ function RecipePage(props) {
           step={1}
           visibleSlides={1}
           totalSlides={recipe?.images?.length}>
-          <StyledSlider>
+          <StyledSlider classNameTray={classes.recipe__slider__tray}>
             {recipe?.images && recipe?.images?.length !== 0
               ? recipe?.images.map((el, index) => {
                   return (
-                    <Slide key={el.url} index={index}>
+                    <Slide key={el.url} index={index} className={classes.recipe__slider__slide}>
                       <div className={classes.recipe__slider__item}>
                         <img src={el.url} />
                       </div>
@@ -218,6 +218,7 @@ function RecipePage(props) {
                 })
               : null}
           </StyledSlider>
+
           <div className={classes.recipe__slider__row}>
             <div className={classes.recipe__slider__controls}>
               <ButtonBack>
@@ -523,8 +524,22 @@ function RecipePage(props) {
             <Title />
           </div>
 
-          <MediaSlider />
+          {!viewAllImages ? <Media /> : <MediaSlider />}
           <div className={classes.layout}>
+            {!viewAllImages && (
+              <div className={classes.layout__content}>
+                <RelatedRecipes />
+                <div className={classes.layout_column1}>
+                  <Classification />
+                  <Description />
+                  <CookingSteps />
+                  <Comments />
+                </div>
+                <div className={classes.layout_column2}>
+                  <Ingredients />
+                </div>
+              </div>
+            )}
             <PopularRecipes />
           </div>
         </>
