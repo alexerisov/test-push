@@ -14,8 +14,6 @@ services:
       disable: true
     networks:
       - proxy
-    environment:
-      - NODE_ENV=${ENV}
     env_file:
       - ../.client.env
     expose:
