@@ -149,10 +149,16 @@
   margin-bottom: 64px;
 
   &_icon_wrapper {
+    cursor: pointer;
     width: 50%;
     display: flex;
     align-items: center;
     column-gap: 20px;
+    &:hover {
+      & * {
+        color: lighten($--color-orange, 2);
+      }
+    }
   }
 
   &_icon {
@@ -454,7 +460,7 @@
     &_checked {
       color: #ffaa00 !important;
     }
-  }
+  }pointer-events: none;
 
   &_header {
     display: flex;

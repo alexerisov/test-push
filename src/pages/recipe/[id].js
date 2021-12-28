@@ -21,7 +21,7 @@ import { Avatar, Button, Collapse, IconButton, Radio, useMediaQuery } from '@mat
 import Image from 'next/image';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { cookingMethods, cookingSkill, recipeTypes } from '@/utils/datasets';
+import { cookingMethods, cookingSkill, cuisineList, dietaryrestrictions, recipeTypes } from '@/utils/datasets';
 import { Divider } from '@/components/basic-elements/divider';
 import { WeekMenuBlock } from '@/components/blocks/home-page/week-menu';
 import { addToCart } from '@/store/cart/actions';
@@ -31,6 +31,7 @@ import { modalActions } from '@/store/actions';
 import styled from 'styled-components';
 import { windowScroll } from '@/utils/windowScroll';
 import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel';
+import { useRouter } from 'next/router';
 
 const StyledSlider = styled(Slider)`
   display: flex;
@@ -68,6 +69,8 @@ function RecipePage(props) {
   const recipeTypesList = recipe?.types;
   const recipeCookingSkills = recipe?.cooking_skills;
   const recipeCookingMethods = recipe?.cooking_methods;
+  const recipeDietRestrictions = recipe?.diet_restrictions;
+  const recipeCuisines = recipe?.cuisines;
   const ingredients = recipe?.ingredients;
   const recipeId = recipe?.pk;
   const recipeAuthorAvatar = recipe?.user.avatar;
@@ -95,6 +98,7 @@ function RecipePage(props) {
 
   const [viewAllImages, setViewAllImages] = useState(false);
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const parseTime = time => {
     const parsedTime = dayjs(time, 'HH-mm');
@@ -279,9 +283,14 @@ function RecipePage(props) {
 
   const Classification = () => {
     const IconWithText = props => {
-      const { icon, text, borderColor } = props;
+      const { icon, text, borderColor, link } = props;
+
+      const classificationClickHandler = () => {
+        router.push(link);
+      };
+
       return (
-        <div className={classes.classification_icon_wrapper}>
+        <div className={classes.classification_icon_wrapper} onClick={classificationClickHandler}>
           <span style={{ borderColor }} className={classes.classification_icon}>
             <BasicIcon icon={icon} color="#353E50" />
           </span>
@@ -304,19 +313,42 @@ function RecipePage(props) {
       <div className={classes.classification}>
         <h2 className={classes.block_title}>All Classifications</h2>
         <div className={classes.classification_icons_container}>
-          <IconWithText icon={StopwatchIcon} text={parseTime(recipeCookingTime ?? 'N/A')} borderColor="#92A5EF" />
+          <IconWithText
+            icon={StopwatchIcon}
+            text={parseTime(recipeCookingTime ?? 'N/A')}
+            link={`/search?cooking_time=${recipeCookingTime}`}
+            borderColor="#92A5EF"
+          />
           <IconWithText
             icon={SoupIcon}
             text={
               recipeTypesList?.length > 0 ? recipeTypesList.map(item => recipeTypes?.[item]).join(', ') : 'Not defined'
             }
+            link={`/search?types=${recipeTypesList.join(',')}`}
             borderColor="#58C27D"
           />
-          <IconWithText icon={ServingPlateIcon} text={'Not defined'} borderColor="#FA8F54" />
-          <IconWithText icon={ForkAndKnifeIcon} text={'Not defined'} borderColor="#8BC5E5" />
+          <IconWithText
+            icon={ServingPlateIcon}
+            text={
+              recipeDietRestrictions?.length > 0
+                ? recipeDietRestrictions.map(item => dietaryrestrictions?.[item]).join(', ')
+                : 'Not defined'
+            }
+            link={`/search?diet_restrictions=${recipeDietRestrictions.join(',')}`}
+            borderColor="#FA8F54"
+          />
+          <IconWithText
+            icon={ForkAndKnifeIcon}
+            text={
+              recipeCuisines?.length > 0 ? recipeCuisines.map(item => cuisineList?.[item]).join(', ') : 'Not defined'
+            }
+            link={`/search?cuisines=${recipeCuisines.join(',')}`}
+            borderColor="#8BC5E5"
+          />
           <IconWithText
             icon={HatChefIcon}
-            text={cookingSkill?.[recipeCookingSkills] || 'Not defined'}
+            text={recipeCookingSkills ? cookingSkill?.[recipeCookingSkills] : 'Not defined'}
+            link={`/search?cooking_skills=${recipeCookingSkills}`}
             borderColor="#F178B6"
           />
           <IconWithText
@@ -326,6 +358,7 @@ function RecipePage(props) {
                 ? recipeCookingMethods.map(item => cookingMethods?.[item]).join(', ')
                 : 'Not defined'
             }
+            link={`/search?cooking_methods=${recipeCookingMethods.join(',')}`}
             borderColor="#FFD166"
           />
         </div>
