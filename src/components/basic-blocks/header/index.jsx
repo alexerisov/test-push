@@ -28,6 +28,7 @@ const Header = props => {
   const [isExpanded, setIsExpanded] = React.useState(false);
   const separatorStyles = useSeparatorStyles();
   const [anchorEl, setAnchorEl] = useState(null);
+  const avatar = props?.account?.profile?.avatar;
 
   const handleClickLogin = name => {
     return () => {
@@ -39,12 +40,12 @@ const Header = props => {
 
   const router = useRouter();
 
-  const [notificationAmount, setNotificationAmount] = useState(null);
+  const [notificationAmount, setNotificationAmount] = useState(0);
 
   const cartItemsAmount = useSelector(state => state.cart.products?.length);
 
-  const isAuthorized = props.account.hasToken;
-  const isChef = props?.account?.profile?.user_type === USER_TYPE.chefType;
+  const isAuthorized = useSelector(state => state?.account?.hasToken);
+  const isChef = useSelector(state => state?.account?.profile?.user_type === USER_TYPE.chefType);
 
   const burgerMenuProps = { anchorEl, setAnchorEl, isExpanded, isChef, notificationAmount };
 
@@ -56,7 +57,9 @@ const Header = props => {
 
   useEffect(() => {
     if (props.account.hasToken) {
-      Account.getNotifications().then(res => setNotificationAmount(res.data.length));
+      Account.getNotifications()
+        .then(res => setNotificationAmount(res.data.length))
+        .catch(e => setNotificationAmount(null));
     }
   }, [props.account.hasToken]);
 
@@ -85,17 +88,16 @@ const Header = props => {
   const CartButton = () => (
     <IconButton href="/cart" className={classes.button_cart}>
       <CartIcon />
-      {cartItemsAmount && cartItemsAmount !== 0 ? <OrangeCircle /> : false}
+      {cartItemsAmount > 0 && <OrangeCircle />}
     </IconButton>
   );
 
   const UserAvatar = () => {
-    const avatar = useSelector(state => state?.account?.profile?.avatar);
     return (
-      <span>
+      <span onClick={openMenuHandler}>
         <div className={classes.button_avatar}>
-          <Avatar alt="User" src={avatar} />
-          {notificationAmount && notificationAmount !== 0 ? <RedCircle /> : false}
+          <Avatar src={avatar} />
+          {notificationAmount > 0 && <RedCircle />}
         </div>
       </span>
     );
@@ -108,7 +110,8 @@ const Header = props => {
   );
 
   const openMenuHandler = event => {
-    setAnchorEl(event.currentTarget);
+    console.log(event.clientX);
+    setAnchorEl({ top: event.clientY, left: event.clientX });
     setIsExpanded(true);
   };
 
@@ -125,11 +128,7 @@ const Header = props => {
           {!isAuthorized && !isMobile && <LoginButton />}
           {isAuthorized && <UploadRecipeButton />}
           {isAuthorized && <CartButton />}
-          {isAuthorized && (
-            <span onClick={openMenuHandler}>
-              <UserAvatar />
-            </span>
-          )}
+          {isAuthorized && <UserAvatar />}
 
           <span className={classes.button_burger} onClick={openMenuHandler}>
             <BurgerButton />
