@@ -128,6 +128,8 @@
   @include bothColumns();
   max-width: 100%;
   // height: 382px;
+  border-radius: 16px;
+  max-height: 555px;
   position: relative;
   overflow: hidden;
 
@@ -464,7 +466,8 @@
     &_checked {
       color: #ffaa00 !important;
     }
-  }pointer-events: none;
+  }
+  pointer-events: none;
 
   &_header {
     display: flex;
@@ -522,8 +525,8 @@
 
   .image_wrapper {
     @include bothColumns();
-
-    // height: 555px;
+    border-radius: 16px;
+    max-height: 555px;
   }
 
   .related_recipes {
@@ -659,8 +662,10 @@
   }
   &__item {
     margin-bottom: 32px;
+
     img {
       width: 100%;
+      border-radius: 16px;
       background-size: cover;
     }
   }

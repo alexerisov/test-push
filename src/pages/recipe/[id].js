@@ -35,7 +35,6 @@ import LightBox from '@/components/blocks/lightbox';
 import { useRouter } from 'next/router';
 import { PopularRecipesBlock } from '@/components/blocks/recipe-page/popular-recipes';
 
-
 const StyledSlider = styled(Slider)`
   display: flex;
   flex-direction: row;
@@ -77,7 +76,8 @@ function RecipePage(props) {
   const mobile = useMediaQuery('(max-width:576px)');
 
   const title = recipe?.title;
-  const image = recipe?.images?.[0]?.url;
+  const image = recipe?.images?.filter(el => el.main_image === true).url;
+  const imagesWithoutMain = recipe?.images?.filter(el => el.main_image === false);
   const price = recipe?.price;
   const recipeTypesList = recipe?.types;
   const recipeCookingSkills = recipe?.cooking_skills;
@@ -268,8 +268,8 @@ function RecipePage(props) {
       <div className={classes.galery}>
         <div className={classes.galery__container}>
           <div className={classes.galery__column}>
-            {recipe?.images?.map((el, ind) => {
-              if (ind % 2 === 0 && !el.main_image) {
+            {imagesWithoutMain.map((el, ind) => {
+              if (ind % 2 === 0) {
                 return (
                   <div key={el.url} className={classes.galery__item}>
                     <img src={el.url} />
@@ -279,8 +279,8 @@ function RecipePage(props) {
             })}
           </div>
           <div className={classes.galery__column}>
-            {recipe?.images?.map((el, ind) => {
-              if (ind % 2 === 1 && !el.main_image) {
+            {imagesWithoutMain.map((el, ind) => {
+              if (ind % 2 === 1) {
                 return (
                   <div key={el.url} className={classes.galery__item}>
                     <img src={el.url} />
