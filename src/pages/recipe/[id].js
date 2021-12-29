@@ -76,7 +76,8 @@ function RecipePage(props) {
   const mobile = useMediaQuery('(max-width:576px)');
 
   const title = recipe?.title;
-  const image = recipe?.images?.filter(el => el.main_image === true).url;
+
+  const image = recipe?.images?.[0]?.url;
   const imagesWithoutMain = recipe?.images?.filter(el => el.main_image === false);
   const price = recipe?.price;
   const recipeTypesList = recipe?.types;
