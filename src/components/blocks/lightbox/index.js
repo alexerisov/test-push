@@ -94,119 +94,19 @@ const LightBox = ({ onClickWrapper, title, video, images }) => {
           </div>
         </div>
       </div>
-
-      <div className={classes.slider__wrap}>
-        {!mobile && (
-          <IconButton
-            className={classes.slider__arrow}
-            size="24px"
-            onClick={() => currentSlide !== 0 && setSlide(currentSlide - 1)}>
-            <BasicIcon icon={ArrowLeftIcon} color={'#AFB8CA'} />
-          </IconButton>
-        )}
-        <div className={classes.slider_body}>
-          {playerState.fullscreen && video && (
-            <div className={classes.fullsize_video}>
-              <video src={video} ref={videoElement} onTimeUpdate={handleOnTimeUpdate} />
-              <div className={classes.slider__main__toolbar}>
-                <VideoRange
-                  classes={{ root: classes.slider__root }}
-                  type="range"
-                  min={0}
-                  max={100}
-                  value={playerState.progress}
-                  onChange={(_, value) => handleVideoProgress(value)}
-                />
-                {isVolumeActive && (
-                  <div className={classes.slider__main__valumebar}>
-                    <IconButton
-                      size="40px"
-                      onClick={() => {
-                        toggleMute;
-                      }}>
-                      <BasicIcon icon={VolumeIcon} color={'#FCFCFD'} />
-                    </IconButton>
-                    <VideoRange
-                      classes={{ root: classes.slider__rail }}
-                      type="range"
-                      min={0}
-                      max={1}
-                      step={0.01}
-                      value={playerState.volume}
-                      onChange={(_, value) => handleAudioVolume(value)}
-                    />
-                    <span>{Math.round(videoElement?.current?.volume * 100)}</span>
-                  </div>
-                )}
-                <div className={classes.slider__main__toolbar_timeRow}>
-                  {!Number.isNaN(Math.floor(videoElement?.current?.currentTime)) ? (
-                    <span>{convertToHours(Math.floor(videoElement?.current?.currentTime))}</span>
-                  ) : (
-                    <span>00 : 00 : 00</span>
-                  )}
-                  {!Number.isNaN(Math.floor(videoElement?.current?.currentTime)) ? (
-                    <span>{convertToHours(Math.floor(videoElement?.current?.duration))}</span>
-                  ) : (
-                    <span>00 : 00 : 00</span>
-                  )}
-                </div>
-                <div className={classes.slider__main__toolbar_row}>
-                  <div>
-                    <IconButton
-                      size="40px"
-                      onClick={() => {
-                        setIsVolumeActive(prev => !prev);
-                      }}>
-                      <BasicIcon icon={VolumeIcon} color={isVolumeActive ? '#FFAA00' : '#FCFCFD'} />
-                    </IconButton>
-                    <IconButton size="40px">
-                      <BasicIcon icon={SubtitlesIcon} color={'#FCFCFD'} />
-                    </IconButton>
-                  </div>
-
-                  <div>
-                    <IconButton size="40px" onClick={backward}>
-                      <BasicIcon icon={BackwardIcon} color={'#FCFCFD'} />
-                    </IconButton>
-                    {!playerState.isPlaying ? (
-                      <IconButton size="40px" onClick={togglePlay}>
-                        <BasicIcon icon={PlayIcon} color={'#FCFCFD'} />
-                      </IconButton>
-                    ) : (
-                      <IconButton size="40px" onClick={togglePlay}>
-                        <BasicIcon icon={PauseIcon} color={'#FCFCFD'} />
-                      </IconButton>
-                    )}
-                    <IconButton size="40px" onClick={forward}>
-                      {console.log(playerState.progress)}
-                      <BasicIcon icon={ForwardIcon} color={'#FCFCFD'} />
-                    </IconButton>
-                  </div>
-                  <div>
-                    <IconButton size="40px" onClick={toggleFullscreen}>
-                      <BasicIcon icon={FullscreenIcon} color={'#FCFCFD'} />
-                    </IconButton>
-                  </div>
-                </div>
-              </div>
-            </div>
+      {video ? (
+        <div className={classes.slider__wrap}>
+          {!mobile && (
+            <IconButton
+              className={classes.slider__arrow}
+              size="24px"
+              onClick={() => currentSlide !== 0 && setSlide(currentSlide - 1)}>
+              <BasicIcon icon={ArrowLeftIcon} color={'#AFB8CA'} />
+            </IconButton>
           )}
-          <Carousel
-            showArrows={false}
-            showThumbs={false}
-            centerMode
-            swipeable={true}
-            emulateTouch={true}
-            infiniteLoop={false}
-            centerSlidePercentage={100 / displayCount}
-            showStatus={false}
-            showIndicators={false}
-            onChange={index => updateCurrentSlide(index)}
-            onClickThumb={() => console.log('clicked')}
-            onClickItem={() => console.log('clicked')}
-            selectedItem={currentSlide}>
-            {video && (
-              <div className={classes.slider__main}>
+          <div className={classes.slider_body}>
+            {playerState.fullscreen && video && (
+              <div className={classes.fullsize_video}>
                 <video src={video} ref={videoElement} onTimeUpdate={handleOnTimeUpdate} />
                 <div className={classes.slider__main__toolbar}>
                   <VideoRange
@@ -265,11 +165,9 @@ const LightBox = ({ onClickWrapper, title, video, images }) => {
                     </div>
 
                     <div>
-                      {!mobile && (
-                        <IconButton size="40px" onClick={backward}>
-                          <BasicIcon icon={BackwardIcon} color={'#FCFCFD'} />
-                        </IconButton>
-                      )}
+                      <IconButton size="40px" onClick={backward}>
+                        <BasicIcon icon={BackwardIcon} color={'#FCFCFD'} />
+                      </IconButton>
                       {!playerState.isPlaying ? (
                         <IconButton size="40px" onClick={togglePlay}>
                           <BasicIcon icon={PlayIcon} color={'#FCFCFD'} />
@@ -279,12 +177,10 @@ const LightBox = ({ onClickWrapper, title, video, images }) => {
                           <BasicIcon icon={PauseIcon} color={'#FCFCFD'} />
                         </IconButton>
                       )}
-                      {!mobile && (
-                        <IconButton size="40px" onClick={forward}>
-                          {console.log(playerState.progress)}
-                          <BasicIcon icon={ForwardIcon} color={'#FCFCFD'} />
-                        </IconButton>
-                      )}
+                      <IconButton size="40px" onClick={forward}>
+                        {console.log(playerState.progress)}
+                        <BasicIcon icon={ForwardIcon} color={'#FCFCFD'} />
+                      </IconButton>
                     </div>
                     <div>
                       <IconButton size="40px" onClick={toggleFullscreen}>
@@ -295,25 +191,131 @@ const LightBox = ({ onClickWrapper, title, video, images }) => {
                 </div>
               </div>
             )}
-            {images?.length > 0 &&
-              images.map(el => (
-                <div className={classes.slider__item} key={el.url}>
-                  <img src={el.url} />
+            <Carousel
+              showArrows={false}
+              showThumbs={false}
+              centerMode
+              swipeable={true}
+              emulateTouch={true}
+              infiniteLoop={false}
+              centerSlidePercentage={100 / displayCount}
+              showStatus={false}
+              showIndicators={false}
+              onChange={index => updateCurrentSlide(index)}
+              onClickThumb={() => console.log('clicked')}
+              onClickItem={() => console.log('clicked')}
+              selectedItem={currentSlide}>
+              {video && (
+                <div className={classes.slider__main}>
+                  <video src={video} ref={videoElement} onTimeUpdate={handleOnTimeUpdate} />
+                  <div className={classes.slider__main__toolbar}>
+                    <VideoRange
+                      classes={{ root: classes.slider__root }}
+                      type="range"
+                      min={0}
+                      max={100}
+                      value={playerState.progress}
+                      onChange={(event, value) => handleVideoProgress(value)}
+                    />
+                    {isVolumeActive && (
+                      <div className={classes.slider__main__valumebar}>
+                        <IconButton
+                          size="40px"
+                          onClick={() => {
+                            toggleMute;
+                          }}>
+                          <BasicIcon icon={VolumeIcon} color={'#FCFCFD'} />
+                        </IconButton>
+                        <VideoRange
+                          classes={{ root: classes.slider__rail }}
+                          type="range"
+                          min={0}
+                          max={1}
+                          step={0.01}
+                          value={playerState.volume}
+                          onChange={(_, value) => handleAudioVolume(value)}
+                        />
+                        <span>{Math.round(videoElement?.current?.volume * 100)}</span>
+                      </div>
+                    )}
+                    <div className={classes.slider__main__toolbar_timeRow}>
+                      {!Number.isNaN(Math.floor(videoElement?.current?.currentTime)) ? (
+                        <span>{convertToHours(Math.floor(videoElement?.current?.currentTime))}</span>
+                      ) : (
+                        <span>00 : 00 : 00</span>
+                      )}
+                      {!Number.isNaN(Math.floor(videoElement?.current?.currentTime)) ? (
+                        <span>{convertToHours(Math.floor(videoElement?.current?.duration))}</span>
+                      ) : (
+                        <span>00 : 00 : 00</span>
+                      )}
+                    </div>
+                    <div className={classes.slider__main__toolbar_row}>
+                      <div>
+                        <IconButton
+                          size="40px"
+                          onClick={() => {
+                            setIsVolumeActive(prev => !prev);
+                          }}>
+                          <BasicIcon icon={VolumeIcon} color={isVolumeActive ? '#FFAA00' : '#FCFCFD'} />
+                        </IconButton>
+                        <IconButton size="40px">
+                          <BasicIcon icon={SubtitlesIcon} color={'#FCFCFD'} />
+                        </IconButton>
+                      </div>
+
+                      <div>
+                        {!mobile && (
+                          <IconButton size="40px" onClick={backward}>
+                            <BasicIcon icon={BackwardIcon} color={'#FCFCFD'} />
+                          </IconButton>
+                        )}
+                        {!playerState.isPlaying ? (
+                          <IconButton size="40px" onClick={togglePlay}>
+                            <BasicIcon icon={PlayIcon} color={'#FCFCFD'} />
+                          </IconButton>
+                        ) : (
+                          <IconButton size="40px" onClick={togglePlay}>
+                            <BasicIcon icon={PauseIcon} color={'#FCFCFD'} />
+                          </IconButton>
+                        )}
+                        {!mobile && (
+                          <IconButton size="40px" onClick={forward}>
+                            {console.log(playerState.progress)}
+                            <BasicIcon icon={ForwardIcon} color={'#FCFCFD'} />
+                          </IconButton>
+                        )}
+                      </div>
+                      <div>
+                        <IconButton size="40px" onClick={toggleFullscreen}>
+                          <BasicIcon icon={FullscreenIcon} color={'#FCFCFD'} />
+                        </IconButton>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              ))}
-          </Carousel>
+              )}
+              {images?.length > 0 &&
+                images.map(el => (
+                  <div className={classes.slider__item} key={el.url}>
+                    <img src={el.url} />
+                  </div>
+                ))}
+            </Carousel>
+          </div>
+
+          {!mobile && (
+            <IconButton
+              className={classes.slider__arrow}
+              size="24px"
+              onClick={() => currentSlide < images.length + 1 && setSlide(currentSlide + 1)}>
+              <BasicIcon icon={ArrowRightIcon} color={'#AFB8CA'} />
+            </IconButton>
+          )}
         </div>
-
-        {!mobile && (
-          <IconButton
-            className={classes.slider__arrow}
-            size="24px"
-            onClick={() => currentSlide < images.length + 1 && setSlide(currentSlide + 1)}>
-            <BasicIcon icon={ArrowRightIcon} color={'#AFB8CA'} />
-          </IconButton>
-        )}
-      </div>
-
+      ) : (
+        'Loading'
+      )}
       <div className={classes.title}>
         <h2>{title}</h2>
       </div>

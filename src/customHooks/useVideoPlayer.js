@@ -31,22 +31,26 @@ const useVideoPlayer = videoElement => {
   };
 
   const handleVideoProgress = value => {
-    const manualChange = Number(value);
+    if (value) {
+      const manualChange = Number(value);
 
-    videoElement.current.currentTime = (videoElement.current.duration / 100) * manualChange;
-    setPlayerState({
-      ...playerState,
-      progress: manualChange
-    });
+      videoElement.current.currentTime = (videoElement.current.duration / 100) * manualChange;
+      setPlayerState({
+        ...playerState,
+        progress: manualChange
+      });
+    }
   };
 
   const handleAudioVolume = value => {
-    const newVolume = Number(value);
-    videoElement.current.volume = newVolume;
-    setPlayerState({
-      ...playerState,
-      volume: newVolume
-    });
+    if (value) {
+      const newVolume = Number(value);
+      videoElement.current.volume = newVolume;
+      setPlayerState({
+        ...playerState,
+        volume: newVolume
+      });
+    }
   };
   const toggleMute = () => {
     setPlayerState({
