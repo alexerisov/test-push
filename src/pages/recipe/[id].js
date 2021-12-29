@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import classes from './index.module.scss';
 import Recipe from '@/api/Recipe.js';
@@ -34,6 +34,9 @@ import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-re
 import LightBox from '@/components/blocks/lightbox';
 import { useRouter } from 'next/router';
 import { PopularRecipesBlock } from '@/components/blocks/recipe-page/popular-recipes';
+import ResipeComments from '@/components/blocks/recipe-comments';
+import Account from '@/api/Account';
+import CommentBlock from '@/components/blocks/recipe-page/comment-block';
 
 const StyledSlider = styled(Slider)`
   display: flex;
@@ -105,6 +108,7 @@ function RecipePage(props) {
   const isRecipeInCart = useSelector(state => state.cart.products?.some(el => el.object_id == recipe?.pk));
   const isRecipeNotSale = recipe?.price === 0 || recipe?.sale_status !== 5;
 
+  const [userId, setUserId] = useState();
   const [recipeSavedId, setRecipeSavedId] = useState(recipe?.user_saved_recipe);
   const [isRecipeLiked, setIsRecipeLiked] = useState(recipe?.user_liked);
   const [likesNumber, setLikesNumber] = useState(recipe?.likes_number);
@@ -114,7 +118,17 @@ function RecipePage(props) {
   const dispatch = useDispatch();
   const router = useRouter();
 
+
+  useEffect(() => {
+    if (props.account.hasToken) {
+      Account.current().then(res => {
+        setUserId(res.data.pk);
+      });
+    }
+  }, [router]);
+
   const [isLightBoxOpen, setIsLightBoxOpen] = useState(false);
+
 
   const parseTime = time => {
     const parsedTime = dayjs(time, 'HH-mm');
@@ -562,8 +576,22 @@ function RecipePage(props) {
   const Comments = () => {
     return (
       <div className={classes.comments}>
-        <h2 className={classes.ingredients_title}>Add a review</h2>
-        <div>There are no comments yet</div>
+        <div className={classes.comments_header}>
+          <div className={classes.comments_title_wrapper}>
+            <h2 className={classes.comments_title}>Add a review</h2>
+            <h3 className={classes.comments_subtitle}>
+              For <span className={classes.comments_subtitle_bold}>{title}</span>
+            </h3>
+          </div>
+          <div className={classes.comments_rate_wrapper}>
+            <BasicIcon icon={StarIcon} color="#FFB04C" />
+            <h2 className={classes.comments_rate_value}>
+              <span className={classes.comments_rate_value_bold}>4,5</span> / 5,0
+            </h2>
+            <h3 className={classes.comments_rate_value_subtitle}>(88%) Eaters recommended this product</h3>
+          </div>
+        </div>
+        <CommentBlock id={recipeId} userId={userId} />
       </div>
     );
   };
