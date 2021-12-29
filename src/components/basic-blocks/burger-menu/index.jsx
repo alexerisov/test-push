@@ -3,7 +3,7 @@ import classes from './index.module.scss';
 import styled from 'styled-components';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { ListItemIcon } from '@material-ui/core';
+import { Button, ListItemIcon } from '@material-ui/core';
 import { connect, useDispatch } from 'react-redux';
 import { ReactComponent as UserIcon } from '../../../../public/icons/User/Line.svg';
 import { ReactComponent as BellIcon } from '../../../../public/icons/Bell/Line.svg';
@@ -15,11 +15,13 @@ import Link from 'next/link';
 import { accountActions } from '@/store/actions';
 import { useRouter } from 'next/router';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const BurgerMenu = props => {
   const { anchorEl, setAnchorEl, isExpanded, isChef, notificationAmount } = props;
   const router = useRouter();
   const dispatch = useDispatch();
+  const isMobile = useMediaQuery('(max-width: 768px)');
 
   const MenuListItem = ({ icon, text, path, ...otherProps }) => {
     const endIcon = otherProps?.endIcon;
@@ -33,7 +35,6 @@ const BurgerMenu = props => {
       </StyledMenuItem>
     );
   };
-  console.log('notificationAmount', notificationAmount);
   const handleLogout = () => {
     dispatch(accountActions.logout());
     router.push('/');
@@ -50,17 +51,28 @@ const BurgerMenu = props => {
       <StyledMenu
         c
         id="simple-menu"
-        anchorEl={anchorEl}
+        anchorReference="anchorPosition"
+        anchorPosition={anchorEl}
+        disableScrollLock
+        autoFocus={false}
         PopoverClasses={{ paper: classes.menu_popover }}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center'
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right'
+        }}
         open={Boolean(anchorEl)}
         onClose={handleClose}>
-        <LogoutMenuItem onClick={handleClose}>
-          <Link href="/recipe/upload">
-            <a className={classes.header__link_place_menu_logout} onClick={handleLogout}>
+        {isMobile && (
+          <LogoutMenuItem onClick={handleClose}>
+            <Button href="/recipe/upload" className={classes.header__link_place_menu_logout}>
               Upload Recipes
-            </a>
-          </Link>
-        </LogoutMenuItem>
+            </Button>
+          </LogoutMenuItem>
+        )}
         <MenuListItem text="Account Settings" icon={UserIcon} path="/profile/account-settings" />
         <MenuListItem
           text="Notifications"
@@ -74,11 +86,9 @@ const BurgerMenu = props => {
         <MenuListItem text="Saved Recipes" icon={BookmarkIcon} path="/saved-recipes" />
 
         <LogoutMenuItem onClick={handleClose}>
-          <Link href="#">
-            <a className={classes.header__link_place_menu_logout} onClick={handleLogout}>
-              Logout
-            </a>
-          </Link>
+          <Button className={classes.header__link_place_menu_logout} onClick={handleLogout}>
+            Logout
+          </Button>
         </LogoutMenuItem>
       </StyledMenu>
     );
@@ -89,7 +99,6 @@ const BurgerMenu = props => {
 
 const StyledMenu = styled(Menu)`
   margin-top: 50px;
-  border-radius: 20px !important;
 `;
 
 const StyledMenuItem = styled(MenuItem)`
@@ -101,11 +110,9 @@ const StyledMenuItem = styled(MenuItem)`
 
 const LogoutMenuItem = styled(StyledMenuItem)`
   width: 100% !important;
-  margin: 16px 0;
-  padding: 16px;
-  justify-content: center;
-  border: 2px solid #e6e8ec;
-  border-radius: 90px;
+  &:hover {
+    background: none;
+  }
 `;
 
 const StyledListItemIcon = styled(ListItemIcon)`
