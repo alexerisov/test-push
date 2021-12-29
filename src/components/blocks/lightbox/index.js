@@ -259,9 +259,9 @@ const LightBox = ({ onClickWrapper, title, video, images }) => {
                           }}>
                           <BasicIcon icon={VolumeIcon} color={isVolumeActive ? '#FFAA00' : '#FCFCFD'} />
                         </IconButton>
-                        <IconButton size="40px">
+                        {/* <IconButton size="40px">
                           <BasicIcon icon={SubtitlesIcon} color={'#FCFCFD'} />
-                        </IconButton>
+                        </IconButton> */}
                       </div>
 
                       <div>
