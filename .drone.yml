@@ -132,7 +132,7 @@ steps:
     commands:
       - df -h
       - docker images  # for debug purpose
-      - docker build --build-arg NODE_ENV=test -t $MAIN_CLIENT_IMAGE .
+      - docker build --build-arg NODE_ENV=stage -t $MAIN_CLIENT_IMAGE .
       - echo $DOCKER_HUB_PASSWORD | docker login docker.io -u $DOCKER_HUB_USERNAME --password-stdin
       - echo $MAIN_CLIENT_IMAGE
       - docker push $MAIN_CLIENT_IMAGE

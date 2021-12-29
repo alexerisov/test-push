@@ -22,9 +22,8 @@ import { Avatar, Button, Collapse, IconButton, Radio, useMediaQuery } from '@mat
 import Image from 'next/image';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { cookingMethods, cookingSkill, recipeTypes } from '@/utils/datasets';
+import { cookingMethods, cookingSkill, cuisineList, dietaryrestrictions, recipeTypes } from '@/utils/datasets';
 import { Divider } from '@/components/basic-elements/divider';
-import { WeekMenuBlock } from '@/components/blocks/home-page/week-menu';
 import { addToCart } from '@/store/cart/actions';
 import { ReactComponent as CartIcon } from '../../../public/icons/Shopping Cart/Line.svg';
 import { ImageIcon } from '@/components/elements';
@@ -33,6 +32,9 @@ import styled from 'styled-components';
 import { windowScroll } from '@/utils/windowScroll';
 import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel';
 import LightBox from '@/components/blocks/lightbox';
+import { useRouter } from 'next/router';
+import { PopularRecipesBlock } from '@/components/blocks/recipe-page/popular-recipes';
+
 
 const StyledSlider = styled(Slider)`
   display: flex;
@@ -46,7 +48,7 @@ const StyledSlider = styled(Slider)`
     width: fit-content !important;
   }
   li {
-    margin: 0 16px;
+    margin: 0 16px !important;
     width: 298px !important;
     img {
       border-radius: 16px !important;
@@ -80,6 +82,8 @@ function RecipePage(props) {
   const recipeTypesList = recipe?.types;
   const recipeCookingSkills = recipe?.cooking_skills;
   const recipeCookingMethods = recipe?.cooking_methods;
+  const recipeDietRestrictions = recipe?.diet_restrictions;
+  const recipeCuisines = recipe?.cuisines;
   const ingredients = recipe?.ingredients;
   const recipeId = recipe?.pk;
   const recipeAuthorAvatar = recipe?.user.avatar;
@@ -100,13 +104,14 @@ function RecipePage(props) {
   const isRecipeInCart = useSelector(state => state.cart.products?.some(el => el.object_id == recipe?.pk));
   const isRecipeNotSale = recipe?.price === 0 || recipe?.sale_status !== 5;
 
-  const [isRecipeSaved, setIsRecipeSaved] = useState(recipe?.user_saved_recipe);
+  const [recipeSavedId, setRecipeSavedId] = useState(recipe?.user_saved_recipe);
   const [isRecipeLiked, setIsRecipeLiked] = useState(recipe?.user_liked);
   const [likesNumber, setLikesNumber] = useState(recipe?.likes_number);
   const [selectedSupplier, setSelectedSupplier] = React.useState('walmart');
 
   const [viewAllImages, setViewAllImages] = useState(false);
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const [isLightBoxOpen, setIsLightBoxOpen] = useState(false);
 
@@ -132,25 +137,27 @@ function RecipePage(props) {
     };
   };
 
+  console.log(process.env.BASE_URL);
+
   const Title = () => {
     const handleSaveRecipe = () => {
       Recipe.postSavedRecipe(recipeId)
         .then(res => {
-          isRecipeSaved(res.data.pk);
+          setRecipeSavedId(res.data.pk);
         })
         .catch(err => console.log(err));
     };
 
     const handleDeleteRecipeFromSaved = () => {
-      Recipe.deleteSavedRecipe(isRecipeSaved)
+      Recipe.deleteSavedRecipe(recipeSavedId)
         .then(res => {
-          setIsRecipeSaved(false);
+          setRecipeSavedId(false);
         })
         .catch(err => console.log(err));
     };
 
     const onClickLike = () => {
-      Recipe.uploadLikesRecipe()
+      Recipe.uploadLikesRecipe(recipeId)
         .then(res => {
           if (res.data.like_status === 'deleted') {
             setIsRecipeLiked(false);
@@ -170,13 +177,16 @@ function RecipePage(props) {
           <div className={classes.title_name}>{title}</div>
           <div className={classes.title_buttons}>
             <IconButton
-              onClick={isRecipeSaved ? () => handleDeleteRecipeFromSaved() : () => handleSaveRecipe()}
+              onClick={recipeSavedId ? () => handleDeleteRecipeFromSaved() : () => handleSaveRecipe()}
               className={classes.button}>
-              <BasicIcon icon={ShareIcon} color={isRecipeSaved ? 'red' : '#353E50'} />
+              <BasicIcon icon={ShareIcon} color={recipeSavedId ? '#FF582E' : '#353E50'} />
             </IconButton>
-            <IconButton onClick={() => onClickLike()} className={classes.button}>
-              <BasicIcon icon={LikeIcon} color={isRecipeLiked ? 'red' : '#353E50'} />
-            </IconButton>
+            <div className={classes.like_wrapper}>
+              <IconButton onClick={() => onClickLike()} className={classes.button} size="24px">
+                <BasicIcon icon={LikeIcon} color={isRecipeLiked ? '#FF582E' : '#353E50'} />
+              </IconButton>
+              {likesNumber}
+            </div>
           </div>
           <span className={classes.title_rating}>
             <Avatar src={recipeAuthorAvatar} alt="Recipe Author Avatar" className={classes.title_rating_avatar} />
@@ -225,11 +235,11 @@ function RecipePage(props) {
           step={1}
           visibleSlides={1}
           totalSlides={recipe?.images?.length}>
-          <StyledSlider>
+          <StyledSlider classNameTray={classes.recipe__slider__tray}>
             {recipe?.images && recipe?.images?.length !== 0
               ? recipe?.images.map((el, index) => {
                   return (
-                    <Slide key={el.url} index={index}>
+                    <Slide key={el.url} index={index} className={classes.recipe__slider__slide}>
                       <div className={classes.recipe__slider__item}>
                         <img src={el.url} />
                       </div>
@@ -238,6 +248,7 @@ function RecipePage(props) {
                 })
               : null}
           </StyledSlider>
+
           <div className={classes.recipe__slider__row}>
             <div className={classes.recipe__slider__controls}>
               <ButtonBack>
@@ -298,9 +309,14 @@ function RecipePage(props) {
 
   const Classification = () => {
     const IconWithText = props => {
-      const { icon, text, borderColor } = props;
+      const { icon, text, borderColor, link } = props;
+
+      const classificationClickHandler = () => {
+        router.push(link);
+      };
+
       return (
-        <div className={classes.classification_icon_wrapper}>
+        <div className={classes.classification_icon_wrapper} onClick={classificationClickHandler}>
           <span style={{ borderColor }} className={classes.classification_icon}>
             <BasicIcon icon={icon} color="#353E50" />
           </span>
@@ -323,19 +339,42 @@ function RecipePage(props) {
       <div className={classes.classification}>
         <h2 className={classes.block_title}>All Classifications</h2>
         <div className={classes.classification_icons_container}>
-          <IconWithText icon={StopwatchIcon} text={parseTime(recipeCookingTime ?? 'N/A')} borderColor="#92A5EF" />
+          <IconWithText
+            icon={StopwatchIcon}
+            text={parseTime(recipeCookingTime ?? 'N/A')}
+            link={`/search?cooking_time=${recipeCookingTime}`}
+            borderColor="#92A5EF"
+          />
           <IconWithText
             icon={SoupIcon}
             text={
               recipeTypesList?.length > 0 ? recipeTypesList.map(item => recipeTypes?.[item]).join(', ') : 'Not defined'
             }
+            link={`/search?types=${recipeTypesList.join(',')}`}
             borderColor="#58C27D"
           />
-          <IconWithText icon={ServingPlateIcon} text={'Not defined'} borderColor="#FA8F54" />
-          <IconWithText icon={ForkAndKnifeIcon} text={'Not defined'} borderColor="#8BC5E5" />
+          <IconWithText
+            icon={ServingPlateIcon}
+            text={
+              recipeDietRestrictions?.length > 0
+                ? recipeDietRestrictions.map(item => dietaryrestrictions?.[item]).join(', ')
+                : 'Not defined'
+            }
+            link={`/search?diet_restrictions=${recipeDietRestrictions.join(',')}`}
+            borderColor="#FA8F54"
+          />
+          <IconWithText
+            icon={ForkAndKnifeIcon}
+            text={
+              recipeCuisines?.length > 0 ? recipeCuisines.map(item => cuisineList?.[item]).join(', ') : 'Not defined'
+            }
+            link={`/search?cuisines=${recipeCuisines.join(',')}`}
+            borderColor="#8BC5E5"
+          />
           <IconWithText
             icon={HatChefIcon}
-            text={cookingSkill?.[recipeCookingSkills] || 'Not defined'}
+            text={recipeCookingSkills ? cookingSkill?.[recipeCookingSkills] : 'Not defined'}
+            link={`/search?cooking_skills=${recipeCookingSkills}`}
             borderColor="#F178B6"
           />
           <IconWithText
@@ -345,6 +384,7 @@ function RecipePage(props) {
                 ? recipeCookingMethods.map(item => cookingMethods?.[item]).join(', ')
                 : 'Not defined'
             }
+            link={`/search?cooking_methods=${recipeCookingMethods.join(',')}`}
             borderColor="#FFD166"
           />
         </div>
@@ -530,7 +570,7 @@ function RecipePage(props) {
   const PopularRecipes = () => {
     return (
       <div className={classes.popular_recipes}>
-        <WeekMenuBlock title="Popular Recipes" subtitle="Let's go to meet new sensations" />
+        <PopularRecipesBlock />
       </div>
     );
   };
@@ -543,8 +583,22 @@ function RecipePage(props) {
             <Title />
           </div>
 
-          <MediaSlider />
+          {!viewAllImages ? <Media /> : <MediaSlider />}
           <div className={classes.layout}>
+            {!viewAllImages && (
+              <div className={classes.layout__content}>
+                <RelatedRecipes />
+                <div className={classes.layout_column1}>
+                  <Classification />
+                  <Description />
+                  <CookingSteps />
+                  <Comments />
+                </div>
+                <div className={classes.layout_column2}>
+                  <Ingredients />
+                </div>
+              </div>
+            )}
             <PopularRecipes />
           </div>
         </>

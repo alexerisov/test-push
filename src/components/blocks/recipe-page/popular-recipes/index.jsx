@@ -55,8 +55,25 @@ const RecipeSlider = props => {
           onClickThumb={() => console.log('clicked')}
           onClickItem={() => console.log('clicked')}
           selectedItem={currentSlide}>
-          {recipes.map(recipe => (
-            <RecipeCard key={recipe.pk} recipe={recipe} />
+          {recipes.map((recipe, index) => (
+            <CardSearch
+              key={`${recipe.pk}-${index}`}
+              title={recipe?.title}
+              image={recipe?.images?.[0]?.url}
+              name={recipe?.user?.full_name}
+              city={recipe?.user?.city}
+              likes={recipe?.likes_number}
+              isParsed={recipe?.is_parsed}
+              publishStatus={recipe?.publish_status}
+              hasVideo={recipe?.video}
+              cookingTime={recipe?.cooking_time}
+              cookingSkill={recipe?.cooking_skills}
+              cookingTypes={recipe?.types}
+              user_saved_recipe={recipe?.user_saved_recipe}
+              price={recipe?.price}
+              token={props.token}
+              id={recipe.pk}
+            />
           ))}
         </Carousel>
       )}
@@ -64,7 +81,7 @@ const RecipeSlider = props => {
   );
 };
 
-export const WeekMenuBlock = () => {
+export const PopularRecipesBlock = () => {
   // const { weekmenu } = props;
   const [recipes, setRecipes] = useState([]);
   const [currentSlide, setSlide] = useState(0);
@@ -92,7 +109,7 @@ export const WeekMenuBlock = () => {
     <section className={classes.container}>
       <Arrows {...arrowsProps} />
       <Box display="flex" flexDirection="row" justifyContent="space-between">
-        <span className={classes.slider_title}>Browse Weekmenu</span>
+        <span className={classes.slider_title}>Popular Recipes</span>
       </Box>
       <div className={classes.slider_subtitle}>Let's go to meet new sensations</div>
       <RecipeSlider recipes={recipes} currentSlide={currentSlide} />

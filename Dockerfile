@@ -1,12 +1,19 @@
 # pull official base image
 FROM node:14.15
 
-ARG NODE_ENV=production
-ENV BASE_URL=https://api.eatchefs.goodbit.dev
-ENV DOMAIN=eatchefs.goodbit.dev
-ENV MAIN_CLIENT_IMAGE=ec-client:latest
+# Get ARGS from --build-args
+ARG NODE_ENV
+ARG BASE_URL
+ARG DOMAIN
+ARG MAIN_CLIENT_IMAGE
 
-RUN echo "NODE_ENV ${NODE_ENV}"
+# Pass ARGS to ENV
+ENV NODE_ENV=${NODE_ENV}
+ENV BASE_URL=${BASE_URL}
+ENV DOMAIN=${DOMAIN}
+ENV MAIN_CLIENT_IMAGE=${MAIN_CLIENT_IMAGE}
+
+RUN echo "NODE_ENV $NODE_ENV"
 
 # set working directory
 WORKDIR /app

@@ -4,7 +4,7 @@
 
 .container {
   width: auto !important;
-  padding: 60px 160px !important;
+  padding: 60px 0 !important;
   position: relative;
 
 
@@ -35,7 +35,7 @@
     }
 
     &_body {
-      width: 1280px;
+      width: 1480px;
       position: relative;
       overflow: scroll;
 

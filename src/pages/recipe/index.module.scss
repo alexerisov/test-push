@@ -153,10 +153,16 @@
   margin-bottom: 64px;
 
   &_icon_wrapper {
+    cursor: pointer;
     width: 50%;
     display: flex;
     align-items: center;
     column-gap: 20px;
+    &:hover {
+      & * {
+        color: lighten($--color-orange, 2);
+      }
+    }
   }
 
   &_icon {
@@ -410,9 +416,25 @@
   @include bothColumns();
 }
 
+.like_wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 8px;
+
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 160%;
+  letter-spacing: 0.01em;
+  color: #14181f;
+  font-variant-numeric: tabular-nums;
+}
+
 .button {
-  padding: 6px !important;
-  border: 2px solid #e0e4eb !important;
+  width: auto !important;
+  padding: 0 !important;
+
   box-sizing: border-box !important;
   box-shadow: 0px 64px 64px -48px rgba(31, 47, 70, 0.12) !important;
   border-radius: 48px !important;
@@ -442,7 +464,7 @@
     &_checked {
       color: #ffaa00 !important;
     }
-  }
+  }pointer-events: none;
 
   &_header {
     display: flex;
@@ -533,6 +555,9 @@
     padding: 0 32px;
     row-gap: 20px;
 
+    &__content {
+      grid-template-columns: 1fr;
+    }
     &_column1,
     &_column2 {
       //@include bothColumns();
@@ -566,6 +591,7 @@
 
   .image_wrapper {
     height: 300px;
+    margin: 0 16px;
   }
 
   .classification {
@@ -645,6 +671,15 @@
 }
 
 .recipe__slider {
+  &__tray {
+    display: flex !important;
+    flex-direction: row !important;
+    width: fit-content !important;
+  }
+  &__slide {
+    margin: 0 16px !important;
+    width: 298px !important;
+  }
   &__item {
     border-radius: 16px;
 
@@ -654,6 +689,7 @@
       // height: 100%;
       // width: 100%;
       background-size: cover;
+      border-radius: 16px;
     }
   }
   &__row {
