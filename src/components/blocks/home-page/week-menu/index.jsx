@@ -22,16 +22,10 @@ const Arrows = props => {
   const { recipes, setSlide, currentSlide } = props;
   return (
     <div className={classes.slider_arrows_container}>
-      <IconButton
-        className={classes.arrows_button}
-        size="22px"
-        onClick={() => setSlide((currentSlide - 5) % recipes?.length)}>
+      <IconButton className={classes.arrows_button} size="22px" onClick={() => setSlide(currentSlide - 5)}>
         <ArrowLeftIcon />
       </IconButton>
-      <IconButton
-        className={classes.arrows_button}
-        size="22px"
-        onClick={() => setSlide((currentSlide + 5) % recipes?.length)}>
+      <IconButton className={classes.arrows_button} size="22px" onClick={() => setSlide(currentSlide + 5)}>
         <ArrowRightIcon />
       </IconButton>
     </div>
@@ -48,21 +42,24 @@ const RecipeSlider = props => {
 
   return (
     <div className={classes.slider_body}>
-      <Carousel
-        showArrows={false}
-        showThumbs={false}
-        centerMode
-        swipeable={false}
-        emulateTouch={false}
-        infiniteLoop
-        centerSlidePercentage={100 / displayCount}
-        showStatus={false}
-        showIndicators={false}
-        onClickThumb={() => console.log('clicked')}
-        onClickItem={() => console.log('clicked')}
-        selectedItem={currentSlide}>
-        {recipes?.length > 0 && recipes.map(recipe => <RecipeCard key={recipe.pk} recipe={recipe} />)}
-      </Carousel>
+      {recipes?.length > 0 && (
+        <Carousel
+          showArrows={false}
+          showThumbs={false}
+          centerMode
+          swipeable={false}
+          emulateTouch={false}
+          centerSlidePercentage={100 / displayCount}
+          showStatus={false}
+          showIndicators={false}
+          onClickThumb={() => console.log('clicked')}
+          onClickItem={() => console.log('clicked')}
+          selectedItem={currentSlide}>
+          {recipes.map(recipe => (
+            <RecipeCard key={recipe.pk} recipe={recipe} />
+          ))}
+        </Carousel>
+      )}
     </div>
   );
 };
@@ -98,7 +95,7 @@ export const WeekMenuBlock = () => {
         <span className={classes.slider_title}>Browse Weekmenu</span>
       </Box>
       <div className={classes.slider_subtitle}>Let's go to meet new sensations</div>
-      <RecipeSlider recipes={recipes} />
+      <RecipeSlider recipes={recipes} currentSlide={currentSlide} />
     </section>
   );
 };
