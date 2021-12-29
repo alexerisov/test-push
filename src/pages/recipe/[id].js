@@ -195,7 +195,14 @@ function RecipePage(props) {
     return (
       <div className={classes.image_wrapper}>
         {recipe?.video_url ? (
-          <video src={recipe?.video_url}></video>
+          <>
+            <video src={recipe?.video_url}></video>
+            <div className={classes.video__control}>
+              <IconBtn onClick={() => setIsLightBoxOpen(true)}>
+                <BasicIcon icon={PlayIcon} color={'#FFAA00'} />
+              </IconBtn>
+            </div>
+          </>
         ) : (
           <img src={image} alt="Recipe Image" className={classes.image} />
         )}
@@ -205,12 +212,6 @@ function RecipePage(props) {
             {`Show all materials (${recipe?.images?.length})`}
           </button>
         ) : null}
-
-        <div className={classes.video__control}>
-          <IconBtn onClick={() => setIsLightBoxOpen(true)}>
-            <BasicIcon icon={PlayIcon} color={'#FFAA00'} />
-          </IconBtn>
-        </div>
       </div>
     );
   };
@@ -592,7 +593,13 @@ function RecipePage(props) {
         />
       )}
       {isLightBoxOpen ? (
-        <LightBox onClickWrapper={() => setIsLightBoxOpen(!isLightBoxOpen)} items={recipe} />
+        <LightBox
+          onClickWrapper={() => setIsLightBoxOpen(!isLightBoxOpen)}
+          items={recipe}
+          title={title}
+          video={recipe?.video_url}
+          images={recipe?.images}
+        />
       ) : (
         <LayoutPageNew content={!notFound ? content : <RecipeNotFound />} />
       )}
