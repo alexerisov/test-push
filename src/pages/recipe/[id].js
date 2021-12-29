@@ -23,7 +23,6 @@ import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { cookingMethods, cookingSkill, cuisineList, dietaryrestrictions, recipeTypes } from '@/utils/datasets';
 import { Divider } from '@/components/basic-elements/divider';
-import { WeekMenuBlock } from '@/components/blocks/home-page/week-menu';
 import { addToCart } from '@/store/cart/actions';
 import { ReactComponent as CartIcon } from '../../../public/icons/Shopping Cart/Line.svg';
 import { ImageIcon } from '@/components/elements';
@@ -32,6 +31,7 @@ import styled from 'styled-components';
 import { windowScroll } from '@/utils/windowScroll';
 import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel';
 import { useRouter } from 'next/router';
+import { PopularRecipesBlock } from '@/components/blocks/recipe-page/popular-recipes';
 
 const StyledSlider = styled(Slider)`
   display: flex;
@@ -544,7 +544,7 @@ function RecipePage(props) {
   const PopularRecipes = () => {
     return (
       <div className={classes.popular_recipes}>
-        <WeekMenuBlock title="Popular Recipes" subtitle="Let's go to meet new sensations" />
+        <PopularRecipesBlock />
       </div>
     );
   };
