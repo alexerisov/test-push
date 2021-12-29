@@ -12,6 +12,7 @@ import { ReactComponent as ShareIcon } from '@/../public/icons/Share Square/Line
 import { ReactComponent as LikeIcon } from '@/../public/icons/Like/Line.svg';
 import { ReactComponent as StarIcon } from '@/../public/icons/Star/Line.svg';
 import { ReactComponent as StopwatchIcon } from '@/../public/icons/Stopwatch/Line.svg';
+import { ReactComponent as PlayIcon } from '@/../public/icons/Play/Filled.svg';
 import { ReactComponent as SoupIcon } from '@/../public/icons/Soup/Line.svg';
 import { ReactComponent as ServingPlateIcon } from '@/../public/icons/Serving Plate/Line.svg';
 import { ReactComponent as ForkAndKnifeIcon } from '@/../public/icons/Fork and Knife/Line.svg';
@@ -30,8 +31,10 @@ import { modalActions } from '@/store/actions';
 import styled from 'styled-components';
 import { windowScroll } from '@/utils/windowScroll';
 import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel';
+import LightBox from '@/components/blocks/lightbox';
 import { useRouter } from 'next/router';
 import { PopularRecipesBlock } from '@/components/blocks/recipe-page/popular-recipes';
+
 
 const StyledSlider = styled(Slider)`
   display: flex;
@@ -52,7 +55,17 @@ const StyledSlider = styled(Slider)`
     }
   }
 `;
-
+const IconBtn = styled(IconButton)`
+  width: 100%;
+  height: 100%;
+  border-radius: 50% !important;
+  &:hover {
+    border-radius: 50% !important;
+  }
+  &:active {
+    border-radius: 50% !important;
+  }
+`;
 const MyPicture = styled(ImageIcon)`
   margin-right: 12px;
   background-color: #fcfcfd;
@@ -99,6 +112,8 @@ function RecipePage(props) {
   const [viewAllImages, setViewAllImages] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
+
+  const [isLightBoxOpen, setIsLightBoxOpen] = useState(false);
 
   const parseTime = time => {
     const parsedTime = dayjs(time, 'HH-mm');
@@ -189,7 +204,18 @@ function RecipePage(props) {
   const Media = () => {
     return (
       <div className={classes.image_wrapper}>
-        <img src={image} alt="Recipe Image" className={classes.image} />
+        {recipe?.video_url ? (
+          <>
+            <video src={recipe?.video_url}></video>
+            <div className={classes.video__control}>
+              <IconBtn onClick={() => setIsLightBoxOpen(true)}>
+                <BasicIcon icon={PlayIcon} color={'#FFAA00'} />
+              </IconBtn>
+            </div>
+          </>
+        ) : (
+          <img src={image} alt="Recipe Image" className={classes.image} />
+        )}
         {recipe?.images?.length > 1 && !viewAllImages ? (
           <button className={classes.media__button} onClick={() => setViewAllImages(true)}>
             <MyPicture />
@@ -620,7 +646,17 @@ function RecipePage(props) {
           }}
         />
       )}
-      <LayoutPageNew content={!notFound ? content : <RecipeNotFound />} />
+      {isLightBoxOpen ? (
+        <LightBox
+          onClickWrapper={() => setIsLightBoxOpen(!isLightBoxOpen)}
+          items={recipe}
+          title={title}
+          video={recipe?.video_url}
+          images={recipe?.images}
+        />
+      ) : (
+        <LayoutPageNew content={!notFound ? content : <RecipeNotFound />} />
+      )}
     </>
   );
 }
