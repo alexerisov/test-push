@@ -406,6 +406,77 @@
 
 .comments {
   margin-bottom: 80px;
+
+  &_header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &_rate {
+    &_wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      column-gap: 8px;
+    }
+
+    &_value {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 24px;
+      line-height: 160%;
+      letter-spacing: 0.01em;
+      color: #14181F;
+
+      &_subtitle {
+        width: 100%;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 160%;
+        text-align: left;
+        letter-spacing: 0.01em;
+        color: #566481;
+      }
+
+      &_bold{
+        font-weight: 600;
+        font-size: 40px;
+        line-height: 140%;
+        letter-spacing: 0.01em;
+        color: #14181F;
+      }
+    }
+  }
+
+  &_title {
+    &_wrapper {
+
+    }
+
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 160%;
+    letter-spacing: 0.01em;
+    color: #14181F;
+  }
+
+  &_subtitle {
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 160%;
+    letter-spacing: 0.01em;
+    color: #566481;
+
+    &_bold {
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 160%;
+      letter-spacing: 0.01em;
+      color: #353E50;
+    }
+  }
+
 }
 
 .popular_recipes {
@@ -528,7 +599,24 @@
 
   .comments {
     margin-bottom: 64px;
+
+    &_header {
+      flex-direction: column;
+      justify-content: flex-start;
+      row-gap: 40px;
+    }
+
+    &_rate {
+      &_wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        column-gap: 8px;
+      }
+    }
   }
+
+
 
   .classification {
     &_icons_container {
