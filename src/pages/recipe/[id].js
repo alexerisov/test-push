@@ -58,8 +58,8 @@ const StyledSlider = styled(Slider)`
   }
 `;
 const IconBtn = styled(IconButton)`
-  width: 100%;
-  height: 100%;
+  width: 100% !important;
+  height: 100% !important;
   border-radius: 50% !important;
   &:hover {
     border-radius: 50% !important;
@@ -118,7 +118,6 @@ function RecipePage(props) {
   const dispatch = useDispatch();
   const router = useRouter();
 
-
   useEffect(() => {
     if (props.account.hasToken) {
       Account.current().then(res => {
@@ -128,7 +127,6 @@ function RecipePage(props) {
   }, [router]);
 
   const [isLightBoxOpen, setIsLightBoxOpen] = useState(false);
-
 
   const parseTime = time => {
     const parsedTime = dayjs(time, 'HH-mm');

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const useVideoPlayer = videoElement => {
+const useVideoPlayer = (videoElement, videoWrap) => {
   const [playerState, setPlayerState] = useState({
     isPlaying: false,
     progress: 0,
@@ -17,7 +17,9 @@ const useVideoPlayer = videoElement => {
   };
 
   useEffect(() => {
-    playerState.isPlaying ? videoElement.current.play() : videoElement.current.pause();
+    if (videoElement.current) {
+      playerState.isPlaying ? videoElement.current.play() : videoElement.current.pause();
+    }
   }, [playerState.isPlaying, videoElement]);
 
   const handleOnTimeUpdate = () => {
@@ -65,7 +67,7 @@ const useVideoPlayer = videoElement => {
     videoElement.current.currentTime = videoElement.current.currentTime + 15;
   };
   useEffect(() => {
-    if (videoElement) {
+    if (videoElement.current) {
       playerState.isMuted ? (videoElement.current.muted = true) : (videoElement.current.muted = false);
     }
   }, [playerState.isMuted, videoElement]);
@@ -78,14 +80,14 @@ const useVideoPlayer = videoElement => {
   };
   useEffect(() => {
     if (playerState.fullscreen) {
-      document.documentElement.requestFullscreen();
+      videoWrap.current.requestFullscreen();
     } else if (document.fullscreenElement) {
       document
         .exitFullscreen()
         .then(() => console.log('Document Exited from Full screen mode'))
         .catch(err => console.error(err));
     }
-  }, [playerState.fullscreen, videoElement]);
+  }, [playerState.fullscreen, videoWrap]);
   return {
     playerState,
     togglePlay,

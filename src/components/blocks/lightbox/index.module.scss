@@ -63,6 +63,9 @@
         width: 343px;
       }
     }
+    &_hide {
+      display: none;
+    }
     &__toolbar {
       padding: 0 7px;
       position: absolute;
@@ -255,4 +258,20 @@
   text-align: center;
   color: #afb8ca;
   margin-top: 24px;
+}
+.video__container {
+  position: relative;
+  video {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-height: none;
+  }
+  .slider__main__toolbar {
+    @media (max-width: $--xs) {
+      margin-bottom: 24px;
+    }
+  }
 }
