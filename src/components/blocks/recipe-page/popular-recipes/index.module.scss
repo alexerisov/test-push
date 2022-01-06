@@ -42,11 +42,11 @@
   }
 
   @media (max-width: 960px) {
-    padding: 60px 80px !important;
+    padding: 60px 0 !important;
   }
 
   @media (max-width: 600px) {
-    padding: 60px 32px 144px !important;
+    padding: 60px 0 !important;
 
     .slider {
       &_arrows_container {
