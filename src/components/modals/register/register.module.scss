@@ -3,13 +3,19 @@
 .register {
   // height: 56vh;
   // height: 430px;
-  &__links_text {
-    text-decoration: none;
-    margin-left: 20px !important;
-    &:hover {
-      text-decoration: none !important;
+  &__links {
+    &_separator {
+      color: #ffaa00;
+      cursor: pointer;
+    }
+    &_text {
+      transition: all 0.2s;
+      text-decoration: none;
+      &:hover {
+        text-decoration: none !important;
 
-      color: white;
+        color: white;
+      }
     }
   }
 }
@@ -43,4 +49,9 @@
   @media (max-width: $--sm) {
     width: 80px;
   }
+}
+.registerLinks {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
 }
