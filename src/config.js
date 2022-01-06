@@ -8,8 +8,6 @@ if (isWindowExist()) {
   currentUrl = `localhost`;
 }
 
-console.log('config', process.env.BASE_URL);
-
 const CONFIG = {
   baseUrl: process.env.BASE_URL,
   fbClientId: process.env.fbClientId,

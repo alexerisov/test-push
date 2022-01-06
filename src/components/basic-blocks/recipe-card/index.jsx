@@ -14,6 +14,7 @@ import { Divider } from '@/components/basic-elements/divider';
 import { ReactComponent as CartIcon } from '../../../../public/icons/Shopping Cart/Line.svg';
 import { Button } from '@material-ui/core';
 import { modalActions } from '@/store/actions';
+import { BasicIcon } from '@/components/basic-elements/basic-icon';
 
 const StyledCardMedia = styled(CardMedia)`
   .MuiCardMedia-root {
@@ -54,7 +55,6 @@ export const RecipeCard = props => {
         className={classes.card__media}
         onClick={event => {
           redirectToRecipeCard(recipe.pk);
-          event.stopPropagation();
         }}
         image={image ?? logo}
         title="img"
@@ -72,14 +72,13 @@ export const RecipeCard = props => {
         disabled={isRecipeInCart || isRecipeNotSale}
         onClick={
           isAuthorized
-            ? event => {
+            ? () => {
                 dispatch(addToCart(recipe?.pk));
-                event.stopPropagation();
               }
             : handleClick('register')
         }
         className={classes.card_button}
-        startIcon={<CartIcon />}>
+        startIcon={<BasicIcon icon={CartIcon} />}>
         {!isRecipeInCart && !isRecipeNotSale && `$${price}`}
         {isRecipeNotSale && `Not sale`}
         {isRecipeInCart && `Added`}

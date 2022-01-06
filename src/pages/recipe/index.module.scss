@@ -440,7 +440,7 @@
         font-weight: 500;
         font-size: 14px;
         line-height: 160%;
-        text-align: left;
+        text-align: right;
         letter-spacing: 0.01em;
         color: #566481;
       }
@@ -619,6 +619,12 @@
         flex-wrap: wrap;
         justify-content: flex-start;
         column-gap: 8px;
+      }
+
+      &_value {
+        &_subtitle {
+          text-align: left;
+        }
       }
     }
   }

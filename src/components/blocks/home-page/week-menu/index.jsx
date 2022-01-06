@@ -11,6 +11,7 @@ import { CardSearch } from '@/components/elements/card';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import styled from 'styled-components';
 import Cookies from 'cookies';
+import { BasicIcon } from '@/components/basic-elements/basic-icon';
 
 const StyledSlider = styled(Slider)`
   display: flex;
@@ -19,73 +20,70 @@ const StyledSlider = styled(Slider)`
 `;
 
 const Arrows = props => {
-  const { recipes, setSlide, currentSlide } = props;
+  const { currentWeek, handleChangeWeek, weeksAmount } = props;
   return (
     <div className={classes.slider_arrows_container}>
-      <IconButton className={classes.arrows_button} size="22px" onClick={() => setSlide(currentSlide - 5)}>
-        <ArrowLeftIcon />
+      <IconButton
+        className={classes.arrows_button}
+        size="22px"
+        disabled={currentWeek === 0}
+        onClick={() => handleChangeWeek(currentWeek - 1)}>
+        <BasicIcon icon={ArrowLeftIcon} />
       </IconButton>
-      <IconButton className={classes.arrows_button} size="22px" onClick={() => setSlide(currentSlide + 5)}>
-        <ArrowRightIcon />
+      <IconButton
+        className={classes.arrows_button}
+        size="22px"
+        disabled={currentWeek === weeksAmount - 1}
+        onClick={() => handleChangeWeek(currentWeek + 1)}>
+        <BasicIcon icon={ArrowRightIcon} />
       </IconButton>
     </div>
   );
 };
 
 const RecipeSlider = props => {
-  const { recipes, currentSlide } = props;
-
-  const tablet = useMediaQuery('(max-width: 1025px)');
-  const mobile = useMediaQuery('(max-width: 576px)');
-
-  const displayCount = 5;
+  const { recipes, currentWeek } = props;
 
   return (
     <div className={classes.slider_body}>
       {recipes?.length > 0 && (
-        <Carousel
-          showArrows={false}
-          showThumbs={false}
-          centerMode
-          swipeable={false}
-          emulateTouch={false}
-          centerSlidePercentage={100 / displayCount}
-          showStatus={false}
-          showIndicators={false}
-          onClickThumb={() => console.log('clicked')}
-          onClickItem={() => console.log('clicked')}
-          selectedItem={currentSlide}>
-          {recipes.map(recipe => (
-            <RecipeCard key={recipe.pk} recipe={recipe} />
-          ))}
-        </Carousel>
+        <>
+          {recipes
+            .filter(el => el?.pk)
+            .map((recipe, index) => (
+              <RecipeCard key={`${currentWeek}${index}${recipe?.pk}`} recipe={recipe} />
+            ))}
+        </>
       )}
     </div>
   );
 };
 
-export const WeekMenuBlock = () => {
-  // const { weekmenu } = props;
+export const WeekMenuBlock = props => {
+  const { data } = props;
   const [recipes, setRecipes] = useState([]);
-  const [currentSlide, setSlide] = useState(0);
-
-  // const recipesArray = weekmenu?.map(el => el.recipes)?.flat();
+  const [currentWeek, setCurrentWeek] = useState(0);
+  const currentWeekRecipes = recipes?.[currentWeek];
 
   useEffect(async () => {
     try {
-      const weekmenu = await Recipe.getWeekmenu('');
-      const recipesArray = weekmenu?.data?.map(el => el.recipes);
-      setRecipes(recipesArray?.flat()?.filter(el => el?.pk));
+      const recipesArray = data?.map(el => el.recipes);
+      setRecipes(recipesArray);
     } catch (e) {
       console.error(e);
     }
   }, []);
 
+  const handleChangeWeek = newWeekIndex => {
+    if (0 <= newWeekIndex && newWeekIndex < recipes?.length) {
+      setCurrentWeek(newWeekIndex);
+    }
+  };
+
   const arrowsProps = {
-    recipes,
-    setRecipes,
-    currentSlide,
-    setSlide
+    currentWeek,
+    weeksAmount: recipes?.length,
+    handleChangeWeek
   };
 
   return (
@@ -95,7 +93,7 @@ export const WeekMenuBlock = () => {
         <span className={classes.slider_title}>Browse Weekmenu</span>
       </Box>
       <div className={classes.slider_subtitle}>Let's go to meet new sensations</div>
-      <RecipeSlider recipes={recipes} currentSlide={currentSlide} />
+      <RecipeSlider recipes={currentWeekRecipes} currentWeek={currentWeek} />
     </section>
   );
 };

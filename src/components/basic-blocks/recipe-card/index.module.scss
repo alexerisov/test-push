@@ -10,6 +10,7 @@
   animation-timing-function: ease-in;
   animation-duration: 0.5s;
   width: 198px;
+  min-width: 198px;
   height: auto;
   box-shadow: none !important;
   border: none !important;
@@ -34,7 +35,6 @@
 
   &_button {
     cursor: pointer !important;
-    pointer-events: auto !important;
     box-shadow: none !important;
     padding: 16px 24px !important;
     width: auto !important;
@@ -47,10 +47,10 @@
     font-weight: 600 !important;
     font-size: 14px !important;
     line-height: 160% !important;
+    display: flex;
     align-items: center !important;
     letter-spacing: 0.01em !important;
     color: #353E50 !important;
-
     &:hover {
       background: #FFF6EB !important;
     }
@@ -58,7 +58,6 @@
   }
 
   &__media {
-    pointer-events: auto !important;
     min-height: 198px;
     min-width: 198px;
     background-color: $--color-gray8;
@@ -80,6 +79,7 @@
 
   @media (max-width: 960px) {
     width: 256px;
+    min-width: 256px;
 
     &__media {
       min-height: 256px;

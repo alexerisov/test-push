@@ -110,7 +110,6 @@ const Header = props => {
   );
 
   const openMenuHandler = event => {
-    console.log(event.clientX);
     setAnchorEl({ top: event.clientY, left: event.clientX });
     setIsExpanded(true);
   };

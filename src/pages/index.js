@@ -60,7 +60,7 @@ const Home = props => {
   const content = (
     <>
       <SearchBlock />
-      <WeekMenuBlock />
+      <WeekMenuBlock data={props?.weekmenu} />
       <WhyEatchefBlock />
     </>
   );
@@ -93,7 +93,6 @@ export async function getServerSideProps(context) {
     const response = await Recipe.getMealOfWeek(token);
     const banners = await Recipe.getHomepageCarouselItems();
     const weekmenu = await Recipe.getWeekmenu('');
-    console.log(weekmenu);
     const mealOfWeekBlock = response?.data?.length ? response?.data?.[0] : null;
 
     return {

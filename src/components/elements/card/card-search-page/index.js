@@ -3,12 +3,24 @@ import classes from './index.module.scss';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
-import LikeIcon from '@/components/elements/like-icon';
 import { styled } from '@material-ui/core/styles';
 import { CardActionArea, Button } from '@material-ui/core';
 import { useRouter } from 'next/router';
+import { ReactComponent as StopwatchIcon } from '../../../../../public/icons/Stopwatch/Line.svg';
+import { ReactComponent as HatChefIcon } from '../../../../../public/icons/Hat Chef/Line.svg';
+import { ReactComponent as CartIcon } from '../../../../../public/icons/Shopping Cart/Line.svg';
+import { ReactComponent as CommentIcon } from '../../../../../public/icons/Comment/Line.svg';
+import { ReactComponent as LikeIcon } from '../../../../../public/icons/Like/Line.svg';
 
-import { PUBLISH_STATUS, APPROVED_STATUS, recipeTypes, recipeTypesImg, cookingSkill } from '@/utils/datasets';
+import { ReactComponent as BurgerIcon } from '../../../../../public/icons/Burger/Line.svg';
+import { ReactComponent as ServingPlateIcon } from '../../../../../public/icons/Serving Plate/Line.svg';
+import { ReactComponent as SoupIcon } from '../../../../../public/icons/Soup/Line.svg';
+import { ReactComponent as IceCreamIcon } from '../../../../../public/icons/Ice Cream/Line.svg';
+import { ReactComponent as FrenchFriesIcon } from '../../../../../public/icons/French Fries/Line.svg';
+import { ReactComponent as CarrotIcon } from '../../../../../public/icons/Carrot/Line.svg';
+import { ReactComponent as DonutIcon } from '../../../../../public/icons/Donut/Line.svg';
+
+import { PUBLISH_STATUS, APPROVED_STATUS, recipeTypes, cookingSkill } from '@/utils/datasets';
 import logo from '/public/images/index/logo.svg';
 import CardControlPlay from '@/components/elements/card-control-play';
 import ChefIcon from '@/components/elements/chef-icon';
@@ -18,6 +30,18 @@ import { modalActions } from '@/store/actions';
 import { SavedIcon } from '../..';
 import { CounterButton } from '@/components/blocks/cart-page/button-counter';
 import { useDispatch, useSelector } from 'react-redux';
+import { BasicIcon } from '@/components/basic-elements/basic-icon';
+
+const recipeTypesImg = {
+  1: BurgerIcon,
+  2: ServingPlateIcon,
+  3: SoupIcon,
+  4: IceCreamIcon,
+  5: IceCreamIcon,
+  6: FrenchFriesIcon,
+  7: CarrotIcon,
+  8: DonutIcon
+};
 
 const StyledCardMedia = styled(CardMedia)`
   .MuiCardMedia-root {
@@ -104,16 +128,23 @@ const CardSearch = props => {
             {/* {props.hasVideo && <CardControlPlay />} */}
             <div className={classes.card__labels}>
               <div className={classes.card__label_left}>
-                {props.cookingTypes.map((el, ind) => (
-                  <div className={classes.card__label} key={`${el}-${ind}`}>
-                    <img src={recipeTypesImg[el]} alt="type-icon" />
-                    {recipeTypes[el]}
+                {props.cookingTypes?.length > 0 ? (
+                  props.cookingTypes.map((el, ind) => (
+                    <div className={classes.card__label} key={`${el}-${ind}`}>
+                      <BasicIcon icon={recipeTypesImg?.[el] || IceCreamIcon} size="16px" />
+                      {recipeTypes?.[el] || 'Not defined'}
+                    </div>
+                  ))
+                ) : (
+                  <div className={classes.card__label}>
+                    <BasicIcon icon={IceCreamIcon} size="16px" />
+                    {'Not defined'}
                   </div>
-                ))}
+                )}
               </div>
               <div className={classes.card__label_right}>
-                {props.cookingSkill && <img className={classes.icon} src="icons/Hat Chef/Line.svg" alt="chef-hat" />}
-                {cookingSkill[props.cookingSkill]}
+                <BasicIcon icon={HatChefIcon} size="16px" />
+                {props.cookingSkill ? cookingSkill[props.cookingSkill] : 'Not defined'}
               </div>
             </div>
             {props.unsalable === true ? (
@@ -121,22 +152,24 @@ const CardSearch = props => {
                 <div className={classes.card__line} />
                 <div className={classes.card__socialStat}>
                   <div className={classes.card__socialStat__item}>
-                    <img src="icons/Like.svg" alt="likes" />
-                    {numberWithCommas(`${props.likes}`)}
+                    <BasicIcon icon={LikeIcon} color="#FF582E" size="16px" />
+                    {props.likes ? numberWithCommas(`${props.likes}`) : 0}
                   </div>
                   <div className={classes.card__socialStat__item}>
-                    <img src="icons/Comment/Line.svg" alt="comment" />
-                    {numberWithCommas(`${props.comments_number}`)}
+                    <BasicIcon icon={CommentIcon} size="16px" />
+                    {props.comments_number ? numberWithCommas(`${props.comments_number}`) : 0}
                   </div>
                 </div>
               </>
             ) : props.price > 0 && !showCounter ? (
               <Button
                 className={classes.card__uploadButton}
+                classes={{ label: classes.card__uploadButton__label }}
                 variant="outlined"
                 color="primary"
                 onClick={handleClickBtn}>
-                <img src="icons/Shopping Cart/Line.svg" alt="cart" /> {`$${props.price}`}
+                <BasicIcon icon={CartIcon} color="#FB8C00" size="18px" />
+                {props.price}
               </Button>
             ) : showCounter === true ? (
               <div onClick={e => e.stopPropagation()} className={classes.card__counterWrap}>
@@ -144,12 +177,11 @@ const CardSearch = props => {
                 <CounterButton count={cartItemAmount} id={cartItemId} />
               </div>
             ) : null}
-            {props.cookingTime && (
-              <div className={classes.card__timeWrap}>
-                <img src="icons/Stopwatch/Line.svg" alt="stopwatch" />
-                {props.cookingTime}
-              </div>
-            )}
+            <div className={classes.card__timeWrap}>
+              <BasicIcon icon={StopwatchIcon} size="12px" />
+              {props.cookingTime || '—:—'}
+            </div>
+
             {/* {props.publishStatus && <div className={classes.card__status}>{getStatusOfCard()}</div>} */}
           </div>
         </StyledCardContent>

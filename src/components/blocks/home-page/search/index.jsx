@@ -80,7 +80,6 @@ const SearchInput = () => {
   };
 
   const handleOptionChange = (_, newOption) => {
-    console.log(newOption);
     formik.setFieldValue('search', newOption);
     formik.submitForm();
   };

@@ -15,7 +15,7 @@ import Recipe from '@/api/Recipe';
 
 import styles from './buttonShare.module.scss';
 
-const ButtonShare = ({ id, photo, description, currentUrl }) => {
+const ButtonShare = ({ id, photo, description, currentUrl, children }) => {
   const [openShareWindow, setOpenShareWindow] = useState(false);
   const [open, setOpen] = useState(false);
   const [isMobileOrTabletDevice] = useMobileDevice();
@@ -99,11 +99,7 @@ const ButtonShare = ({ id, photo, description, currentUrl }) => {
         <div
           className={styles.shareBtn}
           onClick={isMobileOrTabletDevice ? mobileHandler : e => handleOpenShareWindow(e)}>
-          <div className={styles.shareBtn__icon}>
-            <ShareIcon fontSize="inherit" />
-
-            <span className={styles.shareBtn__text}>Share</span>
-          </div>
+          {children}
 
           <Fade in={openShareWindow}>
             <ul className={styles.shareWindow}>

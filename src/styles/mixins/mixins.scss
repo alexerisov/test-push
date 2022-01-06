@@ -63,6 +63,9 @@
 }
 
 @mixin no_scrollbar {
+  scrollbar-width: 0;
+  scrollbar-color: transparent transparent;
+
   &::-webkit-scrollbar {
     width: 0 !important;
     height: 0 !important;

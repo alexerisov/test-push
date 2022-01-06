@@ -18,6 +18,7 @@ import { ReactComponent as ServingPlateIcon } from '@/../public/icons/Serving Pl
 import { ReactComponent as ForkAndKnifeIcon } from '@/../public/icons/Fork and Knife/Line.svg';
 import { ReactComponent as HatChefIcon } from '@/../public/icons/Hat Chef/Line.svg';
 import { ReactComponent as SaltShakerIcon } from '@/../public/icons/Salt Shaker/Line.svg';
+import { ReactComponent as BookmarkIcon } from '@/../public/icons/Bookmark/Line.svg';
 import { Avatar, Button, Collapse, IconButton, Radio, useMediaQuery } from '@material-ui/core';
 import Image from 'next/image';
 import dayjs from 'dayjs';
@@ -37,6 +38,7 @@ import { PopularRecipesBlock } from '@/components/blocks/recipe-page/popular-rec
 import ResipeComments from '@/components/blocks/recipe-comments';
 import Account from '@/api/Account';
 import CommentBlock from '@/components/blocks/recipe-page/comment-block';
+import { ButtonShare } from '@/components/elements/button';
 
 const StyledSlider = styled(Slider)`
   display: flex;
@@ -75,7 +77,7 @@ const MyPicture = styled(ImageIcon)`
 dayjs.extend(customParseFormat);
 
 function RecipePage(props) {
-  const { notFound, recipe } = props;
+  const { notFound, recipe, weekmenu } = props;
   const mobile = useMediaQuery('(max-width:576px)');
 
   const title = recipe?.title;
@@ -151,8 +153,6 @@ function RecipePage(props) {
     };
   };
 
-  console.log(process.env.BASE_URL);
-
   const Title = () => {
     const handleSaveRecipe = () => {
       Recipe.postSavedRecipe(recipeId)
@@ -170,18 +170,30 @@ function RecipePage(props) {
         .catch(err => console.log(err));
     };
 
-    const onClickLike = () => {
+    const onClickLikeHandler = () => {
+      if (!isAuthorized) {
+        return dispatch(modalActions.open('register'));
+      }
+
       Recipe.uploadLikesRecipe(recipeId)
         .then(res => {
           if (res.data.like_status === 'deleted') {
             setIsRecipeLiked(false);
             likesNumber > 0 && setLikesNumber(likesNumber - 1);
-          } else {
+          } else if (res.data.like_status === 'created') {
             setIsRecipeLiked(true);
             setLikesNumber(likesNumber + 1);
           }
         })
         .catch(err => console.log(err));
+    };
+
+    const onClickSaveHandler = () => {
+      if (!isAuthorized) {
+        return dispatch(modalActions.open('register'));
+      }
+
+      recipeSavedId ? handleDeleteRecipeFromSaved() : handleSaveRecipe();
     };
 
     return (
@@ -190,17 +202,27 @@ function RecipePage(props) {
         <div className={classes.title_wrapper}>
           <div className={classes.title_name}>{title}</div>
           <div className={classes.title_buttons}>
-            <IconButton
-              onClick={recipeSavedId ? () => handleDeleteRecipeFromSaved() : () => handleSaveRecipe()}
-              className={classes.button}>
-              <BasicIcon icon={ShareIcon} color={recipeSavedId ? '#FF582E' : '#353E50'} />
-            </IconButton>
             <div className={classes.like_wrapper}>
-              <IconButton onClick={() => onClickLike()} className={classes.button} size="24px">
+              <IconButton onClick={onClickLikeHandler} className={classes.button} size="24px">
                 <BasicIcon icon={LikeIcon} color={isRecipeLiked ? '#FF582E' : '#353E50'} />
               </IconButton>
               {likesNumber}
             </div>
+            <Divider vertical width="1px" height="24px" />
+
+            <ButtonShare
+              id={recipeId}
+              photo={recipe?.images[0]}
+              description={recipe?.description}
+              currentUrl={`${props?.absolutePath}/recipe/${recipeId}`}>
+              <IconButton className={classes.button}>
+                <BasicIcon icon={ShareIcon} color="#353E50" />
+              </IconButton>
+            </ButtonShare>
+            <Divider vertical width="1px" height="24px" />
+            <IconButton onClick={onClickSaveHandler} className={classes.button}>
+              <BasicIcon icon={BookmarkIcon} color={recipeSavedId ? '#FF582E' : '#353E50'} />
+            </IconButton>
           </div>
           <span className={classes.title_rating}>
             <Avatar src={recipeAuthorAvatar} alt="Recipe Author Avatar" className={classes.title_rating_avatar} />
@@ -520,6 +542,14 @@ function RecipePage(props) {
       );
     };
 
+    const onAddToCartHandler = () => {
+      if (!isAuthorized) {
+        return dispatch(modalActions.open('register'));
+      }
+
+      dispatch(addToCart(recipe?.pk));
+    };
+
     return (
       <div className={classes.ingredients}>
         <div className={classes.ingredients_list}>
@@ -555,14 +585,7 @@ function RecipePage(props) {
               <Button
                 fullWidth
                 disabled={isRecipeInCart || isRecipeNotSale}
-                onClick={
-                  isAuthorized
-                    ? event => {
-                        dispatch(addToCart(recipe?.pk));
-                        event.stopPropagation();
-                      }
-                    : handleClick('register')
-                }
+                onClick={onAddToCartHandler}
                 className={classes.ingredients_suppliers_order_button}
                 endIcon={<BasicIcon icon={CartIcon} color="white" />}>
                 {!isRecipeInCart && !isRecipeNotSale && `Add To Cart`}
@@ -601,7 +624,7 @@ function RecipePage(props) {
   const PopularRecipes = () => {
     return (
       <div className={classes.popular_recipes}>
-        <PopularRecipesBlock />
+        <PopularRecipesBlock data={weekmenu} />
       </div>
     );
   };
@@ -703,11 +726,13 @@ export async function getServerSideProps(context) {
   const token = !targetCookies ? undefined : decodeURIComponent(cookies.get('aucr'));
 
   try {
-    const response = await Recipe.getRecipe(id, token);
+    const recipeResponse = await Recipe.getRecipe(id, token);
+    const weekmenuResponse = await Recipe.getWeekmenu('');
 
     return {
       props: {
-        recipe: response.data,
+        recipe: recipeResponse.data,
+        weekmenu: weekmenuResponse.data,
         absolutePath: context.req.headers.host,
         notFound: false
       }

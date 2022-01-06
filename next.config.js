@@ -33,8 +33,6 @@ if (process.env.NODE_ENV === 'production') {
   };
 }
 
-console.log('next.config', envs);
-
 module.exports = {
   // env: envs,
   images: {
