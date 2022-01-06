@@ -6,6 +6,7 @@
   display: flex;
   flex-direction: column;
   width: 262px;
+  min-width: 262px;
   min-height: 339px;
   opacity: 1;
   animation-name: fadeInOpacity;
@@ -151,6 +152,7 @@
 
   @media (max-width: $--sm) {
     width: 285px;
+    min-width: 285px;
   }
 
   &__content {
