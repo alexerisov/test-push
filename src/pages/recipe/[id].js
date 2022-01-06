@@ -238,6 +238,7 @@ function RecipePage(props) {
             {`Show all materials (${recipe?.images?.length})`}
           </button>
         ) : null}
+        {console.log(`thumbnail ----------- ${recipe?.video_thumbnail_url}`)}
       </div>
     );
   };
