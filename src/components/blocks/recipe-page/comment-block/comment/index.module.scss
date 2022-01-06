@@ -1,0 +1,124 @@
+@import "~styles/mixins/mixins.scss";
+
+.comment {
+  position: relative;
+  display: flex;
+  padding: 24px 0 34px;
+  border-bottom: 1px solid $--color-gray-9;
+
+  &__avatar {
+    align-self: flex-start;
+    width: 50px;
+    height: 50px;
+    margin-right: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  &__body {
+    max-width: 632px;
+    @include fontRegular();
+    font-size: 18px;
+  }
+
+  &__username {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    @include fontMedium();
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 160%;
+    letter-spacing: 0.01em;
+    color: #14181F;
+
+    @media (max-width: $--xs) {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  &__text {
+    margin-bottom: 16px;
+    word-break: break-all;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 160%;
+    letter-spacing: 0.01em;
+    color: #353E50;
+
+  }
+
+  &__likes {
+    display: flex;
+  }
+
+  &__like {
+    display: flex;
+    align-items: center;
+    margin-right: 42px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 160%;
+    letter-spacing: 0.01em;
+
+    /* Grey/ Darkest */
+
+    color: #14181F;
+
+    &__icon {
+      margin-right: 12px;
+      color: $--color-gray1;
+      cursor: pointer;
+    }
+
+    &__icon:hover {
+      color: black;
+    }
+  }
+
+  &__like:last-child {
+    margin-right: 0;
+  }
+
+  &__delete {
+    position: absolute;
+    top: 24px;
+    right: 10px;
+    color: inherit;
+    cursor: pointer;
+    transform: rotate(45deg);
+    opacity: 0.2;
+    transition: opacity 0.3s !important;
+
+    &:hover {
+      transform: rotate(45deg) scale(1.2);
+    }
+  }
+
+  &:hover .comment__delete {
+    opacity: 0.8;
+  }
+}
+
+.stars {
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin-top: 24px;
+  &_icon {
+
+    &_empty {
+      color: white;
+      //background-color: transparent;
+    }
+    &_filled {
+      //border: 1.4px solid #FFAA00;
+      //background-color: #FFAA00;
+    }
+  }
+}

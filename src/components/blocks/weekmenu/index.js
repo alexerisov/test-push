@@ -16,12 +16,6 @@ const StyledSlider = styled(Slider)`
 const Weekmenu = ({ weekmenu, token }) => {
   const tablet = useMediaQuery('(max-width: 1025px)');
   const mobile = useMediaQuery('(max-width: 576px)');
-  const [recipe, setRecipe] = useState([]);
-  useEffect(() => {
-    if (weekmenu) {
-      weekmenu.map(el => el.recipes.map(elem => recipe.push(elem)));
-    }
-  }, [weekmenu]);
 
   return (
     <div className={classes.weekmenu}>
@@ -30,7 +24,7 @@ const Weekmenu = ({ weekmenu, token }) => {
         naturalSlideHeight={339}
         step={mobile ? 1 : tablet ? 2 : 2}
         visibleSlides={mobile ? 1.1 : tablet ? 2 : 2.8}
-        totalSlides={recipe?.length}>
+        totalSlides={weekmenu?.length}>
         <div className={classes.weekmenu__row}>
           <h2 className={classes.weekmenu__title}>Weekmenu</h2>
           <div className={classes.weekmenu__controls}>
@@ -43,14 +37,14 @@ const Weekmenu = ({ weekmenu, token }) => {
           </div>
         </div>
         <StyledSlider>
-          {recipe && recipe?.length !== 0
-            ? recipe?.map((recipe, index) => {
+          {weekmenu && weekmenu?.length !== 0
+            ? weekmenu?.map((recipe, index) => {
                 return (
                   <Slide key={`${recipe.pk}-${index}`}>
                     <CardSearch
                       token={token}
                       title={recipe?.title}
-                      image={recipe?.images[0]?.url}
+                      image={recipe?.images?.[0]?.url}
                       name={recipe?.user?.full_name}
                       city={recipe?.user?.city}
                       likes={recipe?.likes_number}

@@ -15,7 +15,9 @@ services:
     networks:
       - proxy
     environment:
-      - NODE_ENV=${NODE_ENV:-production}
+      - NODE_ENV=${NODE_ENV}
+    env_file:
+      - ../.client.env
     expose:
       - 3000
     labels:
@@ -25,6 +27,6 @@ services:
       - traefik.http.routers.main_client.rule=Host(`${DOMAIN}`)
       - traefik.http.routers.main_client.tls=true
       - traefik.http.routers.main_client.tls.certresolver=letsencrypt
-#      - traefik.http.routers.main_client.middlewares=auth
+      - traefik.http.routers.main_client.middlewares=auth
       - traefik.http.routers.main_client.service=main_client_service
       - traefik.http.services.main_client_service.loadbalancer.server.port=3000

@@ -37,11 +37,12 @@
     flex-direction: column;
   }
 
-  &__title {
-    max-width: 310px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  &__title, &_title a {
+    width: min-content !important;
+    max-width: 180px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
     & a:focus, & a:hover, & a:visited, & a:link, & a:active {
       color: inherit;
     }
@@ -150,6 +151,10 @@
       }
     }
 
+    &_title * {
+      max-width: 150px !important;
+    }
+
     &__media {
       min-height: 311px;
     }
@@ -158,6 +163,20 @@
   &:hover .card__status {
     opacity: 1;
   }
+}
+
+
+@media (max-width: 600px) {
+
+  .card {
+    &_title, &_title a {
+      width: min-content !important;
+      max-width: 150px !important;
+    }
+  }
+
+
+
 }
 
 @keyframes fadeInOpacity {

@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import Recipe from '@/api/Recipe.js';
 import CardHighestMeals from '@/components/elements/card-highest-meals';
+import * as yup from 'yup';
 import {
   recipeTypes,
   cookingMethods,
@@ -18,8 +19,8 @@ import {
   cookingMethodsCount
 } from '@/utils/datasets';
 import { modalActions } from '@/store/actions';
-import { connect } from 'react-redux';
-import { Button, NoSsr, Slider } from '@material-ui/core';
+import { connect, useDispatch } from 'react-redux';
+import { Button, NoSsr, Slider, TextField } from '@material-ui/core';
 import Image from 'next/image';
 
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -37,7 +38,7 @@ import Typography from '@material-ui/core/Typography';
 import { useFormik } from 'formik';
 import Pagination from '@material-ui/lab/Pagination';
 import InputLabel from '@material-ui/core/InputLabel';
-import { Select, MenuItem } from '@material-ui/core';
+import { Select, MenuItem, IconButton } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 import SearchDrawer from '@/components/elements/search-drawer';
@@ -49,7 +50,12 @@ import { numberWithCommas } from '@/utils/converter';
 import { windowScroll } from '@/utils/windowScroll';
 import LayoutPageNew from '@/components/layouts/layout-page-new';
 import { Spinner } from '@/components/elements';
+import { Autocomplete } from '@material-ui/lab';
 
+import { ReactComponent as SearchIcon } from '@/../public/icons/Search/Line.svg';
+import { ReactComponent as CloseIcon } from '@/../public/icons/Close Circle/Line.svg';
+import { ReactComponent as RecipeIcon } from '@/../public/icons/Receipt/Line.svg';
+import { TitleOutlined } from '@material-ui/icons';
 const MySlider = styled(Slider)(() => ({
   color: '#FFAA00',
   height: 2,
@@ -118,7 +124,129 @@ const MenuProps = {
     }
   }
 };
+const SearchInput = () => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const [open, setOpen] = React.useState(false);
+  const [result, setResult] = useState([]);
+  const loading = open && result?.length === 0;
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const validationSchema = yup.object({
+    search: yup.string('Search for dish name')
+  });
 
+  const formik = useFormik({
+    initialValues: {
+      search: ''
+    },
+    validationSchema: validationSchema,
+    onSubmit: values => {
+      if (!values.search) {
+        router.push(`search?`);
+      } else {
+        router.push(
+          `search?title=${values.search}&${!isOnlyEatchefRecipesQueryExist() ? '' : 'only_eatchefs_recipes=Y'}`
+        );
+      }
+    }
+  });
+
+  const onChangeInputSearch = search => {
+    if (!search.length) {
+      setResult([]);
+      return;
+    }
+
+    if (!isOnlyEatchefRecipesQueryExist()) {
+      Recipe.getQueryResult(search)
+        .then(res => setResult(res.data))
+        .catch(e => {
+          console.log('error', e);
+        });
+    } else {
+      Recipe.getQueryResult(search, true)
+        .then(res => setResult(res.data))
+        .catch(e => {
+          console.log('error', e);
+        });
+    }
+  };
+
+  const isOnlyEatchefRecipesQueryExist = () => {
+    return !!router?.query?.['only_eatchefs_recipes']?.includes('Y');
+  };
+
+  const renderOption = (option, { selected }) => {
+    return (
+      <span className={classes.option}>
+        <span className={classes.option_icon}>
+          <RecipeIcon />
+        </span>
+        {option}
+      </span>
+    );
+  };
+
+  const handleOptionChange = (_, newOption) => {
+    console.log(newOption);
+    formik.setFieldValue('search', newOption);
+    formik.submitForm();
+  };
+
+  return (
+    <div className={classes.search_input_wrapper}>
+      <form className={classes.search_form} onSubmit={formik.handleSubmit}>
+        <Autocomplete
+          classes={{
+            root: classes.search_autocomplete_root,
+            paper: classes.search_autocomplete_paper,
+            listbox: classes.search_autocomplete_listbox,
+            endAdornment: classes.search_autocomplete_close_icon
+          }}
+          fullWidth
+          id="home-page-search"
+          options={result?.map(option => option.result)}
+          freeSolo
+          renderOption={renderOption}
+          closeIcon={<CloseIcon />}
+          onChange={handleOptionChange}
+          renderInput={params => (
+            <TextField
+              {...params}
+              id="home-page-search"
+              name="search"
+              variant="filled"
+              InputProps={{
+                ...params.InputProps,
+                classes: { root: classes.search_input, focused: classes.search_input_focused },
+                disableUnderline: true
+              }}
+              onFocus={() => setIsSearchFocused(true)}
+              onBlur={() => setIsSearchFocused(false)}
+              value={formik.values.search}
+              placeholder="What do you want to eat?"
+              onChange={e => {
+                formik.handleChange(e);
+                onChangeInputSearch(e.target.value);
+              }}
+              // fullWidth
+            />
+          )}
+        />
+        {/* <IconButton
+          type="submit"
+          className={classes.search_button}
+          style={{ background: '#FFAA00', color: 'white' }}
+          size="32px">
+          <SearchIcon className={classes.search_button_icon} />
+        </IconButton> */}
+        <button className={classes.search__searchButton} type="submit">
+          <img src="/images/index/icon_search.svg" alt="search-icon" />
+        </button>
+      </form>
+    </div>
+  );
+};
 const Recipes = props => {
   const TooltipStyles = useStyledTooltip();
   const tablet = useMediaQuery('(max-width: 1025px)');
@@ -134,31 +262,44 @@ const Recipes = props => {
   const [range, setRange] = useState(1);
   const [data, setData] = useState();
   const [result, setResult] = useState([]);
-  const [weekmenu, setWeekmenu] = useState();
   const [showScrollBtn, setShowScrollBtn] = useState(false);
   const [page, setPage] = useState(1);
   const [showFilters, setShowFilters] = useState(false);
 
+  //WeekMenu
+  const [weekmenu, setWeekmenu] = useState([]);
+  const [weekmenuResults, setWeekmenuRessults] = useState([]);
+  const [firstSearchWeekmenuByTitle, setFirstSearchWeekmenuByTitle] = useState(true);
   //UnsalableRecipes
   const [unsalableResults, setUnsalableResults] = useState([]);
   const [hasMoreUnsalableResults, setHasMoreUnsalableResults] = useState(true);
   const [pageUnsalable, setPageUnsalable] = useState(1);
   const [unsalableLoading, setUnsalableLoading] = useState(false);
+  const [firstSearchUnsalableByTitle, setFirstSearchUnsalableByTitle] = useState(true);
   //SalableRecipes
   const [salableResults, setSalableResults] = useState([]);
   const [firstClickToSalableMore, setFirstClickToSalableMore] = useState(false);
   const [hasMoreSalableResults, setHasMoreSalableResults] = useState(true);
   const [pageSalable, setPageSalable] = useState(1);
+  const [firstSearchSalableByTitle, setFirstSearchSalableByTitle] = useState(true);
   const [salableLoading, setSalableLoading] = useState(false);
 
-  useEffect(async () => {
-    try {
-      const weekmenu = await Recipe.getWeekmenu();
-      setWeekmenu(weekmenu.data);
-    } catch (e) {
-      console.error(e);
+  useEffect(() => {
+    if (weekmenu.length !== 0) {
+      const recipesArray = weekmenu.map(el => el.recipes);
+      setWeekmenuRessults(recipesArray.flat());
     }
-  }, []);
+  }, [weekmenu, setWeekmenu]);
+
+  useEffect(() => {
+    if (query) {
+      Recipe.getWeekmenu(title ? title : '')
+        .then(res => {
+          setWeekmenu(res.data);
+        })
+        .catch(e => console.error(e));
+    }
+  }, [query, title]);
 
   useEffect(async () => {
     pageUnsalable > 1 && setShowScrollBtn(true);
@@ -265,6 +406,8 @@ const Recipes = props => {
       values.page = page;
       setSalableResults([]);
       setUnsalableResults([]);
+      // setWeekmenuRessults([]);
+      setWeekmenu([]);
       router.push(
         {
           search: `?${createQueryParams(values).toString()}`
@@ -430,8 +573,13 @@ const Recipes = props => {
   };
 
   useEffect(() => {
+    setFirstSearchUnsalableByTitle(true);
+    setFirstSearchSalableByTitle(true);
+    setFirstSearchWeekmenuByTitle(true);
     setTitle(router.query.title);
     setPage(router.query.page ? Number(router.query.page) : 1);
+    setPageUnsalable(router.query.page ? Number(router.query.page) : 1);
+    setPageSalable(router.query.page ? Number(router.query.page) : 1);
     setQuery(router.query);
   }, [router]);
   useEffect(() => {
@@ -463,8 +611,9 @@ const Recipes = props => {
           } else {
             setHasMoreUnsalableResults(false);
           }
-          if (title) {
+          if (title && firstSearchUnsalableByTitle) {
             setUnsalableResults(res.data.results);
+            setFirstSearchUnsalableByTitle(false);
           }
           if (!res?.data?.results?.length) {
             setExpanded(false);
@@ -498,12 +647,14 @@ const Recipes = props => {
           } else {
             setHasMoreSalableResults(false);
           }
-          if (title) {
+          if (title && firstSearchSalableByTitle) {
             setSalableResults(res.data.results);
+            setFirstSearchSalableByTitle(false);
           }
           if (!res?.data?.results?.length) {
             setExpanded(false);
           }
+
           setSalableLoading(false);
         })
         .catch(e => {
@@ -553,21 +704,22 @@ const Recipes = props => {
   ));
 
   const searchField = (
-    <div className={classes.search__header}>
-      {title ? (
-        <div className={classes.search__header__text__wrap}>
-          <p className={classes.search__header__text}>{title}</p>
-          <button className={classes.search__closeButton} onClick={handleCloseSearchQuery}>
-            <img src="icons/Close-Circle/Line.svg" alt="close-icon" />
-          </button>
-        </div>
-      ) : (
-        <p></p>
-      )}
-      <button className={classes.search__searchButton} onClick={handleClickSearch('search')}>
-        <img src="/images/index/icon_search.svg" alt="search-icon" />
-      </button>
-    </div>
+    <>
+      <div className={classes.search__header}>
+        {title && !mobile ? (
+          <div className={classes.search__header__text__wrap}>
+            <p className={classes.search__header__text}>{title}</p>
+
+            <button className={classes.search__closeButton} onClick={handleCloseSearchQuery}>
+              <img src="icons/Close-Circle/Line.svg" alt="close-icon" />
+            </button>
+          </div>
+        ) : (
+          <p></p>
+        )}
+        <SearchInput />
+      </div>
+    </>
   );
 
   const tooltipForGetInspiredCheckbox = (
@@ -914,7 +1066,14 @@ const Recipes = props => {
                 </SearchDrawer>
                 //{' '}
               </div> */}
-
+              {mobile && title ? (
+                <div className={classes.search__controls}>
+                  <p className={classes.search__header__text}>{title}</p>
+                  <button className={classes.search__closeButton} onClick={handleCloseSearchQuery}>
+                    <img src="icons/Close-Circle/Line.svg" alt="close-icon" />
+                  </button>{' '}
+                </div>
+              ) : null}
               <div
                 className={`${isDropdownActive ? classes.search__dropdown_active : classes.search__dropdown}`}
                 onClick={() => setIsDropdownActive(!isDropdownActive)}>
@@ -963,7 +1122,7 @@ const Recipes = props => {
               {orderingList}
             </Select>
           </div> */}
-          <Weekmenu weekmenu={weekmenu} token={props.token} />
+          <Weekmenu weekmenu={weekmenuResults} token={props.token} />
 
           <div className={classes.search__result__text}>
             <img src="icons/Coin/Line.svg" alt="close-icon" />
@@ -971,7 +1130,6 @@ const Recipes = props => {
           </div>
 
           <div className={classes.search__result__container}>
-            {console.log(salableResults)}
             {salableResults?.length !== 0 ? (
               <>
                 {!firstClickToSalableMore
@@ -981,7 +1139,7 @@ const Recipes = props => {
                           <CardSearch
                             key={`${recipe.pk}-${index}`}
                             title={recipe?.title}
-                            image={recipe?.images[0]?.url}
+                            image={recipe?.images?.[0]?.url}
                             name={recipe?.user?.full_name}
                             city={recipe?.user?.city}
                             likes={recipe?.likes_number}
@@ -1004,7 +1162,7 @@ const Recipes = props => {
                         <CardSearch
                           key={`${recipe.pk}-${index}`}
                           title={recipe?.title}
-                          image={recipe?.images[0]?.url}
+                          image={recipe?.images?.[0]?.url}
                           name={recipe?.user?.full_name}
                           city={recipe?.user?.city}
                           likes={recipe?.likes_number}
@@ -1051,7 +1209,7 @@ const Recipes = props => {
                     <CardSearch
                       key={`${recipe.pk}-${index}`}
                       title={recipe?.title}
-                      image={recipe?.images[0]?.url}
+                      image={recipe?.images?.[0]?.url}
                       name={recipe?.user?.full_name}
                       city={recipe?.user?.city}
                       likes={recipe?.likes_number}

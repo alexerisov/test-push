@@ -54,11 +54,9 @@ export const CartItemRecipe = props => {
           <ClearRoundedIcon />
         </IconButton>
         <div className={classes.card__content}>
-          <Typography variant="h6" noWrap className={classes.card__title} title={title}>
-            <Link href={`/recipe/${recipe.pk}`}>
-              <a>{title}</a>
-            </Link>
-          </Typography>
+          <div className={classes.card__title} title={title}>
+            <a>{title}</a>
+          </div>
 
           <div className={classes.categories}>
             <div className={classes.element_container}>

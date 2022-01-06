@@ -7,3 +7,4 @@ export { default as PageLoader } from './page-loader';
 export { default as Redirect } from './routes';
 export { default as SavedIcon } from './saved-icon';
 export { default as Spinner } from './spinner';
+export { default as ImageIcon } from './image-icon';

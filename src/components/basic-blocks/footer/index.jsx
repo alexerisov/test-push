@@ -38,9 +38,15 @@ export const Footer = () => {
           <div className={classes.social_block}>
             <div className={classes.social_title}>GET SOCIAL WITH US 🔥</div>
             <div className={classes.social_icons}>
-              <FacebookIcon href="https://www.facebook.com/eatchefs" style={{ color: '#FCFCFD' }} />
-              <TwitterIcon href="https://www.twitter.com/eatchefs" style={{ color: '#FCFCFD' }} />
-              <InstagramIcon href="https://www.instagram.com/eatchefs/" style={{ color: '#FCFCFD' }} />
+              <a href="https://www.facebook.com/eatchefs" rel="noreferrer" target="_blank">
+                <FacebookIcon style={{ color: '#FCFCFD' }} />
+              </a>
+              <a href="https://www.twitter.com/eatchefs" rel="noreferrer" target="_blank">
+                <TwitterIcon style={{ color: '#FCFCFD' }} />
+              </a>
+              <a href="https://www.instagram.com/eatchefs/" rel="noreferrer" target="_blank">
+                <InstagramIcon style={{ color: '#FCFCFD' }} />
+              </a>
             </div>
           </div>
         </div>

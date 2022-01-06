@@ -43,8 +43,8 @@ const defaultFormValues = {
   phone: '',
   city: 'Amsterdam',
   street: '',
-  house: '',
-  flat: '',
+  house: '5',
+  flat: '5',
   zipcode: '',
   date: new Date(),
   save_address: false
@@ -182,8 +182,8 @@ const OrderConfirmPage = () => {
             <InputsBlock.TabPanel index={0}>
               <BasicInput formik={formik} disabled size={0.5} label="City" name="city" placeholder="Enter your city" />
               <BasicInput formik={formik} size={0.5} label="Street" name="street" placeholder="Enter your street" />
-              <BasicInput formik={formik} size={0.5} label="House" name="house" placeholder="Enter your house" />
-              <BasicInput formik={formik} size={0.5} label="Flat" name="flat" placeholder="Enter your flat" />
+              {/*<BasicInput formik={formik} size={0.5} label="House" name="house" placeholder="Enter your house" />*/}
+              {/*<BasicInput formik={formik} size={0.5} label="Flat" name="flat" placeholder="Enter your flat" />*/}
               <BasicInput formik={formik} label="Zipcode" name="zipcode" placeholder="Enter your zipcode" />
               <BasicDatePicker formik={formik} label="Date" name="date" minDate={new Date()} />
               <div className={classes.checkbox_wrapper}>

@@ -81,7 +81,7 @@ const MyOrdersPage = props => {
     const { product: recipe, isLastElement, order } = props;
 
     const title = recipe?.title;
-    const image = recipe?.images[0]?.url;
+    const image = recipe?.images?.[0]?.url;
     const price = recipe?.price;
     const ingredients = recipe?.ingredients;
 
@@ -106,7 +106,7 @@ const MyOrdersPage = props => {
     const { product: recipe, isLastElement, isFirstElement, order } = props;
 
     const title = recipe?.title;
-    const image = recipe?.images[0]?.url;
+    const image = recipe?.images?.[0]?.url;
     const price = recipe?.price;
     const ingredients = recipe?.ingredients;
 

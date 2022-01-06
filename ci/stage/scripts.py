@@ -7,7 +7,7 @@ ENV_FILE = '.client.env'
 
 def build():
     cmd = f'docker build ' \
-          f'--build-arg NODE_ENV=stage ' \
+          f'$(cat .client.env | sed "s@^@--build-arg @g" | paste -s -d " ") ' \
           f'-t {os.environ.get("MAIN_CLIENT_IMAGE")} ../../'
     os.system(cmd)
     return
@@ -70,7 +70,7 @@ def up_main_client(pods=4):
 
 
 def stop_main_client():
-    os.system(f'docker-compose  -f services/main_client.yml up -d')
+    os.system(f'docker-compose  -f services/main_client.yml stop')
     return
 
 

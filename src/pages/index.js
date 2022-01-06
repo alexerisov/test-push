@@ -37,10 +37,12 @@ const Home = props => {
   const chefType = USER_TYPE.chefType;
   const viewerType = USER_TYPE.viewerType;
   const [meal, setMeal] = React.useState(null);
+  const [weekmenu, setWeekmenu] = React.useState(null);
   const mobile = useMediaQuery('(max-width: 768px)');
 
   React.useEffect(() => {
     setMeal(props?.mealOfTheWeek);
+    setWeekmenu(props?.weekmenu);
   }, []);
 
   React.useEffect(() => {
@@ -90,17 +92,25 @@ export async function getServerSideProps(context) {
   try {
     const response = await Recipe.getMealOfWeek(token);
     const banners = await Recipe.getHomepageCarouselItems();
-
+    const weekmenu = await Recipe.getWeekmenu('');
+    console.log(weekmenu);
     const mealOfWeekBlock = response?.data?.length ? response?.data?.[0] : null;
 
     return {
       props: {
         mealOfTheWeek: mealOfWeekBlock,
         carouselItems: banners.data,
+        weekmenu: weekmenu.data,
         absolutePath: context.req.headers.host
       }
     };
   } catch (e) {
     console.error(e);
+
+    return {
+      props: {
+        notFound: true
+      }
+    };
   }
 }
