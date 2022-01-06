@@ -82,6 +82,7 @@ function RecipePage(props) {
 
   const image = recipe?.images?.[0]?.url;
   const imagesWithoutMain = recipe?.images?.filter(el => el.main_image === false);
+  const mainImage = recipe?.images?.filter(el => el.main_image === true);
   const price = recipe?.price;
   const recipeTypesList = recipe?.types;
   const recipeCookingSkills = recipe?.cooking_skills;
@@ -219,13 +220,15 @@ function RecipePage(props) {
       <div className={classes.image_wrapper}>
         {recipe?.video_url ? (
           <>
-            <video src={recipe?.video_url}></video>
+            <img src={recipe?.video_thumbnail_url} alt="Recipe Image" className={classes.image} />
             <div className={classes.video__control}>
               <IconBtn onClick={() => setIsLightBoxOpen(true)}>
                 <BasicIcon icon={PlayIcon} color={'#FFAA00'} />
               </IconBtn>
             </div>
           </>
+        ) : mainImage.length > 0 ? (
+          <img src={mainImage[0]} alt="Recipe Image" className={classes.image} />
         ) : (
           <img src={image} alt="Recipe Image" className={classes.image} />
         )}
