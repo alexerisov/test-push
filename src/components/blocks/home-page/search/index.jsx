@@ -37,9 +37,9 @@ const SearchInput = () => {
     },
     validationSchema: validationSchema,
     onSubmit: values => {
-      router.push(
-        `search?title=${values.search}&${!isOnlyEatchefRecipesQueryExist() ? '' : 'only_eatchefs_recipes=Y'}`
-      );
+      window.location = `search?title=${values.search}&${
+        !isOnlyEatchefRecipesQueryExist() ? '' : 'only_eatchefs_recipes=Y'
+      }`;
     }
   });
 

@@ -268,6 +268,7 @@ const Recipes = props => {
   //WeekMenu
   const [weekmenu, setWeekmenu] = useState([]);
   const [weekmenuResults, setWeekmenuRessults] = useState([]);
+
   const [firstSearchWeekmenuByTitle, setFirstSearchWeekmenuByTitle] = useState(true);
   //UnsalableRecipes
   const [unsalableResults, setUnsalableResults] = useState([]);
@@ -1121,6 +1122,7 @@ const Recipes = props => {
               {orderingList}
             </Select>
           </div> */}
+
           <Weekmenu weekmenu={weekmenuResults} token={props.token} />
 
           <div className={classes.search__result__text}>
@@ -1266,20 +1268,3 @@ export default connect(state => ({
   token: state.account.hasToken,
   userType: state.account?.profile?.user_type
 }))(Recipes);
-
-// export async function getServerSideProps() {
-//   try {
-//     const res = await Recipe.getWeekmenu();
-//     const weekmenu = await res.json(res);
-//     if (!weekmenu) {
-//       return {
-//         notFound: true
-//       };
-//     }
-//     return {
-//       props: { weekmenu } // will be passed to the page component as props
-//     };
-//   } catch (e) {
-//     console.error(e);
-//   }
-// }
