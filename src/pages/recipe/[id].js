@@ -120,6 +120,15 @@ function RecipePage(props) {
   const [viewAllImages, setViewAllImages] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
+  const [materials, setMaterials] = useState([]);
+
+  useEffect(() => {
+    if (recipe?.video_thumbnail_url) {
+      setMaterials([recipe?.video_thumbnail_url, ...recipe?.images]);
+    } else {
+      setMaterials(recipe?.images);
+    }
+  }, [recipe]);
 
   useEffect(() => {
     if (props.account.hasToken) {
@@ -270,10 +279,10 @@ function RecipePage(props) {
             className={classes.image}
           />
         )}
-        {recipe?.images?.length > 1 && !viewAllImages ? (
+        {materials > 1 && !viewAllImages ? (
           <button className={classes.media__button} onClick={() => setViewAllImages(true)}>
             <MyPicture />
-            {`Show all materials (${recipe?.images?.length})`}
+            {`Show all materials (${materials})`}
           </button>
         ) : null}
       </div>
