@@ -15,7 +15,7 @@ import Recipe from '@/api/Recipe';
 
 import styles from './buttonShare.module.scss';
 
-const ButtonShare = ({ id, photo, description, currentUrl, children }) => {
+const ButtonShare = ({ id, photo, description, currentUrl, children, leftSide }) => {
   const [openShareWindow, setOpenShareWindow] = useState(false);
   const [open, setOpen] = useState(false);
   const [isMobileOrTabletDevice] = useMobileDevice();
@@ -46,6 +46,7 @@ const ButtonShare = ({ id, photo, description, currentUrl, children }) => {
 
   const copyLink = async () => {
     await uploadShareStats();
+    navigator.clipboard.writeText(currentUrl);
     handleCloseShareWindow();
     setTimeout(handleTooltipOpen, 500);
     setTimeout(handleTooltipClose, 1500);
@@ -102,7 +103,7 @@ const ButtonShare = ({ id, photo, description, currentUrl, children }) => {
           {children}
 
           <Fade in={openShareWindow}>
-            <ul className={styles.shareWindow}>
+            <ul className={leftSide ? styles.shareWindow__left : styles.shareWindow}>
               <li className={styles.shareWindow__item} onClick={copyLink}>
                 <AssignmentOutlinedIcon fontSize={'small'} /> Copy to clipboard
               </li>

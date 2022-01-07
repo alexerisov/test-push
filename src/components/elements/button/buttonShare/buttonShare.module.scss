@@ -1,4 +1,4 @@
-@import "~styles/mixins/mixins.scss";
+@import '~styles/mixins/mixins.scss';
 
 .shareBtn {
   position: relative;
@@ -47,7 +47,22 @@
   animation-iteration-count: 1;
   animation-timing-function: ease-in;
   animation-duration: 0.4s;
-
+  &__left {
+    position: absolute;
+    bottom: 31px;
+    left: -211px;
+    z-index: 20;
+    transform: translateY(100%);
+    height: max-content;
+    width: 200px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 3px 6px rgb(0 0 0 / 16%);
+    animation-name: shareWindow;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in;
+    animation-duration: 0.4s;
+  }
   &__item {
     display: flex;
     align-items: center;

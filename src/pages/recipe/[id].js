@@ -703,10 +703,11 @@ function RecipePage(props) {
       {isLightBoxOpen ? (
         <LightBox
           onClickWrapper={() => setIsLightBoxOpen(!isLightBoxOpen)}
-          items={recipe}
+          recipe={recipe}
           title={title}
           video={recipe?.video_url}
           images={recipe?.images}
+          absolutePath={props.absolutePath}
         />
       ) : (
         <LayoutPageNew content={!notFound ? content : <RecipeNotFound />} />
