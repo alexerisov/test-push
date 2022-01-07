@@ -242,7 +242,15 @@ function RecipePage(props) {
       <div className={classes.image_wrapper}>
         {recipe?.video_url ? (
           <>
-            <img src={recipe?.video_thumbnail_url} alt="Recipe Image" className={classes.image} />
+            <img
+              src={
+                typeof recipe?.video_thumbnail_url === 'object'
+                  ? JSON.stringify(recipe?.video_thumbnail_url)
+                  : recipe?.video_thumbnail_url
+              }
+              alt="Recipe Image"
+              className={classes.image}
+            />
             <div className={classes.video__control}>
               <IconBtn onClick={() => setIsLightBoxOpen(true)}>
                 <BasicIcon icon={PlayIcon} color={'#FFAA00'} />
@@ -250,9 +258,17 @@ function RecipePage(props) {
             </div>
           </>
         ) : mainImage.length > 0 ? (
-          <img src={mainImage[0]} alt="Recipe Image" className={classes.image} />
+          <img
+            src={typeof mainImage[0] === 'object' ? JSON.stringify(mainImage[0]) : mainImage[0]}
+            alt="Recipe Image"
+            className={classes.image}
+          />
         ) : (
-          <img src={image} alt="Recipe Image" className={classes.image} />
+          <img
+            src={typeof image === 'object' ? JSON.stringify(image) : image}
+            alt="Recipe Image"
+            className={classes.image}
+          />
         )}
         {recipe?.images?.length > 1 && !viewAllImages ? (
           <button className={classes.media__button} onClick={() => setViewAllImages(true)}>
@@ -260,7 +276,9 @@ function RecipePage(props) {
             {`Show all materials (${recipe?.images?.length})`}
           </button>
         ) : null}
-        {console.log(`thumbnail ----------- ${recipe?.video_thumbnail_url}`)}
+        {console.log(`image ---------${JSON.stringify(image)}`)}
+        {console.log(`mainImage ---------${JSON.stringify(mainImage[0])}`)}
+        {console.log(`video_thumbnail_url ---------${JSON.stringify(recipe?.video_thumbnail_url)}`)}
       </div>
     );
   };
