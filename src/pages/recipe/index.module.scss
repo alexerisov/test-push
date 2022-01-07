@@ -433,7 +433,7 @@
       font-size: 24px;
       line-height: 160%;
       letter-spacing: 0.01em;
-      color: #14181F;
+      color: #14181f;
 
       &_subtitle {
         width: 100%;
@@ -445,26 +445,25 @@
         color: #566481;
       }
 
-      &_bold{
+      &_bold {
         font-weight: 600;
         font-size: 40px;
         line-height: 140%;
         letter-spacing: 0.01em;
-        color: #14181F;
+        color: #14181f;
       }
     }
   }
 
   &_title {
     &_wrapper {
-
     }
 
     font-weight: 600;
     font-size: 24px;
     line-height: 160%;
     letter-spacing: 0.01em;
-    color: #14181F;
+    color: #14181f;
   }
 
   &_subtitle {
@@ -479,10 +478,9 @@
       font-size: 14px;
       line-height: 160%;
       letter-spacing: 0.01em;
-      color: #353E50;
+      color: #353e50;
     }
   }
-
 }
 
 .popular_recipes {
@@ -629,8 +627,6 @@
     }
   }
 
-
-
   .classification {
     &_icons_container {
       padding-bottom: 32px;
@@ -766,6 +762,11 @@
   &__close {
     border-radius: 50%;
     border: 2px solid $--sc--color-neutrals6;
+    &__mobile {
+      border-radius: 50%;
+      border: 2px solid $--sc--color-neutrals6;
+      margin-left: 60px;
+    }
   }
 }
 
