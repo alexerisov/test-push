@@ -259,7 +259,7 @@ function RecipePage(props) {
           </>
         ) : mainImage.length > 0 ? (
           <img
-            src={typeof mainImage[0] === 'object' ? JSON.stringify(mainImage[0]) : mainImage[0]}
+            src={typeof mainImage[0] === 'object' ? mainImage[0].url : mainImage[0]}
             alt="Recipe Image"
             className={classes.image}
           />
@@ -276,9 +276,6 @@ function RecipePage(props) {
             {`Show all materials (${recipe?.images?.length})`}
           </button>
         ) : null}
-        {console.log(`image ---------${JSON.stringify(image)}`)}
-        {console.log(`mainImage ---------${JSON.stringify(mainImage[0])}`)}
-        {console.log(`video_thumbnail_url ---------${JSON.stringify(recipe?.video_thumbnail_url)}`)}
       </div>
     );
   };
