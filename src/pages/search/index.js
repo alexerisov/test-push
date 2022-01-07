@@ -141,11 +141,11 @@ const SearchInput = () => {
     },
     validationSchema: validationSchema,
     onSubmit: values => {
-      if (!values.search) {
+      if (!values.search.trim()) {
         router.push(`search?`);
       } else {
         router.push(
-          `search?title=${values.search}&${!isOnlyEatchefRecipesQueryExist() ? '' : 'only_eatchefs_recipes=Y'}`
+          `search?title=${values.search.trim()}&${!isOnlyEatchefRecipesQueryExist() ? '' : 'only_eatchefs_recipes=Y'}`
         );
       }
     }
