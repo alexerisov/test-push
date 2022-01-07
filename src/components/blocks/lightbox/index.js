@@ -19,6 +19,7 @@ import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import useVideoPlayer from '@/customHooks/useVideoPlayer';
 import dayjs from 'dayjs';
 import { convertToHours } from '@/utils/converter';
+import { ButtonShare } from '@/components/elements/button';
 
 const Balls = styled.div`
   display: flex;
@@ -89,7 +90,7 @@ const VideoRange = styled(Slider)`
   }
 `;
 
-const LightBox = ({ onClickWrapper, title, video, images }) => {
+const LightBox = ({ onClickWrapper, title, video, images, recipe, absolutePath }) => {
   const [currentSlide, setSlide] = useState(0);
   const [loading, setLoading] = useState(false);
   const mobile = useMediaQuery('(max-width:576px)');
@@ -126,10 +127,18 @@ const LightBox = ({ onClickWrapper, title, video, images }) => {
             <div className={classes.lightbox__row_top__text}>
               {!mobile && `${currentSlide + 1} / ${images?.length + 1}`}
             </div>
-
+            {console.log(recipe)}
             <div>
               <IconButton className={classes.lightbox__controls_upload} size="24px" onClick={() => null}>
-                <BasicIcon icon={ShareIcon} color={'#AFB8CA'} />
+                {/* <BasicIcon icon={ShareIcon} color={'#AFB8CA'} /> */}
+                <ButtonShare
+                  id={recipe?.pk}
+                  photo={recipe?.images[0]}
+                  description={recipe?.description}
+                  currentUrl={`${absolutePath}/recipe/${recipe?.pk}`}
+                  leftSide>
+                  <BasicIcon icon={ShareIcon} color={'#AFB8CA'} />
+                </ButtonShare>
               </IconButton>
               <IconButton className={classes.lightbox__controls} size="24px" onClick={onClickWrapper}>
                 <BasicIcon icon={CloseIcon} />
