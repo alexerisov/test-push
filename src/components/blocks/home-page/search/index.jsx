@@ -37,7 +37,7 @@ const SearchInput = () => {
     },
     validationSchema: validationSchema,
     onSubmit: values => {
-      window.location = `search?title=${values.search}&${
+      window.location = `search?title=${values.search.trim()}&${
         !isOnlyEatchefRecipesQueryExist() ? '' : 'only_eatchefs_recipes=Y'
       }`;
     }
