@@ -297,6 +297,16 @@ function RecipePage(props) {
                 <img src="/icons/Arrow Right 2/Line.svg" alt="arrow-next" />
               </ButtonNext>
             </div>
+            <div className={classes.galery__close__mobile}>
+              <IconButton
+                size="medium"
+                onClick={() => {
+                  windowScroll(0);
+                  setViewAllImages(false);
+                }}>
+                <img src="/icons/Close/Line.svg" />
+              </IconButton>
+            </div>
           </div>
         </CarouselProvider>
       )
