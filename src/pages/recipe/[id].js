@@ -120,6 +120,15 @@ function RecipePage(props) {
   const [viewAllImages, setViewAllImages] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
+  const [materials, setMaterials] = useState([]);
+
+  useEffect(() => {
+    if (recipe?.video_thumbnail_url) {
+      setMaterials([recipe?.video_thumbnail_url, ...recipe?.images]);
+    } else {
+      setMaterials(recipe?.images);
+    }
+  }, [recipe]);
 
   useEffect(() => {
     if (props.account.hasToken) {
@@ -259,7 +268,7 @@ function RecipePage(props) {
           </>
         ) : mainImage.length > 0 ? (
           <img
-            src={typeof mainImage[0] === 'object' ? JSON.stringify(mainImage[0]) : mainImage[0]}
+            src={typeof mainImage[0] === 'object' ? mainImage[0].url : mainImage[0]}
             alt="Recipe Image"
             className={classes.image}
           />
@@ -270,15 +279,12 @@ function RecipePage(props) {
             className={classes.image}
           />
         )}
-        {recipe?.images?.length > 1 && !viewAllImages ? (
+        {materials > 1 && !viewAllImages ? (
           <button className={classes.media__button} onClick={() => setViewAllImages(true)}>
             <MyPicture />
-            {`Show all materials (${recipe?.images?.length})`}
+            {`Show all materials (${materials})`}
           </button>
         ) : null}
-        {console.log(`image ---------${JSON.stringify(image)}`)}
-        {console.log(`mainImage ---------${JSON.stringify(mainImage[0])}`)}
-        {console.log(`video_thumbnail_url ---------${JSON.stringify(recipe?.video_thumbnail_url)}`)}
       </div>
     );
   };
