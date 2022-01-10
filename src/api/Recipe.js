@@ -142,6 +142,7 @@ export default {
     types = null,
     ordering = null,
     sale_status = null,
+    recipe_set = null,
     page_size = null,
     only_eatchefs_recipes = null
   }) => {
@@ -157,6 +158,7 @@ export default {
         title,
         types,
         ordering,
+        recipe_set,
         sale_status,
         ...eatchefRecipesParams
       }
