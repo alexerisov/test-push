@@ -95,7 +95,6 @@ function RecipePage(props) {
   const recipeId = recipe?.pk;
   const recipeAuthorAvatar = recipe?.user.avatar;
   const recipeCommentsNumber = recipe?.comment_number;
-  const recipeAverageRatins = recipe?.avg_rating;
   const recipeImage = recipe?.images?.[0]?.url;
   const recipeDescription = recipe?.description;
   const recipeCookingTime = recipe?.cooking_time;
@@ -106,6 +105,15 @@ function RecipePage(props) {
   const carbohydrates = recipe?.carbohydrates;
   const deliveryPrice = useSelector(state => state.cart?.deliveryPrice);
   const isRecipeInProduction = recipe?.sale_status === 5;
+
+  const recipeRating = {
+    average: recipe?.avg_rating,
+    taste: recipe?.rating_taste,
+    valueForMoney: recipe?.rating_value_for_the_money,
+    originality: recipe?.rating_originality
+  };
+
+  const isUserRecipeBuyer = recipe?.user_is_buyer;
 
   const isAuthorized = useSelector(state => state.account.hasToken);
   const isRecipeInCart = useSelector(state => state.cart.products?.some(el => el.object_id == recipe?.pk));
@@ -237,7 +245,7 @@ function RecipePage(props) {
             <Avatar src={recipeAuthorAvatar} alt="Recipe Author Avatar" className={classes.title_rating_avatar} />
             <span className={classes.title_rating_stars}>
               <BasicIcon icon={StarIcon} color="#FFB04C" />
-              {recipeAverageRatins ?? 'N/A'}
+              {recipeRating.average ?? 'N/A'}
             </span>
             <span className={classes.title_rating_reviews}>({recipeCommentsNumber ?? 'N/A'} reviews)</span>
           </span>
@@ -645,12 +653,13 @@ function RecipePage(props) {
           <div className={classes.comments_rate_wrapper}>
             <BasicIcon icon={StarIcon} color="#FFB04C" />
             <h2 className={classes.comments_rate_value}>
-              <span className={classes.comments_rate_value_bold}>4,5</span> / 5,0
+              {console.log('rating', recipeRating)}
+              <span className={classes.comments_rate_value_bold}>{recipeRating.average || '-'}</span> / 5,0
             </h2>
             <h3 className={classes.comments_rate_value_subtitle}>(88%) Eaters recommended this product</h3>
           </div>
         </div>
-        <CommentBlock id={recipeId} userId={userId} />
+        <CommentBlock id={recipeId} userId={userId} rating={recipeRating} isUserRecipeBuyer={isUserRecipeBuyer} />
       </div>
     );
   };

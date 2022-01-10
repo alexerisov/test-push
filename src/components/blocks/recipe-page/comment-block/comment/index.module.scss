@@ -52,22 +52,29 @@
 
   }
 
+  &__created_at {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 160%;
+    letter-spacing: 0.01em;
+    color: #566481;
+  }
+
   &__likes {
     display: flex;
+    column-gap: 16px;
   }
 
   &__like {
     display: flex;
     align-items: center;
-    margin-right: 42px;
     font-style: normal;
     font-weight: 600;
     font-size: 12px;
     line-height: 160%;
     letter-spacing: 0.01em;
-
-    /* Grey/ Darkest */
-
+    cursor: pointer;
     color: #14181F;
 
     &__icon {
@@ -81,27 +88,20 @@
     }
   }
 
-  &__like:last-child {
-    margin-right: 0;
-  }
-
   &__delete {
-    position: absolute;
-    top: 24px;
-    right: 10px;
-    color: inherit;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 160%;
+    letter-spacing: 0.01em;
     cursor: pointer;
-    transform: rotate(45deg);
-    opacity: 0.2;
+    color: #14181F;
+    opacity: 0.5;
     transition: opacity 0.3s !important;
 
     &:hover {
-      transform: rotate(45deg) scale(1.2);
+      opacity: 0.8;
     }
-  }
-
-  &:hover .comment__delete {
-    opacity: 0.8;
   }
 }
 

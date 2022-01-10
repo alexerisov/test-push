@@ -250,6 +250,12 @@ export const IS_APPROVED = {
   rejected: 3
 };
 
+const RECIPE_RATING_TYPES = {
+  1: 'taste',
+  2: 'valueForMoney',
+  3: 'originality'
+};
+
 export const pageNames = {
   '/': 'Home',
   '/my-uploads': 'My recipe',

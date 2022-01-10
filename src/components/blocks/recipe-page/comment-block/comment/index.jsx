@@ -12,6 +12,11 @@ import { debounce } from '@/utils/debounce';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Rating } from '@material-ui/lab';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
+import dayjs from 'dayjs';
+const relativeTime = require('dayjs/plugin/relativeTime');
+const utc = require('dayjs/plugin/utc');
+dayjs.extend(utc);
+dayjs.extend(relativeTime);
 
 const Comment = ({
   likesNumber,
@@ -22,7 +27,8 @@ const Comment = ({
   deleteComment,
   user,
   userId,
-  uploadLikeHandler
+  uploadLikeHandler,
+  rating
 }) => {
   const mobile = useMediaQuery('(max-width: 568px)');
   const activeUserId = useSelector(state => state?.account?.profile?.pk);
@@ -131,40 +137,44 @@ const Comment = ({
           {user?.full_name ?? 'No name'}
         </p>
 
-        <div className={classes.stars}>
-          <Rating
-            emptyIcon={<StarBorderIcon htmlColor="#AFB8CA" fontSize="16px" />}
-            classes={{
-              icon: classes.stars_icon,
-              iconEmpty: classes.stars_icon_empty,
-              iconFilled: classes.stars_icon_filled
-            }}
-            readOnly
-            value={3.5}
-            precision={0.5}
-          />
-        </div>
+        {rating && (
+          <div className={classes.stars}>
+            <Rating
+              emptyIcon={<StarBorderIcon htmlColor="#AFB8CA" fontSize="16px" />}
+              classes={{
+                icon: classes.stars_icon,
+                iconEmpty: classes.stars_icon_empty,
+                iconFilled: classes.stars_icon_filled
+              }}
+              readOnly
+              value={rating}
+              precision={0.5}
+            />
+          </div>
+        )}
 
         <p className={classes.comment__text}>{text}</p>
 
         <div className={classes.comment__likes}>
-          <div className={classes.comment__like}>
-            <span onClick={() => likeHandler(likeTypes.like)}>{likes.value} Likes</span>
+          <div className={classes.comment__created_at}>
+            <span>{dayjs().to(dayjs.utc(createdAt))}</span>
           </div>
 
           <div className={classes.comment__like}>
-            <span onClick={() => likeHandler(likeTypes.dislike)}>{dislikes.value} Dislikes</span>
+            <span onClick={() => likeHandler(likeTypes.like)}>{likes.value || false} Like</span>
           </div>
+
+          {/*<div className={classes.comment__like}>*/}
+          {/*  <span onClick={() => likeHandler(likeTypes.dislike)}>{dislikes.value} Dislikes</span>*/}
+          {/*</div>*/}
+
+          {isCreatedTwoHoursAgo() && isCommentCreatedByActiveUser() && (
+            <div className={classes.comment__delete}>
+              <span onClick={() => deleteComment(commentId)}>Delete</span>
+            </div>
+          )}
         </div>
       </div>
-
-      {isCreatedTwoHoursAgo() && isCommentCreatedByActiveUser() && (
-        <AddOutlinedIcon
-          className={classes.comment__delete}
-          fontSize={'small'}
-          onClick={() => deleteComment(commentId)}
-        />
-      )}
     </div>
   );
 };

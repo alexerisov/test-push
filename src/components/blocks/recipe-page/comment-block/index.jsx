@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 
 import { modalActions } from '@/store/actions';
 import { CommentItem } from '@/components/elements/comment';
+import { ReactComponent as ArrowRightIcon } from '@/../public/icons/Arrow Right 2/Line.svg';
 import Recipe from '@/api/Recipe';
 
 import classes from './index.module.scss';
@@ -15,13 +16,26 @@ import Comment from '@/components/blocks/recipe-page/comment-block/comment';
 import { Rating } from '@material-ui/lab';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import StarIcon from '@material-ui/icons/Star';
+import { BasicIcon } from '@/components/basic-elements/basic-icon';
 
-const CommentBlock = ({ id, userId, children, updateComments, addComment, uploadLikeHandler, deleteCommentHandle }) => {
+const CommentBlock = ({
+  id,
+  userId,
+  children,
+  updateComments,
+  addComment,
+  uploadLikeHandler,
+  deleteCommentHandle,
+  rating,
+  isUserRecipeBuyer
+}) => {
   const isAuthorized = useSelector(state => state.account.hasToken);
 
   const dispatch = useDispatch();
 
   const [comments, setComments] = useState();
+  const [reviews, setReviews] = useState();
+  const commentsAndReviews = comments?.results?.concat(reviews?.results) || [];
 
   const placeholder = 'Share your thoughts here...';
   const authError = 'Please login first, then you will can comment recipes!';
@@ -35,7 +49,10 @@ const CommentBlock = ({ id, userId, children, updateComments, addComment, upload
 
   const formik = useFormik({
     initialValues: {
-      textarea: ''
+      textarea: '',
+      ratingTaste: null,
+      ratingValueForMoney: null,
+      ratingOriginality: null
     },
     validationSchema: Yup.object({
       textarea: Yup.string()
@@ -56,16 +73,19 @@ const CommentBlock = ({ id, userId, children, updateComments, addComment, upload
 
   const getComments = async () => {
     try {
-      let response;
+      let responseComments;
+      let responseReviews;
 
       if (updateComments) {
-        response = await updateComments({ recipeId: id, page });
+        responseComments = await updateComments({ recipeId: id, page });
       } else {
-        response = await Recipe.getComments({ recipeId: id, page });
+        responseComments = await Recipe.getComments({ recipeId: id, page });
+        responseReviews = await Recipe.getReviews({ recipeId: id, page });
       }
 
-      setNumberOfPages(countCommentsPages(response.data.count));
-      setComments(response.data);
+      setNumberOfPages(countCommentsPages(responseComments.data.count + responseReviews.data.count));
+      setComments(responseComments.data);
+      setReviews(responseReviews.data);
     } catch (e) {
       console.log(e);
     }
@@ -77,10 +97,16 @@ const CommentBlock = ({ id, userId, children, updateComments, addComment, upload
     return isRemainExists ? ++pages : pages;
   };
 
-  const uploadComment = async ({ textarea }) => {
+  const uploadComment = async ({ textarea, ratingTaste, ratingValueForMoney, ratingOriginality }) => {
     if (!isAuthorized) {
       return;
     }
+
+    const ratings = [
+      { type: 1, value: +ratingTaste },
+      { type: 2, value: +ratingValueForMoney },
+      { type: 3, value: +ratingOriginality }
+    ];
 
     try {
       const targetComment = {
@@ -92,12 +118,24 @@ const CommentBlock = ({ id, userId, children, updateComments, addComment, upload
       if (updateComments) {
         response = await addComment(targetComment);
       } else {
-        response = await Recipe.uploadComments(targetComment);
+        if (isUserRecipeBuyer && ratings.some(el => el.value !== null)) {
+          ratings.map(async item => {
+            if (0 < item.value && item.value <= 5) {
+              let itemResponse = await Recipe.uploadRating({ id: +id, ...item });
+            }
+          });
+          response = await Recipe.uploadReviews(targetComment);
+        } else {
+          response = await Recipe.uploadComments(targetComment);
+        }
       }
 
       if (response.status === 201) {
         getComments();
         formik.values.textarea = '';
+        formik.values.ratingTaste = null;
+        formik.values.ratingValueForMoney = null;
+        formik.values.ratingOriginality = null;
       }
     } catch (e) {
       console.log(e);
@@ -131,27 +169,33 @@ const CommentBlock = ({ id, userId, children, updateComments, addComment, upload
   };
 
   const RateParameter = props => {
-    const [ratingStars, setRatingStars] = useState();
+    const { text, formik, value, average } = props;
 
     return (
       <div className={classes.rate_parameter_wrapper}>
-        <div className={classes.rate_parameter_text}>{props?.text}</div>
-        <div className={classes.rate_parameter_stars}>
-          <Rating
-            emptyIcon={<StarBorderIcon htmlColor="#FFAA00" fontSize="24px" />}
-            classes={{
-              icon: classes.rate_parameter_stars_icon,
-              iconEmpty: classes.rate_parameter_stars_icon_empty,
-              iconFilled: classes.rate_parameter_stars_icon_filled
-            }}
-            name={props?.text}
-            value={ratingStars}
-            precision={0.5}
-            onChange={(event, newValue) => {
-              setRatingStars(newValue);
-            }}
-          />
-        </div>
+        <div className={classes.rate_parameter_text}>{text}</div>
+        {isUserRecipeBuyer && (
+          <div className={classes.rate_parameter_stars}>
+            <Rating
+              emptyIcon={<StarBorderIcon htmlColor="#FFAA00" fontSize="24px" />}
+              classes={{
+                icon: classes.rate_parameter_stars_icon,
+                iconEmpty: classes.rate_parameter_stars_icon_empty,
+                iconFilled: classes.rate_parameter_stars_icon_filled
+              }}
+              name={value}
+              value={formik.values[value]}
+              precision={1}
+              onChange={(event, newValue) => {
+                if (!isAuthorized) {
+                  return dispatch(modalActions.open('register'));
+                }
+
+                formik.setFieldValue(value, newValue);
+              }}
+            />
+          </div>
+        )}
         <div className={classes.rate_parameter_line}>
           <LinearProgress
             classes={{
@@ -160,11 +204,11 @@ const CommentBlock = ({ id, userId, children, updateComments, addComment, upload
               bar: classes.rate_parameter_line_bar
             }}
             variant="determinate"
-            value={(props?.average / 5) * 100}
+            value={average ? (average / 5) * 100 : 0}
           />
         </div>
         <div className={classes.rate_parameter_average}>
-          {props?.average?.toFixed(1)}
+          {average ? average.toFixed(1) : '-'}
           <StarIcon htmlColor="#FFAA00" fontSize="20px" />
         </div>
       </div>
@@ -176,9 +220,24 @@ const CommentBlock = ({ id, userId, children, updateComments, addComment, upload
       <div className={classes.rating}>
         <div className={classes.rating_header}></div>
         <div className={classes.rating_body}>
-          <RateParameter text="Taste" stars="3" average={Number.parseFloat('2.5')} />
-          <RateParameter text="Value for Money" stars="1" average={Number.parseFloat('5')} />
-          <RateParameter text="Originality" stars="2" average={Number.parseFloat('4.5')} />
+          <RateParameter
+            text="Taste"
+            formik={formik}
+            value="ratingTaste"
+            average={Number.parseFloat(rating.taste) || null}
+          />
+          <RateParameter
+            text="Value for Money"
+            formik={formik}
+            value="ratingValueForMoney"
+            average={Number.parseFloat(rating.valueForMoney) || null}
+          />
+          <RateParameter
+            text="Originality"
+            formik={formik}
+            value="ratingOriginality"
+            average={Number.parseFloat(rating.originality) || null}
+          />
         </div>
       </div>
 
@@ -193,8 +252,16 @@ const CommentBlock = ({ id, userId, children, updateComments, addComment, upload
           value={formik.values.textarea}
           fullWidth
           endAdornment={
-            <Button className={classes.comments__input__button} type="submit" variant="contained" color="primary">
-              Post it
+            <Button
+              endIcon={<BasicIcon icon={ArrowRightIcon} color="white" size="16px" />}
+              classes={{
+                root: classes.comments__input__button,
+                label: classes.comments__input__button__label
+              }}
+              type="submit"
+              variant="contained"
+              color="primary">
+              Post it!
             </Button>
           }
         />
@@ -207,11 +274,11 @@ const CommentBlock = ({ id, userId, children, updateComments, addComment, upload
       </form>
 
       <div className={classes.comments__body}>
-        <h3 className={classes.comments__subtitle}>Comments ({comments && comments.count})</h3>
+        <h3 className={classes.comments__subtitle}>{comments && comments.count} Comments</h3>
 
-        {comments?.results?.length !== 0 &&
-          comments?.results.map((comment, index) => {
-            console.log(comment);
+        {commentsAndReviews?.length !== 0 &&
+          commentsAndReviews.map((comment, index) => {
+            let isReview = Boolean(comment?.avg_user_rating);
             return (
               <Comment
                 user={comment?.user}
@@ -224,17 +291,18 @@ const CommentBlock = ({ id, userId, children, updateComments, addComment, upload
                 createdAt={comment?.created_at}
                 deleteComment={deleteComment}
                 uploadLikeHandler={uploadLikeHandler}
+                rating={comment?.avg_user_rating}
               />
             );
           })}
 
-        {comments?.results?.length !== 0 && (
-          <Pagination
-            classes={{ root: classes.comments__pagination }}
-            count={numberOfPages}
-            onChange={(event, page) => setPage(page)}
-          />
-        )}
+        {/*{commentsAndReviews?.length !== 0 && (*/}
+        {/*  <Pagination*/}
+        {/*    classes={{ root: classes.comments__pagination }}*/}
+        {/*    count={numberOfPages}*/}
+        {/*    onChange={(event, page) => setPage(page)}*/}
+        {/*  />*/}
+        {/*)}*/}
       </div>
     </div>
   );

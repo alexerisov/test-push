@@ -91,6 +91,19 @@ export default {
     });
   },
 
+  uploadReviews: ({ id, text }) => {
+    return http.post(`recipe/${id}/reviews`, {
+      text
+    });
+  },
+
+  uploadRating: ({ id, type, value }) => {
+    return http.post(`recipe/${id}/rate`, {
+      rating: value,
+      rating_type: type
+    });
+  },
+
   uploadCommentsLikes: ({ id, type }) => {
     if (type === 'dislike') {
       return http.post(`recipe/comment/${id}/like`, {}, { params: { dislike: 'Y' } });
@@ -207,8 +220,17 @@ export default {
   getComments: ({ recipeId, page }) => {
     return http.get(`/recipe/${recipeId}/comments`, {
       params: {
-        page: `${page}`,
-        page_size: 4
+        // page: `${page}`,
+        page_size: 10
+      }
+    });
+  },
+
+  getReviews: ({ recipeId, page }) => {
+    return http.get(`/recipe/${recipeId}/reviews`, {
+      params: {
+        // page: `${page}`,
+        page_size: 10
       }
     });
   },
