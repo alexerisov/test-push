@@ -125,7 +125,6 @@ const MenuProps = {
   }
 };
 const SearchInput = () => {
-  const dispatch = useDispatch();
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
   const [result, setResult] = useState([]);
@@ -142,12 +141,14 @@ const SearchInput = () => {
     validationSchema: validationSchema,
     onSubmit: values => {
       if (!values.search?.trim()) {
-        router.push(`search?`);
+        values.search = '';
       } else {
         router.push(
           `search?title=${values.search.trim()}&${!isOnlyEatchefRecipesQueryExist() ? '' : 'only_eatchefs_recipes=Y'}`
         );
       }
+      values.search = '';
+      formik.setFieldValue('search', '');
     }
   });
 
@@ -228,17 +229,10 @@ const SearchInput = () => {
                 formik.handleChange(e);
                 onChangeInputSearch(e.target.value);
               }}
-              // fullWidth
             />
           )}
         />
-        {/* <IconButton
-          type="submit"
-          className={classes.search_button}
-          style={{ background: '#FFAA00', color: 'white' }}
-          size="32px">
-          <SearchIcon className={classes.search_button_icon} />
-        </IconButton> */}
+
         <button className={classes.search__searchButton} type="submit">
           <img src="/images/index/icon_search.svg" alt="search-icon" />
         </button>
@@ -716,17 +710,6 @@ const Recipes = props => {
   const searchField = (
     <>
       <div className={classes.search__header}>
-        {title && !mobile ? (
-          <div className={classes.search__header__text__wrap}>
-            <p className={classes.search__header__text}>{title}</p>
-
-            <button className={classes.search__closeButton} onClick={handleCloseSearchQuery}>
-              <img src="icons/Close-Circle/Line.svg" alt="close-icon" />
-            </button>
-          </div>
-        ) : (
-          <p></p>
-        )}
         <SearchInput />
       </div>
     </>
@@ -769,7 +752,17 @@ const Recipes = props => {
             <div className={classes.search__filter__line} />
           </>
         )}
+        {title && !mobile ? (
+          <div className={classes.search__header__text__wrap}>
+            <p className={classes.search__header__text}>{title}</p>
 
+            <button className={classes.search__closeButton} onClick={handleCloseSearchQuery}>
+              <img src="icons/Close-Circle/Line.svg" alt="close-icon" />
+            </button>
+          </div>
+        ) : (
+          <p></p>
+        )}
         {/* <div className={classes.search__filterHeader_left}>
           <p className={classes.search__filter__title}>Filter</p>
           {!mobile && (
