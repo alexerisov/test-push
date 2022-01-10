@@ -29,6 +29,18 @@ const Weekmenu = ({ weekmenu, token }) => {
       })
       .catch(e => console.error(e));
   }, []);
+  useEffect(() => {
+    const filteredArr = defaultWeekmenuResults.reduce((acc, current) => {
+      const x = acc.find(item => item.pc === current.pc);
+      if (!x) {
+        return acc.concat([current]);
+      } else {
+        return acc;
+      }
+    }, []);
+    console.log(filteredArr);
+  }, [defaultWeekmenuResults]);
+
   return (
     <div className={classes.weekmenu}>
       <CarouselProvider

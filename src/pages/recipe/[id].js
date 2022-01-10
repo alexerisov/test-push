@@ -287,10 +287,10 @@ function RecipePage(props) {
             className={classes.image}
           />
         )}
-        {materials > 1 && !viewAllImages ? (
+        {materials !== 0 && !viewAllImages ? (
           <button className={classes.media__button} onClick={() => setViewAllImages(true)}>
             <MyPicture />
-            {`Show all materials (${materials})`}
+            {`Show all materials (${materials.length})`}
           </button>
         ) : null}
       </div>
