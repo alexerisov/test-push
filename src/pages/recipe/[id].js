@@ -136,6 +136,7 @@ function RecipePage(props) {
     } else {
       setMaterials(recipe?.images);
     }
+    console.log(materials)
   }, [recipe]);
 
   useEffect(() => {
@@ -287,7 +288,7 @@ function RecipePage(props) {
             className={classes.image}
           />
         )}
-        {materials !== 0 && !viewAllImages ? (
+        {materials.length > 1 && !viewAllImages ? (
           <button className={classes.media__button} onClick={() => setViewAllImages(true)}>
             <MyPicture />
             {`Show all materials (${materials.length})`}
