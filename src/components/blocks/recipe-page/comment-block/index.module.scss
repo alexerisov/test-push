@@ -124,7 +124,7 @@
   }
 
   &_text {
-    flex: .5;
+    flex: 1;
     font-weight: 500;
     font-size: 14px;
     line-height: 160%;
@@ -136,6 +136,7 @@
   }
 
   &_stars {
+    flex: 0 0 120px;
     &_icon {
 
       &_empty {
@@ -150,7 +151,7 @@
   }
 
   &_line {
-    flex: 3;
+    flex: 1 1 max-content;
     max-width: 280px;
 
     &_root{
@@ -188,6 +189,7 @@
 @media (max-width: 1025px) {
   .rating {
     &_body {
+      row-gap: 22px;
       margin: 32px 0 56px;
     }
   }
@@ -198,16 +200,11 @@
     }
 
     &_text {
-      flex: 1;
-      width: 100%;
-    }
-
-    &_stars {
-
+      flex: 1 1 100%;
     }
 
     &_line {
-      //width: 100%;
+      flex: 1;
       max-width: 280px;
 
     }
@@ -221,28 +218,27 @@
 @media (max-width: 600px) {
   .rating {
     &_body {
+      row-gap: 40px;
       margin: 32px 0 56px;
     }
   }
 
   .rate_parameter {
     &_wrapper {
+      row-gap: 8px;
     }
 
     &_text {
-      flex: 1;
-      width: 100%;
+      flex: 1 1 100%;
     }
 
     &_stars {
-      flex: 1;
-      width: 100%;
+      flex: 0 0 100%;
     }
 
     &_line {
       flex: 1;
-      //width: 100%;
-      max-width: 280px;
+      max-width: 100%;
     }
 
     &_average {
