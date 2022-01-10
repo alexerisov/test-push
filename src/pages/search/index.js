@@ -141,7 +141,7 @@ const SearchInput = () => {
     },
     validationSchema: validationSchema,
     onSubmit: values => {
-      if (!values.search.trim()) {
+      if (!values.search?.trim()) {
         router.push(`search?`);
       } else {
         router.push(
@@ -283,7 +283,6 @@ const Recipes = props => {
   const [pageSalable, setPageSalable] = useState(1);
   const [firstSearchSalableByTitle, setFirstSearchSalableByTitle] = useState(true);
   const [salableLoading, setSalableLoading] = useState(false);
-
   useEffect(() => {
     if (weekmenu.length !== 0) {
       const recipesArray = weekmenu.map(el => el.recipes);
@@ -684,8 +683,9 @@ const Recipes = props => {
   };
 
   const handleClickClearAll = () => {
-    router.push('/search');
-    setTimeout(router.reload, 100);
+    setTitle('');
+    setQuery('');
+    formik.handleSubmit();
   };
 
   const handleChangePage = (event, value) => {
@@ -923,9 +923,18 @@ const Recipes = props => {
           </StyledAccordion>
           <div className={classes.search__line} />
 
-          <button type="reset" onClick={handleClickClearAll} className={classes.search__clearButton}>
-            <img src="icons/Close-Circle/Shape.svg" alt="close-icon" /> Reset filter
-          </button>
+          {(query && Object.keys(query).length == 0) ||
+          (router.query.diet_restrictions === '' &&
+            router.query.cooking_methods === '' &&
+            router.query.cooking_skills === '' &&
+            router.query.types === '' &&
+            router.query.ordering === '-likes_number' &&
+            router.query.only_eatchefs_recipes === '' &&
+            router.query.recipe_set === '') ? null : (
+            <button type="reset" onClick={handleClickClearAll} className={classes.search__clearButton}>
+              <img src="icons/Close-Circle/Shape.svg" alt="close-icon" /> Reset filter
+            </button>
+          )}
         </NoSsr>
       </div>
       {mobile && (
@@ -1060,10 +1069,11 @@ const Recipes = props => {
           </AccordionDetails>
         </StyledAccordion>
         <div className={classes.search__line} />
-
-        <button type="reset" onClick={handleClickClearAll} className={classes.search__clearButton}>
-          <img src="icons/Close-Circle/Shape.svg" alt="close-icon" /> Reset filter
-        </button>
+        {query && Object.keys(query).length == 0 ? null : (
+          <button type="reset" onClick={handleClickClearAll} className={classes.search__clearButton}>
+            <img src="icons/Close-Circle/Shape.svg" alt="close-icon" /> Reset filter
+          </button>
+        )}
       </NoSsr>
     </div>
   );
