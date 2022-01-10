@@ -141,7 +141,7 @@ const SearchInput = () => {
     },
     validationSchema: validationSchema,
     onSubmit: values => {
-      if (!values.search.trim()) {
+      if (!values.search?.trim()) {
         router.push(`search?`);
       } else {
         router.push(
@@ -924,7 +924,14 @@ const Recipes = props => {
           </StyledAccordion>
           <div className={classes.search__line} />
 
-          {query && Object.keys(query).length == 0 ? null : (
+          {(query && Object.keys(query).length == 0) ||
+          (router.query.diet_restrictions === '' &&
+            router.query.cooking_methods === '' &&
+            router.query.cooking_skills === '' &&
+            router.query.types === '' &&
+            router.query.ordering === '-likes_number' &&
+            router.query.only_eatchefs_recipes === '' &&
+            router.query.recipe_set === '') ? null : (
             <button type="reset" onClick={handleClickClearAll} className={classes.search__clearButton}>
               <img src="icons/Close-Circle/Shape.svg" alt="close-icon" /> Reset filter
             </button>
