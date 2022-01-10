@@ -418,6 +418,16 @@ const Recipes = props => {
     }
   });
 
+  const weekmenuWithoutDuplicate = () => {
+    const seen = new Set();
+    const filteredArr = weekmenuResults.flat().filter(el => {
+      const duplicate = seen.has(el.pk);
+      seen.add(el.pk);
+      return !duplicate;
+    });
+    return filteredArr;
+  };
+
   const dietaryrestrictionsList = [];
   const cookingMethodsList = [];
   const recipeTypesList = [];
@@ -1123,7 +1133,7 @@ const Recipes = props => {
             </Select>
           </div> */}
 
-          <Weekmenu weekmenu={weekmenuResults} token={props.token} />
+          <Weekmenu weekmenu={weekmenuWithoutDuplicate} token={props.token} />
 
           <div className={classes.search__result__text}>
             <img src="icons/Coin/Line.svg" alt="close-icon" />
