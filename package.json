@@ -11,6 +11,7 @@
     "build-storybook": "build-storybook",
     "debug": "NODE_OPTIONS='--inspect' next dev"
   },
+  "browserslist": ["> 0.25%", "not dead"],
   "private": true,
   "license": "ISC",
   "dependencies": {
