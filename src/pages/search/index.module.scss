@@ -42,7 +42,8 @@
       &__wrap {
         display: flex;
         align-items: center;
-        min-width: 300px;
+        justify-content: space-around;
+        max-width: 240px;
         img {
           cursor: pointer;
           -moz-user-select: none;
