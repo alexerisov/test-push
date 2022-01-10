@@ -283,7 +283,6 @@ const Recipes = props => {
   const [pageSalable, setPageSalable] = useState(1);
   const [firstSearchSalableByTitle, setFirstSearchSalableByTitle] = useState(true);
   const [salableLoading, setSalableLoading] = useState(false);
-  useEffect(() => console.log(query), [query]);
   useEffect(() => {
     if (weekmenu.length !== 0) {
       const recipesArray = weekmenu.map(el => el.recipes);
