@@ -790,7 +790,17 @@ const Recipes = props => {
           </div>
           {isDropdownActive === true && (
             <ul className={classes.search__dropdown__list}>
-              <li className={classes.search__dropdown__item}>Recommended</li>
+              <li
+                className={classes.search__dropdown__item}
+                onClick={() => {
+                  setRecommendedFilter(``);
+                  setIsDropdownActive(false);
+                  formik.setFieldValue('recipe_set', ``);
+
+                  formik.handleSubmit();
+                }}>
+                Recommended
+              </li>
               {recommendedListMap}
             </ul>
           )}
