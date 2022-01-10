@@ -168,8 +168,7 @@ const CardSearch = props => {
                 variant="outlined"
                 color="primary"
                 onClick={handleClickBtn}>
-                <BasicIcon icon={CartIcon} color="#FB8C00" size="18px" />
-                {props.price}
+                <BasicIcon icon={CartIcon} color="#FB8C00" size="18px" />${props.price}
               </Button>
             ) : showCounter === true ? (
               <div onClick={e => e.stopPropagation()} className={classes.card__counterWrap}>

@@ -7,7 +7,7 @@ export const phoneNumberToServerValue = phoneNumber => {
   return null;
 };
 export function numberWithCommas(stringNum) {
-  return stringNum.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',');
+  return parseFloat(stringNum);
 }
 
 export const convertToHours = number => {
