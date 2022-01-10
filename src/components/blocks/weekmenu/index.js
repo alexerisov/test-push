@@ -24,22 +24,17 @@ const Weekmenu = ({ weekmenu, token }) => {
       .then(res => {
         setDefaultWeekmenuResults(() => {
           const recipesArray = res.data.map(el => el.recipes);
-          setDefaultWeekmenuResults(recipesArray.flat());
+          const seen = new Set();
+          const filteredArr = recipesArray.flat().filter(el => {
+            const duplicate = seen.has(el.pk);
+            seen.add(el.pk);
+            return !duplicate;
+          });
+          setDefaultWeekmenuResults(filteredArr);
         });
       })
       .catch(e => console.error(e));
   }, []);
-  useEffect(() => {
-    const filteredArr = defaultWeekmenuResults.reduce((acc, current) => {
-      const x = acc.find(item => item.pc === current.pc);
-      if (!x) {
-        return acc.concat([current]);
-      } else {
-        return acc;
-      }
-    }, []);
-    console.log(filteredArr);
-  }, [defaultWeekmenuResults]);
 
   return (
     <div className={classes.weekmenu}>
