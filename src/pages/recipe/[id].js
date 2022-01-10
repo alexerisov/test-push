@@ -494,11 +494,14 @@ function RecipePage(props) {
 
   const CookingSteps = () => {
     const Step = props => {
-      const { number, text } = props;
+      const { number, title, description } = props;
       return (
         <div className={classes.cooking_steps_element_wrapper}>
           <span className={classes.cooking_steps_number}>{number || 'N/A'}</span>
-          <span className={classes.cooking_steps_text}>{text || 'Not defined'}</span>
+          <div className={classes.cooking_steps_text}>
+            <p className={classes.cooking_steps_text_title}>{title || 'Not defined'}</p>
+            <p className={classes.cooking_steps_text_description}>{description || 'Not defined'}</p>
+          </div>
         </div>
       );
     };
@@ -509,7 +512,7 @@ function RecipePage(props) {
         <div className={classes.cooking_steps_wrapper}>
           {recipeCookingSteps?.length > 0
             ? recipeCookingSteps.map((step, index) => (
-                <Step number={step?.num} text={step?.title} key={'step' + index} />
+                <Step number={step?.num} title={step?.title} description={step?.description} key={'step' + index} />
               ))
             : 'There is no cooking steps yet'}
         </div>
