@@ -95,5 +95,9 @@ export default reducer(initState, {
       error: action.payload,
       isLoading: false
     };
+  },
+
+  [types.DELETE_CART]: () => {
+    return initState;
   }
 });

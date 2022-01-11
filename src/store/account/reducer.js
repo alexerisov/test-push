@@ -10,40 +10,37 @@ const initState = {
   token: token,
   refresh: refresh,
   remindWait: false,
-  remindError: null,
+  remindError: null
 };
 
 export default reducer(initState, {
-
   [types.SAVE_SESSION]: (state, action) => {
-    const profile = action.payload.profile
-      ? action.payload.profile
-      : state.profile;
+    const profile = action.payload.profile ? action.payload.profile : state.profile;
 
     return {
       ...state,
       profile,
       hasToken: !!action.payload.token,
       token: action.payload.token,
-      refresh: action.payload.refresh,
+      refresh: action.payload.refresh
     };
   },
 
-  [types.LOGOUT]: (state) => {
+  [types.LOGOUT]: state => {
     return {
       ...state,
       profile: {},
       hasToken: false,
       token: null,
-      refresh: null,
+      refresh: null
     };
   },
 
-  [types.REMIND]: (state) => {
+  [types.REMIND]: state => {
     return {
       ...state,
       remindWait: true,
-      remindError: null,
+      remindError: null
     };
   },
 
@@ -52,7 +49,7 @@ export default reducer(initState, {
       ...state,
       profile: action.payload.profile,
       hasToken: true,
-      remindWait: false,
+      remindWait: false
     };
   },
 
@@ -63,8 +60,7 @@ export default reducer(initState, {
       token: null,
       refresh: null,
       remindWait: false,
-      remindError: action.error,
+      remindError: action.error
     };
-  },
-
+  }
 });

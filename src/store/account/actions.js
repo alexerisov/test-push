@@ -1,6 +1,7 @@
 import Account from '@/api/Account.js';
 import { AuthCookieStorage } from '@/utils/web-storage/cookie';
 import { recoveryLocalStorage } from '@/utils/web-storage/local';
+import { types as cartTypes } from '../cart/actions';
 
 export const types = {
   SAVE_SESSION: Symbol('SAVE_SESSION'),
@@ -31,6 +32,7 @@ export default {
     return async dispatch => {
       AuthCookieStorage.reset();
       recoveryLocalStorage.deleteCreateRecipe();
+      dispatch({ type: cartTypes.DELETE_CART });
       dispatch({ type: types.LOGOUT });
     };
   },
