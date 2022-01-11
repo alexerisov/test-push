@@ -17,6 +17,25 @@ import { USER_TYPE } from '@/utils/datasets';
 import BurgerMenu from '@/components/basic-blocks/burger-menu';
 import { LoginDrawer } from '@/components/basic-blocks/drawer';
 
+const UserAvatar = ({ clickHandler, notificationAmount, avatar }) => {
+  const RedCircle = () => <div className={classes.red_circle}></div>;
+
+  return (
+    <span onClick={clickHandler}>
+      <div className={classes.button_avatar}>
+        <Avatar src={avatar} />
+        {notificationAmount > 0 && <RedCircle />}
+      </div>
+    </span>
+  );
+};
+
+const BurgerButton = ({ clickHandler }) => (
+  <IconButton onClick={clickHandler}>
+    <MenuIcon />
+  </IconButton>
+);
+
 const Header = props => {
   const useSeparatorStyles = makeStyles({
     root: {
@@ -65,8 +84,6 @@ const Header = props => {
 
   const OrangeCircle = () => <div className={classes.orange_circle}></div>;
 
-  const RedCircle = () => <div className={classes.red_circle}></div>;
-
   const RecipesButton = () => (
     <Button variant="text" href="/search?title=" className={classes.button_recipes}>
       Recipes
@@ -92,25 +109,9 @@ const Header = props => {
     </IconButton>
   );
 
-  const UserAvatar = () => {
-    return (
-      <span onClick={openMenuHandler}>
-        <div className={classes.button_avatar}>
-          <Avatar src={avatar} />
-          {notificationAmount > 0 && <RedCircle />}
-        </div>
-      </span>
-    );
-  };
-
-  const BurgerButton = () => (
-    <IconButton>
-      <MenuIcon />
-    </IconButton>
-  );
-
   const openMenuHandler = event => {
-    setAnchorEl({ top: event.clientY, left: event.clientX });
+    setAnchorEl(event.target);
+    // event.stopPropagation();
     setIsExpanded(true);
   };
 
@@ -127,11 +128,11 @@ const Header = props => {
           {!isAuthorized && !isMobile && <LoginButton />}
           {isAuthorized && <UploadRecipeButton />}
           {isAuthorized && <CartButton />}
-          {isAuthorized && <UserAvatar />}
+          {isAuthorized && (
+            <UserAvatar clickHandler={openMenuHandler} avatar={avatar} notificationAmount={notificationAmount} />
+          )}
 
-          <span className={classes.button_burger} onClick={openMenuHandler}>
-            <BurgerButton />
-          </span>
+          {isMobile && <BurgerButton clickHandler={openMenuHandler} />}
         </div>
       </div>
       {isAuthorized && <BurgerMenu {...burgerMenuProps} />}

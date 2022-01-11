@@ -51,19 +51,21 @@ const BurgerMenu = props => {
       <StyledMenu
         c
         id="simple-menu"
-        anchorReference="anchorPosition"
-        anchorPosition={anchorEl}
+        // anchorReference="anchorEl"
+        // anchorPosition={anchorEl}
+        anchorEl={anchorEl}
         disableScrollLock
         autoFocus={false}
-        PopoverClasses={{ paper: classes.menu_popover }}
+        PopoverClasses={{ paper: classes.menu_popover, list: classes.menu_list }}
         anchorOrigin={{
-          vertical: 'bottom',
+          vertical: '0',
           horizontal: 'center'
         }}
         transformOrigin={{
           vertical: 'top',
           horizontal: 'right'
         }}
+        marginThreshold={0}
         open={Boolean(anchorEl)}
         onClose={handleClose}>
         {isMobile && (
@@ -102,7 +104,7 @@ const StyledMenu = styled(Menu)`
 `;
 
 const StyledMenuItem = styled(MenuItem)`
-  width: 260px !important;
+  width: 100% !important;
   display: flex;
   padding: 12px 12px 12px 20px !important;
   column-gap: 12px;
