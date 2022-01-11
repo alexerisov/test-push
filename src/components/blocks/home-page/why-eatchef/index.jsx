@@ -7,6 +7,7 @@ import { connect, useDispatch, useSelector } from 'react-redux';
 import { accountActions, modalActions } from '@/store/actions';
 import { useFormik } from 'formik';
 import Image from 'next/image';
+import { BasicIcon } from '@/components/basic-elements/basic-icon';
 
 const CircleButton = () => {
   return (
@@ -31,6 +32,7 @@ const SignUpInput = () => {
     <OutlinedInput
       onClick={handleClickLogin('register')}
       name="email"
+      placeholder="Enter your email"
       className={classes.signup_input}
       fullWidth
       endAdornment={<CircleButton />}
@@ -39,7 +41,11 @@ const SignUpInput = () => {
 };
 
 const UploadRecipeButton = () => (
-  <Button endIcon={<ArrowIcon />} variant="contained" href="/recipe/upload" className={classes.signup_upload}>
+  <Button
+    endIcon={<BasicIcon icon={ArrowIcon} />}
+    variant="contained"
+    href="/recipe/upload"
+    className={classes.signup_upload}>
     Upload Your Recipe
   </Button>
 );
@@ -75,8 +81,6 @@ const ThreeImages = () => {
 
   return (
     <div>
-      {/*{!isAuthorized && <img src="/images/index/three-images.png" alt="image3" className={classes.three_images} />}*/}
-      {/*{isAuthorized && <img src="/images/index/two-images.png" alt="image3" className={classes.three_images} />}*/}
       {!isAuthorized && (
         <Image src="/images/index/three-images.png" alt="image3" width={447} height={502} layout="responsive" />
       )}
