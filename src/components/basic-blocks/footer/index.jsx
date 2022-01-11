@@ -31,7 +31,7 @@ export const Footer = () => {
             <LinkElement text="Home" path="/" />
             <LinkElement text="Chef's Pencil" path="/terms" />
             <LinkElement text="Terms of use" path="/terms" />
-            <LinkElement text="Recipes" path="/search" />
+            <LinkElement text="Recipes" path="/search?title=" />
             <LinkElement text="Get inspired!" path="/search?&only_eatchefs_recipes=Y" />
             <LinkElement text="Privacy policy" path="/privacy-policy" />
           </div>
