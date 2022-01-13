@@ -7,7 +7,20 @@ import dynamic from 'next/dynamic';
 const MuiPhoneNumber = dynamic(import('material-ui-phone-number'), { ssr: false });
 
 export const BasicInput = props => {
-  const { name, label, placeholder, formik, size, disabled, phone } = props;
+  const {
+    name,
+    label,
+    placeholder,
+    formik,
+    size,
+    disabled,
+    phone,
+    isSecret,
+    value,
+    onChange,
+    error,
+    disableValidation
+  } = props;
   const gap = '20px';
 
   const defineFocusedStyle = () => {
@@ -39,13 +52,15 @@ export const BasicInput = props => {
       <InputLabel className={classes.label}>{label}</InputLabel>
       {!phone && (
         <TextField
-          value={formik.values[name]}
+          type={isSecret ? 'password' : 'text'}
+          value={value ? value : formik.values[name]}
           id={name}
+          disableValidation={disableValidation}
           name={name}
           placeholder={placeholder}
           onBlur={formik.handleBlur}
-          onChange={formik.handleChange}
-          error={formik.touched[name] && Boolean(formik.errors[name])}
+          onChange={onChange ? onChange : formik.handleChange}
+          error={error ? error : formik.touched[name] && Boolean(formik.errors[name])}
           helperText={formik.touched[name] && formik.errors[name]}
           InputProps={{
             classes: {
