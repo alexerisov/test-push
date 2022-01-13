@@ -1,4 +1,5 @@
 @import '~styles/variables.scss';
+@import "mixins/mixins.scss";
 
 .LayoutModalOverflow {
   position: fixed;
@@ -117,6 +118,57 @@
 
     .LayoutModal__close {
       background-image: url('/images/index/icons-delete-cross.svg');
+    }
+  }
+
+  &_theme_basic {
+    width: 544px;
+    height: auto;
+    min-height: 559px;
+    max-width: 95vw;
+    top: 50%;
+    color: #000;
+    background: #FCFCFD;
+    box-shadow: 0px 64px 64px -48px rgba(15, 15, 15, 0.08);
+    border-radius: 16px;
+    z-index: 999;
+
+    .LayoutModal__close {
+      position: absolute;
+      right: -16px;
+      top: -16px;
+      width: 32px;
+      height: 32px;
+      background-color: #FCFCFD;
+      box-shadow: 0px 8px 16px -8px rgba(15, 15, 15, 0.1);
+      border-radius: 32px;
+      z-index: 999;
+
+      background-image: url('/images/index/icons-delete-cross-gray.svg');
+      background-size: 18px 18px;
+      background-position: center;
+      background-repeat: no-repeat;
+      transition: background-color .5s;
+
+      &:hover {
+        background-color: darken(#FCFCFD, 10);
+      }
+    }
+
+
+
+    @media (max-width: $--sm) {
+      width: 100vw;
+      height: 100vh;
+      max-height: 100vh;
+      max-width: 100vw;
+      margin: 0;
+      border-radius: 0;
+
+      .LayoutModal__close {
+        right: 24px;
+        top: 24px;
+      }
     }
   }
 

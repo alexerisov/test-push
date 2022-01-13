@@ -4,12 +4,12 @@
 @mixin font-face($font-folder, $font-family, $font-name) {
   font-family: $font-family;
   src: url("/fonts/" + $font-folder + "/" + $font-name + ".woff2") format("woff2"),
-    url("/fonts/" + $font-folder + "/" + $font-name + ".woff") format("woff");
+  url("/fonts/" + $font-folder + "/" + $font-name + ".woff") format("woff");
 }
 
 @mixin fontMontserratSemiBold() {
-    @include font-face("Montserrat", "Montserrat-SemiBold", "Montserrat-SemiBold");
-    font-weight: 600;
+  @include font-face("Montserrat", "Montserrat-SemiBold", "Montserrat-SemiBold");
+  font-weight: 600;
 }
 
 @mixin fontMontserratMedium() {
@@ -33,31 +33,36 @@
 }
 
 @mixin fontLight() {
-    font-family: Montserrat;
-    font-style: normal;
-    font-weight: 300;
+  font-family: Montserrat;
+  letter-spacing: 0.01em;
+  font-style: normal;
+  font-weight: 300;
 }
 
 @mixin fontRegular() {
-    font-family: Montserrat;
-    font-style: normal;
-    font-weight: 400;
+  font-family: Montserrat;
+  letter-spacing: 0.01em;
+  font-style: normal;
+  font-weight: 400;
 }
 
 @mixin fontMedium() {
-  font-family: Montserrat-Medium;
+  font-family: Montserrat;
+  letter-spacing: 0.01em;
   font-style: normal;
   font-weight: 500;
 }
 
 @mixin fontSemiBold() {
-  font-family: Montserrat-SemiBold;
+  font-family: Montserrat;
+  letter-spacing: 0.01em;
   font-style: normal;
   font-weight: 600;
 }
 
 @mixin fontBold() {
-  font-family: Montserrat-Bold;
+  font-family: Montserrat;
+  letter-spacing: 0.01em;
   font-style: normal;
   font-weight: 700;
 }
