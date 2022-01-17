@@ -119,7 +119,7 @@ const CommentBlock = ({
       if (updateComments) {
         response = await addComment(targetComment);
       } else {
-        if (isUserRecipeBuyer && !isRecipeRatedByUser && ratings.some(el => el.value !== null)) {
+        if (isUserRecipeBuyer && !isRecipeRatedByUser && ratings.each(el => el.value !== null)) {
           ratings.map(async item => {
             if (0 < item.value && item.value <= 5) {
               let itemResponse = await Recipe.uploadRating({ id: +id, ...item });
