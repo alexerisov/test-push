@@ -126,7 +126,7 @@ const Header = props => {
         <div className={classes.button_group}>
           <RecipesButton />
           {!isAuthorized && !isMobile && <LoginButton />}
-          {isAuthorized && <UploadRecipeButton />}
+          {isAuthorized && isChef && <UploadRecipeButton />}
           {isAuthorized && <CartButton />}
           {isAuthorized && (
             <UserAvatar clickHandler={openMenuHandler} avatar={avatar} notificationAmount={notificationAmount} />

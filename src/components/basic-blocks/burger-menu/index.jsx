@@ -68,7 +68,7 @@ const BurgerMenu = props => {
         marginThreshold={0}
         open={Boolean(anchorEl)}
         onClose={handleClose}>
-        {isMobile && (
+        {isMobile && isChef && (
           <LogoutMenuItem onClick={handleClose}>
             <Button href="/recipe/upload" className={classes.header__link_place_menu_logout}>
               Upload Recipes
