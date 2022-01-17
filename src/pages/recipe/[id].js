@@ -689,14 +689,11 @@ function RecipePage(props) {
             {!viewAllImages && (
               <div className={classes.layout__content}>
                 <RelatedRecipes />
-                <div className={classes.layout__content_column1}>
-                  <Classification />
-                  <Description />
-                  <CookingSteps />
-                  {mobile && <Ingredients />}
-                  <Comments />
-                </div>
-                <div className={classes.layout__content_column2}>{!mobile && <Ingredients />}</div>
+                <Classification />
+                <Description />
+                <CookingSteps />
+                <Ingredients />
+                <Comments />
               </div>
             )}
             <PopularRecipes />
@@ -710,12 +707,10 @@ function RecipePage(props) {
           {!viewAllImages && (
             <div className={classes.layout__content}>
               <RelatedRecipes />
-              <Ingredients />
               <div className={classes.layout__content_column1}>
                 <Classification />
                 <Description />
                 <CookingSteps />
-                <Ingredients />
                 <Comments />
               </div>
               <div className={classes.layout__content_column2}>

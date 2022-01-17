@@ -17,6 +17,7 @@ import { Rating } from '@material-ui/lab';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import StarIcon from '@material-ui/icons/Star';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
+import { Spinner } from '@/components/elements';
 
 const CommentBlock = ({
   id,
@@ -27,15 +28,17 @@ const CommentBlock = ({
   uploadLikeHandler,
   deleteCommentHandle,
   rating,
-  isUserRecipeBuyer
+  isUserRecipeBuyer,
+  isRecipeRatedByUser
 }) => {
   const isAuthorized = useSelector(state => state.account.hasToken);
 
   const dispatch = useDispatch();
 
   const [comments, setComments] = useState();
-  const [reviews, setReviews] = useState();
-  const commentsAndReviews = comments?.results?.concat(reviews?.results) || [];
+  const [commentsCount, setCommentsCount] = useState(0);
+
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   const placeholder = 'Share your thoughts here...';
   const authError = 'Please login first, then you will can comment recipes!';
@@ -69,23 +72,21 @@ const CommentBlock = ({
     if (id) {
       getComments();
     }
-  }, [page, id]);
+  }, [id]);
 
   const getComments = async () => {
     try {
-      let responseComments;
-      let responseReviews;
+      let response;
 
       if (updateComments) {
-        responseComments = await updateComments({ recipeId: id, page });
+        response = await updateComments({ recipeId: id, page });
       } else {
-        responseComments = await Recipe.getComments({ recipeId: id, page });
-        responseReviews = await Recipe.getReviews({ recipeId: id, page });
+        response = await Recipe.getReviewsAndComments({ recipeId: id, page });
       }
 
-      setNumberOfPages(countCommentsPages(responseComments.data.count + responseReviews.data.count));
-      setComments(responseComments.data);
-      setReviews(responseReviews.data);
+      setNumberOfPages(countCommentsPages(response.data.count));
+      setCommentsCount(response.data.count);
+      setComments(response.data.results);
     } catch (e) {
       console.log(e);
     }
@@ -118,7 +119,7 @@ const CommentBlock = ({
       if (updateComments) {
         response = await addComment(targetComment);
       } else {
-        if (isUserRecipeBuyer && ratings.some(el => el.value !== null)) {
+        if (isUserRecipeBuyer && !isRecipeRatedByUser && ratings.some(el => el.value !== null)) {
           ratings.map(async item => {
             if (0 < item.value && item.value <= 5) {
               let itemResponse = await Recipe.uploadRating({ id: +id, ...item });
@@ -166,6 +167,30 @@ const CommentBlock = ({
         // result when modal return promise and close
       });
     };
+  };
+
+  const loadMoreHandler = async () => {
+    if (page === numberOfPages) {
+      return;
+    }
+
+    try {
+      setIsLoadingMore(true);
+      let response;
+      if (updateComments) {
+        response = await updateComments({ recipeId: id, page: page + 1 });
+      } else {
+        response = await Recipe.getReviewsAndComments({ recipeId: id, page: page + 1 });
+      }
+
+      setPage(page + 1);
+
+      setComments([...comments, ...response.data.results]);
+      setIsLoadingMore(false);
+    } catch (e) {
+      console.log(e);
+      setIsLoadingMore(false);
+    }
   };
 
   const RateParameter = props => {
@@ -274,29 +299,42 @@ const CommentBlock = ({
       </form>
 
       <div className={classes.comments__body}>
-        <h3 className={classes.comments__subtitle}>{comments && comments.count} Comments</h3>
+        <h3 className={classes.comments__subtitle}>{comments && commentsCount} Comments</h3>
 
-        {commentsAndReviews?.length !== 0 &&
-          commentsAndReviews.map((comment, index) => {
-            let isReview = Boolean(comment?.avg_user_rating);
-            return (
-              <Comment
-                user={comment?.user}
-                userId={userId}
-                key={`${comment?.pk}-${index + 1}`}
-                text={comment?.text}
-                likesNumber={comment?.likes_number}
-                dislikesNumber={comment?.dislikes_number}
-                commentId={comment?.pk}
-                createdAt={comment?.created_at}
-                deleteComment={deleteComment}
-                uploadLikeHandler={uploadLikeHandler}
-                rating={comment?.avg_user_rating}
-              />
-            );
-          })}
+        {comments?.length !== 0 &&
+          comments
+            ?.sort((a, b) => Date.parse(b.created_at) - Date.parse(a.created_at))
+            ?.map((comment, index) => {
+              let isReview = Boolean(comment?.avg_user_rating);
+              return (
+                <Comment
+                  user={comment?.user}
+                  userId={userId}
+                  key={`${comment?.pk}-${index + 1}`}
+                  text={comment?.text}
+                  likesNumber={comment?.likes_number}
+                  dislikesNumber={comment?.dislikes_number}
+                  commentId={comment?.pk}
+                  createdAt={comment?.created_at}
+                  deleteComment={deleteComment}
+                  uploadLikeHandler={uploadLikeHandler}
+                  rating={comment?.avg_user_rating}
+                />
+              );
+            })}
 
-        {/*{commentsAndReviews?.length !== 0 && (*/}
+        {page !== numberOfPages && (
+          <div className={classes.load_more_wrapper}>
+            <Button
+              startIcon={isLoadingMore && <Spinner />}
+              onClick={loadMoreHandler}
+              className={classes.load_more_button}>
+              Load more
+            </Button>
+          </div>
+        )}
+
+        {/*{comments?.results?.length !== 0 && (*/}
         {/*  <Pagination*/}
         {/*    classes={{ root: classes.comments__pagination }}*/}
         {/*    count={numberOfPages}*/}

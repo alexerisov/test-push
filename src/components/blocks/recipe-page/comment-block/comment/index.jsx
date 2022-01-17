@@ -164,6 +164,10 @@ const Comment = ({
             <span onClick={() => likeHandler(likeTypes.like)}>{likes.value || false} Like</span>
           </div>
 
+          <div className={classes.comment__reply}>
+            <span>Reply</span>
+          </div>
+
           {/*<div className={classes.comment__like}>*/}
           {/*  <span onClick={() => likeHandler(likeTypes.dislike)}>{dislikes.value} Dislikes</span>*/}
           {/*</div>*/}

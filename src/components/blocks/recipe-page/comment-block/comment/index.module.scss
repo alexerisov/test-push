@@ -88,6 +88,18 @@
     }
   }
 
+  &__reply {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 160%;
+    letter-spacing: 0.01em;
+    cursor: default;
+    color: #14181F;
+    opacity: 0.5;
+    transition: opacity 0.3s !important;
+  }
+
   &__delete {
     font-style: normal;
     font-weight: 600;

@@ -237,6 +237,15 @@ export default {
     });
   },
 
+  getReviewsAndComments: ({ recipeId, page }) => {
+    return http.get(`/recipe/${recipeId}/comments_ext`, {
+      params: {
+        page: `${page}`,
+        page_size: 4
+      }
+    });
+  },
+
   deleteComment: id => {
     return http.delete(`recipe/comment/${id}/delete`);
   },
