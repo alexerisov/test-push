@@ -136,7 +136,7 @@ function RecipePage(props) {
     } else {
       setMaterials(recipe?.images);
     }
-    console.log(materials)
+    console.log(materials);
   }, [recipe]);
 
   useEffect(() => {
@@ -689,15 +689,14 @@ function RecipePage(props) {
             {!viewAllImages && (
               <div className={classes.layout__content}>
                 <RelatedRecipes />
-                <div className={classes.layout_column1}>
+                <div className={classes.layout__content_column1}>
                   <Classification />
                   <Description />
                   <CookingSteps />
+                  {mobile && <Ingredients />}
                   <Comments />
                 </div>
-                <div className={classes.layout_column2}>
-                  <Ingredients />
-                </div>
+                <div className={classes.layout__content_column2}>{!mobile && <Ingredients />}</div>
               </div>
             )}
             <PopularRecipes />
@@ -711,13 +710,15 @@ function RecipePage(props) {
           {!viewAllImages && (
             <div className={classes.layout__content}>
               <RelatedRecipes />
-              <div className={classes.layout_column1}>
+              <Ingredients />
+              <div className={classes.layout__content_column1}>
                 <Classification />
                 <Description />
                 <CookingSteps />
+                <Ingredients />
                 <Comments />
               </div>
-              <div className={classes.layout_column2}>
+              <div className={classes.layout__content_column2}>
                 <Ingredients />
               </div>
             </div>
