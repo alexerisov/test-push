@@ -199,7 +199,7 @@ const CommentBlock = ({
     return (
       <div className={classes.rate_parameter_wrapper}>
         <div className={classes.rate_parameter_text}>{text}</div>
-        {isUserRecipeBuyer && (
+        {isUserRecipeBuyer && !isRecipeRatedByUser && (
           <div className={classes.rate_parameter_stars}>
             <Rating
               emptyIcon={<StarBorderIcon htmlColor="#FFAA00" fontSize="24px" />}
