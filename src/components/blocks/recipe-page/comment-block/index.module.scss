@@ -185,6 +185,27 @@
   }
 }
 
+.load_more {
+  &_wrapper {
+    display: flex;
+    justify-content: center;
+  }
+
+  &_button {
+    padding: 16px 24px !important;
+    height: 54px !important;
+    border: 2px solid #E6E8EC !important;
+    box-sizing: border-box !important;
+    border-radius: 90px !important;
+    font-size: 14px !important;
+    font-style: normal !important;
+    font-weight: bold !important;
+    line-height: 160% !important;
+    color: #353E50 !important;
+    box-shadow: none !important;
+    margin-top: 48px !important;
+  }
+}
 
 @media (max-width: 1025px) {
   .rating {

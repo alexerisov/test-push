@@ -310,13 +310,12 @@
 }
 
 .ingredients {
-  grid-row: 3 / 4;
-
   background: #fcfcfd;
   border: 1px solid #e6e8ec;
   box-sizing: border-box;
   box-shadow: 0px 64px 64px -48px rgba(15, 15, 15, 0.08);
   border-radius: 24px;
+  margin-bottom: 48px;
 
   .ingredient {
     &_container {
@@ -783,6 +782,12 @@
     border-radius: 50%;
     border: 2px solid $--sc--color-neutrals6;
   }
+}
+
+.layout {
+  grid-template-columns: 1fr;
+
+  padding: 0 32px;
 }
 
 .recipe__slider {
