@@ -78,7 +78,7 @@
   }
 
   &_input {
-
+      padding-left: 5px;
       & fieldset {
         border: 2px solid #F4F5F6 !important;
         box-sizing: border-box !important;
@@ -132,7 +132,7 @@
 
 
 
-  @media (max-width: 960px) {
+  @media (max-width: 1025px) {
     .layout {
       padding: 60px 80px !important;
       &_column1 {
@@ -157,6 +157,12 @@
 
       &_column1 {
 
+      }
+
+      .signup {
+        &_title {
+          font-size: 40px;
+        }
       }
 
       &_column2 {

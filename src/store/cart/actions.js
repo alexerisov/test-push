@@ -3,6 +3,7 @@ import Recipe from '@/api/Recipe';
 
 export const types = {
   SET_CART: 'CART/SET_CART',
+  DELETE_CART: 'CART/DELETE_CART',
 
   GET_CART_REQUESTED: 'CART/GET_CART_REQUESTED',
   GET_CART_SUCCESS: 'CART/GET_CART_SUCCESS',
