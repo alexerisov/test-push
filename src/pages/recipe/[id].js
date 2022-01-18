@@ -114,6 +114,7 @@ function RecipePage(props) {
   };
 
   const isUserRecipeBuyer = recipe?.user_is_buyer;
+  const isRecipeRatedByUser = recipe?.user_rated;
 
   const isAuthorized = useSelector(state => state.account.hasToken);
   const isRecipeInCart = useSelector(state => state.cart.products?.some(el => el.object_id == recipe?.pk));
@@ -657,13 +658,18 @@ function RecipePage(props) {
           <div className={classes.comments_rate_wrapper}>
             <BasicIcon icon={StarIcon} color="#FFB04C" />
             <h2 className={classes.comments_rate_value}>
-              {console.log('rating', recipeRating)}
               <span className={classes.comments_rate_value_bold}>{recipeRating.average || '-'}</span> / 5,0
             </h2>
-            <h3 className={classes.comments_rate_value_subtitle}>(88%) Eaters recommended this product</h3>
+            {/*<h3 className={classes.comments_rate_value_subtitle}>(88%) Eaters recommended this product</h3>*/}
           </div>
         </div>
-        <CommentBlock id={recipeId} userId={userId} rating={recipeRating} isUserRecipeBuyer={isUserRecipeBuyer} />
+        <CommentBlock
+          id={recipeId}
+          userId={userId}
+          rating={recipeRating}
+          isUserRecipeBuyer={isUserRecipeBuyer}
+          isRecipeRatedByUser={isRecipeRatedByUser}
+        />
       </div>
     );
   };
