@@ -513,9 +513,11 @@ function RecipePage(props) {
         <h2 className={classes.block_title}>Preparation Steps</h2>
         <div className={classes.cooking_steps_wrapper}>
           {recipeCookingSteps?.length > 0
-            ? recipeCookingSteps.map((step, index) => (
-                <Step number={step?.num} title={step?.title} description={step?.description} key={'step' + index} />
-              ))
+            ? recipeCookingSteps
+                .sort((a, b) => a.num - b.num)
+                .map((step, index) => (
+                  <Step number={step?.num} title={step?.title} description={step?.description} key={'step' + index} />
+                ))
             : 'There is no cooking steps yet'}
         </div>
       </div>
