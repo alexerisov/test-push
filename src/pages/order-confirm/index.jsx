@@ -11,7 +11,7 @@ import { Button, Checkbox, CircularProgress } from '@material-ui/core';
 import { InputsBlock } from '@/components/basic-blocks/inputs-block';
 import classes from './index.module.scss';
 import { Divider } from '@/components/basic-elements/divider';
-import { getCart } from '@/store/cart/actions';
+import { getCart, types as cartTypes } from '@/store/cart/actions';
 import Cart from '@/api/Cart';
 import { BasicDatePicker } from '@/components/basic-elements/basic-date-picker';
 import CheckboxIconUnchecked from '@/components/elements/checkbox-icon/checkbox-icon-unchecked';
@@ -141,16 +141,18 @@ const OrderConfirmPage = () => {
       });
 
     const order = await Cart.postOrder(orderData)
-      .then(r => r.data)
+      .then(async r => {
+        await localStorage.setItem('order', JSON.stringify(r.data));
+        await localStorage.setItem('cart', JSON.stringify(cart));
+        window.open(r.data.url, '_ blank');
+        router.push('/order-congratulation');
+        setIsLoading(false);
+        dispatch({ type: cartTypes.DELETE_CART });
+      })
       .catch(e => {
         setIsLoading(false);
         return e;
       });
-    await localStorage.setItem('order', JSON.stringify(order));
-    await localStorage.setItem('cart', JSON.stringify(cart));
-    window.open(order.url, '_ blank');
-    router.push('/order-congratulation');
-    setIsLoading(false);
   };
 
   const formik = useFormik({

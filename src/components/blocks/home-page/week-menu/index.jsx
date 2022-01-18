@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import classes from './index.module.scss';
 import Recipe from '@/api/Recipe';
-import { Box, IconButton } from '@material-ui/core';
+import { Box, IconButton, List } from '@material-ui/core';
 import { RecipeCard } from '@/components/basic-blocks/recipe-card';
 import { ReactComponent as ArrowLeftIcon } from '../../../../../public/icons/Arrow Left 2/Line.svg';
 import { ReactComponent as ArrowRightIcon } from '../../../../../public/icons/Arrow Right 2/Line.svg';
@@ -76,6 +76,8 @@ export const WeekMenuBlock = props => {
 
   const handleChangeWeek = newWeekIndex => {
     if (0 <= newWeekIndex && newWeekIndex < recipes?.length) {
+      const slider = document.getElementsByClassName(classes.slider_body)?.[0];
+      slider.scrollLeft = 0;
       setCurrentWeek(newWeekIndex);
     }
   };

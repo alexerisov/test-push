@@ -162,7 +162,9 @@ function FormCreateRecipe(props) {
   }
 
   function handleRemoveIngredient(id) {
-    const newIngredientList = data?.ingredients.filter((Ingredient, index) => index !== id);
+    const newIngredientList = data?.ingredients.filter(
+      (Ingredient, index) => `ingredient-${index}-${Ingredient.title}` !== id
+    );
     const newData = { ...data, ingredients: newIngredientList };
     props.dispatch(recipeUploadActions.update(newData));
   }
@@ -642,18 +644,16 @@ function FormCreateRecipe(props) {
               <p className={classes.createRecipeButton_type_addIngredient__text}>Add</p>
             </button>
             {data?.ingredients.length !== 0
-              ? JSON.parse(JSON.stringify(data.ingredients))
-                  .reverse()
-                  .map((item, index) => (
-                    <CardIngredient
-                      delete={handleRemoveIngredient}
-                      key={index}
-                      title={item.title}
-                      quantity={item.quantity}
-                      unit={handleIngredientsUnit(item.unit)}
-                      id={index}
-                    />
-                  ))
+              ? JSON.parse(JSON.stringify(data.ingredients)).map((item, index) => (
+                  <CardIngredient
+                    delete={handleRemoveIngredient}
+                    key={`ingredient-${index}-${item.title}`}
+                    title={item.title}
+                    quantity={item.quantity}
+                    unit={handleIngredientsUnit(item.unit)}
+                    id={`ingredient-${index}-${item.title}`}
+                  />
+                ))
               : ''}
           </div>
           <FieldError errors={error} path="ingredients" id="error" />

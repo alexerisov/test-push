@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classes from './index.module.scss';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -93,6 +93,10 @@ const CardSearch = props => {
   const isRecipeInCart = useSelector(state => state.cart.products?.some(el => el.object_id == props.id));
   const cartItemId = cartItem?.pk;
   const cartItemAmount = cartItem?.count;
+
+  useEffect(() => {
+    setShowCounter(isRecipeInCart);
+  }, isRecipeInCart);
 
   const handleClickBtn = e => {
     if (props.token === true) {

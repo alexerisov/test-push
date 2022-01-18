@@ -36,6 +36,7 @@
       @include no_scrollbar();
       //width: 100%;
       display: flex;
+      flex-direction: row;
       overflow-x: scroll;
       column-gap: 32px;
     }

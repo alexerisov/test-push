@@ -3,6 +3,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import { CartItemRecipe } from '@/components/blocks/cart-page/cart-item-recipe';
 import classes from './index.module.scss';
 import Typography from '@material-ui/core/Typography';
+import { IconButton } from '@material-ui/core';
+import { BasicIcon } from '@/components/basic-elements/basic-icon';
+import { ReactComponent as CloseIcon } from '@/../public/icons/Close/Line.svg';
+import { useDispatch } from 'react-redux';
+import { types as cartTypes } from '@/store/cart/actions';
 
 const useStyles = makeStyles(theme => ({
   tab_content: {
@@ -36,7 +41,13 @@ const useStyles = makeStyles(theme => ({
 
 export const TabContent = props => {
   const { products } = props;
+  const dispatch = useDispatch();
   const styles = useStyles();
+
+  const handleClearAll = () => {
+    dispatch({ type: cartTypes.DELETE_CART });
+  };
+
   return (
     <div className={styles.tab_content}>
       {!products?.length > 0 && <Typography variant="h4">You have no items in your shopping cart. </Typography>}
@@ -51,6 +62,16 @@ export const TabContent = props => {
             />
           ))}
       </div>
+      {products?.length > 0 && (
+        <div className={classes.clear_button_wrapper}>
+          <IconButton
+            classes={{ root: classes.clear_button_root, label: classes.clear_button_label }}
+            onClick={handleClearAll}>
+            <BasicIcon icon={CloseIcon} size="16px" color="#566481" />
+            Clear all
+          </IconButton>
+        </div>
+      )}
     </div>
   );
 };

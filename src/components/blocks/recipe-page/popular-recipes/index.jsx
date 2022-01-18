@@ -95,6 +95,8 @@ export const PopularRecipesBlock = props => {
 
   const handleChangeWeek = newWeekIndex => {
     if (0 <= newWeekIndex && newWeekIndex < recipes?.length) {
+      const slider = document.getElementsByClassName(classes.slider_body)?.[0];
+      slider.scrollLeft = 0;
       setCurrentWeek(newWeekIndex);
     }
   };

@@ -60,16 +60,18 @@ const SignUpBlock = () => {
         We’re giving ambitious at-home cooks the chance to get exposure for their culinary masterpieces!
       </div>
 
-      <div className={classes.signup_step}>
-        <div className={classes.signup_step_wrapper}>
-          <div className={classes.signup_step_badge}>01</div>
-          <span className={classes.signup_step_text}>Share your best meals</span>
+      {!isAuthorized && (
+        <div className={classes.signup_step}>
+          <div className={classes.signup_step_wrapper}>
+            <div className={classes.signup_step_badge}>01</div>
+            <span className={classes.signup_step_text}>Share your best meals</span>
+          </div>
+          <div className={classes.signup_step_wrapper}>
+            <div className={classes.signup_step_badge}>02</div>
+            <span className={classes.signup_step_text}>Sell your best recipes</span>
+          </div>
         </div>
-        <div className={classes.signup_step_wrapper}>
-          <div className={classes.signup_step_badge}>02</div>
-          <span className={classes.signup_step_text}>Sell your best recipes</span>
-        </div>
-      </div>
+      )}
       {!isAuthorized && <SignUpInput />}
       {isAuthorized && <UploadRecipeButton />}
     </div>
