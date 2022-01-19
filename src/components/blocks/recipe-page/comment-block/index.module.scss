@@ -70,6 +70,10 @@
       background: #FFAA00 !important;
       border-radius: 90px !important;
 
+      &:disabled {
+        opacity: .5 !important;
+      }
+
       &__label {
         padding: 12px 16px !important;
         font-style: normal !important;
@@ -124,7 +128,7 @@
   }
 
   &_text {
-    flex: 1;
+    flex: 0 1 150px;
     font-weight: 500;
     font-size: 14px;
     line-height: 160%;
@@ -152,7 +156,6 @@
 
   &_line {
     flex: 1 1 max-content;
-    max-width: 280px;
 
     &_root{
       height: 6px !important;
