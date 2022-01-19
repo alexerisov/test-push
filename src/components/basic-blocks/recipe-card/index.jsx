@@ -16,12 +16,6 @@ import { Button } from '@material-ui/core';
 import { modalActions } from '@/store/actions';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
 
-const StyledCardMedia = styled(CardMedia)`
-  .MuiCardMedia-root {
-    background-size: auto;
-  }
-`;
-
 export const RecipeCard = props => {
   const { recipe } = props;
 
@@ -51,7 +45,7 @@ export const RecipeCard = props => {
 
   return (
     <Card variant="outlined" className={classes.card}>
-      <StyledCardMedia
+      <CardMedia
         className={classes.card__media}
         onClick={event => {
           redirectToRecipeCard(recipe.pk);
