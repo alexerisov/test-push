@@ -220,7 +220,10 @@ function RecipePage(props) {
         <div className={classes.title_back_button}>{'<'}</div>
         <div className={classes.title_wrapper}>
           <div className={classes.title_name}>{title}</div>
-          <div className={classes.title_buttons}>
+          <div className={classes.title_buttons}>{/* PLACE FOR BUTTONS*/}</div>
+          <span className={classes.title_rating}>
+            <Avatar src={recipeAuthorAvatar} alt="Recipe Author Avatar" className={classes.title_rating_avatar} />
+            <Divider vertical width="1px" height="24px" />
             <div className={classes.like_wrapper}>
               <IconButton onClick={onClickLikeHandler} className={classes.button} size="24px">
                 <BasicIcon icon={LikeIcon} color={isRecipeLiked ? '#FF582E' : '#353E50'} />
@@ -242,14 +245,6 @@ function RecipePage(props) {
             <IconButton onClick={onClickSaveHandler} className={classes.button}>
               <BasicIcon icon={BookmarkIcon} color={recipeSavedId ? '#FF582E' : '#353E50'} />
             </IconButton>
-          </div>
-          <span className={classes.title_rating}>
-            <Avatar src={recipeAuthorAvatar} alt="Recipe Author Avatar" className={classes.title_rating_avatar} />
-            <span className={classes.title_rating_stars}>
-              <BasicIcon icon={StarIcon} color="#FFB04C" />
-              {recipeRating.average ?? 'N/A'}
-            </span>
-            <span className={classes.title_rating_reviews}>({recipeCommentsNumber ?? 'N/A'} reviews)</span>
           </span>
         </div>
       </div>

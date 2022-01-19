@@ -80,6 +80,8 @@ const MySlider = styled(Slider)(() => ({
 }));
 
 const StyledAccordion = styled(Accordion)`
+  background: transparent;
+
   p {
     font-size: 16px;
     font-weight: 600;
