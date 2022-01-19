@@ -15,7 +15,7 @@
     font-weight: 600;
     font-size: 24px;
     line-height: 1.6;
-    @include fontMedium();
+    @include fontSemiBold();
   }
   &__row {
     display: flex;

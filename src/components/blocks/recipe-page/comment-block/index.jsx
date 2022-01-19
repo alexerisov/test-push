@@ -18,6 +18,7 @@ import StarBorderIcon from '@material-ui/icons/StarBorder';
 import StarIcon from '@material-ui/icons/Star';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import { Spinner } from '@/components/elements';
+import { useRouter } from 'next/router';
 
 const CommentBlock = ({
   id,
@@ -34,6 +35,7 @@ const CommentBlock = ({
   const isAuthorized = useSelector(state => state.account.hasToken);
 
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const [comments, setComments] = useState();
   const [commentsCount, setCommentsCount] = useState(0);
@@ -98,6 +100,12 @@ const CommentBlock = ({
     return isRemainExists ? ++pages : pages;
   };
 
+  const ratings = [
+    { type: 1, value: +formik.values.ratingTaste },
+    { type: 2, value: +formik.values.ratingValueForMoney },
+    { type: 3, value: +formik.values.ratingOriginality }
+  ];
+
   const uploadComment = async ({ textarea, ratingTaste, ratingValueForMoney, ratingOriginality }) => {
     if (!isAuthorized) {
       return;
@@ -119,13 +127,14 @@ const CommentBlock = ({
       if (updateComments) {
         response = await addComment(targetComment);
       } else {
-        if (isUserRecipeBuyer && !isRecipeRatedByUser && ratings.every(el => el.value !== null)) {
+        if (isUserRecipeBuyer && !isRecipeRatedByUser && ratings.every(el => el.value)) {
           ratings.map(async item => {
             if (0 < item.value && item.value <= 5) {
               let itemResponse = await Recipe.uploadRating({ id: +id, ...item });
             }
           });
           response = await Recipe.uploadReviews(targetComment);
+          router.reload();
         } else {
           response = await Recipe.uploadComments(targetComment);
         }
@@ -279,6 +288,7 @@ const CommentBlock = ({
           fullWidth
           endAdornment={
             <Button
+              disabled={ratings.some(el => el.value) && ratings.some(el => !el.value)}
               endIcon={<BasicIcon icon={ArrowRightIcon} color="white" size="16px" />}
               classes={{
                 root: classes.comments__input__button,
@@ -291,6 +301,8 @@ const CommentBlock = ({
             </Button>
           }
         />
+
+        {console.log('condition', ratings.some(el => el.value) && ratings.some(el => !el.value))}
 
         {formik.touched.textarea && formik.errors.textarea ? (
           <div className={classes.comments__input__error}>{formik.errors.textarea}</div>

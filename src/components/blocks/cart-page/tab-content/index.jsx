@@ -7,7 +7,7 @@ import { IconButton } from '@material-ui/core';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import { ReactComponent as CloseIcon } from '@/../public/icons/Close/Line.svg';
 import { useDispatch } from 'react-redux';
-import { types as cartTypes } from '@/store/cart/actions';
+import { clearCart, types as cartTypes } from '@/store/cart/actions';
 
 const useStyles = makeStyles(theme => ({
   tab_content: {
@@ -45,7 +45,7 @@ export const TabContent = props => {
   const styles = useStyles();
 
   const handleClearAll = () => {
-    dispatch({ type: cartTypes.DELETE_CART });
+    dispatch(clearCart());
   };
 
   return (

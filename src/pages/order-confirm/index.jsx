@@ -16,6 +16,7 @@ import Cart from '@/api/Cart';
 import { BasicDatePicker } from '@/components/basic-elements/basic-date-picker';
 import CheckboxIconUnchecked from '@/components/elements/checkbox-icon/checkbox-icon-unchecked';
 import CheckboxIcon from '@/components/elements/checkbox-icon';
+import dayjs from 'dayjs';
 
 const zipcodeRegExp = /^\d{4}[a-zA-Z]{2}|\d{4}\s[a-zA-Z]{2}$/;
 
@@ -187,7 +188,13 @@ const OrderConfirmPage = () => {
               {/*<BasicInput formik={formik} size={0.5} label="House" name="house" placeholder="Enter your house" />*/}
               {/*<BasicInput formik={formik} size={0.5} label="Flat" name="flat" placeholder="Enter your flat" />*/}
               <BasicInput formik={formik} label="Zipcode" name="zipcode" placeholder="Enter your zipcode" />
-              <BasicDatePicker formik={formik} label="Date" name="date" minDate={new Date()} />
+              <BasicDatePicker
+                formik={formik}
+                label="Date"
+                name="date"
+                minDate={dayjs()}
+                maxDate={dayjs().add(1, 'month')}
+              />
               <div className={classes.checkbox_wrapper}>
                 <Checkbox
                   icon={<CheckboxIconUnchecked />}
