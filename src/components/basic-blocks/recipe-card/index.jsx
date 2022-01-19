@@ -43,6 +43,14 @@ export const RecipeCard = props => {
     router.push(`/recipe/${id}`);
   };
 
+  const handleAddToCart = () => {
+    if (!isAuthorized) {
+      return dispatch(modalActions.open('register'));
+    }
+
+    dispatch(addToCart(recipe?.pk));
+  };
+
   return (
     <Card variant="outlined" className={classes.card}>
       <CardMedia
@@ -64,13 +72,7 @@ export const RecipeCard = props => {
       </CardContent>
       <Button
         disabled={isRecipeInCart || isRecipeNotSale}
-        onClick={
-          isAuthorized
-            ? () => {
-                dispatch(addToCart(recipe?.pk));
-              }
-            : handleClick('register')
-        }
+        onClick={handleAddToCart}
         className={classes.card_button}
         startIcon={<BasicIcon icon={CartIcon} />}>
         {!isRecipeInCart && !isRecipeNotSale && `$${price}`}

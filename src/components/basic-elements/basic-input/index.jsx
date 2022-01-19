@@ -20,7 +20,8 @@ export const BasicInput = props => {
     value,
     onChange,
     error,
-    disableValidation
+    disableValidation,
+    endAdornment
   } = props;
   const gap = '20px';
 
@@ -41,6 +42,10 @@ export const BasicInput = props => {
   };
 
   const defineAdornment = () => {
+    if (endAdornment) {
+      return endAdornment;
+    }
+
     if (formik.dirty && formik.touched[name] && !formik.errors[name]) {
       return <img alt="success-icon" src={SuccessIcon} />;
     }

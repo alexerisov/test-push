@@ -29,12 +29,15 @@ import { Divider } from '@/components/basic-elements/divider';
 import { BasicInput } from '@/components/basic-elements/basic-input';
 import { loginViaFacebook, loginViaGoogle } from '@/utils/authSocial';
 import FieldError from '@/components/elements/field-error';
+import VisibilityOffRoundedIcon from '@material-ui/icons/VisibilityOffRounded';
+import VisibilityRoundedIcon from '@material-ui/icons/VisibilityRounded';
 
 function Register(props) {
   const router = useRouter();
   const isMobile = useMediaQuery('(max-width: 768px)');
   const [isFormLogin, setIsFormLogin] = useState(true);
   const [signupFormStep, setSignupFormStep] = useState(1);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   useEffect(() => {
     if (isMobile) {
@@ -383,15 +386,19 @@ function Register(props) {
     );
   };
 
+  const handleChangePasswordVisibility = () => {
+    setIsPasswordVisible(!isPasswordVisible);
+  };
+
   const switchToNextFormStep = () => {
-    console.log(signupFormStep);
     setSignupFormStep(2);
+    setIsPasswordVisible(false);
   };
 
   const SignupInputs = () => {
     const switchToNextFormStep = () => {
-      console.log(signupFormStep);
       setSignupFormStep(2);
+      setIsPasswordVisible(false);
     };
 
     return (
@@ -489,7 +496,13 @@ function Register(props) {
                 formik={formik}
                 name="password"
                 label="Password"
-                isSecret
+                isSecret={isPasswordVisible}
+                endAdornment={
+                  <IconButton onClick={handleChangePasswordVisibility}>
+                    {!isPasswordVisible && <VisibilityOffRoundedIcon />}
+                    {isPasswordVisible && <VisibilityRoundedIcon />}
+                  </IconButton>
+                }
                 disableValidation
                 // value={loginData?.password}
                 // onChange={onChangeField('password')}
@@ -524,8 +537,14 @@ function Register(props) {
                   formik={formik}
                   name="username"
                   label="Full Name"
-                  isSecret
+                  isSecret={!isPasswordVisible}
                   disableValidation
+                  endAdornment={
+                    <IconButton onClick={handleChangePasswordVisibility}>
+                      {!isPasswordVisible && <VisibilityOffRoundedIcon />}
+                      {isPasswordVisible && <VisibilityRoundedIcon />}
+                    </IconButton>
+                  }
                   // value={loginData?.password}
                   // onChange={onChangeField('password')}
                   placeholder="Enter your password"
