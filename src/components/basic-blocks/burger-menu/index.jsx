@@ -83,7 +83,7 @@ const BurgerMenu = props => {
           path="/notifications"
         />
         {isChef && <MenuListItem text="My Recipes" icon={ListIcon} path="/my-recipes" />}
-        <MenuListItem text="Market" icon={MegaphoneIcon} path="/search" />
+        <MenuListItem text="Market" icon={MegaphoneIcon} path="/search?title=" />
         <MenuListItem text="History" icon={HistoryIcon} path="/my-orders" />
         <MenuListItem text="Saved Recipes" icon={BookmarkIcon} path="/saved-recipes" />
 
