@@ -62,7 +62,7 @@ export const BasicInput = props => {
   };
 
   return (
-    <div style={{ flex: defineWidth() }}>
+    <div className={classes.input_container} style={{ flex: defineWidth() }}>
       <InputLabel className={classes.label}>{label}</InputLabel>
       {!phone && (
         <TextField
