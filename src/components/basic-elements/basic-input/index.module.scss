@@ -67,3 +67,12 @@
   color: #AFB8CA !important;
 }
 
+
+@media (max-width: 600px) {
+  .input {
+    &_container {
+      flex: 1 1 100% !important;
+    }
+
+  }
+}
