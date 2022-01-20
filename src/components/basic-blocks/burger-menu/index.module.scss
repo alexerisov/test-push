@@ -4,7 +4,7 @@
 .menu {
   &_popover {
     max-height: 80vh !important;
-    padding: 0 16px !important;
+    padding: 4px 16px 16px !important;
     background: #fcfcfd !important;
     border: 1px solid #f4f5f6 !important;
     box-sizing: border-box !important;
@@ -12,14 +12,37 @@
     border-radius: 20px !important;
     margin-left: 0 !important;
     margin-right: 0 !important;
-    margin-top: 10px;
+    margin-top: 40px !important;
+    width: 292px !important;
 
     ul {
       width: 100% !important;
     }
   }
 
+  &_item {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: flex-start !important;
+    padding: 12px 10px !important;
+    text-decoration: none !important;
+    border-radius: 10px !important;
 
+    &_icon {
+      display: flex !important;
+      justify-content: center !important;
+    }
+  }
+
+  &_button_item {
+    padding: 0 !important;
+    width: 100% !important;
+    text-decoration: none !important;
+    color: #23262F;
+    &:hover {
+      background-color: transparent !important;
+    }
+  }
 }
 
 .header__link {
@@ -40,6 +63,7 @@
     font-size: 14px;
     line-height: 160%;
 
+
     letter-spacing: 0.01em;
     color: #566481;
 
@@ -55,7 +79,6 @@
       font-weight: bold !important;
       font-size: 14px !important;
       line-height: 16px !important;
-      text-align: center !important;
       color: #23262F !important;
     }
   }

@@ -12,6 +12,7 @@ import { ReactComponent as MegaphoneIcon } from '../../../../public/icons/Megaph
 import { ReactComponent as HistoryIcon } from '../../../../public/icons/History/Line.svg';
 import { ReactComponent as BookmarkIcon } from '../../../../public/icons/Bookmark/Line.svg';
 import Link from 'next/link';
+import { Link as MuiLink } from '@material-ui/core';
 import { accountActions } from '@/store/actions';
 import { useRouter } from 'next/router';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
@@ -26,13 +27,25 @@ const BurgerMenu = props => {
   const MenuListItem = ({ icon, text, path, ...otherProps }) => {
     const endIcon = otherProps?.endIcon;
     return (
-      <StyledMenuItem onClick={handleClose}>
-        <StyledListItemIcon>{<BasicIcon icon={icon} color="#777E90" />}</StyledListItemIcon>
-        <Link href={path}>
-          <a className={classes.header__link_place_menu}>{text}</a>
-        </Link>
-        {endIcon && <>{endIcon}</>}
-      </StyledMenuItem>
+      <MenuItem
+        button
+        component={MuiLink}
+        href={path}
+        onClick={handleClose}
+        className={otherProps?.classes || classes.menu_item}>
+        <>
+          {icon && (
+            <ListItemIcon className={classes.menu_item_icon}>{<BasicIcon icon={icon} color="#777E90" />}</ListItemIcon>
+          )}
+          {/*{path && (*/}
+          {/*  <Link href={path}>*/}
+          <p className={classes.header__link_place_menu}>{text}</p>
+          {/*  </Link>*/}
+          {/*)}*/}
+          {otherProps?.children ? otherProps?.children : false}
+          {endIcon ? endIcon : false}
+        </>
+      </MenuItem>
     );
   };
   const handleLogout = () => {
@@ -48,8 +61,7 @@ const BurgerMenu = props => {
 
   const PopupMenu = () => {
     return (
-      <StyledMenu
-        c
+      <Menu
         id="simple-menu"
         // anchorReference="anchorEl"
         // anchorPosition={anchorEl}
@@ -69,11 +81,11 @@ const BurgerMenu = props => {
         open={Boolean(anchorEl)}
         onClose={handleClose}>
         {isMobile && isChef && (
-          <LogoutMenuItem onClick={handleClose}>
+          <MenuListItem classes={classes.menu_button_item} onClick={handleClose}>
             <Button href="/recipe/upload" className={classes.header__link_place_menu_logout}>
               Upload Recipes
             </Button>
-          </LogoutMenuItem>
+          </MenuListItem>
         )}
         <MenuListItem text="Account Settings" icon={UserIcon} path="/profile/account-settings" />
         <MenuListItem
@@ -87,41 +99,17 @@ const BurgerMenu = props => {
         <MenuListItem text="History" icon={HistoryIcon} path="/my-orders" />
         <MenuListItem text="Saved Recipes" icon={BookmarkIcon} path="/saved-recipes" />
 
-        <LogoutMenuItem onClick={handleClose}>
+        <MenuListItem classes={classes.menu_button_item} onClick={handleClose}>
           <Button className={classes.header__link_place_menu_logout} onClick={handleLogout}>
             Logout
           </Button>
-        </LogoutMenuItem>
-      </StyledMenu>
+        </MenuListItem>
+      </Menu>
     );
   };
 
   return <PopupMenu />;
 };
-
-const StyledMenu = styled(Menu)`
-  margin-top: 50px;
-`;
-
-const StyledMenuItem = styled(MenuItem)`
-  width: 100% !important;
-  display: flex;
-  padding: 12px 12px 12px 20px !important;
-  column-gap: 12px;
-`;
-
-const LogoutMenuItem = styled(StyledMenuItem)`
-  width: 100% !important;
-  &:hover {
-    background: none;
-  }
-`;
-
-const StyledListItemIcon = styled(ListItemIcon)`
-  display: flex;
-  justify-content: center;
-  align-item: center;
-`;
 
 export default connect(state => ({
   account: state.account
