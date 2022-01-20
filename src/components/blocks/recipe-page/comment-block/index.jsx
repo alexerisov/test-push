@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Button, LinearProgress, OutlinedInput } from '@material-ui/core';
+import { Button, IconButton, LinearProgress, OutlinedInput, Popover } from '@material-ui/core';
 import Pagination from '@material-ui/lab/Pagination';
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import 'emoji-mart/css/emoji-mart.css';
+import { Picker } from 'emoji-mart';
 
 import { modalActions } from '@/store/actions';
 import { CommentItem } from '@/components/elements/comment';
 import { ReactComponent as ArrowRightIcon } from '@/../public/icons/Arrow Right 2/Line.svg';
+import { ReactComponent as SmileIcon } from '@/../public/icons/Smile/Line.svg';
 import Recipe from '@/api/Recipe';
 
 import classes from './index.module.scss';
@@ -49,6 +52,10 @@ const CommentBlock = ({
   const itemsPerPage = 4;
   const [page, setPage] = useState(1);
   const [numberOfPages, setNumberOfPages] = useState();
+  const [emojiAnchorEl, setEmojiAnchorEl] = useState(null);
+
+  const emojiPickerOpen = Boolean(emojiAnchorEl);
+  const emojiPickerId = emojiPickerOpen ? 'comment-emoji-picker' : undefined;
 
   const [ratingStars, setRatingStars] = useState();
 
@@ -205,7 +212,6 @@ const CommentBlock = ({
   const RateParameter = props => {
     const { text, formik, value, average } = props;
 
-    console.log(isRecipeRatedByUser);
     return (
       <div className={classes.rate_parameter_wrapper}>
         <div className={classes.rate_parameter_text}>{text}</div>
@@ -250,6 +256,19 @@ const CommentBlock = ({
     );
   };
 
+  const handleSmileClick = event => {
+    setEmojiAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setEmojiAnchorEl(null);
+  };
+
+  const handleEmojiSelect = emoji => {
+    formik.setFieldValue('textarea', formik.values.textarea + emoji.native);
+    handleClose();
+  };
+
   return (
     <div className={classes.comments}>
       <div className={classes.rating}>
@@ -287,22 +306,42 @@ const CommentBlock = ({
           value={formik.values.textarea}
           fullWidth
           endAdornment={
-            <Button
-              disabled={ratings.some(el => el.value) && ratings.some(el => !el.value)}
-              endIcon={<BasicIcon icon={ArrowRightIcon} color="white" size="16px" />}
-              classes={{
-                root: classes.comments__input__button,
-                label: classes.comments__input__button__label
-              }}
-              type="submit"
-              variant="contained"
-              color="primary">
-              Post it!
-            </Button>
+            <>
+              <IconButton onClick={handleSmileClick}>
+                <BasicIcon icon={SmileIcon} color="#566481" />
+              </IconButton>
+              <Popover
+                disableScrollLock
+                id={emojiPickerId}
+                open={emojiPickerOpen}
+                anchorEl={emojiAnchorEl}
+                onClose={handleClose}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'center'
+                }}
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'center'
+                }}>
+                <Picker onSelect={handleEmojiSelect} showPreview={false} showSkinTones={false} />
+              </Popover>
+
+              <Button
+                disabled={ratings.some(el => el.value) && ratings.some(el => !el.value)}
+                endIcon={<BasicIcon icon={ArrowRightIcon} color="white" size="16px" />}
+                classes={{
+                  root: classes.comments__input__button,
+                  label: classes.comments__input__button__label
+                }}
+                type="submit"
+                variant="contained"
+                color="primary">
+                Post it!
+              </Button>
+            </>
           }
         />
-
-        {console.log('condition', ratings.some(el => el.value) && ratings.some(el => !el.value))}
 
         {formik.touched.textarea && formik.errors.textarea ? (
           <div className={classes.comments__input__error}>{formik.errors.textarea}</div>
