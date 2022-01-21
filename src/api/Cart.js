@@ -44,5 +44,9 @@ export default {
 
   postOrder: data => {
     return http.post(`/cart/order`, data);
+  },
+
+  validateZipcode: data => {
+    return http.get(`/settings/zipcode?code=${data}`);
   }
 };

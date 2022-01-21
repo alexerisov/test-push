@@ -7,7 +7,7 @@ import { withAuth } from '@/utils/authProvider';
 import { BasicInput } from '@/components/basic-elements/basic-input';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { Button, Checkbox, CircularProgress } from '@material-ui/core';
+import { Button, Checkbox, CircularProgress, IconButton } from '@material-ui/core';
 import { InputsBlock } from '@/components/basic-blocks/inputs-block';
 import classes from './index.module.scss';
 import { Divider } from '@/components/basic-elements/divider';
@@ -17,10 +17,13 @@ import { BasicDatePicker } from '@/components/basic-elements/basic-date-picker';
 import CheckboxIconUnchecked from '@/components/elements/checkbox-icon/checkbox-icon-unchecked';
 import CheckboxIcon from '@/components/elements/checkbox-icon';
 import dayjs from 'dayjs';
+import CloseIcon from '@material-ui/icons/Close';
+import { BasicIcon } from '@/components/basic-elements/basic-icon';
 
 const zipcodeRegExp = /^\d{4}[a-zA-Z]{2}|\d{4}\s[a-zA-Z]{2}$/;
 
 const validationSchema = yup.object({
+  isZipcodeFieldFocused: yup.boolean(),
   email: yup.string('Enter your email').email('Enter a valid email').required('Email is required'),
   name: yup.string('Enter your name').required('Name is required'),
   phone: yup
@@ -34,7 +37,16 @@ const validationSchema = yup.object({
   flat: yup.string('Enter your flat').required('Flat is required'),
   zipcode: yup
     .string('Enter your zipcode')
-    .matches(zipcodeRegExp, 'Zipcode should have "9999AA" or "9999 AA" format')
+    .when('isZipcodeFieldFocused', {
+      is: true,
+      then: yup
+        .string()
+        .test(
+          'is-valid',
+          'We deliver only within Amsterdam area. Enter zipcode that belongs to Amsterdam',
+          async value => await Cart.validateZipcode(value).then(res => res.result === 'true')
+        )
+    })
     .required('Zipcode is required')
 });
 
@@ -93,7 +105,8 @@ const mergeFormValues = (defaultData, lastOrderData, profileData) => {
     flat: lastOrderData?.flat || defaultData?.flat,
     zipcode: lastOrderData?.zipcode || defaultData?.zipcode,
     date: new Date(),
-    save_address: false
+    save_address: false,
+    isZipcodeFieldFocused: false
   };
 };
 
@@ -187,7 +200,22 @@ const OrderConfirmPage = () => {
               <BasicInput formik={formik} size={0.5} label="Street" name="street" placeholder="Enter your street" />
               {/*<BasicInput formik={formik} size={0.5} label="House" name="house" placeholder="Enter your house" />*/}
               {/*<BasicInput formik={formik} size={0.5} label="Flat" name="flat" placeholder="Enter your flat" />*/}
-              <BasicInput formik={formik} label="Zipcode" name="zipcode" placeholder="Enter your zipcode" />
+              <BasicInput
+                formik={formik}
+                label="Zipcode"
+                name="zipcode"
+                onChange={event => formik.setFieldValue('zipcode', event.target.value, false)}
+                onFocus={event => {
+                  event.target.focus();
+                  formik.setFieldValue('isZipcodeFieldFocused', true);
+                }}
+                onBlur={event => {
+                  formik.handleBlur(event);
+                  formik.setFieldValue('isZipcodeFieldFocused', false);
+                }}
+                placeholder="Enter your zipcode"
+                disableOnChangeValidation
+              />
               <BasicDatePicker
                 formik={formik}
                 label="Date"

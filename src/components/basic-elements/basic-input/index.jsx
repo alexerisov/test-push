@@ -19,6 +19,8 @@ export const BasicInput = props => {
     isSecret,
     value,
     onChange,
+    onBlur,
+    onFocus,
     error,
     disableValidation,
     endAdornment
@@ -71,8 +73,9 @@ export const BasicInput = props => {
           id={name}
           disableValidation={disableValidation}
           name={name}
+          onFocus={onFocus ? onFocus : event => event.target.focus()}
           placeholder={placeholder}
-          onBlur={formik.handleBlur}
+          onBlur={onBlur ? onBlur : formik.handleBlur}
           onChange={onChange ? onChange : formik.handleChange}
           error={error ? error : formik.touched[name] && Boolean(formik.errors[name])}
           helperText={formik.touched[name] && formik.errors[name]}
