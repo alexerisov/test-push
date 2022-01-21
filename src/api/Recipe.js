@@ -250,6 +250,10 @@ export default {
     return http.delete(`recipe/comment/${id}/delete`);
   },
 
+  deleteReview: id => {
+    return http.delete(`recipe/reviews/${id}/delete`);
+  },
+
   deleteRecipe: id => {
     return http.delete(`/recipe/${id}`);
   },
