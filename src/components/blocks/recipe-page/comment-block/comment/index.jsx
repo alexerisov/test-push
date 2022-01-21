@@ -25,6 +25,7 @@ const Comment = ({
   commentId,
   createdAt,
   deleteComment,
+  deleteReview,
   user,
   userId,
   uploadLikeHandler,
@@ -51,7 +52,7 @@ const Comment = ({
     updated: false
   });
 
-  const isCreatedTwoHoursAgo = () => {
+  const isCreated24HoursAgo = () => {
     const createdTimeOfTargetComment = Date.parse(createdAt);
 
     // This is a difference between current GMT and UTC of active user
@@ -60,7 +61,7 @@ const Comment = ({
 
     const hoursDiff = Math.floor((currentTime - createdTimeOfTargetComment) / 3.6e6);
 
-    return hoursDiff < 2;
+    return hoursDiff < 24;
   };
 
   const isCommentCreatedByActiveUser = () => {
@@ -172,9 +173,9 @@ const Comment = ({
           {/*  <span onClick={() => likeHandler(likeTypes.dislike)}>{dislikes.value} Dislikes</span>*/}
           {/*</div>*/}
 
-          {isCreatedTwoHoursAgo() && isCommentCreatedByActiveUser() && (
+          {isCreated24HoursAgo() && isCommentCreatedByActiveUser() && (
             <div className={classes.comment__delete}>
-              <span onClick={() => deleteComment(commentId)}>Delete</span>
+              <span onClick={() => (rating ? deleteReview(commentId) : deleteComment(commentId))}>Delete</span>
             </div>
           )}
         </div>

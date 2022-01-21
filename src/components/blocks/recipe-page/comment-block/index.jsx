@@ -176,6 +176,23 @@ const CommentBlock = ({
       console.log(e);
     }
   };
+  const deleteReview = async commentId => {
+    try {
+      let response;
+
+      if (deleteCommentHandle) {
+        response = await deleteCommentHandle(commentId);
+      } else {
+        response = await Recipe.deleteReview(commentId);
+      }
+
+      if (response.status === 204) {
+        getComments();
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const openUnregisterModal = name => {
     return () => {
@@ -369,6 +386,7 @@ const CommentBlock = ({
                   commentId={comment?.pk}
                   createdAt={comment?.created_at}
                   deleteComment={deleteComment}
+                  deleteReview={deleteReview}
                   uploadLikeHandler={uploadLikeHandler}
                   rating={comment?.avg_user_rating}
                 />
