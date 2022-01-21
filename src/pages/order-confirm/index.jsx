@@ -44,7 +44,15 @@ const validationSchema = yup.object({
         .test(
           'is-valid',
           'We deliver only within Amsterdam area. Enter zipcode that belongs to Amsterdam',
-          async value => await Cart.validateZipcode(value).then(res => res.result === 'true')
+          async value => {
+            try {
+              const response = await Cart.validateZipcode(value);
+              return response.data.result;
+            } catch (e) {
+              console.log(e);
+              return false;
+            }
+          }
         )
     })
     .required('Zipcode is required')
