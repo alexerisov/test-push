@@ -196,7 +196,10 @@ const LightBox = ({ onClickWrapper, title, video, images, recipe, absolutePath }
                           min={0}
                           max={100}
                           value={playerState.progress}
-                          onChange={(event, value) => handleVideoProgress(value)}
+                          onChange={(event, value) => {
+                            handleVideoProgress(value);
+                            event.stopPropagation();
+                          }}
                         />
                         {isVolumeActive && (
                           <div className={classes.slider__main__valumebar}>
@@ -214,7 +217,10 @@ const LightBox = ({ onClickWrapper, title, video, images, recipe, absolutePath }
                               max={1}
                               step={0.01}
                               value={playerState.volume}
-                              onChange={(_, value) => handleAudioVolume(value)}
+                              onChange={(event, value) => {
+                                handleAudioVolume(value);
+                                event.stopPropagation();
+                              }}
                             />
                             <span>{Math.round(videoElement?.current?.volume * 100)}</span>
                           </div>
