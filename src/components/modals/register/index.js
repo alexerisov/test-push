@@ -246,7 +246,7 @@ function Register(props) {
   };
 
   const validationSchema = yup.object({
-    email: yup.string('Enter your email').email('Enter a valid email').required('Email is required')
+    email: yup.string('Enter your email').emailWithoutSymbols().required('Email is required')
   });
 
   const defaultFormValues = {
