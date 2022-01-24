@@ -37,7 +37,7 @@ function Register(props) {
   const isMobile = useMediaQuery('(max-width: 768px)');
   const [isFormLogin, setIsFormLogin] = useState(true);
   const [signupFormStep, setSignupFormStep] = useState(1);
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isPasswordHidden, setIsPasswordHidden] = useState(true);
 
   useEffect(() => {
     if (isMobile) {
@@ -387,18 +387,18 @@ function Register(props) {
   };
 
   const handleChangePasswordVisibility = () => {
-    setIsPasswordVisible(!isPasswordVisible);
+    setIsPasswordHidden(!isPasswordHidden);
   };
 
   const switchToNextFormStep = () => {
     setSignupFormStep(2);
-    setIsPasswordVisible(false);
+    setIsPasswordHidden(false);
   };
 
   const SignupInputs = () => {
     const switchToNextFormStep = () => {
       setSignupFormStep(2);
-      setIsPasswordVisible(false);
+      setIsPasswordHidden(false);
     };
 
     return (
@@ -496,11 +496,11 @@ function Register(props) {
                 formik={formik}
                 name="password"
                 label="Password"
-                isSecret={isPasswordVisible}
+                isSecret={isPasswordHidden}
                 endAdornment={
                   <IconButton onClick={handleChangePasswordVisibility}>
-                    {!isPasswordVisible && <VisibilityOffRoundedIcon />}
-                    {isPasswordVisible && <VisibilityRoundedIcon />}
+                    {!isPasswordHidden && <VisibilityOffRoundedIcon />}
+                    {isPasswordHidden && <VisibilityRoundedIcon />}
                   </IconButton>
                 }
                 disableValidation
@@ -537,12 +537,12 @@ function Register(props) {
                   formik={formik}
                   name="username"
                   label="Full Name"
-                  isSecret={!isPasswordVisible}
+                  isSecret={!isPasswordHidden}
                   disableValidation
                   endAdornment={
                     <IconButton onClick={handleChangePasswordVisibility}>
-                      {!isPasswordVisible && <VisibilityOffRoundedIcon />}
-                      {isPasswordVisible && <VisibilityRoundedIcon />}
+                      {!isPasswordHidden && <VisibilityOffRoundedIcon />}
+                      {isPasswordHidden && <VisibilityRoundedIcon />}
                     </IconButton>
                   }
                   // value={loginData?.password}
