@@ -67,6 +67,9 @@
 
   &__inner {
     height: 100%;
+    overflow-y: auto;
+    max-height: 90vh;
+    @include no_scrollbar();
   }
 
   &__header {
@@ -160,7 +163,6 @@
     @media (max-width: $--sm) {
       width: 100vw;
       height: 100vh;
-      max-height: 100vh;
       max-width: 100vw;
       margin: 0;
       border-radius: 0;

@@ -24,7 +24,7 @@ const zipcodeRegExp = /^\d{4}[a-zA-Z]{2}|\d{4}\s[a-zA-Z]{2}$/;
 
 const validationSchema = yup.object({
   isZipcodeFieldFocused: yup.boolean(),
-  email: yup.string('Enter your email').email('Enter a valid email').required('Email is required'),
+  email: yup.string('Enter your email').emailWithoutSymbols().required('Email is required'),
   name: yup.string('Enter your name').required('Name is required'),
   phone: yup
     .string()
