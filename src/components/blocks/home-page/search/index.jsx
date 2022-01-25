@@ -127,8 +127,7 @@ const SearchInput = () => {
         <IconButton
           type="submit"
           className={classes.search_button}
-          style={{ background: '#FFAA00', color: 'white', display: isSearchFocused && isMobile ? 'none' : 'block' }}
-          size="32px">
+          style={{ background: '#FFAA00', color: 'white', display: isSearchFocused && isMobile ? 'none' : 'block' }}>
           <BasicIcon icon={SearchIcon} color="white" />
         </IconButton>
       </form>

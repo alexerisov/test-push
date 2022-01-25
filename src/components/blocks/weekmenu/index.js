@@ -57,8 +57,8 @@ const Weekmenu = ({ weekmenu, token }) => {
           </div>
         </div>
         <StyledSlider>
-          {weekmenu && weekmenu?.length > 0
-            ? weekmenu?.map((recipe, index) => (
+          {weekmenu() && weekmenu()?.length > 0
+            ? weekmenu()?.map((recipe, index) => (
                 <Slide key={`${recipe.pk}-${index}`}>
                   <CardSearch
                     token={token}
