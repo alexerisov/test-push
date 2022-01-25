@@ -681,6 +681,7 @@ const Recipes = props => {
   const handleClickClearAll = () => {
     setTitle('');
     setQuery('');
+    setRange(1);
     formik.handleSubmit();
   };
 
