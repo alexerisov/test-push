@@ -25,14 +25,12 @@ const Arrows = props => {
     <div className={classes.slider_arrows_container}>
       <IconButton
         className={classes.arrows_button}
-        size="22px"
         disabled={currentWeek === 0}
         onClick={() => handleChangeWeek(currentWeek - 1)}>
         <BasicIcon icon={ArrowLeftIcon} />
       </IconButton>
       <IconButton
         className={classes.arrows_button}
-        size="22px"
         disabled={currentWeek === weeksAmount - 1}
         onClick={() => handleChangeWeek(currentWeek + 1)}>
         <BasicIcon icon={ArrowRightIcon} />
