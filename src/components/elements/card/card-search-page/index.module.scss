@@ -124,7 +124,20 @@
     @include fontMedium();
     display: flex;
     column-gap: 8px;
-    align-items: center;
+    align-items: flex-start;
+    overflow-y: hidden;
+    row-gap: 8px;
+    text-overflow: ellipsis;
+
+    & p {
+      font-weight: 500 !important;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2; /* number of lines to show */
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
 
     &_right {
       color: #566481;

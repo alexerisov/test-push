@@ -4,7 +4,7 @@ import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import { styled } from '@material-ui/core/styles';
-import { CardActionArea, Button } from '@material-ui/core';
+import { CardActionArea, Button, Typography } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import { ReactComponent as StopwatchIcon } from '../../../../../public/icons/Stopwatch/Line.svg';
 import { ReactComponent as HatChefIcon } from '../../../../../public/icons/Hat Chef/Line.svg';
@@ -114,7 +114,7 @@ const CardSearch = props => {
       <StyledCardActionArea onClick={() => redirectToRecipeCard(props.id)}>
         <StyledCardMedia className={classes.card__media} image={props.image ?? logo} title="" />
 
-        {props.user_saved_recipe === 1 ? (
+        {props.user_saved_recipe ? (
           <SavedIcon />
         ) : props.isParsed && props.publishStatus === PUBLISH_STATUS.published ? (
           <ChefIcon type="common" />
@@ -132,19 +132,16 @@ const CardSearch = props => {
             {/* {props.hasVideo && <CardControlPlay />} */}
             <div className={classes.card__labels}>
               <div className={classes.card__label_left}>
-                {props.cookingTypes?.length > 0 ? (
-                  props.cookingTypes.map((el, ind) => (
-                    <div className={classes.card__label} key={`${el}-${ind}`}>
-                      <BasicIcon icon={recipeTypesImg?.[el] || IceCreamIcon} size="16px" />
-                      {recipeTypes?.[el] || 'Not defined'}
-                    </div>
-                  ))
-                ) : (
-                  <div className={classes.card__label}>
-                    <BasicIcon icon={IceCreamIcon} size="16px" />
-                    {'Not defined'}
-                  </div>
-                )}
+                <div className={classes.card__label}>
+                  <BasicIcon icon={IceCreamIcon} size="16px" />
+                  <p>
+                    {props.cookingTypes?.length > 0
+                      ? props.cookingTypes
+                          .map(el => recipeTypes?.[el] + ', Lunch, Dinner, Lunch, Dessert, Dinner' || 'Not defined')
+                          .join(', ')
+                      : "Not defined'"}
+                  </p>
+                </div>
               </div>
               <div className={classes.card__label_right}>
                 <BasicIcon icon={HatChefIcon} size="16px" />

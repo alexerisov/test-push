@@ -256,15 +256,17 @@ function RecipePage(props) {
       <div className={classes.image_wrapper}>
         {recipe?.video_url ? (
           <>
-            <img
-              src={
-                typeof recipe?.video_thumbnail_url === 'object'
-                  ? JSON.stringify(recipe?.video_thumbnail_url)
-                  : recipe?.video_thumbnail_url
-              }
-              alt="Recipe Image"
-              className={classes.image}
-            />
+            <div className={classes.image_wrapper_click_area} onClick={() => setIsLightBoxOpen(true)}>
+              <img
+                src={
+                  typeof recipe?.video_thumbnail_url === 'object'
+                    ? JSON.stringify(recipe?.video_thumbnail_url)
+                    : recipe?.video_thumbnail_url
+                }
+                alt="Recipe Image"
+                className={classes.image}
+              />
+            </div>
             <div className={classes.video__control}>
               <IconBtn onClick={() => setIsLightBoxOpen(true)}>
                 <BasicIcon icon={PlayIcon} color={'#FFAA00'} />
@@ -272,22 +274,26 @@ function RecipePage(props) {
             </div>
           </>
         ) : mainImage.length > 0 ? (
-          <img
-            src={typeof mainImage[0] === 'object' ? mainImage[0].url : mainImage[0]}
-            alt="Recipe Image"
-            className={classes.image}
-          />
+          <div className={classes.image_wrapper_click_area} onClick={() => setIsLightBoxOpen(true)}>
+            <img
+              src={typeof mainImage[0] === 'object' ? mainImage[0].url : mainImage[0]}
+              alt="Recipe Image"
+              className={classes.image}
+            />
+          </div>
         ) : (
-          <img
-            src={typeof image === 'object' ? JSON.stringify(image) : image}
-            alt="Recipe Image"
-            className={classes.image}
-          />
+          <div className={classes.image_wrapper_click_area} onClick={() => setIsLightBoxOpen(true)}>
+            <img
+              src={typeof image === 'object' ? JSON.stringify(image) : image}
+              alt="Recipe Image"
+              className={classes.image}
+            />
+          </div>
         )}
         {materials.length > 1 && !viewAllImages ? (
           <button className={classes.media__button} onClick={() => setViewAllImages(true)}>
             <MyPicture />
-            {`Show all materials (${materials.length})`}
+            {`Show all materials (${materials.length - 1})`}
           </button>
         ) : null}
       </div>

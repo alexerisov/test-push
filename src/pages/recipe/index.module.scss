@@ -140,6 +140,10 @@
     // background-color: lightgray;
     border-radius: 16px;
   }
+
+  &_click_area {
+    cursor: pointer;
+  }
 }
 
 .related_recipes {
