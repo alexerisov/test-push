@@ -114,7 +114,7 @@ const CardSearch = props => {
       <StyledCardActionArea onClick={() => redirectToRecipeCard(props.id)}>
         <StyledCardMedia className={classes.card__media} image={props.image ?? logo} title="" />
 
-        {props.user_saved_recipe === 1 ? (
+        {props.user_saved_recipe ? (
           <SavedIcon />
         ) : props.isParsed && props.publishStatus === PUBLISH_STATUS.published ? (
           <ChefIcon type="common" />
