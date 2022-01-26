@@ -293,7 +293,7 @@ function RecipePage(props) {
         {materials.length > 1 && !viewAllImages ? (
           <button className={classes.media__button} onClick={() => setViewAllImages(true)}>
             <MyPicture />
-            {`Show all materials (${materials.length - 1})`}
+            {`Show all materials (${materials.length})`}
           </button>
         ) : null}
       </div>
@@ -352,7 +352,7 @@ function RecipePage(props) {
       <div className={classes.galery}>
         <div className={classes.galery__container}>
           <div className={classes.galery__column}>
-            {imagesWithoutMain.map((el, ind) => {
+            {images.map((el, ind) => {
               if (ind % 2 === 0) {
                 return (
                   <div key={el.url} className={classes.galery__item}>
@@ -363,7 +363,7 @@ function RecipePage(props) {
             })}
           </div>
           <div className={classes.galery__column}>
-            {imagesWithoutMain.map((el, ind) => {
+            {images.map((el, ind) => {
               if (ind % 2 === 1) {
                 return (
                   <div key={el.url} className={classes.galery__item}>
