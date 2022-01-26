@@ -22,7 +22,7 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  padding: 0px 96px 72px;
+  padding: 0px 92px 72px;
 
 
   &_title {
@@ -41,6 +41,7 @@
     text-align: center;
     letter-spacing: 0.01em;
     color: #14181F;
+    white-space: nowrap;
   }
 
   &_social {
@@ -169,7 +170,7 @@
 
 .select {
   &_container {
-
+    width: 100%;
   }
 
 
@@ -196,7 +197,7 @@
 
 @media (max-width: $--md) {
     .register {
-      padding: 96px 24px 34px;
+      padding: 92px 24px 34px;
 
       &_title {
         &_wrapper {

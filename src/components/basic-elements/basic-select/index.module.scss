@@ -2,29 +2,59 @@
 @import '~styles/mixins/mixins.scss';
 
 
+
 .select {
-&_menu {
+
+  &_menu {
   &_paper {
+    background: #FCFCFD !important;
+    box-shadow: 0px 5px 16px rgba(69, 77, 84, 0.08) !important;
+    border-radius: 16px !important;
+    padding: 16px !important;
+
+    & [class*='MuiListItem-root'] {
+      font-style: normal !important;
+      font-weight: 600 !important;
+      font-size: 14px !important;
+      line-height: 160% !important;
+      text-align: center !important;
+      letter-spacing: 0.01em !important;
+      color: #566481 !important;
+    }
+
+    & [class*=Mui-selected] {
+      background: #FFF6EB !important;
+      border-radius: 8px !important;
+      color: #FB8C00 !important;
+    }
+  }
+
+
 
   }
-}
   &_input {
+    [class*='MuiInputBase-fullWidth'] {
+      border-radius: 12px !important;
+      border: 1px solid !important;
 
-    //& button {
-    //  width: 25px !important;
-    //  height: 25px !important;
-    //  box-shadow: none !important;
-    //  border: none !important;
-    //}
-
+      &:hover {
+        //border: 1px solid !important;
+      }
+    }
+    & button {
+      width: 25px !important;
+      height: 25px !important;
+      box-shadow: none !important;
+      border: none !important;
+    }
 
     & fieldset {
-      border: 1px solid #FFAA00 !important;
+      border: 1px solid yellow !important;
       box-sizing: border-box !important;
       border-radius: 12px !important;
     }
     &:hover fieldset {
-      border-color: #AFB8CA !important;
+      border-color: royalblue !important;
     }
 
     & input {
@@ -36,6 +66,19 @@
       color: #14181F;
     }
 
+  }
+  &_icon {
+    &_wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      right: 5px;
+      border: 2px solid #E0E4EB !important;
+      border-radius: 100px;
+      width: 32px;
+      height: 32px;
+    }
   }
 }
 

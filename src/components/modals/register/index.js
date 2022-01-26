@@ -312,13 +312,6 @@ function Register(props) {
             startIcon={<BasicIcon icon={GoogleIcon} viewBox="0 0 488 512" size="16px" color="#FCFCFD" />}>
             Google
           </Button>
-          <Button
-            disabled
-            className={classes.register_social_button_apple}
-            variant="contained"
-            startIcon={<BasicIcon icon={AppleIcon} viewBox="0 0 384 512" size="16px" color="#FCFCFD" />}>
-            Apple
-          </Button>
         </div>
         <p className={classes.register_social_helper_text2}>Or continue with email</p>
       </div>
@@ -465,7 +458,7 @@ function Register(props) {
   return (
     <LayoutModal onClose={onCancel} themeName="basic">
       <div className={classes.register}>
-        <form>
+        <form style={{ width: '100%' }}>
           <div className={classes.register_title_wrapper}>
             <h2 className={classes.register_title}>{isFormLogin ? 'Login' : 'Sign Up as'}</h2>
             {!isFormLogin && (
