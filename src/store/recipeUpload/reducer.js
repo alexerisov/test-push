@@ -40,6 +40,10 @@ export default reducer(initState, {
     };
   },
 
+  [types.CLEAR]: () => {
+    return initState;
+  },
+
   [types.UPDATE_ERROR]: (state, action) => {
     return {
       ...state,

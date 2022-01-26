@@ -283,6 +283,7 @@ function FormCreateRecipe(props) {
       .then(data => {
         setVideoRecipeError(false);
         setStatusSubmit('Submit');
+        props.dispatch(recipeUploadActions.clear());
         return props.dispatch(
           modalActions.open('uploadSuccessful', {
             pk: data.pk,
@@ -296,6 +297,11 @@ function FormCreateRecipe(props) {
         console.log(err);
       });
   }
+
+  const handleCancel = () => {
+    props.dispatch(recipeUploadActions.clear());
+    router.push('/my-recipes');
+  };
 
   const handleErrorScroll = error => {
     if (error !== null) {
@@ -918,7 +924,7 @@ function FormCreateRecipe(props) {
         <button className={classes.createRecipeButton} onClick={uploadRecipe}>
           <p className={classes.createRecipeButton__text}>{statusSubmit}</p>
         </button>
-        <button className={classes.createRecipeButton_color_gray} onClick={() => router.push('/my-recipes')}>
+        <button className={classes.createRecipeButton_color_gray} onClick={handleCancel}>
           <p className={classes.createRecipeButton__text}>Cancel</p>
         </button>
       </div>
