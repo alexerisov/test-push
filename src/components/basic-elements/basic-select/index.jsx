@@ -1,11 +1,50 @@
 import React, { useState } from 'react';
 import classes from './index.module.scss';
-import { InputAdornment, InputLabel, NativeSelect, OutlinedInput } from '@material-ui/core';
+import { InputAdornment, InputBase, InputLabel, NativeSelect, OutlinedInput } from '@material-ui/core';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { ReactComponent as ArrowDownIcon } from '@/../public/icons/Arrow Down Simple/Line.svg';
 import { ReactComponent as ArrowUpIcon } from '@/../public/icons/Arrow Up Simple/Line.svg';
 import { BasicIcon } from '../basic-icon';
+import { withStyles } from '@material-ui/core/styles';
+
+const StyledInputBase = withStyles(theme => ({
+  root: {
+    display: 'flex',
+    alignItems: 'center',
+    position: 'relative'
+  },
+  input: {
+    height: '48px',
+    borderRadius: 12,
+    border: '1px solid #AFB8CA',
+    padding: '2px 16px',
+    fontFamily: 'Montserrat',
+    fontStyle: 'normal',
+    fontWeight: 600,
+    color: '#14181F !important',
+    fontSize: '14px',
+    lineHeight: '160%',
+    display: 'flex',
+    alignItems: 'center',
+    letterSpacing: '0.01em',
+
+    '&:focus': {
+      borderRadius: 12,
+      borderColor: '#FFAA00',
+      backgroundColor: 'transparent'
+    }
+  }
+}))(InputBase);
+
+const StyledSelect = withStyles(theme => ({
+  root: {
+    borderRadius: 12,
+    border: '1px solid #AFB8CA',
+    // maxWidth: '100% !important',
+    width: '100% !important'
+  }
+}))(Select);
 
 export const BasicSelect = props => {
   const { name, label, formik, values, disabled, classes: styles } = props;
@@ -20,23 +59,32 @@ export const BasicSelect = props => {
     setIsOpen(false);
   };
 
+  const defineEndIcon = () => {
+    return (
+      <div className={classes.select_icon_wrapper}>
+        <BasicIcon icon={isOpen ? ArrowUpIcon : ArrowDownIcon} color="#AFB8CA" />
+      </div>
+    );
+  };
+
   return (
     <div className={styles.container || 'container'}>
       {label && <InputLabel className={classes.label}>{label}</InputLabel>}
-      <Select
+      <StyledSelect
         variant="outlined"
         onOpen={handleOpen}
         onClose={handleClose}
-        IconComponent={() => <BasicIcon icon={isOpen ? ArrowUpIcon : ArrowDownIcon} />}
         labelId={'label-id' + label}
         value={formik.values[name]}
+        // classes={{ root: classes.select_input }}
         id={name}
+        IconComponent={defineEndIcon}
         name={name}
-        classes={{ outlined: classes.select_input }}
         onBlur={formik.handleBlur}
         onChange={formik.handleChange}
         error={formik.touched[name] && Boolean(formik.errors[name])}
         fullWidth
+        input={<StyledInputBase />}
         MenuProps={{
           disableScrollLock: true,
           anchorOrigin: {
@@ -51,10 +99,7 @@ export const BasicSelect = props => {
           classes: { paper: classes.select_menu_paper }
         }}
         inputProps={{
-          classes: {
-            outlined: classes.select_input
-            // input: classes.select_input
-          },
+          // classes: { root: classes.select_input },
           disableUnderline: false
         }}>
         {values &&
@@ -63,7 +108,7 @@ export const BasicSelect = props => {
               {item[1]}
             </MenuItem>
           ))}
-      </Select>
+      </StyledSelect>
     </div>
   );
 };
