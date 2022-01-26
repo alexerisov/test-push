@@ -198,10 +198,8 @@ function RecipePage(props) {
         .then(res => {
           if (res.data.like_status === 'deleted') {
             setIsRecipeLiked(false);
-            likesNumber > 0 && setLikesNumber(likesNumber - 1);
           } else if (res.data.like_status === 'created') {
             setIsRecipeLiked(true);
-            setLikesNumber(likesNumber + 1);
           }
         })
         .catch(err => console.log(err));
@@ -228,7 +226,7 @@ function RecipePage(props) {
               <IconButton onClick={onClickLikeHandler} className={classes.button} size="24px">
                 <BasicIcon icon={LikeIcon} color={isRecipeLiked ? '#FF582E' : '#353E50'} />
               </IconButton>
-              {likesNumber}
+              {likesNumber + isRecipeLiked}
             </div>
             <Divider vertical width="1px" height="24px" />
 
