@@ -288,9 +288,8 @@ function Register(props) {
   };
 
   const selectValues = {
-    0: 'Viewer',
-    1: 'Chef',
-    2: 'Supplier'
+    0: 'Eater',
+    1: 'Chef'
   };
 
   const SocialBlock = () => {

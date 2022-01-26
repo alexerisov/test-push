@@ -198,10 +198,8 @@ function RecipePage(props) {
         .then(res => {
           if (res.data.like_status === 'deleted') {
             setIsRecipeLiked(false);
-            likesNumber > 0 && setLikesNumber(likesNumber - 1);
           } else if (res.data.like_status === 'created') {
             setIsRecipeLiked(true);
-            setLikesNumber(likesNumber + 1);
           }
         })
         .catch(err => console.log(err));
@@ -228,7 +226,7 @@ function RecipePage(props) {
               <IconButton onClick={onClickLikeHandler} className={classes.button} size="24px">
                 <BasicIcon icon={LikeIcon} color={isRecipeLiked ? '#FF582E' : '#353E50'} />
               </IconButton>
-              {likesNumber}
+              {likesNumber + isRecipeLiked}
             </div>
             <Divider vertical width="1px" height="24px" />
 
@@ -293,7 +291,7 @@ function RecipePage(props) {
         {materials.length > 1 && !viewAllImages ? (
           <button className={classes.media__button} onClick={() => setViewAllImages(true)}>
             <MyPicture />
-            {`Show all materials (${materials.length - 1})`}
+            {`Show all materials (${materials.length})`}
           </button>
         ) : null}
       </div>
@@ -352,7 +350,7 @@ function RecipePage(props) {
       <div className={classes.galery}>
         <div className={classes.galery__container}>
           <div className={classes.galery__column}>
-            {imagesWithoutMain.map((el, ind) => {
+            {images.map((el, ind) => {
               if (ind % 2 === 0) {
                 return (
                   <div key={el.url} className={classes.galery__item}>
@@ -363,7 +361,7 @@ function RecipePage(props) {
             })}
           </div>
           <div className={classes.galery__column}>
-            {imagesWithoutMain.map((el, ind) => {
+            {images.map((el, ind) => {
               if (ind % 2 === 1) {
                 return (
                   <div key={el.url} className={classes.galery__item}>

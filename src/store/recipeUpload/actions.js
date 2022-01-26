@@ -2,6 +2,7 @@ import Recipe from '@/api/Recipe';
 
 export const types = {
   UPDATE: Symbol('UPDATE'),
+  CLEAR: Symbol('CLEAR'),
   UPDATE_ERROR: Symbol('UPDATE_ERROR'),
   SEND: Symbol('SEND'),
   SEND_SUCCESS: Symbol('SEND_SUCCESS'),
@@ -14,6 +15,14 @@ export default {
       dispatch({
         type: types.UPDATE,
         payload: data
+      });
+    };
+  },
+
+  clear: () => {
+    return dispatch => {
+      dispatch({
+        type: types.CLEAR
       });
     };
   },
