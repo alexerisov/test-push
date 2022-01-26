@@ -136,10 +136,8 @@ const CardSearch = props => {
                   <BasicIcon icon={IceCreamIcon} size="16px" />
                   <p>
                     {props.cookingTypes?.length > 0
-                      ? props.cookingTypes
-                          .map(el => recipeTypes?.[el] + ', Lunch, Dinner, Lunch, Dessert, Dinner' || 'Not defined')
-                          .join(', ')
-                      : "Not defined'"}
+                      ? props.cookingTypes.map(el => recipeTypes?.[el] || 'Not defined').join(', ')
+                      : 'Not defined'}
                   </p>
                 </div>
               </div>
