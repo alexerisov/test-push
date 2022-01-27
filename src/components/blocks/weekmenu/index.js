@@ -1,107 +1,103 @@
 import React, { useEffect, useState } from 'react';
-import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel';
 import classes from './index.module.scss';
-import { CardSearch } from '@/components/elements/card';
-import styled from 'styled-components';
-import 'pure-react-carousel/dist/react-carousel.es.css';
-import { PUBLISH_STATUS } from '@/utils/datasets';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Recipe from '@/api/Recipe';
+import { Box, IconButton, List } from '@material-ui/core';
+import { RecipeCard } from '@/components/basic-blocks/recipe-card';
+import { ReactComponent as ArrowLeftIcon } from '@/../public/icons/Arrow Left 2/Line.svg';
+import { ReactComponent as ArrowRightIcon } from '@/../public/icons/Arrow Right 2/Line.svg';
+import { BasicIcon } from '@/components/basic-elements/basic-icon';
+import { CardSearch } from '@/components/elements/card';
 
-const StyledSlider = styled(Slider)`
-  display: flex;
-  flex-direction: row;
-  width: auto;
-`;
-
-const Weekmenu = ({ weekmenu, token }) => {
-  const tablet = useMediaQuery('(max-width: 1025px)');
-  const mobile = useMediaQuery('(max-width: 576px)');
-
-  const [defaultWeekmenuResults, setDefaultWeekmenuResults] = useState([]);
-  useEffect(() => {
-    Recipe.getWeekmenu('')
-      .then(res => {
-        setDefaultWeekmenuResults(() => {
-          const recipesArray = res.data.map(el => el.recipes);
-          const seen = new Set();
-          const filteredArr = recipesArray.flat().filter(el => {
-            const duplicate = seen.has(el.pk);
-            seen.add(el.pk);
-            return !duplicate;
-          });
-          setDefaultWeekmenuResults(filteredArr);
-        });
-      })
-      .catch(e => console.error(e));
-  }, []);
-
+const Arrows = props => {
+  const { currentWeek, handleChangeWeek, weeksAmount } = props;
   return (
-    <div className={classes.weekmenu}>
-      <CarouselProvider
-        naturalSlideWidth={261}
-        naturalSlideHeight={339}
-        step={mobile ? 1 : tablet ? 2 : 2}
-        visibleSlides={mobile ? 1.1 : tablet ? 2 : 2.8}
-        currentSlide={0}
-        totalSlides={weekmenu?.length > 0 ? weekmenu?.length : defaultWeekmenuResults.length}>
-        <div className={classes.weekmenu__row}>
-          <h2 className={classes.weekmenu__title}>Weekmenu</h2>
-          <div className={classes.weekmenu__controls}>
-            <ButtonBack>
-              <img src="icons/Arrow Left 2/Line.svg" alt="arrow-back" />
-            </ButtonBack>
-            <ButtonNext>
-              <img src="icons/Arrow Right 2/Line.svg" alt="arrow-next" />
-            </ButtonNext>
-          </div>
-        </div>
-        <StyledSlider>
-          {weekmenu() && weekmenu()?.length > 0
-            ? weekmenu()?.map((recipe, index) => (
-                <Slide key={`${recipe.pk}-${index}`}>
-                  <CardSearch
-                    token={token}
-                    title={recipe?.title}
-                    image={recipe?.images?.[0]?.url}
-                    name={recipe?.user?.full_name}
-                    city={recipe?.user?.city}
-                    likes={recipe?.likes_number}
-                    isParsed={recipe?.is_parsed}
-                    publishStatus={recipe?.publish_status}
-                    hasVideo={recipe?.video}
-                    cookingTime={recipe?.cooking_time}
-                    cookingSkill={recipe?.cooking_skills}
-                    cookingTypes={recipe?.types}
-                    price={recipe?.price}
-                    id={recipe.pk}
-                  />
-                </Slide>
-              ))
-            : defaultWeekmenuResults?.map((recipe, index) => (
-                <Slide key={`${recipe.pk}-${index}`}>
-                  <CardSearch
-                    token={token}
-                    title={recipe?.title}
-                    image={recipe?.images?.[0]?.url}
-                    name={recipe?.user?.full_name}
-                    city={recipe?.user?.city}
-                    likes={recipe?.likes_number}
-                    isParsed={recipe?.is_parsed}
-                    publishStatus={recipe?.publish_status}
-                    hasVideo={recipe?.video}
-                    cookingTime={recipe?.cooking_time}
-                    cookingSkill={recipe?.cooking_skills}
-                    cookingTypes={recipe?.types}
-                    price={recipe?.price}
-                    id={recipe.pk}
-                  />
-                </Slide>
-              ))}
-        </StyledSlider>
-      </CarouselProvider>
+    <div className={classes.slider_arrows_container}>
+      <IconButton
+        className={classes.slider_arrows_button}
+        disabled={currentWeek === 0}
+        onClick={() => handleChangeWeek(currentWeek - 1)}>
+        <BasicIcon icon={ArrowLeftIcon} color="#FFAA00" />
+      </IconButton>
+      <IconButton
+        className={classes.slider_arrows_button}
+        disabled={currentWeek === weeksAmount - 1}
+        onClick={() => handleChangeWeek(currentWeek + 1)}>
+        <BasicIcon icon={ArrowRightIcon} color="#FFAA00" />
+      </IconButton>
     </div>
   );
 };
 
-export default Weekmenu;
+const RecipeSlider = props => {
+  const { recipes, currentWeek } = props;
+
+  return (
+    <div className={classes.slider_body}>
+      {recipes?.length > 0 && (
+        <>
+          {recipes
+            .filter(el => el?.pk)
+            .map((recipe, index) => (
+              <CardSearch
+                key={`${recipe.pk}-${index}`}
+                title={recipe?.title}
+                image={recipe?.images?.[0]?.url}
+                name={recipe?.user?.full_name}
+                city={recipe?.user?.city}
+                likes={recipe?.likes_number}
+                isParsed={recipe?.is_parsed}
+                publishStatus={recipe?.publish_status}
+                hasVideo={recipe?.video}
+                cookingTime={recipe?.cooking_time}
+                cookingSkill={recipe?.cooking_skills}
+                cookingTypes={recipe?.types}
+                price={recipe?.price}
+                id={recipe.pk}
+                disableBorder={true}
+              />
+            ))}
+        </>
+      )}
+    </div>
+  );
+};
+
+export const Weekmenu = props => {
+  const { data } = props;
+  const [recipes, setRecipes] = useState([]);
+  const [currentWeek, setCurrentWeek] = useState(0);
+  const currentWeekRecipes = recipes?.[currentWeek];
+  console.log('weekmenudata', data);
+  useEffect(async () => {
+    try {
+      const recipesArray = data?.map(el => el.recipes);
+      setRecipes(recipesArray);
+    } catch (e) {
+      console.error(e);
+    }
+  }, []);
+
+  const handleChangeWeek = newWeekIndex => {
+    if (0 <= newWeekIndex && newWeekIndex < recipes?.length) {
+      const slider = document.getElementsByClassName(classes.slider_body)?.[0];
+      slider.scrollLeft = 0;
+      setCurrentWeek(newWeekIndex);
+    }
+  };
+
+  const arrowsProps = {
+    currentWeek,
+    weeksAmount: recipes?.length,
+    handleChangeWeek
+  };
+
+  return (
+    <section className={classes.container}>
+      <Arrows {...arrowsProps} />
+      <Box display="flex" flexDirection="row" justifyContent="space-between">
+        <span className={classes.slider_title}>Weekmenu</span>
+      </Box>
+      <RecipeSlider recipes={currentWeekRecipes} currentWeek={currentWeek} />
+    </section>
+  );
+};

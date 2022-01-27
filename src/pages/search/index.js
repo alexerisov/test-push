@@ -45,7 +45,7 @@ import SearchDrawer from '@/components/elements/search-drawer';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { InputSearch } from '@/components/elements/input';
 import { CardSearch } from '@/components/elements/card';
-import Weekmenu from '@/components/blocks/weekmenu';
+import { Weekmenu } from '@/components/blocks/weekmenu';
 import { numberWithCommas } from '@/utils/converter';
 import { windowScroll } from '@/utils/windowScroll';
 import LayoutPageNew from '@/components/layouts/layout-page-new';
@@ -56,6 +56,7 @@ import { ReactComponent as SearchIcon } from '@/../public/icons/Search/Line.svg'
 import { ReactComponent as CloseIcon } from '@/../public/icons/Close Circle/Line.svg';
 import { ReactComponent as RecipeIcon } from '@/../public/icons/Receipt/Line.svg';
 import { TitleOutlined } from '@material-ui/icons';
+import Cookies from 'cookies';
 const MySlider = styled(Slider)(() => ({
   color: '#FFAA00',
   height: 2,
@@ -299,6 +300,7 @@ const Recipes = props => {
   useEffect(async () => {
     pageUnsalable > 1 && setShowScrollBtn(true);
   }, [pageUnsalable]);
+
   // Accordion
   const [expanded, setExpanded] = useState(false);
 
@@ -740,6 +742,21 @@ const Recipes = props => {
     </div>
   );
 
+  const isQueryEmpty =
+    !query ||
+    Object.keys(query)?.length === 0 ||
+    (Object.keys(query)?.length === 1 && router.query.title === '') ||
+    (router.query.diet_restrictions === '' &&
+      (router.query.title === '' || !router.query.title) &&
+      router.query.cooking_methods === '' &&
+      router.query.cooking_skills === '' &&
+      router.query.types === '' &&
+      router.query.ordering === '-likes_number' &&
+      router.query.only_eatchefs_recipes === '' &&
+      router.query.recipe_set === '');
+
+  const weekmenuData = isQueryEmpty ? props?.weekmenuWithoutFilters : [{ recipes: weekmenuWithoutDuplicate() }];
+
   const searchFilter = (
     <>
       <div className={classes.search__filter} onSubmit={formik.handleSubmit}>
@@ -919,14 +936,7 @@ const Recipes = props => {
           </StyledAccordion>
           <div className={classes.search__line} />
 
-          {(query && Object.keys(query).length == 0) ||
-          (router.query.diet_restrictions === '' &&
-            router.query.cooking_methods === '' &&
-            router.query.cooking_skills === '' &&
-            router.query.types === '' &&
-            router.query.ordering === '-likes_number' &&
-            router.query.only_eatchefs_recipes === '' &&
-            router.query.recipe_set === '') ? null : (
+          {!isQueryEmpty && (
             <button type="reset" onClick={handleClickClearAll} className={classes.search__clearButton}>
               <img src="icons/Close-Circle/Shape.svg" alt="close-icon" /> Reset filter
             </button>
@@ -1073,6 +1083,7 @@ const Recipes = props => {
       </NoSsr>
     </div>
   );
+
   const content = (
     <div className={classes.search}>
       {searchField}
@@ -1149,7 +1160,7 @@ const Recipes = props => {
             </Select>
           </div> */}
 
-          <Weekmenu weekmenu={weekmenuWithoutDuplicate} token={props.token} />
+          <Weekmenu data={weekmenuData} />
 
           <div className={classes.search__result__text}>
             <img src="icons/Coin/Line.svg" alt="close-icon" />
@@ -1294,3 +1305,30 @@ export default connect(state => ({
   token: state.account.hasToken,
   userType: state.account?.profile?.user_type
 }))(Recipes);
+
+export async function getServerSideProps(context) {
+  const cookies = new Cookies(context.req, context.res);
+  const targetCookies = cookies.get('aucr');
+  const token = !targetCookies ? undefined : decodeURIComponent(cookies.get('aucr'));
+
+  try {
+    const response = await Recipe.getMealOfWeek(token);
+    const banners = await Recipe.getHomepageCarouselItems();
+    const weekmenu = await Recipe.getWeekmenu('');
+    const mealOfWeekBlock = response?.data?.length ? response?.data?.[0] : null;
+
+    return {
+      props: {
+        weekmenuWithoutFilters: weekmenu.data
+      }
+    };
+  } catch (e) {
+    console.error(e);
+
+    return {
+      props: {
+        notFound: true
+      }
+    };
+  }
+}
