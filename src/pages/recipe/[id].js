@@ -678,7 +678,7 @@ function RecipePage(props) {
   const PopularRecipes = () => {
     return (
       <div className={classes.popular_recipes}>
-        <PopularRecipesBlock data={weekmenu} />
+        <PopularRecipesBlock data={props?.topRatedRecipes} />
       </div>
     );
   };
@@ -779,11 +779,13 @@ export async function getServerSideProps(context) {
   try {
     const recipeResponse = await Recipe.getRecipe(id, token);
     const weekmenuResponse = await Recipe.getWeekmenu('');
+    const topRatedResponse = await Recipe.getTopRatedMeals();
 
     return {
       props: {
         recipe: recipeResponse.data,
         weekmenu: weekmenuResponse.data,
+        topRatedRecipes: topRatedResponse.data,
         absolutePath: context.req.headers.host,
         notFound: false
       }
