@@ -114,9 +114,6 @@ const LightBox = ({ onClickWrapper, title, video, images, recipe, absolutePath }
       setSlide(index);
     }
   };
-  useEffect(() => {
-    setLoading(true);
-  }, []);
 
   const displayCount = 1;
   return (
@@ -127,7 +124,6 @@ const LightBox = ({ onClickWrapper, title, video, images, recipe, absolutePath }
             <div className={classes.lightbox__row_top__text}>
               {!mobile && `${currentSlide + 1} / ${images?.length + 1}`}
             </div>
-            {console.log(recipe)}
             <div>
               <IconButton className={classes.lightbox__controls_upload} size="24px" onClick={() => null}>
                 {/* <BasicIcon icon={ShareIcon} color={'#AFB8CA'} /> */}
@@ -268,7 +264,6 @@ const LightBox = ({ onClickWrapper, title, video, images, recipe, absolutePath }
                             )}
                             {!mobile && (
                               <IconButton size="40px" onClick={forward}>
-                                {console.log(playerState.progress)}
                                 <BasicIcon icon={ForwardIcon} color={'#FCFCFD'} />
                               </IconButton>
                             )}
