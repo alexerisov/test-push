@@ -110,7 +110,10 @@ const CardSearch = props => {
   };
 
   return (
-    <Card className={classes.card}>
+    <Card
+      className={`${classes.card} ${props.disableBorder ? classes.card_disableBorder : ''}`}
+      variant="elevation"
+      style={{ border: '1px red !important' }}>
       <StyledCardActionArea onClick={() => redirectToRecipeCard(props.id)}>
         <StyledCardMedia className={classes.card__media} image={props.image ?? logo} title="" />
 
