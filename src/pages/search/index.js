@@ -740,6 +740,19 @@ const Recipes = props => {
     </div>
   );
 
+  const isQueryEmpty =
+    !query ||
+    Object.keys(query)?.length === 0 ||
+    (Object.keys(query)?.length === 1 && router.query.title === '') ||
+    (router.query.diet_restrictions === '' &&
+      (router.query.title === '' || !router.query.title) &&
+      router.query.cooking_methods === '' &&
+      router.query.cooking_skills === '' &&
+      router.query.types === '' &&
+      router.query.ordering === '-likes_number' &&
+      router.query.only_eatchefs_recipes === '' &&
+      router.query.recipe_set === '');
+
   const searchFilter = (
     <>
       <div className={classes.search__filter} onSubmit={formik.handleSubmit}>
@@ -919,14 +932,7 @@ const Recipes = props => {
           </StyledAccordion>
           <div className={classes.search__line} />
 
-          {(query && Object.keys(query).length == 0) ||
-          (router.query.diet_restrictions === '' &&
-            router.query.cooking_methods === '' &&
-            router.query.cooking_skills === '' &&
-            router.query.types === '' &&
-            router.query.ordering === '-likes_number' &&
-            router.query.only_eatchefs_recipes === '' &&
-            router.query.recipe_set === '') ? null : (
+          {!isQueryEmpty && (
             <button type="reset" onClick={handleClickClearAll} className={classes.search__clearButton}>
               <img src="icons/Close-Circle/Shape.svg" alt="close-icon" /> Reset filter
             </button>
