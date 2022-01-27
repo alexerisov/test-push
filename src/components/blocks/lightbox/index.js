@@ -179,12 +179,13 @@ const LightBox = ({ onClickWrapper, title, video, images, recipe, absolutePath }
                   <div className={loading ? classes.slider__main_hide : classes.slider__main}>
                     <div className={playerState.fullscreen && classes.video__container} ref={videoWrap}>
                       <video
+                        controlsList="nodownload"
                         onLoadedData={() => setLoading(false)}
-                        src={video}
                         ref={videoElement}
                         onTimeUpdate={handleOnTimeUpdate}
-                        preload="true"
-                      />
+                        preload="true">
+                        <source src={video} type="video/mp4" />
+                      </video>
                       <div className={classes.slider__main__toolbar}>
                         <VideoRange
                           classes={{ root: classes.slider__root }}
