@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import classes from './index.module.scss';
 import Recipe from '@/api/Recipe';
 import { Box, IconButton } from '@material-ui/core';
@@ -20,21 +20,17 @@ const StyledSlider = styled(Slider)`
 `;
 
 const Arrows = props => {
-  const { currentWeek, handleChangeWeek, weeksAmount } = props;
+  const { handleArrowsButton, scrollRef, isRightButtonDisabled, isLeftButtonDisabled } = props;
   return (
     <div className={classes.slider_arrows_container}>
-      <IconButton
-        className={classes.arrows_button}
-        size="22px"
-        disabled={currentWeek === 0}
-        onClick={() => handleChangeWeek(currentWeek - 1)}>
+      <IconButton className={classes.arrows_button} size="22px" disabled={0} onClick={() => handleArrowsButton('left')}>
         <BasicIcon icon={ArrowLeftIcon} />
       </IconButton>
       <IconButton
         className={classes.arrows_button}
         size="22px"
-        disabled={currentWeek === weeksAmount - 1}
-        onClick={() => handleChangeWeek(currentWeek + 1)}>
+        disabled={0}
+        onClick={() => handleArrowsButton('right')}>
         <BasicIcon icon={ArrowRightIcon} />
       </IconButton>
     </div>
@@ -42,10 +38,10 @@ const Arrows = props => {
 };
 
 const RecipeSlider = props => {
-  const { recipes, currentWeek } = props;
+  const { recipes, scrollRef } = props;
 
   return (
-    <div className={classes.slider_body}>
+    <div className={classes.slider_body} ref={scrollRef}>
       {recipes?.length > 0 && (
         <>
           {recipes
@@ -79,32 +75,24 @@ const RecipeSlider = props => {
 
 export const PopularRecipesBlock = props => {
   const { data } = props;
-  const [recipes, setRecipes] = useState([]);
-  const [currentWeek, setCurrentWeek] = useState(0);
-  const currentWeekRecipes = recipes?.[currentWeek];
 
-  useEffect(async () => {
-    try {
-      // const weekmenu = await Recipe.getWeekmenu('');
-      const recipesArray = data?.map(el => el.recipes);
-      setRecipes(recipesArray);
-    } catch (e) {
-      console.error(e);
-    }
-  }, []);
+  const scrollRef = useRef(null);
 
-  const handleChangeWeek = newWeekIndex => {
-    if (0 <= newWeekIndex && newWeekIndex < recipes?.length) {
-      const slider = document.getElementsByClassName(classes.slider_body)?.[0];
-      slider.scrollLeft = 0;
-      setCurrentWeek(newWeekIndex);
-    }
+  const handleArrowsButton = direction => {
+    const directions = {
+      left: -2,
+      right: 2
+    };
+    const cardGap = 20;
+    const cardsAmount = data?.length;
+    const fullWidth = scrollRef.current.scrollWidth;
+    const cardWidth = (fullWidth - (cardsAmount - 1) * cardGap) / cardsAmount;
+    scrollRef.current.scrollLeft += cardWidth * directions[direction];
   };
 
   const arrowsProps = {
-    currentWeek,
-    weeksAmount: recipes?.length,
-    handleChangeWeek
+    handleArrowsButton,
+    scrollRef
   };
 
   return (
@@ -114,7 +102,7 @@ export const PopularRecipesBlock = props => {
         <span className={classes.slider_title}>Popular Recipes</span>
       </Box>
       <div className={classes.slider_subtitle}>Let's go to meet new sensations</div>
-      <RecipeSlider recipes={currentWeekRecipes} currentWeek={currentWeek} />
+      <RecipeSlider recipes={data} scrollRef={scrollRef} />
     </section>
   );
 };
