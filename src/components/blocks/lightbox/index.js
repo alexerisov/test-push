@@ -115,6 +115,134 @@ const LightBox = ({ onClickWrapper, title, video, images, recipe, absolutePath }
     }
   };
 
+  const VideoSlide = () => (
+    <>
+      {loading && (
+        <Balls>
+          <div className="ball one"></div>
+          <div className="ball two"></div>
+          <div className="ball three"></div>
+        </Balls>
+      )}
+      <div className={loading ? classes.slider__main_hide : classes.slider__main}>
+        <div className={playerState.fullscreen && classes.video__container} ref={videoWrap}>
+          <video
+            playsInline
+            controlsList="nodownload"
+            onLoadedData={() => setLoading(false)}
+            ref={videoElement}
+            onTimeUpdate={handleOnTimeUpdate}
+            preload="auto"
+            src={video}
+          />
+          <div className={classes.slider__main__toolbar}>
+            <VideoRange
+              classes={{ root: classes.slider__root }}
+              type="range"
+              min={0}
+              max={100}
+              value={playerState.progress}
+              onChange={(event, value) => {
+                handleVideoProgress(value);
+                event.stopPropagation();
+              }}
+            />
+            {isVolumeActive && (
+              <div className={classes.slider__main__valumebar}>
+                <IconButton
+                  size="40px"
+                  onClick={() => {
+                    toggleMute;
+                  }}>
+                  <BasicIcon icon={VolumeIcon} color={'#FCFCFD'} />
+                </IconButton>
+                <VideoRange
+                  classes={{ root: classes.slider__rail }}
+                  type="range"
+                  min={0}
+                  max={1}
+                  step={0.01}
+                  value={playerState.volume}
+                  onChange={(event, value) => {
+                    handleAudioVolume(value);
+                    event.stopPropagation();
+                  }}
+                />
+                <span>{Math.round(videoElement?.current?.volume * 100)}</span>
+              </div>
+            )}
+            <div className={classes.slider__main__toolbar_timeRow}>
+              {!Number.isNaN(Math.floor(videoElement?.current?.currentTime)) ? (
+                <span>{convertToHours(Math.floor(videoElement?.current?.currentTime))}</span>
+              ) : (
+                <span>00 : 00 : 00</span>
+              )}
+              {!Number.isNaN(Math.floor(videoElement?.current?.currentTime)) ? (
+                <span>{convertToHours(Math.floor(videoElement?.current?.duration))}</span>
+              ) : (
+                <span>00 : 00 : 00</span>
+              )}
+            </div>
+            <div className={classes.slider__main__toolbar_row}>
+              <div>
+                <IconButton
+                  size="40px"
+                  onClick={() => {
+                    setIsVolumeActive(prev => !prev);
+                  }}>
+                  <BasicIcon icon={VolumeIcon} color={isVolumeActive ? '#FFAA00' : '#FCFCFD'} />
+                </IconButton>
+                {/* <IconButton size="40px">
+                          <BasicIcon icon={SubtitlesIcon} color={'#FCFCFD'} />
+                        </IconButton> */}
+              </div>
+
+              <div>
+                {!mobile && (
+                  <IconButton size="40px" onClick={backward}>
+                    <BasicIcon icon={BackwardIcon} color={'#FCFCFD'} />
+                  </IconButton>
+                )}
+                {!playerState.isPlaying ? (
+                  <IconButton size="40px" onClick={togglePlay}>
+                    <BasicIcon icon={PlayIcon} color={'#FCFCFD'} />
+                  </IconButton>
+                ) : (
+                  <IconButton size="40px" onClick={togglePlay}>
+                    <BasicIcon icon={PauseIcon} color={'#FCFCFD'} />
+                  </IconButton>
+                )}
+                {!mobile && (
+                  <IconButton size="40px" onClick={forward}>
+                    <BasicIcon icon={ForwardIcon} color={'#FCFCFD'} />
+                  </IconButton>
+                )}
+              </div>
+              <div>
+                <IconButton size="40px" onClick={toggleFullscreen}>
+                  <BasicIcon icon={FullscreenIcon} color={'#FCFCFD'} />
+                </IconButton>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+
+  const videoObject = {
+    url: video,
+    type: 'video'
+  };
+
+  const ImageSlide = ({ image }) => (
+    <div className={classes.slider__item} key={image.url}>
+      <img src={image.url} />
+    </div>
+  );
+
+  const slidesArray = [videoObject, ...images].filter(el => Boolean(el.url));
+
   const displayCount = 1;
   return (
     <Wrapper>
@@ -122,7 +250,7 @@ const LightBox = ({ onClickWrapper, title, video, images, recipe, absolutePath }
         <div className={classes.lightbox__row_top}>
           <div className={classes.lightbox__row_controls}>
             <div className={classes.lightbox__row_top__text}>
-              {!mobile && `${currentSlide + 1} / ${images?.length + 1}`}
+              {!mobile && `${currentSlide + 1} / ${slidesArray?.length}`}
             </div>
             <div>
               <IconButton className={classes.lightbox__controls_upload} size="24px" onClick={() => null}>
@@ -167,127 +295,7 @@ const LightBox = ({ onClickWrapper, title, video, images, recipe, absolutePath }
               onClickThumb={() => console.log('clicked')}
               onClickItem={() => console.log('clicked')}
               selectedItem={currentSlide}>
-              {video && (
-                <>
-                  {loading && (
-                    <Balls>
-                      <div className="ball one"></div>
-                      <div className="ball two"></div>
-                      <div className="ball three"></div>
-                    </Balls>
-                  )}
-                  <div className={loading ? classes.slider__main_hide : classes.slider__main}>
-                    <div className={playerState.fullscreen && classes.video__container} ref={videoWrap}>
-                      <video
-                        playsInline
-                        controlsList="nodownload"
-                        onLoadedData={() => setLoading(false)}
-                        ref={videoElement}
-                        onTimeUpdate={handleOnTimeUpdate}
-                        preload="auto"
-                        src={video}
-                      />
-                      <div className={classes.slider__main__toolbar}>
-                        <VideoRange
-                          classes={{ root: classes.slider__root }}
-                          type="range"
-                          min={0}
-                          max={100}
-                          value={playerState.progress}
-                          onChange={(event, value) => {
-                            handleVideoProgress(value);
-                            event.stopPropagation();
-                          }}
-                        />
-                        {isVolumeActive && (
-                          <div className={classes.slider__main__valumebar}>
-                            <IconButton
-                              size="40px"
-                              onClick={() => {
-                                toggleMute;
-                              }}>
-                              <BasicIcon icon={VolumeIcon} color={'#FCFCFD'} />
-                            </IconButton>
-                            <VideoRange
-                              classes={{ root: classes.slider__rail }}
-                              type="range"
-                              min={0}
-                              max={1}
-                              step={0.01}
-                              value={playerState.volume}
-                              onChange={(event, value) => {
-                                handleAudioVolume(value);
-                                event.stopPropagation();
-                              }}
-                            />
-                            <span>{Math.round(videoElement?.current?.volume * 100)}</span>
-                          </div>
-                        )}
-                        <div className={classes.slider__main__toolbar_timeRow}>
-                          {!Number.isNaN(Math.floor(videoElement?.current?.currentTime)) ? (
-                            <span>{convertToHours(Math.floor(videoElement?.current?.currentTime))}</span>
-                          ) : (
-                            <span>00 : 00 : 00</span>
-                          )}
-                          {!Number.isNaN(Math.floor(videoElement?.current?.currentTime)) ? (
-                            <span>{convertToHours(Math.floor(videoElement?.current?.duration))}</span>
-                          ) : (
-                            <span>00 : 00 : 00</span>
-                          )}
-                        </div>
-                        <div className={classes.slider__main__toolbar_row}>
-                          <div>
-                            <IconButton
-                              size="40px"
-                              onClick={() => {
-                                setIsVolumeActive(prev => !prev);
-                              }}>
-                              <BasicIcon icon={VolumeIcon} color={isVolumeActive ? '#FFAA00' : '#FCFCFD'} />
-                            </IconButton>
-                            {/* <IconButton size="40px">
-                          <BasicIcon icon={SubtitlesIcon} color={'#FCFCFD'} />
-                        </IconButton> */}
-                          </div>
-
-                          <div>
-                            {!mobile && (
-                              <IconButton size="40px" onClick={backward}>
-                                <BasicIcon icon={BackwardIcon} color={'#FCFCFD'} />
-                              </IconButton>
-                            )}
-                            {!playerState.isPlaying ? (
-                              <IconButton size="40px" onClick={togglePlay}>
-                                <BasicIcon icon={PlayIcon} color={'#FCFCFD'} />
-                              </IconButton>
-                            ) : (
-                              <IconButton size="40px" onClick={togglePlay}>
-                                <BasicIcon icon={PauseIcon} color={'#FCFCFD'} />
-                              </IconButton>
-                            )}
-                            {!mobile && (
-                              <IconButton size="40px" onClick={forward}>
-                                <BasicIcon icon={ForwardIcon} color={'#FCFCFD'} />
-                              </IconButton>
-                            )}
-                          </div>
-                          <div>
-                            <IconButton size="40px" onClick={toggleFullscreen}>
-                              <BasicIcon icon={FullscreenIcon} color={'#FCFCFD'} />
-                            </IconButton>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </>
-              )}
-
-              {images?.length > 0 &&
-                images.map(el => (
-                  <div className={classes.slider__item} key={el.url}>
-                    <img src={el.url} />
-                  </div>
-                ))}
+              {slidesArray.map(el => (el?.type === 'video' ? <VideoSlide /> : <ImageSlide image={el} />))}
             </Carousel>
           </div>
 
@@ -303,7 +311,7 @@ const LightBox = ({ onClickWrapper, title, video, images, recipe, absolutePath }
         <div className={classes.title}>
           <h2>{title}</h2>
         </div>
-        {mobile && <div className={classes.currentSlide}>{`${currentSlide + 1} / ${images?.length + 1}`}</div>}
+        {mobile && <div className={classes.currentSlide}>{`${currentSlide + 1} / ${slidesArray?.length}`}</div>}
       </>
     </Wrapper>
   );
