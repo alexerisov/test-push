@@ -39,6 +39,7 @@ import ResipeComments from '@/components/blocks/recipe-comments';
 import Account from '@/api/Account';
 import CommentBlock from '@/components/blocks/recipe-page/comment-block';
 import { ButtonShare } from '@/components/elements/button';
+import { recoveryLocalStorage } from '@/utils/web-storage/local';
 
 const StyledSlider = styled(Slider)`
   display: flex;
@@ -105,6 +106,7 @@ function RecipePage(props) {
   const carbohydrates = recipe?.carbohydrates;
   const deliveryPrice = useSelector(state => state.cart?.deliveryPrice);
   const isRecipeInProduction = recipe?.sale_status === 5;
+  const likesNumberUpdatedAt = recipe?.likes_number_updated_at;
 
   const recipeRating = {
     average: recipe?.avg_rating,
@@ -124,6 +126,7 @@ function RecipePage(props) {
   const [recipeSavedId, setRecipeSavedId] = useState(recipe?.user_saved_recipe);
   const [isRecipeLiked, setIsRecipeLiked] = useState(recipe?.user_liked);
   const [likesNumber, setLikesNumber] = useState(recipe?.likes_number);
+  const [userLikeUpdatedAt, setUserLikeUpdatedAt] = useState();
   const [selectedSupplier, setSelectedSupplier] = React.useState('walmart');
 
   const [viewAllImages, setViewAllImages] = useState(false);
@@ -147,6 +150,11 @@ function RecipePage(props) {
       });
     }
   }, [router]);
+
+  useEffect(() => {
+    const date = recoveryLocalStorage.getDateOfUserRecipeLike(recipeId);
+    setUserLikeUpdatedAt(date);
+  }, []);
 
   const [isLightBoxOpen, setIsLightBoxOpen] = useState(false);
 
@@ -198,8 +206,12 @@ function RecipePage(props) {
         .then(res => {
           if (res.data.like_status === 'deleted') {
             setIsRecipeLiked(false);
+            recoveryLocalStorage.deleteDateOfUserRecipeLike(recipeId);
           } else if (res.data.like_status === 'created') {
             setIsRecipeLiked(true);
+            setUserLikeUpdatedAt(res.data.created_at);
+            console.log(res.data.created_at);
+            recoveryLocalStorage.setDateOfUserRecipeLike(recipeId, res.data.created_at);
           }
         })
         .catch(err => console.log(err));
@@ -226,7 +238,7 @@ function RecipePage(props) {
               <IconButton onClick={onClickLikeHandler} className={classes.button} size="24px">
                 <BasicIcon icon={LikeIcon} color={isRecipeLiked ? '#FF582E' : '#353E50'} />
               </IconButton>
-              {likesNumber + isRecipeLiked}
+              {likesNumber + isRecipeLiked - (Date.parse(userLikeUpdatedAt) > Date.parse(likesNumberUpdatedAt))}
             </div>
             <Divider vertical width="1px" height="24px" />
 

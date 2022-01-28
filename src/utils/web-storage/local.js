@@ -13,5 +13,13 @@ export const recoveryLocalStorage = {
   },
   deleteCreateRecipe: () => {
     localStorage.removeItem('createRecipe');
+  },
+
+  getDateOfUserRecipeLike: recipeId => localStorage.getItem(`likeDate${recipeId}`),
+  setDateOfUserRecipeLike: (recipeId, value) => {
+    localStorage.setItem(`likeDate${recipeId}`, value);
+  },
+  deleteDateOfUserRecipeLike: recipeId => {
+    localStorage.removeItem(`likeDate${recipeId}`);
   }
 };
