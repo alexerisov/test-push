@@ -350,7 +350,7 @@ function RecipePage(props) {
       <div className={classes.galery}>
         <div className={classes.galery__container}>
           <div className={classes.galery__column}>
-            {images.map((el, ind) => {
+            {recipe?.images?.map((el, ind) => {
               if (ind % 2 === 0) {
                 return (
                   <div key={el.url} className={classes.galery__item}>
@@ -361,7 +361,7 @@ function RecipePage(props) {
             })}
           </div>
           <div className={classes.galery__column}>
-            {images.map((el, ind) => {
+            {recipe?.images?.map((el, ind) => {
               if (ind % 2 === 1) {
                 return (
                   <div key={el.url} className={classes.galery__item}>
