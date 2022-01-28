@@ -54,6 +54,7 @@ const RecipeSlider = props => {
                 price={recipe?.price}
                 id={recipe.pk}
                 disableBorder={true}
+                unsalable={recipe?.sale_status !== 5}
               />
             ))}
         </>

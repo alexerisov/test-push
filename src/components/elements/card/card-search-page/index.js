@@ -62,6 +62,43 @@ const StyledCardActionArea = styled(CardActionArea)({
   justifyContent: 'flex-start'
 });
 
+const SocialBlock = ({ likes, comments_number }) => (
+  <>
+    <div className={classes.card__line} />
+    <div className={classes.card__socialStat}>
+      <div className={classes.card__socialStat__item}>
+        <BasicIcon icon={LikeIcon} color="#FF582E" size="16px" />
+        {likes ? numberWithCommas(`${likes}`) : 0}
+      </div>
+      <div className={classes.card__socialStat__item}>
+        <BasicIcon icon={CommentIcon} size="16px" />
+        {comments_number ? numberWithCommas(`${comments_number}`) : 0}
+      </div>
+    </div>
+  </>
+);
+
+const SellingBlock = ({ isRecipeInCart, handleClickBtn, cartItemAmount, cartItemId, price }) => (
+  <>
+    {!isRecipeInCart && (
+      <Button
+        className={classes.card__uploadButton}
+        classes={{ label: classes.card__uploadButton__label }}
+        variant="outlined"
+        color="primary"
+        onClick={handleClickBtn}>
+        <BasicIcon icon={CartIcon} color="#FB8C00" size="18px" />${price}
+      </Button>
+    )}
+    {isRecipeInCart && (
+      <div onClick={e => e.stopPropagation()} className={classes.card__counterWrap}>
+        {`$${price}`}
+        <CounterButton count={cartItemAmount} id={cartItemId} />
+      </div>
+    )}
+  </>
+);
+
 const CardSearch = props => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -93,20 +130,32 @@ const CardSearch = props => {
   const isRecipeInCart = useSelector(state => state.cart.products?.some(el => el.object_id == props.id));
   const cartItemId = cartItem?.pk;
   const cartItemAmount = cartItem?.count;
+  const isAuthorized = useSelector(state => state?.account?.hasToken);
 
   useEffect(() => {
     setShowCounter(isRecipeInCart);
   }, isRecipeInCart);
 
   const handleClickBtn = e => {
-    if (props.token === true) {
-      e.stopPropagation();
-      setShowCounter(true);
-      if (!isRecipeInCart) dispatch(addToCart(props.id));
-    } else {
-      e.stopPropagation();
-      dispatch(modalActions.open('register'));
+    e.stopPropagation();
+    if (!isAuthorized) {
+      return dispatch(modalActions.open('register'));
     }
+
+    dispatch(addToCart(props.id));
+  };
+
+  const SocialBlockProps = {
+    likes: props.likes,
+    comments_number: props.comments_number
+  };
+
+  const SellingBlockProps = {
+    isRecipeInCart,
+    handleClickBtn,
+    cartItemAmount,
+    cartItemId,
+    price: props.price
   };
 
   return (
@@ -149,35 +198,9 @@ const CardSearch = props => {
                 {props.cookingSkill ? cookingSkill[props.cookingSkill] : 'Not defined'}
               </div>
             </div>
-            {props.unsalable === true ? (
-              <>
-                <div className={classes.card__line} />
-                <div className={classes.card__socialStat}>
-                  <div className={classes.card__socialStat__item}>
-                    <BasicIcon icon={LikeIcon} color="#FF582E" size="16px" />
-                    {props.likes ? numberWithCommas(`${props.likes}`) : 0}
-                  </div>
-                  <div className={classes.card__socialStat__item}>
-                    <BasicIcon icon={CommentIcon} size="16px" />
-                    {props.comments_number ? numberWithCommas(`${props.comments_number}`) : 0}
-                  </div>
-                </div>
-              </>
-            ) : props.price > 0 && !showCounter ? (
-              <Button
-                className={classes.card__uploadButton}
-                classes={{ label: classes.card__uploadButton__label }}
-                variant="outlined"
-                color="primary"
-                onClick={handleClickBtn}>
-                <BasicIcon icon={CartIcon} color="#FB8C00" size="18px" />${props.price}
-              </Button>
-            ) : showCounter === true ? (
-              <div onClick={e => e.stopPropagation()} className={classes.card__counterWrap}>
-                {`$${props.price}`}
-                <CounterButton count={cartItemAmount} id={cartItemId} />
-              </div>
-            ) : null}
+
+            {props.unsalable ? <SocialBlock {...SocialBlockProps} /> : <SellingBlock {...SellingBlockProps} />}
+
             <div className={classes.card__timeWrap}>
               <BasicIcon icon={StopwatchIcon} size="12px" />
               {props.cookingTime || '—:—'}
