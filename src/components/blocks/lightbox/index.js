@@ -184,7 +184,7 @@ const LightBox = ({ onClickWrapper, title, video, images, recipe, absolutePath }
                         onLoadedData={() => setLoading(false)}
                         ref={videoElement}
                         onTimeUpdate={handleOnTimeUpdate}
-                        preload="true"
+                        preload="auto"
                         src={video}
                       />
                       <div className={classes.slider__main__toolbar}>
