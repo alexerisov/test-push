@@ -68,15 +68,11 @@ export const Weekmenu = props => {
   const [recipes, setRecipes] = useState([]);
   const [currentWeek, setCurrentWeek] = useState(0);
   const currentWeekRecipes = recipes?.[currentWeek];
-  console.log('weekmenudata', data);
-  useEffect(async () => {
-    try {
-      const recipesArray = data?.map(el => el.recipes);
-      setRecipes(recipesArray);
-    } catch (e) {
-      console.error(e);
-    }
-  }, []);
+  console.log('data', data[0].recipes);
+  useEffect(() => {
+    const recipesArray = data?.map(el => el.recipes);
+    setRecipes(recipesArray);
+  }, [data]);
 
   const handleChangeWeek = newWeekIndex => {
     if (0 <= newWeekIndex && newWeekIndex < recipes?.length) {
@@ -93,12 +89,14 @@ export const Weekmenu = props => {
   };
 
   return (
-    <section className={classes.container}>
-      <Arrows {...arrowsProps} />
-      <Box display="flex" flexDirection="row" justifyContent="space-between">
-        <span className={classes.slider_title}>Weekmenu</span>
-      </Box>
-      <RecipeSlider recipes={currentWeekRecipes} currentWeek={currentWeek} />
-    </section>
+    <div>
+      <section className={classes.container}>
+        <Arrows {...arrowsProps} />
+        <Box display="flex" flexDirection="row" justifyContent="space-between">
+          <span className={classes.slider_title}>Weekmenu</span>
+        </Box>
+        <RecipeSlider recipes={currentWeekRecipes} currentWeek={currentWeek} />
+      </section>
+    </div>
   );
 };

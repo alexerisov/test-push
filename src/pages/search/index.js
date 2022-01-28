@@ -422,7 +422,12 @@ const Recipes = props => {
       seen.add(el.pk);
       return !duplicate;
     });
-    return filteredArr;
+
+    if (filteredArr.length === 0) {
+      return props?.weekmenuWithoutFilters;
+    }
+
+    return [{ recipes: filteredArr }];
   };
 
   const dietaryrestrictionsList = [];
@@ -755,7 +760,7 @@ const Recipes = props => {
       router.query.only_eatchefs_recipes === '' &&
       router.query.recipe_set === '');
 
-  const weekmenuData = isQueryEmpty ? props?.weekmenuWithoutFilters : [{ recipes: weekmenuWithoutDuplicate() }];
+  const weekmenuData = isQueryEmpty ? props?.weekmenuWithoutFilters : weekmenuWithoutDuplicate();
 
   const searchFilter = (
     <>

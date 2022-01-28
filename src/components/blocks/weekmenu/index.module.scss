@@ -7,8 +7,7 @@
   position: relative;
   background: #FFF6EB;
   border-radius: 24px;
-  width: 833px;
-
+  max-width: 833px;
 
   .slider {
     &_title {
@@ -60,18 +59,14 @@
   }
 
   @media (max-width: 1025px) {
-    width: 548px;
+    max-width: 584px;
   }
 
   @media (max-width: 600px) {
+    max-width: 100vw;
     padding: 24px 24px 32px;
-    width: 100%t;
 
     .slider {
-      &_arrows_container {
-        padding-bottom: 50px;
-        inset: auto auto 0 0;
-      }
 
       &_title {
         font-size: 40px;
