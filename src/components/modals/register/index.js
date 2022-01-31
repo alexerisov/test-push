@@ -298,7 +298,7 @@ function Register(props) {
         <p className={classes.register_social_helper_text1}>Use Your OpenID to {isFormLogin ? 'Login' : 'Sign Up'}</p>
         <div className={classes.register_social_buttons_block}>
           <Button
-            onClick={loginViaFacebook()}
+            onClick={loginViaFacebook(formik.values.userType, !isFormLogin)}
             className={classes.register_social_button_facebook}
             variant="contained"
             startIcon={<BasicIcon icon={FacebookIcon} viewBox="0 0 320 512" size="16px" color="#FCFCFD" />}>

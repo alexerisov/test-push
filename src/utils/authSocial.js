@@ -11,16 +11,14 @@ const USER_TYPE = {
 
 const openOAuth = (url, register, accountType) => {
   // TODO : add check for null of user_type
-  const oauthWindow = window.open(url, 'auth', params);
-  let timer = setInterval(function () {
-    if (oauthWindow.closed) {
-      clearInterval(timer);
-      const { token } = AuthCookieStorage.auth;
-      if (token) {
-        window.location.reload();
-      }
-    }
-  }, 1000);
+  window.location.href = url;
+  setTimeout(function () {
+    window.location.reload();
+  }, 1500);
+  // window.location = 'http://localhost:8030';
+  // setTimeout(function () {
+  //   window.location.reload();
+  // }, 5000);
 };
 
 /**
@@ -34,7 +32,7 @@ export const loginViaFacebook = (accountType = USER_TYPE.viewerType, register = 
       `https://www.facebook.com/v10.0/dialog/oauth?scope=public_profile email&client_id=${
         CONFIG.fbClientId
       }&response_type=token&redirect_uri=${CONFIG.oauthRedirectUrl}&state=${JSON.stringify({
-        account_type: accountType,
+        account_type: accountType ?? USER_TYPE.viewerType,
         register: register,
         backend: 'facebook'
       })}`,
