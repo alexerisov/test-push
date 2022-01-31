@@ -289,9 +289,11 @@ const Recipes = props => {
 
   useEffect(() => {
     if (query) {
-      Recipe.getWeekmenu(title ? title : '')
+      // console.log('old weekmenu', weekmenu);
+      Recipe.getWeekmenu(query)
         .then(res => {
           setWeekmenu(res.data);
+          // console.log('new weekmenu', res.data);
         })
         .catch(e => console.error(e));
     }

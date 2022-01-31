@@ -126,7 +126,7 @@ function RecipePage(props) {
   const [recipeSavedId, setRecipeSavedId] = useState(recipe?.user_saved_recipe);
   const [isRecipeLiked, setIsRecipeLiked] = useState(recipe?.user_liked);
   const [likesNumber, setLikesNumber] = useState(recipe?.likes_number);
-  const [userLikeUpdatedAt, setUserLikeUpdatedAt] = useState();
+  const [userLikeUpdatedAt, setUserLikeUpdatedAt] = useState(null);
   const [selectedSupplier, setSelectedSupplier] = React.useState('walmart');
 
   const [viewAllImages, setViewAllImages] = useState(false);
@@ -238,7 +238,9 @@ function RecipePage(props) {
               <IconButton onClick={onClickLikeHandler} className={classes.button} size="24px">
                 <BasicIcon icon={LikeIcon} color={isRecipeLiked ? '#FF582E' : '#353E50'} />
               </IconButton>
-              {likesNumber + isRecipeLiked - (Date.parse(userLikeUpdatedAt) > Date.parse(likesNumberUpdatedAt))}
+              {likesNumber +
+                isRecipeLiked -
+                ((Date.parse(userLikeUpdatedAt) || null) > Date.parse(likesNumberUpdatedAt))}
             </div>
             <Divider vertical width="1px" height="24px" />
 

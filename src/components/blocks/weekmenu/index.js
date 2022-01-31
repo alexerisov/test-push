@@ -68,7 +68,6 @@ export const Weekmenu = props => {
   const [recipes, setRecipes] = useState([]);
   const [currentWeek, setCurrentWeek] = useState(0);
   const currentWeekRecipes = recipes?.[currentWeek];
-  console.log('data', data[0].recipes);
   useEffect(() => {
     const recipesArray = data?.map(el => el.recipes);
     setRecipes(recipesArray);
