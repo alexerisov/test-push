@@ -11,7 +11,8 @@ const USER_TYPE = {
 
 const openOAuth = (url, register, accountType) => {
   // TODO : add check for null of user_type
-  const oauthWindow = window.open(url, '_blank');
+  const oauthWindow = window.open();
+  oauthWindow.location = url;
   let timer = setInterval(function () {
     if (oauthWindow.closed) {
       clearInterval(timer);
