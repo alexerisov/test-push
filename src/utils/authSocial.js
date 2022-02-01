@@ -11,17 +11,21 @@ const USER_TYPE = {
 
 const openOAuth = (url, register, accountType) => {
   // TODO : add check for null of user_type
-  const oauthWindow = window.open();
-  oauthWindow.location = url;
-  let timer = setInterval(function () {
-    if (oauthWindow.closed) {
-      clearInterval(timer);
-      const { token } = AuthCookieStorage.auth;
-      if (token) {
-        document.location.reload();
+  try {
+    const oauthWindow = window.open();
+    oauthWindow.location = url;
+    let timer = setInterval(function () {
+      if (oauthWindow.closed) {
+        clearInterval(timer);
+        const { token } = AuthCookieStorage.auth;
+        if (token) {
+          document.location.reload();
+        }
       }
-    }
-  }, 1000);
+    }, 1000);
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 /**
