@@ -80,14 +80,14 @@ const useVideoPlayer = (videoElement, videoWrap) => {
   };
   useEffect(() => {
     if (playerState.fullscreen) {
-      videoWrap.current.requestFullscreen();
+      videoElement.current?.requestFullscreen();
     } else if (document.fullscreenElement) {
       document
         .exitFullscreen()
         .then(() => console.log('Document Exited from Full screen mode'))
         .catch(err => console.error(err));
     }
-  }, [playerState.fullscreen, videoWrap]);
+  }, [playerState.fullscreen, videoElement]);
   return {
     playerState,
     togglePlay,
