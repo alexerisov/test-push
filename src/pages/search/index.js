@@ -289,15 +289,15 @@ const Recipes = props => {
 
   useEffect(() => {
     if (query) {
-      // console.log('old weekmenu', weekmenu);
-      Recipe.getWeekmenu(query)
+      // console.log('query', createQueryParams(query).toString());
+      Recipe.getWeekmenu(createQueryParams(query).toString())
         .then(res => {
           setWeekmenu(res.data);
           // console.log('new weekmenu', res.data);
         })
         .catch(e => console.error(e));
     }
-  }, [query, title]);
+  }, [JSON.stringify(query), title]);
 
   useEffect(async () => {
     pageUnsalable > 1 && setShowScrollBtn(true);
@@ -368,7 +368,9 @@ const Recipes = props => {
   const createQueryParams = data => {
     const queryParams = new URLSearchParams();
     Object.entries(data).forEach(([key, value]) => {
-      queryParams.set(key, value ?? '');
+      if (value !== '') {
+        queryParams.set(key, value);
+      }
     });
 
     return queryParams;

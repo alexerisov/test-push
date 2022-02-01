@@ -45,7 +45,7 @@ const ConfirmEmail = props => {
                 <a className={classes.confirm__link}>Go to profile settings </a>
               </Link>
               or continue
-              <Link href="/search?title=">
+              <Link href="/search">
                 <a className={classes.confirm__link}> browsing</a>
               </Link>
             </p>

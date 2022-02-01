@@ -49,7 +49,7 @@ export const LoginDrawer = props => {
   );
 
   const GetStartedButton = () => (
-    <Button variant="text" href="/search?title=" className={classes.button_get_started}>
+    <Button variant="text" href="/search" className={classes.button_get_started}>
       Get Started
     </Button>
   );
@@ -69,7 +69,7 @@ export const LoginDrawer = props => {
         </div>
         <div className={classes.links}>
           <LinkElement path="/" text="Home" />
-          <LinkElement path="/search?title=" text="Recipes" />
+          <LinkElement path="/search" text="Recipes" />
         </div>
         <div className={classes.buttons}>
           <LoginButton />

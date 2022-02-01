@@ -85,7 +85,7 @@ const Header = props => {
   const OrangeCircle = () => <div className={classes.orange_circle}></div>;
 
   const RecipesButton = () => (
-    <Button variant="text" href="/search?title=" className={classes.button_recipes}>
+    <Button variant="text" href="/search" className={classes.button_recipes}>
       Recipes
     </Button>
   );

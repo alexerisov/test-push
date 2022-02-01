@@ -98,7 +98,7 @@ const HeaderDefault = props => {
       <ul className={isExpanded ? classes.mobileMenu__list : classes.mobileMenu__listHidden}>
         <nav className={classes.mobileMenu__nav}>
           {/*<li className={classes.mobileMenu__navItem} onClick={handleExpandingMobileMenu}>
-            <Link href="/search?title=">
+            <Link href="/search">
               <a>Recipes</a>
             </Link>
           </li>*/}
@@ -194,7 +194,7 @@ const HeaderDefault = props => {
     <>
       <nav className={classes.header__links}>
         {/*original links order*/}
-        {/*<Link href="/search?title=">
+        {/*<Link href="/search">
           <a className={classes.header__link}>Recipes</a>
         </Link>*/}
         {/*<Link href="/search?&only_eatchefs_recipes=Y">
@@ -208,7 +208,7 @@ const HeaderDefault = props => {
         </Link>
 
         {/*delete three links below, if you will add recipes, get inspired, menu, it made for only hide links*/}
-        <Link href="/search?title=">
+        <Link href="/search">
           <a className={classes.header__link_hide}>Recipes</a>
         </Link>
         <Link href="/search?&only_eatchefs_recipes=Y" className={classes.header__link_hide}>
