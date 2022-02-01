@@ -38,7 +38,9 @@
       overflow-x: auto;
       column-gap: 20px;
       //@include no_scrollbar();
+      padding-bottom: 10px;
       scroll-behavior: smooth;
+      @include styledScrollbar();
     }
   }
 

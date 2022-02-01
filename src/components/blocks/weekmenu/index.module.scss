@@ -55,11 +55,14 @@
       flex-direction: row;
       overflow-x: auto;
       column-gap: 20px;
+      padding-bottom: 10px;
+      @include styledScrollbar(#FCFCFD);
     }
   }
 
   @media (max-width: 1025px) {
     max-width: 584px;
+
   }
 
   @media (max-width: 600px) {
@@ -73,6 +76,11 @@
       }
       &_subtitle {
         font-size: 18px;
+      }
+
+      &_arrows_container {
+        padding-right: 18px;
+        margin-top: 14px;
       }
     }
 
