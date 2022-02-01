@@ -124,7 +124,7 @@ function RecipePage(props) {
 
   const [userId, setUserId] = useState();
   const [recipeSavedId, setRecipeSavedId] = useState(recipe?.user_saved_recipe);
-  const [isRecipeLiked, setIsRecipeLiked] = useState(null);
+  const [isRecipeLiked, setIsRecipeLiked] = useState(recipe?.user_liked);
   const [likesNumber, setLikesNumber] = useState(recipe?.likes_number);
   const [userLikeUpdatedAt, setUserLikeUpdatedAt] = useState(null);
   const [selectedSupplier, setSelectedSupplier] = React.useState('walmart');
@@ -158,6 +158,7 @@ function RecipePage(props) {
 
   useEffect(() => {
     setIsRecipeLiked(recipe?.user_liked);
+    setLikesNumber(recipe?.likes_number);
   }, [recipe?.user_liked, recipeId]);
 
   const [isLightBoxOpen, setIsLightBoxOpen] = useState(false);
