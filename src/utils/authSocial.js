@@ -30,7 +30,7 @@ const openOAuth = (url, register, accountType) => {
  * @return {function(): Promise<void>}
  */
 export const loginViaFacebook = (accountType = USER_TYPE.viewerType, register = true) => {
-  return async () => {
+  return () => {
     openOAuth(
       `https://www.facebook.com/v10.0/dialog/oauth?scope=public_profile email&client_id=${
         CONFIG.fbClientId
@@ -51,7 +51,7 @@ export const loginViaFacebook = (accountType = USER_TYPE.viewerType, register = 
  * @return {function(): Promise<void>}
  */
 export const loginViaGoogle = (accountType = USER_TYPE.viewerType, register = true) => {
-  return async () => {
+  return () => {
     openOAuth(
       `https://accounts.google.com/o/oauth2/v2/auth?scope=openid email profile&client_id=${
         CONFIG.googleClientId
