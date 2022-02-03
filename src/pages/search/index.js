@@ -198,6 +198,7 @@ const SearchInput = () => {
 
   return (
     <div className={classes.search_input_wrapper}>
+      {console.log('formik', formik.values)}
       <form className={classes.search_form} onSubmit={formik.handleSubmit}>
         <Autocomplete
           classes={{
@@ -368,7 +369,7 @@ const Recipes = props => {
   const createQueryParams = data => {
     const queryParams = new URLSearchParams();
     Object.entries(data).forEach(([key, value]) => {
-      if (value !== '') {
+      if (Boolean(value) && value !== '') {
         queryParams.set(key, value);
       }
     });
@@ -393,13 +394,13 @@ const Recipes = props => {
 
   const formik = useFormik({
     initialValues: {
-      diet_restrictions: [...getInitialValuesForFormik('diet_restrictions')],
-      cooking_methods: [...getInitialValuesForFormik('cooking_methods')],
-      cooking_skills: [...getInitialValuesForFormik('cooking_skills')],
-      types: [...getInitialValuesForFormik('types')],
-      ordering: [getInitialValuesForFormik('ordering')],
-      only_eatchefs_recipes: [...getInitialValuesForFormik('only_eatchefs_recipes')],
-      recipe_set: [...getInitialValuesForFormik('recipe_set')]
+      diet_restrictions: '',
+      cooking_methods: '',
+      cooking_skills: '',
+      types: '',
+      ordering: '',
+      only_eatchefs_recipes: '',
+      recipe_set: ''
     },
     enableReinitialize: true,
     onSubmit: values => {

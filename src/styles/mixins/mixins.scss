@@ -85,7 +85,7 @@
     display: none !important;
   }
 }
-@mixin styledScrollbar($trackColor: $--color-orange-light, $thumbColor: $--color-orange,  $width: 8px) {
+@mixin styledScrollbar($trackColor: lighten($--color-orange-light, 10), $thumbColor: $--color-orange,  $width: 4px) {
   scrollbar-width: $width;
   scrollbar-height: $width;
   scrollbar-color: $trackColor;

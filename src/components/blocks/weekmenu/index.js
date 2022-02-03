@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import classes from './index.module.scss';
 import Recipe from '@/api/Recipe';
-import { Box, IconButton, List } from '@material-ui/core';
+import { Box, IconButton, List, Slide } from '@material-ui/core';
 import { RecipeCard } from '@/components/basic-blocks/recipe-card';
 import { ReactComponent as ArrowLeftIcon } from '@/../public/icons/Arrow Left 2/Line.svg';
 import { ReactComponent as ArrowRightIcon } from '@/../public/icons/Arrow Right 2/Line.svg';
