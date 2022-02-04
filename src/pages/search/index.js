@@ -387,20 +387,20 @@ const Recipes = props => {
         return query?.[name].split(',');
       }
 
-      return [];
+      return '';
     },
     [query]
   );
 
   const formik = useFormik({
     initialValues: {
-      diet_restrictions: '',
-      cooking_methods: '',
-      cooking_skills: '',
-      types: '',
-      ordering: '',
-      only_eatchefs_recipes: '',
-      recipe_set: ''
+      diet_restrictions: [...getInitialValuesForFormik('diet_restrictions')],
+      cooking_methods: [...getInitialValuesForFormik('cooking_methods')],
+      cooking_skills: [...getInitialValuesForFormik('cooking_skills')],
+      types: [...getInitialValuesForFormik('types')],
+      ordering: [getInitialValuesForFormik('ordering')],
+      only_eatchefs_recipes: [...getInitialValuesForFormik('only_eatchefs_recipes')],
+      recipe_set: [...getInitialValuesForFormik('recipe_set')]
     },
     enableReinitialize: true,
     onSubmit: values => {
@@ -646,41 +646,46 @@ const Recipes = props => {
 
   //SalableResults
   useEffect(() => {
-    if (query) {
-      Recipe.getSearchResult(query)
-        .then(res => {
-          setData(res.data);
-        })
-        .catch(e => {
-          console.log('error', e);
-        });
-      setSalableLoading(true);
-      Recipe.getSearchResult({ ...query, sale_status: 5, page_size: 9, page: pageSalable })
-        .then(res => {
-          setSalableResults(salableResults.concat(res.data.results));
-
-          if (res.data.next) {
-            setHasMoreSalableResults(true);
-          } else {
-            setHasMoreSalableResults(false);
-          }
-          if (title && firstSearchSalableByTitle) {
-            setSalableResults(res.data.results);
-            setFirstSearchSalableByTitle(false);
-          }
-          if (!res?.data?.results?.length) {
-            setExpanded(false);
-          }
-
-          setSalableLoading(false);
-        })
-        .catch(e => {
-          console.log('error', e);
-          setSalableLoading(false);
-        });
-    }
-  }, [query, pageSalable]);
+    Recipe.getSearchResult(query ? query : {})
+      .then(res => {
+        setData(res.data);
+      })
+      .catch(e => {
+        console.log('error', e);
+      });
+  }, [query]);
   // search banner
+
+  useEffect(() => {
+    setSalableLoading(true);
+    Recipe.getSearchResult(
+      query
+        ? { ...query, sale_status: 5, page_size: 9, page: pageSalable }
+        : { sale_status: 5, page_size: 9, page: pageSalable }
+    )
+      .then(res => {
+        setSalableResults(salableResults.concat(res.data.results));
+
+        if (res.data.next) {
+          setHasMoreSalableResults(true);
+        } else {
+          setHasMoreSalableResults(false);
+        }
+        if (title && firstSearchSalableByTitle) {
+          setSalableResults(res.data.results);
+          setFirstSearchSalableByTitle(false);
+        }
+        if (!res?.data?.results?.length) {
+          setExpanded(false);
+        }
+
+        setSalableLoading(false);
+      })
+      .catch(e => {
+        console.log('error', e);
+        setSalableLoading(false);
+      });
+  }, [query, pageSalable]);
 
   const handleClickSearch = name => {
     return () => {
@@ -1180,53 +1185,38 @@ const Recipes = props => {
           <div className={classes.search__result__container}>
             {salableResults?.length !== 0 ? (
               <>
-                {!firstClickToSalableMore
-                  ? salableResults.map((recipe, index) => {
-                      if (index < 3) {
-                        return (
-                          <CardSearch
-                            key={`${recipe.pk}-${index}`}
-                            title={recipe?.title}
-                            image={recipe?.images?.[0]?.url}
-                            name={recipe?.user?.full_name}
-                            city={recipe?.user?.city}
-                            likes={recipe?.likes_number}
-                            isParsed={recipe?.is_parsed}
-                            publishStatus={recipe?.publish_status}
-                            hasVideo={recipe?.video}
-                            cookingTime={recipe?.cooking_time}
-                            cookingSkill={recipe?.cooking_skills}
-                            cookingTypes={recipe?.types}
-                            user_saved_recipe={recipe?.user_saved_recipe}
-                            price={recipe?.price}
-                            token={props.token}
-                            id={recipe.pk}
-                          />
-                        );
-                      }
-                    })
-                  : salableResults.map((recipe, index) => {
-                      return (
-                        <CardSearch
-                          key={`${recipe.pk}-${index}`}
-                          title={recipe?.title}
-                          image={recipe?.images?.[0]?.url}
-                          name={recipe?.user?.full_name}
-                          city={recipe?.user?.city}
-                          likes={recipe?.likes_number}
-                          isParsed={recipe?.is_parsed}
-                          publishStatus={recipe?.publish_status}
-                          hasVideo={recipe?.video}
-                          cookingTime={recipe?.cooking_time}
-                          cookingSkill={recipe?.cooking_skills}
-                          cookingTypes={recipe?.types}
-                          user_saved_recipe={recipe?.user_saved_recipe}
-                          price={recipe?.price}
-                          token={props.token}
-                          id={recipe.pk}
-                        />
-                      );
-                    })}
+                {salableResults
+                  .filter((el, index) => {
+                    if (!firstClickToSalableMore && index < 3) {
+                      return el;
+                    }
+
+                    if (firstClickToSalableMore) {
+                      return el;
+                    }
+                  })
+                  .map((recipe, index) => {
+                    return (
+                      <CardSearch
+                        key={`${recipe.pk}-${index}`}
+                        title={recipe?.title}
+                        image={recipe?.images?.[0]?.url}
+                        name={recipe?.user?.full_name}
+                        city={recipe?.user?.city}
+                        likes={recipe?.likes_number}
+                        isParsed={recipe?.is_parsed}
+                        publishStatus={recipe?.publish_status}
+                        hasVideo={recipe?.video}
+                        cookingTime={recipe?.cooking_time}
+                        cookingSkill={recipe?.cooking_skills}
+                        cookingTypes={recipe?.types}
+                        user_saved_recipe={recipe?.user_saved_recipe}
+                        price={recipe?.price}
+                        token={props.token}
+                        id={recipe.pk}
+                      />
+                    );
+                  })}
 
                 <div className={classes.search__buttonViewWrap}>
                   <button
@@ -1282,7 +1272,10 @@ const Recipes = props => {
             <button
               disabled={hasMoreUnsalableResults === true ? false : true}
               className={hasMoreUnsalableResults === true ? classes.search__viewAll : classes.search__viewAll_disabled}
-              onClick={() => setPageUnsalable(pageUnsalable + 1) && setPage(page + 1)}>
+              onClick={() => {
+                setPageUnsalable(pageUnsalable + 1);
+                setPage(page + 1);
+              }}>
               {unsalableLoading ? <Spinner /> : null}
               Show More
             </button>

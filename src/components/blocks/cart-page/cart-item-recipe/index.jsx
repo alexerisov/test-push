@@ -77,7 +77,7 @@ export const CartItemRecipe = props => {
           <div className={classes.card__ingredients}>
             <div className={classes.card__ingredients__title}>Ingredients:</div>
             <div className={classes.card__ingredients__items}>
-              {recipe.ingredients?.map(ingredient => ingredient.title) || 'Not defined'}
+              {recipe.ingredients?.map(ingredient => ingredient.title)?.join(', ') || 'Not defined'}
             </div>
             <Button onClick={viewAllHandler} className={classes.card__ingredients__button} variant="text">
               View All
