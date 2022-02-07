@@ -55,6 +55,8 @@
     "pure-react-carousel": "^1.27.6",
     "react": "latest",
     "react-dom": "latest",
+    "react-facebook-login": "^4.1.1",
+    "react-google-login": "^5.2.2",
     "react-phone-input-2": "^2.14.0",
     "react-rating": "^2.0.5",
     "react-redux": "^7.1.0",

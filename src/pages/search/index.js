@@ -198,7 +198,6 @@ const SearchInput = () => {
 
   return (
     <div className={classes.search_input_wrapper}>
-      {console.log('formik', formik.values)}
       <form className={classes.search_form} onSubmit={formik.handleSubmit}>
         <Autocomplete
           classes={{
@@ -244,6 +243,7 @@ const SearchInput = () => {
     </div>
   );
 };
+
 const Recipes = props => {
   const TooltipStyles = useStyledTooltip();
   const tablet = useMediaQuery('(max-width: 1025px)');
@@ -291,8 +291,9 @@ const Recipes = props => {
   useEffect(() => {
     if (query) {
       // console.log('query', createQueryParams(query).toString());
-      Recipe.getWeekmenu(createQueryParams(query).toString())
+      Recipe.getWeekmenu(createQueryParams(query))
         .then(res => {
+          console.log('query', query);
           setWeekmenu(res.data);
           // console.log('new weekmenu', res.data);
         })
@@ -369,9 +370,7 @@ const Recipes = props => {
   const createQueryParams = data => {
     const queryParams = new URLSearchParams();
     Object.entries(data).forEach(([key, value]) => {
-      if (Boolean(value) && value !== '') {
-        queryParams.set(key, value);
-      }
+      queryParams.set(key, value ?? '');
     });
 
     return queryParams;
@@ -387,9 +386,9 @@ const Recipes = props => {
         return query?.[name].split(',');
       }
 
-      return '';
+      return [];
     },
-    [query]
+    [JSON.stringify(query)]
   );
 
   const formik = useFormik({
@@ -610,6 +609,7 @@ const Recipes = props => {
         });
     }
   }, [query, pageSalable, pageUnsalable, title]);
+
   useEffect(() => {
     if (query) {
       //UnsalableResults
@@ -653,7 +653,7 @@ const Recipes = props => {
       .catch(e => {
         console.log('error', e);
       });
-  }, [query]);
+  }, [JSON.stringify(query)]);
   // search banner
 
   useEffect(() => {
@@ -1174,7 +1174,6 @@ const Recipes = props => {
               {orderingList}
             </Select>
           </div> */}
-
           <Weekmenu data={weekmenuData} />
 
           <div className={classes.search__result__text}>

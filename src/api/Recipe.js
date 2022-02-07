@@ -170,7 +170,7 @@ export default {
   },
 
   getWeekmenu: search => {
-    return http.get(`/settings/weekmenus?search=${search}`);
+    return http.get(`/settings/weekmenus?${search}`);
   },
 
   getFavoriteCuisines: id => {
