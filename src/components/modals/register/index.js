@@ -33,6 +33,7 @@ import { loginViaFacebook, loginViaGoogle } from '@/utils/authSocial';
 import FieldError from '@/components/elements/field-error';
 import VisibilityOffRoundedIcon from '@material-ui/icons/VisibilityOffRounded';
 import VisibilityRoundedIcon from '@material-ui/icons/VisibilityRounded';
+import { oauthRedirectUrl } from '@/config';
 
 function Register(props) {
   const router = useRouter();
@@ -310,6 +311,14 @@ function Register(props) {
                 Facebook
               </Button>
             )}
+            state={JSON.stringify({
+              account_type: USER_TYPE.viewerType,
+              register: true,
+              backend: 'facebook'
+            })}
+            xfbml={true}
+            cookie={true}
+            scope="public_profile, email"
             appId={process.env.fbClientId}
             autoLoad={false}
             fields="name,email,picture"
@@ -329,6 +338,15 @@ function Register(props) {
             )}
             clientId={process.env.googleClientId}
             buttonText="Login"
+            cookie={true}
+            uxMode="redirect"
+            redirectUri={oauthRedirectUrl}
+            scope="profile email"
+            state={JSON.stringify({
+              account_type: USER_TYPE.viewerType,
+              register: true,
+              backend: 'google-oauth2'
+            })}
             onSuccess={() => console.log('google success')}
             onFailure={() => console.log('google failure')}
             cookiePolicy={'single_host_origin'}
