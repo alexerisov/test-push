@@ -318,7 +318,6 @@ function Register(props) {
             })}
             xfbml={true}
             cookie={true}
-            scope="public_profile, email"
             appId={process.env.fbClientId}
             autoLoad={false}
             fields="name,email,picture"
@@ -340,8 +339,6 @@ function Register(props) {
             buttonText="Login"
             cookie={true}
             uxMode="redirect"
-            redirectUri={oauthRedirectUrl}
-            scope="profile email"
             state={JSON.stringify({
               account_type: USER_TYPE.viewerType,
               register: true,
