@@ -300,68 +300,20 @@ function Register(props) {
       <div className={classes.register_social}>
         <p className={classes.register_social_helper_text1}>Use Your OpenID to {isFormLogin ? 'Login' : 'Sign Up'}</p>
         <div className={classes.register_social_buttons_block}>
-          <FacebookLogin
-            render={renderProps => (
-              <Button
-                onClick={renderProps.onClick}
-                disabled={renderProps.disabled}
-                className={classes.register_social_button_facebook}
-                variant="contained"
-                startIcon={<BasicIcon icon={FacebookIcon} viewBox="0 0 320 512" size="16px" color="#FCFCFD" />}>
-                Facebook
-              </Button>
-            )}
-            state={JSON.stringify({
-              account_type: USER_TYPE.viewerType,
-              register: true,
-              backend: 'facebook'
-            })}
-            xfbml={true}
-            cookie={true}
-            appId={process.env.fbClientId}
-            autoLoad={false}
-            fields="name,email,picture"
-            onClick={() => console.log('facebook clicked')}
-            callback={() => console.log('facebook success')}
-          />
-          <GoogleLogin
-            render={renderProps => (
-              <Button
-                onClick={renderProps.onClick}
-                disabled={renderProps.disabled}
-                className={classes.register_social_button_google}
-                variant="contained"
-                startIcon={<BasicIcon icon={GoogleIcon} viewBox="0 0 488 512" size="16px" color="#FCFCFD" />}>
-                Google
-              </Button>
-            )}
-            clientId={process.env.googleClientId}
-            buttonText="Login"
-            cookie={true}
-            uxMode="redirect"
-            state={JSON.stringify({
-              account_type: USER_TYPE.viewerType,
-              register: true,
-              backend: 'google-oauth2'
-            })}
-            onSuccess={() => console.log('google success')}
-            onFailure={() => console.log('google failure')}
-            cookiePolicy={'single_host_origin'}
-          />
-          {/*<Button*/}
-          {/*  onClick={loginViaFacebook(formik.values.userType, !isFormLogin)}*/}
-          {/*  className={classes.register_social_button_facebook}*/}
-          {/*  variant="contained"*/}
-          {/*  startIcon={<BasicIcon icon={FacebookIcon} viewBox="0 0 320 512" size="16px" color="#FCFCFD" />}>*/}
-          {/*  Facebook*/}
-          {/*</Button>*/}
-          {/*<Button*/}
-          {/*  onClick={loginViaGoogle()}*/}
-          {/*  className={classes.register_social_button_google}*/}
-          {/*  variant="contained"*/}
-          {/*  startIcon={<BasicIcon icon={GoogleIcon} viewBox="0 0 488 512" size="16px" color="#FCFCFD" />}>*/}
-          {/*  Google*/}
-          {/*</Button>*/}
+          <Button
+            onClick={loginViaFacebook(formik.values.userType, !isFormLogin)}
+            className={classes.register_social_button_facebook}
+            variant="contained"
+            startIcon={<BasicIcon icon={FacebookIcon} viewBox="0 0 320 512" size="16px" color="#FCFCFD" />}>
+            Facebook
+          </Button>
+          <Button
+            onClick={loginViaGoogle()}
+            className={classes.register_social_button_google}
+            variant="contained"
+            startIcon={<BasicIcon icon={GoogleIcon} viewBox="0 0 488 512" size="16px" color="#FCFCFD" />}>
+            Google
+          </Button>
         </div>
         <p className={classes.register_social_helper_text2}>Or continue with email</p>
       </div>

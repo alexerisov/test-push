@@ -11,16 +11,16 @@ const USER_TYPE = {
 
 const openOAuth = (url, register, accountType) => {
   // TODO : add check for null of user_type
-  try {
-    window.location.href = url;
-    let timer = setInterval(function () {
+  const oauthWindow = window.open(url, 'auth', params);
+  let timer = setInterval(function () {
+    if (oauthWindow.closed) {
       clearInterval(timer);
       const { token } = AuthCookieStorage.auth;
-      document.location.reload();
-    }, 1000);
-  } catch (e) {
-    console.log(e);
-  }
+      if (token) {
+        window.location.reload();
+      }
+    }
+  }, 1000);
 };
 
 /**
@@ -29,12 +29,12 @@ const openOAuth = (url, register, accountType) => {
  * @return {function(): Promise<void>}
  */
 export const loginViaFacebook = (accountType = USER_TYPE.viewerType, register = true) => {
-  return () => {
+  return async () => {
     openOAuth(
       `https://www.facebook.com/v10.0/dialog/oauth?scope=public_profile email&client_id=${
         CONFIG.fbClientId
       }&response_type=token&redirect_uri=${CONFIG.oauthRedirectUrl}&state=${JSON.stringify({
-        account_type: accountType ?? USER_TYPE.viewerType,
+        account_type: accountType,
         register: register,
         backend: 'facebook'
       })}`,
@@ -50,7 +50,7 @@ export const loginViaFacebook = (accountType = USER_TYPE.viewerType, register = 
  * @return {function(): Promise<void>}
  */
 export const loginViaGoogle = (accountType = USER_TYPE.viewerType, register = true) => {
-  return () => {
+  return async () => {
     openOAuth(
       `https://accounts.google.com/o/oauth2/v2/auth?scope=openid email profile&client_id=${
         CONFIG.googleClientId
