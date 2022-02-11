@@ -11,16 +11,11 @@ const USER_TYPE = {
 
 const openOAuth = (url, register, accountType) => {
   // TODO : add check for null of user_type
-  const oauthWindow = window.open(url, 'auth', params);
-  let timer = setInterval(function () {
-    if (oauthWindow.closed) {
-      clearInterval(timer);
-      const { token } = AuthCookieStorage.auth;
-      if (token) {
-        window.location.reload();
-      }
-    }
-  }, 1000);
+  try {
+    window.location.href = url;
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 /**
