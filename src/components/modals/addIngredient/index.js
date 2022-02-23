@@ -18,6 +18,7 @@ import ErrorBoundary from '@/components/basic-blocks/error-boundary';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import Recipe from '@/api/Recipe';
+import { login } from '@/store/reducers';
 
 const useStyles = makeStyles(theme => ({
   textField: {
@@ -88,7 +89,7 @@ const SelectList = ({ list, valueField, labelField, key }) => (
 const defaultUnits = () => {
   const result = [];
   for (let key in units) {
-    result.push({ pk: key, metric_name: units[key] });
+    result.push({ pk: key, unit: units[key] });
   }
   return result;
 };
@@ -299,17 +300,17 @@ function AddIngredient(props) {
               variant="outlined"
               placeholder={'Ingredient has no available units'}
               fullWidth>
-              {basicIngredientUnits?.length > 0 ? (
-                basicIngredientUnits.map(el => (
-                  <MenuItem key={'unit' + el.pk} value={el.pk}>
-                    {el.metric_name}
-                  </MenuItem>
-                ))
-              ) : (
-                <MenuItem key={'empty-unit'} value={'empty-unit'}>
-                  Ingredient has no available units
-                </MenuItem>
-              )}
+              {basicIngredientUnits?.length > 0
+                ? basicIngredientUnits.map(el => (
+                    <MenuItem key={'unit' + el.pk} value={el.pk}>
+                      {el.metric_name}
+                    </MenuItem>
+                  ))
+                : defaultUnits().map(el => (
+                    <MenuItem key={'default-unit' + el.pk} value={el.pk}>
+                      {el.unit}
+                    </MenuItem>
+                  ))}
             </Select>
           </div>
           <div className={classes.addIngredient__buttonContainer}>
