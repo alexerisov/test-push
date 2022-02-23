@@ -284,7 +284,6 @@ function FormCreateRecipe(props) {
 
     const clonedData = { ...data, ingredients: remadeIngredients };
 
-    console.log('data', data.ingredients, clonedData.ingredients);
     props
       .dispatch(recipeUploadActions.uploadRecipe(clonedData))
       .then(data => {
