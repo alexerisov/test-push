@@ -276,8 +276,15 @@ function FormCreateRecipe(props) {
   function uploadRecipe(e) {
     e.preventDefault();
     setStatusSubmit('Loading...');
-    const clonedData = { ...data };
 
+    const remadeIngredients = data.ingredients.map(el => {
+      const { unit, ...otherProps } = el;
+      return { ...otherProps };
+    });
+
+    const clonedData = { ...data, ingredients: remadeIngredients };
+
+    console.log('data', data.ingredients, clonedData.ingredients);
     props
       .dispatch(recipeUploadActions.uploadRecipe(clonedData))
       .then(data => {

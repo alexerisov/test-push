@@ -348,5 +348,12 @@ export default {
     return http.get('/recipe/saved_recipe', {
       params: query
     });
+  },
+
+  createBasicIngredient: ({ title, group }) => {
+    return http.post(`/recipe/basic_ingredients`, {
+      title,
+      group
+    });
   }
 };

@@ -50,6 +50,14 @@
     line-height: 1.29;
     text-align: center;
     background-color: $--color-blue;
+
+    &:hover {
+      background: darken($--color-blue, 15);
+    }
+
+    &:disabled {
+      background: lighten($--color-blue, 15);
+    }
   }
 
   &__container {
@@ -58,5 +66,9 @@
     grid-auto-flow: column;
     grid-template-rows: 1fr 1fr;
     gap: 0 20px;
+  }
+
+  &__close_icon {
+    top: calc(50% - 20px) !important;
   }
 }
