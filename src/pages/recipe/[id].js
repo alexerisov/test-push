@@ -550,13 +550,23 @@ function RecipePage(props) {
     };
 
     const Ingredient = props => {
-      const { title, quantity, unit } = props;
+      const { title, quantity, unit, custom_unit } = props;
 
       return (
         <div className={classes.ingredient_container}>
           <span className={classes.ingredient_name}>{title}</span>
           <span className={classes.ingredient_amount}>
-            {quantity} {unit}
+            {custom_unit?.metric_name ? (
+              <abbr
+                style={{ cursor: 'help' }}
+                title={`${quantity * custom_unit?.metric_value} ${custom_unit?.metric_unit}`}>
+                {quantity} {custom_unit?.metric_name}
+              </abbr>
+            ) : (
+              <span>
+                {quantity} {unit}
+              </span>
+            )}
           </span>
         </div>
       );

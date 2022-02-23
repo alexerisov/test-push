@@ -36,13 +36,23 @@ export const IngredientsModal = props => {
   );
 
   const Ingredient = props => {
-    const { title, quantity, unit } = props;
+    const { title, quantity, unit, custom_unit } = props;
 
     return (
       <div className={classes.ingredient__container}>
         <span className={classes.ingredient__name}>{title}</span>
         <span className={classes.ingredient__amount}>
-          {quantity * cartItemAmount} {unit}
+          {custom_unit?.metric_name ? (
+            <abbr
+              style={{ cursor: 'help' }}
+              title={`${quantity * custom_unit?.metric_value} ${custom_unit?.metric_unit}`}>
+              {quantity} {custom_unit?.metric_name}
+            </abbr>
+          ) : (
+            <span>
+              {quantity} {unit}
+            </span>
+          )}
         </span>
         <span className={classes.ingredient__seller}>Unbranded Chicken</span>
         <span className={classes.ingredient__price}>$0.00</span>
