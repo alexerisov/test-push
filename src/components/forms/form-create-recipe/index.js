@@ -769,7 +769,7 @@ function FormCreateRecipe(props) {
           <div className={classes.createRecipeSection__grid_type_input}>
             <div className={classes.createRecipeItem__inputTime}>
               <label htmlFor="create-cooking_time" className={classes.createRecipeLabel}>
-                Cooking Time
+                <span style={{ color: 'red' }}>* </span> Cooking Time
               </label>
               <NoSsr>
                 <InputTime
@@ -786,7 +786,7 @@ function FormCreateRecipe(props) {
                 <label
                   htmlFor="create-types-select"
                   className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
-                  Type
+                  <span style={{ color: 'red' }}>* </span> Type
                 </label>
                 <Select
                   id="create-types-select"
@@ -807,7 +807,7 @@ function FormCreateRecipe(props) {
                 <label
                   htmlFor="create-diet-restrictions-select"
                   className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
-                  <span style={{ color: 'red' }}>* </span>Lifestyle
+                  Lifestyle
                 </label>
                 <Select
                   id="create-diet-restrictions-select"
@@ -828,7 +828,7 @@ function FormCreateRecipe(props) {
                 <label
                   htmlFor="create-cuisines-select"
                   className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
-                  <span style={{ color: 'red' }}>* </span>Cuisine
+                  Cuisine
                 </label>
                 <Select
                   id="create-cuisines-select"
@@ -849,7 +849,7 @@ function FormCreateRecipe(props) {
                 <label
                   htmlFor="create-cooking-methods-select"
                   className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
-                  <span style={{ color: 'red' }}>* </span>Cooking Method
+                  Cooking Method
                 </label>
                 <Select
                   id="create-cooking-methods-select"
@@ -870,7 +870,7 @@ function FormCreateRecipe(props) {
                 <label
                   htmlFor="create-cooking-skills-select"
                   className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
-                  <span style={{ color: 'red' }}>* </span>Cooking Skills
+                  Cooking Skills
                 </label>
                 <Select
                   id="create-cooking-skills-select"
