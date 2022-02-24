@@ -53,16 +53,6 @@ const fetcher = (...args) =>
       console.log('error', e);
     });
 
-const fetcherPost = (...args) =>
-  http
-    .post(...args)
-    .then(res => {
-      return res?.data;
-    })
-    .catch(e => {
-      console.log('error', e);
-    });
-
 const validationSchema = yup.object({
   title: yup.string().required('Title is required'),
   quantity: yup
@@ -104,10 +94,8 @@ const renderOption = (option, { selected }) => {
 function AddIngredient(props) {
   const classMarerialUi = useStyles();
   const { data } = props.recipeUpload;
-  const [basicIngredient, setBasicIngredient] = useState();
+  const [basicIngredient, setBasicIngredient] = useState(null);
   const [shouldLoadUnits, setShouldLoadUnits] = useState();
-  const [shouldCreateIngredient, setShouldCreateIngredient] = useState();
-  const [showGroupSelector, setShowGroupSelector] = useState();
 
   const formik = useFormik({
     initialValues: {
@@ -115,13 +103,11 @@ function AddIngredient(props) {
       quantity: '',
       unit: '',
       old_unit: '',
-      group: null,
-      groupInputValue: ''
+      basicIngredient: ''
     },
     validationSchema: validationSchema,
     onSubmit: values => {
       const preparedValues = {
-        pk: basicIngredient.pk,
         title: values.title,
         quantity: getNumberWithMaxDigits(Number(values.quantity), 3),
         unit: values.old_unit
@@ -129,6 +115,10 @@ function AddIngredient(props) {
 
       if (basicIngredientUnits?.length > 0) {
         preparedValues.custom_unit = values.unit;
+      }
+
+      if (basicIngredient) {
+        preparedValues.basic_ingredient = basicIngredient.pk;
       }
 
       const newData = { ...data, ingredients: [...data.ingredients, preparedValues] };
@@ -141,7 +131,12 @@ function AddIngredient(props) {
     data: autocompleteSuggestions,
     error: autocompleteError,
     isValidating: isAutocompleteLoading
-  } = useSWR(formik.values.title?.length > 1 ? `/recipe/basic_ingredients?title=${formik.values.title}` : '', fetcher);
+  } = useSWR(
+    formik.values?.basicIngredient?.length > 1
+      ? `/recipe/basic_ingredients?title=${formik.values.basicIngredient}`
+      : null,
+    fetcher
+  );
 
   const {
     data: basicIngredientUnits,
@@ -149,17 +144,11 @@ function AddIngredient(props) {
     isValidating: isBasicIngredientUnitLoading
   } = useSWR(shouldLoadUnits ? `/recipe/units/${basicIngredient?.pk}` : null, fetcher);
 
-  const {
-    data: ingredientGroups,
-    error: ingredientGroupsError,
-    isValidating: isIngredientGroupLoading
-  } = useSWR(showGroupSelector ? `/recipe/ingredient_groups?title=${formik.values.groupInputValue}` : null, fetcher);
-
   const onCancel = () => {
     props.dispatch(modalActions.close());
   };
 
-  const onChangeTitle = event => {
+  const onChangeBasicIngredient = event => {
     setShouldLoadUnits(false);
     const isSuggestionsIncludeTitle = Boolean(
       autocompleteSuggestions?.some(el => el.title?.toLowerCase().trim() === event.target.value?.toLowerCase().trim())
@@ -174,26 +163,20 @@ function AddIngredient(props) {
       setBasicIngredient(null);
     }
 
-    formik.setFieldValue('title', event.target.value);
-  };
-
-  const handleOptionChange = (_, newOption) => {
-    setBasicIngredient(newOption);
-    formik.setFieldValue('title', newOption?.title);
+    formik.setFieldValue('basicIngredient', event.target.value);
   };
 
   const onBlur = () => {
-    if (basicIngredient) {
-      formik.setFieldValue('title', basicIngredient?.title);
+    if (basicIngredient?.pk) {
       setShouldLoadUnits(true);
-      setShowGroupSelector(false);
     } else {
-      !formik.errors?.title && formik.dirty ? setShowGroupSelector(true) : setShowGroupSelector(false);
+      formik.setFieldValue('basicIngredient', 'None');
     }
   };
 
-  const handleSelectGroup = (event, newValue) => {
-    formik.setFieldValue('group', newValue?.pk);
+  const handleSelectBasicIngredient = (event, newValue) => {
+    setBasicIngredient(newValue);
+    formik.setFieldValue('basicIngredient', newValue?.title);
   };
 
   const handleSelectUnit = (event, child) => {
@@ -201,40 +184,37 @@ function AddIngredient(props) {
     formik.setFieldValue('old_unit', child.props.children);
   };
 
-  const onBlurGroup = async () => {
-    if (!formik.values.group) {
-      formik.setFieldValue('groupInputValue', '');
-    } else {
-      try {
-        const response = await Recipe.createBasicIngredient({ title: formik.values.title, group: formik.values.group });
-        setBasicIngredient(response.data);
-      } catch (e) {
-        console.log(e);
-      }
-    }
-
-    if (formik.values.groupInputValue?.trim() === '') {
-      formik.setFieldValue('group', null);
-    }
-  };
-
   const renderContent = () => {
     return (
       <div className={classes.addIngredient}>
         <h2 className={classes.addIngredient__title}>Add More Ingredients</h2>
         <form className={classes.addIngredient__form} onSubmit={formik.submitForm}>
+          <label htmlFor="addIngredient-title" className={classes.addIngredient__label}>
+            Name
+          </label>
+          <TextField
+            id="addIngredient-title"
+            name="title"
+            variant="outlined"
+            fullWidth
+            placeholder="Enter ingredient name"
+            className={classMarerialUi.textField}
+            onChange={formik.handleChange}
+            value={formik.values.title}
+          />
+
           <ErrorBoundary>
             <div>
-              <label htmlFor="addIngredient-name" className={classes.addIngredient__label}>
-                Name
+              <label htmlFor="addIngredient-group" className={classes.addIngredient__label}>
+                Type
               </label>
               <Autocomplete
                 classes={{
                   endAdornment: classes.addIngredient__close_icon
                 }}
-                key="autocomplete"
+                key="autocomplete-basicIngredient"
                 fullWidth
-                id="home-page-search"
+                id="autocomplete-basicIngredient"
                 options={
                   isAutocompleteLoading
                     ? [{ title: '...loading' }]
@@ -245,92 +225,33 @@ function AddIngredient(props) {
                 freeSolo
                 autoComplete
                 includeInputInList
+                autoHighlight
                 getOptionLabel={option => option.title}
                 onChange={(event, newValue) => {
-                  formik.setFieldValue('title', newValue?.title || '');
-                  setShowGroupSelector(false);
+                  formik.setFieldValue('basicIngredient', newValue?.title || '');
                 }}
-                inputValue={formik.values.title}
+                inputValue={formik.values.basicIngredient}
                 onBlur={onBlur}
-                onInputChange={(_, newValue) => onChangeTitle({ target: { value: newValue } })}
+                onInputChange={(_, newValue) => onChangeBasicIngredient({ target: { value: newValue } })}
                 loading={isAutocompleteLoading}
                 renderOption={renderOption}
                 closeIcon={<BasicIcon icon={CloseIcon} color="#B1B5C3" size="32px" />}
                 renderInput={params => (
                   <TextField
                     {...params}
-                    id="addIngredient-name"
-                    name="title"
-                    autoFocus
+                    id="addIngredient-basicIngredient"
+                    name="basicIngredient"
                     variant="outlined"
                     fullWidth
+                    placeholder="Please select type"
                     className={classMarerialUi.textField}
-                    onChange={onChangeTitle}
-                    value={formik.values.title}
+                    onChange={onChangeBasicIngredient}
+                    value={formik.values.basicIngredient}
                   />
                 )}
               />
             </div>
           </ErrorBoundary>
-          <Collapse in={showGroupSelector}>
-            {/*<Select*/}
-            {/*  MenuProps={MenuProps}*/}
-            {/*  id="addIngredient-group"*/}
-            {/*  name="group"*/}
-            {/*  value={formik.values.group}*/}
-            {/*  onChange={handleSelectGroup}*/}
-            {/*  variant="outlined"*/}
-            {/*  fullWidth>*/}
-            {/*  {ingredientGroups?.length > 0 &&*/}
-            {/*    ingredientGroups.map(el => (*/}
-            {/*      <MenuItem key={'group' + el.pk} value={el.pk}>*/}
-            {/*        {el.title}*/}
-            {/*      </MenuItem>*/}
-            {/*    ))}*/}
-            {/*</Select>*/}
-            <ErrorBoundary>
-              <div>
-                <label htmlFor="addIngredient-group" className={classes.addIngredient__label}>
-                  Category
-                </label>
-                <Autocomplete
-                  classes={{
-                    endAdornment: classes.addIngredient__close_icon
-                  }}
-                  key="autocomplete-group"
-                  fullWidth
-                  id="autocomplete-group"
-                  options={
-                    isIngredientGroupLoading ? [{ title: '...loading' }] : ingredientGroups ? ingredientGroups : []
-                  }
-                  freeSolo
-                  autoComplete
-                  includeInputInList
-                  getOptionLabel={option => option.title}
-                  onChange={handleSelectGroup}
-                  inputValue={formik.values.groupInputValue}
-                  onBlur={onBlurGroup}
-                  onInputChange={(_, newValue) => formik.setFieldValue('groupInputValue', newValue)}
-                  loading={isIngredientGroupLoading}
-                  renderOption={renderOption}
-                  closeIcon={<BasicIcon icon={CloseIcon} color="#B1B5C3" size="32px" />}
-                  renderInput={params => (
-                    <TextField
-                      {...params}
-                      id="addIngredient-group"
-                      name="groupInputValue"
-                      variant="outlined"
-                      fullWidth
-                      placeholder="Please select category"
-                      className={classMarerialUi.textField}
-                      onChange={formik.handleChange}
-                      value={formik.values.groupInputValue}
-                    />
-                  )}
-                />
-              </div>
-            </ErrorBoundary>
-          </Collapse>
           <div className={classes.addIngredient__container}>
             <label htmlFor="addIngredient-quantity" className={classes.addIngredient__label}>
               Quantity
@@ -352,7 +273,6 @@ function AddIngredient(props) {
               MenuProps={MenuProps}
               id="addIngredient-unit"
               name="unit"
-              disabled={!basicIngredient?.title}
               value={formik.values.unit}
               onChange={handleSelectUnit}
               variant="outlined"
