@@ -221,7 +221,6 @@ function AddIngredient(props) {
   const renderContent = () => {
     return (
       <div className={classes.addIngredient}>
-        {JSON.stringify(basicIngredientUnits)}
         <h2 className={classes.addIngredient__title}>Add More Ingredients</h2>
         <form className={classes.addIngredient__form} onSubmit={formik.submitForm}>
           <ErrorBoundary>
@@ -305,7 +304,7 @@ function AddIngredient(props) {
                     isIngredientGroupLoading ? [{ title: '...loading' }] : ingredientGroups ? ingredientGroups : []
                   }
                   freeSolo
-                  // autoComplete
+                  autoComplete
                   includeInputInList
                   getOptionLabel={option => option.title}
                   onChange={handleSelectGroup}
