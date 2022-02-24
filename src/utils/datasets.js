@@ -33,7 +33,6 @@ export const recipeTypes = {
   2: 'Lunch',
   3: 'Dinner',
   4: 'Dessert',
-  5: '',
   6: 'Appetizer',
   7: 'Salad',
   8: 'Bread'
