@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import classes from './addIngredient.module.scss';
 import TextField from '@material-ui/core/TextField';
 import { units } from '@/utils/datasets';
-import { Select, MenuItem, MenuList, Collapse } from '@material-ui/core';
+import { Select, MenuItem, Collapse } from '@material-ui/core';
 import { getNumberWithMaxDigits } from '@/utils/helpers';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import { ReactComponent as CloseIcon } from '../../../../public/icons/Close Circle/Line.svg';
@@ -18,7 +18,6 @@ import ErrorBoundary from '@/components/basic-blocks/error-boundary';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import Recipe from '@/api/Recipe';
-import { login } from '@/store/reducers';
 
 const useStyles = makeStyles(theme => ({
   textField: {
@@ -95,7 +94,11 @@ const defaultUnits = () => {
 };
 
 const renderOption = (option, { selected }) => {
-  return <span className={classes.option}>{option.title}</span>;
+  return (
+    <span className={classes.option} value={option.pk}>
+      {option.title}
+    </span>
+  );
 };
 
 function AddIngredient(props) {
@@ -112,7 +115,8 @@ function AddIngredient(props) {
       quantity: '',
       unit: '',
       old_unit: '',
-      group: ''
+      group: null,
+      groupInputValue: ''
     },
     validationSchema: validationSchema,
     onSubmit: values => {
@@ -120,9 +124,12 @@ function AddIngredient(props) {
         pk: basicIngredient.pk,
         title: values.title,
         quantity: getNumberWithMaxDigits(Number(values.quantity), 3),
-        custom_unit: values.unit,
         unit: values.old_unit
       };
+
+      if (basicIngredientUnits?.length > 0) {
+        preparedValues.custom_unit = values.unit;
+      }
 
       const newData = { ...data, ingredients: [...data.ingredients, preparedValues] };
       props.dispatch(recipeUploadActions.update(newData));
@@ -142,10 +149,11 @@ function AddIngredient(props) {
     isValidating: isBasicIngredientUnitLoading
   } = useSWR(shouldLoadUnits ? `/recipe/units/${basicIngredient?.pk}` : null, fetcher);
 
-  const { data: ingredientGroups, error: ingredientGroupsError } = useSWR(
-    showGroupSelector ? `/recipe/ingredient_groups` : null,
-    fetcher
-  );
+  const {
+    data: ingredientGroups,
+    error: ingredientGroupsError,
+    isValidating: isIngredientGroupLoading
+  } = useSWR(showGroupSelector ? `/recipe/ingredient_groups?title=${formik.values.groupInputValue}` : null, fetcher);
 
   const onCancel = () => {
     props.dispatch(modalActions.close());
@@ -184,14 +192,8 @@ function AddIngredient(props) {
     }
   };
 
-  const handleSelectGroup = async event => {
-    formik.setFieldValue('group', event.target.value);
-    try {
-      const response = await Recipe.createBasicIngredient({ title: formik.values.title, group: event.target.value });
-      setBasicIngredient(response.data);
-    } catch (e) {
-      console.log(e);
-    }
+  const handleSelectGroup = (event, newValue) => {
+    formik.setFieldValue('group', newValue?.pk);
   };
 
   const handleSelectUnit = (event, child) => {
@@ -199,9 +201,27 @@ function AddIngredient(props) {
     formik.setFieldValue('old_unit', child.props.children);
   };
 
+  const onBlurGroup = async () => {
+    if (!formik.values.group) {
+      formik.setFieldValue('groupInputValue', '');
+    } else {
+      try {
+        const response = await Recipe.createBasicIngredient({ title: formik.values.title, group: formik.values.group });
+        setBasicIngredient(response.data);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
+    if (formik.values.groupInputValue?.trim() === '') {
+      formik.setFieldValue('group', null);
+    }
+  };
+
   const renderContent = () => {
     return (
       <div className={classes.addIngredient}>
+        {JSON.stringify(basicIngredientUnits)}
         <h2 className={classes.addIngredient__title}>Add More Ingredients</h2>
         <form className={classes.addIngredient__form} onSubmit={formik.submitForm}>
           <ErrorBoundary>
@@ -254,24 +274,63 @@ function AddIngredient(props) {
             </div>
           </ErrorBoundary>
           <Collapse in={showGroupSelector}>
-            <label htmlFor="addIngredient-group" className={classes.addIngredient__label}>
-              Group
-            </label>
-            <Select
-              MenuProps={MenuProps}
-              id="addIngredient-group"
-              name="group"
-              value={formik.values.group}
-              onChange={handleSelectGroup}
-              variant="outlined"
-              fullWidth>
-              {ingredientGroups?.length > 0 &&
-                ingredientGroups.map(el => (
-                  <MenuItem key={'group' + el.pk} value={el.pk}>
-                    {el.title}
-                  </MenuItem>
-                ))}
-            </Select>
+            {/*<Select*/}
+            {/*  MenuProps={MenuProps}*/}
+            {/*  id="addIngredient-group"*/}
+            {/*  name="group"*/}
+            {/*  value={formik.values.group}*/}
+            {/*  onChange={handleSelectGroup}*/}
+            {/*  variant="outlined"*/}
+            {/*  fullWidth>*/}
+            {/*  {ingredientGroups?.length > 0 &&*/}
+            {/*    ingredientGroups.map(el => (*/}
+            {/*      <MenuItem key={'group' + el.pk} value={el.pk}>*/}
+            {/*        {el.title}*/}
+            {/*      </MenuItem>*/}
+            {/*    ))}*/}
+            {/*</Select>*/}
+            <ErrorBoundary>
+              <div>
+                <label htmlFor="addIngredient-group" className={classes.addIngredient__label}>
+                  Category
+                </label>
+                <Autocomplete
+                  classes={{
+                    endAdornment: classes.addIngredient__close_icon
+                  }}
+                  key="autocomplete-group"
+                  fullWidth
+                  id="autocomplete-group"
+                  options={
+                    isIngredientGroupLoading ? [{ title: '...loading' }] : ingredientGroups ? ingredientGroups : []
+                  }
+                  freeSolo
+                  // autoComplete
+                  includeInputInList
+                  getOptionLabel={option => option.title}
+                  onChange={handleSelectGroup}
+                  inputValue={formik.values.groupInputValue}
+                  onBlur={onBlurGroup}
+                  onInputChange={(_, newValue) => formik.setFieldValue('groupInputValue', newValue)}
+                  loading={isIngredientGroupLoading}
+                  renderOption={renderOption}
+                  closeIcon={<BasicIcon icon={CloseIcon} color="#B1B5C3" size="32px" />}
+                  renderInput={params => (
+                    <TextField
+                      {...params}
+                      id="addIngredient-group"
+                      name="groupInputValue"
+                      variant="outlined"
+                      fullWidth
+                      placeholder="Please select category"
+                      className={classMarerialUi.textField}
+                      onChange={formik.handleChange}
+                      value={formik.values.groupInputValue}
+                    />
+                  )}
+                />
+              </div>
+            </ErrorBoundary>
           </Collapse>
           <div className={classes.addIngredient__container}>
             <label htmlFor="addIngredient-quantity" className={classes.addIngredient__label}>
