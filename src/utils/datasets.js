@@ -136,7 +136,6 @@ export const dietaryrestrictionsCount = {
   'High FODMAP': 'high_fodmap_num'
 };
 export const units = {
-  0: '',
   1: 'bag(s)',
   2: 'bottle',
   3: 'box(es)',

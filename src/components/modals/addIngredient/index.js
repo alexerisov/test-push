@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { LayoutModal } from '@/components/layouts';
 import { modalActions, recipeUploadActions } from '@/store/actions';
@@ -17,12 +17,14 @@ import http from '@/utils/http';
 import ErrorBoundary from '@/components/basic-blocks/error-boundary';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import Recipe from '@/api/Recipe';
 
 const useStyles = makeStyles(theme => ({
   textField: {
     '& .MuiOutlinedInput-root': {
-      borderRadius: '4px'
+      borderRadius: '4px',
+      '&.Mui-disabled fieldset': {
+        opacity: 0.3
+      }
     },
     '& .MuiInputBase-input': {
       height: 'auto',
@@ -105,6 +107,8 @@ function AddIngredient(props) {
       old_unit: '',
       basicIngredient: ''
     },
+    validateOnBlur: true,
+    validateOnChang: true,
     validationSchema: validationSchema,
     onSubmit: values => {
       const preparedValues = {
@@ -183,7 +187,18 @@ function AddIngredient(props) {
   const handleSelectUnit = (event, child) => {
     formik.setFieldValue('unit', event.target.value);
     formik.setFieldValue('old_unit', child.props.children);
+    formik.validateField('unit');
   };
+
+  const onBlurUnit = () => {
+    formik.validateField('unit');
+  };
+
+  useEffect(() => {
+    if (!formik.dirty || formik.errors?.title) {
+      formik.setFieldValue('basicIngredient', '');
+    }
+  }, [formik.dirty, formik.errors?.title]);
 
   const renderContent = () => {
     return (
@@ -191,14 +206,14 @@ function AddIngredient(props) {
         <h2 className={classes.addIngredient__title}>Add More Ingredients</h2>
         <form className={classes.addIngredient__form} onSubmit={formik.submitForm}>
           <label htmlFor="addIngredient-title" className={classes.addIngredient__label}>
-            Name
+            Title
           </label>
           <TextField
             id="addIngredient-title"
             name="title"
             variant="outlined"
             fullWidth
-            placeholder="Enter ingredient name"
+            placeholder="Enter title"
             className={classMarerialUi.textField}
             onChange={formik.handleChange}
             value={formik.values.title}
@@ -207,7 +222,7 @@ function AddIngredient(props) {
           <ErrorBoundary>
             <div>
               <label htmlFor="addIngredient-group" className={classes.addIngredient__label}>
-                Type
+                Ingredient
               </label>
               <Autocomplete
                 classes={{
@@ -223,6 +238,7 @@ function AddIngredient(props) {
                     ? autocompleteSuggestions
                     : []
                 }
+                disabled={!formik.dirty || formik.errors?.title}
                 freeSolo
                 autoComplete
                 includeInputInList
@@ -244,7 +260,7 @@ function AddIngredient(props) {
                     name="basicIngredient"
                     variant="outlined"
                     fullWidth
-                    placeholder="Please select type"
+                    placeholder="Please select ingredient"
                     className={classMarerialUi.textField}
                     onChange={onChangeBasicIngredient}
                     value={formik.values.basicIngredient}
@@ -278,6 +294,7 @@ function AddIngredient(props) {
               onChange={handleSelectUnit}
               variant="outlined"
               placeholder={'Ingredient has no available units'}
+              onBlur={onBlurUnit}
               fullWidth>
               {basicIngredientUnits?.length > 0
                 ? basicIngredientUnits.map(el => (

@@ -57,6 +57,7 @@
 
     &:disabled {
       background: lighten($--color-blue, 15);
+      cursor: default;
     }
   }
 
