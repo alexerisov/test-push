@@ -188,7 +188,6 @@ function AddIngredient(props) {
   const renderContent = () => {
     return (
       <div className={classes.addIngredient}>
-        {JSON.stringify(formik.values, 4, 8)}
         <h2 className={classes.addIngredient__title}>Add More Ingredients</h2>
         <form className={classes.addIngredient__form} onSubmit={formik.submitForm}>
           <label htmlFor="addIngredient-title" className={classes.addIngredient__label}>
