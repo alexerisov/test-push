@@ -299,7 +299,7 @@ function AddIngredient(props) {
               {basicIngredientUnits?.length > 0
                 ? basicIngredientUnits.map(el => (
                     <MenuItem key={'unit' + el.pk} value={el.pk}>
-                      {el.metric_name}
+                      {el.primary_type === 'imperial' ? el.imperial_name : el.metric_name}
                     </MenuItem>
                   ))
                 : defaultUnits().map(el => (
