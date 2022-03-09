@@ -107,7 +107,7 @@ function AddIngredient(props) {
   const formik = useFormik({
     initialValues: {
       basicIngredient: '',
-      customTitle: '',
+      title: '',
       quantity: '',
       unit: '',
       old_unit: '',
@@ -154,6 +154,7 @@ function AddIngredient(props) {
         const response = await Recipe.createBasicIngredient({ title: values.name, group: values.group });
         setBasicIngredient(response.data);
         formik.setFieldValue('basicIngredient', response.data.title);
+        formik.setFieldValue('title', response.data.title);
         handleClose();
       } catch (e) {
         if (e.response.data?.title) {
@@ -305,6 +306,7 @@ function AddIngredient(props) {
                   formik.setFieldValue('basicIngredient', '');
                 }
                 formik.setFieldValue('basicIngredient', newValue?.title || '');
+                formik.setFieldValue('title', newValue?.title || '');
               }}
               inputValue={formik.values.basicIngredient}
               onBlur={onBlur}
@@ -334,13 +336,13 @@ function AddIngredient(props) {
             </label>
             <TextField
               id="addIngredient-title"
-              name="customTitle"
+              name="title"
               variant="outlined"
               fullWidth
-              placeholder="Enter title"
+              placeholder="Enter custom name"
               className={classMarerialUi.textField}
               onChange={formik.handleChange}
-              value={formik.values.customTitle}
+              value={formik.values.title}
             />
           </div>
 
