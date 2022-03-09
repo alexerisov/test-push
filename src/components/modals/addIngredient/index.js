@@ -101,6 +101,7 @@ function AddIngredient(props) {
   const classMarerialUi = useStyles();
   const { data } = props.recipeUpload;
   const [basicIngredient, setBasicIngredient] = useState(null);
+  const [group, setGroup] = useState(null);
   const [shouldLoadUnits, setShouldLoadUnits] = useState();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -151,7 +152,7 @@ function AddIngredient(props) {
     validationSchema: validationSchema2,
     onSubmit: async values => {
       try {
-        const response = await Recipe.createBasicIngredient({ title: values.name, group: values.group });
+        const response = await Recipe.createBasicIngredient({ title: values.name, group: group.pk });
         setBasicIngredient(response.data);
         formik.setFieldValue('basicIngredient', response.data.title);
         formik.setFieldValue('title', response.data.title);
@@ -161,7 +162,7 @@ function AddIngredient(props) {
           formik2.setFieldError('name', e.response.data?.title);
         }
         if (e.response.data?.group) {
-          formik2.setFieldError('group', e.response.data?.title);
+          formik2.setFieldError('group', e.response.data?.group);
         }
       }
     }
@@ -172,7 +173,7 @@ function AddIngredient(props) {
     error: autocompleteError,
     isValidating: isAutocompleteLoading
   } = useSWR(
-    formik.values?.basicIngredient?.length > 1
+    formik.values?.basicIngredient?.length > 0
       ? `/recipe/basic_ingredients?title=${formik.values.basicIngredient}`
       : null,
     fetcher
@@ -184,8 +185,14 @@ function AddIngredient(props) {
     isValidating: isBasicIngredientUnitLoading
   } = useSWR(shouldLoadUnits ? `/recipe/units/${basicIngredient?.pk}` : null, fetcher);
 
-  const { data: ingredientGroups, error: ingredientGroupsError } = useSWR(
-    isDialogOpen ? `/recipe/ingredient_groups` : null,
+  const {
+    data: ingredientGroups,
+    error: ingredientGroupsError,
+    isValidating: isIngredientsGroupLoading
+  } = useSWR(
+    isDialogOpen && formik2.values?.group?.length > 0
+      ? `/recipe/ingredient_groups?title=${formik2.values.group}`
+      : null,
     fetcher
   );
 
@@ -219,11 +226,6 @@ function AddIngredient(props) {
       formik.setFieldValue('basicIngredient', '');
     }
     formik.validateField('basicIngredient');
-  };
-
-  const handleSelectBasicIngredient = (event, newValue) => {
-    setBasicIngredient(newValue);
-    formik.setFieldValue('basicIngredient', newValue?.title);
   };
 
   const handleSelectUnit = (event, child) => {
@@ -269,7 +271,28 @@ function AddIngredient(props) {
   };
 
   const handleSelectGroup = event => {
+    const isSuggestionsIncludeTitle = Boolean(
+      ingredientGroups?.some(el => el.title?.toLowerCase().trim() === event.target.value?.toLowerCase().trim())
+    );
+    if (isSuggestionsIncludeTitle) {
+      setGroup(
+        ingredientGroups?.filter(el => el.title.toLowerCase().trim() === event.target.value.toLowerCase().trim())[0]
+      );
+    } else {
+      setGroup(null);
+    }
+
     formik2.setFieldValue('group', event.target.value);
+  };
+
+  const onBlurGroup = () => {
+    if (group?.pk) {
+      setShouldLoadUnits(true);
+      formik2.setFieldValue('group', group.title);
+    } else {
+      formik2.setFieldValue('group', '');
+    }
+    formik2.validateField('group');
   };
 
   const handleSubmit = event => {
@@ -415,24 +438,47 @@ function AddIngredient(props) {
                   />
                 </div>
                 <div>
-                  <label htmlFor="create-types-select" className={classes.addIngredient__label}>
-                    Group
-                  </label>
-                  <Select
-                    MenuProps={MenuProps}
-                    id="createIngredient-group"
-                    name="group"
-                    value={formik2.values.group}
-                    onChange={handleSelectGroup}
-                    variant="outlined"
-                    fullWidth>
-                    {ingredientGroups?.length > 0 &&
-                      ingredientGroups.map(el => (
-                        <MenuItem key={'group' + el.pk} value={el.pk}>
-                          {el.title}
-                        </MenuItem>
-                      ))}
-                  </Select>
+                  <ErrorBoundary>
+                    <label htmlFor="create-types-select" className={classes.addIngredient__label}>
+                      Group
+                    </label>
+                    <Autocomplete
+                      classes={{
+                        endAdornment: classes.addIngredient__close_icon
+                      }}
+                      key="autocomplete-group"
+                      fullWidth
+                      id="autocomplete-group"
+                      options={ingredientGroups ? ingredientGroups : []}
+                      freeSolo
+                      autoComplete
+                      includeInputInList
+                      autoHighlight
+                      getOptionLabel={option => option.title}
+                      onChange={(event, newValue) => {
+                        formik2.setFieldValue('group', newValue?.title || '');
+                      }}
+                      inputValue={formik2.values.group}
+                      onBlur={onBlurGroup}
+                      onInputChange={(_, newValue) => handleSelectGroup({ target: { value: newValue } })}
+                      loading={isIngredientsGroupLoading}
+                      renderOption={renderOption}
+                      closeIcon={<BasicIcon icon={CloseIcon} color="#B1B5C3" size="32px" />}
+                      renderInput={params => (
+                        <TextField
+                          {...params}
+                          id="createIngredient-group"
+                          name="group"
+                          variant="outlined"
+                          fullWidth
+                          placeholder="Please select ingredient"
+                          className={classMarerialUi.textField}
+                          onChange={handleSelectGroup}
+                          value={formik2.values.group}
+                        />
+                      )}
+                    />
+                  </ErrorBoundary>
                 </div>
                 <div className={classes.addIngredient__buttonContainer}>
                   <button type="submit" disabled={!formik2.isValid} className={classes.addIngredient__button}>
