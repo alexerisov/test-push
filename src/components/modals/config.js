@@ -3,6 +3,7 @@ export { default as register } from './register';
 export { default as search } from './search';
 export { default as confirmation } from './confirmation';
 export { default as addIngredient } from './addIngredient';
+export { default as createNewIngredient } from './createNewIngredient';
 export { default as editIngredient } from './editIngredient';
 export { default as addNutrition } from './addNutrition';
 export { default as editNutrition } from './editNutrition';
