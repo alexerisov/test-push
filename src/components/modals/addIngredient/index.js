@@ -19,6 +19,7 @@ import ErrorBoundary from '@/components/basic-blocks/error-boundary';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import Recipe from '@/api/Recipe';
+import { i18n, useTranslation } from 'next-i18next';
 
 const useStyles = makeStyles(theme => ({
   textField: {
@@ -85,7 +86,7 @@ const renderOption = (option, { selected }) => {
     return (
       <span className={classes.option} value={option.pk}>
         <AddIcon htmlColor="#ffaa00" />
-        You want to create new ingredient?
+        {i18n.t('addIngredientModal:createIngredient.popupText')}
       </span>
     );
   }
@@ -98,6 +99,7 @@ const renderOption = (option, { selected }) => {
 };
 
 function AddIngredient(props) {
+  const { t } = useTranslation('addIngredientModal');
   const classMarerialUi = useStyles();
   const { data } = props.recipeUpload;
   const [basicIngredient, setBasicIngredient] = useState(null);
@@ -316,11 +318,11 @@ function AddIngredient(props) {
   const renderContent = () => {
     return (
       <div className={classes.addIngredient}>
-        <h2 className={classes.addIngredient__title}>Add More Ingredients</h2>
+        <h2 className={classes.addIngredient__title}>{t('title')}</h2>
         <form className={classes.addIngredient__form} onSubmit={formik.submitForm}>
           <ErrorBoundary>
             <label htmlFor="addIngredient-group" className={classes.addIngredient__label}>
-              Ingredient
+              {t('ingredientInput.label')}
             </label>
             <Autocomplete
               classes={{
@@ -357,7 +359,7 @@ function AddIngredient(props) {
                   name="basicIngredient"
                   variant="outlined"
                   fullWidth
-                  placeholder="Please select ingredient"
+                  placeholder={t('ingredientInput.placeholder')}
                   className={classMarerialUi.textField}
                   onChange={onChangeBasicIngredient}
                   value={formik.values.basicIngredient}
@@ -368,14 +370,14 @@ function AddIngredient(props) {
 
           <div>
             <label htmlFor="addIngredient-title" className={classes.addIngredient__label}>
-              Extra information
+              {t('extraInput.label')}
             </label>
             <TextField
               id="addIngredient-title"
               name="title"
               variant="outlined"
               fullWidth
-              placeholder="Enter custom name"
+              placeholder={t('extraInput.placeholder')}
               className={classMarerialUi.textField}
               onChange={formik.handleChange}
               value={formik.values.title}
@@ -384,7 +386,7 @@ function AddIngredient(props) {
 
           <div className={classes.addIngredient__container}>
             <label htmlFor="addIngredient-quantity" className={classes.addIngredient__label}>
-              Quantity
+              {t('quantityInput.label')}
             </label>
             <TextField
               inputRef={quantityInputRef}
@@ -399,7 +401,7 @@ function AddIngredient(props) {
               className={classMarerialUi.textField}
             />
             <label htmlFor="create-types-select" className={classes.addIngredient__label}>
-              Unit
+              {t('unitInput.label')}
             </label>
 
             <Select
@@ -428,7 +430,7 @@ function AddIngredient(props) {
           </div>
           <div className={classes.addIngredient__buttonContainer}>
             <button type="submit" ref={buttonRef} disabled={!formik.isValid} className={classes.addIngredient__button}>
-              Add
+              {t('button')}
             </button>
             {Object.values(formik.errors)?.length > 0 && <p>{Object.values(formik.errors)[0]}</p>}
           </div>
@@ -436,18 +438,18 @@ function AddIngredient(props) {
         <Dialog open={isDialogOpen} aria-labelledby="form-dialog-title">
           <LayoutModal onClose={handleClose} themeName="white_small">
             <div className={classes.addIngredient}>
-              <h2 className={classes.addIngredient__title}>Create new ingredient</h2>
+              <h2 className={classes.addIngredient__title}>{t('createIngredient.title')}</h2>
               <form className={classes.addIngredient__form} onSubmit={handleSubmit}>
                 <div>
                   <label htmlFor="addIngredient-title" className={classes.addIngredient__label}>
-                    Name
+                    {t('createIngredient.nameInput.label')}
                   </label>
                   <TextField
                     id="createIngredient-title"
                     name="name"
                     variant="outlined"
                     fullWidth
-                    placeholder="Enter ingredient name"
+                    placeholder={t('createIngredient.nameInput.placeholder')}
                     className={classMarerialUi.textField}
                     onChange={formik2.handleChange}
                     value={formik2.values.name}
@@ -456,7 +458,7 @@ function AddIngredient(props) {
                 <div>
                   <ErrorBoundary>
                     <label htmlFor="create-types-select" className={classes.addIngredient__label}>
-                      Group
+                      {t('createIngredient.groupInput.placeholder')}
                     </label>
                     <Autocomplete
                       classes={{
@@ -487,7 +489,7 @@ function AddIngredient(props) {
                           name="group"
                           variant="outlined"
                           fullWidth
-                          placeholder="Please select ingredient"
+                          placeholder={t('createIngredient.groupInput.placeholder')}
                           className={classMarerialUi.textField}
                           onChange={handleSelectGroup}
                           value={formik2.values.group}
@@ -498,7 +500,7 @@ function AddIngredient(props) {
                 </div>
                 <div className={classes.addIngredient__buttonContainer}>
                   <button type="submit" disabled={!formik2.isValid} className={classes.addIngredient__button}>
-                    Create
+                    {t('createIngredient.button')}
                   </button>
                   {Object.values(formik2.errors)?.length > 0 && <p>{Object.values(formik2.errors)[0]}</p>}
                 </div>

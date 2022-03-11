@@ -39,6 +39,7 @@ import Recipe from '@/api/Recipe';
 import LinearProgressWithLabel from '@/components/elements/linear-progress-with-label';
 import CheckboxIcon from '@/components/elements/checkbox-icon';
 import CheckboxIconUnchecked from '@/components/elements/checkbox-icon/checkbox-icon-unchecked';
+import { useTranslation } from 'next-i18next';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -102,6 +103,7 @@ const LANGUAGES = {
 
 function FormCreateRecipe(props) {
   const router = useRouter();
+  const { t } = useTranslation('uploadRecipe');
 
   const classMarerialUi = useStyles();
   const { data, error } = props.recipeUpload;
@@ -509,7 +511,7 @@ function FormCreateRecipe(props) {
           onDragLeave={event => handleDragLeave(event)}>
           <div className={classes.uploadPhotoLabel__border} ref={uploadImageLabel}>
             <img className={classes.uploadPhotoLabel__logo} src="/images/index/uploadIconGray.svg" />
-            <p className={classes.uploadPhotoLabel__text}>Add Photos</p>
+            <p className={classes.uploadPhotoLabel__text}>{t('cookingImages.button')}</p>
           </div>
         </label>
         <input
@@ -529,17 +531,18 @@ function FormCreateRecipe(props) {
     <div className={classes.createRecipeForm__wrap}>
       <div className={classes.wave}></div>
       <div className={classes.createRecipeForm__header}>
-        <h1 className={classes.createRecipeForm__header__title}>Create New Recipe</h1>
+        <h1 className={classes.createRecipeForm__header__title}>{t('formTitle')}</h1>
         <button className={classes.createRecipeForm__header__clear} onClick={handleClearForm}>
-          Clear All
+          {t('clearButton')}
         </button>
       </div>
       <form className={classes.createRecipeForm}>
         <div className={classes.createRecipeSection}>
-          <h2 className={classes.createRecipeSubtitle}>Basic Details</h2>
+          <h2 className={classes.createRecipeSubtitle}>{t('basicDetails.header')}</h2>
           <div className={classes.createRecipeInput_type_title}>
             <label htmlFor="create-title" className={classes.createRecipeLabel}>
-              <span style={{ color: 'red' }}>* </span>Title
+              <span style={{ color: 'red' }}>* </span>
+              {t('basicDetails.titleInput')}
             </label>
             <NoSsr>
               <TextField
@@ -558,7 +561,8 @@ function FormCreateRecipe(props) {
           </div>
           <div className={classes.createRecipeInput_type_description}>
             <label htmlFor="create-description" className={classes.createRecipeLabel}>
-              <span style={{ color: 'red' }}>* </span>Description
+              <span style={{ color: 'red' }}>* </span>
+              {t('basicDetails.descriptionInput')}
             </label>
             <NoSsr>
               <TextField
@@ -580,7 +584,8 @@ function FormCreateRecipe(props) {
 
         <div className={classes.createRecipeSection}>
           <h2 className={classes.createRecipeSubtitle}>
-            <span style={{ color: 'red' }}>* </span>Cooking images
+            <span style={{ color: 'red' }}>* </span>
+            {t('cookingImages.title')}
           </h2>
           <ReactSortable
             delayOnTouchOnly={false}
@@ -597,7 +602,7 @@ function FormCreateRecipe(props) {
           <FieldError errors={error} path="main_image" id="error" />
         </div>
         <div className={classes.createRecipeSection}>
-          <h2 className={classes.createRecipeSubtitle_withoutInput}>Cooking Video</h2>
+          <h2 className={classes.createRecipeSubtitle_withoutInput}>{t('cookingVideo.title')}</h2>
           <div className={classes.createRecipeSection__video}>
             <>
               <div
@@ -610,7 +615,9 @@ function FormCreateRecipe(props) {
                 <div className={classes.uploadVideoLabel__border} ref={labelRefVideo}>
                   <img className={classes.uploadVideoLabel__logo} src="/images/index/uploadIconGray.svg" />
                   {(progressVideo === 0 || videoRecipe) && (
-                    <p className={classes.uploadVideoLabel__dragText}>{!videoRecipe ? 'Add Video' : 'Change Video'}</p>
+                    <p className={classes.uploadVideoLabel__dragText}>
+                      {!videoRecipe ? t('cookingVideo.addButton') : t('cookingVideo.changeutton')}
+                    </p>
                   )}
                   {progressVideo !== 0 && !videoRecipe && <LinearProgressWithLabel value={progressVideo} />}
                 </div>
@@ -645,8 +652,8 @@ function FormCreateRecipe(props) {
 
         <div className={classes.createRecipeSection}>
           <h2 className={classes.createRecipeSubtitle}>
-            <span style={{ color: 'red' }}>* </span>Ingredients:
-            <span style={{ color: '#ffaa00' }}> {data?.ingredients.length ?? '0'}</span>
+            <span style={{ color: 'red' }}>* </span>
+            {t('ingredients.title')}:<span style={{ color: '#ffaa00' }}> {data?.ingredients.length ?? '0'}</span>
           </h2>
           <div className={classes.createRecipeSection__grid_type_cardIngredients} id="create-ingredients">
             <button
@@ -654,7 +661,7 @@ function FormCreateRecipe(props) {
               onClick={handleClickPopupOpen('addIngredient')}
               className={classes.createRecipeButton_type_addIngredient}>
               <p className={classes.createRecipeButton_type_addIngredient__icon}>&#43;</p>
-              <p className={classes.createRecipeButton_type_addIngredient__text}>Add</p>
+              <p className={classes.createRecipeButton_type_addIngredient__text}>{t('ingredients.button')}</p>
             </button>
             {data?.ingredients.length !== 0
               ? JSON.parse(JSON.stringify(data.ingredients)).map((item, index) => (
@@ -672,7 +679,7 @@ function FormCreateRecipe(props) {
           <FieldError errors={error} path="ingredients" id="error" />
         </div>
         <div className={classes.createRecipeSection_type_cardNutrition}>
-          <h2 className={classes.createRecipeSubtitle}>Nutrition value</h2>
+          <h2 className={classes.createRecipeSubtitle}>{t('nutrition.title')}</h2>
           <div className={classes.createRecipeSection__grid_type_cardNutrition}>
             {!data?.calories || !data?.proteins || !data?.fats || !data?.carbohydrates ? (
               <button
@@ -680,7 +687,7 @@ function FormCreateRecipe(props) {
                 onClick={handleClickPopupOpen('addNutrition')}
                 className={classes.createRecipeButton_type_addNutrition}>
                 <p className={classes.createRecipeButton_type_addNutrition__icon}>&#43;</p>
-                <p className={classes.createRecipeButton_type_addNutrition__text}>Add</p>
+                <p className={classes.createRecipeButton_type_addNutrition__text}>{t('nutrition.button')}</p>
               </button>
             ) : (
               ''
@@ -718,7 +725,7 @@ function FormCreateRecipe(props) {
           </div>
         </div>
         <div className={classes.createRecipeSection}>
-          <h2 className={classes.createRecipeSubtitle_withoutInput}>Steps to make the recipe</h2>
+          <h2 className={classes.createRecipeSubtitle_withoutInput}>{t('steps.title')}</h2>
           <ul className={classes.createRecipeList}>
             {data?.steps.length !== 0
               ? data?.steps.map((item, index) => {
@@ -758,19 +765,20 @@ function FormCreateRecipe(props) {
             onClick={handleClickPopupOpen('addStep')}
             className={classes.createRecipeButton_type_addStep}>
             <p className={classes.createRecipeButton_type_addStep__icon}>&#43;</p>
-            <p className={classes.createRecipeButton_type_addStep__text}>Add More Steps</p>
+            <p className={classes.createRecipeButton_type_addStep__text}>{t('steps.button')}</p>
           </button>
         </div>
 
         <div className={classes.createRecipeSection}>
           <h2
             className={`${classes.createRecipeSubtitle_withoutInput} ${classes.createRecipeSubtitle_classifications}`}>
-            All Classifications
+            {t('classification.title')}
           </h2>
           <div className={classes.createRecipeSection__grid_type_input}>
             <div className={classes.createRecipeItem__inputTime}>
               <label htmlFor="create-cooking_time" className={classes.createRecipeLabel}>
-                <span style={{ color: 'red' }}>* </span> Cooking Time
+                <span style={{ color: 'red' }}>* </span>
+                {t('classification.time')}
               </label>
               <NoSsr>
                 <InputTime
@@ -787,7 +795,8 @@ function FormCreateRecipe(props) {
                 <label
                   htmlFor="create-types-select"
                   className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
-                  <span style={{ color: 'red' }}>* </span> Type
+                  <span style={{ color: 'red' }}>* </span>
+                  {t('classification.type')}
                 </label>
                 <Select
                   id="create-types-select"
@@ -808,7 +817,7 @@ function FormCreateRecipe(props) {
                 <label
                   htmlFor="create-diet-restrictions-select"
                   className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
-                  Lifestyle
+                  {t('classification.lifestyle')}
                 </label>
                 <Select
                   id="create-diet-restrictions-select"
@@ -829,7 +838,7 @@ function FormCreateRecipe(props) {
                 <label
                   htmlFor="create-cuisines-select"
                   className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
-                  Cuisine
+                  {t('classification.cuisine')}
                 </label>
                 <Select
                   id="create-cuisines-select"
@@ -850,7 +859,7 @@ function FormCreateRecipe(props) {
                 <label
                   htmlFor="create-cooking-methods-select"
                   className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
-                  Cooking Method
+                  {t('classification.method')}
                 </label>
                 <Select
                   id="create-cooking-methods-select"
@@ -871,7 +880,7 @@ function FormCreateRecipe(props) {
                 <label
                   htmlFor="create-cooking-skills-select"
                   className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
-                  Cooking Skills
+                  {t('classification.skills')}
                 </label>
                 <Select
                   id="create-cooking-skills-select"
@@ -891,7 +900,7 @@ function FormCreateRecipe(props) {
                 <label
                   htmlFor="create-language-select"
                   className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
-                  Language
+                  {t('classification.language')}
                 </label>
                 <Select
                   id="create-language-select"
@@ -919,7 +928,8 @@ function FormCreateRecipe(props) {
         <div className={`${classes.createRecipeSection} ${classes.createRecipeSection_visibility}`}>
           <div className={classes.createRecipeItem}>
             <h3 className={`${classes.createRecipeSubtitle} ${classes.createRecipeSubtitle_type_visibility}`}>
-              <span style={{ color: 'red' }}>* </span>Visibility
+              <span style={{ color: 'red' }}>* </span>
+              {t('visibility.title')}
             </h3>
             <NoSsr>
               <RadioGroup
@@ -934,7 +944,7 @@ function FormCreateRecipe(props) {
                   control={
                     <Radio id="publish_status" icon={<CheckboxIconUnchecked />} checkedIcon={<CheckboxIcon />} />
                   }
-                  label="Save"
+                  label={t('visibility.save')}
                 />
 
                 <FormControlLabel
@@ -942,7 +952,7 @@ function FormCreateRecipe(props) {
                   control={
                     <Radio id="publish_status" icon={<CheckboxIconUnchecked />} checkedIcon={<CheckboxIcon />} />
                   }
-                  label="Publish"
+                  label={t('visibility.publish')}
                 />
               </RadioGroup>
             </NoSsr>
@@ -954,10 +964,10 @@ function FormCreateRecipe(props) {
       </form>
       <div className={classes.createRecipebuttonContainer}>
         <button className={classes.createRecipeButton} onClick={uploadRecipe}>
-          <p className={classes.createRecipeButton__text}>{statusSubmit}</p>
+          <p className={classes.createRecipeButton__text}>{t('submitButton')}</p>
         </button>
         <button className={classes.createRecipeButton_color_gray} onClick={handleCancel}>
-          <p className={classes.createRecipeButton__text}>Cancel</p>
+          <p className={classes.createRecipeButton__text}>{t('cancelButton')}</p>
         </button>
       </div>
     </div>
