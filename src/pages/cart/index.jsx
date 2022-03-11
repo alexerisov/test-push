@@ -13,7 +13,6 @@ import { useRouter, withRouter } from 'next/router';
 import { withAuth } from '@/utils/authProvider';
 import classes from './index.module.scss';
 import { IngredientsModal } from '@/components/basic-blocks/ingredients-modal';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const useStyles = makeStyles(theme => ({
   tabs: {
@@ -101,7 +100,6 @@ export async function getServerSideProps(context) {
     const isAuthenticated = Boolean(token);
     return {
       props: {
-        ...(await serverSideTranslations(context.locale, ['common'])),
         isAuthenticated,
         absolutePath: context.req.headers.host
       }
@@ -111,7 +109,6 @@ export async function getServerSideProps(context) {
 
     return {
       props: {
-        ...(await serverSideTranslations(context.locale, ['common'])),
         notFound: true
       }
     };

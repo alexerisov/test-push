@@ -96,7 +96,7 @@ const Header = props => {
 
   const LoginButton = () => (
     <Button onClick={handleClickLogin('register')} variant="outlined" className={classes.button_login}>
-      Login
+      {t('header.loginButton')}
     </Button>
   );
 

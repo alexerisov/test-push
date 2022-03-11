@@ -7,7 +7,6 @@ import { modalActions } from '@/store/actions';
 import { useDispatch } from 'react-redux';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { withRedirectTo404ForHidePage } from '@/utils/withHidePage';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const Menu = () => {
   const dispatch = useDispatch();
@@ -93,9 +92,3 @@ const Menu = () => {
 };
 
 export default withRedirectTo404ForHidePage(Menu, true);
-
-export const getServerSideProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common']))
-  }
-});

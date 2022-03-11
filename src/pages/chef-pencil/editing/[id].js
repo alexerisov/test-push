@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 import LayoutPage from '@/components/layouts/layout-page';
 import { FormCreateChefPencil } from '@/components/forms';
 import ChefPencil from '@/api/ChefPencil';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 function CreateRecipe() {
   const router = useRouter();
