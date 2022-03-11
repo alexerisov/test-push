@@ -35,7 +35,7 @@ const CardHighestMeals = props => {
   const router = useRouter();
 
   const redirectToRecipeCard = id => {
-    router.push(`/recipe/${id}`);
+    router.push(`/recipe/${id}`, undefined, { locale: router.locale });
   };
 
   const getStatusOfCard = () => {

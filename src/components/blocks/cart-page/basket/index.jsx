@@ -8,7 +8,7 @@ export const Basket = props => {
   const router = useRouter();
 
   const handleOrderClick = () => {
-    router.push('/order-confirm');
+    router.push('/order-confirm', undefined, { locale: router.locale });
   };
 
   const TextElement = props => {

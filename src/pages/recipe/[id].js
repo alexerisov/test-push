@@ -414,7 +414,7 @@ function RecipePage(props) {
       const { icon, text, borderColor, link } = props;
 
       const classificationClickHandler = () => {
-        router.push(link);
+        router.push(link, undefined, { locale: router.locale });
       };
 
       return (
@@ -813,7 +813,7 @@ export async function getServerSideProps(context) {
 
     return {
       props: {
-        ...(await serverSideTranslations(locale, ['common'])),
+        ...(await serverSideTranslations(context.locale, ['common'])),
         recipe: recipeResponse.data,
         weekmenu: weekmenuResponse.data,
         topRatedRecipes: topRatedResponse.data,
@@ -826,7 +826,7 @@ export async function getServerSideProps(context) {
 
     return {
       props: {
-        ...(await serverSideTranslations(locale, ['common'])),
+        ...(await serverSideTranslations(context.locale, ['common'])),
         notFound: true
       }
     };

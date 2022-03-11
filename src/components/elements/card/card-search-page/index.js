@@ -105,7 +105,7 @@ const CardSearch = props => {
   const [showCounter, setShowCounter] = useState(false);
   const [counter, setCounter] = useState(1);
   const redirectToRecipeCard = id => {
-    router.push(`/recipe/${id}`);
+    router.push(`/recipe/${id}`, undefined, { locale: router.locale });
   };
 
   const getStatusOfCard = () => {

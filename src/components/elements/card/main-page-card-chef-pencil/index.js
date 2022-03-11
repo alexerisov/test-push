@@ -37,7 +37,7 @@ const CardChefPencil = ({ image, title, chefName, id, description }) => {
   });
 
   const redirectToTargetPencil = id => {
-    router.push(`/chef-pencil/${id}`);
+    router.push(`/chef-pencil/${id}`, undefined, { locale: router.locale });
   };
 
   return (

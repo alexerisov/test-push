@@ -11,7 +11,7 @@ const BannerBlocksHomePage = props => {
 
   const handleChangeStatus = () => {
     if (props?.profile?.data?.user_type === USER_TYPE.viewerType) {
-      router.push('/profile/become-home-chef');
+      router.push('/profile/become-home-chef', undefined, { locale: router.locale });
     } else {
       props.dispatch(modalActions.open('register'));
     }
@@ -21,7 +21,10 @@ const BannerBlocksHomePage = props => {
     chef: () => {
       const button =
         props?.profile?.data?.user_type === USER_TYPE.chefType ? (
-          <button type="button" onClick={() => router.push('/recipe/upload')} className={classes.blocksButtons}>
+          <button
+            type="button"
+            onClick={() => router.push('/recipe/upload', undefined, { locale: router.locale })}
+            className={classes.blocksButtons}>
             I'm A Chef
           </button>
         ) : (
@@ -34,7 +37,10 @@ const BannerBlocksHomePage = props => {
     },
     foodie: () => {
       const button = props?.account?.hasToken ? (
-        <button type="button" onClick={() => router.push('/search')} className={classes.blocksButtons}>
+        <button
+          type="button"
+          onClick={() => router.push('/search', undefined, { locale: router.locale })}
+          className={classes.blocksButtons}>
           I'm A Foodie
         </button>
       ) : (

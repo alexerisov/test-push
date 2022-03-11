@@ -35,7 +35,7 @@ const CardSavedPencil = props => {
   const router = useRouter();
 
   const redirectToRecipeCard = id => {
-    router.push(`/chef-pencil/${id}`);
+    router.push(`/chef-pencil/${id}`, undefined, { locale: router.locale });
   };
 
   const getStatusOfCard = () => {

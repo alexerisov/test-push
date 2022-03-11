@@ -26,7 +26,7 @@ class LoginSocial extends Component {
     const code = this.query.get('code');
 
     if (this.props.account.hasToken) {
-      Router.router.push('/');
+      Router.router.push('/', undefined, { locale: router.locale });
     }
     this.props
       .dispatch(

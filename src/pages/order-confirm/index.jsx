@@ -168,7 +168,7 @@ const OrderConfirmPage = () => {
         await localStorage.setItem('order', JSON.stringify(r.data));
         await localStorage.setItem('cart', JSON.stringify(cart));
         window.open(r.data.url, '_ blank');
-        router.push('/order-congratulation');
+        router.push('/order-congratulation', undefined, { locale: router.locale });
         setIsLoading(false);
         dispatch({ type: cartTypes.DELETE_CART });
       })

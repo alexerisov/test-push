@@ -25,7 +25,7 @@ const ConfirmEmail = props => {
           setResponse(res);
         })
         .catch(e => {
-          router.push('/404');
+          router.push('/404', undefined, { locale: router.locale });
         });
     }
   }, [code]);

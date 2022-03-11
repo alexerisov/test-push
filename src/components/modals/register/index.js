@@ -84,7 +84,7 @@ function Register(props) {
 
   const onCancel = () => {
     props.dispatch(modalActions.close());
-    if (router.pathname === '/confirm/email/[code]') {
+    if ((router.pathname === '/confirm/email/[code]', undefined, { locale: router.locale })) {
       router.push('/');
     }
   };

@@ -97,6 +97,7 @@ module.exports = {
     modules: [path.resolve(__dirname, 'src'), 'node_modules']
   },
   i18n,
+  trailingSlash: true,
   webpack5: true,
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')]

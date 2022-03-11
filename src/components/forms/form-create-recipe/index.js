@@ -108,7 +108,7 @@ function FormCreateRecipe(props) {
 
   useEffect(() => {
     if (props?.account && !props.account.hasToken) {
-      router.push('/');
+      router.push('/', undefined, { locale: router.locale });
     }
   }, [props?.account]);
 
@@ -307,7 +307,7 @@ function FormCreateRecipe(props) {
 
   const handleCancel = () => {
     props.dispatch(recipeUploadActions.clear());
-    router.push('/my-recipes');
+    router.push('/my-recipes', undefined, { locale: router.locale });
   };
 
   const handleErrorScroll = error => {

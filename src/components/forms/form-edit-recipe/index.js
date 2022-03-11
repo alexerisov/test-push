@@ -98,7 +98,7 @@ function FormEditRecipe(props) {
 
   useEffect(() => {
     if (props?.account && !props.account.hasToken) {
-      router.push('/');
+      router.push('/', undefined, { locale: router.locale });
     }
   }, [props?.account]);
 
@@ -897,7 +897,9 @@ function FormEditRecipe(props) {
           <button className={classes.createRecipeButton} onClick={uploadRecipe}>
             <p className={classes.createRecipeButton__text}>{statusSubmit}</p>
           </button>
-          <button className={classes.createRecipeButton_color_gray} onClick={() => router.push(`/recipe/${recipeId}`)}>
+          <button
+            className={classes.createRecipeButton_color_gray}
+            onClick={() => router.push(`/recipe/${recipeId}`, undefined, { locale: router.locale })}>
             <p className={classes.createRecipeButton__text}>Cancel</p>
           </button>
         </div>

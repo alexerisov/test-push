@@ -148,7 +148,9 @@ const SearchInput = () => {
         values.search = '';
       } else {
         router.push(
-          `search?title=${values.search.trim()}&${!isOnlyEatchefRecipesQueryExist() ? '' : 'only_eatchefs_recipes=Y'}`
+          `search?title=${values.search.trim()}&${!isOnlyEatchefRecipesQueryExist() ? '' : 'only_eatchefs_recipes=Y'}`,
+          undefined,
+          { locale: router.locale }
         );
       }
       values.search = '';
@@ -415,7 +417,7 @@ const Recipes = props => {
           search: `?${createQueryParams(values).toString()}`
         },
         null,
-        { scroll: false }
+        { scroll: false, locale: router.locale }
       );
     }
   });
@@ -779,7 +781,7 @@ const Recipes = props => {
         {props.userType === 1 && (
           <>
             <Button
-              onClick={() => router.push('/recipe/upload')}
+              onClick={() => router.push('/recipe/upload', undefined, { locale: router.locale })}
               className={classes.search__uploadButton}
               variant="outlined"
               color="primary">
@@ -1151,7 +1153,7 @@ const Recipes = props => {
               {showFilters && mobileFilters}
               <div className={classes.search__line_mobile} />
               <Button
-                onClick={() => router.push('/recipe/upload')}
+                onClick={() => router.push('/recipe/upload', undefined, { locale: router.locale })}
                 className={classes.search__uploadButton}
                 variant="outlined"
                 color="primary">
@@ -1322,7 +1324,7 @@ export async function getServerSideProps(context) {
 
     return {
       props: {
-        ...(await serverSideTranslations(locale, ['common'])),
+        ...(await serverSideTranslations(context.locale, ['common'])),
         weekmenuWithoutFilters: weekmenu.data
       }
     };
@@ -1331,7 +1333,7 @@ export async function getServerSideProps(context) {
 
     return {
       props: {
-        ...(await serverSideTranslations(locale, ['common'])),
+        ...(await serverSideTranslations(context.locale, ['common'])),
         notFound: true
       }
     };

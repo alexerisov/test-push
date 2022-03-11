@@ -40,7 +40,7 @@ export const RecipeCard = props => {
   };
 
   const redirectToRecipeCard = id => {
-    router.push(`/recipe/${id}`);
+    router.push(`/recipe/${id}`, undefined, { locale: router.locale });
   };
 
   const handleAddToCart = () => {

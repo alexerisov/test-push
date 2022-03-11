@@ -232,23 +232,23 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
     e.preventDefault();
 
     if (isEditing) {
-      router.push(`/chef-pencil/${id}`);
+      router.push(`/chef-pencil/${id}`, undefined, { locale: router.locale });
       close();
       return;
     }
 
-    router.push(`/chef-pencil/${id}`);
+    router.push(`/chef-pencil/${id}`, undefined, { locale: router.locale });
     close();
   };
 
   const handleCloseForModal = () => {
     if (isEditing) {
-      router.push(`/chef-pencil/${id}`);
+      router.push(`/chef-pencil/${id}`, undefined, { locale: router.locale });
       close();
       return;
     }
 
-    router.push(`/`);
+    router.push(`/`, undefined, { locale: router.locale });
     close();
   };
 
@@ -611,7 +611,9 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
         <button className={classes.createPencilButton} onClick={uploadChefPencilHandler}>
           <p className={classes.createPencilButton__text}>{statusSubmit}</p>
         </button>
-        <button className={classes.createPencilButton_color_gray} onClick={() => router.push('/my-pencils')}>
+        <button
+          className={classes.createPencilButton_color_gray}
+          onClick={() => router.push('/my-pencils', undefined, { locale: router.locale })}>
           <p className={classes.createPencilButton__text}>Cancel</p>
         </button>
       </div>

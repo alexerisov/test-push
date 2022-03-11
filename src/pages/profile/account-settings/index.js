@@ -5,11 +5,23 @@ import FormEditAccountUser from '@/components/forms/form-edit-account-user';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useRouter } from 'next/router';
 
 const ProfileAccountSettings = props => {
+  const router = useRouter();
   if (!props.account.profile) {
     return <div>loading...</div>;
   }
+
+  React.useEffect(() => {
+    if (props.account.profile?.language === 'english') {
+      router.locale = 'en';
+    }
+    if (props.account.profile?.language === 'dutch') {
+      router.locale = 'nl';
+    }
+    router.push(router.asPath, undefined, { locale: router.locale });
+  }, []);
 
   const { user_type } = props.account.profile;
 

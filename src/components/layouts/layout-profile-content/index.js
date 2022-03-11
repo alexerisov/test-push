@@ -23,7 +23,7 @@ const ContentLayout = props => {
   const { children } = props;
 
   const handleChangeStatus = () => {
-    router.push('/profile/become-home-chef');
+    router.push('/profile/become-home-chef', undefined, { locale: router.locale });
   };
 
   useEffect(() => {

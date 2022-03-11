@@ -112,7 +112,7 @@ const ProfileAccountSettings = props => {
 
   const handleOpenPopup = name => {
     props.dispatch(modalActions.open(name)).then(result => {
-      router.push('/profile/account-settings');
+      router.push('/profile/account-settings', undefined, { locale: router.locale });
     });
   };
 

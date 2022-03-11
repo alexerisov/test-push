@@ -52,7 +52,7 @@ const BurgerMenu = props => {
   };
   const handleLogout = () => {
     dispatch(accountActions.logout());
-    router.push('/');
+    router.push('/', undefined, { locale: router.locale });
   };
 
   const handleClose = () => {
@@ -84,9 +84,9 @@ const BurgerMenu = props => {
         onClose={handleClose}>
         {isMobile && isChef && (
           <MenuListItem classes={classes.menu_button_item} onClick={handleClose}>
-            <Button href="/recipe/upload" className={classes.header__link_place_menu_logout}>
-              {t('header.uploadRecipeButton')}
-            </Button>
+            <Link href="/recipe/upload">
+              <Button className={classes.header__link_place_menu_logout}>{t('header.uploadRecipeButton')}</Button>
+            </Link>
           </MenuListItem>
         )}
         <MenuListItem text={t('header.burgerMenu.accountSettings')} icon={UserIcon} path="/profile/account-settings" />

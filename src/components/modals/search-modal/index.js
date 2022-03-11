@@ -19,7 +19,7 @@ const SearchBanner = () => {
   const router = useRouter();
   const { data: suggestions, fetchDataNow: fetchSuggestions } = useFetch({
     request: ChefPencil.getPencilSearchSuggestions,
-    query: {search: ''}
+    query: { search: '' }
   });
   const { close } = useActions(modalActions);
 
@@ -35,7 +35,7 @@ const SearchBanner = () => {
     },
     validationSchema: validationSchema,
     onSubmit: values => {
-      router.push(`/chef-pencil?title=${values.search}`);
+      router.push(`/chef-pencil?title=${values.search}`, undefined, { locale: router.locale });
       close();
     }
   });

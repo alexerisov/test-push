@@ -113,7 +113,7 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
     if (confirm) {
       ChefPencil.deletePencil(pencilId)
         .then(res => {
-          router.push('/my-pencils');
+          router.push('/my-pencils', undefined, { locale: router.locale });
         })
         .catch(err => {
           console.error(err);
@@ -130,7 +130,7 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
   };
 
   const redirectToHomeChefPage = () => {
-    router.push(`/home-chef/${pencil?.user?.pk}`);
+    router.push(`/home-chef/${pencil?.user?.pk}`, undefined, { locale: router.locale });
   };
 
   const handleRating = async value => {

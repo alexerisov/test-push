@@ -60,7 +60,7 @@ const HeaderDefault = props => {
   const router = useRouter();
   const handleLogout = () => {
     props.dispatch(accountActions.logout());
-    router.push('/');
+    router.push('/', undefined, { locale: router.locale });
   };
 
   const handleClose = () => {

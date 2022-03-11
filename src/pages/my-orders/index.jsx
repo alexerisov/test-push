@@ -120,7 +120,7 @@ const MyOrdersPage = props => {
     const reorderButtonHandler = async () => {
       dispatch(retryOrder(order));
       await localStorage.setItem('last-order', JSON.stringify(order));
-      router.push('/cart');
+      router.push('/cart', undefined, { locale: router.locale });
     };
 
     return (

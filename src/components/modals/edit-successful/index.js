@@ -1,16 +1,16 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import {LayoutModal} from '@/components/layouts';
+import { LayoutModal } from '@/components/layouts';
 import { modalActions } from '@/store/actions';
 import { connect } from 'react-redux';
-import classes from "./upload-successful.module.scss";
+import classes from './upload-successful.module.scss';
 
-function UploadSuccessful (props) {
+function UploadSuccessful(props) {
   const router = useRouter();
 
-  function handleClick (e) {
+  function handleClick(e) {
     e.preventDefault();
-    router.push(`/recipe/${props?.pk}`);
+    router.push(`/recipe/${props?.pk}`, undefined, { locale: router.locale });
     props.dispatch(modalActions.close());
   }
 
@@ -19,32 +19,23 @@ function UploadSuccessful (props) {
   };
 
   const renderContent = () => {
-    return <div className={classes.UploadSuccess}>
-      <img src="/images/index/upload_success.svg" alt="Success"></img>
-      {!props.handleClick && <h2 className={classes.UploadSuccess__title}>
-        Recipe successfully edit
-      </h2>}
+    return (
+      <div className={classes.UploadSuccess}>
+        <img src="/images/index/upload_success.svg" alt="Success"></img>
+        {!props.handleClick && <h2 className={classes.UploadSuccess__title}>Recipe successfully edit</h2>}
 
-      {props.handleClick && <h2 className={classes.UploadSuccess__title}>
-        {"Chef's pencil successfully edit"}
-      </h2>}
-      <button
-        type="button"
-        className={classes.UploadSuccess__button}
-        onClick={props.handleClick ?? handleClick}
-      >
-        {!props.handleClick ? "See recipe" : "See pencil"}
-      </button>
-    </div>;
+        {props.handleClick && <h2 className={classes.UploadSuccess__title}>{"Chef's pencil successfully edit"}</h2>}
+        <button type="button" className={classes.UploadSuccess__button} onClick={props.handleClick ?? handleClick}>
+          {!props.handleClick ? 'See recipe' : 'See pencil'}
+        </button>
+      </div>
+    );
   };
 
   return (
-      <LayoutModal
-        onClose={props.handleCancel ?? onCancel}
-        themeName="white_small"
-      >
-        {renderContent()}
-      </LayoutModal>
+    <LayoutModal onClose={props.handleCancel ?? onCancel} themeName="white_small">
+      {renderContent()}
+    </LayoutModal>
   );
 }
 

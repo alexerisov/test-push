@@ -87,9 +87,11 @@ const Header = props => {
   const OrangeCircle = () => <div className={classes.orange_circle}></div>;
 
   const RecipesButton = () => (
-    <Button variant="text" href="/search" className={classes.button_recipes}>
-      {t('header.recipesButton')}
-    </Button>
+    <Link href="/search">
+      <Button variant="text" className={classes.button_recipes}>
+        {t('header.recipesButton')}
+      </Button>
+    </Link>
   );
 
   const LoginButton = () => (
@@ -99,16 +101,20 @@ const Header = props => {
   );
 
   const UploadRecipeButton = () => (
-    <Button variant="outlined" href="/recipe/upload" className={classes.button_upload}>
-      {t('header.uploadRecipeButton')}
-    </Button>
+    <Link href="/recipe/upload">
+      <Button variant="outlined" className={classes.button_upload}>
+        {t('header.uploadRecipeButton')}
+      </Button>
+    </Link>
   );
 
   const CartButton = () => (
-    <IconButton href="/cart" className={classes.button_cart}>
-      <CartIcon />
-      {cartItemsAmount > 0 && <OrangeCircle />}
-    </IconButton>
+    <Link href="/cart">
+      <IconButton className={classes.button_cart}>
+        <CartIcon />
+        {cartItemsAmount > 0 && <OrangeCircle />}
+      </IconButton>
+    </Link>
   );
 
   const openMenuHandler = event => {
