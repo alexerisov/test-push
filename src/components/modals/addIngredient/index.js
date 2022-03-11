@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { LayoutModal } from '@/components/layouts';
 import { modalActions, recipeUploadActions } from '@/store/actions';
@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import classes from './addIngredient.module.scss';
 import TextField from '@material-ui/core/TextField';
 import { units } from '@/utils/datasets';
-import { Select, MenuItem, Collapse, Dialog } from '@material-ui/core';
+import { Select, MenuItem, Collapse, Dialog, FormControl } from '@material-ui/core';
 import { getNumberWithMaxDigits } from '@/utils/helpers';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import { ReactComponent as CloseIcon } from '../../../../public/icons/Close Circle/Line.svg';
@@ -104,6 +104,7 @@ function AddIngredient(props) {
   const [group, setGroup] = useState(null);
   const [shouldLoadUnits, setShouldLoadUnits] = useState();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isUnitFocused, setIsUnitFocused] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -142,6 +143,9 @@ function AddIngredient(props) {
     }
   });
 
+  const quantityInputRef = useRef();
+  const buttonRef = useRef();
+
   const formik2 = useFormik({
     initialValues: {
       name: '',
@@ -157,6 +161,7 @@ function AddIngredient(props) {
         formik.setFieldValue('basicIngredient', response.data.title);
         formik.setFieldValue('title', response.data.title);
         handleClose();
+        quantityInputRef.current.focus();
       } catch (e) {
         if (e.response.data?.title) {
           formik2.setFieldError('name', e.response.data?.title);
@@ -232,6 +237,7 @@ function AddIngredient(props) {
     formik.setFieldValue('unit', event.target.value);
     formik.setFieldValue('old_unit', child.props.children);
     formik.validateField('unit');
+    buttonRef.current.blur();
   };
 
   const onBlurUnit = () => {
@@ -298,6 +304,13 @@ function AddIngredient(props) {
   const handleSubmit = event => {
     event.preventDefault();
     formik2.handleSubmit(event);
+  };
+
+  const handleExited = () => {
+    formik.validateField('unit');
+    setTimeout(() => {
+      buttonRef.current.focus();
+    }, 100);
   };
 
   const renderContent = () => {
@@ -374,9 +387,11 @@ function AddIngredient(props) {
               Quantity
             </label>
             <TextField
+              inputRef={quantityInputRef}
               id="addIngredient-quantity"
               name="quantity"
               type="number"
+              focus
               value={formik.values.quantity}
               onChange={formik.handleChange}
               variant="outlined"
@@ -386,8 +401,9 @@ function AddIngredient(props) {
             <label htmlFor="create-types-select" className={classes.addIngredient__label}>
               Unit
             </label>
+
             <Select
-              MenuProps={MenuProps}
+              MenuProps={{ ...MenuProps, onExited: handleExited }}
               id="addIngredient-unit"
               name="unit"
               disabled={!basicIngredient?.pk}
@@ -395,11 +411,11 @@ function AddIngredient(props) {
               onChange={handleSelectUnit}
               variant="outlined"
               placeholder={'Ingredient has no available units'}
-              onBlur={onBlurUnit}
+              // onBlur={onBlurUnit}
               fullWidth>
               {basicIngredientUnits?.length > 0
                 ? basicIngredientUnits.map(el => (
-                    <MenuItem key={'unit' + el.pk} value={el.pk}>
+                    <MenuItem key={'unit' + el.pk} value={el.pk} onClick={() => formik.validateField('unit')}>
                       {el.primary_type === 'imperial' ? el.imperial_name : el.metric_name}
                     </MenuItem>
                   ))
@@ -411,7 +427,7 @@ function AddIngredient(props) {
             </Select>
           </div>
           <div className={classes.addIngredient__buttonContainer}>
-            <button type="submit" disabled={!formik.isValid} className={classes.addIngredient__button}>
+            <button type="submit" ref={buttonRef} disabled={!formik.isValid} className={classes.addIngredient__button}>
               Add
             </button>
             {Object.values(formik.errors)?.length > 0 && <p>{Object.values(formik.errors)[0]}</p>}
