@@ -16,8 +16,16 @@ import { useFormik } from 'formik';
 import TextField from '@material-ui/core/TextField';
 import Input from '@material-ui/core/Input';
 import FieldError from '@/components/elements/field-error';
+import { Select } from '@material-ui/core';
 
 const StyledTextField = styled(TextField)`
+  width: 100%;
+  .PrivateNotchedOutline-root-1:hover {
+    border-color: #000000;
+  }
+`;
+
+const StyledSelect = styled(Select)`
   width: 100%;
   .PrivateNotchedOutline-root-1:hover {
     border-color: #000000;
@@ -222,13 +230,16 @@ function FormEditAccountUser(props) {
         <div>
           <label className={classes.profile__label}>Language</label>
           <StyledTextField
-            id="language"
-            name="language"
+            id="city"
+            name="city"
             variant="outlined"
-            value={formik.values.language ? formik.values.language : ''}
-            onChange={formik.handleChange}
-            error={Boolean(errorForm?.language)}
-            helperText={errorForm?.language}
+            value={formik.values.city ? formik.values.city : ''}
+            onChange={e => {
+              onChangeField('city', e);
+            }}
+            inputProps={{ maxLength: 255 }}
+            error={Boolean(errorForm?.city)}
+            helperText={errorForm?.city}
           />
         </div>
         <div>

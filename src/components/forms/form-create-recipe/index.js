@@ -87,6 +87,7 @@ const useStyles = makeStyles(theme => ({
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
+  disableScrollLock: true,
   PaperProps: {
     style: {
       maxHeight: ITEM_HEIGHT * 5 + ITEM_PADDING_TOP

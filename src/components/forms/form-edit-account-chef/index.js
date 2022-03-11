@@ -395,6 +395,9 @@ function FormEditAccountChef(props) {
               id="language"
               name="language"
               variant="outlined"
+              MenuProps={{
+                disableScrollLock: true
+              }}
               value={formik.values.language ? formik.values.language : ''}
               onChange={formik.handleChange}
               error={Boolean(errorForm?.language)}
