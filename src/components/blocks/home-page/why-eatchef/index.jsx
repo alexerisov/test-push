@@ -8,6 +8,7 @@ import { accountActions, modalActions } from '@/store/actions';
 import { useFormik } from 'formik';
 import Image from 'next/image';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
+import { useTranslation } from 'next-i18next';
 
 const CircleButton = () => {
   return (
@@ -18,6 +19,7 @@ const CircleButton = () => {
 };
 
 const SignUpInput = () => {
+  const { t } = useTranslation('homePage');
   const dispatch = useDispatch();
 
   const handleClickLogin = name => {
@@ -32,7 +34,7 @@ const SignUpInput = () => {
     <OutlinedInput
       onClick={handleClickLogin('register')}
       name="email"
-      placeholder="Enter your email"
+      placeholder={t('whyEatchefBlock.emailInputPlaceholder')}
       className={classes.signup_input}
       fullWidth
       endAdornment={<CircleButton />}
@@ -40,35 +42,38 @@ const SignUpInput = () => {
   );
 };
 
-const UploadRecipeButton = () => (
-  <Button
-    endIcon={<BasicIcon icon={ArrowIcon} />}
-    variant="contained"
-    href="/recipe/upload"
-    className={classes.signup_upload}>
-    Upload Your Recipe
-  </Button>
-);
+const UploadRecipeButton = () => {
+  const { t } = useTranslation('homePage');
+
+  return (
+    <Button
+      endIcon={<BasicIcon icon={ArrowIcon} />}
+      variant="contained"
+      href="/recipe/upload"
+      className={classes.signup_upload}>
+      {t('whyEatchefBlock.buttonText')}
+    </Button>
+  );
+};
 
 const SignUpBlock = () => {
+  const { t } = useTranslation('homePage');
   const isAuthorized = useSelector(state => state.account.hasToken);
 
   return (
     <div className={classes.signup}>
-      <div className={classes.signup_title}>Why Eatchefs for Chefs? ‍🍳</div>
-      <div className={classes.signup_description}>
-        We’re giving ambitious at-home cooks the chance to get exposure for their culinary masterpieces!
-      </div>
+      <div className={classes.signup_title}>{t('whyEatchefBlock.title')}</div>
+      <div className={classes.signup_description}>{t('whyEatchefBlock.subtitle')}</div>
 
       {!isAuthorized && (
         <div className={classes.signup_step}>
           <div className={classes.signup_step_wrapper}>
             <div className={classes.signup_step_badge}>01</div>
-            <span className={classes.signup_step_text}>Share your best meals</span>
+            <span className={classes.signup_step_text}>{t('whyEatchefBlock.step1')}</span>
           </div>
           <div className={classes.signup_step_wrapper}>
             <div className={classes.signup_step_badge}>02</div>
-            <span className={classes.signup_step_text}>Sell your best recipes</span>
+            <span className={classes.signup_step_text}>{t('whyEatchefBlock.step2')}</span>
           </div>
         </div>
       )}

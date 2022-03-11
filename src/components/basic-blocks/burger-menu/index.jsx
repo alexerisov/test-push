@@ -17,8 +17,10 @@ import { accountActions } from '@/store/actions';
 import { useRouter } from 'next/router';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTranslation } from 'next-i18next';
 
 const BurgerMenu = props => {
+  const { t } = useTranslation('common');
   const { anchorEl, setAnchorEl, isExpanded, isChef, notificationAmount } = props;
   const router = useRouter();
   const dispatch = useDispatch();
@@ -83,25 +85,25 @@ const BurgerMenu = props => {
         {isMobile && isChef && (
           <MenuListItem classes={classes.menu_button_item} onClick={handleClose}>
             <Button href="/recipe/upload" className={classes.header__link_place_menu_logout}>
-              Upload Recipes
+              {t('header.uploadRecipeButton')}
             </Button>
           </MenuListItem>
         )}
-        <MenuListItem text="Account Settings" icon={UserIcon} path="/profile/account-settings" />
+        <MenuListItem text={t('header.burgerMenu.accountSettings')} icon={UserIcon} path="/profile/account-settings" />
         <MenuListItem
-          text="Notifications"
+          text={t('header.burgerMenu.notifications')}
           icon={BellIcon}
           endIcon={notificationAmount && notificationAmount !== 0 ? <NotificationCircle /> : false}
           path="/notifications"
         />
-        {isChef && <MenuListItem text="My Recipes" icon={ListIcon} path="/my-recipes" />}
-        <MenuListItem text="Market" icon={MegaphoneIcon} path="/search" />
-        <MenuListItem text="History" icon={HistoryIcon} path="/my-orders" />
-        <MenuListItem text="Saved Recipes" icon={BookmarkIcon} path="/saved-recipes" />
+        {isChef && <MenuListItem text={t('header.burgerMenu.myRecipes')} icon={ListIcon} path="/my-recipes" />}
+        <MenuListItem text={t('header.burgerMenu.market')} icon={MegaphoneIcon} path="/search" />
+        <MenuListItem text={t('header.burgerMenu.history')} icon={HistoryIcon} path="/my-orders" />
+        <MenuListItem text={t('header.burgerMenu.savedRecipes')} icon={BookmarkIcon} path="/saved-recipes" />
 
         <MenuListItem classes={classes.menu_button_item} onClick={handleClose}>
           <Button className={classes.header__link_place_menu_logout} onClick={handleLogout}>
-            Logout
+            {t('header.burgerMenu.logout')}
           </Button>
         </MenuListItem>
       </Menu>

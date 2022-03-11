@@ -12,6 +12,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import styled from 'styled-components';
 import Cookies from 'cookies';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
+import { useTranslation } from 'next-i18next';
 
 const StyledSlider = styled(Slider)`
   display: flex;
@@ -58,6 +59,7 @@ const RecipeSlider = props => {
 };
 
 export const WeekMenuBlock = props => {
+  const { t } = useTranslation('homePage');
   const { data } = props;
   const [recipes, setRecipes] = useState([]);
   const [currentWeek, setCurrentWeek] = useState(0);
@@ -89,9 +91,9 @@ export const WeekMenuBlock = props => {
     <section className={classes.container}>
       <Arrows {...arrowsProps} />
       <Box display="flex" flexDirection="row" justifyContent="space-between">
-        <span className={classes.slider_title}>Browse Weekmenu</span>
+        <span className={classes.slider_title}>{t('weekmenuBlock.title')}</span>
       </Box>
-      <div className={classes.slider_subtitle}>Let's go to meet new sensations</div>
+      <div className={classes.slider_subtitle}>{t('weekmenuBlock.subtitle')}</div>
       <RecipeSlider recipes={currentWeekRecipes} currentWeek={currentWeek} />
     </section>
   );

@@ -17,6 +17,7 @@ import CalendarIcon from '../../../public/icons/Calendar/Line.svg';
 import RecipeIcon from '../../../public/icons/Receipt/Line.svg';
 import WalletIcon from '../../../public/icons/Wallet/Line.svg';
 import dayjs from 'dayjs';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const OrderCongratulationPage = () => {
   const dispatch = useDispatch();
@@ -84,3 +85,9 @@ const connector = connect(state => ({
 }))(OrderCongratulationPage);
 
 export default withRouter(withAuth(connector));
+
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common']))
+  }
+});

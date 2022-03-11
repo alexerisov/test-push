@@ -13,6 +13,8 @@ import { WhyEatchefBlock } from '@/components/blocks/home-page/why-eatchef';
 import { SearchBlock } from '@/components/blocks/home-page/search';
 import { WeekMenuBlock } from '@/components/blocks/home-page/week-menu';
 import LayoutPageNew from '@/components/layouts/layout-page-new';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { i18n } from 'next-i18next';
 
 const useStyles = makeStyles({
   root: {
@@ -48,6 +50,13 @@ const Home = props => {
   React.useEffect(() => {
     props.dispatch(profileActions.init(props.account.profile));
   }, [props.account.profile]);
+
+  React.useEffect(() => {
+    var userLang = navigator.language || navigator.userLanguage;
+    if (userLang === 'nl') {
+      router.push('/', '/', { locale: 'nl' });
+    }
+  }, []);
 
   const handleChangeStatus = () => {
     if (props?.profile?.data?.user_type === viewerType) {
@@ -97,6 +106,7 @@ export async function getServerSideProps(context) {
 
     return {
       props: {
+        ...(await serverSideTranslations(context.locale, ['common', 'homePage'])),
         mealOfTheWeek: mealOfWeekBlock,
         carouselItems: banners.data,
         weekmenu: weekmenu.data,

@@ -40,6 +40,7 @@ import Account from '@/api/Account';
 import CommentBlock from '@/components/blocks/recipe-page/comment-block';
 import { ButtonShare } from '@/components/elements/button';
 import { recoveryLocalStorage } from '@/utils/web-storage/local';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const StyledSlider = styled(Slider)`
   display: flex;
@@ -812,6 +813,7 @@ export async function getServerSideProps(context) {
 
     return {
       props: {
+        ...(await serverSideTranslations(locale, ['common'])),
         recipe: recipeResponse.data,
         weekmenu: weekmenuResponse.data,
         topRatedRecipes: topRatedResponse.data,
@@ -824,6 +826,7 @@ export async function getServerSideProps(context) {
 
     return {
       props: {
+        ...(await serverSideTranslations(locale, ['common'])),
         notFound: true
       }
     };

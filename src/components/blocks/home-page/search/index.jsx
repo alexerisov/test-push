@@ -17,8 +17,10 @@ import { ReactComponent as CloseIcon } from '@/../public/icons/Close Circle/Line
 import { ReactComponent as RecipeIcon } from '@/../public/icons/Receipt/Line.svg';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTranslation } from 'next-i18next';
 
 const SearchInput = () => {
+  const { t } = useTranslation('homePage');
   const isMobile = useMediaQuery('(max-width: 600px)');
   const dispatch = useDispatch();
   const router = useRouter();
@@ -115,7 +117,7 @@ const SearchInput = () => {
                 disableUnderline: true
               }}
               value={formik.values.search}
-              placeholder="What do you want to eat?"
+              placeholder={t('searchBlock.inputPlaceholder')}
               onChange={e => {
                 formik.handleChange(e);
                 onChangeInputSearch(e.target.value);
@@ -136,12 +138,13 @@ const SearchInput = () => {
 };
 
 export const SearchBlock = () => {
+  const { t } = useTranslation('homePage');
   return (
     <section className={classes.container}>
       <div className={classes.search_image_wrapper}>
         <div className={classes.search_image_text_wrapper}>
-          <div className={classes.search_image_text_title}>Eat Personal</div>
-          <div className={classes.search_image_text_subtitle}>Find a great Recipe</div>
+          <div className={classes.search_image_text_title}>{t('searchBlock.bannerTitle')}</div>
+          <div className={classes.search_image_text_subtitle}>{t('searchBlock.bannerSubtitle')}</div>
         </div>
         <img src="/images/index/search-block.png" alt="Head picture" className={classes.search_image} />
       </div>

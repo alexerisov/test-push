@@ -4,6 +4,7 @@ import LayoutPage from '@/components/layouts/layout-page';
 import { connect } from 'react-redux';
 import Account from '@/api/Account';
 import { CardNotification } from '@/components/elements/card';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const NotificationsPage = props => {
   useEffect(() => {
@@ -90,3 +91,9 @@ const NotificationsPage = props => {
 export default connect(state => ({
   account: state.account
 }))(NotificationsPage);
+
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common']))
+  }
+});

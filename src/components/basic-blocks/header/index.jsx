@@ -16,6 +16,7 @@ import Link from 'next/link';
 import { USER_TYPE } from '@/utils/datasets';
 import BurgerMenu from '@/components/basic-blocks/burger-menu';
 import { LoginDrawer } from '@/components/basic-blocks/drawer';
+import { useTranslation } from 'next-i18next';
 
 const UserAvatar = ({ clickHandler, notificationAmount, avatar }) => {
   const RedCircle = () => <div className={classes.red_circle}></div>;
@@ -37,6 +38,7 @@ const BurgerButton = ({ clickHandler }) => (
 );
 
 const Header = props => {
+  const { t } = useTranslation('common');
   const useSeparatorStyles = makeStyles({
     root: {
       borderBottom: '2px solid #f8f8f8'
@@ -86,7 +88,7 @@ const Header = props => {
 
   const RecipesButton = () => (
     <Button variant="text" href="/search" className={classes.button_recipes}>
-      Recipes
+      {t('header.recipesButton')}
     </Button>
   );
 
@@ -98,7 +100,7 @@ const Header = props => {
 
   const UploadRecipeButton = () => (
     <Button variant="outlined" href="/recipe/upload" className={classes.button_upload}>
-      Upload Recipe
+      {t('header.uploadRecipeButton')}
     </Button>
   );
 

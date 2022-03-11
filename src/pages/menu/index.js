@@ -7,6 +7,7 @@ import { modalActions } from '@/store/actions';
 import { useDispatch } from 'react-redux';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { withRedirectTo404ForHidePage } from '@/utils/withHidePage';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const Menu = () => {
   const dispatch = useDispatch();
@@ -64,29 +65,37 @@ const Menu = () => {
   };
 
   const content = (
-      <div className={classes.menu}>
-        {!mobile && <button className={classes.btnSearch} onClick={handleClickSearch('search')}>
+    <div className={classes.menu}>
+      {!mobile && (
+        <button className={classes.btnSearch} onClick={handleClickSearch('search')}>
           <img src="/images/index/icon_search.svg" className={classes.btnSearch__icon} />
-        </button>}
+        </button>
+      )}
 
-        <div className={classes.menu__wrapper}>
-          <h2 className={classes.menu__navbar}>
-            <Link href="/">
-              <a className={classes.menu__navbar__link}>Home / </a>
-            </Link>
-            <span>Menu</span>
-          </h2>
-          <h1 className={classes.menu__title}>Menu</h1>
-          <div className={classes.menu__content}>
-            {menuItem.map((item, index) => {
-              return <CardMenu key={index} title={item.title} src={item.src} link={item.link} />;
-            })}
-          </div>
+      <div className={classes.menu__wrapper}>
+        <h2 className={classes.menu__navbar}>
+          <Link href="/">
+            <a className={classes.menu__navbar__link}>Home / </a>
+          </Link>
+          <span>Menu</span>
+        </h2>
+        <h1 className={classes.menu__title}>Menu</h1>
+        <div className={classes.menu__content}>
+          {menuItem.map((item, index) => {
+            return <CardMenu key={index} title={item.title} src={item.src} link={item.link} />;
+          })}
         </div>
       </div>
+    </div>
   );
 
   return <LayoutPage content={content} />;
 };
 
 export default withRedirectTo404ForHidePage(Menu, true);
+
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common']))
+  }
+});

@@ -4,9 +4,9 @@
   "description": "web-client",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development next -p 8030",
-    "build": "next build",
-    "start": "next start",
+    "dev": "i18nexus pull && cross-env NODE_ENV=development next -p 8030",
+    "build": "i18nexus pull && next build",
+    "start": "i18nexus pull && next start",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "debug": "NODE_OPTIONS='--inspect' next dev"
@@ -51,6 +51,7 @@
     "formik": "^2.2.9",
     "material-ui-phone-number": "^2.2.6",
     "next": "latest",
+    "next-i18next": "^10.5.0",
     "next-seo": "latest",
     "pure-react-carousel": "^1.27.6",
     "react": "latest",
@@ -146,6 +147,7 @@
     "eslint-config-next": "^11.0.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
+    "i18nexus-cli": "^2.1.0",
     "prettier": "^2.3.2",
     "storybook-addon-outline": "^1.4.1",
     "typescript": "^4.5.4"

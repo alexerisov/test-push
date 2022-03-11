@@ -14,6 +14,7 @@ import CardHighestMeals from '@/components/elements/card-highest-meals';
 import ChefPencil from '@/api/ChefPencil';
 import { DEFAULT_VALUE_TAB_STATE } from '@/utils/constants';
 import CardSavedPencil from '@/components/elements/card-saved-pencil';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const StyledTabs = styled(Tabs)`
   width: 100%;
@@ -164,3 +165,9 @@ const SavedPencils = () => {
 };
 
 export default SavedPencils;
+
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common']))
+  }
+});

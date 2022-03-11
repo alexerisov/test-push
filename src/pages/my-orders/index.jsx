@@ -20,6 +20,7 @@ import Order from '@/api/Order';
 import dayjs from 'dayjs';
 import Typography from '@material-ui/core/Typography';
 import { addManyToCart, clearCart, retryOrder } from '@/store/cart/actions';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const MyOrdersPage = props => {
   const dispatch = useDispatch();
@@ -215,6 +216,7 @@ export async function getServerSideProps(context) {
   try {
     return {
       props: {
+        ...(await serverSideTranslations(context.locale, ['common'])),
         isAuthenticated,
         absolutePath: context.req.headers.host
       }
@@ -224,6 +226,7 @@ export async function getServerSideProps(context) {
 
     return {
       props: {
+        ...(await serverSideTranslations(context.locale, ['common'])),
         notFound: true
       }
     };

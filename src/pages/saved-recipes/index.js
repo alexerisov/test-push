@@ -14,6 +14,7 @@ import Recipe from '@/api/Recipe';
 import { DEFAULT_VALUE_TAB_STATE } from '@/utils/constants';
 
 import styles from './index.module.scss';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const StyledTabs = styled(Tabs)`
   width: 100%;
@@ -166,3 +167,9 @@ const SavedRecipesPage = () => {
 };
 
 export default SavedRecipesPage;
+
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common']))
+  }
+});

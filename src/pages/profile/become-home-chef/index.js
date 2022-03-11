@@ -19,6 +19,7 @@ import { useFormik } from 'formik';
 import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
 import { useRouter } from 'next/router';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const StyledTextField = styled(TextField)`
   width: 100%;
@@ -585,3 +586,9 @@ ProfileAccountSettings.propTypes = {
 export default connect(state => ({
   account: state.account
 }))(ProfileAccountSettings);
+
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common']))
+  }
+});

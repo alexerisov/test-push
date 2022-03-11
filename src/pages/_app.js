@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import { useStore } from '@/store/store';
 import { DefaultSeo } from 'next-seo';
 //utils
+import { appWithTranslation } from 'next-i18next';
 import SEO from '@/next-seo.config';
 import { AuthProvider } from '@/utils/authProvider';
 import http from '@/utils/http';
@@ -17,7 +18,7 @@ import { CssBaseline } from '@material-ui/core';
 import yupSetup from '@/utils/yup';
 yupSetup();
 
-export default function App({ Component, pageProps }) {
+function App({ Component, pageProps }) {
   const store = useStore(pageProps.initialReduxState);
   http.init(store);
 
@@ -36,3 +37,5 @@ export default function App({ Component, pageProps }) {
     </Provider>
   );
 }
+
+export default appWithTranslation(App);

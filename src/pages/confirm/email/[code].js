@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import HeaderDefault from '@/components/elements/header-default';
 import classes from './index.module.scss';
 import Link from 'next/link';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const ConfirmEmail = props => {
   const router = useRouter();
@@ -58,3 +59,9 @@ const ConfirmEmail = props => {
 };
 
 export default connect()(ConfirmEmail);
+
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common']))
+  }
+});

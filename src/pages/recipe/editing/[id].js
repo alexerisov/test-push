@@ -1,12 +1,12 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useRouter } from 'next/router';
 
 import LayoutPage from '@/components/layouts/layout-page';
 import { FormEditRecipe } from '@/components/forms';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
-function EditRecipe (props) {
-
+function EditRecipe(props) {
   const router = useRouter();
 
   const [recipeId, setRecipeId] = useState();
@@ -15,9 +15,13 @@ function EditRecipe (props) {
     setRecipeId(router.query.id);
   }, [router]);
 
-  return (
-    <LayoutPage content={recipeId && <FormEditRecipe recipeId={recipeId} />} />
-  );
+  return <LayoutPage content={recipeId && <FormEditRecipe recipeId={recipeId} />} />;
 }
 
 export default connect()(EditRecipe);
+
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common']))
+  }
+});

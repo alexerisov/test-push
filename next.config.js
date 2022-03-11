@@ -1,5 +1,6 @@
 let path = require('path');
 let webpack = require('webpack');
+const { i18n } = require('./next-i18next.config');
 
 let isProduction;
 if (typeof process.env.NODE_ENV === 'undefined') {
@@ -95,6 +96,7 @@ module.exports = {
     extensions: ['.js', '.jsx'],
     modules: [path.resolve(__dirname, 'src'), 'node_modules']
   },
+  i18n,
   webpack5: true,
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')]

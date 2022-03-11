@@ -57,6 +57,7 @@ import { ReactComponent as CloseIcon } from '@/../public/icons/Close Circle/Line
 import { ReactComponent as RecipeIcon } from '@/../public/icons/Receipt/Line.svg';
 import { TitleOutlined } from '@material-ui/icons';
 import Cookies from 'cookies';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 const MySlider = styled(Slider)(() => ({
   color: '#FFAA00',
   height: 2,
@@ -1321,6 +1322,7 @@ export async function getServerSideProps(context) {
 
     return {
       props: {
+        ...(await serverSideTranslations(locale, ['common'])),
         weekmenuWithoutFilters: weekmenu.data
       }
     };
@@ -1329,6 +1331,7 @@ export async function getServerSideProps(context) {
 
     return {
       props: {
+        ...(await serverSideTranslations(locale, ['common'])),
         notFound: true
       }
     };

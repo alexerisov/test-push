@@ -6,15 +6,18 @@ import Link from 'next/link';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import InstagramIcon from '@material-ui/icons/Instagram';
+import { useTranslation } from 'next-i18next';
+
+const LinkElement = props => (
+  <div className={classes.link_element}>
+    <Link href={props.path}>
+      <a>{props.text}</a>
+    </Link>
+  </div>
+);
 
 export const Footer = () => {
-  const LinkElement = props => (
-    <div className={classes.link_element}>
-      <Link href={props.path}>
-        <a>{props.text}</a>
-      </Link>
-    </div>
-  );
+  const { t } = useTranslation('common');
 
   return (
     <div className={classes.footer}>
@@ -28,15 +31,15 @@ export const Footer = () => {
             </Link>
           </div>
           <div className={classes.links_block}>
-            <LinkElement text="Home" path="/" />
-            <LinkElement text="Chef's Pencil" path="/chef-pencil" />
-            <LinkElement text="Terms of use" path="/terms" />
-            <LinkElement text="Recipes" path="/search" />
-            <LinkElement text="Get inspired!" path="/search?&only_eatchefs_recipes=Y" />
-            <LinkElement text="Privacy policy" path="/privacy-policy" />
+            <LinkElement text={t('footer.links.home')} path="/" />
+            <LinkElement text={t('footer.links.pencil')} path="/chef-pencil" />
+            <LinkElement text={t('footer.links.terms')} path="/terms" />
+            <LinkElement text={t('footer.links.recipes')} path="/search" />
+            <LinkElement text={t('footer.links.inspired')} path="/search?&only_eatchefs_recipes=Y" />
+            <LinkElement text={t('footer.links.policy')} path="/privacy-policy" />
           </div>
           <div className={classes.social_block}>
-            <div className={classes.social_title}>GET SOCIAL WITH US 🔥</div>
+            <div className={classes.social_title}>{t('footer.socialText')}</div>
             <div className={classes.social_icons}>
               <a href="https://www.facebook.com/eatchefs" rel="noreferrer" target="_blank">
                 <FacebookIcon style={{ color: '#FCFCFD' }} />
@@ -52,7 +55,7 @@ export const Footer = () => {
         </div>
         <div className={classes.copyright_wrapper}>
           <Divider m="24px 0 0" />
-          <div className={classes.copyright}>©EatChefs 2021. All right reserved</div>
+          <div className={classes.copyright}>{t('footer.rightsReserved')}</div>
         </div>
       </div>
     </div>

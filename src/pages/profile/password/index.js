@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import { modalActions } from '@/store/actions';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const StyledTextField = styled(TextField)`
   width: 100%;
@@ -122,3 +123,9 @@ export default connect(state => ({
   account: state.account,
   restorePassword: state.restorePassword
 }))(ProfilePassword);
+
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common']))
+  }
+});

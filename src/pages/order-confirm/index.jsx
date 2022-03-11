@@ -19,6 +19,7 @@ import CheckboxIcon from '@/components/elements/checkbox-icon';
 import dayjs from 'dayjs';
 import CloseIcon from '@material-ui/icons/Close';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const zipcodeRegExp = /^\d{4}[a-zA-Z]{2}|\d{4}\s[a-zA-Z]{2}$/;
 
@@ -296,3 +297,9 @@ const connector = connect(state => ({
 }))(OrderConfirmPage);
 
 export default withRouter(withAuth(connector));
+
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common']))
+  }
+});

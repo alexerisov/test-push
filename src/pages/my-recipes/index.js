@@ -13,6 +13,7 @@ import { RedirectWithoutAuthAndByCheckingUserType } from '@/utils/authProvider';
 import { CHEF_TYPE } from '@/utils/constants';
 
 import classes from './index.module.scss';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const MyUploadsPage = () => {
   const matches = useMediaQuery('(max-width: 767.95px)');
@@ -95,3 +96,9 @@ const MyUploadsPage = () => {
 };
 
 export default withRouter(RedirectWithoutAuthAndByCheckingUserType(MyUploadsPage, CHEF_TYPE));
+
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common']))
+  }
+});

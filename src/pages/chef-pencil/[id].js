@@ -27,6 +27,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { ButtonShare } from '@/components/elements/button';
 import savedStatus from '/public/images/index/savedStatus.svg';
 import notSavedStatus from '/public/images/index/notSavedStatus.svg';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const useStyledTooltip = makeStyles({
   tooltip: {
@@ -311,7 +312,7 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
                 </button>
               </Tooltip>
 
-              <ButtonShare id={pencilId} currentUrl={`${absolutePath}/chef-pencil/${pencilData?.pk}`}/>
+              <ButtonShare id={pencilId} currentUrl={`${absolutePath}/chef-pencil/${pencilData?.pk}`} />
 
               {!savedId ? (
                 <button
@@ -404,6 +405,7 @@ export async function getServerSideProps(context) {
 
     return {
       props: {
+        ...(await serverSideTranslations(context.locale, ['common'])),
         pencilData: response.data,
         absolutePath: context.req.headers.host
       }
@@ -413,6 +415,7 @@ export async function getServerSideProps(context) {
 
     return {
       props: {
+        ...(await serverSideTranslations(context.locale, ['common'])),
         notFound: true
       }
     };
