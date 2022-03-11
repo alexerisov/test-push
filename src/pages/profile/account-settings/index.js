@@ -14,12 +14,14 @@ const ProfileAccountSettings = props => {
   }
 
   React.useEffect(() => {
-    if (props.account.profile?.language !== 'dutch') {
+    var userLang = navigator.language || navigator.userLanguage;
+    if (props.account.profile?.language === 'dutch' || userLang === 'nl') {
+      router.locale = 'nl';
+    } else {
       router.locale = 'en';
     }
-    if (props.account.profile?.language === 'dutch') {
-      router.locale = 'nl';
-    }
+
+    router.push('/', undefined, { locale: router.locale });
     router.push(router.asPath, undefined, { locale: router.locale });
   }, []);
 

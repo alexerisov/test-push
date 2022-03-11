@@ -49,18 +49,15 @@ const Home = props => {
 
   React.useEffect(() => {
     props.dispatch(profileActions.init(props.account.profile));
-  }, [props.account.profile]);
-
-  React.useEffect(() => {
     var userLang = navigator.language || navigator.userLanguage;
-    if (userLang !== 'nl' || props.account.profile?.language !== 'dutch') {
+    if (props.account.profile?.language === 'dutch' || userLang === 'nl') {
+      router.locale = 'nl';
+    } else {
       router.locale = 'en';
     }
-    if (props.account.profile?.language === 'dutch') {
-      router.locale = 'nl';
-    }
+
     router.push('/', undefined, { locale: router.locale });
-  }, []);
+  }, [props.account.profile]);
 
   const handleChangeStatus = () => {
     if (props?.profile?.data?.user_type === viewerType) {
