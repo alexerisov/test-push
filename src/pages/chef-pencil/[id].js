@@ -394,7 +394,7 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
 
 export default RecipePage;
 
-export async function getServerSidePropsProps(context) {
+export async function getServerSideProps(context) {
   const id = context.params.id;
   const cookies = new Cookies(context.req, context.res);
   const targetCookies = cookies.get('aucr');
