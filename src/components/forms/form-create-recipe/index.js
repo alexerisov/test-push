@@ -94,6 +94,11 @@ const MenuProps = {
   }
 };
 
+const LANGUAGES = {
+  0: 'english',
+  1: 'dutch'
+};
+
 function FormCreateRecipe(props) {
   const router = useRouter();
 
@@ -521,6 +526,7 @@ function FormCreateRecipe(props) {
 
   return (
     <div className={classes.createRecipeForm__wrap}>
+      <div>{JSON.stringify(data)}</div>
       <div className={classes.wave}></div>
       <div className={classes.createRecipeForm__header}>
         <h1 className={classes.createRecipeForm__header__title}>Create New Recipe</h1>
@@ -878,6 +884,26 @@ function FormCreateRecipe(props) {
                   error={Boolean(error?.cooking_skills)}
                   MenuProps={MenuProps}>
                   {selectItemList(cookingSkill)}
+                </Select>
+                <FormHelperText>{error?.cooking_skills ? 'This field is required' : ''}</FormHelperText>
+              </FormControl>
+              <FormControl variant="outlined" className={classMarerialUi.formControl}>
+                <label
+                  htmlFor="create-language-select"
+                  className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
+                  Language
+                </label>
+                <Select
+                  id="create-language-select"
+                  value={data?.language}
+                  onChange={onChangeSelect('language')}
+                  fullWidth
+                  IconComponent={() => (
+                    <img src="/images/index/Polygon6.png" className={classes.createRecipeSelectArrow} />
+                  )}
+                  error={Boolean(error?.cooking_skills)}
+                  MenuProps={MenuProps}>
+                  {selectItemList(LANGUAGES)}
                 </Select>
                 <FormHelperText>{error?.cooking_skills ? 'This field is required' : ''}</FormHelperText>
               </FormControl>
