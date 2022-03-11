@@ -298,7 +298,7 @@ const connector = connect(state => ({
 
 export default withRouter(withAuth(connector));
 
-export const getStaticProps = async ({ locale }) => ({
+export const getServerSideProps = async ({ locale }) => ({
   props: {
     ...(await serverSideTranslations(locale, ['common']))
   }

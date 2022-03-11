@@ -93,7 +93,7 @@ const connector = connect(state => ({
 
 export default withRouter(withAuth(connector));
 
-export async function getServerSideProps(context) {
+export async function getServerSidePropsProps(context) {
   try {
     const cookies = new Cookies(context.req, context.res);
     const targetCookies = cookies.get('aucr');

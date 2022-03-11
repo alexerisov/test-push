@@ -800,7 +800,7 @@ export default connect(state => ({
   account: state.account
 }))(RecipePage);
 
-export async function getServerSideProps(context) {
+export async function getServerSidePropsProps(context) {
   const id = context.params.id;
   const cookies = new Cookies(context.req, context.res);
   const targetCookies = cookies.get('aucr');

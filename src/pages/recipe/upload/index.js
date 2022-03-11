@@ -11,7 +11,7 @@ function CreateRecipe() {
 
 export default connect()(CreateRecipe);
 
-export const getStaticProps = async ({ locale }) => ({
+export const getServerSideProps = async ({ locale }) => ({
   props: {
     ...(await serverSideTranslations(locale, ['common']))
   }

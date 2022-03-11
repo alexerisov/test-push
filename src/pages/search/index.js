@@ -1311,7 +1311,7 @@ export default connect(state => ({
   userType: state.account?.profile?.user_type
 }))(Recipes);
 
-export async function getServerSideProps(context) {
+export async function getServerSidePropsProps(context) {
   const cookies = new Cookies(context.req, context.res);
   const targetCookies = cookies.get('aucr');
   const token = !targetCookies ? undefined : decodeURIComponent(cookies.get('aucr'));
