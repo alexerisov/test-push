@@ -14,7 +14,7 @@ const ProfileAccountSettings = props => {
   }
 
   React.useEffect(() => {
-    if (props.account.profile?.language === 'english') {
+    if (props.account.profile?.language !== 'dutch') {
       router.locale = 'en';
     }
     if (props.account.profile?.language === 'dutch') {

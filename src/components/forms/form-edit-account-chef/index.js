@@ -403,10 +403,10 @@ function FormEditAccountChef(props) {
               error={Boolean(errorForm?.language)}
               helperText={errorForm?.language}>
               <MenuItem key={'english'} value={'english'}>
-                {'english'}
+                {'English'}
               </MenuItem>
               <MenuItem key={'dutch'} value={'dutch'}>
-                {'dutch'}
+                {'Dutch'}
               </MenuItem>
             </StyledSelect>
           </div>

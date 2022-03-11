@@ -53,10 +53,10 @@ const Home = props => {
 
   React.useEffect(() => {
     var userLang = navigator.language || navigator.userLanguage;
-    if (userLang !== 'en' || props.account.profile?.language !== 'dutch') {
+    if (userLang !== 'nl' || props.account.profile?.language !== 'dutch') {
       router.locale = 'en';
     }
-    if (props.account.profile?.language !== 'dutch') {
+    if (props.account.profile?.language === 'dutch') {
       router.locale = 'nl';
     }
     router.push('/', undefined, { locale: router.locale });

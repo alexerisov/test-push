@@ -241,10 +241,10 @@ function FormEditAccountUser(props) {
             error={Boolean(errorForm?.city)}
             helperText={errorForm?.city}>
             <MenuItem key={'english'} value={'english'}>
-              {'english'}
+              {'English'}
             </MenuItem>
             <MenuItem key={'dutch'} value={'dutch'}>
-              {'dutch'}
+              {'Dutch'}
             </MenuItem>
           </StyledSelect>
         </div>
