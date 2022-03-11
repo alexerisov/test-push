@@ -527,7 +527,6 @@ function FormCreateRecipe(props) {
 
   return (
     <div className={classes.createRecipeForm__wrap}>
-      <div>{JSON.stringify(data)}</div>
       <div className={classes.wave}></div>
       <div className={classes.createRecipeForm__header}>
         <h1 className={classes.createRecipeForm__header__title}>Create New Recipe</h1>
