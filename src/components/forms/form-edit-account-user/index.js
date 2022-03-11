@@ -16,7 +16,7 @@ import { useFormik } from 'formik';
 import TextField from '@material-ui/core/TextField';
 import Input from '@material-ui/core/Input';
 import FieldError from '@/components/elements/field-error';
-import { Select } from '@material-ui/core';
+import { MenuItem, Select } from '@material-ui/core';
 
 const StyledTextField = styled(TextField)`
   width: 100%;
@@ -229,7 +229,7 @@ function FormEditAccountUser(props) {
         </div>
         <div>
           <label className={classes.profile__label}>Language</label>
-          <StyledTextField
+          <StyledSelect
             id="city"
             name="city"
             variant="outlined"
@@ -239,8 +239,14 @@ function FormEditAccountUser(props) {
             }}
             inputProps={{ maxLength: 255 }}
             error={Boolean(errorForm?.city)}
-            helperText={errorForm?.city}
-          />
+            helperText={errorForm?.city}>
+            <MenuItem key={'english'} value={'english'}>
+              {'english'}
+            </MenuItem>
+            <MenuItem key={'dutch'} value={'dutch'}>
+              {'dutch'}
+            </MenuItem>
+          </StyledSelect>
         </div>
         <div>
           <button type="submit" className={classes.profile__buttonUpdate}>

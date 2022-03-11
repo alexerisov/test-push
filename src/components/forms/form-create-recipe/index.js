@@ -903,7 +903,12 @@ function FormCreateRecipe(props) {
                   )}
                   error={Boolean(error?.cooking_skills)}
                   MenuProps={MenuProps}>
-                  {selectItemList(LANGUAGES)}
+                  <MenuItem key={'english'} value={'english'}>
+                    {'english'}
+                  </MenuItem>
+                  <MenuItem key={'dutch'} value={'dutch'}>
+                    {'dutch'}
+                  </MenuItem>
                 </Select>
                 <FormHelperText>{error?.cooking_skills ? 'This field is required' : ''}</FormHelperText>
               </FormControl>
