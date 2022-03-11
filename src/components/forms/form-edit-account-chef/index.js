@@ -17,8 +17,16 @@ import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
+import { MenuItem, Select } from '@material-ui/core';
 
 const StyledTextField = styled(TextField)`
+  width: 100%;
+  .PrivateNotchedOutline-root-1:hover {
+    border-color: #000000;
+  }
+`;
+
+const StyledSelect = styled(Select)`
   width: 100%;
   .PrivateNotchedOutline-root-1:hover {
     border-color: #000000;
@@ -383,15 +391,21 @@ function FormEditAccountChef(props) {
           </div>
           <div>
             <label className={classes.profile__label}>Language</label>
-            <StyledTextField
+            <StyledSelect
               id="language"
               name="language"
               variant="outlined"
               value={formik.values.language ? formik.values.language : ''}
               onChange={formik.handleChange}
               error={Boolean(errorForm?.language)}
-              helperText={errorForm?.language}
-            />
+              helperText={errorForm?.language}>
+              <MenuItem key={'english'} value={'english'}>
+                {'english'}
+              </MenuItem>
+              <MenuItem key={'dutch'} value={'dutch'}>
+                {'dutch'}
+              </MenuItem>
+            </StyledSelect>
           </div>
         </div>
         <div className={classes.profile__experience}>
