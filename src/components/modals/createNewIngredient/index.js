@@ -80,7 +80,7 @@ const renderOption = (option, { selected }) => {
     return (
       <span className={classes.option} value={option.pk}>
         <AddIcon htmlColor="#ffaa00" />
-        You want to create new ingredient?
+        Do you want to create new ingredient?
       </span>
     );
   }
