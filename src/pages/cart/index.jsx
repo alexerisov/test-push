@@ -13,6 +13,8 @@ import { useRouter, withRouter } from 'next/router';
 import { withAuth } from '@/utils/authProvider';
 import classes from './index.module.scss';
 import { IngredientsModal } from '@/components/basic-blocks/ingredients-modal';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 
 const useStyles = makeStyles(theme => ({
   tabs: {
@@ -44,6 +46,7 @@ const useStyles = makeStyles(theme => ({
 export const CartContext = React.createContext({});
 
 const CartPage = props => {
+  const { t } = useTranslation('cartPage');
   const router = useRouter();
   const dispatch = useDispatch();
   const styles = useStyles();
@@ -72,7 +75,7 @@ const CartPage = props => {
 
   let content = (
     <div className={styles.tabs}>
-      <div className={classes.header}>Your Cart</div>
+      <div className={classes.header}>{t('title')}</div>
       <div className={styles.content}>
         <CartContext.Provider value={{ setIngredientsModalData, openModalHandler }}>
           <TabContent products={data.products} />
@@ -100,6 +103,7 @@ export async function getServerSideProps(context) {
     const isAuthenticated = Boolean(token);
     return {
       props: {
+        ...(await serverSideTranslations(context.locale, ['common', 'cartPage', 'orderSummary'])),
         isAuthenticated,
         absolutePath: context.req.headers.host
       }

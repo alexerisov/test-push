@@ -8,6 +8,7 @@ import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import { ReactComponent as CloseIcon } from '@/../public/icons/Close/Line.svg';
 import { useDispatch } from 'react-redux';
 import { clearCart, types as cartTypes } from '@/store/cart/actions';
+import { useTranslation } from 'next-i18next';
 
 const useStyles = makeStyles(theme => ({
   tab_content: {
@@ -40,6 +41,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const TabContent = props => {
+  const { t } = useTranslation('cartPage');
   const { products } = props;
   const dispatch = useDispatch();
   const styles = useStyles();
@@ -50,7 +52,7 @@ export const TabContent = props => {
 
   return (
     <div className={styles.tab_content}>
-      {!products?.length > 0 && <Typography variant="h4">You have no items in your shopping cart. </Typography>}
+      {!products?.length > 0 && <Typography variant="h4">{t('emptyCartText')}</Typography>}
       <div className={styles.tab_dishes}>
         {products?.length > 0 &&
           products.map(item => (

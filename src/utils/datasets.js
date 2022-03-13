@@ -399,3 +399,8 @@ export const nameErrorProfile = [
   { nameErrorResponse: 'phone_number', nameInput: 'phone_number' },
   { nameErrorResponse: 'language', nameInput: 'language' }
 ];
+
+export const LANGUAGES = {
+  en: 'english',
+  nl: 'dutch'
+};

@@ -20,6 +20,7 @@ import dayjs from 'dayjs';
 import CloseIcon from '@material-ui/icons/Close';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 
 const zipcodeRegExp = /^\d{4}[a-zA-Z]{2}|\d{4}\s[a-zA-Z]{2}$/;
 
@@ -120,6 +121,7 @@ const mergeFormValues = (defaultData, lastOrderData, profileData) => {
 };
 
 const OrderConfirmPage = () => {
+  const { t } = useTranslation('orderConfirmPage');
   const router = useRouter();
   const dispatch = useDispatch();
   const cart = useSelector(state => state.cart);
@@ -195,23 +197,49 @@ const OrderConfirmPage = () => {
         <form onSubmit={formik.handleSubmit}>
           <InputsBlock title="Your details">
             <BasicInput formik={formik} label="Email" name="email" placeholder="youremail@gmail.net" />
-            <BasicInput formik={formik} size={0.5} label="Name" name="name" placeholder="Enter your name" />
-            <BasicInput phone formik={formik} size={0.5} label="Phone" name="phone" placeholder="Phone number" />
+            <BasicInput
+              formik={formik}
+              size={0.5}
+              label={t('name.label')}
+              name="name"
+              placeholder={t('name.placeholder')}
+            />
+            <BasicInput
+              phone
+              formik={formik}
+              size={0.5}
+              label={t('phone.label')}
+              name="phone"
+              placeholder="Phone number"
+            />
           </InputsBlock>
           <Divider m="48px 0" />
-          <InputsBlock title="Shipping">
+          <InputsBlock title={t('shipping')}>
             <InputsBlock.Tabs isTabs>
-              <InputsBlock.Tab label="courier" />
+              <InputsBlock.Tab label={t('courier')} />
               <InputsBlock.Tab disabled label="self-delivery" />
             </InputsBlock.Tabs>
             <InputsBlock.TabPanel index={0}>
-              <BasicInput formik={formik} disabled size={0.5} label="City" name="city" placeholder="Enter your city" />
-              <BasicInput formik={formik} size={0.5} label="Street" name="street" placeholder="Enter your street" />
+              <BasicInput
+                formik={formik}
+                disabled
+                size={0.5}
+                label={t('city.label')}
+                name="city"
+                placeholder={t('city.placeholder')}
+              />
+              <BasicInput
+                formik={formik}
+                size={0.5}
+                label={t('street.label')}
+                name="street"
+                placeholder={t('street.placeholder')}
+              />
               {/*<BasicInput formik={formik} size={0.5} label="House" name="house" placeholder="Enter your house" />*/}
               {/*<BasicInput formik={formik} size={0.5} label="Flat" name="flat" placeholder="Enter your flat" />*/}
               <BasicInput
                 formik={formik}
-                label="Zipcode"
+                label={t('zipcode.label')}
                 name="zipcode"
                 onChange={event => formik.setFieldValue('zipcode', event.target.value, false)}
                 onFocus={event => {
@@ -222,12 +250,12 @@ const OrderConfirmPage = () => {
                   formik.handleBlur(event);
                   formik.setFieldValue('isZipcodeFieldFocused', false);
                 }}
-                placeholder="Enter your zipcode"
+                placeholder={t('zipcode.placeholder')}
                 disableOnChangeValidation
               />
               <BasicDatePicker
                 formik={formik}
-                label="Date"
+                label={t('date.label')}
                 name="date"
                 minDate={dayjs()}
                 maxDate={dayjs().add(1, 'month')}
@@ -244,7 +272,7 @@ const OrderConfirmPage = () => {
                   color="primary"
                 />
                 <label className={classes.checkbox_label} htmlFor="save_address">
-                  Save address
+                  {t('saveAddress')}
                 </label>
               </div>
             </InputsBlock.TabPanel>
@@ -261,7 +289,7 @@ const OrderConfirmPage = () => {
             </InputsBlock.TabPanel>
           </InputsBlock>
           <Divider m="48px 0" />
-          <InputsBlock title="Pay with">
+          <InputsBlock title={t('payWith')}>
             <InputsBlock.Tabs isTabs>
               <InputsBlock.Tab label="Tikkie" />
               <InputsBlock.Tab disabled label="Credit card" />
@@ -279,7 +307,7 @@ const OrderConfirmPage = () => {
             </InputsBlock.TabPanel>
           </InputsBlock>
           <Button startIcon={isLoading && <ButtonSpinner />} type="submit" className={classes.content__button}>
-            Confirm and pay
+            {t('confirmButton')}
           </Button>
         </form>
       </div>
@@ -300,6 +328,6 @@ export default withRouter(withAuth(connector));
 
 export const getServerSideProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale, ['common']))
+    ...(await serverSideTranslations(locale, ['common', 'orderConfirmPage', 'orderSummary']))
   }
 });

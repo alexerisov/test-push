@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useRouter } from 'next/router';
+import { LANGUAGES } from '@/utils/datasets';
 
 const ProfileAccountSettings = props => {
   const router = useRouter();
@@ -14,14 +15,11 @@ const ProfileAccountSettings = props => {
   }
 
   React.useEffect(() => {
-    var userLang = navigator.language || navigator.userLanguage;
-    if (props.account.profile?.language === 'dutch' || userLang === 'nl') {
-      router.locale = 'nl';
-    } else {
-      router.locale = 'en';
+    for (let key in LANGUAGES) {
+      if (props.account.profile?.language === LANGUAGES[key]) {
+        router.locale = key;
+      }
     }
-
-    router.push('/', undefined, { locale: router.locale });
     router.push(router.asPath, undefined, { locale: router.locale });
   }, []);
 
