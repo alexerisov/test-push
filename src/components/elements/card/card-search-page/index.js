@@ -12,13 +12,13 @@ import { ReactComponent as CartIcon } from '../../../../../public/icons/Shopping
 import { ReactComponent as CommentIcon } from '../../../../../public/icons/Comment/Line.svg';
 import { ReactComponent as LikeIcon } from '../../../../../public/icons/Like/Line.svg';
 
-import { ReactComponent as BurgerIcon } from '../../../../../public/icons/Burger/Line.svg';
-import { ReactComponent as ServingPlateIcon } from '../../../../../public/icons/Serving Plate/Line.svg';
-import { ReactComponent as SoupIcon } from '../../../../../public/icons/Soup/Line.svg';
-import { ReactComponent as IceCreamIcon } from '../../../../../public/icons/Ice Cream/Line.svg';
-import { ReactComponent as FrenchFriesIcon } from '../../../../../public/icons/French Fries/Line.svg';
-import { ReactComponent as CarrotIcon } from '../../../../../public/icons/Carrot/Line.svg';
-import { ReactComponent as DonutIcon } from '../../../../../public/icons/Donut/Line.svg';
+import { ReactComponent as BurgerIcon } from '@/../public/icons/Burger/Line.svg';
+import { ReactComponent as ServingPlateIcon } from '@/../public/icons/Serving Plate/Line.svg';
+import { ReactComponent as SoupIcon } from '@/../public/icons/Soup/Line.svg';
+import { ReactComponent as IceCreamIcon } from '@/../public/icons/Ice Cream/Line.svg';
+import { ReactComponent as FrenchFriesIcon } from '@/../public/icons/French Fries/Line.svg';
+import { ReactComponent as CarrotIcon } from '@/../public/icons/Carrot/Line.svg';
+import { ReactComponent as DonutIcon } from '@/../public/icons/Donut/Line.svg';
 
 import { PUBLISH_STATUS, APPROVED_STATUS, recipeTypes, cookingSkill } from '@/utils/datasets';
 import logo from '/public/images/index/logo.svg';

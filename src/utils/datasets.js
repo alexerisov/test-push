@@ -48,17 +48,6 @@ export const recipeTypesCount = {
   Bread: 'bread_num'
 };
 
-export const recipeTypesImg = {
-  1: 'icons/Burger/Line.svg',
-  2: 'icons/Serving Plate/Line.svg',
-  3: 'icons/Soup/Line.svg',
-  4: 'icons/Ice Cream/Line.svg',
-  5: '',
-  6: 'icons/French Fries/Line.svg',
-  7: 'icons/Carrot/Line.svg',
-  8: 'icons/Donut/Line.svg'
-};
-
 export const recommendedList = {
   1: 'Latest',
   2: 'Cheapest',

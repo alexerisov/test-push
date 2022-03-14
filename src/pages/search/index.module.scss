@@ -329,10 +329,13 @@
       @include fontMedium();
       margin-top: 48px;
       margin-bottom: 24px;
-      img {
+
+      svg {
         margin-right: 8px;
+        fill: #566481;
       }
     }
+
     &__container {
       display: flex;
       flex-wrap: wrap;
@@ -423,7 +426,7 @@
       width: 56px !important;
       min-width: 56px !important;
     }
-    img {
+    svg {
       fill: #fcfcfd;
     }
   }
@@ -679,6 +682,7 @@
     }
   }
 }
+
 .search_autocomplete {
   &_root {
     height: min-content !important;
@@ -798,5 +802,13 @@
       letter-spacing: 0.01em;
       color: #fcfcfd;
     }
+  }
+}
+
+.recipe__type__wrapper {
+  display: flex;
+  align-items: center;
+  & > svg {
+    margin-right: 12px;
   }
 }

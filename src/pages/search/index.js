@@ -4,7 +4,6 @@ import LayoutPage from '@/components/layouts/layout-page';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import Recipe from '@/api/Recipe.js';
-import CardHighestMeals from '@/components/elements/card-highest-meals';
 import * as yup from 'yup';
 import {
   recipeTypes,
@@ -13,7 +12,6 @@ import {
   cookingSkill,
   ordering,
   recommendedList,
-  recipeTypesImg,
   recipeTypesCount,
   dietaryrestrictionsCount,
   cookingMethodsCount
@@ -54,8 +52,18 @@ import { Autocomplete } from '@material-ui/lab';
 
 import { ReactComponent as SearchIcon } from '@/../public/icons/Search/Line.svg';
 import { ReactComponent as CloseIcon } from '@/../public/icons/Close Circle/Line.svg';
+import { ReactComponent as CoinIcon } from '@/../public/icons/Coin/Line.svg';
 import { ReactComponent as RecipeIcon } from '@/../public/icons/Receipt/Line.svg';
-import { TitleOutlined } from '@material-ui/icons';
+import { ReactComponent as ArrowUpIcon } from '@/../public/icons/Arrow Up Simple/Line.svg';
+
+import { ReactComponent as BurgerIcon } from '@/../public/icons/Burger/Line.svg';
+import { ReactComponent as ServingPlateIcon } from '@/../public/icons/Serving Plate/Line.svg';
+import { ReactComponent as SoupIcon } from '@/../public/icons/Soup/Line.svg';
+import { ReactComponent as IceCreamIcon } from '@/../public/icons/Ice Cream/Line.svg';
+import { ReactComponent as FrenchFriesIcon } from '@/../public/icons/French Fries/Line.svg';
+import { ReactComponent as CarrotIcon } from '@/../public/icons/Carrot/Line.svg';
+import { ReactComponent as DonutIcon } from '@/../public/icons/Donut/Line.svg';
+
 import Cookies from 'cookies';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 const MySlider = styled(Slider)(() => ({
@@ -120,7 +128,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ITEM_HEIGHT = 30;
+
 const ITEM_PADDING_TOP = 6;
+
 const MenuProps = {
   PaperProps: {
     style: {
@@ -128,6 +138,18 @@ const MenuProps = {
     }
   }
 };
+
+const recipeTypesImg = {
+  1: BurgerIcon,
+  2: ServingPlateIcon,
+  3: SoupIcon,
+  4: IceCreamIcon,
+  5: IceCreamIcon,
+  6: FrenchFriesIcon,
+  7: CarrotIcon,
+  8: DonutIcon
+};
+
 const SearchInput = () => {
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
@@ -240,7 +262,7 @@ const SearchInput = () => {
         />
 
         <button className={classes.search__searchButton} type="submit">
-          <img src="/images/index/icon_search.svg" alt="search-icon" />
+          <SearchIcon />
         </button>
       </form>
     </div>
@@ -293,12 +315,9 @@ const Recipes = props => {
 
   useEffect(() => {
     if (query) {
-      // console.log('query', createQueryParams(query).toString());
       Recipe.getWeekmenu(createQueryParams(query))
         .then(res => {
-          console.log('query', query);
           setWeekmenu(res.data);
-          // console.log('new weekmenu', res.data);
         })
         .catch(e => console.error(e));
     }
@@ -511,11 +530,12 @@ const Recipes = props => {
 
   for (let i = 1; i <= Object.keys(recipeTypes).length; i++) {
     if (i !== 5) {
+      const Icon = recipeTypesImg[i];
       recipeTypesList.push(
         <FormControlLabel
           key={i}
           control={
-            <>
+            <div className={classes.recipe__type__wrapper}>
               <Checkbox
                 style={{
                   color: formik.initialValues['types'].includes(String(i)) ? '#FFAA00' : '#E6E8EC'
@@ -528,13 +548,8 @@ const Recipes = props => {
                 name="types"
                 color="primary"
               />
-              <img
-                style={{
-                  marginRight: '12px'
-                }}
-                src={recipeTypesImg[i]}
-              />
-            </>
+              <Icon />
+            </div>
           }
           label={getLabelByStatusOfCheckbox({
             fieldName: 'types',
@@ -1180,7 +1195,7 @@ const Recipes = props => {
           <Weekmenu data={weekmenuData} />
 
           <div className={classes.search__result__text}>
-            <img src="icons/Coin/Line.svg" alt="close-icon" />
+            <CoinIcon />
             <p>You can order all the ingredients</p>
           </div>
 
@@ -1290,7 +1305,7 @@ const Recipes = props => {
                 windowScroll();
                 setShowScrollBtn(false);
               }}>
-              <img src="icons/Arrow Up Simple/Line.svg" alt="arrow-icon" />
+              <ArrowUpIcon />
             </button>
           ) : null}
         </div>
