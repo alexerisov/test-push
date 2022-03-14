@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import classes from './addStep.module.scss';
 import TextField from '@material-ui/core/TextField';
 import { validator } from '@/utils/validator';
+import { useTranslation } from 'next-i18next';
 
 const useStyles = makeStyles(theme => ({
   textField: {
@@ -20,6 +21,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function AddStep(props) {
+  const { t } = useTranslation('addStepModal');
   const classMarerialUi = useStyles();
   const FIRST_STEP = 1;
   const { data } = props.recipeEdit;
@@ -115,13 +117,13 @@ function AddStep(props) {
       <div className={classes.addStep}>
         <h2 className={classes.addStep__title}>
           {props?.modal?.params
-            ? `Update Recipe Step ${props?.modal?.params.num}`
-            : `Add Recipe Step ${data.steps.length === 0 ? FIRST_STEP : data.steps.length + 1}`}
+            ? `${t('editStepTitle')} ${props?.modal?.params.num}`
+            : `${t('addStepTitle')} ${data.steps.length === 0 ? FIRST_STEP : data.steps.length + 1}`}
         </h2>
         <form className={classes.addStep__form} onSubmit={props?.modal?.params ? handleUpdateStep : handleAddStep}>
           <div>
             <label htmlFor="addStep-name" className={classes.addStep__label}>
-              Title
+              {t('titleInput.label')}
             </label>
             <TextField
               id="addStep-name"
@@ -136,11 +138,11 @@ function AddStep(props) {
               error={Boolean(errorForm?.title)}
               helperText={errorForm?.title}
             />
-            <p className={classes.addStep__maxLength}>{remainingСharactersTitle} characters left</p>
+            <p className={classes.addStep__maxLength}>{`${remainingСharactersTitle} ${t('charactersLeft')}`}</p>
           </div>
           <div>
             <label htmlFor="addSep-description" className={classes.addStep__label}>
-              Description
+              {t('descriptionInput.label')}
             </label>
             <TextField
               id="addSep-description"
@@ -156,11 +158,11 @@ function AddStep(props) {
               error={Boolean(errorForm?.description)}
               helperText={errorForm?.description}
             />
-            <p className={classes.addStep__maxLength}>{remainingСharactersDescription} characters left</p>
+            <p className={classes.addStep__maxLength}>{`${remainingСharactersDescription} ${t('charactersLeft')}`}</p>
           </div>
           <div className={classes.addStep__buttonContainer}>
             <button type="submit" className={classes.addStep__button}>
-              {props?.modal?.params ? 'Update' : 'Add'}
+              {props?.modal?.params ? t('editButton') : t('addButton')}
             </button>
             {error && <p>{error}</p>}
           </div>

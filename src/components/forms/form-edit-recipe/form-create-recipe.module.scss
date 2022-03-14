@@ -433,7 +433,7 @@
   border: 1px solid $--color-gray18;
   box-sizing: border-box;
   border-radius: 5px;
-  width: 66px !important;
+  width: auto !important;
   height: 66px !important;
 
   &__text {
@@ -465,7 +465,7 @@
   border: 1px solid $--color-gray18;
   box-sizing: border-box;
   border-radius: 5px;
-  width: 66px !important;
+  width: auto !important;
   height: 66px !important;
 
   &__text {

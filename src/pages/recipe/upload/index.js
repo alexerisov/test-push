@@ -13,6 +13,12 @@ export default connect()(CreateRecipe);
 
 export const getServerSideProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale, ['common', 'uploadRecipe', 'addIngredientModal']))
+    ...(await serverSideTranslations(locale, [
+      'common',
+      'uploadRecipe',
+      'addIngredientModal',
+      'addNutritionModal',
+      'addStepModal'
+    ]))
   }
 });

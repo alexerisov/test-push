@@ -38,6 +38,7 @@ import InputTime from '@/components/elements/input/inputTime';
 import LinearProgressWithLabel from '@/components/elements/linear-progress-with-label';
 import CheckboxIconUnchecked from '@/components/elements/checkbox-icon/checkbox-icon-unchecked';
 import CheckboxIcon from '@/components/elements/checkbox-icon';
+import { useTranslation } from 'next-i18next';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -94,6 +95,7 @@ const MenuProps = {
 };
 
 function FormEditRecipe(props) {
+  const { t } = useTranslation('uploadRecipe');
   const router = useRouter();
 
   useEffect(() => {
@@ -498,14 +500,15 @@ function FormEditRecipe(props) {
     <div className={classes.createRecipeForm__wrap}>
       <div className={classes.wave}></div>
       <div className={classes.createRecipeForm__header}>
-        <h1 className={classes.createRecipeForm__header__title}>Edit Recipe</h1>
+        <h1 className={classes.createRecipeForm__header__title}>{t('editFormTitle')}</h1>
       </div>
       <form className={classes.createRecipeForm}>
         <div className={classes.createRecipeSection}>
-          <h2 className={classes.createRecipeSubtitle}>Basic Details</h2>
+          <h2 className={classes.createRecipeSubtitle}>{t('basicDetails.header')}</h2>
           <div className={classes.createRecipeInput_type_title}>
             <label htmlFor="create-title" className={classes.createRecipeLabel}>
-              <span style={{ color: 'red' }}>* </span>Title
+              <span style={{ color: 'red' }}>* </span>
+              {t('basicDetails.titleInput')}
             </label>
             <NoSsr>
               <TextField
@@ -524,7 +527,8 @@ function FormEditRecipe(props) {
           </div>
           <div className={classes.createRecipeInput_type_description}>
             <label htmlFor="create-description" className={classes.createRecipeLabel}>
-              <span style={{ color: 'red' }}>* </span>Description
+              <span style={{ color: 'red' }}>* </span>
+              {t('basicDetails.descriptionInput')}
             </label>
             <NoSsr>
               <TextField
@@ -546,7 +550,8 @@ function FormEditRecipe(props) {
 
         <div className={classes.createRecipeSection}>
           <h2 className={classes.createRecipeSubtitle}>
-            <span style={{ color: 'red' }}>* </span>Cooking images
+            <span style={{ color: 'red' }}>* </span>
+            {t('cookingImages.title')}
           </h2>
           <ReactSortable
             delayOnTouchOnly={false}
@@ -563,7 +568,7 @@ function FormEditRecipe(props) {
         </div>
 
         <div className={classes.createRecipeSection}>
-          <h2 className={classes.createRecipeSubtitle_withoutInput}>Cooking Video</h2>
+          <h2 className={classes.createRecipeSubtitle_withoutInput}>{t('cookingVideo.title')}</h2>
           <div className={classes.createRecipeSection__video}>
             <>
               <div
@@ -576,7 +581,9 @@ function FormEditRecipe(props) {
                 <div className={classes.uploadVideoLabel__border} ref={labelRefVideo}>
                   <img className={classes.uploadVideoLabel__logo} src="/images/index/uploadIconGray.svg" />
                   {(progressVideo === 0 || videoRecipe) && (
-                    <p className={classes.uploadVideoLabel__dragText}>{!videoRecipe ? 'Add Video' : 'Change Video'}</p>
+                    <p className={classes.uploadVideoLabel__dragText}>
+                      {!videoRecipe ? t('cookingVideo.addButton') : t('cookingVideo.changeButton')}
+                    </p>
                   )}
                   {progressVideo !== 0 && !videoRecipe && <LinearProgressWithLabel value={progressVideo} />}
                 </div>
@@ -611,8 +618,8 @@ function FormEditRecipe(props) {
 
         <div className={classes.createRecipeSection}>
           <h2 className={classes.createRecipeSubtitle}>
-            <span style={{ color: 'red' }}>* </span>Ingredients:
-            <span style={{ color: '#ffaa00' }}> {data?.ingredients.length ?? '0'}</span>
+            <span style={{ color: 'red' }}>* </span>
+            {t('ingredients.title')}:<span style={{ color: '#ffaa00' }}> {data?.ingredients.length ?? '0'}</span>
           </h2>
           <div className={classes.createRecipeSection__grid_type_cardIngredients} id="create-ingredients">
             <button
@@ -620,7 +627,7 @@ function FormEditRecipe(props) {
               onClick={handleClickPopupOpen('editIngredient')}
               className={classes.createRecipeButton_type_addIngredient}>
               <p className={classes.createRecipeButton_type_addIngredient__icon}>&#43;</p>
-              <p className={classes.createRecipeButton_type_addIngredient__text}>Add</p>
+              <p className={classes.createRecipeButton_type_addIngredient__text}>{t('ingredients.button')}</p>
             </button>
             {data?.ingredients.length !== 0
               ? JSON.parse(JSON.stringify(data.ingredients))
@@ -640,7 +647,7 @@ function FormEditRecipe(props) {
           <FieldError errors={error} path="ingredients" id="error" />
         </div>
         <div className={classes.createRecipeSection_type_cardNutrition}>
-          <h2 className={classes.createRecipeSubtitle}>Nutrition value</h2>
+          <h2 className={classes.createRecipeSubtitle}>{t('nutrition.title')}</h2>
           <div className={classes.createRecipeSection__grid_type_cardNutrition}>
             {!data?.calories || !data?.proteins || !data?.fats || !data?.carbohydrates ? (
               <button
@@ -648,7 +655,7 @@ function FormEditRecipe(props) {
                 onClick={handleClickPopupOpen('editNutrition')}
                 className={classes.createRecipeButton_type_addNutrition}>
                 <p className={classes.createRecipeButton_type_addNutrition__icon}>&#43;</p>
-                <p className={classes.createRecipeButton_type_addNutrition__text}>Add</p>
+                <p className={classes.createRecipeButton_type_addNutrition__text}>{t('nutrition.button')}</p>
               </button>
             ) : (
               ''
@@ -686,7 +693,7 @@ function FormEditRecipe(props) {
           </div>
         </div>
         <div className={classes.createRecipeSection}>
-          <h2 className={classes.createRecipeSubtitle_withoutInput}>Steps to make the recipe</h2>
+          <h2 className={classes.createRecipeSubtitle_withoutInput}>{t('steps.title')}</h2>
           <ul className={classes.createRecipeList}>
             {data?.steps.length !== 0
               ? data?.steps.map((item, index) => {
@@ -694,7 +701,9 @@ function FormEditRecipe(props) {
                     <li key={index} className={classes.createRecipeList__item}>
                       <div className={classes.createRecipeList__titleContainer}>
                         <h3 className={classes.createRecipeList__title}>
-                          <span className={classes.createRecipeList__title_color}>{`Step ${item.num} : `}</span>
+                          <span className={classes.createRecipeList__title_color}>{`${t('steps.step')} ${
+                            item.num
+                          } : `}</span>
                           {item.title}
                         </h3>
                         <button
@@ -726,19 +735,19 @@ function FormEditRecipe(props) {
             onClick={handleClickPopupOpen('editStep')}
             className={classes.createRecipeButton_type_addStep}>
             <p className={classes.createRecipeButton_type_addStep__icon}>&#43;</p>
-            <p className={classes.createRecipeButton_type_addStep__text}>Add More Steps</p>
+            <p className={classes.createRecipeButton_type_addStep__text}>{t('steps.button')}</p>
           </button>
         </div>
 
         <div className={classes.createRecipeSection}>
           <h2
             className={`${classes.createRecipeSubtitle_withoutInput} ${classes.createRecipeSubtitle_classifications}`}>
-            All Classifications
+            {t('classification.title')}
           </h2>
           <div className={classes.createRecipeSection__grid_type_input}>
             <div className={classes.createRecipeItem__inputTime}>
               <label htmlFor="create-cooking_time" className={classes.createRecipeLabel}>
-                Preparation Time
+                {t('classification.time')}
               </label>
               <NoSsr>
                 <InputTime
@@ -755,7 +764,7 @@ function FormEditRecipe(props) {
                 <label
                   htmlFor="create-types-select"
                   className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
-                  Type
+                  {t('classification.type')}
                 </label>
                 <Select
                   id="create-types-select"
@@ -776,7 +785,8 @@ function FormEditRecipe(props) {
                 <label
                   htmlFor="create-diet-restrictions-select"
                   className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
-                  <span style={{ color: 'red' }}>* </span>Lifestyle
+                  <span style={{ color: 'red' }}>* </span>
+                  {t('classification.lifestyle')}
                 </label>
                 <Select
                   id="create-diet-restrictions-select"
@@ -797,7 +807,8 @@ function FormEditRecipe(props) {
                 <label
                   htmlFor="create-cuisines-select"
                   className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
-                  <span style={{ color: 'red' }}>* </span>Cuisine
+                  <span style={{ color: 'red' }}>* </span>
+                  {t('classification.cuisine')}
                 </label>
                 <Select
                   id="create-cuisines-select"
@@ -818,7 +829,8 @@ function FormEditRecipe(props) {
                 <label
                   htmlFor="create-cooking-methods-select"
                   className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
-                  <span style={{ color: 'red' }}>* </span>Cooking Method
+                  <span style={{ color: 'red' }}>* </span>
+                  {t('classification.method')}
                 </label>
                 <Select
                   id="create-cooking-methods-select"
@@ -839,7 +851,8 @@ function FormEditRecipe(props) {
                 <label
                   htmlFor="create-cooking-skills-select"
                   className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
-                  <span style={{ color: 'red' }}>* </span>Cooking skills
+                  <span style={{ color: 'red' }}>* </span>
+                  {t('classification.skills')}
                 </label>
                 <Select
                   id="create-cooking-skills-select"
@@ -855,6 +868,31 @@ function FormEditRecipe(props) {
                 </Select>
                 <FormHelperText>{error?.cooking_skills ? 'This field is required' : ''}</FormHelperText>
               </FormControl>
+              <FormControl variant="outlined" className={classMarerialUi.formControl}>
+                <label
+                  htmlFor="create-language-select"
+                  className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
+                  {t('classification.language')}
+                </label>
+                <Select
+                  id="create-language-select"
+                  value={data?.language}
+                  onChange={onChangeSelect('language')}
+                  fullWidth
+                  IconComponent={() => (
+                    <img src="/images/index/Polygon6.png" className={classes.createRecipeSelectArrow} />
+                  )}
+                  error={Boolean(error?.cooking_skills)}
+                  MenuProps={MenuProps}>
+                  <MenuItem key={'english'} value={'english'}>
+                    {'English'}
+                  </MenuItem>
+                  <MenuItem key={'dutch'} value={'dutch'}>
+                    {'Dutch'}
+                  </MenuItem>
+                </Select>
+                <FormHelperText>{error?.cooking_skills ? 'This field is required' : ''}</FormHelperText>
+              </FormControl>
             </NoSsr>
           </div>
         </div>
@@ -862,7 +900,8 @@ function FormEditRecipe(props) {
         <div className={`${classes.createRecipeSection} ${classes.createRecipeSection_visibility}`}>
           <div className={classes.createRecipeItem}>
             <h3 className={`${classes.createRecipeSubtitle} ${classes.createRecipeSubtitle_type_visibility}`}>
-              <span style={{ color: 'red' }}>* </span>Visibility
+              <span style={{ color: 'red' }}>* </span>
+              {t('visibility.title')}
             </h3>
             <NoSsr>
               <RadioGroup
@@ -878,14 +917,14 @@ function FormEditRecipe(props) {
                   control={
                     <Radio icon={<CheckboxIconUnchecked />} checkedIcon={<CheckboxIcon />} id="publish_status" />
                   }
-                  label="Save"
+                  label={t('visibility.save')}
                 />
                 <FormControlLabel
                   value={2}
                   control={
                     <Radio icon={<CheckboxIconUnchecked />} checkedIcon={<CheckboxIcon />} id="publish_status" />
                   }
-                  label="Publish"
+                  label={t('visibility.publish')}
                 />
               </RadioGroup>
             </NoSsr>
@@ -895,12 +934,12 @@ function FormEditRecipe(props) {
       <div className={classes.createRecipebuttonContainer}>
         <div className={classes.createRecipebuttonContainer__wrapper}>
           <button className={classes.createRecipeButton} onClick={uploadRecipe}>
-            <p className={classes.createRecipeButton__text}>{statusSubmit}</p>
+            <p className={classes.createRecipeButton__text}>{t('editButton')}</p>
           </button>
           <button
             className={classes.createRecipeButton_color_gray}
             onClick={() => router.push(`/recipe/${recipeId}`, undefined, { locale: router.locale })}>
-            <p className={classes.createRecipeButton__text}>Cancel</p>
+            <p className={classes.createRecipeButton__text}>{t('cancelButton')}</p>
           </button>
         </div>
 

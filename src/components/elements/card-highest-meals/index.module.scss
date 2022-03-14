@@ -90,6 +90,25 @@
   }
 }
 
+.edit_button__wrapper {
+  position: absolute !important;
+  top: 15px !important;
+  left: 15px !important;
+  background-color: white !important;
+
+  &:hover {
+    background-color: $--color-orange !important;
+    & .edit_button__icon {
+      color: white;
+    }
+  }
+}
+
+.edit_button__icon {
+  color: black;
+  font-size: 24px !important;
+}
+
 @keyframes fadeInOpacity {
   0% {
     opacity: 0;

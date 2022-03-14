@@ -6,7 +6,8 @@ import { connect } from 'react-redux';
 import classes from './addNutrition.module.scss';
 import { TextField, FormControl, Select, MenuItem } from '@material-ui/core';
 import { nutritions } from '@/utils/datasets';
-import { getMaxQuantityOfNutrition } from "@/utils/checkTotalQuantityOfNutrition";
+import { getMaxQuantityOfNutrition } from '@/utils/checkTotalQuantityOfNutrition';
+import { useTranslation } from 'next-i18next';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -30,6 +31,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function AddNutrition(props) {
+  const { t } = useTranslation('addNutritionModal');
   const classMarerialUi = useStyles();
   const { data } = props.recipeUpload;
 
@@ -116,11 +118,11 @@ function AddNutrition(props) {
   const renderContent = () => {
     return (
       <div className={classes.addNutrition}>
-        <h2 className={classes.addNutrition__title}>Add Nutrition Value</h2>
+        <h2 className={classes.addNutrition__title}>{t('title')}</h2>
         <form className={classes.addNutrition__form} onSubmit={handleAddNutrition}>
           <FormControl variant="outlined" className={classMarerialUi.formControl} fullWidth>
             <label htmlFor="addNutrition-quantity" className={classes.addNutrition__label}>
-              Name
+              {t('name.label')}
             </label>
             <Select id="addNutrition-quantity" value={nutrition.title} onChange={onChangeField('title')} fullWidth>
               {!data?.calories ? <MenuItem value="calories">{nutritions.calories}</MenuItem> : null}
@@ -131,7 +133,7 @@ function AddNutrition(props) {
           </FormControl>
           <div>
             <label htmlFor="addNutrition-quantity" className={classes.addNutrition__label}>
-              {nutrition.title === 'calories' ? 'Quantity' : 'Percentage'}
+              {nutrition.title === 'calories' ? t('quantity.label') : t('percentage.label')}
             </label>
             <TextField
               id="addNutrition-quantity"
@@ -146,7 +148,7 @@ function AddNutrition(props) {
           </div>
           <div className={classes.addNutrition__buttonContainer}>
             <button type="submit" className={classes.addNutrition__button}>
-              Add
+              {t('addButton')}
             </button>
             {error && <p>{error}</p>}
           </div>

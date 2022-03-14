@@ -123,6 +123,7 @@ function FormCreateRecipe(props) {
   useEffect(() => {
     const newData = data;
     newData.cooking_time = '00:00';
+    newData.language = props.account.profile?.language;
     props.dispatch(recipeUploadActions.update(newData));
   }, []);
 
@@ -616,7 +617,7 @@ function FormCreateRecipe(props) {
                   <img className={classes.uploadVideoLabel__logo} src="/images/index/uploadIconGray.svg" />
                   {(progressVideo === 0 || videoRecipe) && (
                     <p className={classes.uploadVideoLabel__dragText}>
-                      {!videoRecipe ? t('cookingVideo.addButton') : t('cookingVideo.changeutton')}
+                      {!videoRecipe ? t('cookingVideo.addButton') : t('cookingVideo.changeButton')}
                     </p>
                   )}
                   {progressVideo !== 0 && !videoRecipe && <LinearProgressWithLabel value={progressVideo} />}
@@ -733,7 +734,9 @@ function FormCreateRecipe(props) {
                     <li key={index} className={classes.createRecipeList__item}>
                       <div className={classes.createRecipeList__titleContainer}>
                         <h3 className={classes.createRecipeList__title}>
-                          <span className={classes.createRecipeList__title_color}>{`Step ${item.num} : `}</span>
+                          <span className={classes.createRecipeList__title_color}>{`${t('steps.step')} ${
+                            item.num
+                          } : `}</span>
                           {item.title}
                         </h3>
                         <button

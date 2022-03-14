@@ -5,13 +5,14 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import LikeIcon from '@/components/elements/like-icon';
 import { styled } from '@material-ui/core/styles';
-import { CardActionArea } from '@material-ui/core';
+import { CardActionArea, IconButton } from '@material-ui/core';
 import { useRouter } from 'next/router';
 
 import { PUBLISH_STATUS, APPROVED_STATUS } from '@/utils/datasets';
 import logo from '/public/images/index/logo.svg';
 import CardControlPlay from '@/components/elements/card-control-play';
 import ChefIcon from '@/components/elements/chef-icon';
+import EditIcon from '@material-ui/icons/Edit';
 
 const StyledCardMedia = styled(CardMedia)`
   .MuiCardMedia-root {
@@ -55,9 +56,19 @@ const CardHighestMeals = props => {
     }
   };
 
+  const handleEditClick = event => {
+    router.push(`/recipe/editing/${props.id}`, undefined, { locale: router.locale });
+    event.stopPropagation();
+  };
+
   return (
     <Card className={classes.card}>
       <StyledCardActionArea onClick={() => redirectToRecipeCard(props.id)}>
+        {props.sale_status === 5 && (
+          <IconButton onClick={handleEditClick} size="small" className={classes.edit_button__wrapper}>
+            <EditIcon className={classes.edit_button__icon} />
+          </IconButton>
+        )}
         <StyledCardMedia className={classes.card__media} image={props.image ?? logo} title="" />
         <StyledCardContent className={classes.card__content}>
           <div>
