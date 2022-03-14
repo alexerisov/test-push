@@ -39,11 +39,7 @@ const BurgerMenu = props => {
           {icon && (
             <ListItemIcon className={classes.menu_item_icon}>{<BasicIcon icon={icon} color="#777E90" />}</ListItemIcon>
           )}
-          {/*{path && (*/}
-          {/*  <Link href={path}>*/}
           <p className={classes.header__link_place_menu}>{text}</p>
-          {/*  </Link>*/}
-          {/*)}*/}
           {otherProps?.children ? otherProps?.children : false}
           {endIcon ? endIcon : false}
         </>
@@ -65,8 +61,6 @@ const BurgerMenu = props => {
     return (
       <Menu
         id="simple-menu"
-        // anchorReference="anchorEl"
-        // anchorPosition={anchorEl}
         anchorEl={anchorEl}
         disableScrollLock
         autoFocus={false}
@@ -77,7 +71,7 @@ const BurgerMenu = props => {
         }}
         transformOrigin={{
           vertical: 'top',
-          horizontal: 'right'
+          horizontal: 'center'
         }}
         marginThreshold={0}
         open={Boolean(anchorEl)}

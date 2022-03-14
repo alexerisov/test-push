@@ -152,6 +152,11 @@
 
   }
 
+  &__shadow {
+    box-shadow: 0 0 25px rgb(10 36 88 / 25%);
+  }
+
+  transition: box-shadow .1s ease-in-out;
 
   @media (max-width: 1025px) {
     &_logo {

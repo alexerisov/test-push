@@ -124,7 +124,7 @@ const Header = props => {
   };
 
   return (
-    <div className={classes.header}>
+    <div className={`${classes.header} ${props.shadow && classes.header__shadow}`}>
       <div className={classes.header_elements_wrapper}>
         <Link href="/">
           <a>

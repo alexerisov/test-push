@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import classes from './index.module.scss';
 import Head from 'next/head';
 import CookiesBanner from '@/components/banners/cookies-banner';
@@ -6,6 +6,22 @@ import Header from '@/components/basic-blocks/header';
 import { Footer } from '@/components/basic-blocks/footer';
 
 const LayoutPageNew = ({ content }) => {
+  const headerRef = useRef();
+  const contentRef = useRef();
+  const [headerShadow, setHeaderShadow] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const isContentScrolled =
+        contentRef.current?.getBoundingClientRect().y + 0.5 < headerRef.current?.firstChild.clientHeight;
+      setHeaderShadow(isContentScrolled);
+    };
+
+    window.removeEventListener('scroll', onScroll);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
     <>
       <Head>
@@ -14,11 +30,13 @@ const LayoutPageNew = ({ content }) => {
       </Head>
 
       <section className={classes.layout}>
-        <header>
-          <Header />
+        <header ref={headerRef}>
+          <Header shadow={headerShadow} />
         </header>
 
-        <main className={classes.layout__content}>{content}</main>
+        <main ref={contentRef} className={classes.layout__content}>
+          {content}
+        </main>
 
         <footer>
           <Footer />

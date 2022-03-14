@@ -63,7 +63,6 @@ const Home = props => {
         }
       }
     }
-    console.log('router', router.locale);
     router.push(router.asPath, undefined, { locale: router.locale });
   }, [props.account.profile]);
 
