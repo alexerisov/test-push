@@ -7,7 +7,6 @@ import { NoSsr } from '@material-ui/core';
 import Pagination from '@material-ui/lab/Pagination';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-import { LayoutPage } from '@/components/layouts';
 import CardHighestMeals from '@/components/elements/card-highest-meals';
 
 import Recipe from '@/api/Recipe';
@@ -15,6 +14,7 @@ import { DEFAULT_VALUE_TAB_STATE } from '@/utils/constants';
 
 import styles from './index.module.scss';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import LayoutPageNew from '@/components/layouts/layout-page-new';
 
 const StyledTabs = styled(Tabs)`
   width: 100%;
@@ -163,7 +163,7 @@ const SavedRecipesPage = () => {
     </div>
   );
 
-  return <LayoutPage content={content} />;
+  return <LayoutPageNew content={content} />;
 };
 
 export default SavedRecipesPage;

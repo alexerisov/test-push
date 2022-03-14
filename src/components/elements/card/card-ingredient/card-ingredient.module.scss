@@ -6,7 +6,7 @@
   flex-direction: column;
   justify-content: center;
   width: auto;
-  height: 66px;
+  height: auto;
   max-height: max-content;
   margin: 0;
   padding: 14px 16px;
@@ -20,6 +20,13 @@
     line-height: 22px;
     text-align: left;
     font-weight: 900;
+  }
+
+  &__extra {
+    font-size: 15px;
+    line-height: 18px;
+    text-align: left;
+    overflow: hidden;
   }
 
   &__text {

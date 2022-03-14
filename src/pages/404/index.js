@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import classes from './index.module.scss';
 import LayoutPage from '@/components/layouts/layout-page';
+import LayoutPageNew from '@/components/layouts/layout-page-new';
 
 const Custom404 = () => {
   const content = (
@@ -14,7 +15,7 @@ const Custom404 = () => {
     </div>
   );
 
-  return <LayoutPage content={content} />;
+  return <LayoutPageNew content={content} />;
 };
 
 export default Custom404;

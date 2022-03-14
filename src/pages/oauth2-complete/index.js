@@ -1,9 +1,9 @@
 import PageLoader from '@/components/elements/page-loader';
-import { LayoutPage } from '@/components/layouts';
 import { AuthCookieStorage } from '@/utils/web-storage/cookie';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import LayoutPageNew from '@/components/layouts/layout-page-new';
 
 const Oauth2LoginComplete = props => {
   const router = useRouter();
@@ -27,7 +27,7 @@ const Oauth2LoginComplete = props => {
 
   const content = <PageLoader />;
 
-  return <LayoutPage content={content} />;
+  return <LayoutPageNew content={content} />;
 };
 
 export default connect(state => ({

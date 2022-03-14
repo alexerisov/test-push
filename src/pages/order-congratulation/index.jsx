@@ -1,26 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { LayoutPage } from '@/components/layouts';
 import { Basket } from '@/components/blocks/cart-page/basket';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { useRouter, withRouter } from 'next/router';
 import { withAuth } from '@/utils/authProvider';
-import { BasicInput } from '@/components/basic-elements/basic-input';
-import { useFormik } from 'formik';
-import * as yup from 'yup';
 import { Button } from '@material-ui/core';
-import { InputsBlock } from '@/components/basic-blocks/inputs-block';
 import classes from './index.module.scss';
 import { Divider } from '@/components/basic-elements/divider';
-import { getCart } from '@/store/cart/actions';
 import HandCartIcon from '../../../public/icons/Hand Cart/Line.svg';
 import CalendarIcon from '../../../public/icons/Calendar/Line.svg';
 import RecipeIcon from '../../../public/icons/Receipt/Line.svg';
 import WalletIcon from '../../../public/icons/Wallet/Line.svg';
 import dayjs from 'dayjs';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import LayoutPageNew from '@/components/layouts/layout-page-new';
 
 const OrderCongratulationPage = () => {
-  const dispatch = useDispatch();
   const router = useRouter();
   const [cart, setCart] = useState(null);
   const [order, setOrder] = useState(null);
@@ -77,7 +71,7 @@ const OrderCongratulationPage = () => {
     </div>
   );
 
-  return <LayoutPage content={content} />;
+  return <LayoutPageNew content={content} />;
 };
 
 const connector = connect(state => ({

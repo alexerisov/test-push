@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { LayoutPage } from '@/components/layouts';
 import { connect, useDispatch } from 'react-redux';
 import { useRouter, withRouter } from 'next/router';
 import { withAuth } from '@/utils/authProvider';
@@ -21,6 +20,7 @@ import dayjs from 'dayjs';
 import Typography from '@material-ui/core/Typography';
 import { addManyToCart, clearCart, retryOrder } from '@/store/cart/actions';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import LayoutPageNew from '@/components/layouts/layout-page-new';
 
 const MyOrdersPage = props => {
   const dispatch = useDispatch();
@@ -198,7 +198,7 @@ const MyOrdersPage = props => {
     </div>
   );
 
-  return <LayoutPage content={content} />;
+  return <LayoutPageNew content={content} />;
 };
 
 const connector = connect(state => ({

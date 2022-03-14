@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import classes from './index.module.scss';
-import LayoutPage from '@/components/layouts/layout-page';
 import { connect } from 'react-redux';
 import Account from '@/api/Account';
 import { CardNotification } from '@/components/elements/card';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import LayoutPageNew from '@/components/layouts/layout-page-new';
 
 const NotificationsPage = props => {
   useEffect(() => {
@@ -85,7 +85,7 @@ const NotificationsPage = props => {
     </div>
   );
 
-  return <LayoutPage content={content} />;
+  return <LayoutPageNew content={content} />;
 };
 
 export default connect(state => ({

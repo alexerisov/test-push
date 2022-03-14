@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { LayoutPage } from '@/components/layouts';
 import { loginActions } from '@/store/actions';
 import { useRouter } from 'next/router';
 import HeaderDefault from '@/components/elements/header-default';
 import classes from './index.module.scss';
 import Link from 'next/link';
+import LayoutPageNew from '@/components/layouts/layout-page-new';
 
 const ConfirmEmail = props => {
   const router = useRouter();
@@ -54,7 +54,7 @@ const ConfirmEmail = props => {
       )}
     </>
   );
-  return <LayoutPage content={content} header={<HeaderDefault />} />;
+  return <LayoutPageNew content={content} header={<HeaderDefault />} />;
 };
 
 export default connect()(ConfirmEmail);

@@ -330,6 +330,13 @@ function FormEditRecipe(props) {
   function uploadRecipe(e) {
     setStatusSubmit('Loading...');
     e.preventDefault();
+
+    const preparedIngredients = data.ingredients?.forEach(el => {
+      if (el?.custom_unit) {
+        el.unit = null;
+      }
+    });
+
     const clonedData = { ...data };
 
     props
@@ -631,17 +638,19 @@ function FormEditRecipe(props) {
             </button>
             {data?.ingredients.length !== 0
               ? JSON.parse(JSON.stringify(data.ingredients))
-                  .reverse()
                   .map((item, index) => (
                     <CardIngredient
                       delete={handleRemoveIngredient}
                       key={index}
+                      basicIngredient={item?.basic_ingredient}
                       title={item.title}
+                      extraInfo={item.extraInfo}
                       quantity={item.quantity}
                       unit={handleIngredientsUnit(item.unit)}
                       id={index}
                     />
                   ))
+                  .reverse()
               : ''}
           </div>
           <FieldError errors={error} path="ingredients" id="error" />

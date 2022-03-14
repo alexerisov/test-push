@@ -171,9 +171,9 @@ function FormCreateRecipe(props) {
   }
 
   function handleRemoveIngredient(id) {
-    const newIngredientList = data?.ingredients.filter(
-      (Ingredient, index) => `ingredient-${index}-${Ingredient.title}` !== id
-    );
+    const newIngredientList = data?.ingredients.filter((ingredient, index) => {
+      return `ingredient-${index}-${ingredient.title}` !== id;
+    });
     const newData = { ...data, ingredients: newIngredientList };
     props.dispatch(recipeUploadActions.update(newData));
   }
@@ -285,6 +285,12 @@ function FormCreateRecipe(props) {
   function uploadRecipe(e) {
     e.preventDefault();
     setStatusSubmit('Loading...');
+
+    const preparedIngredients = data.ingredients?.forEach(el => {
+      if (el?.custom_unit) {
+        el.unit = null;
+      }
+    });
 
     const clonedData = { ...data };
 
@@ -657,6 +663,7 @@ function FormCreateRecipe(props) {
             {t('ingredients.title')}:<span style={{ color: '#ffaa00' }}> {data?.ingredients.length ?? '0'}</span>
           </h2>
           <div className={classes.createRecipeSection__grid_type_cardIngredients} id="create-ingredients">
+            <div>{JSON.stringify(data?.ingredients)}</div>
             <button
               type="button"
               onClick={handleClickPopupOpen('addIngredient')}
@@ -665,16 +672,20 @@ function FormCreateRecipe(props) {
               <p className={classes.createRecipeButton_type_addIngredient__text}>{t('ingredients.button')}</p>
             </button>
             {data?.ingredients.length !== 0
-              ? JSON.parse(JSON.stringify(data.ingredients)).map((item, index) => (
-                  <CardIngredient
-                    delete={handleRemoveIngredient}
-                    key={`ingredient-${index}-${item.title}`}
-                    title={item.title}
-                    quantity={item.quantity}
-                    unit={handleIngredientsUnit(item.unit)}
-                    id={`ingredient-${index}-${item.title}`}
-                  />
-                ))
+              ? JSON.parse(JSON.stringify(data.ingredients))
+                  .map((item, index) => (
+                    <CardIngredient
+                      delete={handleRemoveIngredient}
+                      key={`ingredient-${index}-${item.title}`}
+                      basicIngredient={item?.basic_ingredient}
+                      title={item.title}
+                      extraInfo={item.extraInfo}
+                      quantity={item.quantity}
+                      unit={handleIngredientsUnit(item.unit)}
+                      id={`ingredient-${index}-${item.title}`}
+                    />
+                  ))
+                  .reverse()
               : ''}
           </div>
           <FieldError errors={error} path="ingredients" id="error" />

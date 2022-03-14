@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import LayoutPage from '@/components/layouts/layout-page';
 import FormEditAccountChef from '@/components/forms/form-edit-account-chef';
 import FormEditAccountUser from '@/components/forms/form-edit-account-user';
 import PropTypes from 'prop-types';
@@ -7,6 +6,7 @@ import { connect } from 'react-redux';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useRouter } from 'next/router';
 import { LANGUAGES } from '@/utils/datasets';
+import LayoutPageNew from '@/components/layouts/layout-page-new';
 
 const ProfileAccountSettings = props => {
   const router = useRouter();
@@ -27,7 +27,7 @@ const ProfileAccountSettings = props => {
 
   const content = user_type === 0 ? <FormEditAccountUser /> : <FormEditAccountChef />;
 
-  return <LayoutPage content={content} />;
+  return <LayoutPageNew content={content} />;
 };
 
 ProfileAccountSettings.propTypes = {

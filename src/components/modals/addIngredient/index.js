@@ -125,7 +125,9 @@ function AddIngredient(props) {
     validationSchema: validationSchema,
     onSubmit: values => {
       const preparedValues = {
-        title: values.title,
+        title: values.basicIngredient,
+        extraInfo: values.title,
+        unit: values.old_unit,
         quantity: getNumberWithMaxDigits(Number(values.quantity), 3)
       };
 
@@ -161,7 +163,6 @@ function AddIngredient(props) {
         const response = await Recipe.createBasicIngredient({ title: values.name, group: group.pk });
         setBasicIngredient(response.data);
         formik.setFieldValue('basicIngredient', response.data.title);
-        formik.setFieldValue('title', response.data.title);
         handleClose();
         quantityInputRef.current.focus();
       } catch (e) {
@@ -344,7 +345,6 @@ function AddIngredient(props) {
                   formik.setFieldValue('basicIngredient', '');
                 }
                 formik.setFieldValue('basicIngredient', newValue?.title || '');
-                formik.setFieldValue('title', newValue?.title || '');
               }}
               inputValue={formik.values.basicIngredient}
               onBlur={onBlur}

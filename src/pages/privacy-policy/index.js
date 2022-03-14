@@ -1,9 +1,8 @@
-import { LayoutPage } from '@/components/layouts';
 import React from 'react';
 import { connect } from 'react-redux';
 import classes from './index.module.scss';
-import Link from 'next/link';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import LayoutPageNew from '@/components/layouts/layout-page-new';
 
 const PrivacyPolicy = () => {
   const content = (
@@ -372,7 +371,7 @@ const PrivacyPolicy = () => {
       </p>
     </div>
   );
-  return <LayoutPage content={content} />;
+  return <LayoutPageNew content={content} />;
 };
 
 export default connect()(PrivacyPolicy);

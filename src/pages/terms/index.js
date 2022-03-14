@@ -1,7 +1,7 @@
-import { LayoutPage } from '@/components/layouts';
 import React from 'react';
 import { connect } from 'react-redux';
 import classes from './index.module.scss';
+import LayoutPageNew from '@/components/layouts/layout-page-new';
 
 const Terms = () => {
   const content = (
@@ -1128,7 +1128,7 @@ const Terms = () => {
     </div>
   );
 
-  return <LayoutPage content={content} />;
+  return <LayoutPageNew content={content} />;
 };
 
 export default connect()(Terms);

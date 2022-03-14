@@ -1,12 +1,12 @@
 import React from 'react';
 import Link from 'next/link';
 import classes from './index.module.scss';
-import LayoutPage from '@/components/layouts/layout-page';
 import { CardMenu } from '@/components/elements/card';
 import { modalActions } from '@/store/actions';
 import { useDispatch } from 'react-redux';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { withRedirectTo404ForHidePage } from '@/utils/withHidePage';
+import LayoutPageNew from '@/components/layouts/layout-page-new';
 
 const Menu = () => {
   const dispatch = useDispatch();
@@ -88,7 +88,7 @@ const Menu = () => {
     </div>
   );
 
-  return <LayoutPage content={content} />;
+  return <LayoutPageNew content={content} />;
 };
 
 export default withRedirectTo404ForHidePage(Menu, true);

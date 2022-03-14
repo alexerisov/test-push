@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import classes from './index.module.scss';
-import LayoutPage from '@/components/layouts/layout-page';
 import ContentLayout from '@/components/layouts/layout-profile-content';
 import { restorePasswordActions } from '@/store/actions';
 
@@ -12,6 +11,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import { modalActions } from '@/store/actions';
+import LayoutPageNew from '@/components/layouts/layout-page-new';
 
 const StyledTextField = styled(TextField)`
   width: 100%;
@@ -115,7 +115,7 @@ const ProfilePassword = props => {
     </>
   );
 
-  return <LayoutPage content={content} />;
+  return <LayoutPageNew content={content} />;
 };
 
 export default connect(state => ({

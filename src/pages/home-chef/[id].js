@@ -11,7 +11,6 @@ import Avatar from '@material-ui/core/Avatar';
 import { makeStyles } from '@material-ui/core/styles';
 import { useMediaQuery } from '@material-ui/core';
 
-import { LayoutPage } from '@/components/layouts';
 import RoleModel from '@/components/elements/role-model';
 import CardFavouriteDishes from '@/components/elements/card/card-favourite-dishes';
 import CardHomeChefProfile from '@/components/elements/card/card-homechef-profile';
@@ -22,6 +21,7 @@ import Account from '@/api/Account';
 
 import styles from '@/pages/home-chef/index.module.scss';
 import 'pure-react-carousel/dist/react-carousel.es.css';
+import LayoutPageNew from '@/components/layouts/layout-page-new';
 
 const useAvatarStyles = makeStyles({
   root: {
@@ -328,7 +328,7 @@ const HomePageOfTargetChef = () => {
     </div>
   );
 
-  return <LayoutPage content={content} />;
+  return <LayoutPageNew content={content} />;
 };
 
 export default HomePageOfTargetChef;

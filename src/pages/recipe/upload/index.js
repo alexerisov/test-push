@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import LayoutPage from '@/components/layouts/layout-page';
 import { FormCreateRecipe } from '@/components/forms';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import LayoutPageNew from '@/components/layouts/layout-page-new';
 
 function CreateRecipe() {
-  return <LayoutPage content={<FormCreateRecipe />} />;
+  return <LayoutPageNew content={<FormCreateRecipe />} />;
 }
 
 export default connect()(CreateRecipe);

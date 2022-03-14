@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import classes from './index.module.scss';
 import { connect } from 'react-redux';
 
-import LayoutPage from '@/components/layouts/layout-page';
 import ContentLayout from '@/components/layouts/layout-profile-content';
 import { modalActions } from '@/store/actions';
 import { profileActions, accountActions } from '@/store/actions';
@@ -20,6 +19,7 @@ import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
 import { useRouter } from 'next/router';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import LayoutPageNew from '@/components/layouts/layout-page-new';
 
 const StyledTextField = styled(TextField)`
   width: 100%;
@@ -576,7 +576,7 @@ const ProfileAccountSettings = props => {
     </>
   );
 
-  return <LayoutPage content={content} />;
+  return <LayoutPageNew content={content} />;
 };
 
 ProfileAccountSettings.propTypes = {
