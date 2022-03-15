@@ -16,7 +16,8 @@ import Link from 'next/link';
 import { USER_TYPE } from '@/utils/datasets';
 import BurgerMenu from '@/components/basic-blocks/burger-menu';
 import { LoginDrawer } from '@/components/basic-blocks/drawer';
-import { useTranslation } from 'next-i18next';
+import { useTranslation, i18n } from 'next-i18next';
+import LanguageSelector from '@/components/elements/language-selector';
 
 const UserAvatar = ({ clickHandler, notificationAmount, avatar }) => {
   const RedCircle = () => <div className={classes.red_circle}></div>;
@@ -37,6 +38,28 @@ const BurgerButton = ({ clickHandler }) => (
   </IconButton>
 );
 
+const RecipesButton = () => (
+  <Link href="/search">
+    <Button variant="text" className={classes.button_recipes}>
+      {i18n.t('header.recipesButton')}
+    </Button>
+  </Link>
+);
+
+const LoginButton = ({ handleClick }) => (
+  <Button onClick={handleClick('register')} variant="outlined" className={classes.button_login}>
+    {i18n.t('header.loginButton')}
+  </Button>
+);
+
+const UploadRecipeButton = () => (
+  <Link href="/recipe/upload">
+    <Button variant="outlined" className={classes.button_upload}>
+      {i18n.t('header.uploadRecipeButton')}
+    </Button>
+  </Link>
+);
+
 const Header = props => {
   const { t } = useTranslation('common');
   const useSeparatorStyles = makeStyles({
@@ -50,6 +73,7 @@ const Header = props => {
   const separatorStyles = useSeparatorStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const avatar = props?.account?.profile?.avatar;
+  const isAuthorized = useSelector(state => state.account?.hasToken);
 
   const handleClickLogin = name => {
     return () => {
@@ -65,7 +89,6 @@ const Header = props => {
 
   const cartItemsAmount = useSelector(state => state.cart.products?.length);
 
-  const isAuthorized = useSelector(state => state?.account?.hasToken);
   const isChef = useSelector(state => state?.account?.profile?.user_type === USER_TYPE.chefType);
 
   const burgerMenuProps = { anchorEl, setAnchorEl, isExpanded, isChef, notificationAmount };
@@ -73,6 +96,7 @@ const Header = props => {
   const drawerProps = { anchorEl, setAnchorEl, isExpanded, setIsExpanded, isChef, notificationAmount };
 
   useEffect(() => {
+    console.log('auth', isAuthorized);
     return cartItemsAmount ?? props.dispatch(getCart());
   }, [props.account.hasToken]);
 
@@ -84,44 +108,20 @@ const Header = props => {
     }
   }, [props.account.hasToken]);
 
-  const OrangeCircle = () => <div className={classes.orange_circle}></div>;
-
-  const RecipesButton = () => (
-    <Link href="/search">
-      <Button variant="text" className={classes.button_recipes}>
-        {t('header.recipesButton')}
-      </Button>
-    </Link>
-  );
-
-  const LoginButton = () => (
-    <Button onClick={handleClickLogin('register')} variant="outlined" className={classes.button_login}>
-      {t('header.loginButton')}
-    </Button>
-  );
-
-  const UploadRecipeButton = () => (
-    <Link href="/recipe/upload">
-      <Button variant="outlined" className={classes.button_upload}>
-        {t('header.uploadRecipeButton')}
-      </Button>
-    </Link>
-  );
-
-  const CartButton = () => (
-    <Link href="/cart">
-      <IconButton className={classes.button_cart}>
-        <CartIcon />
-        {cartItemsAmount > 0 && <OrangeCircle />}
-      </IconButton>
-    </Link>
-  );
-
   const openMenuHandler = event => {
     setAnchorEl(event.target);
     // event.stopPropagation();
     setIsExpanded(true);
   };
+
+  const CartButton = cartItemsAmount => (
+    <Link href="/cart">
+      <IconButton className={classes.button_cart}>
+        <CartIcon />
+        {cartItemsAmount > 0 && <div className={classes.orange_circle}></div>}
+      </IconButton>
+    </Link>
+  );
 
   return (
     <div className={`${classes.header} ${props.shadow && classes.header__shadow}`}>
@@ -133,14 +133,15 @@ const Header = props => {
         </Link>
         <div className={classes.button_group}>
           <RecipesButton />
-          {!isAuthorized && !isMobile && <LoginButton />}
+          {!isAuthorized && !isMobile && <LoginButton handleClick={handleClickLogin} />}
           {isAuthorized && isChef && <UploadRecipeButton />}
-          {isAuthorized && <CartButton />}
+          {isAuthorized && <CartButton cartItemsAmount={cartItemsAmount} />}
           {isAuthorized && (
             <UserAvatar clickHandler={openMenuHandler} avatar={avatar} notificationAmount={notificationAmount} />
           )}
 
           {isMobile && <BurgerButton clickHandler={openMenuHandler} />}
+          <LanguageSelector />
         </div>
       </div>
       {isAuthorized && <BurgerMenu {...burgerMenuProps} />}
