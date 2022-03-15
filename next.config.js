@@ -40,6 +40,9 @@ module.exports = {
     disableStaticImages: true,
     domains: ['localhost', 'goodbit.dev', 'eatchefs.com']
   },
+  typescript: {
+    ignoreBuildErrors: true
+  },
   webpack: (config, options) => {
     config.module.rules.push(
       {
