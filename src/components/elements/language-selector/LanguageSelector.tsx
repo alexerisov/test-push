@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import s from './LanguageSelector.module.scss';
 
-import { ReactComponent as FlagUS } from '@/../public/icons/flags/us.svg';
-import { ReactComponent as FlagNL } from '@/../public/icons/flags/nl.svg';
+import FlagUS from '../../../../public/icons/flags/us.svg';
+import FlagNL from '../../../../public/icons/flags/nl.svg';
 import { IconButton, ListItemIcon, ListItemText, MenuItem, Select } from '@material-ui/core';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import { useRouter } from 'next/router';

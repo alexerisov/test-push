@@ -1,21 +1,7 @@
 {
   "compilerOptions": {
-    "jsx": "preserve",
-    "target": "ES6",
-    "module": "commonjs",
-    "allowSyntheticDefaultImports": true,
-    "baseUrl": "src",
-    "paths": {
-      "@/*": [
-        "*"
-      ],
-      "~src/*": [
-        "*"
-      ],
-      "~styles/*": [
-        "styles/*"
-      ]
-    },
+    "noImplicitAny": false,
+    "target": "es6",
     "lib": [
       "dom",
       "dom.iterable",
@@ -23,19 +9,27 @@
     ],
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": false,
+    "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
-    "incremental": true,
     "esModuleInterop": true,
+    "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "src",
+    "paths": {
+      "@/*": ["*"],
+      "~src/*": ["*"],
+      "~styles/*": ["styles/*"]
+    },
+    "incremental": true
   },
-  "include": [
-    "**/*"
-  ],
-  "exclude": [
-    "node_modules"
+  "include": ["**/*"],
+  "exclude": ["node_modules"],
+  "files": [
+    "declarations.d.ts"
   ]
 }
