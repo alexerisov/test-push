@@ -12,6 +12,7 @@ import styled from 'styled-components';
 
 import { modalActions } from '@/store/actions';
 import LayoutPageNew from '@/components/layouts/layout-page-new';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const StyledTextField = styled(TextField)`
   width: 100%;
@@ -122,3 +123,12 @@ export default connect(state => ({
   account: state.account,
   restorePassword: state.restorePassword
 }))(ProfilePassword);
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common']))
+      // Will be passed to the page component as props
+    }
+  };
+}

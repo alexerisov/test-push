@@ -1,11 +1,15 @@
-import axios from 'axios';
+import axios, { AxiosInstance } from 'axios';
 import CONFIG from '../config.js';
 
-const http = axios.create({
-  baseURL: CONFIG.baseUrl,
-});
+interface ExtendedAxiosInstance extends AxiosInstance {
+  init: (any) => Promise<void>;
+}
 
-http.init = async function (store) {
+const http = axios.create({
+  baseURL: CONFIG.baseUrl
+}) as ExtendedAxiosInstance;
+
+http.init = async function (store): Promise<void> {
   let prevSessionId = store.getState().account.token;
   if (prevSessionId !== null) {
     this.defaults.headers.common['Authorization'] = `Bearer ${prevSessionId}`;

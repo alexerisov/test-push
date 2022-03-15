@@ -4,10 +4,10 @@ import { Button, Drawer, IconButton } from '@material-ui/core';
 import { modalActions } from '@/store/actions';
 import { useDispatch } from 'react-redux';
 import logo from '../../../../public/images/Header Logo/Line.svg';
-import { ReactComponent as CloseIcon } from '../../../../public/icons/Close/Line.svg';
+import CloseIcon from '../../../../public/icons/Close/Line.svg';
 import Link from 'next/link';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
-import { ReactComponent as UserIcon } from '../../../../public/icons/User/Line.svg';
+import UserIcon from '../../../../public/icons/User/Line.svg';
 import { useRouter } from 'next/router';
 
 export const LoginDrawer = props => {

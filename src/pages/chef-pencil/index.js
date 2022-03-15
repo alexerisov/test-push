@@ -14,6 +14,7 @@ import ChefPencil from '@/api/ChefPencil';
 import classes from './index.module.scss';
 import SearchIcon from '@material-ui/icons/Search';
 import { modalActions } from '@/store/actions';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const ChefPencilsPage = () => {
   const matches = useMediaQuery('(max-width: 992px)');
@@ -139,3 +140,12 @@ const ChefPencilsPage = () => {
 };
 
 export default ChefPencilsPage;
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common']))
+      // Will be passed to the page component as props
+    }
+  };
+}

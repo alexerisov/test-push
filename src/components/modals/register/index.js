@@ -1,19 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import classes from './register.module.scss';
 import { LayoutModal } from '@/components/layouts';
-import GoogleLogin from 'react-google-login';
-import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
-import {
-  Button,
-  Checkbox,
-  FormControlLabel,
-  Icon,
-  IconButton,
-  Link,
-  OutlinedInput,
-  SvgIcon,
-  useMediaQuery
-} from '@material-ui/core';
+import { Button, Icon, IconButton, Link, OutlinedInput, useMediaQuery } from '@material-ui/core';
 import { loginActions, modalActions, registerActions, restorePasswordActions } from '@/store/actions';
 import { LoginChoice, LoginSocial, RegisterChoice, RegisterSuccess, ResetPasswordSuccess } from '@/components/elements';
 import { FormLogin, FormRegister, FormResetPassword } from '@/components/forms';
@@ -22,10 +10,10 @@ import { useRouter } from 'next/router';
 import { BasicSelect } from '@/components/basic-elements/basic-select';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { ReactComponent as ArrowIcon } from '../../../../public/icons/Arrow Right 2/Line.svg';
-import { ReactComponent as GoogleIcon } from '../../../../public/icons/Google Logo/Line.svg';
-import { ReactComponent as AppleIcon } from '../../../../public/icons/Apple Logo/Line.svg';
-import { ReactComponent as FacebookIcon } from '../../../../public/icons/Facebook Logo/Line-F.svg';
+import ArrowIcon from '../../../../public/icons/Arrow Right 2/Line.svg';
+import GoogleIcon from '../../../../public/icons/Google Logo/Line.svg';
+import AppleIcon from '../../../../public/icons/Apple Logo/Line.svg';
+import FacebookIcon from '../../../../public/icons/Facebook Logo/Line-F.svg';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import { Divider } from '@/components/basic-elements/divider';
 import { BasicInput } from '@/components/basic-elements/basic-input';
@@ -33,7 +21,6 @@ import { loginViaFacebook, loginViaGoogle } from '@/utils/authSocial';
 import FieldError from '@/components/elements/field-error';
 import VisibilityOffRoundedIcon from '@material-ui/icons/VisibilityOffRounded';
 import VisibilityRoundedIcon from '@material-ui/icons/VisibilityRounded';
-import { oauthRedirectUrl } from '@/config';
 
 function Register(props) {
   const router = useRouter();

@@ -55,24 +55,14 @@ module.exports = {
       },
       {
         test: /\.(svg)$/i,
-        use: [
-          {
-            loader: require.resolve('@svgr/webpack'),
-            options: {
-              typescript: true,
-              icon: true,
-              ext: 'tsx'
-            }
-          },
-          {
-            loader: 'file-loader',
-            options: {
-              typescript: true,
-              icon: true,
-              name: 'static/images/[name].[contenthash].[ext]'
-            }
+        use: {
+          loader: '@svgr/webpack',
+          options: {
+            typescript: true,
+            icon: true,
+            ext: 'tsx'
           }
-        ]
+        }
       },
       {
         test: /\.(swf|otf|eot|ttf|woff|woff2)(\?.*)?$/,

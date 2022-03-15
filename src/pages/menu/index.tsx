@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { withRedirectTo404ForHidePage } from '@/utils/withHidePage';
 import LayoutPageNew from '@/components/layouts/layout-page-new';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const Menu = () => {
   const dispatch = useDispatch();
@@ -92,3 +93,12 @@ const Menu = () => {
 };
 
 export default withRedirectTo404ForHidePage(Menu, true);
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common']))
+      // Will be passed to the page component as props
+    }
+  };
+}

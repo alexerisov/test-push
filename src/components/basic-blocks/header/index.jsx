@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import classes from './index.module.scss';
 import logo from '../../../../public/images/Header Logo/Line.svg';
-import { ReactComponent as CartIcon } from '../../../../public/icons/Shopping Cart/Line.svg';
-import { ReactComponent as MenuIcon } from '../../../../public/icons/Menu/Line.svg';
+import CartIcon from '../../../../public/icons/Shopping Cart/Line.svg';
+import MenuIcon from '../../../../public/icons/Menu/Line.svg';
 import { Button, IconButton, ListItemIcon, NoSsr, SvgIcon } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
 import { connect, useSelector } from 'react-redux';
@@ -18,6 +18,7 @@ import BurgerMenu from '@/components/basic-blocks/burger-menu';
 import { LoginDrawer } from '@/components/basic-blocks/drawer';
 import { useTranslation, i18n } from 'next-i18next';
 import LanguageSelector from '@/components/elements/language-selector';
+import { useSession } from 'next-auth/react';
 
 const UserAvatar = ({ clickHandler, notificationAmount, avatar }) => {
   const RedCircle = () => <div className={classes.red_circle}></div>;
@@ -38,35 +39,47 @@ const BurgerButton = ({ clickHandler }) => (
   </IconButton>
 );
 
-const RecipesButton = () => (
-  <Link href="/search">
-    <Button variant="text" className={classes.button_recipes}>
-      {i18n.t('header.recipesButton')}
-    </Button>
-  </Link>
-);
+const RecipesButton = () => {
+  const { t } = useTranslation('common');
+  return (
+    <Link href="/search">
+      <Button variant="text" className={classes.button_recipes}>
+        {i18n?.t('header.recipesButton')}
+      </Button>
+    </Link>
+  );
+};
 
-const LoginButton = ({ handleClick }) => (
-  <Button onClick={handleClick('register')} variant="outlined" className={classes.button_login}>
-    {i18n.t('header.loginButton')}
-  </Button>
-);
-
-const UploadRecipeButton = () => (
-  <Link href="/recipe/upload">
-    <Button variant="outlined" className={classes.button_upload}>
-      {i18n.t('header.uploadRecipeButton')}
+const LoginButton = ({ handleClick }) => {
+  const { t } = useTranslation('common');
+  return (
+    <Button onClick={handleClick('register')} variant="outlined" className={classes.button_login}>
+      {i18n?.t('header.loginButton')}
     </Button>
-  </Link>
-);
+  );
+};
+
+const UploadRecipeButton = () => {
+  const { t } = useTranslation('common');
+  return (
+    <Link href="/recipe/upload">
+      <Button variant="outlined" className={classes.button_upload}>
+        {i18n?.t('header.uploadRecipeButton')}
+      </Button>
+    </Link>
+  );
+};
 
 const Header = props => {
-  const { t } = useTranslation('common');
   const useSeparatorStyles = makeStyles({
     root: {
       borderBottom: '2px solid #f8f8f8'
     }
   });
+
+  const { data: session, status } = useSession();
+  const loading = status === 'loading';
+  console.log('sesison', session, 'status', status);
 
   const isMobile = useMediaQuery('(max-width: 768px)');
   const [isExpanded, setIsExpanded] = React.useState(false);
@@ -135,10 +148,10 @@ const Header = props => {
         </Link>
         <div className={classes.button_group}>
           <RecipesButton />
-          {!isAuthorized && !isMobile && <LoginButton handleClick={handleClickLogin} />}
-          {isAuthorized && isChef && <UploadRecipeButton />}
-          {isAuthorized && <CartButton cartItemsAmount={cartItemsAmount} />}
-          {isAuthorized && (
+          {!session && !isMobile && <LoginButton handleClick={handleClickLogin} />}
+          {session && isChef && <UploadRecipeButton />}
+          {session && <CartButton cartItemsAmount={cartItemsAmount} />}
+          {session && (
             <UserAvatar clickHandler={openMenuHandler} avatar={avatar} notificationAmount={notificationAmount} />
           )}
 
@@ -146,8 +159,8 @@ const Header = props => {
           <LanguageSelector />
         </div>
       </div>
-      {isAuthorized && <BurgerMenu {...burgerMenuProps} />}
-      {!isAuthorized && isMobile && <LoginDrawer {...drawerProps} />}
+      {session && <BurgerMenu {...burgerMenuProps} />}
+      {!session && isMobile && <LoginDrawer {...drawerProps} />}
     </div>
   );
 };

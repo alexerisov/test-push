@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import classes from './index.module.scss';
 import LayoutPageNew from '@/components/layouts/layout-page-new';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const Custom404 = () => {
   const content = (
@@ -18,3 +19,12 @@ const Custom404 = () => {
 };
 
 export default Custom404;
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common']))
+      // Will be passed to the page component as props
+    }
+  };
+}

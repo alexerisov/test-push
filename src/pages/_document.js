@@ -5,8 +5,9 @@ import { theme } from '../utils/themeProvider';
 
 export default class MyDocument extends Document {
   render() {
+    const currentLocale = this.props.__NEXT_DATA__.query.locale;
     return (
-      <Html lang="nl" translate="no" className="notranslate">
+      <Html lang={currentLocale} translate="no" className="notranslate">
         <Head>
           {/* PWA primary color */}
           <meta name="googlebot" content="notranslate" />

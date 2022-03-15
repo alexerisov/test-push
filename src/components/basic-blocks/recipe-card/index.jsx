@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, removeFromCart } from '@/store/cart/actions';
 import { Divider } from '@/components/basic-elements/divider';
-import { ReactComponent as CartIcon } from '../../../../public/icons/Shopping Cart/Line.svg';
+import CartIcon from '../../../../public/icons/Shopping Cart/Line.svg';
 import { Button } from '@material-ui/core';
 import { modalActions } from '@/store/actions';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';

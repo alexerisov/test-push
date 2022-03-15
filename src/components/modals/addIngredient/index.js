@@ -9,7 +9,7 @@ import { units } from '@/utils/datasets';
 import { Select, MenuItem, Collapse, Dialog, FormControl } from '@material-ui/core';
 import { getNumberWithMaxDigits } from '@/utils/helpers';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
-import { ReactComponent as CloseIcon } from '../../../../public/icons/Close Circle/Line.svg';
+import CloseIcon from '../../../../public/icons/Close Circle/Line.svg';
 import AddIcon from '@material-ui/icons/Add';
 import { Autocomplete } from '@material-ui/lab';
 

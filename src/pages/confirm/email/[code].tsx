@@ -6,6 +6,7 @@ import HeaderDefault from '@/components/elements/header-default';
 import classes from './index.module.scss';
 import Link from 'next/link';
 import LayoutPageNew from '@/components/layouts/layout-page-new';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const ConfirmEmail = props => {
   const router = useRouter();
@@ -58,3 +59,12 @@ const ConfirmEmail = props => {
 };
 
 export default connect()(ConfirmEmail);
+
+export async function getServerSideProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common']))
+      // Will be passed to the page component as props
+    }
+  };
+}

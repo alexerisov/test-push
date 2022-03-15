@@ -22,6 +22,7 @@ import Account from '@/api/Account';
 import styles from '@/pages/home-chef/index.module.scss';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import LayoutPageNew from '@/components/layouts/layout-page-new';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const useAvatarStyles = makeStyles({
   root: {
@@ -332,3 +333,12 @@ const HomePageOfTargetChef = () => {
 };
 
 export default HomePageOfTargetChef;
+
+export async function getServerSideProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common']))
+      // Will be passed to the page component as props
+    }
+  };
+}

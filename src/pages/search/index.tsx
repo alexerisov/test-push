@@ -50,19 +50,19 @@ import LayoutPageNew from '@/components/layouts/layout-page-new';
 import { Spinner } from '@/components/elements';
 import { Autocomplete } from '@material-ui/lab';
 
-import { ReactComponent as SearchIcon } from '@/../public/icons/Search/Line.svg';
-import { ReactComponent as CloseIcon } from '@/../public/icons/Close Circle/Line.svg';
-import { ReactComponent as CoinIcon } from '@/../public/icons/Coin/Line.svg';
-import { ReactComponent as RecipeIcon } from '@/../public/icons/Receipt/Line.svg';
-import { ReactComponent as ArrowUpIcon } from '@/../public/icons/Arrow Up Simple/Line.svg';
+import SearchIcon from '@/../public/icons/Search/Line.svg';
+import CloseIcon from '@/../public/icons/Close Circle/Line.svg';
+import CoinIcon from '@/../public/icons/Coin/Line.svg';
+import RecipeIcon from '@/../public/icons/Receipt/Line.svg';
+import ArrowUpIcon from '@/../public/icons/Arrow Up Simple/Line.svg';
 
-import { ReactComponent as BurgerIcon } from '@/../public/icons/Burger/Line.svg';
-import { ReactComponent as ServingPlateIcon } from '@/../public/icons/Serving Plate/Line.svg';
-import { ReactComponent as SoupIcon } from '@/../public/icons/Soup/Line.svg';
-import { ReactComponent as IceCreamIcon } from '@/../public/icons/Ice Cream/Line.svg';
-import { ReactComponent as FrenchFriesIcon } from '@/../public/icons/French Fries/Line.svg';
-import { ReactComponent as CarrotIcon } from '@/../public/icons/Carrot/Line.svg';
-import { ReactComponent as DonutIcon } from '@/../public/icons/Donut/Line.svg';
+import BurgerIcon from '@/../public/icons/Burger/Line.svg';
+import ServingPlateIcon from '@/../public/icons/Serving Plate/Line.svg';
+import SoupIcon from '@/../public/icons/Soup/Line.svg';
+import IceCreamIcon from '@/../public/icons/Ice Cream/Line.svg';
+import FrenchFriesIcon from '@/../public/icons/French Fries/Line.svg';
+import CarrotIcon from '@/../public/icons/Carrot/Line.svg';
+import DonutIcon from '@/../public/icons/Donut/Line.svg';
 
 import Cookies from 'cookies';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
