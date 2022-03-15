@@ -8,26 +8,21 @@ import * as reducers from './reducers';
 let store;
 
 function initStore(initialState) {
-
   const composeEnhancers = composeWithDevTools({
     trace: true,
     traceLimit: 25,
     serialize: true
   });
 
-  return createStore(
-    combineReducers(reducers),
-    initialState,
-    composeEnhancers(applyMiddleware(thunkMiddleware))
-  );
+  return createStore(combineReducers(reducers), initialState, composeEnhancers(applyMiddleware(thunkMiddleware)));
 }
 
-export const initializeStore = (preloadedState) => {
+export const initializeStore = preloadedState => {
   let _store = store ?? initStore(preloadedState);
   if (preloadedState && store) {
     _store = initStore({
       ...store.getState(),
-      ...preloadedState,
+      ...preloadedState
     });
     store = undefined;
   }

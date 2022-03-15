@@ -26,7 +26,7 @@ class LoginSocial extends Component {
     const code = this.query.get('code');
 
     if (this.props.account.hasToken) {
-      Router.router.push('/', undefined, { locale: this.props.router.locale });
+      this.props.router.replace('/', undefined, { locale: this.props.router.locale });
     }
     this.props
       .dispatch(
@@ -39,12 +39,15 @@ class LoginSocial extends Component {
           redirect_uri: CONFIG.oauthRedirectUrl
         })
       )
-      .then(() => {
-        this.props.router.replace('/');
+      .then(res => {
+        console.log('promise', res);
+        setTimeout(() => {
+          this.props.router.replace('/', undefined, { locale: this.props.router.locale });
+        }, 1000);
       })
       .catch(e => {
         console.log('Login error', e);
-        this.props.router.replace('/');
+        this.props.router.replace('/', undefined, { locale: this.props.router.locale });
       });
   }
 

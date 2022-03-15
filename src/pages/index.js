@@ -1,8 +1,6 @@
 import React from 'react';
 import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
-import classes from './index.module.scss';
-import LayoutPage from '@/components/layouts/layout-page';
 import { connect, useSelector } from 'react-redux';
 import { modalActions, profileActions } from '@/store/actions';
 import Recipe from '@/api/Recipe';
@@ -14,8 +12,6 @@ import { SearchBlock } from '@/components/blocks/home-page/search';
 import { WeekMenuBlock } from '@/components/blocks/home-page/week-menu';
 import LayoutPageNew from '@/components/layouts/layout-page-new';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { i18n } from 'next-i18next';
-import { LANGUAGES } from '@/utils/datasets';
 
 const useStyles = makeStyles({
   root: {
@@ -51,19 +47,6 @@ const Home = props => {
 
   React.useEffect(() => {
     props.dispatch(profileActions.init(props.account.profile));
-    for (let key in LANGUAGES) {
-      if (isAuthorized) {
-        if (props.account.profile?.language === LANGUAGES[key]) {
-          router.locale = key;
-        }
-      } else {
-        var userLang = navigator.language || navigator.userLanguage;
-        if (userLang === LANGUAGES[key]) {
-          router.locale = key;
-        }
-      }
-    }
-    router.push(router.asPath, undefined, { locale: router.locale });
   }, [props.account.profile]);
 
   const handleChangeStatus = () => {

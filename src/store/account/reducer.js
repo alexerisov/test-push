@@ -16,7 +16,6 @@ const initState = {
 export default reducer(initState, {
   [types.SAVE_SESSION]: (state, action) => {
     const profile = action.payload.profile ? action.payload.profile : state.profile;
-
     return {
       ...state,
       profile,

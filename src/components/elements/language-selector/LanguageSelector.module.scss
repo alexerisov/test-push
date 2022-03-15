@@ -1,0 +1,18 @@
+.menu__item {
+  width: auto !important;
+}
+
+.select {
+  & fieldset{
+    border: none !important;
+    outline: none !important;
+  }
+
+  max-width: 70px;
+  max-height: 40px;
+  border: none !important;
+}
+
+.paper {
+  max-width: 40px !important;
+}
