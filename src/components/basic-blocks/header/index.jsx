@@ -73,7 +73,7 @@ const Header = props => {
   const separatorStyles = useSeparatorStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const avatar = props?.account?.profile?.avatar;
-  const isAuthorized = useSelector(state => state.account?.hasToken);
+  const [isAuthorized, setIsAuthorized] = useState(props.account?.hasToken);
 
   const handleClickLogin = name => {
     return () => {
@@ -96,8 +96,10 @@ const Header = props => {
   const drawerProps = { anchorEl, setAnchorEl, isExpanded, setIsExpanded, isChef, notificationAmount };
 
   useEffect(() => {
-    console.log('auth', isAuthorized);
-    return cartItemsAmount ?? props.dispatch(getCart());
+    setTimeout(() => {
+      setIsAuthorized(props.account?.hasToken);
+      return cartItemsAmount ?? props.dispatch(getCart());
+    }, 200);
   }, [props.account.hasToken]);
 
   useEffect(() => {

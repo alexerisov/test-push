@@ -1,7 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
 import classes from './index.module.scss';
-import LayoutPage from '@/components/layouts/layout-page';
 import LayoutPageNew from '@/components/layouts/layout-page-new';
 
 const Custom404 = () => {
