@@ -4,11 +4,12 @@
     "target": "ES6",
     "module": "commonjs",
     "allowSyntheticDefaultImports": true,
-    "baseUrl": "src",
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["*"],
-      "~src/*": ["*"],
-      "~styles/*": ["styles/*"]
+      "@/*": ["src/*"],
+      "~public/*": ["public/*"],
+      "~src/*": ["src/*"],
+      "~styles/*": ["src/styles/*"]
     }
   },
   "include": ["**/*"],

@@ -26,7 +26,7 @@ export const Footer = () => {
           <div className={classes.logo_wrapper}>
             <Link href="/">
               <a>
-                <Logo />
+                <Logo className={classes.logo_footer} />
               </a>
             </Link>
           </div>

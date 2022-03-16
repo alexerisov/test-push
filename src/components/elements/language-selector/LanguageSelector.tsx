@@ -9,6 +9,7 @@ import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import { useRouter } from 'next/router';
 import { LANGUAGES } from '@/utils/datasets';
 import { useSelector } from 'react-redux';
+import { RootState } from '@/store/store';
 
 const ITEM_HEIGHT = 24;
 const ITEM_PADDING_TOP = 4;
@@ -25,9 +26,9 @@ export const LanguageSelector = () => {
   const { i18n } = useTranslation('common');
   const router = useRouter();
   // @ts-ignore
-  const isAuthorized = useSelector(state => state.account?.hasToken);
+  const isAuthorized = useSelector((state: RootState) => state.account?.hasToken);
   // @ts-ignore
-  const profileLanguage = useSelector(state => state.profile?.language);
+  const profileLanguage = useSelector((state: RootState) => state.profile?.language);
 
   const languageList = [
     {

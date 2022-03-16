@@ -7,6 +7,9 @@ import * as reducers from './reducers';
 
 let store;
 
+const rootReducer = combineReducers(reducers);
+export type RootState = ReturnType<typeof rootReducer>;
+
 function initStore(initialState) {
   const composeEnhancers = composeWithDevTools({
     trace: true,
@@ -14,7 +17,7 @@ function initStore(initialState) {
     serialize: true
   });
 
-  return createStore(combineReducers(reducers), initialState, composeEnhancers(applyMiddleware(thunkMiddleware)));
+  return createStore(rootReducer, initialState, composeEnhancers(applyMiddleware(thunkMiddleware)));
 }
 
 export const initializeStore = preloadedState => {

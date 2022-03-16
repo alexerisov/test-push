@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import classes from './index.module.scss';
-import logo from '../../../../public/images/Header Logo/Line.svg';
-import CartIcon from '../../../../public/icons/Shopping Cart/Line.svg';
-import MenuIcon from '../../../../public/icons/Menu/Line.svg';
-import { Button, IconButton, ListItemIcon, NoSsr, SvgIcon } from '@material-ui/core';
+import s from './index.module.scss';
+import Logo from '~public/images/Header Logo/Line.svg';
+import CartIcon from '~public/icons/Shopping Cart/Line.svg';
+import MenuIcon from '~public/icons/Menu/Line.svg';
+import { Button, IconButton } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
 import { connect, useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { accountActions, modalActions } from '@/store/actions';
+import { modalActions } from '@/store/actions';
 import { useRouter } from 'next/router';
 import { getCart } from '@/store/cart/actions';
 import Account from '@/api/Account';
@@ -16,16 +16,16 @@ import Link from 'next/link';
 import { USER_TYPE } from '@/utils/datasets';
 import BurgerMenu from '@/components/basic-blocks/burger-menu';
 import { LoginDrawer } from '@/components/basic-blocks/drawer';
-import { useTranslation, i18n } from 'next-i18next';
+import { useTranslation } from 'next-i18next';
 import LanguageSelector from '@/components/elements/language-selector';
-import { useSession } from 'next-auth/react';
+import { RootState } from '@/store/store';
 
 const UserAvatar = ({ clickHandler, notificationAmount, avatar }) => {
-  const RedCircle = () => <div className={classes.red_circle}></div>;
+  const RedCircle = () => <div className={s.red_circle}></div>;
 
   return (
     <span onClick={clickHandler}>
-      <div className={classes.button_avatar}>
+      <div className={s.button_avatar}>
         <Avatar src={avatar} />
         {notificationAmount > 0 && <RedCircle />}
       </div>
@@ -43,8 +43,8 @@ const RecipesButton = () => {
   const { t } = useTranslation('common');
   return (
     <Link href="/search">
-      <Button variant="text" className={classes.button_recipes}>
-        {i18n?.t('header.recipesButton')}
+      <Button variant="text" className={s.button_recipes}>
+        {t('header.recipesButton')}
       </Button>
     </Link>
   );
@@ -53,8 +53,8 @@ const RecipesButton = () => {
 const LoginButton = ({ handleClick }) => {
   const { t } = useTranslation('common');
   return (
-    <Button onClick={handleClick('register')} variant="outlined" className={classes.button_login}>
-      {i18n?.t('header.loginButton')}
+    <Button onClick={handleClick('register')} variant="outlined" className={s.button_login}>
+      {t('header.loginButton')}
     </Button>
   );
 };
@@ -63,8 +63,8 @@ const UploadRecipeButton = () => {
   const { t } = useTranslation('common');
   return (
     <Link href="/recipe/upload">
-      <Button variant="outlined" className={classes.button_upload}>
-        {i18n?.t('header.uploadRecipeButton')}
+      <Button variant="outlined" className={s.button_upload}>
+        {t('header.uploadRecipeButton')}
       </Button>
     </Link>
   );
@@ -76,10 +76,6 @@ const Header = props => {
       borderBottom: '2px solid #f8f8f8'
     }
   });
-
-  const { data: session, status } = useSession();
-  const loading = status === 'loading';
-  console.log('sesison', session, 'status', status);
 
   const isMobile = useMediaQuery('(max-width: 768px)');
   const [isExpanded, setIsExpanded] = React.useState(false);
@@ -100,9 +96,9 @@ const Header = props => {
 
   const [notificationAmount, setNotificationAmount] = useState(0);
 
-  const cartItemsAmount = useSelector(state => state.cart.products?.length);
+  const cartItemsAmount = useSelector((state: RootState) => state.cart.products?.length);
 
-  const isChef = useSelector(state => state?.account?.profile?.user_type === USER_TYPE.chefType);
+  const isChef = useSelector((state: RootState) => state?.account?.profile?.user_type === USER_TYPE.chefType);
 
   const burgerMenuProps = { anchorEl, setAnchorEl, isExpanded, isChef, notificationAmount };
 
@@ -131,27 +127,27 @@ const Header = props => {
 
   const CartButton = cartItemsAmount => (
     <Link href="/cart">
-      <IconButton className={classes.button_cart}>
+      <IconButton className={s.button_cart}>
         <CartIcon />
-        {cartItemsAmount > 0 && <div className={classes.orange_circle}></div>}
+        {cartItemsAmount > 0 && <div className={s.orange_circle}></div>}
       </IconButton>
     </Link>
   );
 
   return (
-    <div className={`${classes.header} ${props.shadow && classes.header__shadow}`}>
-      <div className={classes.header_elements_wrapper}>
+    <div className={`${s.header} ${props.shadow && s.header__shadow}`}>
+      <div className={s.header_elements_wrapper}>
         <Link href="/">
           <a>
-            <img className={classes.header_logo} src={logo} alt="Eatchef Header Logo" />
+            <Logo className={s.header_logo} />
           </a>
         </Link>
-        <div className={classes.button_group}>
+        <div className={s.button_group}>
           <RecipesButton />
-          {!session && !isMobile && <LoginButton handleClick={handleClickLogin} />}
-          {session && isChef && <UploadRecipeButton />}
-          {session && <CartButton cartItemsAmount={cartItemsAmount} />}
-          {session && (
+          {!isAuthorized && !isMobile && <LoginButton handleClick={handleClickLogin} />}
+          {isAuthorized && isChef && <UploadRecipeButton />}
+          {isAuthorized && <CartButton cartItemsAmount={cartItemsAmount} />}
+          {isAuthorized && (
             <UserAvatar clickHandler={openMenuHandler} avatar={avatar} notificationAmount={notificationAmount} />
           )}
 
@@ -159,12 +155,12 @@ const Header = props => {
           <LanguageSelector />
         </div>
       </div>
-      {session && <BurgerMenu {...burgerMenuProps} />}
-      {!session && isMobile && <LoginDrawer {...drawerProps} />}
+      {isAuthorized && <BurgerMenu {...burgerMenuProps} />}
+      {!isAuthorized && isMobile && <LoginDrawer {...drawerProps} />}
     </div>
   );
 };
 
-export default connect(state => ({
+export default connect((state: RootState) => ({
   account: state.account
 }))(Header);

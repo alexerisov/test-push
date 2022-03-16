@@ -22,7 +22,7 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  padding: 0px 92px 72px;
+  padding: 0px 92px 24px;
 
 
   &_title {
@@ -126,7 +126,7 @@
     background: #FFAA00 !important;
     border-radius: 90px !important;
     box-shadow: none !important;
-    margin: 24px 0 0 !important;
+    margin: 24px 0 24px !important;
     &:disabled {
       opacity: .5;
     }
@@ -135,9 +135,9 @@
 }
 
 .signup_input {
-
+  margin-bottom: 1em;
   & fieldset {
-    border: 2px solid #F4F5F6 !important;
+    border: 2px solid #E0E4EB !important;
     box-sizing: border-box !important;
     border-radius: 90px !important;
   }

@@ -85,6 +85,12 @@
   align-self: flex-start;
 }
 
+.logo_wrapper {
+  & svg {
+    width: 74px;
+    height: 45px;
+  }
+}
 
 
 

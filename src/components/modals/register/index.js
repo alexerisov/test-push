@@ -449,17 +449,8 @@ function Register(props) {
       <div className={classes.register}>
         <form style={{ width: '100%' }}>
           <div className={classes.register_title_wrapper}>
-            <h2 className={classes.register_title}>{isFormLogin ? 'Login' : 'Sign Up as'}</h2>
-            {!isFormLogin && (
-              <BasicSelect
-                name="userType"
-                formik={formik}
-                values={selectValues}
-                classes={{ container: classes.select_container }}
-              />
-            )}
+            <h2 className={classes.register_title}>{isFormLogin ? 'Login' : 'Sign Up'}</h2>
           </div>
-          {/*{renderContent()}*/}
 
           {signupFormStep === 1 && <SocialBlock />}
 
@@ -469,8 +460,6 @@ function Register(props) {
                 formik={formik}
                 name="email"
                 label="Email"
-                // value={loginData?.email}
-                // onChange={onChangeField('email')}
                 placeholder="Enter your email"
                 error={loginError?.['email']}
               />
@@ -519,17 +508,7 @@ function Register(props) {
                   formik={formik}
                   name="username"
                   label="Full Name"
-                  isSecret={!isPasswordHidden}
-                  disableValidation
-                  endAdornment={
-                    <IconButton onClick={handleChangePasswordVisibility}>
-                      {!isPasswordHidden && <VisibilityOffRoundedIcon />}
-                      {isPasswordHidden && <VisibilityRoundedIcon />}
-                    </IconButton>
-                  }
-                  // value={loginData?.password}
-                  // onChange={onChangeField('password')}
-                  placeholder="Enter your password"
+                  placeholder="Enter your name"
                   error={registerError?.['full_name']}
                 />
               )}
@@ -540,8 +519,13 @@ function Register(props) {
                   label="Password"
                   isSecret
                   disableValidation
-                  // value={loginData?.password}
-                  // onChange={onChangeField('password')}
+                  isSecret={!isPasswordHidden}
+                  endAdornment={
+                    <IconButton onClick={handleChangePasswordVisibility}>
+                      {!isPasswordHidden && <VisibilityOffRoundedIcon />}
+                      {isPasswordHidden && <VisibilityRoundedIcon />}
+                    </IconButton>
+                  }
                   placeholder="Enter your password"
                   error={registerError?.['password']}
                 />

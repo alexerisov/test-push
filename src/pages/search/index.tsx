@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import classes from './index.module.scss';
-import LayoutPage from '@/components/layouts/layout-page';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import Recipe from '@/api/Recipe.js';
@@ -34,14 +33,10 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 
 import { useFormik } from 'formik';
-import Pagination from '@material-ui/lab/Pagination';
-import InputLabel from '@material-ui/core/InputLabel';
 import { Select, MenuItem, IconButton } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import SearchDrawer from '@/components/elements/search-drawer';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { InputSearch } from '@/components/elements/input';
 import { CardSearch } from '@/components/elements/card';
 import { Weekmenu } from '@/components/blocks/weekmenu';
 import { numberWithCommas } from '@/utils/converter';
@@ -52,9 +47,11 @@ import { Autocomplete } from '@material-ui/lab';
 
 import SearchIcon from '@/../public/icons/Search/Line.svg';
 import CloseIcon from '@/../public/icons/Close Circle/Line.svg';
+import CloseIconFilled from '@/../public/icons/Close Circle/Filled.svg';
 import CoinIcon from '@/../public/icons/Coin/Line.svg';
 import RecipeIcon from '@/../public/icons/Receipt/Line.svg';
 import ArrowUpIcon from '@/../public/icons/Arrow Up Simple/Line.svg';
+import ArrowDownIcon from '@/../public/icons/Arrow Down Simple/Line.svg';
 
 import BurgerIcon from '@/../public/icons/Burger/Line.svg';
 import ServingPlateIcon from '@/../public/icons/Serving Plate/Line.svg';
@@ -88,6 +85,11 @@ const MySlider = styled(Slider)(() => ({
     height: 2
   }
 }));
+
+const StyledArrowDownIcon = styled(ArrowDownIcon)`
+  font-size: 24px;
+  fill: #777e91;
+`;
 
 const StyledAccordion = styled(Accordion)`
   background: transparent;
@@ -157,7 +159,7 @@ const SearchInput = () => {
   const loading = open && result?.length === 0;
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const validationSchema = yup.object({
-    search: yup.string('Search for dish name')
+    search: yup.string()
   });
 
   const formik = useFormik({
@@ -279,8 +281,8 @@ const Recipes = props => {
   const [recommendedFilter, setRecommendedFilter] = useState('');
   const [isDropdownActive, setIsDropdownActive] = useState(false);
 
-  const [query, setQuery] = useState();
-  const [title, setTitle] = useState();
+  const [query, setQuery] = useState<any>();
+  const [title, setTitle] = useState<any>();
   const [range, setRange] = useState(1);
   const [data, setData] = useState();
   const [result, setResult] = useState([]);
@@ -323,7 +325,7 @@ const Recipes = props => {
     }
   }, [JSON.stringify(query), title]);
 
-  useEffect(async () => {
+  useEffect(() => {
     pageUnsalable > 1 && setShowScrollBtn(true);
   }, [pageUnsalable]);
 
@@ -391,8 +393,8 @@ const Recipes = props => {
   // formik
   const createQueryParams = data => {
     const queryParams = new URLSearchParams();
-    Object.entries(data).forEach(([key, value]) => {
-      queryParams.set(key, value ?? '');
+    Object.entries(data).forEach(([key, value]: any) => {
+      queryParams.set(key, value);
     });
 
     return queryParams;
@@ -424,7 +426,7 @@ const Recipes = props => {
       recipe_set: [...getInitialValuesForFormik('recipe_set')]
     },
     enableReinitialize: true,
-    onSubmit: values => {
+    onSubmit: (values: any) => {
       values.title = title;
       values.page = page;
       setSalableResults([]);
@@ -469,7 +471,11 @@ const Recipes = props => {
         ? ''
         : classes.search__filter__subLabel_active;
 
-      return <span className={labelClass}>{dataList[value]}</span>;
+      return (
+        <span style={{ fontSize: 14 }} className={labelClass}>
+          {dataList[value]}
+        </span>
+      );
     },
     [formik.initialValues]
   );
@@ -548,7 +554,7 @@ const Recipes = props => {
                 name="types"
                 color="primary"
               />
-              <Icon />
+              <Icon style={{ fontSize: 18 }} />
             </div>
           }
           label={getLabelByStatusOfCheckbox({
@@ -810,7 +816,7 @@ const Recipes = props => {
             <p className={classes.search__header__text}>{title}</p>
 
             <button className={classes.search__closeButton} onClick={handleCloseSearchQuery}>
-              <img src="icons/Close-Circle/Line.svg" alt="close-icon" />
+              <CloseIcon />
             </button>
           </div>
         ) : (
@@ -831,7 +837,7 @@ const Recipes = props => {
             onClick={() => setIsDropdownActive(!isDropdownActive)}>
             {recommendedFilter ? <span>{recommendedFilter}</span> : <span>Recommended</span>}
             <div className={classes.search__dropdown__circle}>
-              <img src="icons/Arrow Down Simple/Line.svg" />
+              <StyledArrowDownIcon />
             </div>
           </div>
           {isDropdownActive === true && (
@@ -856,7 +862,7 @@ const Recipes = props => {
               <AccordionSummary
                 expandIcon={
                   <div className={classes.search__clickList}>
-                    <img src="icons/Arrow Down Simple/Line.svg" />
+                    <StyledArrowDownIcon />
                   </div>
                 }
                 aria-controls="panel1a-content"
@@ -915,7 +921,7 @@ const Recipes = props => {
             <AccordionSummary
               expandIcon={
                 <div className={classes.search__clickList}>
-                  <img src="icons/Arrow Down Simple/Line.svg" />
+                  <StyledArrowDownIcon />
                 </div>
               }
               aria-controls="panel3a-content"
@@ -944,7 +950,7 @@ const Recipes = props => {
             <AccordionSummary
               expandIcon={
                 <div className={classes.search__clickList}>
-                  <img src="icons/Arrow Down Simple/Line.svg" />
+                  <StyledArrowDownIcon />
                 </div>
               }
               aria-controls="panel4a-content"
@@ -971,7 +977,7 @@ const Recipes = props => {
 
           {!isQueryEmpty && (
             <button type="reset" onClick={handleClickClearAll} className={classes.search__clearButton}>
-              <img src="icons/Close-Circle/Shape.svg" alt="close-icon" /> Reset filter
+              <CloseIconFilled style={{ color: '#ffaa00' }} /> Reset filter
             </button>
           )}
         </NoSsr>
@@ -996,7 +1002,7 @@ const Recipes = props => {
             <AccordionSummary
               expandIcon={
                 <div className={classes.search__clickList}>
-                  <img src="icons/Arrow Down Simple/Line.svg" />
+                  <StyledArrowDownIcon />
                 </div>
               }
               aria-controls="panel1a-content"
@@ -1055,7 +1061,7 @@ const Recipes = props => {
           <AccordionSummary
             expandIcon={
               <div className={classes.search__clickList}>
-                <img src="icons/Arrow Down Simple/Line.svg" />
+                <StyledArrowDownIcon />
               </div>
             }
             aria-controls="panel3a-content"
@@ -1084,7 +1090,7 @@ const Recipes = props => {
           <AccordionSummary
             expandIcon={
               <div className={classes.search__clickList}>
-                <img src="icons/Arrow Down Simple/Line.svg" />
+                <StyledArrowDownIcon />
               </div>
             }
             aria-controls="panel4a-content"
@@ -1110,7 +1116,7 @@ const Recipes = props => {
         <div className={classes.search__line} />
         {query && Object.keys(query).length == 0 ? null : (
           <button type="reset" onClick={handleClickClearAll} className={classes.search__clearButton}>
-            <img src="icons/Close-Circle/Shape.svg" alt="close-icon" /> Reset filter
+            <CloseIconFilled /> Reset filter
           </button>
         )}
       </NoSsr>
@@ -1140,7 +1146,7 @@ const Recipes = props => {
                 <div className={classes.search__controls}>
                   <p className={classes.search__header__text}>{title}</p>
                   <button className={classes.search__closeButton} onClick={handleCloseSearchQuery}>
-                    <img src="icons/Close-Circle/Line.svg" alt="close-icon" />
+                    <CloseIcon />
                   </button>{' '}
                 </div>
               ) : null}
@@ -1149,7 +1155,7 @@ const Recipes = props => {
                 onClick={() => setIsDropdownActive(!isDropdownActive)}>
                 {recommendedFilter ? <span>{recommendedFilter}</span> : <span>Recommended</span>}
                 <div className={classes.search__dropdown__circle}>
-                  <img src="icons/Arrow Down Simple/Line.svg" />
+                  <StyledArrowDownIcon />
                 </div>
               </div>
               {isDropdownActive === true && (

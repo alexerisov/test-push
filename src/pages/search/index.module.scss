@@ -427,6 +427,7 @@
       min-width: 56px !important;
     }
     svg {
+      font-size: 24px;
       fill: #fcfcfd;
     }
   }
@@ -584,7 +585,9 @@
     @media (max-width: $--md) {
       color: $--color-orange;
     }
-    img {
+    svg {
+      font-size: 20px;
+      fill: $--sc--color-neutrals4;
       margin-right: 10px;
     }
   }
@@ -696,6 +699,7 @@
   }
   &_close_icon {
     top: auto !important;
+    fill: $--color-orange;
   }
   &_no_scrollbar {
     &::-webkit-scrollbar {

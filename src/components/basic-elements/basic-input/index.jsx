@@ -49,7 +49,7 @@ export const BasicInput = props => {
     }
 
     if (formik.dirty && formik.touched[name] && !formik.errors[name]) {
-      return <img alt="success-icon" src={SuccessIcon} />;
+      return <SuccessIcon />;
     }
 
     if (formik.touched[name] && Boolean(formik.errors[name])) {

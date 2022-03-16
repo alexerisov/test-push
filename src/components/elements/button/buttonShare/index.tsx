@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, PropsWithChildren } from 'react';
 import Clipboard from 'clipboard';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Fade from '@material-ui/core/Fade';
@@ -15,7 +15,15 @@ import Recipe from '@/api/Recipe';
 
 import styles from './buttonShare.module.scss';
 
-const ButtonShare = ({ id, photo, description, currentUrl, children, leftSide }) => {
+interface IButtonShareProps extends PropsWithChildren<any> {
+  id: any;
+  photo?: any;
+  description?: any;
+  currentUrl: string;
+  leftSide?: any;
+}
+
+const ButtonShare = ({ id, photo, description, currentUrl, children, leftSide }: IButtonShareProps) => {
   const [openShareWindow, setOpenShareWindow] = useState(false);
   const [open, setOpen] = useState(false);
   const [isMobileOrTabletDevice] = useMobileDevice();
@@ -32,7 +40,7 @@ const ButtonShare = ({ id, photo, description, currentUrl, children, leftSide })
     setOpenShareWindow(true);
   };
 
-  const handleCloseShareWindow = e => {
+  const handleCloseShareWindow = () => {
     setOpenShareWindow(false);
   };
 

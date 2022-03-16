@@ -61,7 +61,7 @@ const fetcher = (...args) =>
 const validationSchema = yup.object({
   basicIngredient: yup.string().required('Ingredient is required'),
   quantity: yup
-    .number()
+    .number('Quantity should be number')
     .min(0, 'Quantity should be greater than 0')
     .max(99999, 'Quantity should be less than 99999')
     .required('Quantity is required'),
@@ -316,6 +316,12 @@ function AddIngredient(props) {
     }, 100);
   };
 
+  const filterNaNLetters = event => {
+    if ((event.which != 8 && event.which != 0 && event.which < 48) || event.which > 57) {
+      event.preventDefault();
+    }
+  };
+
   const renderContent = () => {
     return (
       <div className={classes.addIngredient}>
@@ -396,6 +402,7 @@ function AddIngredient(props) {
               focus
               value={formik.values.quantity}
               onChange={formik.handleChange}
+              onKeyPress={filterNaNLetters}
               variant="outlined"
               fullWidth
               className={classMarerialUi.textField}

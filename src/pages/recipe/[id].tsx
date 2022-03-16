@@ -7,7 +7,6 @@ import { NextSeo } from 'next-seo';
 import Cookies from 'cookies';
 import LayoutPageNew from '@/components/layouts/layout-page-new';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
-import logo from '@/../public/images/index/logo.svg';
 import ShareIcon from '@/../public/icons/Share Square/Line.svg';
 import LikeIcon from '@/../public/icons/Like/Line.svg';
 import StarIcon from '@/../public/icons/Star/Line.svg';
@@ -41,6 +40,7 @@ import CommentBlock from '@/components/blocks/recipe-page/comment-block';
 import { ButtonShare } from '@/components/elements/button';
 import { recoveryLocalStorage } from '@/utils/web-storage/local';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { RootState } from '@/store/store';
 
 const StyledSlider = styled(Slider)`
   display: flex;
@@ -105,7 +105,7 @@ function RecipePage(props) {
   const proteins = recipe?.proteins;
   const fats = recipe?.fats;
   const carbohydrates = recipe?.carbohydrates;
-  const deliveryPrice = useSelector(state => state.cart?.deliveryPrice);
+  const deliveryPrice = useSelector((state: RootState) => state.cart?.deliveryPrice);
   const isRecipeInProduction = recipe?.sale_status === 5;
   const likesNumberUpdatedAt = recipe?.likes_number_updated_at;
 
@@ -119,8 +119,8 @@ function RecipePage(props) {
   const isUserRecipeBuyer = recipe?.user_is_buyer;
   const isRecipeRatedByUser = recipe?.user_rated;
 
-  const isAuthorized = useSelector(state => state.account.hasToken);
-  const isRecipeInCart = useSelector(state => state.cart.products?.some(el => el.object_id == recipe?.pk));
+  const isAuthorized = useSelector((state: RootState) => state.account.hasToken);
+  const isRecipeInCart = useSelector((state: RootState) => state.cart.products?.some(el => el.object_id == recipe?.pk));
   const isRecipeNotSale = recipe?.price === 0 || recipe?.sale_status !== 5;
 
   const [userId, setUserId] = useState();
@@ -180,9 +180,7 @@ function RecipePage(props) {
 
   const handleClick = name => {
     return () => {
-      dispatch(modalActions.open(name)).then(result => {
-        // result when modal return promise and close
-      });
+      dispatch(modalActions.open(name));
     };
   };
 
@@ -241,12 +239,12 @@ function RecipePage(props) {
             <Avatar src={recipeAuthorAvatar} alt="Recipe Author Avatar" className={classes.title_rating_avatar} />
             <Divider vertical width="1px" height="24px" />
             <div className={classes.like_wrapper}>
-              <IconButton onClick={onClickLikeHandler} className={classes.button} size="24px">
+              <IconButton onClick={onClickLikeHandler} className={classes.button}>
                 <BasicIcon icon={LikeIcon} color={isRecipeLiked ? '#FF582E' : '#353E50'} />
               </IconButton>
               {likesNumber +
                 isRecipeLiked -
-                ((Date.parse(userLikeUpdatedAt) || null) > Date.parse(likesNumberUpdatedAt))}
+                Number(Boolean((Date.parse(userLikeUpdatedAt) || null) > Date.parse(likesNumberUpdatedAt)))}
             </div>
             <Divider vertical width="1px" height="24px" />
 
@@ -598,7 +596,7 @@ function RecipePage(props) {
             <img src={image} alt={'image'} />
             <h5 className={classes.supplier_name}>{name}</h5>
           </div>
-          <Collapse in={isSelected} direction="down" mountOnEnter unmountOnExit>
+          <Collapse in={isSelected} mountOnEnter unmountOnExit>
             <p className={classes.supplier_text_wrapper}>
               <span className={classes.supplier_text}>Ingredients</span>
               <span className={classes.supplier_value}>${Number.parseFloat(price).toFixed(2) ?? 0}</span>
