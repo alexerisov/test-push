@@ -8,8 +8,10 @@ import { IconButton, ListItemIcon, ListItemText, MenuItem, Select } from '@mater
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import { useRouter } from 'next/router';
 import { LANGUAGES } from '@/utils/datasets';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
+import { accountActions, profileActions } from '@/store/actions';
+import classes from '@/components/forms/form-edit-account-user/index.module.scss';
 
 const ITEM_HEIGHT = 24;
 const ITEM_PADDING_TOP = 4;
@@ -25,10 +27,9 @@ const MenuProps = {
 export const LanguageSelector = () => {
   const { i18n } = useTranslation('common');
   const router = useRouter();
-  // @ts-ignore
-  const isAuthorized = useSelector((state: RootState) => state.account?.hasToken);
-  // @ts-ignore
-  const profileLanguage = useSelector((state: RootState) => state.profile?.language);
+  const dispatch = useDispatch();
+  const profile = useSelector((state: RootState) => state.profile?.data);
+  const profileLanguage = profile?.language;
 
   const languageList = [
     {
@@ -43,25 +44,48 @@ export const LanguageSelector = () => {
 
   const [currentLanguage, setCurrentLanguage] = React.useState<string>('nl');
 
-  useEffect(() => {
-    setCurrentLanguage(i18n.language);
-    for (let key in LANGUAGES) {
-      if (isAuthorized) {
+  useEffect(async () => {
+    const storedLanguage = await JSON.parse(localStorage.getItem('language'));
+    if (storedLanguage) {
+      return setCurrentLanguage(storedLanguage);
+    }
+    console.log(i18n);
+    if (profileLanguage) {
+      for (let key in LANGUAGES) {
+        console.log('authed');
         if (profileLanguage === LANGUAGES[key]) {
-          router.locale = key;
+          setCurrentLanguage(key);
         }
       }
     }
-  }, [i18n.language]);
+  }, [currentLanguage]);
+
+  const updateProfileLangage = language => {
+    if (profileLanguage) {
+      dispatch(profileActions.updateProfileUser({ ...profile, language: LANGUAGES[language] }))
+        .then(res => {
+          dispatch(accountActions.remind());
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  };
+
+  const saveLanguageToLocalStorage = async language => {
+    await localStorage.setItem('language', JSON.stringify(language));
+  };
 
   const onChangeSelect = event => {
+    console.log(event.target.value);
     setCurrentLanguage(event.target.value);
+    saveLanguageToLocalStorage(event.target.value);
+    updateProfileLangage(event.target.value);
     router.push(router.asPath, undefined, { locale: event.target.value });
   };
 
   const getOptionList = list => {
     return list.map(el => {
-      const Icon = el.icon;
       return (
         <MenuItem key={el.value} value={el.value} className={s.menu__item}>
           <ListItemIcon>
