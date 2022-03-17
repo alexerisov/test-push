@@ -49,6 +49,7 @@
     "eslint-plugin-react": "^7.22.0",
     "file-loader": "^6.2.0",
     "formik": "^2.2.9",
+    "fscreen": "^1.2.0",
     "material-ui-phone-number": "^2.2.6",
     "next": "latest",
     "next-i18next": "^10.5.0",
