@@ -5,10 +5,12 @@ import Account from '@/api/Account';
 import { CardNotification } from '@/components/elements/card';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import LayoutPageNew from '@/components/layouts/layout-page-new';
+import { useAuth } from '@/utils/Hooks';
 
 const NotificationsPage = props => {
+  const { session } = useAuth();
   useEffect(() => {
-    if (props.account.hasToken) {
+    if (session) {
       const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
       const currentDate = new Date().toLocaleDateString('ko-KR', options).replace(/. /gi, '-').slice(0, -1);
       const newNotList = [];
@@ -25,7 +27,7 @@ const NotificationsPage = props => {
         setOldNotificationList(oldNotList);
       });
     }
-  }, [props.account.hasToken]);
+  }, [session]);
 
   const [nowNotificationList, setNowNotificationList] = useState([]);
   const [oldNotificationList, setOldNotificationList] = useState([]);

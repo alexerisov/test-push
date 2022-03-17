@@ -1,15 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { ButtonLogin } from '@/components/elements/button';
-import {
-  loginViaFacebook,
-  loginViaGoogle,
-} from '@/utils/authSocial';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import classes from "./loginSocial.module.scss";
+import classes from './loginSocial.module.scss';
 
-function LoginSocial (props) {
-
+function LoginSocial(props) {
   return (
     <div>
       <ArrowBackIcon
@@ -22,8 +17,8 @@ function LoginSocial (props) {
         onClick={props.onClickReturn}
       />
       <h2 className={classes.registerTitle}>LOGIN</h2>
-      <ButtonLogin onClick={loginViaFacebook()}>LOGIN WITH FACEBOOK</ButtonLogin>
-      <ButtonLogin onClick={loginViaGoogle()}>LOGIN WITH GOOGLE</ButtonLogin>
+      <ButtonLogin onClick={() => console.log('login')}>LOGIN WITH FACEBOOK</ButtonLogin>
+      <ButtonLogin onClick={() => console.log('login')}>LOGIN WITH GOOGLE</ButtonLogin>
     </div>
   );
 }

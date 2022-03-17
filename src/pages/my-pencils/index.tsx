@@ -4,16 +4,14 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import Link from 'next/link';
 import { ButtonUpload } from '@/components/elements/button';
-import { LayoutPage } from '@/components/layouts';
 import Pagination from '@material-ui/lab/Pagination';
 import { CardChefPencil } from '@/components/elements/card';
 
 import ChefPencil from '@/api/ChefPencil';
-import { RedirectWithoutAuthAndByCheckingUserType } from '@/utils/authProvider';
-import { CHEF_TYPE } from '@/utils/constants';
 
 import classes from './index.module.scss';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import LayoutPageNew from '@/components/layouts/layout-page-new';
 
 const MyUploadsPage = () => {
   const matches = useMediaQuery('(max-width: 767.95px)');
@@ -89,10 +87,10 @@ const MyUploadsPage = () => {
     </div>
   );
 
-  return <LayoutPage content={content} />;
+  return <LayoutPageNew content={content} />;
 };
 
-export default withRouter(RedirectWithoutAuthAndByCheckingUserType(MyUploadsPage, CHEF_TYPE));
+export default withRouter(MyUploadsPage);
 
 export const getServerSideProps = async ({ locale }) => ({
   props: {

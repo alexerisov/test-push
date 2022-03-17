@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Basket } from '@/components/blocks/cart-page/basket';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import { useRouter, withRouter } from 'next/router';
-import { withAuth } from '@/utils/authProvider';
 import { Button } from '@material-ui/core';
 import classes from './index.module.scss';
 import { Divider } from '@/components/basic-elements/divider';
@@ -78,7 +77,7 @@ const connector = connect(state => ({
   account: state.account
 }))(OrderCongratulationPage);
 
-export default withRouter(withAuth(connector));
+export default withRouter(connector);
 
 export const getServerSideProps = async ({ locale }) => ({
   props: {

@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 import { useActions } from '@/customHooks/useActions';
 
 import Link from 'next/link';
-import { LayoutPage } from '@/components/layouts';
 import Pagination from '@material-ui/lab/Pagination';
 import { MainCardChefPencil } from '@/components/elements/card';
 
@@ -15,6 +14,7 @@ import classes from './index.module.scss';
 import SearchIcon from '@material-ui/icons/Search';
 import { modalActions } from '@/store/actions';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import LayoutPageNew from '@/components/layouts/layout-page-new';
 
 const ChefPencilsPage = () => {
   const matches = useMediaQuery('(max-width: 992px)');
@@ -136,7 +136,7 @@ const ChefPencilsPage = () => {
     </div>
   );
 
-  return <LayoutPage content={content} />;
+  return <LayoutPageNew content={content} />;
 };
 
 export default ChefPencilsPage;

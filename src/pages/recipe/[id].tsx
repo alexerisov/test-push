@@ -41,6 +41,7 @@ import { ButtonShare } from '@/components/elements/button';
 import { recoveryLocalStorage } from '@/utils/web-storage/local';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { RootState } from '@/store/store';
+import { useAuth } from '@/utils/Hooks';
 
 const StyledSlider = styled(Slider)`
   display: flex;
@@ -79,6 +80,7 @@ const MyPicture = styled(ImageIcon)`
 dayjs.extend(customParseFormat);
 
 function RecipePage(props) {
+  const { session } = useAuth();
   const { notFound, recipe, weekmenu } = props;
   const mobile = useMediaQuery('(max-width:576px)');
 
@@ -119,7 +121,6 @@ function RecipePage(props) {
   const isUserRecipeBuyer = recipe?.user_is_buyer;
   const isRecipeRatedByUser = recipe?.user_rated;
 
-  const isAuthorized = useSelector((state: RootState) => state.account.hasToken);
   const isRecipeInCart = useSelector((state: RootState) => state.cart.products?.some(el => el.object_id == recipe?.pk));
   const isRecipeNotSale = recipe?.price === 0 || recipe?.sale_status !== 5;
 
@@ -202,7 +203,7 @@ function RecipePage(props) {
     };
 
     const onClickLikeHandler = () => {
-      if (!isAuthorized) {
+      if (!session) {
         return dispatch(modalActions.open('register'));
       }
 
@@ -222,7 +223,7 @@ function RecipePage(props) {
     };
 
     const onClickSaveHandler = () => {
-      if (!isAuthorized) {
+      if (!session) {
         return dispatch(modalActions.open('register'));
       }
 
@@ -619,7 +620,7 @@ function RecipePage(props) {
     };
 
     const onAddToCartHandler = () => {
-      if (!isAuthorized) {
+      if (!session) {
         return dispatch(modalActions.open('register'));
       }
 

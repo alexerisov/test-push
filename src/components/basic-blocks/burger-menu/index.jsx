@@ -18,6 +18,7 @@ import { useRouter } from 'next/router';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTranslation } from 'next-i18next';
+import { signOut } from 'next-auth/react';
 
 const BurgerMenu = props => {
   const { t } = useTranslation('common');
@@ -47,8 +48,7 @@ const BurgerMenu = props => {
     );
   };
   const handleLogout = () => {
-    dispatch(accountActions.logout());
-    router.push('/', undefined, { locale: router.locale });
+    return signOut();
   };
 
   const handleClose = () => {

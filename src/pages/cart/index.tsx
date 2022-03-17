@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { LayoutPage } from '@/components/layouts';
 import { TabContent } from '@/components/blocks/cart-page/tab-content';
-import { CartTabs } from '@/components/blocks/cart-page/tabs';
 import { Basket } from '@/components/blocks/cart-page/basket';
 import { makeStyles } from '@material-ui/core/styles';
 import Cookies from 'cookies';
-import Recipe from '@/api/Recipe';
-import Cart from '@/api/Cart';
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { getCart, setCart } from '@/store/cart/actions';
+import { getCart } from '@/store/cart/actions';
 import { useRouter, withRouter } from 'next/router';
-import { withAuth } from '@/utils/authProvider';
 import classes from './index.module.scss';
 import { IngredientsModal } from '@/components/basic-blocks/ingredients-modal';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
+import { RootState } from '@/store/store';
+import LayoutPageNew from '@/components/layouts/layout-page-new';
 
 const useStyles = makeStyles(theme => ({
   tabs: {
@@ -86,14 +83,14 @@ const CartPage = props => {
     </div>
   );
 
-  return <LayoutPage content={content} />;
+  return <LayoutPageNew content={content} />;
 };
 
-const connector = connect(state => ({
+const connector = connect((state: RootState) => ({
   account: state.account
 }))(CartPage);
 
-export default withRouter(withAuth(connector));
+export default withRouter(connector);
 
 export async function getServerSideProps(context) {
   try {

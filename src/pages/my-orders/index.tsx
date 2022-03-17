@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { useRouter, withRouter } from 'next/router';
-import { withAuth } from '@/utils/authProvider';
 import { Box, Button, Collapse } from '@material-ui/core';
 import classes from './index.module.scss';
 import { Divider } from '@/components/basic-elements/divider';
@@ -205,7 +204,7 @@ const connector = connect(state => ({
   account: state.account
 }))(MyOrdersPage);
 
-export default withRouter(withAuth(connector));
+export default withRouter(connector);
 
 export async function getServerSideProps(context) {
   const cookies = new Cookies(context.req, context.res);

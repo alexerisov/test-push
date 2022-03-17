@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useRouter } from 'next/router';
 
-import LayoutPage from '@/components/layouts/layout-page';
 import { FormCreateChefPencil } from '@/components/forms';
 import ChefPencil from '@/api/ChefPencil';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import LayoutPageNew from '@/components/layouts/layout-page-new';
 
 function CreateRecipe() {
   const router = useRouter();
@@ -41,7 +41,7 @@ function CreateRecipe() {
   }, [pencilId]);
 
   return (
-    <LayoutPage
+    <LayoutPageNew
       content={pencilId && initData && <FormCreateChefPencil initData={initData} isEditing id={pencilId} />}
     />
   );

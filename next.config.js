@@ -28,14 +28,21 @@ if (process.env.NODE_ENV === 'production') {
 } else {
   envs = {
     fbClientId: '3044235379228131',
-    googleClientId: '655496569198-f4akmc86kndanpb2p10uk80h5al1sg4l.apps.googleusercontent.com',
+    googleClientId: '690315014418-ji6h0pmf1npeic8egnj3kp00sffoli1s.apps.googleusercontent.com',
+    googleClientSecret: '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',
     BASE_URL: 'http://localhost:4096',
     DEBUG: true
   };
 }
 
 module.exports = {
-  // env: envs,
+  compiler: {
+    styledComponents: true,
+    dynamicImport: true,
+    decorators: true,
+    tsx: true
+  },
+  swcMinify: true,
   images: {
     disableStaticImages: true,
     domains: ['localhost', 'goodbit.dev', 'eatchefs.com']
