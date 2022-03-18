@@ -131,8 +131,7 @@ function FormEditAccountChef(props) {
           formik.setFieldValue('role_model_images', []);
           setStatusSubmit(t('submitStatus.update'));
           setFormStatus(<span className={classes.profile__formStatus_true}>{t('submitSuccess')}</span>);
-          i18n.changeLanguage(LANGUAGES[values.language]);
-          router.push(router.asPath, undefined, { locale: LANGUAGES[values.language], shallow: true });
+          router.push(router.asPath, undefined, { locale: LANGUAGES[values.language] });
           props.dispatch(accountActions.remind());
         })
         .catch(error => {

@@ -91,10 +91,9 @@ function FormEditAccountUser(props) {
         .dispatch(profileActions.updateProfileUser(values))
         .then(res => {
           setStatusSubmit(t('submitStatus.update'));
-          i18n.changeLanguage(LANGUAGES[values.language]);
-          router.push(router.asPath, undefined, { locale: LANGUAGES[values.language], shallow: true });
           setFormStatus(<span className={classes.profile__formStatus_true}>{t('submitSuccess')}</span>);
           props.dispatch(accountActions.remind());
+          router.push(router.asPath, undefined, { locale: LANGUAGES[values.language] });
         })
         .catch(error => {
           setErrorForm(error.response.data);

@@ -32,6 +32,11 @@ export const LanguageSelector = () => {
   const isAuthorized = useSelector((state: RootState) => state.account?.hasToken);
   const profileLanguage = profile?.language;
 
+  const languagesIcon = {
+    en: FlagUS,
+    nl: FlagNL
+  };
+
   const languageList = [
     {
       value: 'en',
@@ -46,12 +51,9 @@ export const LanguageSelector = () => {
   const [currentLanguage, setCurrentLanguage] = React.useState<string>('nl');
 
   useEffect(async () => {
-    console.log(i18n);
     if (isAuthorized) {
       if (profileLanguage in LANGUAGES) {
-        console.log('authed', profileLanguage);
         setCurrentLanguage(LANGUAGES[profileLanguage]);
-        i18n.changeLanguage(profileLanguage);
       }
     } else {
       const storedLanguage = await JSON.parse(localStorage.getItem('language'));
@@ -63,7 +65,7 @@ export const LanguageSelector = () => {
         i18n.changeLanguage('nl');
       }
     }
-  }, [isAuthorized]);
+  }, [isAuthorized, profileLanguage]);
 
   const updateProfileLangage = language => {
     dispatch(profileActions.updateProfileUser({ ...profile, language: LANGUAGES[language] }))
@@ -80,26 +82,39 @@ export const LanguageSelector = () => {
   };
 
   const onChangeSelect = async event => {
-    console.log(event.target.value);
     await saveLanguageToLocalStorage(event.target.value);
+
     if (profileLanguage) {
       await updateProfileLangage(event.target.value);
     }
+
     await setCurrentLanguage(event.target.value);
-    i18n.changeLanguage(event.target.value);
+
+    setTimeout(() => {
+      setCurrentLanguage(event.target.value);
+    }, 200);
+
     router.push(router.asPath, undefined, { locale: event.target.value, shallow: true });
+
+    if (router.asPath.includes('account-settings')) {
+      router.push(router.asPath, undefined, { locale: event.target.value });
+    }
+    i18n.changeLanguage(event.target.value);
   };
 
   const getOptionList = list => {
     return list.map(el => {
       return (
         <MenuItem key={el.value} value={el.value} className={s.menu__item}>
-          <ListItemIcon>
-            <BasicIcon icon={el.icon} size={'24px'} viewBox={'0 0 640 480'} />
-          </ListItemIcon>
+          <BasicIcon icon={el.icon} size={'24px'} viewBox={'0 0 640 480'} />
+          <span className={s.menu__text}>{el.value}</span>
         </MenuItem>
       );
     });
+  };
+
+  const renderValue = value => {
+    return <BasicIcon icon={languagesIcon[value]} size={'24px'} viewBox={'0 0 640 480'} />;
   };
 
   return (
@@ -109,6 +124,7 @@ export const LanguageSelector = () => {
         value={currentLanguage}
         onChange={onChangeSelect}
         className={s.select}
+        renderValue={renderValue}
         variant="outlined"
         MenuProps={{
           disableScrollLock: true,
