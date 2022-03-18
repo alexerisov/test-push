@@ -25,9 +25,10 @@ import { useTranslation } from 'next-i18next';
 
 const TextWithIcon = props => {
   const { icon, text, value } = props;
+  const Icon = icon;
   return (
     <div className={classes.order__bill__wrapper}>
-      <img src={icon} alt="icon" />
+      <Icon className={classes.order__bill__icon} />
       <div className={classes.order__bill__text}>{text}</div>
       <div className={classes.order__bill__value}>{value}</div>
     </div>

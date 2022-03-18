@@ -17,7 +17,7 @@ import { RootState } from '@/store/store';
 import { useTranslation } from 'next-i18next';
 
 const OrderCongratulationPage = () => {
-  const { t } = useTranslation('orderCongratulationPage');
+  const { t } = useTranslation(['orderCongratulationPage', 'orderInfo']);
   const router = useRouter();
   const [cart, setCart] = useState(null);
   const [order, setOrder] = useState(null);
@@ -39,9 +39,10 @@ const OrderCongratulationPage = () => {
 
   const TextWithIcon = props => {
     const { icon, text, value } = props;
+    const Icon = icon;
     return (
       <div className={classes.element_wrapper}>
-        <img src={icon} alt="icon" />
+        <Icon className={classes.element_icon} />
         <div className={classes.element_text}>{text}</div>
         <div className={classes.element_value}>{value}</div>
       </div>
@@ -51,25 +52,25 @@ const OrderCongratulationPage = () => {
   let content = (
     <div className={classes.content}>
       <div className={classes.content__column1}>
-        <div className={classes.header}>{t('title')}</div>
-        <div className={classes.subheader}>{t('subtitle')}</div>
+        <div className={classes.header}>{t('orderCongratulationPage:title')}</div>
+        <div className={classes.subheader}>{t('orderCongratulationPage:subtitle')}</div>
         <Divider m="32px 0" />
         <div className={classes.info}>
-          <div className={classes.info__header}>{t('deliveryDetails')}</div>
-          <TextWithIcon icon={HandCartIcon} text={`${t('bookingCode')}:`} value={order?.pk} />
+          <div className={classes.info__header}>{t('orderCongratulationPage:deliveryDetails')}</div>
+          <TextWithIcon icon={HandCartIcon} text={`${t('orderInfo:bookingCode')}:`} value={order?.pk} />
           <TextWithIcon
             icon={CalendarIcon}
-            text={`${t('date')}:`}
+            text={`${t('orderInfo:date')}:`}
             value={dayjs(order?.delivery_date).format('D MMM, YYYY')}
           />
-          <TextWithIcon icon={RecipeIcon} text={`${t('paymentMethod')}:`} value={'$' + order?.total_price} />
-          <TextWithIcon icon={WalletIcon} text={`${t('status')}:`} value="Tikkie" />
+          <TextWithIcon icon={RecipeIcon} text={`${t('orderInfo:paymentMethod')}:`} value={'$' + order?.total_price} />
+          <TextWithIcon icon={WalletIcon} text={`${t('orderInfo:status')}:`} value="Tikkie" />
           <div className={classes.button_group}>
             <Button onClick={ordersButtonHandler} className={classes.button__orders}>
-              {t('yourOrdersButton')}
+              {t('orderCongratulationPage:yourOrdersButton')}
             </Button>
             <Button onClick={exploreButtonHandler} className={classes.button__explore}>
-              {t('exploreRecipesButton')}
+              {t('orderCongratulationPage:exploreRecipesButton')}
             </Button>
           </div>
         </div>

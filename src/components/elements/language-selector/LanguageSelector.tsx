@@ -29,6 +29,7 @@ export const LanguageSelector = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const profile = useSelector((state: RootState) => state.profile?.data);
+  const isAuthorized = useSelector((state: RootState) => state.account?.hasToken);
   const profileLanguage = profile?.language;
 
   const languageList = [
@@ -45,43 +46,48 @@ export const LanguageSelector = () => {
   const [currentLanguage, setCurrentLanguage] = React.useState<string>('nl');
 
   useEffect(async () => {
-    const storedLanguage = await JSON.parse(localStorage.getItem('language'));
-    if (storedLanguage) {
-      return setCurrentLanguage(storedLanguage);
-    }
     console.log(i18n);
-    if (profileLanguage) {
-      for (let key in LANGUAGES) {
-        console.log('authed');
-        if (profileLanguage === LANGUAGES[key]) {
-          setCurrentLanguage(key);
-        }
+    if (isAuthorized) {
+      if (profileLanguage in LANGUAGES) {
+        console.log('authed', profileLanguage);
+        setCurrentLanguage(LANGUAGES[profileLanguage]);
+        i18n.changeLanguage(profileLanguage);
+      }
+    } else {
+      const storedLanguage = await JSON.parse(localStorage.getItem('language'));
+      if (storedLanguage) {
+        setCurrentLanguage(storedLanguage);
+        i18n.changeLanguage(storedLanguage);
+      } else {
+        setCurrentLanguage('nl');
+        i18n.changeLanguage('nl');
       }
     }
-  }, [currentLanguage]);
+  }, [isAuthorized]);
 
   const updateProfileLangage = language => {
-    if (profileLanguage) {
-      dispatch(profileActions.updateProfileUser({ ...profile, language: LANGUAGES[language] }))
-        .then(res => {
-          dispatch(accountActions.remind());
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
+    dispatch(profileActions.updateProfileUser({ ...profile, language: LANGUAGES[language] }))
+      .then(res => {
+        dispatch(accountActions.remind());
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   const saveLanguageToLocalStorage = async language => {
     await localStorage.setItem('language', JSON.stringify(language));
   };
 
-  const onChangeSelect = event => {
+  const onChangeSelect = async event => {
     console.log(event.target.value);
-    setCurrentLanguage(event.target.value);
-    saveLanguageToLocalStorage(event.target.value);
-    updateProfileLangage(event.target.value);
-    router.push(router.asPath, undefined, { locale: event.target.value });
+    await saveLanguageToLocalStorage(event.target.value);
+    if (profileLanguage) {
+      await updateProfileLangage(event.target.value);
+    }
+    await setCurrentLanguage(event.target.value);
+    i18n.changeLanguage(event.target.value);
+    router.push(router.asPath, undefined, { locale: event.target.value, shallow: true });
   };
 
   const getOptionList = list => {
@@ -98,6 +104,7 @@ export const LanguageSelector = () => {
 
   return (
     <div>
+      <pre>{JSON.stringify(currentLanguage)}</pre>
       <Select
         id="language-selector"
         value={currentLanguage}

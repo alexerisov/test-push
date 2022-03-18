@@ -7,7 +7,7 @@ import { modalActions } from '@/store/actions';
 import { profileActions, accountActions } from '@/store/actions';
 import { CardRoleModels } from '@/components/elements/card';
 import { validator } from '@/utils/validator';
-import { nameErrorProfile } from '@/utils/datasets';
+import { LANGUAGES, nameErrorProfile } from '@/utils/datasets';
 import FieldError from '@/components/elements/field-error';
 
 import PhoneInput from 'react-phone-input-2';
@@ -19,6 +19,7 @@ import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
 import { MenuItem, Select } from '@material-ui/core';
 import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
 
 const StyledTextField = styled(TextField)`
   width: 100%;
@@ -34,7 +35,8 @@ const StyledSelect = styled(Select)`
   }
 `;
 function FormEditAccountChef(props) {
-  const { t } = useTranslation('profilePage');
+  const router = useRouter();
+  const { t, i18n } = useTranslation('profilePage');
   if (!props.account.profile) {
     return <div>loading...</div>;
   }
@@ -129,6 +131,8 @@ function FormEditAccountChef(props) {
           formik.setFieldValue('role_model_images', []);
           setStatusSubmit(t('submitStatus.update'));
           setFormStatus(<span className={classes.profile__formStatus_true}>{t('submitSuccess')}</span>);
+          i18n.changeLanguage(LANGUAGES[values.language]);
+          router.push(router.asPath, undefined, { locale: LANGUAGES[values.language], shallow: true });
           props.dispatch(accountActions.remind());
         })
         .catch(error => {

@@ -391,5 +391,7 @@ export const nameErrorProfile = [
 
 export const LANGUAGES = {
   en: 'english',
-  nl: 'dutch'
+  nl: 'dutch',
+  english: 'en',
+  dutch: 'nl'
 };

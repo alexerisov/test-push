@@ -126,11 +126,13 @@ const Header = props => {
     setIsExpanded(true);
   };
 
-  const CartButton = cartItemsAmount => (
+  const OrangeCircle = () => <div className={s.orange_circle}></div>;
+
+  const CartButton = () => (
     <Link href="/cart">
       <IconButton className={s.button_cart}>
         <CartIcon />
-        {cartItemsAmount > 0 && <div className={s.orange_circle}></div>}
+        {cartItemsAmount > 0 && <OrangeCircle />}
       </IconButton>
     </Link>
   );
@@ -147,7 +149,7 @@ const Header = props => {
           <RecipesButton />
           {!isAuthorized && !isMobile && <LoginButton handleClick={handleClickLogin} />}
           {isAuthorized && isChef && <UploadRecipeButton />}
-          {isAuthorized && <CartButton cartItemsAmount={cartItemsAmount} />}
+          {isAuthorized && <CartButton />}
           {isAuthorized && (
             <UserAvatar clickHandler={openMenuHandler} avatar={avatar} notificationAmount={notificationAmount} />
           )}

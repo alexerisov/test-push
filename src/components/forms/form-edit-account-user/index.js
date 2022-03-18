@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import ContentLayout from '@/components/layouts/layout-profile-content';
 import { profileActions, accountActions } from '@/store/actions';
 import { validator } from '@/utils/validator';
-import { nameErrorProfile } from '@/utils/datasets';
+import { LANGUAGES, nameErrorProfile } from '@/utils/datasets';
 
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
@@ -18,6 +18,7 @@ import Input from '@material-ui/core/Input';
 import FieldError from '@/components/elements/field-error';
 import { MenuItem, Select } from '@material-ui/core';
 import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
 
 const StyledTextField = styled(TextField)`
   width: 100%;
@@ -38,7 +39,8 @@ const StyledInput = styled(Input)`
 `;
 
 function FormEditAccountUser(props) {
-  const { t } = useTranslation('profilePage');
+  const router = useRouter();
+  const { t, i18n } = useTranslation('profilePage');
   if (!props.account.profile) {
     return <div>loading...</div>;
   }
@@ -89,6 +91,8 @@ function FormEditAccountUser(props) {
         .dispatch(profileActions.updateProfileUser(values))
         .then(res => {
           setStatusSubmit(t('submitStatus.update'));
+          i18n.changeLanguage(LANGUAGES[values.language]);
+          router.push(router.asPath, undefined, { locale: LANGUAGES[values.language], shallow: true });
           setFormStatus(<span className={classes.profile__formStatus_true}>{t('submitSuccess')}</span>);
           props.dispatch(accountActions.remind());
         })

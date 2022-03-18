@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import classes from './index.module.scss';
 import { DatePicker } from '@material-ui/pickers';
 import { InputAdornment } from '@material-ui/core';
-import CalendarIcon from '../../../../public/icons/Calendar/Line.svg';
+import CalendarIcon from '~public/icons/Calendar/Line.svg';
 
 export const BasicDatePicker = props => {
   const { formik, label, name, ...otherProps } = props;
@@ -32,8 +32,8 @@ export const BasicDatePicker = props => {
         },
         disableUnderline: true,
         endAdornment: (
-          <InputAdornment position="end">
-            <img className={classes.icon} fill="#AFB8CA" alt="calendar-icon" src={CalendarIcon} />
+          <InputAdornment style={{ fontSize: 20 }} position="end">
+            <CalendarIcon className={classes.icon} />
           </InputAdornment>
         )
       }}

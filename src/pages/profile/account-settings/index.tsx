@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useRouter } from 'next/router';
-import { LANGUAGES } from '@/utils/datasets';
 import LayoutPageNew from '@/components/layouts/layout-page-new';
 
 const ProfileAccountSettings = props => {
@@ -13,15 +12,6 @@ const ProfileAccountSettings = props => {
   if (!props.account.profile) {
     return <div>loading...</div>;
   }
-
-  React.useEffect(() => {
-    for (let key in LANGUAGES) {
-      if (props.account.profile?.language === LANGUAGES[key]) {
-        router.locale = key;
-      }
-    }
-    router.push(router.asPath, undefined, { locale: router.locale });
-  }, []);
 
   const { user_type } = props.account.profile;
 
