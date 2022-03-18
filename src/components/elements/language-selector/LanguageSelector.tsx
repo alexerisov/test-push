@@ -104,7 +104,6 @@ export const LanguageSelector = () => {
 
   return (
     <div>
-      <pre>{JSON.stringify(currentLanguage)}</pre>
       <Select
         id="language-selector"
         value={currentLanguage}
