@@ -6,8 +6,10 @@ import { Button } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { USER_TYPE } from '@/utils/datasets';
 import { profileActions } from '@/store/actions';
+import { useTranslation } from 'next-i18next';
 
 const ContentLayout = props => {
+  const { t } = useTranslation('profilePage');
   const router = useRouter();
 
   const [data, setData] = useState();
@@ -38,9 +40,9 @@ const ContentLayout = props => {
     <div className={classes.dashboard__navbar}>
       <h2 className={classes.dashboard__title}>
         <Link href="/">
-          <a className={classes.dashboard__navbar__link}>Home / </a>
+          <a className={classes.dashboard__navbar__link}>{t('navBar.home')} / </a>
         </Link>
-        <span className={classes.dashboard__myProfile}>My profile</span>
+        <span className={classes.dashboard__myProfile}>{t('navBar.myProfile')}</span>
       </h2>
       <ul className={classes.dashboard__itemContainer}>
         <li
@@ -48,7 +50,7 @@ const ContentLayout = props => {
             router.asPath === data.accountSettings.path && classes.dashboard__item_active
           }`}>
           <Link href={data.accountSettings.path}>
-            <a>Account Settings</a>
+            <a>{t('navBar.accountSettings')}</a>
           </Link>
         </li>
         <li
@@ -56,7 +58,7 @@ const ContentLayout = props => {
             router.asPath === data.password.path && classes.dashboard__item_active
           }`}>
           <Link href={data.password.path}>
-            <a>Password</a>
+            <a>{t('navBar.password')}</a>
           </Link>
         </li>
       </ul>
@@ -64,11 +66,11 @@ const ContentLayout = props => {
         <div className={classes.dashboard__buttonUploud}>
           {props?.profile?.data?.user_type === USER_TYPE.chefType ? (
             <Button variant="contained" color="primary" href="/recipe/upload">
-              Upload New Recipe!
+              {t('navBar.uploadRecipeButton')}
             </Button>
           ) : (
             <Button variant="contained" color="primary" onClick={handleChangeStatus}>
-              Become a home chef
+              {t('navBar.becomeChefButton')}
             </Button>
           )}
         </div>

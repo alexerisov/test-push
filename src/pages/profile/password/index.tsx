@@ -13,6 +13,7 @@ import styled from 'styled-components';
 import { modalActions } from '@/store/actions';
 import LayoutPageNew from '@/components/layouts/layout-page-new';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 
 const StyledTextField = styled(TextField)`
   width: 100%;
@@ -22,6 +23,7 @@ const StyledTextField = styled(TextField)`
 `;
 
 const ProfilePassword = props => {
+  const { t } = useTranslation('profilePage');
   const handleClickPopupOpen = (name, params) => {
     props.dispatch(modalActions.open(name, params));
   };
@@ -64,11 +66,12 @@ const ProfilePassword = props => {
   const content = (
     <>
       <ContentLayout>
-        <h2 className={classes.profile__title}>Update Password</h2>
+        <h2 className={classes.profile__title}>{t('password.title')}</h2>
         <form onSubmit={formik.handleSubmit} className={classes.profile__data}>
           <div>
             <label className={classes.profile__label}>
-              <span style={{ color: 'red' }}>* </span>Current Password
+              <span style={{ color: 'red' }}>* </span>
+              {t('password.current')}
             </label>
             <StyledTextField
               type="password"
@@ -81,7 +84,8 @@ const ProfilePassword = props => {
               helperText={formik.touched.password && formik.errors.password}
             />
             <label className={classes.profile__label}>
-              <span style={{ color: 'red' }}>* </span>New Password
+              <span style={{ color: 'red' }}>* </span>
+              {t('password.new')}
             </label>
             <StyledTextField
               type="password"
@@ -94,7 +98,8 @@ const ProfilePassword = props => {
               helperText={formik.touched.new_password && formik.errors.new_password}
             />
             <label className={classes.profile__label}>
-              <span style={{ color: 'red' }}>* </span>Confirm Password
+              <span style={{ color: 'red' }}>* </span>
+              {t('password.confirm')}
             </label>
             <StyledTextField
               type="password"
@@ -108,7 +113,7 @@ const ProfilePassword = props => {
             />
           </div>
           <button type="submit" className={classes.profile__buttonUpdate}>
-            Update
+            {t('updateButton')}
           </button>
         </form>
         <p className={classes.profile__errorForm}>{formError}</p>
@@ -127,7 +132,7 @@ export default connect(state => ({
 export async function getStaticProps({ locale }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ['common']))
+      ...(await serverSideTranslations(locale, ['common', 'profilePage']))
       // Will be passed to the page component as props
     }
   };

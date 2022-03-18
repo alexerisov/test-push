@@ -63,6 +63,7 @@ import DonutIcon from '@/../public/icons/Donut/Line.svg';
 
 import Cookies from 'cookies';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 const MySlider = styled(Slider)(() => ({
   color: '#FFAA00',
   height: 2,
@@ -153,6 +154,7 @@ const recipeTypesImg = {
 };
 
 const SearchInput = () => {
+  const { t } = useTranslation('searchPage');
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
   const [result, setResult] = useState([]);
@@ -254,7 +256,7 @@ const SearchInput = () => {
               onFocus={() => setIsSearchFocused(true)}
               onBlur={() => setIsSearchFocused(false)}
               value={formik.values.search}
-              placeholder="What do you want to eat?"
+              placeholder={t('searchInput.placeholder')}
               onChange={e => {
                 formik.handleChange(e);
                 onChangeInputSearch(e.target.value);
@@ -272,6 +274,7 @@ const SearchInput = () => {
 };
 
 const Recipes = props => {
+  const { t } = useTranslation('searchPage');
   const TooltipStyles = useStyledTooltip();
   const tablet = useMediaQuery('(max-width: 1025px)');
   const mobile = useMediaQuery('(max-width: 576px)');
@@ -365,6 +368,7 @@ const Recipes = props => {
       event.preventDefault();
       switch (name) {
         case 'Easy':
+          f;
           setRange(1);
           setPageSalable(1);
           setPageUnsalable(1);
@@ -796,33 +800,35 @@ const Recipes = props => {
 
   const weekmenuData = isQueryEmpty ? props?.weekmenuWithoutFilters : weekmenuWithoutDuplicate();
 
-  const searchFilter = (
-    <>
-      <div className={classes.search__filter} onSubmit={formik.handleSubmit}>
-        {props.userType === 1 && (
-          <>
-            <Button
-              onClick={() => router.push('/recipe/upload', undefined, { locale: router.locale })}
-              className={classes.search__uploadButton}
-              variant="outlined"
-              color="primary">
-              Upload Recipe
-            </Button>
-            <div className={classes.search__filter__line} />
-          </>
-        )}
-        {title && !mobile ? (
-          <div className={classes.search__header__text__wrap}>
-            <p className={classes.search__header__text}>{title}</p>
+  const SearchFilter = () => {
+    const { t } = useTranslation('searchPage');
+    return (
+      <React.Fragment>
+        <div className={classes.search__filter} onSubmit={formik.handleSubmit}>
+          {props.userType === 1 && (
+            <>
+              <Button
+                onClick={() => router.push('/recipe/upload', undefined, { locale: router.locale })}
+                className={classes.search__uploadButton}
+                variant="outlined"
+                color="primary">
+                {t('uploadRecipeButton')}
+              </Button>
+              <div className={classes.search__filter__line} />
+            </>
+          )}
+          {title && !mobile ? (
+            <div className={classes.search__header__text__wrap}>
+              <p className={classes.search__header__text}>{title}</p>
 
-            <button className={classes.search__closeButton} onClick={handleCloseSearchQuery}>
-              <CloseIcon />
-            </button>
-          </div>
-        ) : (
-          <p></p>
-        )}
-        {/* <div className={classes.search__filterHeader_left}>
+              <button className={classes.search__closeButton} onClick={handleCloseSearchQuery}>
+                <CloseIcon />
+              </button>
+            </div>
+          ) : (
+            <p></p>
+          )}
+          {/* <div className={classes.search__filterHeader_left}>
           <p className={classes.search__filter__title}>Filter</p>
           {!mobile && (
             <button type="reset" onClick={handleClickClearAll} className={classes.search__clearButton}>
@@ -831,32 +837,175 @@ const Recipes = props => {
           )}
         </div> */}
 
-        <NoSsr>
-          <div
-            className={`${isDropdownActive ? classes.search__dropdown_active : classes.search__dropdown}`}
-            onClick={() => setIsDropdownActive(!isDropdownActive)}>
-            {recommendedFilter ? <span>{recommendedFilter}</span> : <span>Recommended</span>}
-            <div className={classes.search__dropdown__circle}>
-              <StyledArrowDownIcon />
+          <NoSsr>
+            <div
+              className={`${isDropdownActive ? classes.search__dropdown_active : classes.search__dropdown}`}
+              onClick={() => setIsDropdownActive(!isDropdownActive)}>
+              {recommendedFilter ? <span>{recommendedFilter}</span> : <span>Recommended</span>}
+              <div className={classes.search__dropdown__circle}>
+                <StyledArrowDownIcon />
+              </div>
             </div>
+            {isDropdownActive === true && (
+              <ul className={classes.search__dropdown__list}>
+                <li
+                  className={classes.search__dropdown__item}
+                  onClick={() => {
+                    setRecommendedFilter(``);
+                    setIsDropdownActive(false);
+                    formik.setFieldValue('recipe_set', ``);
+
+                    formik.handleSubmit();
+                  }}>
+                  Recommended
+                </li>
+                {recommendedListMap}
+              </ul>
+            )}
+
+            {
+              <StyledAccordion expanded={expanded === 'panel1'} onChange={handleAnchorAccordion('panel1')}>
+                <AccordionSummary
+                  expandIcon={
+                    <div className={classes.search__clickList}>
+                      <StyledArrowDownIcon />
+                    </div>
+                  }
+                  aria-controls="panel1a-content"
+                  id="panel1a-header">
+                  <Typography className={classes.search__filter__title}>{t('filters.type.title')}</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <div className={classes.search__filter__list__wrap}>
+                    <div className={classes.search__filter__list}>{recipeTypesList}</div>
+                    <div className={classes.search__filter__list}>
+                      {Object.values(recipeTypesCount).map(
+                        (el, ind) =>
+                          data && (
+                            <div key={`${el}-${ind}`} className={classes.search__filter__list_item}>
+                              {numberWithCommas(`${data[el]}`)}
+                            </div>
+                          )
+                      )}
+                    </div>
+                  </div>
+                </AccordionDetails>
+              </StyledAccordion>
+            }
+            <div className={classes.search__line_botMargin} />
+
+            <Typography className={classes.search__filter__title}>{t('filters.skills.title')}</Typography>
+            <MySlider
+              defaultValue={2}
+              min={1}
+              max={3}
+              step={1}
+              value={range}
+              onChange={(event, value) => {
+                setRange(value);
+                setPage(1);
+                formik.setFieldValue('cooking_skills', value);
+                formik.handleSubmit();
+              }}
+              name="cooking_skills"
+              id="cooking_skills"
+            />
+            <div className={classes.search__cookingSkills}>
+              <button className={classes.search__cookingSkills__firstItem} onClick={handleChangeRange('Easy')}>
+                {t('filters.skills.easy')}
+              </button>
+              <button className={classes.search__cookingSkills__secondItem} onClick={handleChangeRange('Medium')}>
+                {t('filters.skills.medium')}
+              </button>
+              <button className={classes.search__cookingSkills__thirdItem} onClick={handleChangeRange('Complex')}>
+                {t('filters.skills.hard')}
+              </button>
+            </div>
+            <div className={classes.search__line_topMargin} />
+
+            <StyledAccordion expanded={expanded === 'panel3'} onChange={handleAnchorAccordion('panel3')}>
+              <AccordionSummary
+                expandIcon={
+                  <div className={classes.search__clickList}>
+                    <StyledArrowDownIcon />
+                  </div>
+                }
+                aria-controls="panel3a-content"
+                id="panel3a-header">
+                <Typography className={classes.search__filter__title}>{t('filters.method.title')}</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <div className={classes.search__filter__list__wrap}>
+                  <div className={classes.search__filter__list}>{cookingMethodsList}</div>
+                  <div className={classes.search__filter__list}>
+                    {Object.values(cookingMethodsCount).map(
+                      (el, ind) =>
+                        data && (
+                          <div key={`${el}-${ind}`} className={classes.search__filter__list_item}>
+                            {numberWithCommas(`${data[el]}`)}
+                          </div>
+                        )
+                    )}
+                  </div>
+                </div>
+              </AccordionDetails>
+            </StyledAccordion>
+            <div className={classes.search__line} />
+
+            <StyledAccordion expanded={expanded === 'panel4'} onChange={handleAnchorAccordion('panel4')}>
+              <AccordionSummary
+                expandIcon={
+                  <div className={classes.search__clickList}>
+                    <StyledArrowDownIcon />
+                  </div>
+                }
+                aria-controls="panel4a-content"
+                id="panel4a-header">
+                <Typography className={classes.search__filter__title}>{t('filters.diet.title')}</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <div className={classes.search__filter__list__wrap}>
+                  <div className={classes.search__filter__list}>{dietaryrestrictionsList} </div>
+                  <div className={classes.search__filter__list}>
+                    {Object.values(dietaryrestrictionsCount).map(
+                      (el, ind) =>
+                        data && (
+                          <div key={`${el}-${ind}`} className={classes.search__filter__list_item}>
+                            {numberWithCommas(`${data[el]}`)}
+                          </div>
+                        )
+                    )}
+                  </div>
+                </div>
+              </AccordionDetails>
+            </StyledAccordion>
+            <div className={classes.search__line} />
+
+            {!isQueryEmpty && (
+              <button type="reset" onClick={handleClickClearAll} className={classes.search__clearButton}>
+                <CloseIconFilled style={{ color: '#ffaa00' }} />
+                {t('filters.resetButton')}
+              </button>
+            )}
+          </NoSsr>
+        </div>
+        {mobile && (
+          <div className={classes.search__filter__footer}>
+            <button type="reset" onClick={handleClickClearAll} className={classes.search__clearButton}>
+              Clear all
+            </button>
+            <button type="button" className={classes.search__applyBtn} onClick={toggleDrawer('right', false)}>
+              Apply
+            </button>
           </div>
-          {isDropdownActive === true && (
-            <ul className={classes.search__dropdown__list}>
-              <li
-                className={classes.search__dropdown__item}
-                onClick={() => {
-                  setRecommendedFilter(``);
-                  setIsDropdownActive(false);
-                  formik.setFieldValue('recipe_set', ``);
-
-                  formik.handleSubmit();
-                }}>
-                Recommended
-              </li>
-              {recommendedListMap}
-            </ul>
-          )}
-
+        )}
+      </React.Fragment>
+    );
+  };
+  const MobileFilters = () => {
+    return (
+      <div className={classes.search__mobileFilters}>
+        <NoSsr>
           {
             <StyledAccordion expanded={expanded === 'panel1'} onChange={handleAnchorAccordion('panel1')}>
               <AccordionSummary
@@ -890,9 +1039,9 @@ const Recipes = props => {
 
           <Typography className={classes.search__filter__title}>Cooking Skills</Typography>
           <MySlider
-            defaultValue={2}
-            min={1}
-            max={3}
+            defaultValue={1}
+            min={0}
+            max={2}
             step={1}
             value={range}
             onChange={(event, value) => {
@@ -974,160 +1123,26 @@ const Recipes = props => {
             </AccordionDetails>
           </StyledAccordion>
           <div className={classes.search__line} />
-
-          {!isQueryEmpty && (
+          {query && Object.keys(query).length == 0 ? null : (
             <button type="reset" onClick={handleClickClearAll} className={classes.search__clearButton}>
-              <CloseIconFilled style={{ color: '#ffaa00' }} /> Reset filter
+              <CloseIconFilled />
+              {t('filters.resetButton')}
             </button>
           )}
         </NoSsr>
       </div>
-      {mobile && (
-        <div className={classes.search__filter__footer}>
-          <button type="reset" onClick={handleClickClearAll} className={classes.search__clearButton}>
-            Clear all
-          </button>
-          <button type="button" className={classes.search__applyBtn} onClick={toggleDrawer('right', false)}>
-            Apply
-          </button>
-        </div>
-      )}
-    </>
-  );
-  const mobileFilters = (
-    <div className={classes.search__mobileFilters}>
-      <NoSsr>
-        {
-          <StyledAccordion expanded={expanded === 'panel1'} onChange={handleAnchorAccordion('panel1')}>
-            <AccordionSummary
-              expandIcon={
-                <div className={classes.search__clickList}>
-                  <StyledArrowDownIcon />
-                </div>
-              }
-              aria-controls="panel1a-content"
-              id="panel1a-header">
-              <Typography className={classes.search__filter__title}>Type</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <div className={classes.search__filter__list__wrap}>
-                <div className={classes.search__filter__list}>{recipeTypesList}</div>
-                <div className={classes.search__filter__list}>
-                  {Object.values(recipeTypesCount).map(
-                    (el, ind) =>
-                      data && (
-                        <div key={`${el}-${ind}`} className={classes.search__filter__list_item}>
-                          {numberWithCommas(`${data[el]}`)}
-                        </div>
-                      )
-                  )}
-                </div>
-              </div>
-            </AccordionDetails>
-          </StyledAccordion>
-        }
-        <div className={classes.search__line_botMargin} />
-
-        <Typography className={classes.search__filter__title}>Cooking Skills</Typography>
-        <MySlider
-          defaultValue={1}
-          min={0}
-          max={2}
-          step={1}
-          value={range}
-          onChange={(event, value) => {
-            setRange(value);
-            setPage(1);
-            formik.setFieldValue('cooking_skills', value);
-            formik.handleSubmit();
-          }}
-          name="cooking_skills"
-          id="cooking_skills"
-        />
-        <div className={classes.search__cookingSkills}>
-          <button className={classes.search__cookingSkills__firstItem} onClick={handleChangeRange('Easy')}>
-            Easy
-          </button>
-          <button className={classes.search__cookingSkills__secondItem} onClick={handleChangeRange('Medium')}>
-            Medium
-          </button>
-          <button className={classes.search__cookingSkills__thirdItem} onClick={handleChangeRange('Complex')}>
-            Complex
-          </button>
-        </div>
-        <div className={classes.search__line_topMargin} />
-
-        <StyledAccordion expanded={expanded === 'panel3'} onChange={handleAnchorAccordion('panel3')}>
-          <AccordionSummary
-            expandIcon={
-              <div className={classes.search__clickList}>
-                <StyledArrowDownIcon />
-              </div>
-            }
-            aria-controls="panel3a-content"
-            id="panel3a-header">
-            <Typography className={classes.search__filter__title}>Cooking Method</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <div className={classes.search__filter__list__wrap}>
-              <div className={classes.search__filter__list}>{cookingMethodsList}</div>
-              <div className={classes.search__filter__list}>
-                {Object.values(cookingMethodsCount).map(
-                  (el, ind) =>
-                    data && (
-                      <div key={`${el}-${ind}`} className={classes.search__filter__list_item}>
-                        {numberWithCommas(`${data[el]}`)}
-                      </div>
-                    )
-                )}
-              </div>
-            </div>
-          </AccordionDetails>
-        </StyledAccordion>
-        <div className={classes.search__line} />
-
-        <StyledAccordion expanded={expanded === 'panel4'} onChange={handleAnchorAccordion('panel4')}>
-          <AccordionSummary
-            expandIcon={
-              <div className={classes.search__clickList}>
-                <StyledArrowDownIcon />
-              </div>
-            }
-            aria-controls="panel4a-content"
-            id="panel4a-header">
-            <Typography className={classes.search__filter__title}>Dietary Restrictions</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <div className={classes.search__filter__list__wrap}>
-              <div className={classes.search__filter__list}>{dietaryrestrictionsList} </div>
-              <div className={classes.search__filter__list}>
-                {Object.values(dietaryrestrictionsCount).map(
-                  (el, ind) =>
-                    data && (
-                      <div key={`${el}-${ind}`} className={classes.search__filter__list_item}>
-                        {numberWithCommas(`${data[el]}`)}
-                      </div>
-                    )
-                )}
-              </div>
-            </div>
-          </AccordionDetails>
-        </StyledAccordion>
-        <div className={classes.search__line} />
-        {query && Object.keys(query).length == 0 ? null : (
-          <button type="reset" onClick={handleClickClearAll} className={classes.search__clearButton}>
-            <CloseIconFilled /> Reset filter
-          </button>
-        )}
-      </NoSsr>
-    </div>
-  );
+    );
+  };
 
   const content = (
     <div className={classes.search}>
       {searchField}
       <div className={classes.search__content}>
-        {!mobile && <form>{searchFilter}</form>}
+        {!mobile && (
+          <form>
+            <SearchFilter />
+          </form>
+        )}
 
         <div className={classes.search__result}>
           {mobile && (
@@ -1171,7 +1186,7 @@ const Recipes = props => {
                 color="primary">
                 Advanced filter
               </Button>
-              {showFilters && mobileFilters}
+              {showFilters && <MobileFilters />}
               <div className={classes.search__line_mobile} />
               <Button
                 onClick={() => router.push('/recipe/upload', undefined, { locale: router.locale })}
@@ -1202,7 +1217,7 @@ const Recipes = props => {
 
           <div className={classes.search__result__text}>
             <CoinIcon />
-            <p>You can order all the ingredients</p>
+            <p>{t('orderAllIngredientsText')}</p>
           </div>
 
           <div className={classes.search__result__container}>
@@ -1345,7 +1360,7 @@ export async function getServerSideProps(context) {
 
     return {
       props: {
-        ...(await serverSideTranslations(context.locale, ['common'])),
+        ...(await serverSideTranslations(context.locale, ['common', 'searchPage'])),
         weekmenuWithoutFilters: weekmenu.data
       }
     };

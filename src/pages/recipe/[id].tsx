@@ -41,6 +41,7 @@ import { ButtonShare } from '@/components/elements/button';
 import { recoveryLocalStorage } from '@/utils/web-storage/local';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { RootState } from '@/store/store';
+import { useTranslation } from 'next-i18next';
 
 const StyledSlider = styled(Slider)`
   display: flex;
@@ -79,6 +80,7 @@ const MyPicture = styled(ImageIcon)`
 dayjs.extend(customParseFormat);
 
 function RecipePage(props) {
+  const { t } = useTranslation('recipePage');
   const { notFound, recipe, weekmenu } = props;
   const mobile = useMediaQuery('(max-width:576px)');
 
@@ -437,7 +439,7 @@ function RecipePage(props) {
 
     return (
       <div className={classes.classification}>
-        <h2 className={classes.block_title}>All Classifications</h2>
+        <h2 className={classes.block_title}>{t('classifications.title')}</h2>
         <div className={classes.classification_icons_container}>
           <IconWithText
             icon={StopwatchIcon}
@@ -490,10 +492,10 @@ function RecipePage(props) {
         </div>
         <Divider />
         <div className={classes.classification_calories}>
-          <CaloriesElement title="Calories" value={calories ?? '—'} />
-          <CaloriesElement title="Protein" value={proteins ?? '—'} />
-          <CaloriesElement title="Fat" value={fats ?? '—'} />
-          <CaloriesElement title="Carbs" value={carbohydrates ?? '—'} />
+          <CaloriesElement title={t('nutrition.calories')} value={calories ?? '—'} />
+          <CaloriesElement title={t('nutrition.protein')} value={proteins ?? '—'} />
+          <CaloriesElement title={t('nutrition.fat')} value={fats ?? '—'} />
+          <CaloriesElement title={t('nutrition.carbs')} value={carbohydrates ?? '—'} />
         </div>
         <Divider />
       </div>
@@ -503,10 +505,10 @@ function RecipePage(props) {
   const Description = () => {
     return (
       <div className={classes.description}>
-        <h2 className={classes.block_title}>Description</h2>
+        <h2 className={classes.block_title}>{t('description.title')}</h2>
         <p
           className={classes.description_text}
-          dangerouslySetInnerHTML={{ __html: recipeDescription ?? 'There is no description yet' }}></p>
+          dangerouslySetInnerHTML={{ __html: recipeDescription ?? t('description.emptyText') }}></p>
       </div>
     );
   };
@@ -518,8 +520,8 @@ function RecipePage(props) {
         <div className={classes.cooking_steps_element_wrapper}>
           <span className={classes.cooking_steps_number}>{number || 'N/A'}</span>
           <div className={classes.cooking_steps_text}>
-            <p className={classes.cooking_steps_text_title}>{title || 'Not defined'}</p>
-            <p className={classes.cooking_steps_text_description}>{description || 'Not defined'}</p>
+            <p className={classes.cooking_steps_text_title}>{title || t('common:notDefinedText')}</p>
+            <p className={classes.cooking_steps_text_description}>{description || t('common:notDefinedText')}</p>
           </div>
         </div>
       );
@@ -527,7 +529,7 @@ function RecipePage(props) {
 
     return (
       <div className={classes.cooking_steps}>
-        <h2 className={classes.block_title}>Preparation Steps</h2>
+        <h2 className={classes.block_title}>{t('steps.title')}</h2>
         <div className={classes.cooking_steps_wrapper}>
           {recipeCookingSteps?.length > 0
             ? recipeCookingSteps
@@ -535,7 +537,7 @@ function RecipePage(props) {
                 .map((step, index) => (
                   <Step number={step?.num} title={step?.title} description={step?.description} key={'step' + index} />
                 ))
-            : 'There is no cooking steps yet'}
+            : t('steps.emptyText')}
         </div>
       </div>
     );
@@ -598,11 +600,11 @@ function RecipePage(props) {
           </div>
           <Collapse in={isSelected} mountOnEnter unmountOnExit>
             <p className={classes.supplier_text_wrapper}>
-              <span className={classes.supplier_text}>Ingredients</span>
+              <span className={classes.supplier_text}>{t('ingredients.supplier.ingredients')}</span>
               <span className={classes.supplier_value}>${Number.parseFloat(price).toFixed(2) ?? 0}</span>
             </p>
             <p className={classes.supplier_text_wrapper}>
-              <span className={classes.supplier_text}>Delivery</span>
+              <span className={classes.supplier_text}>{t('ingredients.supplier.delivery')}</span>
               <span className={classes.supplier_value}>{Number.parseFloat(deliveryPrice).toFixed(2)}</span>
             </p>
             <p className={classes.supplier_text_wrapper}>
@@ -629,9 +631,9 @@ function RecipePage(props) {
     return (
       <div className={classes.ingredients}>
         <div className={classes.ingredients_list}>
-          <h2 className={classes.ingredients_title}>Ingredients</h2>
+          <h2 className={classes.ingredients_title}>{t('ingredients.title')}</h2>
           {ingredients.slice(0, 9)?.map(ingredient => <Ingredient key={ingredient.pk} {...ingredient} />) ||
-            'There are no ingredients'}
+            t('ingredients.emptyText')}
 
           {ingredients.slice(9)?.length > 0 && (
             <>
@@ -664,8 +666,8 @@ function RecipePage(props) {
                 onClick={onAddToCartHandler}
                 className={classes.ingredients_suppliers_order_button}
                 endIcon={<BasicIcon icon={CartIcon} color="white" />}>
-                {!isRecipeInCart && !isRecipeNotSale && `Add To Cart`}
-                {isRecipeInCart && `Added`}
+                {!isRecipeInCart && !isRecipeNotSale && t('ingredients.cartButton.add')}
+                {isRecipeInCart && t('ingredients.cartButton.added')}
               </Button>
             </div>
           </>
@@ -679,9 +681,9 @@ function RecipePage(props) {
       <div className={classes.comments}>
         <div className={classes.comments_header}>
           <div className={classes.comments_title_wrapper}>
-            <h2 className={classes.comments_title}>Add a review</h2>
+            <h2 className={classes.comments_title}>{t('reviews.title')}</h2>
             <h3 className={classes.comments_subtitle}>
-              For <span className={classes.comments_subtitle_bold}>{title}</span>
+              {t('reviews.for')} <span className={classes.comments_subtitle_bold}>{title}</span>
             </h3>
           </div>
           <div className={classes.comments_rate_wrapper}>
@@ -811,7 +813,7 @@ export async function getServerSideProps(context) {
 
     return {
       props: {
-        ...(await serverSideTranslations(context.locale, ['common'])),
+        ...(await serverSideTranslations(context.locale, ['common', 'recipePage'])),
         recipe: recipeResponse.data,
         weekmenu: weekmenuResponse.data,
         topRatedRecipes: topRatedResponse.data,

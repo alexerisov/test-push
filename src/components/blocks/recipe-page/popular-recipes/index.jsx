@@ -12,6 +12,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import styled from 'styled-components';
 import Cookies from 'cookies';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
+import { useTranslation } from 'next-i18next';
 
 const StyledSlider = styled(Slider)`
   display: flex;
@@ -74,6 +75,7 @@ const RecipeSlider = props => {
 };
 
 export const PopularRecipesBlock = props => {
+  const { t } = useTranslation('recipePage');
   const { data } = props;
 
   const scrollRef = useRef(null);
@@ -99,9 +101,9 @@ export const PopularRecipesBlock = props => {
     <section className={classes.container}>
       <Arrows {...arrowsProps} />
       <Box display="flex" flexDirection="row" justifyContent="space-between">
-        <span className={classes.slider_title}>Popular Recipes</span>
+        <span className={classes.slider_title}>{t('popularRecipes.title')}</span>
       </Box>
-      <div className={classes.slider_subtitle}>Let's go to meet new sensations</div>
+      <div className={classes.slider_subtitle}>{t('popularRecipes.subtitle')}</div>
       <RecipeSlider recipes={data} scrollRef={scrollRef} />
     </section>
   );

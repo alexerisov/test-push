@@ -13,6 +13,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Rating } from '@material-ui/lab';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import dayjs from 'dayjs';
+import { useTranslation } from 'next-i18next';
 const relativeTime = require('dayjs/plugin/relativeTime');
 const utc = require('dayjs/plugin/utc');
 dayjs.extend(utc);
@@ -31,6 +32,7 @@ const Comment = ({
   uploadLikeHandler,
   rating
 }) => {
+  const { t } = useTranslation('recipePage');
   const mobile = useMediaQuery('(max-width: 568px)');
   const activeUserId = useSelector(state => state?.account?.profile?.pk);
   const status = {
@@ -162,11 +164,13 @@ const Comment = ({
           </div>
 
           <div className={classes.comment__like}>
-            <span onClick={() => likeHandler(likeTypes.like)}>{likes.value || false} Like</span>
+            <span onClick={() => likeHandler(likeTypes.like)}>
+              {likes.value || false} {t('comments.likeButton')}
+            </span>
           </div>
 
           <div className={classes.comment__reply}>
-            <span>Reply</span>
+            <span>{t('comments.replyButton')}</span>
           </div>
 
           {/*<div className={classes.comment__like}>*/}
@@ -175,7 +179,9 @@ const Comment = ({
 
           {isCreated24HoursAgo() && isCommentCreatedByActiveUser() && (
             <div className={classes.comment__delete}>
-              <span onClick={() => (rating ? deleteReview(commentId) : deleteComment(commentId))}>Delete</span>
+              <span onClick={() => (rating ? deleteReview(commentId) : deleteComment(commentId))}>
+                {t('comments.deleteButton')}
+              </span>
             </div>
           )}
         </div>

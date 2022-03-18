@@ -17,6 +17,7 @@ import TextField from '@material-ui/core/TextField';
 import Input from '@material-ui/core/Input';
 import FieldError from '@/components/elements/field-error';
 import { MenuItem, Select } from '@material-ui/core';
+import { useTranslation } from 'next-i18next';
 
 const StyledTextField = styled(TextField)`
   width: 100%;
@@ -37,6 +38,7 @@ const StyledInput = styled(Input)`
 `;
 
 function FormEditAccountUser(props) {
+  const { t } = useTranslation('profilePage');
   if (!props.account.profile) {
     return <div>loading...</div>;
   }
@@ -67,7 +69,7 @@ function FormEditAccountUser(props) {
 
   const [avatarFile, setAvatarFile] = useState(avatar);
   const [formStatus, setFormStatus] = useState('');
-  const [statusSubmit, setStatusSubmit] = useState('Update');
+  const [statusSubmit, setStatusSubmit] = useState(t('submitStatus.update'));
 
   const formik = useFormik({
     initialValues: {
@@ -79,22 +81,22 @@ function FormEditAccountUser(props) {
       avatar: avatar
     },
     onSubmit: values => {
-      setStatusSubmit('Loading...');
+      setStatusSubmit(t('submitStatus.loading'));
       setFormStatus('');
       values.user_type = user_type;
       values.phone_number = changePhone;
       props
         .dispatch(profileActions.updateProfileUser(values))
         .then(res => {
-          setStatusSubmit('Update');
-          setFormStatus(<span className={classes.profile__formStatus_true}>Successfully sent</span>);
+          setStatusSubmit(t('submitStatus.update'));
+          setFormStatus(<span className={classes.profile__formStatus_true}>{t('submitSuccess')}</span>);
           props.dispatch(accountActions.remind());
         })
         .catch(error => {
           setErrorForm(error.response.data);
           handleErrorScroll(error.response.data);
-          setStatusSubmit('Update');
-          setFormStatus(<span className={classes.profile__formStatus_error}>Error</span>);
+          setStatusSubmit(t('submitStatus.update'));
+          setFormStatus(<span className={classes.profile__formStatus_error}>{t('submitError')}</span>);
           console.log(error);
         });
     }
@@ -127,7 +129,7 @@ function FormEditAccountUser(props) {
 
   return (
     <ContentLayout>
-      <h2 className={classes.profile__title}>Update a New Photo</h2>
+      <h2 className={classes.profile__title}>{t('updatePhoto')}</h2>
       <form onSubmit={formik.handleSubmit} className={classes.profile__data}>
         <div className={classes.profile__formAvatar}>
           <div className={classes.profile__upload} onClick={onClickUpload}>
@@ -157,10 +159,11 @@ function FormEditAccountUser(props) {
             <p className={classes.profile__formStatus}>{formStatus}</p>
           </div>
         </div>
-        <h2 className={classes.profile__title}>Update User Information</h2>
+        <h2 className={classes.profile__title}>{t('updateUserInfo')}</h2>
         <div>
           <label className={classes.profile__label}>
-            <span style={{ color: 'red' }}>* </span>Full Name
+            <span style={{ color: 'red' }}>* </span>
+            {t('nameInput.label')}
           </label>
           <StyledTextField
             id="full_name"
@@ -177,7 +180,8 @@ function FormEditAccountUser(props) {
         </div>
         <div>
           <label className={classes.profile__label}>
-            <span style={{ color: 'red' }}>* </span>Email
+            <span style={{ color: 'red' }}>* </span>
+            {t('emailInput.label')}
           </label>
           <StyledTextField
             disabled
@@ -191,7 +195,7 @@ function FormEditAccountUser(props) {
           />
         </div>
         <div>
-          <label className={classes.profile__label}>Phone number</label>
+          <label className={classes.profile__label}>{t('phoneInput.label')}</label>
           <PhoneInput
             country="us"
             id="phone_number"
@@ -216,7 +220,7 @@ function FormEditAccountUser(props) {
           <FieldError errors={errorForm} path="phone_number" id="error" />
         </div>
         <div>
-          <label className={classes.profile__label}>City</label>
+          <label className={classes.profile__label}>{t('cityInput.label')}</label>
           <StyledTextField
             id="city"
             name="city"
@@ -228,7 +232,7 @@ function FormEditAccountUser(props) {
           />
         </div>
         <div>
-          <label className={classes.profile__label}>Language</label>
+          <label className={classes.profile__label}>{t('languageInput.label')}</label>
           <StyledSelect
             id="city"
             name="city"

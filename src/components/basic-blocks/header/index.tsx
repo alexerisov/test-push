@@ -19,6 +19,7 @@ import { LoginDrawer } from '@/components/basic-blocks/drawer';
 import { useTranslation } from 'next-i18next';
 import LanguageSelector from '@/components/elements/language-selector';
 import { RootState } from '@/store/store';
+import { useAuth } from '@/utils/authProvider';
 
 const UserAvatar = ({ clickHandler, notificationAmount, avatar }) => {
   const RedCircle = () => <div className={s.red_circle}></div>;

@@ -7,6 +7,7 @@ import ArrowLeftIcon from '@/../public/icons/Arrow Left 2/Line.svg';
 import ArrowRightIcon from '@/../public/icons/Arrow Right 2/Line.svg';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import { CardSearch } from '@/components/elements/card';
+import { useTranslation } from 'next-i18next';
 
 const Arrows = props => {
   const { currentWeek, handleChangeWeek, weeksAmount } = props;
@@ -64,6 +65,7 @@ const RecipeSlider = props => {
 };
 
 export const Weekmenu = props => {
+  const { t } = useTranslation('searchPage');
   const { data } = props;
   const [recipes, setRecipes] = useState([]);
   const [currentWeek, setCurrentWeek] = useState(0);
@@ -94,7 +96,7 @@ export const Weekmenu = props => {
       <section className={classes.container}>
         <Arrows {...arrowsProps} />
         <Box display="flex" flexDirection="row" justifyContent="space-between">
-          <span className={classes.slider_title}>Weekmenu</span>
+          <span className={classes.slider_title}>{t('weekmenuTitle')}</span>
         </Box>
         <RecipeSlider recipes={currentWeekRecipes} currentWeek={currentWeek} />
       </section>

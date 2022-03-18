@@ -13,8 +13,11 @@ import WalletIcon from '../../../public/icons/Wallet/Line.svg';
 import dayjs from 'dayjs';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import LayoutPageNew from '@/components/layouts/layout-page-new';
+import { RootState } from '@/store/store';
+import { useTranslation } from 'next-i18next';
 
 const OrderCongratulationPage = () => {
+  const { t } = useTranslation('orderCongratulationPage');
   const router = useRouter();
   const [cart, setCart] = useState(null);
   const [order, setOrder] = useState(null);
@@ -48,21 +51,25 @@ const OrderCongratulationPage = () => {
   let content = (
     <div className={classes.content}>
       <div className={classes.content__column1}>
-        <div className={classes.header}>Congratulation!</div>
-        <div className={classes.subheader}>Your ingredients has been ordered! 🎉</div>
+        <div className={classes.header}>{t('title')}</div>
+        <div className={classes.subheader}>{t('subtitle')}</div>
         <Divider m="32px 0" />
         <div className={classes.info}>
-          <div className={classes.info__header}>Delivery details</div>
-          <TextWithIcon icon={HandCartIcon} text="Booking code:" value={order?.pk} />
-          <TextWithIcon icon={CalendarIcon} text="Date:" value={dayjs(order?.delivery_date).format('D MMM, YYYY')} />
-          <TextWithIcon icon={RecipeIcon} text="Total:" value={'$' + order?.total_price} />
-          <TextWithIcon icon={WalletIcon} text="Payment method:" value="Tikkie" />
+          <div className={classes.info__header}>{t('deliveryDetails')}</div>
+          <TextWithIcon icon={HandCartIcon} text={`${t('bookingCode')}:`} value={order?.pk} />
+          <TextWithIcon
+            icon={CalendarIcon}
+            text={`${t('date')}:`}
+            value={dayjs(order?.delivery_date).format('D MMM, YYYY')}
+          />
+          <TextWithIcon icon={RecipeIcon} text={`${t('paymentMethod')}:`} value={'$' + order?.total_price} />
+          <TextWithIcon icon={WalletIcon} text={`${t('status')}:`} value="Tikkie" />
           <div className={classes.button_group}>
             <Button onClick={ordersButtonHandler} className={classes.button__orders}>
-              Your Orders
+              {t('yourOrdersButton')}
             </Button>
             <Button onClick={exploreButtonHandler} className={classes.button__explore}>
-              Explore Other Recipes
+              {t('exploreRecipesButton')}
             </Button>
           </div>
         </div>
@@ -74,7 +81,7 @@ const OrderCongratulationPage = () => {
   return <LayoutPageNew content={content} />;
 };
 
-const connector = connect(state => ({
+const connector = connect((state: RootState) => ({
   account: state.account
 }))(OrderCongratulationPage);
 
@@ -82,6 +89,6 @@ export default withRouter(withAuth(connector));
 
 export const getServerSideProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale, ['common']))
+    ...(await serverSideTranslations(locale, ['common', 'orderCongratulationPage', 'orderSummary', 'orderInfo']))
   }
 });
