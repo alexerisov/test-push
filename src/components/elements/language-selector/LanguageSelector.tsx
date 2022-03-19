@@ -17,8 +17,13 @@ export const LanguageSelector = () => {
   const { i18n } = useTranslation('common');
   const router = useRouter();
   const dispatch = useDispatch();
-  const { data: session } = useAuth();
+  const { session } = useAuth();
   const profileLanguage = session?.user?.language;
+
+  const languagesIcon = {
+    en: FlagUS,
+    nl: FlagNL
+  };
 
   const languageList = [
     {
@@ -34,27 +39,27 @@ export const LanguageSelector = () => {
   const [currentLanguage, setCurrentLanguage] = React.useState<string>('nl');
 
   useEffect(async () => {
-    const storedLanguage = await JSON.parse(localStorage.getItem('language'));
-    if (storedLanguage) {
-      return setCurrentLanguage(storedLanguage);
-    }
-    console.log(i18n);
-    if (profileLanguage) {
-      for (let key in LANGUAGES) {
-        console.log('authed');
-        if (profileLanguage === LANGUAGES[key]) {
-          setCurrentLanguage(key);
-        }
+    if (session) {
+      if (profileLanguage in LANGUAGES) {
+        setCurrentLanguage(LANGUAGES[profileLanguage]);
+      }
+    } else {
+      const storedLanguage = await JSON.parse(localStorage.getItem('language'));
+      if (storedLanguage) {
+        setCurrentLanguage(storedLanguage);
+        i18n.changeLanguage(storedLanguage);
+      } else {
+        setCurrentLanguage('nl');
+        i18n.changeLanguage('nl');
       }
     }
-  }, [currentLanguage]);
+  }, [session, profileLanguage]);
 
   const updateProfileLangage = language => {
     if (profileLanguage) {
       return http
         .patch(`account/me`, { language: LANGUAGES[language] })
         .then(res => {
-          console.log('res', res);
           dispatch(accountActions.remind());
         })
         .catch(error => {
@@ -67,24 +72,40 @@ export const LanguageSelector = () => {
     await localStorage.setItem('language', JSON.stringify(language));
   };
 
-  const onChangeSelect = event => {
-    console.log(event.target.value);
-    setCurrentLanguage(event.target.value);
-    saveLanguageToLocalStorage(event.target.value);
-    updateProfileLangage(event.target.value);
-    router.push(router.asPath, undefined, { locale: event.target.value });
+  const onChangeSelect = async event => {
+    await saveLanguageToLocalStorage(event.target.value);
+
+    if (profileLanguage) {
+      await updateProfileLangage(event.target.value);
+    }
+
+    await setCurrentLanguage(event.target.value);
+
+    setTimeout(() => {
+      setCurrentLanguage(event.target.value);
+    }, 200);
+
+    router.push(router.asPath, undefined, { locale: event.target.value, shallow: true });
+
+    if (router.asPath.includes('account-settings')) {
+      router.push(router.asPath, undefined, { locale: event.target.value });
+    }
+    i18n.changeLanguage(event.target.value);
   };
 
   const getOptionList = list => {
     return list.map(el => {
       return (
         <MenuItem key={el.value} value={el.value} className={s.menu__item}>
-          <ListItemIcon>
-            <BasicIcon icon={el.icon} size={'24px'} viewBox={'0 0 640 480'} />
-          </ListItemIcon>
+          <BasicIcon icon={el.icon} size={'24px'} viewBox={'0 0 640 480'} />
+          <span className={s.menu__text}>{el.value}</span>
         </MenuItem>
       );
     });
+  };
+
+  const renderValue = value => {
+    return <BasicIcon icon={languagesIcon[value]} size={'24px'} viewBox={'0 0 640 480'} />;
   };
 
   return (
@@ -94,6 +115,7 @@ export const LanguageSelector = () => {
         value={currentLanguage}
         onChange={onChangeSelect}
         className={s.select}
+        renderValue={renderValue}
         variant="outlined"
         MenuProps={{
           disableScrollLock: true,

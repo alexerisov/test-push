@@ -7,7 +7,7 @@ import { modalActions } from '@/store/actions';
 import { profileActions, accountActions } from '@/store/actions';
 import { CardRoleModels } from '@/components/elements/card';
 import { validator } from '@/utils/validator';
-import { nameErrorProfile } from '@/utils/datasets';
+import { LANGUAGES, nameErrorProfile } from '@/utils/datasets';
 import FieldError from '@/components/elements/field-error';
 
 import PhoneInput from 'react-phone-input-2';
@@ -18,6 +18,8 @@ import { useFormik } from 'formik';
 import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
 import { MenuItem, Select } from '@material-ui/core';
+import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
 
 const StyledTextField = styled(TextField)`
   width: 100%;
@@ -33,6 +35,8 @@ const StyledSelect = styled(Select)`
   }
 `;
 function FormEditAccountChef(props) {
+  const router = useRouter();
+  const { t, i18n } = useTranslation('profilePage');
   if (!props.account.profile) {
     return <div>loading...</div>;
   }
@@ -94,7 +98,7 @@ function FormEditAccountChef(props) {
 
   const [avatarFile, setAvatarFile] = useState(avatar);
   const [formStatus, setFormStatus] = useState('');
-  const [statusSubmit, setStatusSubmit] = useState('Update');
+  const [statusSubmit, setStatusSubmit] = useState(t('submitStatus.update'));
 
   const formik = useFormik({
     initialValues: {
@@ -125,15 +129,16 @@ function FormEditAccountChef(props) {
           setErrorForm(null);
           formik.setFieldValue('role_models', []);
           formik.setFieldValue('role_model_images', []);
-          setStatusSubmit('Update');
-          setFormStatus(<span className={classes.profile__formStatus_true}>Successfully sent</span>);
+          setStatusSubmit(t('submitStatus.update'));
+          setFormStatus(<span className={classes.profile__formStatus_true}>{t('submitSuccess')}</span>);
+          router.push(router.asPath, undefined, { locale: LANGUAGES[values.language] });
           props.dispatch(accountActions.remind());
         })
         .catch(error => {
           setErrorForm(error.response.data);
           handleErrorScroll(error.response.data);
-          setStatusSubmit('Update');
-          setFormStatus(<span className={classes.profile__formStatus_error}>Error</span>);
+          setStatusSubmit(t('submitStatus.update'));
+          setFormStatus(<span className={classes.profile__formStatus_error}>{t('submitError')}</span>);
           console.log(error);
         });
     }
@@ -269,7 +274,7 @@ function FormEditAccountChef(props) {
 
   return (
     <ContentLayout>
-      <h2 className={classes.profile__title}>Update a New Photo</h2>
+      <h2 className={classes.profile__title}>{t('updatePhoto')}</h2>
       <form onSubmit={formik.handleSubmit} className={classes.profile__data}>
         <div className={classes.profile__formAvatar}>
           <div className={classes.profile__upload} onClick={onClickUpload}>
@@ -299,10 +304,11 @@ function FormEditAccountChef(props) {
             <p className={classes.profile__formStatus}>{formStatus}</p>
           </div>
         </div>
-        <h2 className={classes.profile__title}>Basic Information</h2>
+        <h2 className={classes.profile__title}>{t('basicInformation')}</h2>
         <div>
           <label className={classes.profile__label}>
-            <span style={{ color: 'red' }}>* </span>Full Name
+            <span style={{ color: 'red' }}>* </span>
+            {t('nameInput.label')}
           </label>
           <StyledTextField
             id="full_name"
@@ -318,7 +324,7 @@ function FormEditAccountChef(props) {
           />
         </div>
         <div>
-          <label className={classes.profile__label}>Bio</label>
+          <label className={classes.profile__label}>{t('bioInput.label')}</label>
           <StyledTextField
             multiline
             rows={3}
@@ -333,7 +339,8 @@ function FormEditAccountChef(props) {
         </div>
         <div>
           <label className={classes.profile__label}>
-            <span style={{ color: 'red' }}>* </span>Email
+            <span style={{ color: 'red' }}>* </span>
+            {t('emailInput.label')}
           </label>
           <StyledTextField
             disabled
@@ -347,7 +354,7 @@ function FormEditAccountChef(props) {
           />
         </div>
         <div>
-          <label className={classes.profile__label}>Phone number</label>
+          <label className={classes.profile__label}>{t('phoneInput.label')}</label>
           <PhoneInput
             country="us"
             id="phone_number"
@@ -374,7 +381,8 @@ function FormEditAccountChef(props) {
         <div className={classes.profile__container_emailAndPhone}>
           <div>
             <label className={classes.profile__label}>
-              <span style={{ color: 'red' }}>* </span>City
+              <span style={{ color: 'red' }}>* </span>
+              {t('cityInput.label')}
             </label>
             <StyledTextField
               id="city"
@@ -390,7 +398,7 @@ function FormEditAccountChef(props) {
             />
           </div>
           <div>
-            <label className={classes.profile__label}>Language</label>
+            <label className={classes.profile__label}>{t('languageInput.label')}</label>
             <StyledSelect
               id="language"
               name="language"
@@ -412,7 +420,7 @@ function FormEditAccountChef(props) {
           </div>
         </div>
         <div className={classes.profile__experience}>
-          <label className={classes.profile__label}>Work Experience (if any)</label>
+          <label className={classes.profile__label}>{t('experience.title')}</label>
           {experienceArr.map((item, index) => {
             return (
               <div className={classes.profile__experience__input} key={index}>
@@ -428,11 +436,11 @@ function FormEditAccountChef(props) {
           <button
             className={classes.profile__buttonAddExperience}
             onClick={handleClickPopupOpenaddExperience('addExperience')}>
-            Add Experience
+            {t('experience.button')}
           </button>
         </div>
         <div>
-          <h2 className={classes.profile__title}>Role Models</h2>
+          <h2 className={classes.profile__title}>{t('role.title')}</h2>
           <div className={classes.profile__container_addRoleModels}>
             {roleModelsArr.map((item, index) => {
               return (
@@ -450,12 +458,12 @@ function FormEditAccountChef(props) {
               className={classes.profile__button__addRoleModels}
               onClick={handleClickPopupOpenAddRoleModels('addRoleModel')}>
               <span className={classes.profile__button__addRoleModels__iconPlus}></span>
-              <span>Add more</span>
+              <span style={{ textAlign: 'center' }}>{t('role.button')}</span>
             </buuton>
           </div>
         </div>
         <div>
-          <h2 className={classes.profile__title}>Other Information</h2>
+          <h2 className={classes.profile__title}>{t('otherInfo.title')}</h2>
           <div className={classes.profile__container_otherInformations}>
             {personalCookingMissionArr.length === 0 ? (
               <button
@@ -466,12 +474,12 @@ function FormEditAccountChef(props) {
                   nameFormik: 'personal_cooking_mission'
                 })}>
                 <span className={classes.profile__button__addRoleModels__iconPlus}></span>
-                <span>Personal Cooking Mission</span>
+                <span>{t('otherInfo.mission')}</span>
               </button>
             ) : (
               <div className={classes.profile__otherInformationsCard}>
                 <div className={classes.profile__otherInformationsCard__header}>
-                  <p className={classes.profile__otherInformationsCard__title}>Personal Cooking Mission</p>
+                  <p className={classes.profile__otherInformationsCard__title}>{t('otherInfo.mission')}</p>
                   <div className={classes.profile__otherInformationsCard__buttons}>
                     <button
                       type="button"
@@ -520,12 +528,12 @@ function FormEditAccountChef(props) {
                   nameFormik: 'source_of_inspiration'
                 })}>
                 <span className={classes.profile__button__addRoleModels__iconPlus}></span>
-                <span>Source Of Inspiration</span>
+                <span>{t('otherInfo.inspiration')}</span>
               </button>
             ) : (
               <div className={classes.profile__otherInformationsCard}>
                 <div className={classes.profile__otherInformationsCard__header}>
-                  <p className={classes.profile__otherInformationsCard__title}>Source Of Inspiration</p>
+                  <p className={classes.profile__otherInformationsCard__title}>{t('otherInfo.inspiration')}</p>
                   <div className={classes.profile__otherInformationsCard__buttons}>
                     <button
                       type="button"
@@ -577,7 +585,7 @@ function FormEditAccountChef(props) {
             ) : (
               <div className={classes.profile__otherInformationsCard}>
                 <div className={classes.profile__otherInformationsCard__header}>
-                  <p className={classes.profile__otherInformationsCard__title}>Cooking Philosophy</p>
+                  <p className={classes.profile__otherInformationsCard__title}>{t('otherInfo.philosophy')}</p>
                   <div className={classes.profile__otherInformationsCard__buttons}>
                     <button
                       type="button"

@@ -1,5 +1,16 @@
 .menu__item {
+  display: flex;
+  column-gap: 8px;
+}
+
+.menu__icon {
   width: auto !important;
+  margin: 0 !important;
+}
+
+.menu__text {
+  text-transform: uppercase;
+  font-size: 14px;
 }
 
 .select {
@@ -14,5 +25,5 @@
 }
 
 .paper {
-  max-width: 40px !important;
+  max-width: 90px !important;
 }

@@ -23,6 +23,7 @@ import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import { Spinner } from '@/components/elements';
 import { useRouter } from 'next/router';
 import { useAuth } from '@/utils/Hooks';
+import { useTranslation } from 'next-i18next';
 
 const CommentBlock = ({
   id,
@@ -37,6 +38,7 @@ const CommentBlock = ({
   isRecipeRatedByUser
 }) => {
   const { session } = useAuth();
+  const { t } = useTranslation('recipePage');
 
   const dispatch = useDispatch();
   const router = useRouter();
@@ -46,8 +48,8 @@ const CommentBlock = ({
 
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
-  const placeholder = 'Share your thoughts here...';
-  const authError = 'Please login first, then you will can comment recipes!';
+  const placeholder = t('reviews.input.placeholder');
+  const authError = t('reviews.input.authError');
 
   // Pagination for comments
   const itemsPerPage = 4;
@@ -293,19 +295,19 @@ const CommentBlock = ({
         <div className={classes.rating_header}></div>
         <div className={classes.rating_body}>
           <RateParameter
-            text="Taste"
+            text={t('reviews.rates.taste')}
             formik={formik}
             value="ratingTaste"
             average={Number.parseFloat(rating.taste) || null}
           />
           <RateParameter
-            text="Value for Money"
+            text={t('reviews.rates.valueForMoney')}
             formik={formik}
             value="ratingValueForMoney"
             average={Number.parseFloat(rating.valueForMoney) || null}
           />
           <RateParameter
-            text="Originality"
+            text={t('reviews.rates.originality')}
             formik={formik}
             value="ratingOriginality"
             average={Number.parseFloat(rating.originality) || null}
@@ -355,7 +357,7 @@ const CommentBlock = ({
                 type="submit"
                 variant="contained"
                 color="primary">
-                Post it!
+                {t('reviews.postButton')}
               </Button>
             </>
           }
@@ -369,7 +371,9 @@ const CommentBlock = ({
       </form>
 
       <div className={classes.comments__body}>
-        <h3 className={classes.comments__subtitle}>{comments && commentsCount} Comments</h3>
+        <h3 className={classes.comments__subtitle}>
+          {comments && commentsCount} {t('comments.title')}
+        </h3>
 
         {comments?.length !== 0 &&
           comments

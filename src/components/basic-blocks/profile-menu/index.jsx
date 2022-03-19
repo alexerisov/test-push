@@ -8,8 +8,10 @@ import BoxesIcon from '../../../../public/icons/Boxes/Line.svg';
 
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
 
 export const ProfileMenu = () => {
+  const { t } = useTranslation('profileSidebar');
   const router = useRouter();
 
   const LinkElement = props => {
@@ -28,11 +30,11 @@ export const ProfileMenu = () => {
 
   return (
     <div className={classes.container}>
-      <LinkElement path="/profile-info" icon={<UserIcon />} text="Profile info" />
-      <LinkElement path="/security" icon={<LockIcon />} text="Login and security" />
-      <LinkElement path="/my-payments" icon={<CreditCardIcon />} text="Payments" />
-      <LinkElement path="/my-orders" icon={<BoxesIcon />} text="Orders" />
-      <LinkElement path="/notifications" icon={<BellIcon />} text="Notifications" />
+      <LinkElement path="/profile-info" icon={<UserIcon />} text={t('profileInfo')} />
+      <LinkElement path="/security" icon={<LockIcon />} text={t('security')} />
+      <LinkElement path="/my-payments" icon={<CreditCardIcon />} text={t('payments')} />
+      <LinkElement path="/my-orders" icon={<BoxesIcon />} text={t('orders')} />
+      <LinkElement path="/notifications" icon={<BellIcon />} text={t('notifications')} />
     </div>
   );
 };

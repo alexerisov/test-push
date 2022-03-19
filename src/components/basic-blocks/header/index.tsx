@@ -21,12 +21,6 @@ import LanguageSelector from '@/components/elements/language-selector';
 import { RootState } from '@/store/store';
 import { useAuth } from '@/utils/Hooks';
 
-const useSeparatorStyles = makeStyles({
-  root: {
-    borderBottom: '2px solid #f8f8f8'
-  }
-});
-
 const UserAvatar = ({ clickHandler, notificationAmount, avatar }) => {
   const RedCircle = () => <div className={s.red_circle}></div>;
 
@@ -82,7 +76,6 @@ const Header = props => {
 
   const isMobile = useMediaQuery('(max-width: 768px)');
   const [isExpanded, setIsExpanded] = React.useState(false);
-  const separatorStyles = useSeparatorStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const avatar = session?.user?.avatar;
 
@@ -126,11 +119,13 @@ const Header = props => {
     setIsExpanded(true);
   };
 
-  const CartButton = cartItemsAmount => (
+  const OrangeCircle = () => <div className={s.orange_circle}></div>;
+
+  const CartButton = () => (
     <Link href="/cart">
       <IconButton className={s.button_cart}>
         <CartIcon />
-        {cartItemsAmount > 0 && <div className={s.orange_circle}></div>}
+        {cartItemsAmount > 0 && <OrangeCircle />}
       </IconButton>
     </Link>
   );
@@ -147,7 +142,7 @@ const Header = props => {
           <RecipesButton />
           {!session && !isMobile && <LoginButton handleClick={handleClickLogin} />}
           {session && isChef && <UploadRecipeButton />}
-          {session && <CartButton cartItemsAmount={cartItemsAmount} />}
+          {session && <CartButton />}
           {session && (
             <UserAvatar clickHandler={openMenuHandler} avatar={avatar} notificationAmount={notificationAmount} />
           )}
