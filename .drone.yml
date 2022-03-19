@@ -37,7 +37,7 @@ steps:
     commands:
       - df -h
       - docker images  # for debug purpose
-      - docker build --build-arg NODE_ENV=stage --build-arg BASE_URL=https://api.eatchefs.goodbit.dev --build-arg DOMAIN=eatchefs.goodbit.dev -t $MAIN_CLIENT_IMAGE .
+      - docker build --build-arg NODE_ENV=stage --build-arg BASE_URL=https://api.eatchefs.goodbit.dev --build-arg DOMAIN=eatchefs.goodbit.dev --build-arg NEXTAUTH_URL=https://eatchefs.goodbit.dev --build-arg NEXTAUTH_SECRET=9bddf54f3bd8a4a9bd0e7b09de0c5828 -t $MAIN_CLIENT_IMAGE .
       - echo $DOCKER_HUB_PASSWORD | docker login docker.io -u $DOCKER_HUB_USERNAME --password-stdin
       - echo $MAIN_CLIENT_IMAGE
       - docker push $MAIN_CLIENT_IMAGE
@@ -132,7 +132,7 @@ steps:
     commands:
       - df -h
       - docker images  # for debug purpose
-      - docker build --build-arg NODE_ENV=stage --build-arg BASE_URL=https://api.test.eatchefs.com --build-arg DOMAIN=test.eatchefs.com -t $MAIN_CLIENT_IMAGE .
+      - docker build --build-arg NODE_ENV=stage --build-arg BASE_URL=https://api.test.eatchefs.com --build-arg DOMAIN=test.eatchefs.com --build-arg NEXTAUTH_URL=https://test.eatchefs.com --build-arg NEXTAUTH_SECRET=9bddf54f3bd8a4a9bd0e7b09de0c5828 -t $MAIN_CLIENT_IMAGE .
       - echo $DOCKER_HUB_PASSWORD | docker login docker.io -u $DOCKER_HUB_USERNAME --password-stdin
       - echo $MAIN_CLIENT_IMAGE
       - docker push $MAIN_CLIENT_IMAGE
