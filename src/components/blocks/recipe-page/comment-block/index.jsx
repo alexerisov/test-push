@@ -22,6 +22,7 @@ import StarIcon from '@material-ui/icons/Star';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import { Spinner } from '@/components/elements';
 import { useRouter } from 'next/router';
+import { useAuth } from '@/utils/Hooks';
 import { useTranslation } from 'next-i18next';
 
 const CommentBlock = ({
@@ -36,8 +37,8 @@ const CommentBlock = ({
   isUserRecipeBuyer,
   isRecipeRatedByUser
 }) => {
+  const { session } = useAuth();
   const { t } = useTranslation('recipePage');
-  const isAuthorized = useSelector(state => state.account.hasToken);
 
   const dispatch = useDispatch();
   const router = useRouter();
@@ -116,7 +117,7 @@ const CommentBlock = ({
   ];
 
   const uploadComment = async ({ textarea, ratingTaste, ratingValueForMoney, ratingOriginality }) => {
-    if (!isAuthorized) {
+    if (!session) {
       return;
     }
 
@@ -247,7 +248,7 @@ const CommentBlock = ({
               value={formik.values[value]}
               precision={1}
               onChange={(event, newValue) => {
-                if (!isAuthorized) {
+                if (!session) {
                   return dispatch(modalActions.open('register'));
                 }
 
@@ -366,7 +367,7 @@ const CommentBlock = ({
           <div className={classes.comments__input__error}>{formik.errors.textarea}</div>
         ) : null}
 
-        {!isAuthorized && <div className={classes.comments__input__error}>{authError}</div>}
+        {!session && <div className={classes.comments__input__error}>{authError}</div>}
       </form>
 
       <div className={classes.comments__body}>

@@ -1,13 +1,11 @@
 import React from 'react';
 
-import LayoutPage from '@/components/layouts/layout-page';
 import { FormCreateChefPencil } from '@/components/forms';
 import { withRouter } from 'next/router';
-import { RedirectWithoutAuthAndByCheckingUserType } from '@/utils/authProvider';
-import { CHEF_TYPE } from '@/utils/constants';
+import LayoutPageNew from '@/components/layouts/layout-page-new';
 
 function CreatePencil() {
-  return <LayoutPage content={<FormCreateChefPencil />} />;
+  return <LayoutPageNew content={<FormCreateChefPencil />} />;
 }
 
-export default withRouter(RedirectWithoutAuthAndByCheckingUserType(CreatePencil, CHEF_TYPE));
+export default withRouter(CreatePencil);

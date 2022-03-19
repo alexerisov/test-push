@@ -16,26 +16,39 @@ if (process.env.NODE_ENV === 'production') {
     fbClientId: '161418379213740',
     googleClientId: '245264013276-avgqsj1umm7sc07sk2dtdgkpmqmn0p42.apps.googleusercontent.com',
     BASE_URL: process.env.BASE_URL,
+    NEXTAUTH_URL: process.env.DOMAIN,
+    NEXTAUTH_SECRET: '9bddf54f3bd8a4a9bd0e7b09de0c5828',
     DEBUG: JSON.stringify(process.env.DEBUG ?? false)
   };
 } else if (process.env.NODE_ENV === 'stage') {
   envs = {
     fbClientId: '161418379213740',
     googleClientId: '245264013276-sbkrl06fu1e7d6m0d3724or58hvdmpej.apps.googleusercontent.com',
+    NEXTAUTH_URL: process.env.DOMAIN,
+    NEXTAUTH_SECRET: '9bddf54f3bd8a4a9bd0e7b09de0c5828',
     BASE_URL: process.env.BASE_URL,
     DEBUG: true
   };
 } else {
   envs = {
     fbClientId: '3044235379228131',
-    googleClientId: '655496569198-f4akmc86kndanpb2p10uk80h5al1sg4l.apps.googleusercontent.com',
+    googleClientId: '690315014418-ji6h0pmf1npeic8egnj3kp00sffoli1s.apps.googleusercontent.com',
+    googleClientSecret: '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',
+    NEXTAUTH_URL: process.env.DOMAIN,
+    NEXTAUTH_SECRET: '9bddf54f3bd8a4a9bd0e7b09de0c5828',
     BASE_URL: 'http://localhost:4096',
     DEBUG: true
   };
 }
 
 module.exports = {
-  // env: envs,
+  compiler: {
+    styledComponents: true,
+    dynamicImport: true,
+    decorators: true,
+    tsx: true
+  },
+  swcMinify: true,
   images: {
     disableStaticImages: true,
     domains: ['localhost', 'goodbit.dev', 'eatchefs.com']

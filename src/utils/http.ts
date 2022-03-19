@@ -1,30 +1,34 @@
-import axios, { AxiosInstance } from 'axios';
-import CONFIG from '../config.js';
+import axios from 'axios';
+import { getSession } from 'next-auth/react';
+import CONFIG from '@/config';
 
-interface ExtendedAxiosInstance extends AxiosInstance {
-  init: (any) => Promise<void>;
-}
+const baseURL = process.env.SOME_API_URL || 'http://localhost:1337';
 
-const http = axios.create({
-  baseURL: CONFIG.baseUrl
-}) as ExtendedAxiosInstance;
+const http = () => {
+  const defaultOptions = {
+    baseURL: CONFIG.baseUrl
+  };
 
-http.init = async function (store): Promise<void> {
-  let prevSessionId = store.getState().account.token;
-  if (prevSessionId !== null) {
-    this.defaults.headers.common['Authorization'] = `Bearer ${prevSessionId}`;
-  }
-  store.subscribe(() => {
-    let newSessionId = store.getState().account.token;
-    if (newSessionId !== prevSessionId) {
-      if (newSessionId === null) {
-        delete this.defaults.headers.common['Authorization'];
-      } else {
-        this.defaults.headers.common['Authorization'] = `Bearer ${newSessionId}`;
-      }
-      prevSessionId = newSessionId;
+  const instance = axios.create(defaultOptions);
+
+  instance.interceptors.request.use(async request => {
+    const session = await getSession();
+    if (session) {
+      request.headers.Authorization = `Bearer ${session.jwt}`;
     }
+    return request;
   });
+
+  instance.interceptors.response.use(
+    response => {
+      return response;
+    },
+    error => {
+      console.log(`error`, error);
+    }
+  );
+
+  return instance;
 };
 
-export default http;
+export default http();

@@ -31,6 +31,7 @@ import { SavedIcon } from '../..';
 import { CounterButton } from '@/components/blocks/cart-page/button-counter';
 import { useDispatch, useSelector } from 'react-redux';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
+import { useAuth } from '@/utils/Hooks';
 
 const recipeTypesImg = {
   1: BurgerIcon,
@@ -100,6 +101,7 @@ const SellingBlock = ({ isRecipeInCart, handleClickBtn, cartItemAmount, cartItem
 );
 
 const CardSearch = props => {
+  const { session } = useAuth();
   const dispatch = useDispatch();
   const router = useRouter();
   const [showCounter, setShowCounter] = useState(false);
@@ -130,7 +132,6 @@ const CardSearch = props => {
   const isRecipeInCart = useSelector(state => state.cart.products?.some(el => el.object_id == props.id));
   const cartItemId = cartItem?.pk;
   const cartItemAmount = cartItem?.count;
-  const isAuthorized = useSelector(state => state?.account?.hasToken);
 
   useEffect(() => {
     setShowCounter(isRecipeInCart);
@@ -138,7 +139,7 @@ const CardSearch = props => {
 
   const handleClickBtn = e => {
     e.stopPropagation();
-    if (!isAuthorized) {
+    if (!session) {
       return dispatch(modalActions.open('register'));
     }
 

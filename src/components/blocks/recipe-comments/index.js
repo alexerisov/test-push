@@ -11,6 +11,7 @@ import Recipe from '@/api/Recipe';
 
 import classes from './RecipeComments.module.scss';
 import { useDispatch } from 'react-redux';
+import { useAuth } from '@/utils/Hooks';
 
 const ResipeComments = ({
   id,
@@ -21,7 +22,7 @@ const ResipeComments = ({
   uploadLikeHandler,
   deleteCommentHandle
 }) => {
-  const isAuthorized = useSelector(state => state.account.hasToken);
+  const { session } = useAuth();
 
   const dispatch = useDispatch();
 
@@ -80,7 +81,7 @@ const ResipeComments = ({
   };
 
   const uploadComment = async ({ textarea }) => {
-    if (!isAuthorized) {
+    if (!session) {
       return;
     }
 
@@ -157,10 +158,10 @@ const ResipeComments = ({
           <div className={classes.comments__input__error}>{formik.errors.textarea}</div>
         ) : null}
 
-        {!isAuthorized && <div className={classes.comments__input__error}>{authError}</div>}
+        {!session && <div className={classes.comments__input__error}>{authError}</div>}
         <div
           className={classes.comments__form__btnWrap}
-          onClick={!isAuthorized ? openUnregisterModal('unregisterActivityModal') : null}>
+          onClick={!session ? openUnregisterModal('unregisterActivityModal') : null}>
           <Button type="submit" variant="contained" color="primary">
             Submit
           </Button>

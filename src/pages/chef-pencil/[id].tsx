@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import { useActions } from '@/customHooks/useActions';
-import LayoutPage from '@/components/layouts/layout-page';
 import { useRouter } from 'next/router';
 import { useMobileDevice } from '@/customHooks/useMobileDevice';
 import { NextSeo } from 'next-seo';
@@ -28,6 +27,8 @@ import { ButtonShare } from '@/components/elements/button';
 import savedStatus from '/public/images/index/savedStatus.svg';
 import notSavedStatus from '/public/images/index/notSavedStatus.svg';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useAuth } from '@/utils/Hooks';
+import LayoutPageNew from '@/components/layouts/layout-page-new';
 
 const useStyledTooltip = makeStyles({
   tooltip: {
@@ -39,7 +40,7 @@ const useStyledTooltip = makeStyles({
 });
 
 function RecipePage({ pencilData, notFound, absolutePath }) {
-  const account = useSelector(state => state.account);
+  const { session } = useAuth();
   const toolTipStyles = useStyledTooltip();
 
   // Bind Modal action creators with dispatch
@@ -60,7 +61,7 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
 
   useEffect(() => {
     setPencilId(router.query.id);
-    if (account.hasToken) {
+    if (session) {
       Account.current().then(res => {
         setUserId(res.data.pk);
       });
@@ -387,7 +388,7 @@ function RecipePage({ pencilData, notFound, absolutePath }) {
           }}
         />
       )}
-      <LayoutPage content={!notFound ? content : <RecipeNotFound text="Chef's Pencil not found" />} />
+      <LayoutPageNew content={!notFound ? content : <RecipeNotFound text="Chef's Pencil not found" />} />
     </>
   );
 }

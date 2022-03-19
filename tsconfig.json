@@ -28,7 +28,7 @@
     },
     "incremental": true
   },
-  "include": ["**/*"],
+  "include": ["**/*", "types/**/*.ts"],
   "exclude": ["node_modules"],
   "files": [
     "declarations.d.ts"

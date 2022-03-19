@@ -19,7 +19,7 @@ import { LoginDrawer } from '@/components/basic-blocks/drawer';
 import { useTranslation } from 'next-i18next';
 import LanguageSelector from '@/components/elements/language-selector';
 import { RootState } from '@/store/store';
-import { useAuth } from '@/utils/authProvider';
+import { useAuth } from '@/utils/Hooks';
 
 const UserAvatar = ({ clickHandler, notificationAmount, avatar }) => {
   const RedCircle = () => <div className={s.red_circle}></div>;
@@ -72,18 +72,12 @@ const UploadRecipeButton = () => {
 };
 
 const Header = props => {
-  const useSeparatorStyles = makeStyles({
-    root: {
-      borderBottom: '2px solid #f8f8f8'
-    }
-  });
+  const { session } = useAuth();
 
   const isMobile = useMediaQuery('(max-width: 768px)');
   const [isExpanded, setIsExpanded] = React.useState(false);
-  const separatorStyles = useSeparatorStyles();
   const [anchorEl, setAnchorEl] = useState(null);
-  const avatar = props?.account?.profile?.avatar;
-  const [isAuthorized, setIsAuthorized] = useState(props.account?.hasToken);
+  const avatar = session?.user?.avatar;
 
   const handleClickLogin = name => {
     return () => {
@@ -99,26 +93,25 @@ const Header = props => {
 
   const cartItemsAmount = useSelector((state: RootState) => state.cart.products?.length);
 
-  const isChef = useSelector((state: RootState) => state?.account?.profile?.user_type === USER_TYPE.chefType);
+  const isChef = session?.user.user_type === USER_TYPE.chefType;
 
   const burgerMenuProps = { anchorEl, setAnchorEl, isExpanded, isChef, notificationAmount };
 
   const drawerProps = { anchorEl, setAnchorEl, isExpanded, setIsExpanded, isChef, notificationAmount };
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsAuthorized(props.account?.hasToken);
+    if (session) {
       return cartItemsAmount ?? props.dispatch(getCart());
-    }, 200);
-  }, [props.account.hasToken]);
+    }
+  }, [session]);
 
   useEffect(() => {
-    if (props.account.hasToken) {
+    if (session) {
       Account.getNotifications()
         .then(res => setNotificationAmount(res.data.length))
         .catch(e => setNotificationAmount(null));
     }
-  }, [props.account.hasToken]);
+  }, [session]);
 
   const openMenuHandler = event => {
     setAnchorEl(event.target);
@@ -147,10 +140,10 @@ const Header = props => {
         </Link>
         <div className={s.button_group}>
           <RecipesButton />
-          {!isAuthorized && !isMobile && <LoginButton handleClick={handleClickLogin} />}
-          {isAuthorized && isChef && <UploadRecipeButton />}
-          {isAuthorized && <CartButton />}
-          {isAuthorized && (
+          {!session && !isMobile && <LoginButton handleClick={handleClickLogin} />}
+          {session && isChef && <UploadRecipeButton />}
+          {session && <CartButton />}
+          {session && (
             <UserAvatar clickHandler={openMenuHandler} avatar={avatar} notificationAmount={notificationAmount} />
           )}
 
@@ -158,8 +151,8 @@ const Header = props => {
           <LanguageSelector />
         </div>
       </div>
-      {isAuthorized && <BurgerMenu {...burgerMenuProps} />}
-      {!isAuthorized && isMobile && <LoginDrawer {...drawerProps} />}
+      {session && <BurgerMenu {...burgerMenuProps} />}
+      {!session && isMobile && <LoginDrawer {...drawerProps} />}
     </div>
   );
 };

@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Basket } from '@/components/blocks/cart-page/basket';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { useRouter, withRouter } from 'next/router';
-import { withAuth } from '@/utils/authProvider';
 import { BasicInput } from '@/components/basic-elements/basic-input';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { Button, Checkbox, CircularProgress, IconButton } from '@material-ui/core';
+import { Button, Checkbox, CircularProgress } from '@material-ui/core';
 import { InputsBlock } from '@/components/basic-blocks/inputs-block';
 import classes from './index.module.scss';
 import { Divider } from '@/components/basic-elements/divider';
@@ -322,7 +321,7 @@ const connector = connect(state => ({
   account: state.account
 }))(OrderConfirmPage);
 
-export default withRouter(withAuth(connector));
+export default withRouter(connector);
 
 export const getServerSideProps = async ({ locale }) => ({
   props: {

@@ -14,6 +14,7 @@ import logo from '../../../../public/images/index/logo.svg';
 import Link from 'next/link';
 import CardControlPlay from '@/components/elements/card-control-play';
 import ChefIcon from '@/components/elements/chef-icon';
+import { useAuth } from '@/utils/Hooks';
 
 const StyledCardMedia = styled(CardMedia)`
   .MuiCardMedia-root {
@@ -30,6 +31,7 @@ const StyledCardActionArea = styled(CardActionArea)`
 `;
 
 const CardLatestRecipes = props => {
+  const { session } = useAuth();
   const router = useRouter();
 
   const [saveRecipeId, setSaveRecipeId] = useState(props.savedId);
@@ -68,12 +70,12 @@ const CardLatestRecipes = props => {
           {!saveRecipeId ? (
             <button
               className={classes.card__buttonSaveRecipe}
-              onClick={!props.account.hasToken ? openRegisterPopup('register') : onClickSave}
+              onClick={!session ? openRegisterPopup('register') : onClickSave}
             />
           ) : (
             <button
               className={classes.card__buttonDeleteRecipe}
-              onClick={!props.account.hasToken ? openRegisterPopup('register') : onClickDelete}
+              onClick={!session ? openRegisterPopup('register') : onClickDelete}
             />
           )}
           <CardContent className={classes.card__content}>

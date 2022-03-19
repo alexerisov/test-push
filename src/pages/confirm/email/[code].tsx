@@ -55,7 +55,7 @@ const ConfirmEmail = props => {
       )}
     </>
   );
-  return <LayoutPageNew content={content} header={<HeaderDefault />} />;
+  return <LayoutPageNew content={content} />;
 };
 
 export default connect()(ConfirmEmail);

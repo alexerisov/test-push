@@ -18,6 +18,7 @@ import RecipeIcon from '@/../public/icons/Receipt/Line.svg';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTranslation } from 'next-i18next';
+import { useAuth } from '@/utils/Hooks';
 
 const SearchInput = () => {
   const { t } = useTranslation('homePage');
@@ -28,7 +29,6 @@ const SearchInput = () => {
   const [result, setResult] = useState([]);
   const loading = open && result?.length === 0;
   const [isSearchFocused, setIsSearchFocused] = useState(false);
-
   const validationSchema = yup.object({
     search: yup.string('Search for dish name')
   });
@@ -139,6 +139,7 @@ const SearchInput = () => {
 
 export const SearchBlock = () => {
   const { t } = useTranslation('homePage');
+  const { session } = useAuth();
   return (
     <section className={classes.container}>
       <div className={classes.search_image_wrapper}>

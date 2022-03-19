@@ -9,6 +9,7 @@ import { useFormik } from 'formik';
 import Image from 'next/image';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import { useTranslation } from 'next-i18next';
+import { useAuth } from '@/utils/Hooks';
 
 const CircleButton = () => {
   return (
@@ -58,14 +59,14 @@ const UploadRecipeButton = () => {
 
 const SignUpBlock = () => {
   const { t } = useTranslation('homePage');
-  const isAuthorized = useSelector(state => state.account.hasToken);
+  const { session } = useAuth();
 
   return (
     <div className={classes.signup}>
       <div className={classes.signup_title}>{t('whyEatchefBlock.title')}</div>
       <div className={classes.signup_description}>{t('whyEatchefBlock.subtitle')}</div>
 
-      {!isAuthorized && (
+      {!session && (
         <div className={classes.signup_step}>
           <div className={classes.signup_step_wrapper}>
             <div className={classes.signup_step_badge}>01</div>
@@ -77,21 +78,21 @@ const SignUpBlock = () => {
           </div>
         </div>
       )}
-      {!isAuthorized && <SignUpInput />}
-      {isAuthorized && <UploadRecipeButton />}
+      {!session && <SignUpInput />}
+      {session && <UploadRecipeButton />}
     </div>
   );
 };
 
 const ThreeImages = () => {
-  const isAuthorized = useSelector(state => state.account.hasToken);
+  const { session, loading } = useAuth();
 
   return (
     <div>
-      {!isAuthorized && (
+      {!session && (
         <Image src="/images/index/three-images.png" alt="image3" width={447} height={502} layout="responsive" />
       )}
-      {isAuthorized && (
+      {session && (
         <Image src="/images/index/two-images.png" alt="image3" width={447} height={502} layout="responsive" />
       )}
     </div>

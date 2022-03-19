@@ -2,11 +2,10 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { useStore } from '@/store/store';
 import { DefaultSeo } from 'next-seo';
+import { SessionProvider } from 'next-auth/react';
 //utils
 import { appWithTranslation } from 'next-i18next';
 import SEO from '@/next-seo.config';
-import { AuthProvider } from '@/utils/authProvider';
-import http from '@/utils/http';
 //styles
 import { ThemeProvider } from '@material-ui/core/styles';
 import { theme } from '@/utils/themeProvider';
@@ -21,11 +20,10 @@ yupSetup();
 
 function App({ Component, pageProps }: AppProps) {
   const store = useStore(pageProps.initialReduxState);
-  http.init(store);
 
   return (
     <Provider store={store}>
-      <AuthProvider>
+      <SessionProvider session={pageProps.session} refetchInterval={0}>
         <CssBaseline />
         <MuiPickersUtilsProvider utils={DayjsUtils}>
           <ThemeProvider theme={theme}>
@@ -34,7 +32,7 @@ function App({ Component, pageProps }: AppProps) {
             <Modals />
           </ThemeProvider>
         </MuiPickersUtilsProvider>
-      </AuthProvider>
+      </SessionProvider>
     </Provider>
   );
 }

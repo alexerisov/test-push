@@ -17,10 +17,11 @@ import FacebookIcon from '../../../../public/icons/Facebook Logo/Line-F.svg';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import { Divider } from '@/components/basic-elements/divider';
 import { BasicInput } from '@/components/basic-elements/basic-input';
-import { loginViaFacebook, loginViaGoogle } from '@/utils/authSocial';
 import FieldError from '@/components/elements/field-error';
 import VisibilityOffRoundedIcon from '@material-ui/icons/VisibilityOffRounded';
 import VisibilityRoundedIcon from '@material-ui/icons/VisibilityRounded';
+import { signIn } from 'next-auth/react';
+import CONFIG from '@/config';
 
 function Register(props) {
   const router = useRouter();
@@ -262,7 +263,6 @@ function Register(props) {
       email: values.email,
       password: values.password
     };
-    console.log('registerdata', registerData);
     const registerData = {
       email: values.email,
       full_name: values.username,
@@ -271,7 +271,7 @@ function Register(props) {
     };
 
     if (isFormLogin) {
-      return login(loginData);
+      return signIn('credentials', { ...loginData });
     } else {
       return register(registerData);
     }
@@ -288,14 +288,14 @@ function Register(props) {
         <p className={classes.register_social_helper_text1}>Use Your OpenID to {isFormLogin ? 'Login' : 'Sign Up'}</p>
         <div className={classes.register_social_buttons_block}>
           <Button
-            onClick={loginViaFacebook(formik.values.userType, !isFormLogin)}
+            onClick={() => signIn('facebook')}
             className={classes.register_social_button_facebook}
             variant="contained"
             startIcon={<BasicIcon icon={FacebookIcon} viewBox="0 0 320 512" size="16px" color="#FCFCFD" />}>
             Facebook
           </Button>
           <Button
-            onClick={loginViaGoogle()}
+            onClick={() => signIn('google')}
             className={classes.register_social_button_google}
             variant="contained"
             startIcon={<BasicIcon icon={GoogleIcon} viewBox="0 0 488 512" size="16px" color="#FCFCFD" />}>

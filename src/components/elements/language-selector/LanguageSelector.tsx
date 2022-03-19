@@ -4,33 +4,21 @@ import s from './LanguageSelector.module.scss';
 
 import FlagUS from '../../../../public/icons/flags/us.svg';
 import FlagNL from '../../../../public/icons/flags/nl.svg';
-import { IconButton, ListItemIcon, ListItemText, MenuItem, Select } from '@material-ui/core';
+import { ListItemIcon, MenuItem, Select } from '@material-ui/core';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import { useRouter } from 'next/router';
 import { LANGUAGES } from '@/utils/datasets';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/store/store';
-import { accountActions, profileActions } from '@/store/actions';
-import classes from '@/components/forms/form-edit-account-user/index.module.scss';
-
-const ITEM_HEIGHT = 24;
-const ITEM_PADDING_TOP = 4;
-const MenuProps = {
-  disableScrollLock: true,
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 5 + ITEM_PADDING_TOP
-    }
-  }
-};
+import { useDispatch } from 'react-redux';
+import { accountActions } from '@/store/actions';
+import http from '@/utils/http';
+import { useAuth } from '@/utils/Hooks';
 
 export const LanguageSelector = () => {
   const { i18n } = useTranslation('common');
   const router = useRouter();
   const dispatch = useDispatch();
-  const profile = useSelector((state: RootState) => state.profile?.data);
-  const isAuthorized = useSelector((state: RootState) => state.account?.hasToken);
-  const profileLanguage = profile?.language;
+  const { session } = useAuth();
+  const profileLanguage = session?.user?.language;
 
   const languagesIcon = {
     en: FlagUS,
@@ -51,7 +39,7 @@ export const LanguageSelector = () => {
   const [currentLanguage, setCurrentLanguage] = React.useState<string>('nl');
 
   useEffect(async () => {
-    if (isAuthorized) {
+    if (session) {
       if (profileLanguage in LANGUAGES) {
         setCurrentLanguage(LANGUAGES[profileLanguage]);
       }
@@ -65,16 +53,19 @@ export const LanguageSelector = () => {
         i18n.changeLanguage('nl');
       }
     }
-  }, [isAuthorized, profileLanguage]);
+  }, [session, profileLanguage]);
 
   const updateProfileLangage = language => {
-    dispatch(profileActions.updateProfileUser({ ...profile, language: LANGUAGES[language] }))
-      .then(res => {
-        dispatch(accountActions.remind());
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    if (profileLanguage) {
+      return http
+        .patch(`account/me`, { language: LANGUAGES[language] })
+        .then(res => {
+          dispatch(accountActions.remind());
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
   };
 
   const saveLanguageToLocalStorage = async language => {

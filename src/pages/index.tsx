@@ -37,7 +37,6 @@ const Home = props => {
   const viewerType = USER_TYPE.viewerType;
   const [meal, setMeal] = React.useState(null);
   const [weekmenu, setWeekmenu] = React.useState(null);
-  const isAuthorized = useSelector(state => state?.account?.hasToken);
   const mobile = useMediaQuery('(max-width: 768px)');
 
   React.useEffect(() => {

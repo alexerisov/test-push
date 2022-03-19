@@ -15,8 +15,10 @@ import CartIcon from '../../../../public/icons/Shopping Cart/Line.svg';
 import { Button } from '@material-ui/core';
 import { modalActions } from '@/store/actions';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
+import { useAuth } from '@/utils/Hooks';
 
 export const RecipeCard = props => {
+  const { session } = useAuth();
   const { recipe } = props;
 
   const title = recipe?.title;
@@ -27,7 +29,6 @@ export const RecipeCard = props => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const isAuthorized = useSelector(state => state.account?.hasToken);
   const isRecipeInCart = useSelector(state => state.cart.products?.some(el => el.object_id == recipe?.pk));
   const isRecipeNotSale = recipe?.price === 0 || recipe?.sale_status !== 5;
 
@@ -44,7 +45,7 @@ export const RecipeCard = props => {
   };
 
   const handleAddToCart = () => {
-    if (!isAuthorized) {
+    if (!session) {
       return dispatch(modalActions.open('register'));
     }
 
