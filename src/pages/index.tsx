@@ -85,7 +85,6 @@ export default connect(state => ({
 }))(Home);
 
 export async function getServerSideProps(context) {
-  const id = context.params.id;
   const cookies = new Cookies(context.req, context.res);
   const targetCookies = cookies.get('aucr');
   const token = !targetCookies ? undefined : decodeURIComponent(cookies.get('aucr'));
