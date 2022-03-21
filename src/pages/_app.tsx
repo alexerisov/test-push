@@ -23,7 +23,7 @@ function App({ Component, pageProps }: AppProps) {
 
   return (
     <Provider store={store}>
-      <SessionProvider session={pageProps.session} refetchOnWindowFocus={true} refetchInterval={5 * 60}>
+      <SessionProvider session={pageProps.session} refetchInterval={0}>
         <CssBaseline />
         <MuiPickersUtilsProvider utils={DayjsUtils}>
           <ThemeProvider theme={theme}>

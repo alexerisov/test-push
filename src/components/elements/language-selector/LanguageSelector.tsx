@@ -11,13 +11,13 @@ import { LANGUAGES } from '@/utils/datasets';
 import { useDispatch } from 'react-redux';
 import { accountActions } from '@/store/actions';
 import http from '@/utils/http';
-import { useSession } from 'next-auth/react';
+import { useAuth } from '@/utils/Hooks';
 
 export const LanguageSelector = () => {
   const { i18n } = useTranslation('common');
   const router = useRouter();
   const dispatch = useDispatch();
-  const { data: session } = useSession();
+  const { session } = useAuth();
   const profileLanguage = session?.user?.language;
 
   const languagesIcon = {

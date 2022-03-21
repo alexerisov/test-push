@@ -19,7 +19,7 @@ import { LoginDrawer } from '@/components/basic-blocks/drawer';
 import { useTranslation } from 'next-i18next';
 import LanguageSelector from '@/components/elements/language-selector';
 import { RootState } from '@/store/store';
-import { useSession } from 'next-auth/react';
+import { useAuth } from '@/utils/Hooks';
 
 const UserAvatar = ({ clickHandler, notificationAmount, avatar }) => {
   const RedCircle = () => <div className={s.red_circle}></div>;
@@ -72,7 +72,7 @@ const UploadRecipeButton = () => {
 };
 
 const Header = props => {
-  const { data: session } = useSession();
+  const { session } = useAuth();
 
   const isMobile = useMediaQuery('(max-width: 768px)');
   const [isExpanded, setIsExpanded] = React.useState(false);

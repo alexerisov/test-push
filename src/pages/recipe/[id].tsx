@@ -41,8 +41,8 @@ import { ButtonShare } from '@/components/elements/button';
 import { recoveryLocalStorage } from '@/utils/web-storage/local';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { RootState } from '@/store/store';
+import { useAuth } from '@/utils/Hooks';
 import { useTranslation } from 'next-i18next';
-import { useSession } from 'next-auth/react';
 
 const StyledSlider = styled(Slider)`
   display: flex;
@@ -81,7 +81,7 @@ const MyPicture = styled(ImageIcon)`
 dayjs.extend(customParseFormat);
 
 function RecipePage(props) {
-  const { data: session } = useSession();
+  const { session } = useAuth();
   const { t } = useTranslation('recipePage');
   const { notFound, recipe, weekmenu } = props;
   const mobile = useMediaQuery('(max-width:576px)');
@@ -814,7 +814,7 @@ export async function getServerSideProps(context) {
 
     return {
       props: {
-        ...(await serverSideTranslations(context.locale, ['common', 'recipePage'])),
+        ...(await serverSideTranslations(context.locale, ['common'])),
         recipe: recipeResponse.data,
         weekmenu: weekmenuResponse.data,
         topRatedRecipes: topRatedResponse.data,

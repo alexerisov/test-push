@@ -9,7 +9,7 @@ import { useFormik } from 'formik';
 import Image from 'next/image';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import { useTranslation } from 'next-i18next';
-import { useSession } from 'next-auth/react';
+import { useAuth } from '@/utils/Hooks';
 
 const CircleButton = () => {
   return (
@@ -59,7 +59,7 @@ const UploadRecipeButton = () => {
 
 const SignUpBlock = () => {
   const { t } = useTranslation('homePage');
-  const { data: session } = useSession();
+  const { session } = useAuth();
 
   return (
     <div className={classes.signup}>
@@ -85,7 +85,7 @@ const SignUpBlock = () => {
 };
 
 const ThreeImages = () => {
-  const { data: session } = useSession();
+  const { session, loading } = useAuth();
 
   return (
     <div>

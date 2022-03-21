@@ -64,7 +64,6 @@ import DonutIcon from '@/../public/icons/Donut/Line.svg';
 import Cookies from 'cookies';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
-import { getSession } from 'next-auth/react';
 const MySlider = styled(Slider)(() => ({
   color: '#FFAA00',
   height: 2,
@@ -1361,7 +1360,6 @@ export async function getServerSideProps(context) {
 
     return {
       props: {
-        session: await getSession(context),
         ...(await serverSideTranslations(context.locale, ['common', 'searchPage'])),
         weekmenuWithoutFilters: weekmenu.data
       }

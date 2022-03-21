@@ -1,5 +1,4 @@
 import { Session } from 'next-auth';
-import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
 import useSwr, { mutate } from 'swr';
 
@@ -66,23 +65,20 @@ export function useAuth(refreshInterval: number = 30) {
     @param {number} refreshInterval: The refresh/polling interval in seconds. default is 20.
     @return {object} An object of the Session and boolean loading value
   */
-  // const { data, error } = useSwr(sessionUrl, fetchSession, {
-  //   revalidateOnFocus: true,
-  //   revalidateOnMount: true,
-  //   revalidateOnReconnect: true
-  // });
-  //
-  // useEffect(() => {
-  //   const intervalId = setInterval(() => mutate(sessionUrl), (refreshInterval || 20) * 1000);
-  //
-  //   return () => clearInterval(intervalId);
-  // }, []);
+  const { data, error } = useSwr(sessionUrl, fetchSession, {
+    revalidateOnFocus: true,
+    revalidateOnMount: true,
+    revalidateOnReconnect: true
+  });
 
-  const { data: session, status: loading } = useSession();
+  useEffect(() => {
+    const intervalId = setInterval(() => mutate(sessionUrl), (refreshInterval || 20) * 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   return {
-    session: session,
-    loading
-    // loading: typeof data === 'undefined' && typeof error === 'undefined'
+    session: data,
+    loading: typeof data === 'undefined' && typeof error === 'undefined'
   };
 }
