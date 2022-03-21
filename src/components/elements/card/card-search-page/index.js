@@ -31,7 +31,7 @@ import { SavedIcon } from '../..';
 import { CounterButton } from '@/components/blocks/cart-page/button-counter';
 import { useDispatch, useSelector } from 'react-redux';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
-import { useAuth } from '@/utils/Hooks';
+import { useSession } from 'next-auth/react';
 
 const recipeTypesImg = {
   1: BurgerIcon,
@@ -101,7 +101,7 @@ const SellingBlock = ({ isRecipeInCart, handleClickBtn, cartItemAmount, cartItem
 );
 
 const CardSearch = props => {
-  const { session } = useAuth();
+  const { data: session } = useSession();
   const dispatch = useDispatch();
   const router = useRouter();
   const [showCounter, setShowCounter] = useState(false);

@@ -14,7 +14,7 @@ import logo from '../../../../public/images/index/logo.svg';
 import Link from 'next/link';
 import CardControlPlay from '@/components/elements/card-control-play';
 import ChefIcon from '@/components/elements/chef-icon';
-import { useAuth } from '@/utils/Hooks';
+import { useSession } from 'next-auth/react';
 
 const StyledCardMedia = styled(CardMedia)`
   .MuiCardMedia-root {
@@ -31,7 +31,7 @@ const StyledCardActionArea = styled(CardActionArea)`
 `;
 
 const CardLatestRecipes = props => {
-  const { session } = useAuth();
+  const { data: session } = useSession();
   const router = useRouter();
 
   const [saveRecipeId, setSaveRecipeId] = useState(props.savedId);

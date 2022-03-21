@@ -41,8 +41,8 @@ import { ButtonShare } from '@/components/elements/button';
 import { recoveryLocalStorage } from '@/utils/web-storage/local';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { RootState } from '@/store/store';
-import { useAuth } from '@/utils/Hooks';
 import { useTranslation } from 'next-i18next';
+import { useSession } from 'next-auth/react';
 
 const StyledSlider = styled(Slider)`
   display: flex;
@@ -81,7 +81,7 @@ const MyPicture = styled(ImageIcon)`
 dayjs.extend(customParseFormat);
 
 function RecipePage(props) {
-  const { session } = useAuth();
+  const { data: session } = useSession();
   const { t } = useTranslation('recipePage');
   const { notFound, recipe, weekmenu } = props;
   const mobile = useMediaQuery('(max-width:576px)');

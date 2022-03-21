@@ -12,6 +12,7 @@ import { SearchBlock } from '@/components/blocks/home-page/search';
 import { WeekMenuBlock } from '@/components/blocks/home-page/week-menu';
 import LayoutPageNew from '@/components/layouts/layout-page-new';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { getSession } from 'next-auth/react';
 
 const useStyles = makeStyles({
   root: {
@@ -84,21 +85,13 @@ export default connect(state => ({
 }))(Home);
 
 export async function getServerSideProps(context) {
-  const cookies = new Cookies(context.req, context.res);
-  const targetCookies = cookies.get('aucr');
-  const token = !targetCookies ? undefined : decodeURIComponent(cookies.get('aucr'));
-
   try {
-    const response = await Recipe.getMealOfWeek(token);
-    const banners = await Recipe.getHomepageCarouselItems();
     const weekmenu = await Recipe.getWeekmenu('');
-    const mealOfWeekBlock = response?.data?.length ? response?.data?.[0] : null;
 
     return {
       props: {
+        session: await getSession(context),
         ...(await serverSideTranslations(context.locale, ['common', 'homePage'])),
-        mealOfTheWeek: mealOfWeekBlock,
-        carouselItems: banners.data,
         weekmenu: weekmenu.data,
         absolutePath: context.req.headers.host
       }

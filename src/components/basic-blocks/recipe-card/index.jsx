@@ -15,10 +15,10 @@ import CartIcon from '../../../../public/icons/Shopping Cart/Line.svg';
 import { Button } from '@material-ui/core';
 import { modalActions } from '@/store/actions';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
-import { useAuth } from '@/utils/Hooks';
+import { useSession } from 'next-auth/react';
 
 export const RecipeCard = props => {
-  const { session } = useAuth();
+  const { data: session } = useSession();
   const { recipe } = props;
 
   const title = recipe?.title;
