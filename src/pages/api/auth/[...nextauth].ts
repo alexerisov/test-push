@@ -79,8 +79,8 @@ export default NextAuth({
       clientSecret: process.env.googleClientSecret
     }),
     FacebookProvider({
-      clientId: process.env.facebookClientId,
-      clientSecret: process.env.facebookClientSecret
+      clientId: process.env.fbClientId,
+      clientSecret: process.env.fbClientSecret
     }),
     CredentialsProvider({
       name: 'credentials',
