@@ -38,7 +38,7 @@ import useSwr, { mutate } from 'swr';
 
 //   return [session, loading];
 // }
-
+const REFRESH_INTERVAL = 5 * 60; // in seconds
 const sessionUrl = '/api/auth/session';
 
 async function fetchSession(url: string) {
@@ -58,11 +58,11 @@ async function fetchSession(url: string) {
 }
 
 // ### useSwr() approach works for now ###
-export function useAuth(refreshInterval: number = 30) {
+export function useAuth(refreshInterval: number = REFRESH_INTERVAL) {
   /*
     custom hook that keeps the session up-to-date by refreshing it
 
-    @param {number} refreshInterval: The refresh/polling interval in seconds. default is 20.
+    @param {number} refreshInterval: The refresh/polling interval in seconds. default is 5 min.
     @return {object} An object of the Session and boolean loading value
   */
   const { data, error } = useSwr(sessionUrl, fetchSession, {
@@ -72,7 +72,7 @@ export function useAuth(refreshInterval: number = 30) {
   });
 
   useEffect(() => {
-    const intervalId = setInterval(() => mutate(sessionUrl), (refreshInterval || 20) * 1000);
+    const intervalId = setInterval(() => mutate(sessionUrl), (refreshInterval || REFRESH_INTERVAL) * 1000);
 
     return () => clearInterval(intervalId);
   }, []);
