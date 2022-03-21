@@ -27,7 +27,7 @@ if (process.env.NODE_ENV === 'production') {
     fbClientId: '161418379213740',
     fbClientSecret: '9400ca8e8b798c1cf7dde384c4c0cbb2',
     googleClientId: '245264013276-sbkrl06fu1e7d6m0d3724or58hvdmpej.apps.googleusercontent.com',
-    googleClientSecret: '27KF4-qS4BgnriYmMVfXfE56',
+    googleClientSecret: 'T31vo_Y09jfQAuw2tDlzpSml',
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     BASE_URL: process.env.BASE_URL,
@@ -35,7 +35,8 @@ if (process.env.NODE_ENV === 'production') {
   };
 } else {
   envs = {
-    fbClientId: '3044235379228131',
+    fbClientId: '161418379213740',
+    fbClientSecret: '9400ca8e8b798c1cf7dde384c4c0cbb2',
     googleClientId: '690315014418-ji6h0pmf1npeic8egnj3kp00sffoli1s.apps.googleusercontent.com',
     googleClientSecret: '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',
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,

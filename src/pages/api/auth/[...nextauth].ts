@@ -1,5 +1,6 @@
 import NextAuth, { Awaitable, DefaultAccount, Session, User } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
+import FacebookProvider from 'next-auth/providers/facebook';
 import http from '@/utils/http';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import log from 'loglevel';
@@ -49,7 +50,14 @@ namespace NextAuthUtils {
 export default NextAuth({
   // https://next-auth.js.org/configuration/providers/oauth
   // secret: process.env.SESSION_SECRET,
-  debug: false,
+  debug: true,
+  pages: {
+    signIn: '/',
+    signOut: '/',
+    error: '/',
+    verifyRequest: '/',
+    newUser: '/'
+  },
   session: {
     strategy: 'jwt',
     maxAge: 24 * 60 * 60 // 24 hours
@@ -69,6 +77,10 @@ export default NextAuth({
     GoogleProvider({
       clientId: process.env.googleClientId,
       clientSecret: process.env.googleClientSecret
+    }),
+    FacebookProvider({
+      clientId: process.env.facebookClientId,
+      clientSecret: process.env.facebookClientSecret
     }),
     CredentialsProvider({
       name: 'credentials',
