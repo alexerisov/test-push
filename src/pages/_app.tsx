@@ -22,8 +22,8 @@ function App({ Component, pageProps }: AppProps) {
   const store = useStore(pageProps.initialReduxState);
 
   return (
-    <SessionProvider session={pageProps.session} refetchOnWindowFocus={true} refetchInterval={5 * 60}>
-      <Provider store={store}>
+    <Provider store={store}>
+      <SessionProvider session={pageProps.session} refetchOnWindowFocus={true} refetchInterval={5 * 60}>
         <CssBaseline />
         <MuiPickersUtilsProvider utils={DayjsUtils}>
           <ThemeProvider theme={theme}>
@@ -32,8 +32,8 @@ function App({ Component, pageProps }: AppProps) {
             <Modals />
           </ThemeProvider>
         </MuiPickersUtilsProvider>
-      </Provider>
-    </SessionProvider>
+      </SessionProvider>
+    </Provider>
   );
 }
 
