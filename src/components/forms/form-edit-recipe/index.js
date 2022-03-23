@@ -39,6 +39,7 @@ import LinearProgressWithLabel from '@/components/elements/linear-progress-with-
 import CheckboxIconUnchecked from '@/components/elements/checkbox-icon/checkbox-icon-unchecked';
 import CheckboxIcon from '@/components/elements/checkbox-icon';
 import { useTranslation } from 'next-i18next';
+import { filterNaNLetters } from '@/utils/filterNaNLetters';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -97,12 +98,6 @@ const MenuProps = {
 function FormEditRecipe(props) {
   const { t } = useTranslation('uploadRecipe');
   const router = useRouter();
-
-  useEffect(() => {
-    if (props?.account && !props.account.hasToken) {
-      router.push('/', undefined, { locale: router.locale });
-    }
-  }, [props?.account]);
 
   const classMarerialUi = useStyles();
   const AlertMaterialStyles = useAlertStyles();
@@ -351,7 +346,7 @@ function FormEditRecipe(props) {
         );
       })
       .catch(error => {
-        handleErrorScroll(error.response.data);
+        handleErrorScroll(error.response?.data);
         setStatusSubmit('Edit');
         console.log(error);
       });
@@ -542,6 +537,7 @@ function FormEditRecipe(props) {
                 id="create-description"
                 multiline
                 rows={4}
+                maxRows={20}
                 onChange={onChangeField('description')}
                 variant="outlined"
                 value={data?.description}
@@ -549,7 +545,7 @@ function FormEditRecipe(props) {
                 className={classMarerialUi.textField}
                 error={error?.description}
                 helperText={error?.description}
-                inputProps={{ maxLength: 200 }}
+                inputProps={{ maxLength: 1000 }}
               />
             </NoSsr>
           </div>
@@ -900,6 +896,26 @@ function FormEditRecipe(props) {
                     {'Dutch'}
                   </MenuItem>
                 </Select>
+                <FormHelperText>{error?.cooking_skills ? 'This field is required' : ''}</FormHelperText>
+              </FormControl>
+              <FormControl variant="outlined" className={classMarerialUi.formControl}>
+                <label
+                  htmlFor="create-servings"
+                  className={`${classes.createRecipeLabel} ${classes.createRecipeLabel_selects}`}>
+                  {t('classification.servings')}
+                </label>
+                <TextField
+                  id="create-servings"
+                  onChange={onChangeField('servings')}
+                  onKeyPress={filterNaNLetters}
+                  type="number"
+                  variant="outlined"
+                  value={data?.servings}
+                  fullWidth
+                  className={classMarerialUi.textField}
+                  error={Boolean(error?.description)}
+                  helperText={error?.description}
+                />
                 <FormHelperText>{error?.cooking_skills ? 'This field is required' : ''}</FormHelperText>
               </FormControl>
             </NoSsr>

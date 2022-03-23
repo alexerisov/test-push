@@ -20,6 +20,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import Recipe from '@/api/Recipe';
 import { i18n, useTranslation } from 'next-i18next';
+import { filterNaNLetters } from '@/utils/filterNaNLetters';
 
 const useStyles = makeStyles(theme => ({
   textField: {
@@ -314,12 +315,6 @@ function AddIngredient(props) {
     setTimeout(() => {
       buttonRef.current.focus();
     }, 100);
-  };
-
-  const filterNaNLetters = event => {
-    if ((event.which != 8 && event.which != 0 && event.which < 48) || event.which > 57) {
-      event.preventDefault();
-    }
   };
 
   const renderContent = () => {

@@ -13,6 +13,7 @@ const initState = {
     video: '',
     types: [],
     // tags: null,
+    servings: null,
     language: '',
     caption: '',
     ingredients: [],
