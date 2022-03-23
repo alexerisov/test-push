@@ -53,6 +53,7 @@ export default {
           types: data?.types,
           // tags,
           language: data?.language,
+          servings: data?.servings,
           caption: data?.caption,
           ingredients: data?.ingredients,
           calories: data?.calories,

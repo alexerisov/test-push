@@ -11,6 +11,7 @@ declare module 'next-auth' {
       avatar: string;
       language: string;
       user_type: number;
+      pk: number;
     };
   }
 

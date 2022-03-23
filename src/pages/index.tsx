@@ -12,6 +12,7 @@ import { SearchBlock } from '@/components/blocks/home-page/search';
 import { WeekMenuBlock } from '@/components/blocks/home-page/week-menu';
 import LayoutPageNew from '@/components/layouts/layout-page-new';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { RootState } from '@/store/store';
 
 const useStyles = makeStyles({
   root: {
@@ -78,7 +79,7 @@ const Home = props => {
   );
 };
 
-export default connect(state => ({
+export default connect((state: RootState) => ({
   account: state.account,
   profile: state.profile
 }))(Home);

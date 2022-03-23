@@ -18,6 +18,7 @@ import ForkAndKnifeIcon from '@/../public/icons/Fork and Knife/Line.svg';
 import HatChefIcon from '@/../public/icons/Hat Chef/Line.svg';
 import SaltShakerIcon from '@/../public/icons/Salt Shaker/Line.svg';
 import BookmarkIcon from '@/../public/icons/Bookmark/Line.svg';
+import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
 import { Avatar, Button, Collapse, IconButton, Radio, useMediaQuery } from '@material-ui/core';
 import Image from 'next/image';
 import dayjs from 'dayjs';
@@ -43,6 +44,8 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { RootState } from '@/store/store';
 import { useAuth } from '@/utils/Hooks';
 import { useTranslation } from 'next-i18next';
+import { getSession } from 'next-auth/react';
+import Head from 'next/head';
 
 const StyledSlider = styled(Slider)`
   display: flex;
@@ -97,6 +100,7 @@ function RecipePage(props) {
   const recipeCookingMethods = recipe?.cooking_methods;
   const recipeDietRestrictions = recipe?.diet_restrictions;
   const recipeCuisines = recipe?.cuisines;
+  const recipeServings = recipe?.servings;
   const ingredients = recipe?.ingredients;
   const recipeId = recipe?.pk;
   const recipeAuthorAvatar = recipe?.user.avatar;
@@ -451,7 +455,9 @@ function RecipePage(props) {
           <IconWithText
             icon={SoupIcon}
             text={
-              recipeTypesList?.length > 0 ? recipeTypesList.map(item => recipeTypes?.[item]).join(', ') : 'Not defined'
+              recipeTypesList?.length > 0
+                ? recipeTypesList.map(item => recipeTypes?.[item]).join(', ')
+                : t('common:notDefinedText')
             }
             link={`/search?types=${recipeTypesList.join(',')}`}
             borderColor="#58C27D"
@@ -461,7 +467,7 @@ function RecipePage(props) {
             text={
               recipeDietRestrictions?.length > 0
                 ? recipeDietRestrictions.map(item => dietaryrestrictions?.[item]).join(', ')
-                : 'Not defined'
+                : t('common:notDefinedText')
             }
             link={`/search?diet_restrictions=${recipeDietRestrictions.join(',')}`}
             borderColor="#FA8F54"
@@ -469,14 +475,16 @@ function RecipePage(props) {
           <IconWithText
             icon={ForkAndKnifeIcon}
             text={
-              recipeCuisines?.length > 0 ? recipeCuisines.map(item => cuisineList?.[item]).join(', ') : 'Not defined'
+              recipeCuisines?.length > 0
+                ? recipeCuisines.map(item => cuisineList?.[item]).join(', ')
+                : t('common:notDefinedText')
             }
             link={`/search?cuisines=${recipeCuisines.join(',')}`}
             borderColor="#8BC5E5"
           />
           <IconWithText
             icon={HatChefIcon}
-            text={recipeCookingSkills ? cookingSkill?.[recipeCookingSkills] : 'Not defined'}
+            text={recipeCookingSkills ? cookingSkill?.[recipeCookingSkills] : t('common:notDefinedText')}
             link={`/search?cooking_skills=${recipeCookingSkills}`}
             borderColor="#F178B6"
           />
@@ -485,9 +493,15 @@ function RecipePage(props) {
             text={
               recipeCookingMethods?.length > 0
                 ? recipeCookingMethods.map(item => cookingMethods?.[item]).join(', ')
-                : 'Not defined'
+                : t('common:notDefinedText')
             }
             link={`/search?cooking_methods=${recipeCookingMethods.join(',')}`}
+            borderColor="#FFD166"
+          />
+          <IconWithText
+            icon={PeopleOutlineIcon}
+            text={recipeServings || t('common:notDefinedText')}
+            link={`${router.asPath}`}
             borderColor="#FFD166"
           />
         </div>
@@ -716,6 +730,9 @@ function RecipePage(props) {
 
   const content = (
     <>
+      <Head>
+        <script async src="https://cdn.foodinfluencersunited.nl/prod.js" key="foodinfluencer-script" />
+      </Head>
       {mobile ? (
         <>
           <div className={classes.layout}>
@@ -797,7 +814,7 @@ function RecipePage(props) {
   );
 }
 
-export default connect(state => ({
+export default connect((state: RootState) => ({
   account: state.account
 }))(RecipePage);
 
@@ -808,13 +825,15 @@ export async function getServerSideProps(context) {
   const token = !targetCookies ? undefined : decodeURIComponent(cookies.get('aucr'));
 
   try {
+    const session = await getSession(context);
     const recipeResponse = await Recipe.getRecipe(id, token);
     const weekmenuResponse = await Recipe.getWeekmenu('');
     const topRatedResponse = await Recipe.getTopRatedMeals();
 
     return {
       props: {
-        ...(await serverSideTranslations(context.locale, ['common'])),
+        session,
+        ...(await serverSideTranslations(context.locale, ['common', 'recipePage'])),
         recipe: recipeResponse.data,
         weekmenu: weekmenuResponse.data,
         topRatedRecipes: topRatedResponse.data,

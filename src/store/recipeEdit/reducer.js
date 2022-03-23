@@ -14,6 +14,7 @@ const initState = {
     types: [],
     // tags: null,
     language: '',
+    servings: null,
     caption: '',
     ingredients: [],
     calories: null,

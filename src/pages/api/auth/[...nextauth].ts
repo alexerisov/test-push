@@ -201,11 +201,11 @@ export default NextAuth({
           }
         });
 
-        const { full_name, email, avatar, language, user_type } = response2.data;
+        const { full_name, email, avatar, language, user_type, pk } = response2.data;
 
         token.user_type = user_type;
         session.jwt = access;
-        session.user = { full_name, email, avatar, language, user_type } as const;
+        session.user = { full_name, email, avatar, language, user_type, pk } as const;
         return session;
       } catch (error) {
         // process.stdout.write(JSON.stringify(JSON.stringify(error, undefined, 2)));
