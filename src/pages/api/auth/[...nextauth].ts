@@ -143,6 +143,8 @@ export default NextAuth({
               accessToken: access,
               refreshToken: refresh
             };
+            http.defaults.headers.common['Authorization'] = `Bearer ${access}`;
+            console.log('\n JWT Google end:', http.defaults.headers.common['Authorization']);
             return token;
           } catch (error) {
             return null;
@@ -168,6 +170,8 @@ export default NextAuth({
               accessToken: access,
               refreshToken: refresh
             };
+            http.defaults.headers.common['Authorization'] = `Bearer ${access}`;
+            console.log('\n JWT Facebook end:', http.defaults.headers.common['Authorization']);
             return token;
           } catch (error) {
             return null;
@@ -180,6 +184,8 @@ export default NextAuth({
             accessToken: account.token.access,
             refreshToken: account.token.refresh
           };
+          http.defaults.headers.common['Authorization'] = `Bearer ${account.token.access}`;
+          console.log('\n JWT Credentials end:', http.defaults.headers.common['Authorization']);
           return token;
         }
       }
@@ -190,7 +196,8 @@ export default NextAuth({
     async session({ session, user, token }) {
       // console.log('\n Session start:', user);
       // console.log('\n Session start:', session);
-      // console.log('\n Session start:', token);
+      http.defaults.headers.common['Authorization'] = `Bearer ${token?.accessToken}`;
+      console.log('\n Session start:', http.defaults.headers.common['Authorization']);
       try {
         const access = token.accessToken;
         const response2 = await http.get(`account/me`, {
@@ -200,11 +207,10 @@ export default NextAuth({
         });
         await console.log('context', http.defaults.headers.common);
         const { full_name, email, avatar, language, user_type, pk } = response2.data;
-
         token.user_type = user_type;
         session.jwt = access;
         session.user = { full_name, email, avatar, language, user_type, pk } as const;
-
+        console.log('\n Session end:', http.defaults.headers.common['Authorization']);
         return session;
       } catch (error) {
         // process.stdout.write(JSON.stringify(JSON.stringify(error, undefined, 2)));
