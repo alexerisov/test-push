@@ -7,19 +7,22 @@ import { RootState } from '@/store/store';
 import { getSession } from 'next-auth/react';
 import Account from '@/api/Account';
 import http from '@/utils/http';
+import { getToken } from 'next-auth/jwt';
 
 export default connect((state: RootState) => ({
   account: state.account
 }))(ProfileAccountSettingsPage);
 
 export const getServerSideProps = async context => {
+  const token = await getToken(context);
+  console.log('\n Props start:', http.defaults.headers.common['Authorization']);
   const session = await getSession(context);
-  if (session) {
-    http.defaults.headers.common['Authorization'] = `Bearer ${session.jwt}`;
+  if (token) {
+    http.defaults.headers.common['Authorization'] = `Bearer ${token?.accessToken}`;
   }
 
   try {
-    const profileResponse = await Account.current(session?.jwt);
+    const profileResponse = await Account.current();
     // await console.log('response', profileResponse.request._header);
 
     return {
