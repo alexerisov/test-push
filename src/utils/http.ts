@@ -4,31 +4,27 @@ import CONFIG from '@/config';
 
 const baseURL = process.env.SOME_API_URL || 'http://localhost:1337';
 
-const http = () => {
-  const defaultOptions = {
-    baseURL: CONFIG.baseUrl
-  };
-
-  const instance = axios.create(defaultOptions);
-
-  instance.interceptors.request.use(async request => {
-    const session = await getSession();
-    if (session) {
-      request.headers.Authorization = `Bearer ${session.jwt}`;
-    }
-    return request;
-  });
-
-  instance.interceptors.response.use(
-    response => {
-      return response;
-    },
-    error => {
-      console.log(`error`, error);
-    }
-  );
-
-  return instance;
+const defaultOptions = {
+  baseURL: CONFIG.baseUrl
 };
 
-export default http();
+const http = axios.create(defaultOptions);
+
+http.interceptors.request.use(async request => {
+  const session = await getSession();
+  if (session) {
+    request.headers.Authorization = `Bearer ${session.jwt}`;
+  }
+  return request;
+});
+
+http.interceptors.response.use(
+  response => {
+    return response;
+  },
+  error => {
+    console.log(`error`, error);
+  }
+);
+
+export default http;

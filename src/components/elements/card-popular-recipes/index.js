@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import CardMedia from '@material-ui/core/CardMedia';
 import { CardActionArea } from '@material-ui/core';
 import { useRouter } from 'next/router';
-import logo from '/public/images/index/logo.svg';
+import logo from '~public/images/index/logo.svg';
 
 const StyledCardMedia = styled(CardMedia)`
   .MuiCardMedia-root {

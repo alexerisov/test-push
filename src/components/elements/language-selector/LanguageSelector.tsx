@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import s from './LanguageSelector.module.scss';
 
-import FlagUS from '../../../../public/icons/flags/us.svg';
-import FlagNL from '../../../../public/icons/flags/nl.svg';
+import FlagUS from '~public/icons/flags/us.svg';
+import FlagNL from '~public/icons/flags/nl.svg';
 import { ListItemIcon, MenuItem, Select } from '@material-ui/core';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import { useRouter } from 'next/router';
@@ -39,21 +39,19 @@ export const LanguageSelector = () => {
   const [currentLanguage, setCurrentLanguage] = React.useState<string>('nl');
 
   useEffect(async () => {
-    if (session) {
-      if (profileLanguage in LANGUAGES) {
-        setCurrentLanguage(LANGUAGES[profileLanguage]);
-      }
+    const storedLanguage = await JSON.parse(localStorage.getItem('language'));
+    if (storedLanguage) {
+      return onChangeSelect({ target: { value: storedLanguage } });
     } else {
-      const storedLanguage = await JSON.parse(localStorage.getItem('language'));
-      if (storedLanguage) {
-        setCurrentLanguage(storedLanguage);
-        i18n.changeLanguage(storedLanguage);
+      if (session) {
+        if (profileLanguage in LANGUAGES) {
+          return onChangeSelect({ target: { value: LANGUAGES[profileLanguage] } });
+        }
       } else {
-        setCurrentLanguage('nl');
-        i18n.changeLanguage('nl');
+        return onChangeSelect({ target: { value: 'nl' } });
       }
     }
-  }, [session, profileLanguage]);
+  }, [session]);
 
   const updateProfileLangage = language => {
     if (profileLanguage) {
@@ -81,16 +79,9 @@ export const LanguageSelector = () => {
 
     await setCurrentLanguage(event.target.value);
 
-    setTimeout(() => {
-      setCurrentLanguage(event.target.value);
-    }, 200);
-
-    router.push(router.asPath, undefined, { locale: event.target.value, shallow: true });
-
-    if (router.asPath.includes('account-settings')) {
-      router.push(router.asPath, undefined, { locale: event.target.value });
-    }
     i18n.changeLanguage(event.target.value);
+
+    router.push(router.asPath, undefined, { locale: event.target.value });
   };
 
   const getOptionList = list => {

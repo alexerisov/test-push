@@ -1,9 +1,9 @@
 import React from 'react';
 import classes from './index.module.scss';
 import { Box, Fade, IconButton, Modal } from '@material-ui/core';
-import IceCreamIcon from '../../../../public/icons/Ice Cream/Line.svg';
+import IceCreamIcon from '~public/icons/Ice Cream/Line.svg';
 import { cookingSkill, recipeTypes } from '@/utils/datasets';
-import HatChefIcon from '../../../../public/icons/Hat Chef/Line.svg';
+import HatChefIcon from '~public/icons/Hat Chef/Line.svg';
 import Backdrop from '@material-ui/core/Backdrop';
 import Typography from '@material-ui/core/Typography';
 import { Divider } from '@/components/basic-elements/divider';

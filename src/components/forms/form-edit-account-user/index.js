@@ -41,9 +41,6 @@ const StyledInput = styled(Input)`
 function FormEditAccountUser(props) {
   const router = useRouter();
   const { t, i18n } = useTranslation('profilePage');
-  if (!props.account.profile) {
-    return <div>loading...</div>;
-  }
 
   const [errorForm, setErrorForm] = useState(null);
 
@@ -67,7 +64,7 @@ function FormEditAccountUser(props) {
     }
   };
 
-  const { email, full_name, phone_number, city, language, avatar, user_type } = props.account.profile;
+  const { email, full_name, phone_number, city, language, avatar, user_type } = props.profile;
 
   const [avatarFile, setAvatarFile] = useState(avatar);
   const [formStatus, setFormStatus] = useState('');
@@ -270,6 +267,4 @@ FormEditAccountUser.propTypes = {
   account: PropTypes.object.isRequired
 };
 
-export default connect(state => ({
-  account: state.account
-}))(FormEditAccountUser);
+export default connect()(FormEditAccountUser);

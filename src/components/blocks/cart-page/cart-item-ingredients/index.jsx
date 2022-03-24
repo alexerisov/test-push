@@ -3,7 +3,7 @@ import { styled } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import logo from '../../../../../public/images/index/logo.svg';
+import logo from '~public/images/index/logo.svg';
 import { CardActions } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import classes from './index.module.scss';

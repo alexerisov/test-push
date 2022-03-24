@@ -3,8 +3,8 @@ import classes from './index.module.scss';
 import { InputAdornment, InputBase, InputLabel, NativeSelect, OutlinedInput } from '@material-ui/core';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import ArrowDownIcon from '@/../public/icons/Arrow Down Simple/Line.svg';
-import ArrowUpIcon from '@/../public/icons/Arrow Up Simple/Line.svg';
+import ArrowDownIcon from '~public/icons/Arrow Down Simple/Line.svg';
+import ArrowUpIcon from '~public/icons/Arrow Up Simple/Line.svg';
 import { BasicIcon } from '../basic-icon';
 import { withStyles } from '@material-ui/core/styles';
 

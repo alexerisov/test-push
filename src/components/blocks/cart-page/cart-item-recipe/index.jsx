@@ -3,21 +3,19 @@ import { styled } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import logo from '../../../../../public/images/index/logo.svg';
-import { useRouter } from 'next/router';
+import logo from '~public/images/index/logo.svg';
 import classes from './index.module.scss';
 import { CounterButton } from '@/components/blocks/cart-page/button-counter';
-import Typography from '@material-ui/core/Typography';
 import { useDispatch } from 'react-redux';
 import { removeFromCart } from '@/store/cart/actions';
 import ClearRoundedIcon from '@material-ui/icons/ClearRounded';
-import IceCreamIcon from '../../../../../public/icons/Ice Cream/Line.svg';
-import HatChefIcon from '../../../../../public/icons/Hat Chef/Line.svg';
+import IceCreamIcon from '~public/icons/Ice Cream/Line.svg';
+import HatChefIcon from '~public/icons/Hat Chef/Line.svg';
 import { Divider } from '@/components/basic-elements/divider';
-import { Button, IconButton, SvgIcon } from '@material-ui/core';
+import { Button, IconButton } from '@material-ui/core';
 import { cookingSkill, recipeTypes } from '@/utils/datasets';
 import Link from 'next/link';
-import { CartContext } from '@/pages/cart';
+import { CartContext } from '@/components/pages/cart/CartPage';
 
 const StyledCardMedia = styled(CardMedia)`
   .MuiCardMedia-root {

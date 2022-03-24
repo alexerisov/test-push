@@ -37,9 +37,6 @@ const StyledSelect = styled(Select)`
 function FormEditAccountChef(props) {
   const router = useRouter();
   const { t, i18n } = useTranslation('profilePage');
-  if (!props.account.profile) {
-    return <div>loading...</div>;
-  }
 
   const [errorForm, setErrorForm] = useState(null);
 
@@ -79,7 +76,7 @@ function FormEditAccountChef(props) {
     personal_cooking_mission,
     source_of_inspiration,
     cooking_philosophy
-  } = props.account.profile;
+  } = props.profile;
 
   const namesRoleModels = [];
   const avatarsRoleModels = [];
