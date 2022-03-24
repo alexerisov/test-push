@@ -19,7 +19,7 @@ export const getServerSideProps = async context => {
   }
 
   try {
-    const profileResponse = await Account.current();
+    const profileResponse = await Account.current(session?.jwt);
     // await console.log('response', profileResponse.request._header);
 
     return {
