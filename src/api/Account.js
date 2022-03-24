@@ -11,7 +11,14 @@ export default {
     });
   },
 
-  current: () => {
+  current: token => {
+    if (token) {
+      return http.get(`account/me`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+    }
     return http.get(`account/me`);
   },
 

@@ -67,7 +67,7 @@ const useStyles = makeStyles(theme => ({
   textField: {
     '& .MuiOutlinedInput-root': {
       borderRadius: '10px',
-      backgroundColor: '#ffffff'
+      backgroundColor: 'transparent'
     },
     '& .MuiInputBase-input': {
       height: 'auto'
