@@ -2,7 +2,7 @@ import React from 'react';
 import classes from './index.module.scss';
 import { Button, IconButton, OutlinedInput } from '@material-ui/core';
 import { ArrowRight } from '@material-ui/icons';
-import ArrowIcon from '../../../../../public/icons/Arrow Right 2/Line.svg';
+import ArrowIcon from '~public/icons/Arrow Right 2/Line.svg';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { accountActions, modalActions } from '@/store/actions';
 import { useFormik } from 'formik';

@@ -6,9 +6,10 @@ import Link from 'next/link';
 import { setСonfirmBannerCoockie, getСonfirmBannerCoockie } from '@/utils/web-storage/cookie';
 
 import { connect } from 'react-redux';
+import { useAuth } from '@/utils/Hooks';
 
 const CookiesBanner = props => {
-  const { account } = props;
+  const { session } = useAuth();
 
   const [isVisible, setVisible] = useState(true);
 
@@ -21,7 +22,7 @@ const CookiesBanner = props => {
     setVisible(getСonfirmBannerCoockie());
   };
 
-  return !isVisible && !account.hasToken ? (
+  return !isVisible && !session ? (
     <div className={classes.cookiesBanner}>
       <Alert severity="info" className={classes.alert}>
         <div className={classes.cookiesBanner__container}>

@@ -6,7 +6,7 @@ import ThumbDownOutlinedIcon from '@material-ui/icons/ThumbDownOutlined';
 import classes from './CommentItem.module.scss';
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 
-import defaultAvatar from '../../../../../public/images/index/icon_user.svg';
+import defaultAvatar from '~public/images/index/icon_user.svg';
 import Recipe from '@/api/Recipe';
 import { debounce } from '@/utils/debounce';
 import useMediaQuery from '@material-ui/core/useMediaQuery';

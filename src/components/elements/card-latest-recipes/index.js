@@ -10,7 +10,7 @@ import { modalActions } from '@/store/actions';
 import Recipe from '@/api/Recipe.js';
 import { useRouter } from 'next/router';
 import { CardActionArea } from '@material-ui/core';
-import logo from '../../../../public/images/index/logo.svg';
+import logo from '~public/images/index/logo.svg';
 import Link from 'next/link';
 import CardControlPlay from '@/components/elements/card-control-play';
 import ChefIcon from '@/components/elements/chef-icon';

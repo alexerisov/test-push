@@ -6,7 +6,7 @@ import { styled } from '@material-ui/core/styles';
 import { CardActionArea } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import $clamp from 'clamp-js';
-import logo from '/public/images/index/logo.svg';
+import logo from '~public/images/index/logo.svg';
 
 const StyledCardActionArea = styled(CardActionArea)({
   position: 'relative',

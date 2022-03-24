@@ -1,8 +1,8 @@
 import React from 'react';
 import classes from './index.module.scss';
 import { IconButton, InputAdornment, InputLabel, TextField } from '@material-ui/core';
-import SuccessIcon from '../../../../public/images/index/icons-complete.svg';
-import ClearIcon from '@/../public/icons/Close Circle/Filled.svg';
+import SuccessIcon from '~public/images/index/icons-complete.svg';
+import ClearIcon from '~public/icons/Close Circle/Filled.svg';
 import dynamic from 'next/dynamic';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
 const MuiPhoneNumber = dynamic(import('material-ui-phone-number'), { ssr: false });

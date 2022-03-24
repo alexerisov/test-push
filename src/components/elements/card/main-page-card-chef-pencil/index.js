@@ -8,7 +8,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import { CardActionArea } from '@material-ui/core';
 
-import logo from '../../../../../public/images/index/logo.svg';
+import logo from '~public/images/index/logo.svg';
 import classes from './index.module.scss';
 import Avatar from '@material-ui/core/Avatar';
 

@@ -9,8 +9,8 @@ import { Picker } from 'emoji-mart';
 
 import { modalActions } from '@/store/actions';
 import { CommentItem } from '@/components/elements/comment';
-import ArrowRightIcon from '@/../public/icons/Arrow Right 2/Line.svg';
-import SmileIcon from '@/../public/icons/Smile/Line.svg';
+import ArrowRightIcon from '~public/icons/Arrow Right 2/Line.svg';
+import SmileIcon from '~public/icons/Smile/Line.svg';
 import Recipe from '@/api/Recipe';
 
 import classes from './index.module.scss';

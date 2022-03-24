@@ -9,7 +9,7 @@ import { CardActionArea } from '@material-ui/core';
 import { useRouter } from 'next/router';
 
 import { PUBLISH_STATUS, APPROVED_STATUS } from '@/utils/datasets';
-import logo from '../../../../public/images/index/logo.svg';
+import logo from '~public/images/index/logo.svg';
 import CardControlPlay from '@/components/elements/card-control-play';
 import ChefIcon from '@/components/elements/chef-icon';
 

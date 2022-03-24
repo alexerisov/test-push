@@ -187,29 +187,28 @@ export default NextAuth({
       // console.log('\n JWT end:', token);
       return token;
     },
-
     async session({ session, user, token }) {
       // console.log('\n Session start:', user);
       // console.log('\n Session start:', session);
       // console.log('\n Session start:', token);
       try {
         const access = token.accessToken;
-
         const response2 = await http.get(`account/me`, {
           headers: {
             Authorization: `Bearer ${access}`
           }
         });
-
+        await console.log('context', http.defaults.headers.common);
         const { full_name, email, avatar, language, user_type, pk } = response2.data;
 
         token.user_type = user_type;
         session.jwt = access;
         session.user = { full_name, email, avatar, language, user_type, pk } as const;
+
         return session;
       } catch (error) {
         // process.stdout.write(JSON.stringify(JSON.stringify(error, undefined, 2)));
-        console.log(error);
+        // console.dir(error);
         return null;
       }
     }

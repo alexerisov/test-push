@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './index.module.scss';
 import { Divider } from '@/components/basic-elements/divider';
-import Logo from '../../../../public/images/Footer Logo/Line.svg';
+import Logo from '~public/images/Footer Logo/Line.svg';
 import Link from 'next/link';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import TwitterIcon from '@material-ui/icons/Twitter';

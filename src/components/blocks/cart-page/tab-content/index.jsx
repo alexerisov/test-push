@@ -5,7 +5,7 @@ import classes from './index.module.scss';
 import Typography from '@material-ui/core/Typography';
 import { IconButton } from '@material-ui/core';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
-import CloseIcon from '@/../public/icons/Close/Line.svg';
+import CloseIcon from '~public/icons/Close/Line.svg';
 import { useDispatch } from 'react-redux';
 import { clearCart, types as cartTypes } from '@/store/cart/actions';
 import { useTranslation } from 'next-i18next';

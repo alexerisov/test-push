@@ -1,10 +1,10 @@
 import React from 'react';
 import classes from './index.module.scss';
-import BellIcon from '../../../../public/icons/Bell/Line.svg';
-import CreditCardIcon from '../../../../public/icons/Credit Card/Line.svg';
-import LockIcon from '../../../../public/icons/Lock/Line.svg';
-import UserIcon from '../../../../public/icons/User/Line.svg';
-import BoxesIcon from '../../../../public/icons/Boxes/Line.svg';
+import BellIcon from '~public/icons/Bell/Line.svg';
+import CreditCardIcon from '~public/icons/Credit Card/Line.svg';
+import LockIcon from '~public/icons/Lock/Line.svg';
+import UserIcon from '~public/icons/User/Line.svg';
+import BoxesIcon from '~public/icons/Boxes/Line.svg';
 
 import Link from 'next/link';
 import { useRouter } from 'next/router';
