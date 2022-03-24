@@ -5,10 +5,12 @@ import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import LayoutPageNew from '@/components/layouts/layout-page-new';
 import { VIEWER_TYPE } from '@/utils/constants';
+import { useAuth } from '@/utils/Hooks';
 
 export function ProfileAccountSettingsPage(props) {
   const router = useRouter();
-  const userType = props.session.user.user_type;
+  const { session } = useAuth();
+  const userType = session?.user.user_type;
 
   const content =
     userType === VIEWER_TYPE ? (

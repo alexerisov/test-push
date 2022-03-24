@@ -16,7 +16,6 @@ export default connect((state: RootState) => ({
 export const getServerSideProps = async context => {
   const token = await getToken(context);
   console.log('\n Props start:', http.defaults.headers.common['Authorization']);
-  const session = await getSession(context);
   if (token) {
     http.defaults.headers.common['Authorization'] = `Bearer ${token?.accessToken}`;
   }
@@ -27,7 +26,6 @@ export const getServerSideProps = async context => {
 
     return {
       props: {
-        session,
         profile: profileResponse?.data,
         ...(await serverSideTranslations(context.locale, ['common', 'profilePage']))
       }
