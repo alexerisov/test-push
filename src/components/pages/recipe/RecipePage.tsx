@@ -421,7 +421,7 @@ export const RecipePage = props => {
           <span style={{ borderColor }} className={s.classification_icon}>
             <BasicIcon icon={icon} color="#353E50" />
           </span>
-          <Tooltip placement={'right-start'} title={tooltipText} aria-label={`${text}-tooltip`}>
+          <Tooltip arrow title={tooltipText} aria-label={`${text}-tooltip`} placement="bottom">
             <span className={s.classification_text}>{text}</span>
           </Tooltip>
         </div>
@@ -445,7 +445,7 @@ export const RecipePage = props => {
           <IconWithText
             icon={StopwatchIcon}
             text={parseTime(recipeCookingTime ?? 'N/A')}
-            tooltipText="Cooking time"
+            tooltipText="Cooking Time"
             link={`/search?cooking_time=${recipeCookingTime}`}
             borderColor="#92A5EF"
           />
@@ -456,7 +456,7 @@ export const RecipePage = props => {
                 ? recipeTypesList.map(item => recipeTypes?.[item]).join(', ')
                 : t('common:notDefinedText')
             }
-            tooltipText="Cooking types"
+            tooltipText="Cooking Type"
             link={`/search?types=${recipeTypesList.join(',')}`}
             borderColor="#58C27D"
           />
@@ -467,7 +467,7 @@ export const RecipePage = props => {
                 ? recipeDietRestrictions.map(item => dietaryrestrictions?.[item]).join(', ')
                 : t('common:notDefinedText')
             }
-            tooltipText="Diet restrictions"
+            tooltipText="Dietary Restrictions"
             link={`/search?diet_restrictions=${recipeDietRestrictions.join(',')}`}
             borderColor="#FA8F54"
           />
@@ -478,14 +478,14 @@ export const RecipePage = props => {
                 ? recipeCuisines.map(item => cuisineList?.[item]).join(', ')
                 : t('common:notDefinedText')
             }
-            tooltipText="Recipe cuisiness"
+            tooltipText="Recipe Cuisiness"
             link={`/search?cuisines=${recipeCuisines.join(',')}`}
             borderColor="#8BC5E5"
           />
           <IconWithText
             icon={HatChefIcon}
             text={recipeCookingSkills ? cookingSkill?.[recipeCookingSkills] : t('common:notDefinedText')}
-            tooltipText="Cooking skills"
+            tooltipText="Cooking Skill"
             link={`/search?cooking_skills=${recipeCookingSkills}`}
             borderColor="#F178B6"
           />
@@ -496,7 +496,7 @@ export const RecipePage = props => {
                 ? recipeCookingMethods.map(item => cookingMethods?.[item]).join(', ')
                 : t('common:notDefinedText')
             }
-            tooltipText="Cooking methods"
+            tooltipText="Cooking Method"
             link={`/search?cooking_methods=${recipeCookingMethods.join(',')}`}
             borderColor="#FFD166"
           />
