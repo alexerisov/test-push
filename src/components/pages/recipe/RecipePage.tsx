@@ -408,8 +408,22 @@ export const RecipePage = props => {
     return <div className={s.related_recipes}>related_recipes</div>;
   };
 
+  function generateGetBoundingClientRect(x = 0, y = 0) {
+    return {
+      width: 0,
+      height: 0,
+      top: y,
+      right: x,
+      bottom: y,
+      left: x
+    };
+  }
+
   const Classification = () => {
     const IconWithText = props => {
+      const positionRef = React.useRef({ x: 0, y: 0 });
+      const popperRef = React.useRef();
+      const [position, setPosition] = React.useState({ x: undefined, y: undefined });
       const { icon, text, borderColor, link, tooltipText } = props;
 
       const classificationClickHandler = () => {
@@ -417,11 +431,33 @@ export const RecipePage = props => {
       };
 
       return (
-        <div className={s.classification_icon_wrapper} onClick={classificationClickHandler}>
+        <div
+          onMouseMove={e => setPosition({ x: e.pageX, y: e.pageY })}
+          className={s.classification_icon_wrapper}
+          onClick={classificationClickHandler}>
           <span style={{ borderColor }} className={s.classification_icon}>
             <BasicIcon icon={icon} color="#353E50" />
           </span>
-          <Tooltip arrow title={tooltipText} aria-label={`${text}-tooltip`} placement="bottom">
+          <Tooltip
+            onMouseMove={event => (positionRef.current = { x: event.clientX, y: event.clientY })}
+            title={tooltipText}
+            aria-label={`${text}-tooltip`}
+            placement="top-start"
+            popperRef={popperRef}
+            PopperProps={{
+              anchorEl: {
+                clientHeight: 0,
+                clientWidth: 0,
+                getBoundingClientRect: () => ({
+                  top: positionRef.current.y,
+                  left: positionRef.current.x,
+                  right: positionRef.current.x,
+                  bottom: positionRef.current.y,
+                  width: 0,
+                  height: 0
+                })
+              }
+            }}>
             <span className={s.classification_text}>{text}</span>
           </Tooltip>
         </div>
