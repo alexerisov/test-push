@@ -494,7 +494,7 @@ export const RecipePage = props => {
           />
           <IconWithText
             icon={PeopleOutlineIcon}
-            text={recipeServings || t('common:notDefinedText')}
+            text={recipeServings ? `${recipeServings} servings` : t('common:notDefinedText')}
             link={`${router.asPath}`}
             borderColor="#FFD166"
           />
