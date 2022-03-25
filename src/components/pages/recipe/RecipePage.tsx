@@ -18,7 +18,7 @@ import HatChefIcon from '~public/icons/Hat Chef/Line.svg';
 import SaltShakerIcon from '~public/icons/Salt Shaker/Line.svg';
 import BookmarkIcon from '~public/icons/Bookmark/Line.svg';
 import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
-import { Avatar, Button, Collapse, IconButton, Radio, useMediaQuery } from '@material-ui/core';
+import { Avatar, Button, Collapse, IconButton, Radio, Tooltip, useMediaQuery } from '@material-ui/core';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { cookingMethods, cookingSkill, cuisineList, dietaryrestrictions, recipeTypes } from '@/utils/datasets';
@@ -410,7 +410,7 @@ export const RecipePage = props => {
 
   const Classification = () => {
     const IconWithText = props => {
-      const { icon, text, borderColor, link } = props;
+      const { icon, text, borderColor, link, tooltipText } = props;
 
       const classificationClickHandler = () => {
         router.push(link, undefined, { locale: router.locale });
@@ -421,7 +421,9 @@ export const RecipePage = props => {
           <span style={{ borderColor }} className={s.classification_icon}>
             <BasicIcon icon={icon} color="#353E50" />
           </span>
-          <span className={s.classification_text}>{text}</span>
+          <Tooltip placement={'right-start'} title={tooltipText} aria-label={`${text}-tooltip`}>
+            <span className={s.classification_text}>{text}</span>
+          </Tooltip>
         </div>
       );
     };
@@ -443,6 +445,7 @@ export const RecipePage = props => {
           <IconWithText
             icon={StopwatchIcon}
             text={parseTime(recipeCookingTime ?? 'N/A')}
+            tooltipText="Cooking time"
             link={`/search?cooking_time=${recipeCookingTime}`}
             borderColor="#92A5EF"
           />
@@ -453,6 +456,7 @@ export const RecipePage = props => {
                 ? recipeTypesList.map(item => recipeTypes?.[item]).join(', ')
                 : t('common:notDefinedText')
             }
+            tooltipText="Cooking types"
             link={`/search?types=${recipeTypesList.join(',')}`}
             borderColor="#58C27D"
           />
@@ -463,6 +467,7 @@ export const RecipePage = props => {
                 ? recipeDietRestrictions.map(item => dietaryrestrictions?.[item]).join(', ')
                 : t('common:notDefinedText')
             }
+            tooltipText="Diet restrictions"
             link={`/search?diet_restrictions=${recipeDietRestrictions.join(',')}`}
             borderColor="#FA8F54"
           />
@@ -473,12 +478,14 @@ export const RecipePage = props => {
                 ? recipeCuisines.map(item => cuisineList?.[item]).join(', ')
                 : t('common:notDefinedText')
             }
+            tooltipText="Recipe cuisiness"
             link={`/search?cuisines=${recipeCuisines.join(',')}`}
             borderColor="#8BC5E5"
           />
           <IconWithText
             icon={HatChefIcon}
             text={recipeCookingSkills ? cookingSkill?.[recipeCookingSkills] : t('common:notDefinedText')}
+            tooltipText="Cooking skills"
             link={`/search?cooking_skills=${recipeCookingSkills}`}
             borderColor="#F178B6"
           />
@@ -489,6 +496,7 @@ export const RecipePage = props => {
                 ? recipeCookingMethods.map(item => cookingMethods?.[item]).join(', ')
                 : t('common:notDefinedText')
             }
+            tooltipText="Cooking methods"
             link={`/search?cooking_methods=${recipeCookingMethods.join(',')}`}
             borderColor="#FFD166"
           />
@@ -496,6 +504,7 @@ export const RecipePage = props => {
             icon={PeopleOutlineIcon}
             text={recipeServings ? `${recipeServings} servings` : t('common:notDefinedText')}
             link={`${router.asPath}`}
+            tooltipText="Servings"
             borderColor="#FFD166"
           />
         </div>
