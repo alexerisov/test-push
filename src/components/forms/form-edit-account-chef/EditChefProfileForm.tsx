@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import classes from './index.module.scss';
+import s from './EditChefProfileForm.module.scss';
 import { connect } from 'react-redux';
 
 import ContentLayout from '@/components/layouts/layout-profile-content';
@@ -20,6 +20,7 @@ import TextField from '@material-ui/core/TextField';
 import { MenuItem, Select } from '@material-ui/core';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
+import { ChefProfile } from '~types/profile';
 
 const StyledTextField = styled(TextField)`
   width: 100%;
@@ -34,7 +35,12 @@ const StyledSelect = styled(Select)`
     border-color: #000000;
   }
 `;
-function FormEditAccountChef(props) {
+
+interface EditChefProfileFormProps {
+  profile: ChefProfile;
+}
+
+const EditChefProfileForm: React.FC<EditChefProfileFormProps> = props => {
   const router = useRouter();
   const { t, i18n } = useTranslation('profilePage');
 
@@ -127,7 +133,7 @@ function FormEditAccountChef(props) {
           formik.setFieldValue('role_models', []);
           formik.setFieldValue('role_model_images', []);
           setStatusSubmit(t('submitStatus.update'));
-          setFormStatus(<span className={classes.profile__formStatus_true}>{t('submitSuccess')}</span>);
+          setFormStatus(<span className={s.profile__formStatus_true}>{t('submitSuccess')}</span>);
           router.push(router.asPath, undefined, { locale: LANGUAGES[values.language] });
           props.dispatch(accountActions.remind());
         })
@@ -135,7 +141,7 @@ function FormEditAccountChef(props) {
           setErrorForm(error.response.data);
           handleErrorScroll(error.response.data);
           setStatusSubmit(t('submitStatus.update'));
-          setFormStatus(<span className={classes.profile__formStatus_error}>{t('submitError')}</span>);
+          setFormStatus(<span className={s.profile__formStatus_error}>{t('submitError')}</span>);
           console.log(error);
         });
     }
@@ -271,16 +277,16 @@ function FormEditAccountChef(props) {
 
   return (
     <ContentLayout>
-      <h2 className={classes.profile__title}>{t('updatePhoto')}</h2>
-      <form onSubmit={formik.handleSubmit} className={classes.profile__data}>
-        <div className={classes.profile__formAvatar}>
-          <div className={classes.profile__upload} onClick={onClickUpload}>
+      <h2 className={s.profile__title}>{t('updatePhoto')}</h2>
+      <form onSubmit={formik.handleSubmit} className={s.profile__data}>
+        <div className={s.profile__formAvatar}>
+          <div className={s.profile__upload} onClick={onClickUpload}>
             {!avatarFile ? (
-              <img src="/images/index/default-avatar.png" alt="avatar" className={classes.profile__avatar} />
+              <img src="/images/index/default-avatar.png" alt="avatar" className={s.profile__avatar} />
             ) : (
-              avatarFile && <img src={avatarFile} alt="avatar" className={classes.profile__avatar} />
+              avatarFile && <img src={avatarFile} alt="avatar" className={s.profile__avatar} />
             )}
-            <div className={classes.profile__avatarBack} id="avatar" />
+            <div className={s.profile__avatarBack} id="avatar" />
           </div>
           <input
             type="file"
@@ -294,16 +300,16 @@ function FormEditAccountChef(props) {
             }}
           />
           <FieldError errors={errorForm} path="avatar" id="error" />
-          <div className={classes.profile__buttonUpdate_place_avatar}>
-            <button type="submit" className={classes.profile__buttonUpdate}>
+          <div className={s.profile__buttonUpdate_place_avatar}>
+            <button type="submit" className={s.profile__buttonUpdate}>
               {statusSubmit}
             </button>
-            <p className={classes.profile__formStatus}>{formStatus}</p>
+            <p className={s.profile__formStatus}>{formStatus}</p>
           </div>
         </div>
-        <h2 className={classes.profile__title}>{t('basicInformation')}</h2>
+        <h2 className={s.profile__title}>{t('basicInformation')}</h2>
         <div>
-          <label className={classes.profile__label}>
+          <label className={s.profile__label}>
             <span style={{ color: 'red' }}>* </span>
             {t('nameInput.label')}
           </label>
@@ -321,7 +327,7 @@ function FormEditAccountChef(props) {
           />
         </div>
         <div>
-          <label className={classes.profile__label}>{t('bioInput.label')}</label>
+          <label className={s.profile__label}>{t('bioInput.label')}</label>
           <StyledTextField
             multiline
             rows={3}
@@ -335,7 +341,7 @@ function FormEditAccountChef(props) {
           />
         </div>
         <div>
-          <label className={classes.profile__label}>
+          <label className={s.profile__label}>
             <span style={{ color: 'red' }}>* </span>
             {t('emailInput.label')}
           </label>
@@ -351,7 +357,7 @@ function FormEditAccountChef(props) {
           />
         </div>
         <div>
-          <label className={classes.profile__label}>{t('phoneInput.label')}</label>
+          <label className={s.profile__label}>{t('phoneInput.label')}</label>
           <PhoneInput
             country="us"
             id="phone_number"
@@ -360,7 +366,7 @@ function FormEditAccountChef(props) {
             variant="outlined"
             value={changePhone}
             onChange={handleChangePhone}
-            containerClass={classes.profile__inputPhone}
+            containerClass={s.profile__inputPhone}
             inputStyle={{
               border: 'none',
               fontSize: '18px',
@@ -375,9 +381,9 @@ function FormEditAccountChef(props) {
           />
           <FieldError errors={errorForm} path="phone_number" id="error" />
         </div>
-        <div className={classes.profile__container_emailAndPhone}>
+        <div className={s.profile__container_emailAndPhone}>
           <div>
-            <label className={classes.profile__label}>
+            <label className={s.profile__label}>
               <span style={{ color: 'red' }}>* </span>
               {t('cityInput.label')}
             </label>
@@ -395,7 +401,7 @@ function FormEditAccountChef(props) {
             />
           </div>
           <div>
-            <label className={classes.profile__label}>{t('languageInput.label')}</label>
+            <label className={s.profile__label}>{t('languageInput.label')}</label>
             <StyledSelect
               id="language"
               name="language"
@@ -416,14 +422,14 @@ function FormEditAccountChef(props) {
             </StyledSelect>
           </div>
         </div>
-        <div className={classes.profile__experience}>
-          <label className={classes.profile__label}>{t('experience.title')}</label>
+        <div className={s.profile__experience}>
+          <label className={s.profile__label}>{t('experience.title')}</label>
           {experienceArr.map((item, index) => {
             return (
-              <div className={classes.profile__experience__input} key={index}>
+              <div className={s.profile__experience__input} key={index}>
                 <p>{item}</p>
                 <button
-                  className={classes.profile__experience__delete}
+                  className={s.profile__experience__delete}
                   onClick={() => {
                     onClickDeleteExperience(index);
                   }}></button>
@@ -431,14 +437,14 @@ function FormEditAccountChef(props) {
             );
           })}
           <button
-            className={classes.profile__buttonAddExperience}
+            className={s.profile__buttonAddExperience}
             onClick={handleClickPopupOpenaddExperience('addExperience')}>
             {t('experience.button')}
           </button>
         </div>
         <div>
-          <h2 className={classes.profile__title}>{t('role.title')}</h2>
-          <div className={classes.profile__container_addRoleModels}>
+          <h2 className={s.profile__title}>{t('role.title')}</h2>
+          <div className={s.profile__container_addRoleModels}>
             {roleModelsArr.map((item, index) => {
               return (
                 <CardRoleModels
@@ -452,35 +458,35 @@ function FormEditAccountChef(props) {
               );
             })}
             <buuton
-              className={classes.profile__button__addRoleModels}
+              className={s.profile__button__addRoleModels}
               onClick={handleClickPopupOpenAddRoleModels('addRoleModel')}>
-              <span className={classes.profile__button__addRoleModels__iconPlus}></span>
+              <span className={s.profile__button__addRoleModels__iconPlus}></span>
               <span style={{ textAlign: 'center' }}>{t('role.button')}</span>
             </buuton>
           </div>
         </div>
         <div>
-          <h2 className={classes.profile__title}>{t('otherInfo.title')}</h2>
-          <div className={classes.profile__container_otherInformations}>
+          <h2 className={s.profile__title}>{t('otherInfo.title')}</h2>
+          <div className={s.profile__container_otherInformations}>
             {personalCookingMissionArr.length === 0 ? (
               <button
                 type="button"
-                className={classes.profile__button__otherInformations}
+                className={s.profile__button__otherInformations}
                 onClick={handleClickPopupOpenOtherInformations('addOtherInformations', {
                   title: 'Add Personal Cooking Mission',
                   nameFormik: 'personal_cooking_mission'
                 })}>
-                <span className={classes.profile__button__addRoleModels__iconPlus}></span>
+                <span className={s.profile__button__addRoleModels__iconPlus}></span>
                 <span>{t('otherInfo.mission')}</span>
               </button>
             ) : (
-              <div className={classes.profile__otherInformationsCard}>
-                <div className={classes.profile__otherInformationsCard__header}>
-                  <p className={classes.profile__otherInformationsCard__title}>{t('otherInfo.mission')}</p>
-                  <div className={classes.profile__otherInformationsCard__buttons}>
+              <div className={s.profile__otherInformationsCard}>
+                <div className={s.profile__otherInformationsCard__header}>
+                  <p className={s.profile__otherInformationsCard__title}>{t('otherInfo.mission')}</p>
+                  <div className={s.profile__otherInformationsCard__buttons}>
                     <button
                       type="button"
-                      className={classes.profile__otherInformationsCard__buttonEdit}
+                      className={s.profile__otherInformationsCard__buttonEdit}
                       onClick={handleClickPopupOpenOtherInformations('addOtherInformations', {
                         title: 'Add Personal Cooking Mission',
                         nameFormik: 'personal_cooking_mission',
@@ -489,24 +495,24 @@ function FormEditAccountChef(props) {
                     />
                     <button
                       type="button"
-                      className={classes.profile__otherInformationsCard__buttonDelete}
+                      className={s.profile__otherInformationsCard__buttonDelete}
                       onClick={() =>
                         resetValuesOtherInformations(setPersonalCookingMissionArrr, 'personal_cooking_mission')
                       }
                     />
                   </div>
                 </div>
-                <div className={classes.profile__otherInformationsCard__content}>
+                <div className={s.profile__otherInformationsCard__content}>
                   <img
                     src="/images/index/PersonalCookingMissionIcon.svg"
                     alt=""
-                    className={classes.profile__iconOtherInformations}
+                    className={s.profile__iconOtherInformations}
                   />
-                  <div className={classes.profile__otherInformationsCard__list}>
+                  <div className={s.profile__otherInformationsCard__list}>
                     {personalCookingMissionArr.map((item, index) => {
                       return (
                         <div key={index}>
-                          <div className={classes.profile__otherInformationsCard__listIndex}>{index + 1}</div>
+                          <div className={s.profile__otherInformationsCard__listIndex}>{index + 1}</div>
                           <span>{item}</span>
                         </div>
                       );
@@ -519,22 +525,22 @@ function FormEditAccountChef(props) {
             {sourceInspirationArr.length === 0 ? (
               <button
                 type="button"
-                className={classes.profile__button__otherInformations}
+                className={s.profile__button__otherInformations}
                 onClick={handleClickPopupOpenOtherInformations('addOtherInformations', {
                   title: 'Add Source Of Inspiration',
                   nameFormik: 'source_of_inspiration'
                 })}>
-                <span className={classes.profile__button__addRoleModels__iconPlus}></span>
+                <span className={s.profile__button__addRoleModels__iconPlus}></span>
                 <span>{t('otherInfo.inspiration')}</span>
               </button>
             ) : (
-              <div className={classes.profile__otherInformationsCard}>
-                <div className={classes.profile__otherInformationsCard__header}>
-                  <p className={classes.profile__otherInformationsCard__title}>{t('otherInfo.inspiration')}</p>
-                  <div className={classes.profile__otherInformationsCard__buttons}>
+              <div className={s.profile__otherInformationsCard}>
+                <div className={s.profile__otherInformationsCard__header}>
+                  <p className={s.profile__otherInformationsCard__title}>{t('otherInfo.inspiration')}</p>
+                  <div className={s.profile__otherInformationsCard__buttons}>
                     <button
                       type="button"
-                      className={classes.profile__otherInformationsCard__buttonEdit}
+                      className={s.profile__otherInformationsCard__buttonEdit}
                       onClick={handleClickPopupOpenOtherInformations('addOtherInformations', {
                         title: 'Add Source Of Inspiration',
                         nameFormik: 'source_of_inspiration',
@@ -543,22 +549,18 @@ function FormEditAccountChef(props) {
                     />
                     <button
                       type="button"
-                      className={classes.profile__otherInformationsCard__buttonDelete}
+                      className={s.profile__otherInformationsCard__buttonDelete}
                       onClick={() => resetValuesOtherInformations(setSourceInspirationArr, 'source_of_inspiration')}
                     />
                   </div>
                 </div>
-                <div className={classes.profile__otherInformationsCard__content}>
-                  <img
-                    src="/images/index/SourceInspiration.svg"
-                    alt=""
-                    className={classes.profile__iconOtherInformations}
-                  />
-                  <div className={classes.profile__otherInformationsCard__list}>
+                <div className={s.profile__otherInformationsCard__content}>
+                  <img src="/images/index/SourceInspiration.svg" alt="" className={s.profile__iconOtherInformations} />
+                  <div className={s.profile__otherInformationsCard__list}>
                     {sourceInspirationArr.map((item, index) => {
                       return (
                         <div key={index}>
-                          <div className={classes.profile__otherInformationsCard__listIndex}>{index + 1}</div>
+                          <div className={s.profile__otherInformationsCard__listIndex}>{index + 1}</div>
                           <span>{item}</span>
                         </div>
                       );
@@ -571,22 +573,22 @@ function FormEditAccountChef(props) {
             {cookingPhilosophyArr.length === 0 ? (
               <button
                 type="button"
-                className={classes.profile__button__otherInformations}
+                className={s.profile__button__otherInformations}
                 onClick={handleClickPopupOpenOtherInformations('addOtherInformations', {
                   title: 'Add Cooking Philosophy',
                   nameFormik: 'cooking_philosophy'
                 })}>
-                <span className={classes.profile__button__addRoleModels__iconPlus}></span>
+                <span className={s.profile__button__addRoleModels__iconPlus}></span>
                 <span>Cooking Philosophy</span>
               </button>
             ) : (
-              <div className={classes.profile__otherInformationsCard}>
-                <div className={classes.profile__otherInformationsCard__header}>
-                  <p className={classes.profile__otherInformationsCard__title}>{t('otherInfo.philosophy')}</p>
-                  <div className={classes.profile__otherInformationsCard__buttons}>
+              <div className={s.profile__otherInformationsCard}>
+                <div className={s.profile__otherInformationsCard__header}>
+                  <p className={s.profile__otherInformationsCard__title}>{t('otherInfo.philosophy')}</p>
+                  <div className={s.profile__otherInformationsCard__buttons}>
                     <button
                       type="button"
-                      className={classes.profile__otherInformationsCard__buttonEdit}
+                      className={s.profile__otherInformationsCard__buttonEdit}
                       onClick={handleClickPopupOpenOtherInformations('addOtherInformations', {
                         title: 'Add Cooking Philosophy',
                         nameFormik: 'cooking_philosophy',
@@ -595,22 +597,22 @@ function FormEditAccountChef(props) {
                     />
                     <button
                       type="button"
-                      className={classes.profile__otherInformationsCard__buttonDelete}
+                      className={s.profile__otherInformationsCard__buttonDelete}
                       onClick={() => resetValuesOtherInformations(setCookingPhilosophyArr, 'cooking_philosophy')}
                     />
                   </div>
                 </div>
-                <div className={classes.profile__otherInformationsCard__content}>
+                <div className={s.profile__otherInformationsCard__content}>
                   <img
                     src="/images/index/CookingPhilosophyIcon.svg"
                     alt=""
-                    className={classes.profile__iconOtherInformations}
+                    className={s.profile__iconOtherInformations}
                   />
-                  <div className={classes.profile__otherInformationsCard__list}>
+                  <div className={s.profile__otherInformationsCard__list}>
                     {cookingPhilosophyArr.map((item, index) => {
                       return (
                         <div key={index}>
-                          <div className={classes.profile__otherInformationsCard__listIndex}>{index + 1}</div>
+                          <div className={s.profile__otherInformationsCard__listIndex}>{index + 1}</div>
                           <span>{item}</span>
                         </div>
                       );
@@ -622,20 +624,20 @@ function FormEditAccountChef(props) {
           </div>
         </div>
         <div>
-          <button type="submit" className={classes.profile__buttonUpdate}>
+          <button type="submit" className={s.profile__buttonUpdate}>
             {statusSubmit}
           </button>
-          <p className={classes.profile__formStatus}>{formStatus}</p>
+          <p className={s.profile__formStatus}>{formStatus}</p>
         </div>
       </form>
     </ContentLayout>
   );
-}
+};
 
-FormEditAccountChef.propTypes = {
+EditChefProfileForm.propTypes = {
   account: PropTypes.object.isRequired
 };
 
 export default connect(state => ({
   account: state.account
-}))(FormEditAccountChef);
+}))(EditChefProfileForm);

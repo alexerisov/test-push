@@ -1,6 +1,10 @@
 import http from '../utils/http';
 
-export default {
+interface AccountApi {
+  current: (token: string) => XMLHttpRequestResponseType;
+}
+
+const AccountApi = {
   login: (email, password) => {
     return http.post(`token/`, { email, password });
   },
@@ -12,13 +16,6 @@ export default {
   },
 
   current: token => {
-    if (token) {
-      return http.get(`account/me`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-    }
     return http.get(`account/me`);
   },
 
@@ -209,3 +206,5 @@ export default {
     return http.get(`/account/${id}`);
   }
 };
+
+export default AccountApi;

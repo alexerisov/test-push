@@ -49,6 +49,7 @@ export const recipeTypesCount = {
 };
 
 export const recommendedList = {
+  0: 'Reccommended',
   1: 'Latest',
   2: 'Cheapest',
   3: 'Quickest'

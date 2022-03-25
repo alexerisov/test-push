@@ -14,18 +14,12 @@ export default connect((state: RootState) => ({
 }))(ProfileAccountSettingsPage);
 
 export const getServerSideProps = async context => {
-  const token = await getToken(context);
-  console.log('\n Props start:', http.defaults.headers.common['Authorization']);
-  if (token) {
-    http.defaults.headers.common['Authorization'] = `Bearer ${token?.accessToken}`;
-  }
-
   try {
     const profileResponse = await Account.current();
-    // await console.log('response', profileResponse.request._header);
 
     return {
       props: {
+        session: await getSession(context),
         profile: profileResponse?.data,
         ...(await serverSideTranslations(context.locale, ['common', 'profilePage']))
       }

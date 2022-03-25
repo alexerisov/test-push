@@ -33,38 +33,38 @@
 }
 
 @mixin fontLight() {
-  font-family: Montserrat;
-  letter-spacing: 0.01em;
-  font-style: normal;
-  font-weight: 300;
+  font-family: Montserrat !important;
+  letter-spacing: 0.01em !important;
+  font-style: normal !important;
+  font-weight: 300 !important;
 }
 
 @mixin fontRegular() {
-  font-family: Montserrat;
-  letter-spacing: 0.01em;
-  font-style: normal;
-  font-weight: 400;
+  font-family: Montserrat !important;
+  letter-spacing: 0.01em !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
 }
 
 @mixin fontMedium() {
-  font-family: Montserrat;
-  letter-spacing: 0.01em;
-  font-style: normal;
-  font-weight: 500;
+  font-family: Montserrat !important;
+  letter-spacing: 0.01em !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
 }
 
 @mixin fontSemiBold() {
-  font-family: Montserrat;
-  letter-spacing: 0.01em;
-  font-style: normal;
-  font-weight: 600;
+  font-family: Montserrat !important;
+  letter-spacing: 0.01em !important;
+  font-style: normal !important;
+  font-weight: 600 !important;
 }
 
 @mixin fontBold() {
-  font-family: Montserrat;
-  letter-spacing: 0.01em;
-  font-style: normal;
-  font-weight: 700;
+  font-family: Montserrat !important;
+  letter-spacing: 0.01em !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
 }
 
 @mixin no_scrollbar {

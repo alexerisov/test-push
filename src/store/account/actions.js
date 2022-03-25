@@ -1,4 +1,4 @@
-import Account from '@/api/Account.js';
+import Account from '@/api/Account.ts';
 import { AuthCookieStorage } from '@/utils/web-storage/cookie';
 import { recoveryLocalStorage } from '@/utils/web-storage/local';
 import { types as cartTypes } from '../cart/actions';
