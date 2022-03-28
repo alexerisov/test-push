@@ -1,11 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { ReactComponentElement, useEffect, useRef, useState } from 'react';
 import classes from './index.module.scss';
 import Head from 'next/head';
 import CookiesBanner from '@/components/banners/cookies-banner';
 import Header from '@/components/basic-blocks/header';
 import { Footer } from '@/components/basic-blocks/footer';
 
-const LayoutPageNew = ({ content }) => {
+interface LayoutPageNewProps {
+  content: ReactComponentElement<any>;
+}
+
+const LayoutPageNew: React.FC<LayoutPageNewProps> = ({ content }) => {
   const headerRef = useRef();
   const contentRef = useRef();
   const [headerShadow, setHeaderShadow] = useState(false);

@@ -101,6 +101,24 @@ const SellingBlock = ({ isRecipeInCart, handleClickBtn, cartItemAmount, cartItem
 );
 
 const CardSearch = props => {
+  const { recipe, disableBorder } = props;
+  const title = recipe.title;
+  const image = recipe.images?.[0]?.url;
+  const name = recipe.user?.full_name;
+  const city = recipe.user?.city;
+  const likes = recipe.likes_number;
+  const isParsed = recipe.is_parsed;
+  const publishStatus = recipe.publish_status;
+  const hasVideo = recipe.video;
+  const cookingTime = recipe.cooking_time;
+  const cookingSkill = recipe.cooking_skills;
+  const cookingTypes = recipe.types;
+  const user_saved_recipe = recipe.user_saved_recipe;
+  const price = recipe.price;
+  const comments_number = recipe.comments_number;
+  const id = recipe.pk;
+  const unsalable = recipe.sale_status !== 5;
+
   const { session } = useAuth();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -111,12 +129,12 @@ const CardSearch = props => {
   };
 
   const getStatusOfCard = () => {
-    if (props.publishStatus === PUBLISH_STATUS.notPublished) {
+    if (publishStatus === PUBLISH_STATUS.notPublished) {
       return 'Saved';
     }
 
-    if (props.reviewStatus) {
-      switch (props.reviewStatus) {
+    if (reviewStatus) {
+      switch (reviewStatus) {
         case 1:
           return APPROVED_STATUS[1];
         case 2:
@@ -128,8 +146,8 @@ const CardSearch = props => {
   };
 
   //Cart
-  const cartItem = useSelector(state => state.cart.products?.find(el => el.object.pk === props.id));
-  const isRecipeInCart = useSelector(state => state.cart.products?.some(el => el.object_id == props.id));
+  const cartItem = useSelector(state => state.cart.products?.find(el => el.object.pk === id));
+  const isRecipeInCart = useSelector(state => state.cart.products?.some(el => el.object_id == id));
   const cartItemId = cartItem?.pk;
   const cartItemAmount = cartItem?.count;
 
@@ -143,12 +161,12 @@ const CardSearch = props => {
       return dispatch(modalActions.open('register'));
     }
 
-    dispatch(addToCart(props.id));
+    dispatch(addToCart(id));
   };
 
   const SocialBlockProps = {
-    likes: props.likes,
-    comments_number: props.comments_number
+    likes: likes,
+    comments_number: comments_number
   };
 
   const SellingBlockProps = {
@@ -156,55 +174,55 @@ const CardSearch = props => {
     handleClickBtn,
     cartItemAmount,
     cartItemId,
-    price: props.price
+    price: price
   };
 
   return (
     <Card
-      className={`${classes.card} ${props.disableBorder ? classes.card_disableBorder : ''}`}
+      className={`${classes.card} ${disableBorder ? classes.card_disableBorder : ''}`}
       variant="elevation"
       style={{ border: '1px red !important' }}>
-      <StyledCardActionArea onClick={() => redirectToRecipeCard(props.id)}>
-        <StyledCardMedia className={classes.card__media} image={props.image ?? logo} title="" />
+      <StyledCardActionArea onClick={() => redirectToRecipeCard(id)}>
+        <StyledCardMedia className={classes.card__media} image={image ?? logo} title="" />
 
-        {props.user_saved_recipe ? (
+        {user_saved_recipe ? (
           <SavedIcon />
-        ) : props.isParsed && props.publishStatus === PUBLISH_STATUS.published ? (
+        ) : isParsed && publishStatus === PUBLISH_STATUS.published ? (
           <ChefIcon type="common" />
         ) : null}
         <StyledCardContent className={classes.card__content}>
           <div className={classes.card__wrap}>
-            <p className={classes.card__name} title={props.title}>
-              {props.title}
+            <p className={classes.card__name} title={title}>
+              {title}
             </p>
-            {/* <p className={classes.card__author}>{`by Chef ${props.name}`}</p> */}
-            {/* <p className={classes.card__location}>{props.city}</p> */}
+            {/* <p className={classes.card__author}>{`by Chef ${name}`}</p> */}
+            {/* <p className={classes.card__location}>{city}</p> */}
             {/* <div className={classes.card__likeIcon}>
-              <LikeIcon value={props.likes} />
+              <LikeIcon value={likes} />
             </div> */}
-            {/* {props.hasVideo && <CardControlPlay />} */}
+            {/* {hasVideo && <CardControlPlay />} */}
             <div className={classes.card__labels}>
               <div className={classes.card__label_left}>
                 <div className={classes.card__label}>
                   <BasicIcon icon={IceCreamIcon} size="16px" />
                   <p>
-                    {props.cookingTypes?.length > 0
-                      ? props.cookingTypes.map(el => recipeTypes?.[el] || 'Not defined').join(', ')
+                    {cookingTypes?.length > 0
+                      ? cookingTypes.map(el => recipeTypes?.[el] || 'Not defined').join(', ')
                       : 'Not defined'}
                   </p>
                 </div>
               </div>
               <div className={classes.card__label_right}>
                 <BasicIcon icon={HatChefIcon} size="16px" />
-                {props.cookingSkill ? cookingSkill[props.cookingSkill] : 'Not defined'}
+                {cookingSkill ? cookingSkill[cookingSkill] : 'Not defined'}
               </div>
             </div>
 
-            {props.unsalable ? <SocialBlock {...SocialBlockProps} /> : <SellingBlock {...SellingBlockProps} />}
+            {unsalable ? <SocialBlock {...SocialBlockProps} /> : <SellingBlock {...SellingBlockProps} />}
 
             <div className={classes.card__timeWrap}>
               <BasicIcon icon={StopwatchIcon} size="12px" />
-              {props.cookingTime || '—:—'}
+              {cookingTime || '—:—'}
             </div>
 
             {/* {props.publishStatus && <div className={classes.card__status}>{getStatusOfCard()}</div>} */}

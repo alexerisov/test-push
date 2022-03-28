@@ -48,25 +48,7 @@ const RecipeSlider = props => {
           {recipes
             .filter(el => el?.pk)
             .map((recipe, index) => (
-              <CardSearch
-                key={`${recipe.pk}-${index}`}
-                title={recipe?.title}
-                image={recipe?.images?.[0]?.url}
-                name={recipe?.user?.full_name}
-                city={recipe?.user?.city}
-                likes={recipe?.likes_number}
-                isParsed={recipe?.is_parsed}
-                publishStatus={recipe?.publish_status}
-                hasVideo={recipe?.video}
-                cookingTime={recipe?.cooking_time}
-                cookingSkill={recipe?.cooking_skills}
-                cookingTypes={recipe?.types}
-                user_saved_recipe={recipe?.user_saved_recipe}
-                price={recipe?.price}
-                token={props.token}
-                id={recipe.pk}
-                unsalable={true}
-              />
+              <CardSearch key={`${recipe.pk}-${index}`} recipe={recipe} />
             ))}
         </>
       )}

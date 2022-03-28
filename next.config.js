@@ -109,9 +109,10 @@ module.exports = {
       '~styles': path.join(__dirname, 'src/styles'),
       '~src': path.join(__dirname, 'src'),
       '~npm': path.join(__dirname, 'node_modules'),
-      '~public': path.join(__dirname, 'public')
+      '~public': path.join(__dirname, 'public'),
+      '~types': path.join(__dirname, 'types')
     },
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
     modules: [path.resolve(__dirname, 'src'), 'node_modules']
   },
   i18n,

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import classes from './index.module.scss';
+import s from './EditViewerProfileForm.module.scss';
 import { connect } from 'react-redux';
 
 import ContentLayout from '@/components/layouts/layout-profile-content';
@@ -19,6 +19,7 @@ import FieldError from '@/components/elements/field-error';
 import { MenuItem, Select } from '@material-ui/core';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
+import { ViewerProfile } from '~types/profile';
 
 const StyledTextField = styled(TextField)`
   width: 100%;
@@ -38,7 +39,11 @@ const StyledInput = styled(Input)`
   display: none;
 `;
 
-function FormEditAccountUser(props) {
+interface EditViewerProfileFormProps {
+  profile: ViewerProfile;
+}
+
+const EditViewerProfileForm: React.FC<EditViewerProfileFormProps> = props => {
   const router = useRouter();
   const { t, i18n } = useTranslation('profilePage');
 
@@ -66,8 +71,8 @@ function FormEditAccountUser(props) {
 
   const { email, full_name, phone_number, city, language, avatar, user_type } = props.profile;
 
-  const [avatarFile, setAvatarFile] = useState(avatar);
-  const [formStatus, setFormStatus] = useState('');
+  const [avatarFile, setAvatarFile] = useState<URL>(avatar);
+  const [formStatus, setFormStatus] = useState<string | HTMLElement>('');
   const [statusSubmit, setStatusSubmit] = useState(t('submitStatus.update'));
 
   const formik = useFormik({
@@ -88,7 +93,7 @@ function FormEditAccountUser(props) {
         .dispatch(profileActions.updateProfileUser(values))
         .then(res => {
           setStatusSubmit(t('submitStatus.update'));
-          setFormStatus(<span className={classes.profile__formStatus_true}>{t('submitSuccess')}</span>);
+          setFormStatus(<span className={s.profile__formStatus_true}>{t('submitSuccess')}</span>);
           props.dispatch(accountActions.remind());
           router.push(router.asPath, undefined, { locale: LANGUAGES[values.language] });
         })
@@ -96,7 +101,7 @@ function FormEditAccountUser(props) {
           setErrorForm(error.response.data);
           handleErrorScroll(error.response.data);
           setStatusSubmit(t('submitStatus.update'));
-          setFormStatus(<span className={classes.profile__formStatus_error}>{t('submitError')}</span>);
+          setFormStatus(<span className={s.profile__formStatus_error}>{t('submitError')}</span>);
           console.log(error);
         });
     }
@@ -129,16 +134,16 @@ function FormEditAccountUser(props) {
 
   return (
     <ContentLayout>
-      <h2 className={classes.profile__title}>{t('updatePhoto')}</h2>
-      <form onSubmit={formik.handleSubmit} className={classes.profile__data}>
-        <div className={classes.profile__formAvatar}>
-          <div className={classes.profile__upload} onClick={onClickUpload}>
+      <h2 className={s.profile__title}>{t('updatePhoto')}</h2>
+      <form onSubmit={formik.handleSubmit} className={s.profile__data}>
+        <div className={s.profile__formAvatar}>
+          <div className={s.profile__upload} onClick={onClickUpload}>
             {!avatarFile ? (
-              <img src="/images/index/default-avatar.png" alt="avatar" className={classes.profile__avatar} />
+              <img src="/images/index/default-avatar.png" alt="avatar" className={s.profile__avatar} />
             ) : (
-              avatarFile && <img src={avatarFile} alt="avatar" className={classes.profile__avatar} />
+              avatarFile && <img src={avatarFile} alt="avatar" className={s.profile__avatar} />
             )}
-            <div className={classes.profile__avatarBack} />
+            <div className={s.profile__avatarBack} />
           </div>
           <input
             type="file"
@@ -151,17 +156,17 @@ function FormEditAccountUser(props) {
               formik.setFieldValue('avatar', event.currentTarget.files[0]);
             }}
           />
-          <label className={classes.profile__uploadLabel}>Profile-pic.jpg</label>
-          <div className={classes.profile__buttonUpdate_place_avatar}>
-            <button type="submit" className={classes.profile__buttonUpdate}>
+          <label className={s.profile__uploadLabel}>Profile-pic.jpg</label>
+          <div className={s.profile__buttonUpdate_place_avatar}>
+            <button type="submit" className={s.profile__buttonUpdate}>
               {statusSubmit}
             </button>
-            <p className={classes.profile__formStatus}>{formStatus}</p>
+            <p className={s.profile__formStatus}>{formStatus}</p>
           </div>
         </div>
-        <h2 className={classes.profile__title}>{t('updateUserInfo')}</h2>
+        <h2 className={s.profile__title}>{t('updateUserInfo')}</h2>
         <div>
-          <label className={classes.profile__label}>
+          <label className={s.profile__label}>
             <span style={{ color: 'red' }}>* </span>
             {t('nameInput.label')}
           </label>
@@ -179,7 +184,7 @@ function FormEditAccountUser(props) {
           />
         </div>
         <div>
-          <label className={classes.profile__label}>
+          <label className={s.profile__label}>
             <span style={{ color: 'red' }}>* </span>
             {t('emailInput.label')}
           </label>
@@ -195,7 +200,7 @@ function FormEditAccountUser(props) {
           />
         </div>
         <div>
-          <label className={classes.profile__label}>{t('phoneInput.label')}</label>
+          <label className={s.profile__label}>{t('phoneInput.label')}</label>
           <PhoneInput
             country="us"
             id="phone_number"
@@ -204,7 +209,7 @@ function FormEditAccountUser(props) {
             variant="outlined"
             value={changePhone}
             onChange={handleChangePhone}
-            containerClass={classes.profile__inputPhone}
+            containerClass={s.profile__inputPhone}
             inputStyle={{
               border: 'none',
               fontSize: '18px',
@@ -220,7 +225,7 @@ function FormEditAccountUser(props) {
           <FieldError errors={errorForm} path="phone_number" id="error" />
         </div>
         <div>
-          <label className={classes.profile__label}>{t('cityInput.label')}</label>
+          <label className={s.profile__label}>{t('cityInput.label')}</label>
           <StyledTextField
             id="city"
             name="city"
@@ -232,7 +237,7 @@ function FormEditAccountUser(props) {
           />
         </div>
         <div>
-          <label className={classes.profile__label}>{t('languageInput.label')}</label>
+          <label className={s.profile__label}>{t('languageInput.label')}</label>
           <StyledSelect
             id="city"
             name="city"
@@ -253,18 +258,14 @@ function FormEditAccountUser(props) {
           </StyledSelect>
         </div>
         <div>
-          <button type="submit" className={classes.profile__buttonUpdate}>
+          <button type="submit" className={s.profile__buttonUpdate}>
             {statusSubmit}
           </button>
-          <p className={classes.profile__formStatus}>{formStatus}</p>
+          <p className={s.profile__formStatus}>{formStatus}</p>
         </div>
       </form>
     </ContentLayout>
   );
-}
-
-FormEditAccountUser.propTypes = {
-  account: PropTypes.object.isRequired
 };
 
-export default connect()(FormEditAccountUser);
+export default connect()(EditViewerProfileForm);

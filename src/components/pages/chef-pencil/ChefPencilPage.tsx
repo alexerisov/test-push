@@ -10,7 +10,7 @@ import { CardChefPencil } from '@/components/elements/card';
 import RecipeNotFound from '@/components/elements/recipe-not-found';
 
 import { pageNames } from '@/utils/datasets';
-import Account from '@/api/Account.js';
+import Account from '@/api/Account';
 import { modalActions } from '@/store/actions';
 import ChefPencil from '@/api/ChefPencil.js';
 import { recipePhotoSlider } from '@/store/actions';
