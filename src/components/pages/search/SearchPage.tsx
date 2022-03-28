@@ -233,56 +233,58 @@ export const SearchPage = props => {
     : props.weekmenuWithoutFilters;
 
   const {
-    data: nonProductionRecipesData,
-    error: isNonProductionRecipesLoading,
-    size: nonProductionRecipesPageSize,
-    setSize: setNonProductionRecipesPageSize
-  } = useSWRInfinite(
-    index => ['/recipe', searchParams, { page: index + 1, page_size: 3, sale_status: 4 }],
-    //TODO check filter by sale_status with multiple values
-    recipeFetcher
-  );
-
-  const {
     data: productionRecipesData,
     error: isProductionRecipesLoading,
     size: productionRecipesPageSize,
     setSize: setProductionRecipesPageSize
   } = useSWRInfinite(
-    index => ['/recipe', searchParams, { page: index + 1, page_size: 3, sale_status: 5 }],
+    index => ['/recipe', searchParams, { page: index + 1, page_size: index ? 9 : 3, sale_status: 5 }],
+    recipeFetcher
+  );
+  //TODO remove flexible index, fix page size to 9, and for first page create accordion
+
+  const {
+    data: nonProductionRecipesData,
+    error: isNonProductionRecipesLoading,
+    size: nonProductionRecipesPageSize,
+    setSize: setNonProductionRecipesPageSize
+  } = useSWRInfinite(
+    index => ['/recipe', searchParams, { page: index + 1, page_size: 9, sale_status: 4 }],
+    //TODO check filter by sale_status with multiple values
     recipeFetcher
   );
 
-  const productionRecipes = productionRecipesData ? [].concat(...productionRecipesData.map(el => el.results)) : null;
+  const isLoadingInitialData = !productionRecipesData && !isProductionRecipesLoading;
+  const isLoadingMoreProd =
+    isLoadingInitialData ||
+    (productionRecipesPageSize > 0 &&
+      productionRecipesData &&
+      typeof productionRecipesData[productionRecipesPageSize - 1] === 'undefined');
+  const isEmptyProd = productionRecipesData?.[0]?.length === 0;
+  const isReachingEndProd =
+    productionRecipesData && productionRecipesData[productionRecipesData.length - 1]?.next === null;
+
+  const isLoadingInitialDataNonProd = !nonProductionRecipesData && !isNonProductionRecipesLoading;
+  const isLoadingMoreNonProd =
+    isLoadingInitialDataNonProd ||
+    (nonProductionRecipesPageSize > 0 &&
+      nonProductionRecipesData &&
+      typeof nonProductionRecipesData[nonProductionRecipesPageSize - 1] === 'undefined');
+  const isEmptyNonProd = nonProductionRecipesData?.[0]?.length === 0;
+  const isReachingEndNonProd =
+    nonProductionRecipesData && nonProductionRecipesData[nonProductionRecipesData.length - 1]?.next === null;
+
+  const productionRecipes = productionRecipesData
+    ? [].concat(...productionRecipesData.filter(el => el?.results).map(el => el?.results))
+    : null;
   const nonProductionRecipes = nonProductionRecipesData
-    ? [].concat(...nonProductionRecipesData.map(el => el.results))
+    ? [].concat(...nonProductionRecipesData.filter(el => el?.results).map(el => el?.results))
     : null;
   const countRecipesData = nonProductionRecipesData
     ? nonProductionRecipesData[nonProductionRecipesData.length - 1]
     : null;
 
-  const isLoadingInitialDataNonProd = !nonProductionRecipes && !isNonProductionRecipesLoading;
-  const isLoadingMoreNonProd =
-    isLoadingInitialDataNonProd ||
-    (nonProductionRecipesPageSize > 0 &&
-      nonProductionRecipes &&
-      typeof nonProductionRecipes[nonProductionRecipesPageSize - 1] === 'undefined');
-  const isEmptyNonProd = nonProductionRecipes?.[0]?.length === 0;
-  const isReachingEndNonProd =
-    isEmptyNonProd || (nonProductionRecipes && nonProductionRecipes[nonProductionRecipes.length - 1]?.length < 20);
-
-  const isLoadingInitialData = !productionRecipes && !isProductionRecipesLoading;
-  const isLoadingMoreProd =
-    isLoadingInitialData ||
-    (productionRecipesPageSize > 0 &&
-      productionRecipes &&
-      typeof productionRecipes[productionRecipesPageSize - 1] === 'undefined');
-  const isEmptyProd = productionRecipes?.[0]?.length === 0;
-  const isReachingEndProd =
-    isEmptyProd ||
-    (productionRecipes && productionRecipes[productionRecipes.length - 1]?.length < productionRecipesPageSize);
-
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(productionRecipesData);
 
   const handleTooltipClose = () => {
     setOpen(false);
@@ -418,10 +420,10 @@ export const SearchPage = props => {
                 className={s.search__viewAll}
                 disabled={isLoadingMoreProd || isReachingEndProd}
                 onClick={() => {
-                  setProductionRecipesPageSize(productionRecipesPageSize + 3);
+                  setProductionRecipesPageSize(productionRecipesPageSize + 1);
                 }}>
-                {isProductionRecipesLoading && <Spinner />}
-                Show More
+                {isLoadingMoreProd && <Spinner />}
+                {isLoadingMoreProd ? 'Loading...' : isReachingEndProd ? 'No More Recipes' : 'Show more'}
               </button>
             </div>
           </div>
@@ -436,10 +438,10 @@ export const SearchPage = props => {
               className={s.search__viewAll}
               disabled={isLoadingMoreNonProd || isReachingEndNonProd}
               onClick={() => {
-                setNonProductionRecipesPageSize(nonProductionRecipesPageSize + 3);
+                setNonProductionRecipesPageSize(nonProductionRecipesPageSize + 1);
               }}>
-              {isNonProductionRecipesLoading && <Spinner />}
-              Show More
+              {isLoadingMoreNonProd && <Spinner />}
+              {isLoadingMoreNonProd ? 'Loading...' : isReachingEndNonProd ? 'No More Recipes' : 'Show more'}
             </button>
           </div>
 

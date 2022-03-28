@@ -1,8 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
+import LoaderIcon from '~public/icons/Loader/Line.svg';
 
-const SpinnerImg = styled.img`
-  animation: move 1s infinite linear;
+const SpinnerSpan = styled.span`
+  display: flex;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  transform-origin: center;
+  & svg {
+    width: 24px;
+    height: 24px;
+    animation: move 1s infinite linear;
+  }
   @keyframes move {
     0% {
       transform: rotate(0deg);
@@ -16,6 +26,10 @@ const SpinnerImg = styled.img`
   }
 `;
 const Spinner = () => {
-  return <SpinnerImg src="icons/Loader/Line.svg" alt="loader" />;
+  return (
+    <SpinnerSpan>
+      <LoaderIcon />
+    </SpinnerSpan>
+  );
 };
 export default Spinner;
