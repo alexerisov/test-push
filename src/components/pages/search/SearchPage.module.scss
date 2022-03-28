@@ -369,7 +369,7 @@
     img {
       margin-right: 12px;
     }
-    &_disabled {
+    &:disabled {
       background: #e0e4eb;
       border-radius: 90px;
       border-width: 2px;

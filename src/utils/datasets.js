@@ -49,7 +49,7 @@ export const recipeTypesCount = {
 };
 
 export const recommendedList = {
-  0: 'Reccommended',
+  0: 'Recommended',
   1: 'Latest',
   2: 'Cheapest',
   3: 'Quickest'
@@ -67,7 +67,6 @@ export const cookingMethods = {
   3: 'Roasting',
   4: 'Baking',
   5: 'Sauteing',
-  6: '',
   7: 'Simmering',
   8: 'Boiling',
   9: 'Steaming',
