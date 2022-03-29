@@ -27,7 +27,7 @@ export async function getServerSideProps(context) {
     return {
       props: {
         session,
-        ...(await serverSideTranslations(context.locale, ['common', 'recipePage'])),
+        ...(await serverSideTranslations(context.locale, ['common', 'recipePage', 'recipeClassifications'])),
         recipe: recipeResponse.data,
         weekmenu: weekmenuResponse.data,
         topRatedRecipes: topRatedResponse.data,

@@ -20,7 +20,7 @@ import FrenchFriesIcon from '~public/icons/French Fries/Line.svg';
 import CarrotIcon from '~public/icons/Carrot/Line.svg';
 import DonutIcon from '~public/icons/Donut/Line.svg';
 
-import { PUBLISH_STATUS, APPROVED_STATUS, recipeTypes, cookingSkill } from '@/utils/datasets';
+import { PUBLISH_STATUS, APPROVED_STATUS, recipeTypes, cookingSkill as cookingSkils } from '@/utils/datasets';
 import logo from '~public/images/index/logo.svg';
 import CardControlPlay from '@/components/elements/card-control-play';
 import ChefIcon from '@/components/elements/chef-icon';
@@ -215,7 +215,7 @@ const CardSearch = props => {
               </div>
               <div className={classes.card__label_right}>
                 <BasicIcon icon={HatChefIcon} size="16px" />
-                {cookingSkill ? t(`cookingSkill.${cookingSkill[cookingSkill]?.toLowerCase()}`) : '一一'}
+                {cookingSkill ? t(`cookingSkill.${cookingSkills[cookingSkill]?.toLowerCase()}`) : '一一'}
               </div>
             </div>
 
