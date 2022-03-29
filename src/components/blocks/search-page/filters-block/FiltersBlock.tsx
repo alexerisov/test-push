@@ -103,7 +103,6 @@ const recipeTypesImg = {
 
 const RecipeSetSelector = ({ formik, focusRef }) => {
   const [isActive, setIsActive] = useState<boolean>(false);
-
   const handleOpen = () => {
     setIsActive(true);
   };
@@ -179,7 +178,7 @@ const FilterAccordion = ({ formik, list, iconList, header, data, formikKey }) =>
       formik.setFieldValue(formikKey, result);
     }
   });
-
+  formik[`reset_${formikKey}`] = () => localFormik.resetForm();
   const handleChange = event => {
     localFormik.handleChange(event);
     localFormik.handleSubmit();
@@ -324,6 +323,9 @@ const SearchFilter = ({ formik, session, data }) => {
 
   const handleClickClearAll = () => {
     formik.resetForm();
+    formik.reset_types();
+    formik.reset_cooking_methods();
+    formik.reset_diet_restrictions();
     formik.handleSubmit();
   };
 
