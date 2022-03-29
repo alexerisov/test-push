@@ -17,7 +17,7 @@ export async function getServerSideProps(context) {
 
     return {
       props: {
-        ...(await serverSideTranslations(context.locale, ['common', 'searchPage'])),
+        ...(await serverSideTranslations(context.locale, ['common', 'searchPage', 'recipeClassifications'])),
         weekmenuWithoutFilters: weekmenu.data
       }
     };

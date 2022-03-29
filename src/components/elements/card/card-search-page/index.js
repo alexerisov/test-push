@@ -32,6 +32,7 @@ import { CounterButton } from '@/components/blocks/cart-page/button-counter';
 import { useDispatch, useSelector } from 'react-redux';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import { useAuth } from '@/utils/Hooks';
+import { useTranslation } from 'next-i18next';
 
 const recipeTypesImg = {
   1: BurgerIcon,
@@ -122,6 +123,7 @@ const CardSearch = props => {
   const { session } = useAuth();
   const dispatch = useDispatch();
   const router = useRouter();
+  const { t } = useTranslation('recipeClassifications');
   const [showCounter, setShowCounter] = useState(false);
   const [counter, setCounter] = useState(1);
   const redirectToRecipeCard = id => {
@@ -195,26 +197,25 @@ const CardSearch = props => {
             <p className={classes.card__name} title={title}>
               {title}
             </p>
-            {/* <p className={classes.card__author}>{`by Chef ${name}`}</p> */}
-            {/* <p className={classes.card__location}>{city}</p> */}
-            {/* <div className={classes.card__likeIcon}>
-              <LikeIcon value={likes} />
-            </div> */}
-            {/* {hasVideo && <CardControlPlay />} */}
             <div className={classes.card__labels}>
               <div className={classes.card__label_left}>
                 <div className={classes.card__label}>
                   <BasicIcon icon={IceCreamIcon} size="16px" />
                   <p>
                     {cookingTypes?.length > 0
-                      ? cookingTypes.map(el => recipeTypes?.[el] || 'Not defined').join(', ')
-                      : 'Not defined'}
+                      ? cookingTypes
+                          .map(el => {
+                            const typeName = t(`types.${recipeTypes?.[el].toLowerCase()}`);
+                            return typeName || '一一';
+                          })
+                          .join(', ')
+                      : '一'}
                   </p>
                 </div>
               </div>
               <div className={classes.card__label_right}>
                 <BasicIcon icon={HatChefIcon} size="16px" />
-                {cookingSkill ? cookingSkill[cookingSkill] : 'Not defined'}
+                {cookingSkill ? t(`cookingSkill.${cookingSkill[cookingSkill].toLowerCase()}`) : '一一'}
               </div>
             </div>
 
@@ -224,8 +225,6 @@ const CardSearch = props => {
               <BasicIcon icon={StopwatchIcon} size="12px" />
               {cookingTime || '—:—'}
             </div>
-
-            {/* {props.publishStatus && <div className={classes.card__status}>{getStatusOfCard()}</div>} */}
           </div>
         </StyledCardContent>
       </StyledCardActionArea>

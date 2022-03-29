@@ -103,6 +103,7 @@ const recipeTypesImg = {
 
 const RecipeSetSelector = ({ formik, focusRef }) => {
   const [isActive, setIsActive] = useState<boolean>(false);
+  const { t } = useTranslation('searchPage');
   const handleOpen = () => {
     setIsActive(true);
   };
@@ -144,16 +145,16 @@ const RecipeSetSelector = ({ formik, focusRef }) => {
       value={formik.values.recipe_set}
       onChange={formik.handleChange}>
       <MenuItem className={s.search__dropdown__item} key="reccommended" value={0}>
-        {'Recommended'}
+        {t('recipeSet.recommended')}
       </MenuItem>
       <MenuItem className={s.search__dropdown__item} key="cheapest" value={1}>
-        {'Cheapest'}
+        {t('recipeSet.cheapest')}
       </MenuItem>
       <MenuItem className={s.search__dropdown__item} key="latest" value={2}>
-        {'Latest'}
+        {t('recipeSet.latest')}
       </MenuItem>
       <MenuItem className={s.search__dropdown__item} key="quickest" value={3}>
-        {'Quickest'}
+        {t('recipeSet.quickest')}
       </MenuItem>
     </Select>
   );
@@ -161,6 +162,7 @@ const RecipeSetSelector = ({ formik, focusRef }) => {
 
 const FilterAccordion = ({ formik, list, iconList, header, data, formikKey }) => {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const { t } = useTranslation('recipeClassifications');
 
   const getInitialValues = () => {
     const initialValues = {};
@@ -198,7 +200,7 @@ const FilterAccordion = ({ formik, list, iconList, header, data, formikKey }) =>
         }
         aria-controls="panel1a-content"
         id="panel1a-header">
-        <Typography className={s.search__filter__title}>{header}</Typography>
+        <Typography className={s.search__filter__title}>{t(`${formikKey}.title`)}</Typography>
       </AccordionSummary>
       <AccordionDetails>
         <div className={s.search__filter__list__wrap}>
@@ -207,6 +209,7 @@ const FilterAccordion = ({ formik, list, iconList, header, data, formikKey }) =>
               const Icon = iconList?.[el];
               const isActive = localFormik.values[el];
               const countKey = `${list[el].toLowerCase()}_num`;
+              const label = t(`${formikKey}.${list[el].toLowerCase()}`);
               return (
                 <div className={s.checkbox__wrapper}>
                   <NoSsr>
@@ -226,7 +229,7 @@ const FilterAccordion = ({ formik, list, iconList, header, data, formikKey }) =>
                   <label
                     className={`${s.label} ${isActive && s.search__filter__subLabel_active}`}
                     htmlFor={`${header}-${el}`}>
-                    {list[el]}
+                    {label}
                     <span className={s.count}>{data?.[countKey]}</span>
                   </label>
                 </div>
@@ -240,7 +243,7 @@ const FilterAccordion = ({ formik, list, iconList, header, data, formikKey }) =>
 };
 
 const SkillsSlider = ({ formik }) => {
-  const { t } = useTranslation('searchPage');
+  const { t } = useTranslation('recipeClassifications');
 
   const handleChangeRange = name => {
     return event => {
@@ -266,7 +269,7 @@ const SkillsSlider = ({ formik }) => {
 
   return (
     <React.Fragment>
-      <Typography className={s.search__filter__title}>{t('filters.skills.title')}</Typography>
+      <Typography className={s.search__filter__title}>{t('cookingSkill.title')}</Typography>
       <MySlider
         defaultValue={2}
         min={1}
@@ -279,13 +282,13 @@ const SkillsSlider = ({ formik }) => {
       />
       <div className={s.search__cookingSkills}>
         <button className={s.search__cookingSkills__firstItem} onClick={handleChangeRange('Easy')}>
-          {t('filters.skills.easy')}
+          {t('cookingSkill.easy')}
         </button>
         <button className={s.search__cookingSkills__secondItem} onClick={handleChangeRange('Medium')}>
-          {t('filters.skills.medium')}
+          {t('cookingSkill.medium')}
         </button>
         <button className={s.search__cookingSkills__thirdItem} onClick={handleChangeRange('Complex')}>
-          {t('filters.skills.hard')}
+          {t('cookingSkill.hard')}
         </button>
       </div>
     </React.Fragment>
@@ -297,7 +300,7 @@ const SearchFilter = ({ formik, session, data }) => {
   const focusRef = useRef();
   const TooltipStyles = useStyledTooltip();
   const mobile = useMediaQuery('(max-width: 576px)');
-  const { t } = useTranslation('searchPage');
+  const { t } = useTranslation(['recipeClassifications', 'searchPage']);
   const [showFilters, setShowFilters] = useState(false);
 
   const [isDropdownActive, setIsDropdownActive] = useState(false);
@@ -338,7 +341,7 @@ const SearchFilter = ({ formik, session, data }) => {
           className={s.search__moreFiltersButton}
           variant="outlined"
           color="primary">
-          Advanced filter
+          {t('searchPage:advancedFilter')}
         </Button>
         {session?.user.user_type === USER_TYPES.CHEF && (
           <Button
@@ -347,7 +350,7 @@ const SearchFilter = ({ formik, session, data }) => {
             variant="outlined"
             color="primary">
             <UploadIcon />
-            Upload Recipe
+            {t('searchPage:uploadRecipeButton')}
           </Button>
         )}
         {showFilters && (
@@ -359,7 +362,8 @@ const SearchFilter = ({ formik, session, data }) => {
                   className={s.search__uploadButton}
                   variant="outlined"
                   color="primary">
-                  {t('uploadRecipeButton')}
+                  <UploadIcon />
+                  {t('searchPage:uploadRecipeButton')}
                 </Button>
                 <div className={s.search__filter__line} />
               </>
@@ -370,7 +374,7 @@ const SearchFilter = ({ formik, session, data }) => {
 
             <div className={s.search__line_topMargin} />
             <FilterAccordion
-              header={t('filters.type.title')}
+              header={t('recipeClassifications:types.title')}
               formik={formik}
               formikKey="types"
               list={recipeTypes}
@@ -384,7 +388,7 @@ const SearchFilter = ({ formik, session, data }) => {
             <div className={s.search__line_topMargin} />
 
             <FilterAccordion
-              header={t('filters.method.title')}
+              header={t('recipeClassifications:cooking_methods.title')}
               formik={formik}
               formikKey="cooking_methods"
               list={cookingMethods}
@@ -394,7 +398,7 @@ const SearchFilter = ({ formik, session, data }) => {
             <div className={s.search__line} />
 
             <FilterAccordion
-              header={t('filters.diet.title')}
+              header={t('recipeClassifications:diet_restrictions.title')}
               formik={formik}
               formikKey="diet_restrictions"
               list={dietaryrestrictions}
@@ -403,11 +407,11 @@ const SearchFilter = ({ formik, session, data }) => {
             <div className={s.search__line} />
             <div className={s.search__filter__footer}>
               <button type="button" className={s.search__applyBtn} onClick={toggleDrawer('right', false)}>
-                Apply
+                {t('searchPage:apply')}
               </button>
               <button type="reset" onClick={handleClickClearAll} className={s.search__resetBtn}>
                 <CloseIcon />
-                Reset filters
+                {t('searchPage:resetFilterButton')}
               </button>
             </div>
           </div>
@@ -427,7 +431,7 @@ const SearchFilter = ({ formik, session, data }) => {
               className={s.search__uploadButton}
               variant="outlined"
               color="primary">
-              {t('uploadRecipeButton')}
+              {t('searchPage:uploadRecipeButton')}
             </Button>
             <div className={s.search__filter__line} />
           </>
@@ -438,7 +442,7 @@ const SearchFilter = ({ formik, session, data }) => {
 
         <div className={s.search__line_topMargin} />
         <FilterAccordion
-          header={t('filters.type.title')}
+          header={t('recipeClassifications:types.title')}
           formik={formik}
           formikKey="types"
           list={recipeTypes}
@@ -452,7 +456,7 @@ const SearchFilter = ({ formik, session, data }) => {
         <div className={s.search__line_topMargin} />
 
         <FilterAccordion
-          header={t('filters.method.title')}
+          header={t('recipeClassifications:cooking_methods.title')}
           formik={formik}
           formikKey="cooking_methods"
           list={cookingMethods}
@@ -462,7 +466,7 @@ const SearchFilter = ({ formik, session, data }) => {
         <div className={s.search__line} />
 
         <FilterAccordion
-          header={t('filters.diet.title')}
+          header={t('recipeClassifications:diet_restrictions.title')}
           formik={formik}
           formikKey="diet_restrictions"
           list={dietaryrestrictions}
@@ -473,7 +477,7 @@ const SearchFilter = ({ formik, session, data }) => {
         {Object.values(formik.values).some(el => el) && (
           <button type="reset" onClick={handleClickClearAll} className={s.search__clearButton}>
             <CloseIconFilled style={{ color: '#ffaa00' }} />
-            {t('filters.resetButton')}
+            {t('searchPage:resetFilterButton')}
           </button>
         )}
       </form>

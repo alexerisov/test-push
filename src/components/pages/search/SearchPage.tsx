@@ -396,7 +396,6 @@ export const SearchPage = props => {
         <div className={s.search__result}>
           {mobile && <SearchFilter formik={formik} session={session} data={countRecipesData} />}
 
-          {/*<pre>{JSON.stringify(weekmenuData, undefined, 2)}</pre>*/}
           <Weekmenu data={weekmenuRecipes} />
 
           <div className={s.search__result__text}>
@@ -423,7 +422,11 @@ export const SearchPage = props => {
                   setProductionRecipesPageSize(productionRecipesPageSize + 1);
                 }}>
                 {isLoadingMoreProd && <Spinner />}
-                {isLoadingMoreProd ? 'Loading...' : isReachingEndProd ? 'No More Recipes' : 'Show more'}
+                {isLoadingMoreProd
+                  ? t('button.loading')
+                  : isReachingEndProd
+                  ? t('button.noMore')
+                  : t('button.showMore')}
               </button>
             </div>
           </div>
@@ -441,7 +444,11 @@ export const SearchPage = props => {
                 setNonProductionRecipesPageSize(nonProductionRecipesPageSize + 1);
               }}>
               {isLoadingMoreNonProd && <Spinner />}
-              {isLoadingMoreNonProd ? 'Loading...' : isReachingEndNonProd ? 'No More Recipes' : 'Show more'}
+              {isLoadingMoreNonProd
+                ? t('button.loading')
+                : isReachingEndNonProd
+                ? t('button.noMore')
+                : t('button.showMore')}
             </button>
           </div>
 

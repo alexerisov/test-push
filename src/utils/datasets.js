@@ -58,7 +58,7 @@ export const recommendedList = {
 export const cookingSkill = {
   1: 'Easy',
   2: 'Medium',
-  3: 'Complex'
+  3: 'Hard'
 };
 
 export const cookingMethods = {
