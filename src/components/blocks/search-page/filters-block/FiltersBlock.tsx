@@ -208,8 +208,8 @@ const FilterAccordion = ({ formik, list, iconList, header, data, formikKey }) =>
             {Object.keys(list).map(el => {
               const Icon = iconList?.[el];
               const isActive = localFormik.values[el];
-              const countKey = `${list[el].toLowerCase()}_num`;
-              const label = t(`${formikKey}.${list[el].toLowerCase()}`);
+              const countKey = `${list[el]?.toLowerCase()}_num`;
+              const label = t(`${formikKey}.${list[el]?.toLowerCase()}`);
               return (
                 <div className={s.checkbox__wrapper}>
                   <NoSsr>

@@ -269,7 +269,7 @@ function FormCreateRecipe(props) {
     for (let key in list) {
       itemList.push(
         <MenuItem key={key} value={key}>
-          {t(`${translateKey}.${list[key].toLowerCase()}`)}
+          {t(`${translateKey}.${list[key]?.toLowerCase()}`)}
         </MenuItem>
       );
     }

@@ -205,7 +205,7 @@ const CardSearch = props => {
                     {cookingTypes?.length > 0
                       ? cookingTypes
                           .map(el => {
-                            const typeName = t(`types.${recipeTypes?.[el].toLowerCase()}`);
+                            const typeName = t(`types.${recipeTypes?.[el]?.toLowerCase()}`);
                             return typeName || '一一';
                           })
                           .join(', ')
@@ -215,7 +215,7 @@ const CardSearch = props => {
               </div>
               <div className={classes.card__label_right}>
                 <BasicIcon icon={HatChefIcon} size="16px" />
-                {cookingSkill ? t(`cookingSkill.${cookingSkill[cookingSkill].toLowerCase()}`) : '一一'}
+                {cookingSkill ? t(`cookingSkill.${cookingSkill[cookingSkill]?.toLowerCase()}`) : '一一'}
               </div>
             </div>
 

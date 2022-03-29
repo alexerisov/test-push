@@ -490,7 +490,7 @@ export const RecipePage = props => {
             text={
               recipeTypesList?.length > 0
                 ? recipeTypesList
-                    .map(item => t(`recipeClassifications:types.${recipeTypes?.[item].toLowerCase()}`))
+                    .map(item => t(`recipeClassifications:types.${recipeTypes?.[item]?.toLowerCase()}`))
                     .join(', ')
                 : t('common:notDefinedText')
             }
@@ -504,7 +504,7 @@ export const RecipePage = props => {
               recipeDietRestrictions?.length > 0
                 ? recipeDietRestrictions
                     .map(item =>
-                      t(`recipeClassifications:diet_restrictions.${dietaryrestrictions?.[item].toLowerCase()}`)
+                      t(`recipeClassifications:diet_restrictions.${dietaryrestrictions?.[item]?.toLowerCase()}`)
                     )
                     .join(', ')
                 : t('common:notDefinedText')
@@ -518,7 +518,7 @@ export const RecipePage = props => {
             text={
               recipeCuisines?.length > 0
                 ? recipeCuisines
-                    .map(item => t(`recipeClassifications:cuisine.${cuisineList?.[item].toLowerCase()}`))
+                    .map(item => t(`recipeClassifications:cuisine.${cuisineList?.[item]?.toLowerCase()}`))
                     .join(', ')
                 : t('common:notDefinedText')
             }
@@ -538,7 +538,7 @@ export const RecipePage = props => {
             text={
               recipeCookingMethods?.length > 0
                 ? recipeCookingMethods
-                    .map(item => t(`recipeClassifications:cooking_methods.${cookingMethods?.[item].toLowerCase()}`))
+                    .map(item => t(`recipeClassifications:cooking_methods.${cookingMethods?.[item]?.toLowerCase()}`))
                     .join(', ')
                 : t('common:notDefinedText')
             }
