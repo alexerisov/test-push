@@ -20,7 +20,7 @@ import FrenchFriesIcon from '~public/icons/French Fries/Line.svg';
 import CarrotIcon from '~public/icons/Carrot/Line.svg';
 import DonutIcon from '~public/icons/Donut/Line.svg';
 
-import { PUBLISH_STATUS, APPROVED_STATUS, recipeTypes, cookingSkill as cookingSkils } from '@/utils/datasets';
+import { PUBLISH_STATUS, APPROVED_STATUS, recipeTypes, cookingSkill as cookingSkills } from '@/utils/datasets';
 import logo from '~public/images/index/logo.svg';
 import CardControlPlay from '@/components/elements/card-control-play';
 import ChefIcon from '@/components/elements/chef-icon';
