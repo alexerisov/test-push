@@ -1,0 +1,75 @@
+{
+  "cooking_methods": {
+    "baking": "Bakken",
+    "boiling": "Kokend",
+    "braising": "Smoren",
+    "broiling": "Roosteren",
+    "grilling": "Grillen",
+    "roasting": "Roosteren",
+    "sauteing": "Sauteren",
+    "simmering": "Sudderen",
+    "steaming": "Stomen",
+    "stewing": "Stoven",
+    "title": "Kookmethodes"
+  },
+  "cookingSkill": {
+    "easy": "Eenvoudig",
+    "hard": "Moeilijk",
+    "medium": "Medium",
+    "title": "Kook Vaardigheden"
+  },
+  "cooking_time": {
+    "hours": "uur",
+    "minutes": "minuten"
+  },
+  "cuisine": {
+    "american": "Amerikaans",
+    "chinese": "Chinese",
+    "continental": "Continentaal",
+    "cuban": "Cubaans",
+    "french": "Frans",
+    "greek": "Grieks",
+    "indian": "Indisch",
+    "indonisian": "Indonesisch",
+    "italian": "Italiaans",
+    "japanese": "Japans",
+    "korean": "Koreaans",
+    "libanese": "Libanees",
+    "malyasian": "Maleisisch",
+    "mexican": "Mexicaans-",
+    "moracon": "Moracon",
+    "spanish": "Spaans",
+    "thai": "Thais",
+    "turkish": "Turks"
+  },
+  "diet_restrictions": {
+    "none": "Geen",
+    "dairy free": "Zuivel Vrij",
+    "fodmap": "FODMAP",
+    "gluten free": "Glutenvrij",
+    "grain free": "Graanvrij",
+    "high fodmap": "Hoge FODMAP",
+    "high protein": "Hoog Proteïnegehalte",
+    "ketogenic": "Ketogeen",
+    "low carb": "Koolhydraatarm",
+    "low fodmap": "Low FODMAP",
+    "low sodium": "Laag Natriumgehalte",
+    "paleo": "Paleo",
+    "pescetarian": "Pescetarisch",
+    "primal": "Primal",
+    "title": "Dieet Restricties",
+    "vegan": "Veganistisch",
+    "vegetarian": "Vegetarisch",
+    "whole 30": "Heel 30"
+  },
+  "types": {
+    "appetizer": "Voorafje",
+    "bread": "Brood",
+    "breakfast": "Ontbijt",
+    "dessert": "Toetje",
+    "dinner": "Diner",
+    "lunch": "Lunch",
+    "salad": "Salade",
+    "title": "Type"
+  }
+}

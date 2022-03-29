@@ -32,7 +32,8 @@ export async function getServerSideProps(context) {
           'uploadRecipe',
           'addIngredientModal',
           'addNutritionModal',
-          'addStepModal'
+          'addStepModal',
+          'recipeClassifications'
         ])),
         recipe: recipeResponse.data,
         notFound: false

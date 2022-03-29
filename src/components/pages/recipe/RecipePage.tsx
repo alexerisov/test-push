@@ -170,14 +170,14 @@ export const RecipePage = props => {
     const parsedTime = dayjs(time, 'HH-mm');
 
     if (!parsedTime['$H']) {
-      return `${parsedTime['$m']} minutes`;
+      return `${parsedTime['$m']} ${t('recipeClassifications:cooking_time.minutes')}`;
     }
 
     if (!parsedTime['$m']) {
-      return `${parsedTime['$H']} hours`;
+      return `${parsedTime['$H']} ${t('recipeClassifications:cooking_time.hours')}`;
     }
 
-    return `${parsedTime['$H'] * 60 + parsedTime['$m']} minutes`;
+    return `${parsedTime['$H'] * 60 + parsedTime['$m']} ${t('recipeClassifications:cooking_time.minutes')}`;
   };
 
   const handleClick = name => {
@@ -310,7 +310,7 @@ export const RecipePage = props => {
         {materials.length > 1 && !viewAllImages ? (
           <button className={s.media__button} onClick={() => setViewAllImages(true)}>
             <MyPicture />
-            {`Show all materials (${materials.length})`}
+            {`${t('recipePage:showAllMaterials')} (${materials.length})`}
           </button>
         ) : null}
       </div>
@@ -489,7 +489,9 @@ export const RecipePage = props => {
             icon={SoupIcon}
             text={
               recipeTypesList?.length > 0
-                ? recipeTypesList.map(item => recipeTypes?.[item]).join(', ')
+                ? recipeTypesList
+                    .map(item => t(`recipeClassifications:types.${recipeTypes?.[item].toLowerCase()}`))
+                    .join(', ')
                 : t('common:notDefinedText')
             }
             tooltipText="Cooking Type"
@@ -500,7 +502,11 @@ export const RecipePage = props => {
             icon={ServingPlateIcon}
             text={
               recipeDietRestrictions?.length > 0
-                ? recipeDietRestrictions.map(item => dietaryrestrictions?.[item]).join(', ')
+                ? recipeDietRestrictions
+                    .map(item =>
+                      t(`recipeClassifications:diet_restrictions.${dietaryrestrictions?.[item].toLowerCase()}`)
+                    )
+                    .join(', ')
                 : t('common:notDefinedText')
             }
             tooltipText="Dietary Restrictions"
@@ -511,7 +517,9 @@ export const RecipePage = props => {
             icon={ForkAndKnifeIcon}
             text={
               recipeCuisines?.length > 0
-                ? recipeCuisines.map(item => cuisineList?.[item]).join(', ')
+                ? recipeCuisines
+                    .map(item => t(`recipeClassifications:cuisine.${cuisineList?.[item].toLowerCase()}`))
+                    .join(', ')
                 : t('common:notDefinedText')
             }
             tooltipText="Recipe Cuisiness"
@@ -529,7 +537,9 @@ export const RecipePage = props => {
             icon={SaltShakerIcon}
             text={
               recipeCookingMethods?.length > 0
-                ? recipeCookingMethods.map(item => cookingMethods?.[item]).join(', ')
+                ? recipeCookingMethods
+                    .map(item => t(`recipeClassifications:cooking_methods.${cookingMethods?.[item].toLowerCase()}`))
+                    .join(', ')
                 : t('common:notDefinedText')
             }
             tooltipText="Cooking Method"

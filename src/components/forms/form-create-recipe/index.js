@@ -263,12 +263,13 @@ function FormCreateRecipe(props) {
     props.dispatch(recipeUploadActions.update(newData));
   };
 
-  const selectItemList = list => {
+  const selectItemList = (list, translateKey) => {
+    const { t } = useTranslation('recipeClassifications');
     let itemList = [];
     for (let key in list) {
       itemList.push(
         <MenuItem key={key} value={key}>
-          {list[key]}
+          {t(`${translateKey}.${list[key].toLowerCase()}`)}
         </MenuItem>
       );
     }
@@ -818,7 +819,7 @@ function FormCreateRecipe(props) {
                     <img src={'/images/index/Polygon6.png'} className={classes.createRecipeSelectArrow} />
                   )}
                   multiple>
-                  {selectItemList(recipeTypes)}
+                  {selectItemList(recipeTypes, 'types')}
                 </Select>
                 <FormHelperText>{error?.types ? 'This field is required' : ''}</FormHelperText>
               </FormControl>
@@ -839,7 +840,7 @@ function FormCreateRecipe(props) {
                     <img src="/images/index/Polygon6.png" className={classes.createRecipeSelectArrow} />
                   )}
                   multiple>
-                  {selectItemList(dietaryrestrictions)}
+                  {selectItemList(dietaryrestrictions, 'diet_restrictions')}
                 </Select>
                 <FormHelperText>{error?.diet_restrictions ? 'This field is required' : ''}</FormHelperText>
               </FormControl>
@@ -860,7 +861,7 @@ function FormCreateRecipe(props) {
                     <img src="/images/index/Polygon6.png" className={classes.createRecipeSelectArrow} />
                   )}
                   multiple>
-                  {selectItemList(cuisineList)}
+                  {selectItemList(cuisineList, 'cuisine')}
                 </Select>
                 <FormHelperText>{error?.cuisines ? 'This field is required' : ''}</FormHelperText>
               </FormControl>
@@ -881,7 +882,7 @@ function FormCreateRecipe(props) {
                   )}
                   MenuProps={MenuProps}
                   multiple>
-                  {selectItemList(cookingMethods)}
+                  {selectItemList(cookingMethods, 'cooking_methods')}
                 </Select>
                 <FormHelperText>{error?.cooking_methods ? 'This field is required' : ''}</FormHelperText>
               </FormControl>
@@ -901,7 +902,7 @@ function FormCreateRecipe(props) {
                   )}
                   error={Boolean(error?.cooking_skills)}
                   MenuProps={MenuProps}>
-                  {selectItemList(cookingSkill)}
+                  {selectItemList(cookingSkill, 'cookingSkill')}
                 </Select>
                 <FormHelperText>{error?.cooking_skills ? 'This field is required' : ''}</FormHelperText>
               </FormControl>
