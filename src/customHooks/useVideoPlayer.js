@@ -1,4 +1,4 @@
-import fscreen from 'fscreen';
+import screenfull from 'screenfull';
 import { useState, useEffect } from 'react';
 
 const useVideoPlayer = (videoElement, videoWrap) => {
@@ -80,19 +80,33 @@ const useVideoPlayer = (videoElement, videoWrap) => {
     });
   };
   useEffect(() => {
-    if (playerState.fullscreen) {
-      if (videoWrap.current?.requestFullscreen) {
-        videoWrap.current.requestFullscreen();
-      } else if (videoElement.current?.webkitEnterFullscreen) {
-        videoElement.current.webkitEnterFullscreen();
-      } else {
-        console.log('fullscreen false');
+    document.fullscreenEnabled =
+      videoElement.current?.fullscreenEnabled ||
+      videoElement.current?.mozFullScreenEnabled ||
+      videoElement.current?.webkitRequestFullScreen;
+
+    function requestFullscreen(element) {
+      if (element?.requestFullscreen) {
+        element.requestFullscreen();
+      } else if (element?.mozRequestFullScreen) {
+        element.mozRequestFullScreen();
+      } else if (element?.webkitRequestFullScreen) {
+        element.webkitRequestFullScreen(element?.ALLOW_KEYBOARD_INPUT);
       }
-    } else if (document.fullscreenElement) {
-      document
-        .exitFullscreen()
-        .then(() => console.log('Document Exited from Full screen mode'))
-        .catch(err => console.error(err));
+    }
+
+    function exitFullscreen(element) {
+      if (element?.exitFullscreen) {
+        element.exitFullscreen();
+      } else if (element?.webkitExitFullscreen) {
+        element.webkitExitFullscreen();
+      }
+    }
+
+    if (playerState.fullscreen) {
+      requestFullscreen(videoElement.current);
+    } else if (document.fullscreenEnabled) {
+      exitFullscreen(videoElement.current);
     }
   }, [playerState.fullscreen, videoWrap]);
   return {
