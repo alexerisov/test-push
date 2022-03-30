@@ -8,6 +8,6 @@ export default connect()(PrivacyPolicy);
 
 export const getServerSideProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale, ['common']))
+    ...(await serverSideTranslations(locale, ['common', 'privacyPolicy']))
   }
 });
