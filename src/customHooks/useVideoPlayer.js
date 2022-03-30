@@ -81,9 +81,9 @@ const useVideoPlayer = (videoElement, videoWrap) => {
   };
   useEffect(() => {
     if (playerState.fullscreen) {
-      if (videoWrap.current.requestFullscreen) {
+      if (videoWrap.current?.requestFullscreen) {
         videoWrap.current.requestFullscreen();
-      } else if (videoElement.current.webkitEnterFullscreen) {
+      } else if (videoElement.current?.webkitEnterFullscreen) {
         videoElement.current.webkitEnterFullscreen();
       } else {
         console.log('fullscreen false');
