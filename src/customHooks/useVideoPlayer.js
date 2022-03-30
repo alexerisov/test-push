@@ -80,28 +80,32 @@ const useVideoPlayer = (videoElement, videoWrap) => {
   };
 
   useEffect(() => {
-    function requestFullscreen(element) {
-      if (element?.requestFullscreen) {
-        element.requestFullscreen();
-      } else if (element?.mozRequestFullScreen) {
-        element.mozRequestFullScreen();
-      } else if (element?.webkitRequestFullScreen) {
-        element.webkitRequestFullScreen(element?.ALLOW_KEYBOARD_INPUT);
+    function requestFullscreen() {
+      if (videoWrap.current?.requestFullscreen) {
+        videoWrap.current.requestFullscreen();
+      } else if (videoElement.current?.webkitEnterFullscreen) {
+        videoElement.current.webkitEnterFullscreen();
+        setPlayerState({
+          ...playerState,
+          fullscreen: false
+        });
+      } else {
+        console.log("Can't open fullscreen");
       }
     }
 
-    function exitFullscreen(element) {
-      if (element?.exitFullscreen) {
-        element.exitFullscreen();
-      } else if (element?.webkitExitFullscreen) {
-        element.webkitExitFullscreen();
+    function exitFullscreen() {
+      if (videoWrap.current?.exitFullscreen) {
+        videoWrap.current.exitFullscreen();
+      } else if (videoElement.current?.webkitExitFullscreen) {
+        videoElement.current.webkitExitFullscreen();
       }
     }
 
     if (playerState.fullscreen) {
-      requestFullscreen(videoElement.current);
+      requestFullscreen();
     } else if (document.fullscreenEnabled) {
-      exitFullscreen(videoElement.current);
+      exitFullscreen();
     }
   }, [playerState.fullscreen, videoWrap]);
   return {
