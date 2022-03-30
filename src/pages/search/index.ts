@@ -14,7 +14,6 @@ export default connect((state: RootState) => ({
 export async function getServerSideProps(context) {
   try {
     const weekmenu = await Recipe.getWeekmenu('');
-
     return {
       props: {
         ...(await serverSideTranslations(context.locale, ['common', 'searchPage', 'recipeClassifications'])),

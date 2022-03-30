@@ -7,6 +7,7 @@ import { getSession } from 'next-auth/react';
 // page component
 import { RecipePage } from '@/components/pages/recipe/RecipePage';
 import http from '@/utils/http';
+import { LANGUAGES } from '@/utils/datasets';
 
 export default connect((state: RootState) => ({
   account: state.account
@@ -19,8 +20,12 @@ export async function getServerSideProps(context) {
     http.defaults.headers.common['Authorization'] = `Bearer ${session.jwt}`;
   }
   try {
-    const recipeResponse = await Recipe.getRecipe(id);
-    console.log('recipe', id);
+    let recipeResponse = await Recipe.getRecipe(id);
+    if (session?.user?.language !== recipeResponse.data.language.toLowerCase()) {
+      recipeResponse = await Recipe.getRecipe(id, LANGUAGES[session?.user?.language]);
+      console.log('translatedrecipe', recipeResponse.data);
+    }
+    console.log('recipe', recipeResponse.data.language);
     const weekmenuResponse = await Recipe.getWeekmenu('');
     const topRatedResponse = await Recipe.getTopRatedMeals();
 

@@ -193,7 +193,10 @@ export default {
     return http.get(`/recipe/meal_of_the_week`);
   },
 
-  getRecipe: (id, token) => {
+  getRecipe: (id, lang) => {
+    if (lang) {
+      return http.get(`/recipe/${id}`, { params: { lang: lang } });
+    }
     return http.get(`/recipe/${id}`);
   },
 

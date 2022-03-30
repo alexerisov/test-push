@@ -79,7 +79,7 @@ export const LanguageSelector = () => {
 
     await setCurrentLanguage(event.target.value);
 
-    i18n.changeLanguage(event.target.value);
+    i18n?.changeLanguage(event.target.value);
 
     router.push(router.asPath, undefined, { locale: event.target.value });
   };

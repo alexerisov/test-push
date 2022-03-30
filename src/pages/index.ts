@@ -4,6 +4,8 @@ import Cookies from 'cookies';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { RootState } from '@/store/store';
 import { HomePage } from '@/components/pages/home/HomePage';
+import { getSession } from 'next-auth/react';
+import http from '@/utils/http';
 
 export default connect((state: RootState) => ({
   account: state.account,
@@ -11,21 +13,13 @@ export default connect((state: RootState) => ({
 }))(HomePage);
 
 export async function getServerSideProps(context) {
-  const cookies = new Cookies(context.req, context.res);
-  const targetCookies = cookies.get('aucr');
-  const token = !targetCookies ? undefined : decodeURIComponent(cookies.get('aucr'));
-
   try {
-    const response = await Recipe.getMealOfWeek(token);
-    const banners = await Recipe.getHomepageCarouselItems();
     const weekmenu = await Recipe.getWeekmenu('');
-    const mealOfWeekBlock = response?.data?.length ? response?.data?.[0] : null;
-
+    const translations = await serverSideTranslations(context.locale, ['common', 'homePage']);
     return {
       props: {
-        ...(await serverSideTranslations(context.locale, ['common', 'homePage'])),
-        mealOfTheWeek: mealOfWeekBlock,
-        carouselItems: banners.data,
+        ...translations,
+        session: await getSession(context),
         weekmenu: weekmenu.data,
         absolutePath: context.req.headers.host
       }
