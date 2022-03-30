@@ -655,6 +655,7 @@
   }
 
   &__resetBtn {
+    margin-bottom: 32px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -965,6 +966,27 @@
   border-bottom-width: 0 !important;
   &::before {
     display: none;
+  }
+}
+
+.block__title {
+  color: #777e90;
+  @include fontSemiBold();
+}
+
+.advancedFilter {
+  column-gap: 12px;
+  display: flex;
+  align-items: center;
+  border: none;
+  font-size: 24px !important;
+  line-height: 120% !important;
+  color: #23262F;
+  text-transform: capitalize;
+  @include fontMedium('Poppins');
+
+  svg {
+    font-size: 40px;
   }
 }
 

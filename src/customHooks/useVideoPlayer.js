@@ -80,15 +80,18 @@ const useVideoPlayer = (videoElement, videoWrap) => {
   };
 
   useEffect(() => {
+    videoElement.addEventListener('webkitendfullscreen', function (e) {
+      setPlayerState({
+        ...playerState,
+        fullscreen: false
+      });
+    });
+
     function requestFullscreen() {
       if (videoWrap.current?.requestFullscreen) {
         videoWrap.current.requestFullscreen();
       } else if (videoElement.current?.webkitEnterFullscreen) {
         videoElement.current.webkitEnterFullscreen();
-        setPlayerState({
-          ...playerState,
-          fullscreen: false
-        });
       } else {
         console.log("Can't open fullscreen");
       }

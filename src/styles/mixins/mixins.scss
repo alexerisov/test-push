@@ -32,36 +32,36 @@
   font-weight: 700;
 }
 
-@mixin fontLight() {
-  font-family: Montserrat !important;
+@mixin fontLight($font: 'Montserrat') {
+  font-family: $font sans-serif !important;
   letter-spacing: 0.01em !important;
   font-style: normal !important;
   font-weight: 300 !important;
 }
 
-@mixin fontRegular() {
-  font-family: Montserrat !important;
+@mixin fontRegular($font: 'Montserrat') {
+  font-family: $font sans-serif !important;
   letter-spacing: 0.01em !important;
   font-style: normal !important;
   font-weight: 400 !important;
 }
 
-@mixin fontMedium() {
-  font-family: Montserrat !important;
+@mixin fontMedium($font: 'Montserrat') {
+  font-family: $font sans-serif !important;
   letter-spacing: 0.01em !important;
   font-style: normal !important;
   font-weight: 500 !important;
 }
 
-@mixin fontSemiBold() {
-  font-family: Montserrat !important;
+@mixin fontSemiBold($font: 'Montserrat') {
+  font-family: $font sans-serif !important;
   letter-spacing: 0.01em !important;
   font-style: normal !important;
   font-weight: 600 !important;
 }
 
-@mixin fontBold() {
-  font-family: Montserrat !important;
+@mixin fontBold($font: 'Montserrat') {
+  font-family: $font sans-serif !important;
   letter-spacing: 0.01em !important;
   font-style: normal !important;
   font-weight: 700 !important;

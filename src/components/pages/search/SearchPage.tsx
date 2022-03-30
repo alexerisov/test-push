@@ -317,7 +317,9 @@ export const SearchPage = props => {
   });
 
   useEffect(() => {
-    formik.handleSubmit();
+    if (!mobile) {
+      formik.handleSubmit();
+    }
   }, [formik.values]);
 
   const getLabelByStatusOfCheckbox = useCallback(

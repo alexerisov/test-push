@@ -3,7 +3,7 @@ import { createTheme, responsiveFontSizes } from '@material-ui/core/styles';
 export const theme = responsiveFontSizes(
   createTheme({
     typography: {
-      fontFamily: `"Montserrat", "Roboto", "Helvetica", "Arial", sans-serif`,
+      fontFamily: `"Montserrat", "Roboto", "Helvetica", "Arial", "Poppins", sans-serif`,
       // fontSize: 16,
       lineHeight: '160%',
       letterSpacing: '0.01em',

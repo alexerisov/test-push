@@ -1,13 +1,12 @@
 import { useTranslation } from 'next-i18next';
 import React, { useRef, useState } from 'react';
-import { Button, Checkbox, MenuItem, NoSsr, OutlinedInput, Select, Slider } from '@material-ui/core';
+import { Button, Checkbox, MenuItem, NoSsr, OutlinedInput, Select, Slider, SwipeableDrawer } from '@material-ui/core';
 import CloseIcon from '~public/icons/Close/Line.svg';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import Typography from '@material-ui/core/Typography';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import CloseIconFilled from '~public/icons/Close Circle/Filled.svg';
 import { cookingMethods, dietaryrestrictions, recipeTypes, recipeTypesCount, recommendedList } from '@/utils/datasets';
-import { numberWithCommas } from '@/utils/converter';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { USER_TYPES } from '~types/profile';
 import ArrowDownIcon from '~public/icons/Arrow Down Simple/Line.svg';
@@ -18,6 +17,8 @@ import s from './FiltersBlock.module.scss';
 import CheckboxIconUnchecked from '@/components/elements/checkbox-icon/checkbox-icon-unchecked';
 import CheckboxIcon from '@/components/elements/checkbox-icon';
 import { useFormik } from 'formik';
+
+import ArrowLeft from '~public/icons/Arrow Left Simple/Line.svg';
 import UploadIcon from '~public/icons/File Upload/Shape.svg';
 import BurgerIcon from '~public/icons/Burger/Line.svg';
 import ServingPlateIcon from '~public/icons/Serving Plate/Line.svg';
@@ -304,25 +305,8 @@ const SearchFilter = ({ formik, session, data }) => {
   const [showFilters, setShowFilters] = useState(false);
 
   const [isDropdownActive, setIsDropdownActive] = useState(false);
-  const [isDrawerOpened, setDrawerOpened] = useState({
-    right: false
-  });
 
-  const toggleDrawer = (anchor, open) => event => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-      return;
-    }
-
-    setDrawerOpened({ ...isDrawerOpened, [anchor]: open });
-  };
-
-  const handleTooltipClose = () => {
-    setOpen(false);
-  };
-
-  const handleTooltipOpen = () => {
-    setOpen(true);
-  };
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const handleClickClearAll = () => {
     formik.resetForm();
@@ -333,16 +317,86 @@ const SearchFilter = ({ formik, session, data }) => {
   };
 
   if (mobile) {
+    const toggleDrawer = open => event => {
+      if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+        return;
+      }
+
+      setIsDrawerOpen(open);
+    };
+
     return (
       <>
-        <RecipeSetSelector formik={formik} />
-        <Button
-          onClick={() => setShowFilters(prevState => !prevState)}
-          className={s.search__moreFiltersButton}
-          variant="outlined"
-          color="primary">
+        <Button onClick={toggleDrawer(true)} className={s.search__moreFiltersButton} variant="outlined" color="primary">
           {t('searchPage:advancedFilter')}
         </Button>
+        <SwipeableDrawer anchor="left" open={isDrawerOpen} onClose={toggleDrawer(false)} onOpen={toggleDrawer(true)}>
+          <div className={s.search__mobileFilters}>
+            <div className={s.search__line} />
+            <button type="reset" onClick={toggleDrawer(false)} className={s.advancedFilter}>
+              <ArrowLeft />
+              {t('searchPage:advancedFilter')}
+            </button>
+            <div className={s.search__line_botMargin} />
+
+            <Typography className={s.block__title}>{t('searchPage:blockTitles.sorting')}</Typography>
+            <div className={s.search__line} />
+            <RecipeSetSelector formik={formik} focusRef={focusRef} />
+            <div className={s.search__line_botMargin} />
+
+            <Typography className={s.block__title}>{t('searchPage:blockTitles.filters')}</Typography>
+            <div className={s.search__line} />
+            <FilterAccordion
+              header={t('recipeClassifications:types.title')}
+              formik={formik}
+              formikKey="types"
+              list={recipeTypes}
+              iconList={recipeTypesImg}
+              data={data}
+            />
+            <div className={s.search__line_botMargin} />
+            <SkillsSlider formik={formik} />
+            <div className={s.search__line_topMargin} />
+            <FilterAccordion
+              header={t('recipeClassifications:cooking_methods.title')}
+              formik={formik}
+              formikKey="cooking_methods"
+              list={cookingMethods}
+              data={data}
+            />
+            <div className={s.search__line} />
+            <FilterAccordion
+              header={t('recipeClassifications:diet_restrictions.title')}
+              formik={formik}
+              formikKey="diet_restrictions"
+              list={dietaryrestrictions}
+              data={data}
+            />
+            <div className={s.search__line} />
+            <div className={s.search__filter__footer}>
+              <button
+                type="button"
+                className={s.search__applyBtn}
+                onClick={() => {
+                  formik.handleSubmit();
+                  setIsDrawerOpen(false);
+                }}>
+                {t('searchPage:apply')}
+              </button>
+              <button
+                type="reset"
+                onClick={() => {
+                  handleClickClearAll();
+                  setIsDrawerOpen(false);
+                }}
+                className={s.search__resetBtn}>
+                <CloseIcon />
+                {t('searchPage:resetFilterButton')}
+              </button>
+            </div>
+          </div>
+        </SwipeableDrawer>
+        <div className={s.search__line_mobile} />
         {session?.user.user_type === USER_TYPES.CHEF && (
           <Button
             onClick={() => router.push('/recipe/upload', undefined, { locale: router.locale })}
@@ -353,70 +407,6 @@ const SearchFilter = ({ formik, session, data }) => {
             {t('searchPage:uploadRecipeButton')}
           </Button>
         )}
-        {showFilters && (
-          <div className={s.search__mobileFilters}>
-            {session?.user.user_type === USER_TYPES.CHEF && (
-              <>
-                <Button
-                  onClick={() => router.push('/recipe/upload', undefined, { locale: router.locale })}
-                  className={s.search__uploadButton}
-                  variant="outlined"
-                  color="primary">
-                  <UploadIcon />
-                  {t('searchPage:uploadRecipeButton')}
-                </Button>
-                <div className={s.search__filter__line} />
-              </>
-            )}
-
-            <div className={s.search__line_botMargin} />
-            <RecipeSetSelector formik={formik} focusRef={focusRef} />
-
-            <div className={s.search__line_topMargin} />
-            <FilterAccordion
-              header={t('recipeClassifications:types.title')}
-              formik={formik}
-              formikKey="types"
-              list={recipeTypes}
-              iconList={recipeTypesImg}
-              data={data}
-            />
-            <div className={s.search__line_botMargin} />
-
-            <SkillsSlider formik={formik} />
-
-            <div className={s.search__line_topMargin} />
-
-            <FilterAccordion
-              header={t('recipeClassifications:cooking_methods.title')}
-              formik={formik}
-              formikKey="cooking_methods"
-              list={cookingMethods}
-              data={data}
-            />
-
-            <div className={s.search__line} />
-
-            <FilterAccordion
-              header={t('recipeClassifications:diet_restrictions.title')}
-              formik={formik}
-              formikKey="diet_restrictions"
-              list={dietaryrestrictions}
-              data={data}
-            />
-            <div className={s.search__line} />
-            <div className={s.search__filter__footer}>
-              <button type="button" className={s.search__applyBtn} onClick={toggleDrawer('right', false)}>
-                {t('searchPage:apply')}
-              </button>
-              <button type="reset" onClick={handleClickClearAll} className={s.search__resetBtn}>
-                <CloseIcon />
-                {t('searchPage:resetFilterButton')}
-              </button>
-            </div>
-          </div>
-        )}
-        <div className={s.search__line_mobile} />
       </>
     );
   }
@@ -437,10 +427,13 @@ const SearchFilter = ({ formik, session, data }) => {
           </>
         )}
 
-        <div className={s.search__line_botMargin} />
+        <Typography className={s.block__title}>{t('searchPage:blockTitles.sorting')}</Typography>
+        <div className={s.search__line} />
         <RecipeSetSelector formik={formik} focusRef={focusRef} />
+        <div className={s.search__line_botMargin} />
 
-        <div className={s.search__line_topMargin} />
+        <Typography className={s.block__title}>{t('searchPage:blockTitles.filters')}</Typography>
+        <div className={s.search__line} />
         <FilterAccordion
           header={t('recipeClassifications:types.title')}
           formik={formik}
