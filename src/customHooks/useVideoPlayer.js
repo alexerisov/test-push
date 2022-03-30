@@ -1,4 +1,3 @@
-import screenfull from 'screenfull';
 import { useState, useEffect } from 'react';
 
 const useVideoPlayer = (videoElement, videoWrap) => {
@@ -79,12 +78,8 @@ const useVideoPlayer = (videoElement, videoWrap) => {
       fullscreen: !playerState.fullscreen
     });
   };
-  useEffect(() => {
-    document.fullscreenEnabled =
-      videoElement.current?.fullscreenEnabled ||
-      videoElement.current?.mozFullScreenEnabled ||
-      videoElement.current?.webkitRequestFullScreen;
 
+  useEffect(() => {
     function requestFullscreen(element) {
       if (element?.requestFullscreen) {
         element.requestFullscreen();
