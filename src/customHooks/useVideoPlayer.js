@@ -1,7 +1,7 @@
 import fscreen from 'fscreen';
 import { useState, useEffect } from 'react';
 
-const useVideoPlayer = (videoElement, videoWrap, screenfull) => {
+const useVideoPlayer = (videoElement, videoWrap) => {
   const [playerState, setPlayerState] = useState({
     isPlaying: false,
     progress: 0,
@@ -81,13 +81,20 @@ const useVideoPlayer = (videoElement, videoWrap, screenfull) => {
   };
   useEffect(() => {
     if (playerState.fullscreen) {
-      if (fscreen.fullscreenEnabled) {
-        fscreen.requestFullscreen(videoElement.current);
+      if (videoWrap.current.requestFullscreen) {
+        videoWrap.current.requestFullscreen();
+      } else if (videoElement.current.webkitEnterFullscreen) {
+        videoElement.current.webkitEnterFullscreen();
+      } else {
+        console.log('fullscreen false');
       }
-    } else if (fscreen.fullscreenElement) {
-      fscreen.exitFullscreen();
+    } else if (document.fullscreenElement) {
+      document
+        .exitFullscreen()
+        .then(() => console.log('Document Exited from Full screen mode'))
+        .catch(err => console.error(err));
     }
-  }, [playerState.fullscreen, videoElement]);
+  }, [playerState.fullscreen, videoWrap]);
   return {
     playerState,
     togglePlay,

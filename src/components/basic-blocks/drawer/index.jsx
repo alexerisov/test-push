@@ -3,7 +3,7 @@ import classes from './index.module.scss';
 import { Button, Drawer, IconButton } from '@material-ui/core';
 import { modalActions } from '@/store/actions';
 import { useDispatch } from 'react-redux';
-import logo from '~public/images/Header Logo/Line.svg';
+import Logo from '~public/images/Header Logo/Line.svg';
 import CloseIcon from '~public/icons/Close/Line.svg';
 import Link from 'next/link';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
@@ -60,7 +60,7 @@ export const LoginDrawer = props => {
         <div className={classes.header}>
           <Link href="/">
             <a>
-              <img className={classes.header_logo} src={logo} alt="Eatchef Header Logo" />
+              <Logo className={classes.header_logo} />
             </a>
           </Link>
           <IconButton onClick={handleClose}>
