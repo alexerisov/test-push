@@ -17,7 +17,7 @@ import { useRouter } from 'next/router';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTranslation } from 'next-i18next';
-import { useAuth } from '@/utils/Hooks';
+import { signOut } from 'next-auth/react';
 
 const BurgerMenu = props => {
   const { t } = useTranslation('common');
@@ -25,7 +25,6 @@ const BurgerMenu = props => {
   const router = useRouter();
   const dispatch = useDispatch();
   const isMobile = useMediaQuery('(max-width: 768px)');
-  const { signOut } = useAuth();
 
   const MenuListItem = ({ icon, text, path, ...otherProps }) => {
     const endIcon = otherProps?.endIcon;

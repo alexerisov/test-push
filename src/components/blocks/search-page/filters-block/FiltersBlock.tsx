@@ -29,6 +29,26 @@ import CarrotIcon from '~public/icons/Carrot/Line.svg';
 import DonutIcon from '~public/icons/Donut/Line.svg';
 import { useRouter } from 'next/router';
 
+const CssTextField = styled(OutlinedInput)({
+  '& label.Mui-focused': {
+    color: 'white'
+  },
+  '& .MuiInput-underline:after': {
+    borderBottomColor: 'yellow'
+  },
+  '& .MuiOutlinedInput-root': {
+    '& fieldset': {
+      borderColor: 'white'
+    },
+    '&:hover fieldset': {
+      borderColor: 'white'
+    },
+    '&.Mui-focused fieldset': {
+      borderColor: 'yellow'
+    }
+  }
+});
+
 const MySlider = styled(Slider)(() => ({
   color: '#FFAA00',
   height: 2,
@@ -123,7 +143,7 @@ const RecipeSetSelector = ({ formik, focusRef }) => {
       id="recipe-set-selector"
       name="recipe_set"
       label={false}
-      input={<OutlinedInput classes={{ input: s.search__input }} notched={false} label={false} />}
+      input={<CssTextField classes={{ input: s.search__input }} notched={false} label={false} />}
       variant="outlined"
       IconComponent={StyledArrowDownIcon}
       onOpen={handleOpen}
