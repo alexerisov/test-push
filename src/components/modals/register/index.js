@@ -20,11 +20,11 @@ import { BasicInput } from '@/components/basic-elements/basic-input';
 import FieldError from '@/components/elements/field-error';
 import VisibilityOffRoundedIcon from '@material-ui/icons/VisibilityOffRounded';
 import VisibilityRoundedIcon from '@material-ui/icons/VisibilityRounded';
-import { signIn } from 'next-auth/react';
-import CONFIG from '@/config';
+import { useAuth } from '@/utils/Hooks';
 
 function Register(props) {
   const router = useRouter();
+  const { signIn } = useAuth();
   const isMobile = useMediaQuery('(max-width: 768px)');
   const [isFormLogin, setIsFormLogin] = useState(true);
   const [signupFormStep, setSignupFormStep] = useState(1);

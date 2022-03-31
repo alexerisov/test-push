@@ -16,10 +16,9 @@ import { Button } from '@material-ui/core';
 import { modalActions } from '@/store/actions';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import { useAuth } from '@/utils/Hooks';
-import { useSession } from 'next-auth/react';
 
 export const RecipeCard = props => {
-  const { data: session, status: loading } = useSession();
+  const { session, status: loading } = useAuth();
   const { recipe } = props;
 
   const title = recipe?.title;

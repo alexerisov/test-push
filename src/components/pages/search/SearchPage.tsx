@@ -46,7 +46,6 @@ import useSWRInfinite from 'swr/infinite';
 import { CardSearch } from '@/components/elements/card';
 import { Spinner } from '@/components/elements';
 import useSWR from 'swr';
-import { useSession } from 'next-auth/react';
 
 const useStyles = makeStyles(theme => ({
   selectEmpty: {
@@ -220,7 +219,7 @@ const recipeFetcher = (url, queryParams, filters) => {
 
 export const SearchPage = props => {
   const TooltipStyles = useStyledTooltip();
-  const { data: session, status: loading } = useSession();
+  const { session, status: loading } = useAuth();
   const { t } = useTranslation('searchPage');
   const [searchParams, setSearchParams] = useState<{}>();
   const tablet = useMediaQuery('(max-width: 1025px)');

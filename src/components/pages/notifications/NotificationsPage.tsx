@@ -4,10 +4,9 @@ import Account from '@/api/Account';
 import { CardNotification } from '@/components/elements/card';
 import LayoutPageNew from '@/components/layouts/layout-page-new';
 import { useAuth } from '@/utils/Hooks';
-import { useSession } from 'next-auth/react';
 
 export const NotificationsPage = props => {
-  const { data: session, status: loading } = useSession();
+  const { session, status: loading } = useAuth();
   useEffect(() => {
     if (session) {
       const options = { year: 'numeric', month: '2-digit', day: '2-digit' };

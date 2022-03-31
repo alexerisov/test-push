@@ -7,10 +7,9 @@ import { setСonfirmBannerCoockie, getСonfirmBannerCoockie } from '@/utils/web-
 
 import { connect } from 'react-redux';
 import { useAuth } from '@/utils/Hooks';
-import { useSession } from 'next-auth/react';
 
 const CookiesBanner = props => {
-  const { data: session, status: loading } = useSession();
+  const { session, status: loading } = useAuth();
 
   const [isVisible, setVisible] = useState(true);
 

@@ -48,7 +48,6 @@ import { RootState } from '@/store/store';
 import { useAuth } from '@/utils/Hooks';
 import { useTranslation } from 'next-i18next';
 import Head from 'next/head';
-import { useSession } from 'next-auth/react';
 
 const StyledSlider = styled(Slider)`
   display: flex;
@@ -87,7 +86,7 @@ const MyPicture = styled(ImageIcon)`
 dayjs.extend(customParseFormat);
 
 export const RecipePage = props => {
-  const { data: session, status: loading } = useSession();
+  const { session, status: loading } = useAuth();
   const { t } = useTranslation('recipePage');
   const { notFound, recipe, weekmenu, userLang } = props;
   const mobile = useMediaQuery('(max-width:576px)');

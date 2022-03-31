@@ -13,12 +13,11 @@ import HistoryIcon from '~public/icons/History/Line.svg';
 import BookmarkIcon from '~public/icons/Bookmark/Line.svg';
 import Link from 'next/link';
 import { Link as MuiLink } from '@material-ui/core';
-import { accountActions } from '@/store/actions';
 import { useRouter } from 'next/router';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTranslation } from 'next-i18next';
-import { signOut } from 'next-auth/react';
+import { useAuth } from '@/utils/Hooks';
 
 const BurgerMenu = props => {
   const { t } = useTranslation('common');
@@ -26,6 +25,7 @@ const BurgerMenu = props => {
   const router = useRouter();
   const dispatch = useDispatch();
   const isMobile = useMediaQuery('(max-width: 768px)');
+  const { signOut } = useAuth();
 
   const MenuListItem = ({ icon, text, path, ...otherProps }) => {
     const endIcon = otherProps?.endIcon;

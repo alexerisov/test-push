@@ -19,7 +19,6 @@ import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTranslation } from 'next-i18next';
 import { useAuth } from '@/utils/Hooks';
-import { useSession } from 'next-auth/react';
 
 const SearchInput = () => {
   const { t } = useTranslation('homePage');
@@ -140,7 +139,7 @@ const SearchInput = () => {
 
 export const SearchBlock = () => {
   const { t } = useTranslation('homePage');
-  const { data: session, status: loading } = useSession();
+  const { session, status: loading } = useAuth();
   return (
     <section className={classes.container}>
       <div className={classes.search_image_wrapper}>
