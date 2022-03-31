@@ -128,6 +128,7 @@ const moduleExports = {
 };
 
 const sentryWebpackPluginOptions = {
+  token: process.env.SENTRY_AUTH_TOKEN,
   // Additional config options for the Sentry Webpack plugin. Keep in mind that
   // the following options are set automatically, and overriding them is not
   // recommended:
