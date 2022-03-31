@@ -6,26 +6,27 @@ import { ProfileAccountSettingsPage } from '@/components/pages/profile/account-s
 import { RootState } from '@/store/store';
 import { getSession } from 'next-auth/react';
 import Account from '@/api/Account';
-import http from '@/utils/http';
-import { getToken } from 'next-auth/jwt';
+import { log } from 'loglevel';
+import { setBearer } from '@/utils/setBearer';
 
 export default connect((state: RootState) => ({
   account: state.account
 }))(ProfileAccountSettingsPage);
-
 export const getServerSideProps = async context => {
+  const session = await getSession(context);
+  setBearer(session?.jwt);
   try {
     const profileResponse = await Account.current();
 
     return {
       props: {
-        session: await getSession(context),
+        session,
         profile: profileResponse?.data,
         ...(await serverSideTranslations(context.locale, ['common', 'profilePage']))
       }
     };
   } catch (e) {
-    console.error(e);
+    log(e);
 
     return {
       props: {

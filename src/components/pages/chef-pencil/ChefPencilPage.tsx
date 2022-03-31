@@ -25,6 +25,7 @@ import savedStatus from '~public/images/index/savedStatus.svg';
 import notSavedStatus from '~public/images/index/notSavedStatus.svg';
 import { useAuth } from '@/utils/Hooks';
 import LayoutPageNew from '@/components/layouts/layout-page-new';
+import { useSession } from 'next-auth/react';
 
 const useStyledTooltip = makeStyles({
   tooltip: {
@@ -36,7 +37,7 @@ const useStyledTooltip = makeStyles({
 });
 
 export const ChefPencilPage = ({ pencilData, notFound, absolutePath }) => {
-  const { session } = useAuth();
+  const { data: session, status: loading } = useSession();
   const toolTipStyles = useStyledTooltip();
 
   // Bind Modal action creators with dispatch

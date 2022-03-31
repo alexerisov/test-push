@@ -5,10 +5,11 @@ import { useRouter } from 'next/router';
 import LayoutPageNew from '@/components/layouts/layout-page-new';
 import { useAuth } from '@/utils/Hooks';
 import { USER_TYPES } from '~types/profile';
+import { useSession } from 'next-auth/react';
 
 export function ProfileAccountSettingsPage(props) {
   const router = useRouter();
-  const { session } = useAuth();
+  const { data: session, status: loading } = useSession();
   const userType = session?.user.user_type;
 
   const content =

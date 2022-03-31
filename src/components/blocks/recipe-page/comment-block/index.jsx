@@ -24,6 +24,7 @@ import { Spinner } from '@/components/elements';
 import { useRouter } from 'next/router';
 import { useAuth } from '@/utils/Hooks';
 import { useTranslation } from 'next-i18next';
+import { useSession } from 'next-auth/react';
 
 const CommentBlock = ({
   id,
@@ -37,7 +38,7 @@ const CommentBlock = ({
   isUserRecipeBuyer,
   isRecipeRatedByUser
 }) => {
-  const { session } = useAuth();
+  const { data: session, status: loading } = useSession();
   const { t } = useTranslation('recipePage');
 
   const dispatch = useDispatch();

@@ -33,6 +33,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import { useAuth } from '@/utils/Hooks';
 import { useTranslation } from 'next-i18next';
+import { useSession } from 'next-auth/react';
 
 const recipeTypesImg = {
   1: BurgerIcon,
@@ -120,7 +121,7 @@ const CardSearch = props => {
   const id = recipe.pk;
   const unsalable = recipe.sale_status !== 5;
 
-  const { session } = useAuth();
+  const { data: session, status: loading } = useSession();
   const dispatch = useDispatch();
   const router = useRouter();
   const { t } = useTranslation('recipeClassifications');
@@ -155,7 +156,7 @@ const CardSearch = props => {
 
   useEffect(() => {
     setShowCounter(isRecipeInCart);
-  }, isRecipeInCart);
+  }, [isRecipeInCart]);
 
   const handleClickBtn = e => {
     e.stopPropagation();

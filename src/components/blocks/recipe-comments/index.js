@@ -12,6 +12,7 @@ import Recipe from '@/api/Recipe';
 import classes from './RecipeComments.module.scss';
 import { useDispatch } from 'react-redux';
 import { useAuth } from '@/utils/Hooks';
+import { useSession } from 'next-auth/react';
 
 const ResipeComments = ({
   id,
@@ -22,7 +23,7 @@ const ResipeComments = ({
   uploadLikeHandler,
   deleteCommentHandle
 }) => {
-  const { session } = useAuth();
+  const { data: session, status: loading } = useSession();
 
   const dispatch = useDispatch();
 

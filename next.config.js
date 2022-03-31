@@ -1,6 +1,7 @@
 let path = require('path');
 let webpack = require('webpack');
 const { i18n } = require('./next-i18next.config');
+const { withSentryConfig } = require('@sentry/nextjs');
 
 let isProduction;
 if (typeof process.env.NODE_ENV === 'undefined') {
@@ -46,7 +47,7 @@ if (process.env.NODE_ENV === 'production') {
   };
 }
 
-module.exports = {
+const moduleExports = {
   compiler: {
     styledComponents: true,
     dynamicImport: true,
@@ -125,3 +126,17 @@ module.exports = {
     ignoreDuringBuilds: true
   }
 };
+
+const sentryWebpackPluginOptions = {
+  // Additional config options for the Sentry Webpack plugin. Keep in mind that
+  // the following options are set automatically, and overriding them is not
+  // recommended:
+  //   release, url, org, project, authToken, configFile, stripPrefix,
+  //   urlPrefix, include, ignore
+
+  silent: true // Suppresses all logs
+  // For all available options, see:
+  // https://github.com/getsentry/sentry-webpack-plugin#options.
+};
+
+module.exports = withSentryConfig(moduleExports, sentryWebpackPluginOptions);

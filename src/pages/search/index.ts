@@ -5,6 +5,8 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 // page component
 import { SearchPage } from '@/components/pages/search/SearchPage';
+import { getSession } from 'next-auth/react';
+import { setBearer } from '@/utils/setBearer';
 
 export default connect((state: RootState) => ({
   token: state.account.hasToken,
@@ -12,10 +14,13 @@ export default connect((state: RootState) => ({
 }))(SearchPage);
 
 export async function getServerSideProps(context) {
+  const session = await getSession(context);
+  setBearer(session?.jwt);
   try {
     const weekmenu = await Recipe.getWeekmenu('');
     return {
       props: {
+        session,
         ...(await serverSideTranslations(context.locale, ['common', 'searchPage', 'recipeClassifications'])),
         weekmenuWithoutFilters: weekmenu.data
       }

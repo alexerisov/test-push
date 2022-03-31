@@ -15,7 +15,7 @@ const AccountApi = {
     });
   },
 
-  current: token => {
+  current: () => {
     return http.get(`account/me`);
   },
 

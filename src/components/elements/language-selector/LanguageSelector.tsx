@@ -12,12 +12,13 @@ import { useDispatch } from 'react-redux';
 import { accountActions } from '@/store/actions';
 import http from '@/utils/http';
 import { useAuth } from '@/utils/Hooks';
+import { useSession } from 'next-auth/react';
 
 export const LanguageSelector = () => {
   const { i18n } = useTranslation('common');
   const router = useRouter();
   const dispatch = useDispatch();
-  const { session } = useAuth();
+  const { data: session, status: loading } = useSession();
   const profileLanguage = session?.user?.language;
 
   const languagesIcon = {

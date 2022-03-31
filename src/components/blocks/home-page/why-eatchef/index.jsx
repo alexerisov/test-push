@@ -10,6 +10,7 @@ import Image from 'next/image';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import { useTranslation } from 'next-i18next';
 import { useAuth } from '@/utils/Hooks';
+import { useSession } from 'next-auth/react';
 
 const CircleButton = () => {
   return (
@@ -59,7 +60,7 @@ const UploadRecipeButton = () => {
 
 const SignUpBlock = () => {
   const { t } = useTranslation('homePage');
-  const { session } = useAuth();
+  const { data: session, status: loading } = useSession();
 
   return (
     <div className={classes.signup}>
@@ -85,7 +86,7 @@ const SignUpBlock = () => {
 };
 
 const ThreeImages = () => {
-  const { session, loading } = useAuth();
+  const { data: session, status: loading } = useSession();
 
   return (
     <div>

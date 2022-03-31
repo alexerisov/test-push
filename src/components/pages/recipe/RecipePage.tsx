@@ -21,7 +21,14 @@ import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
 import { Avatar, Button, Collapse, IconButton, Radio, Tooltip, useMediaQuery } from '@material-ui/core';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { cookingMethods, cookingSkill, cuisineList, dietaryrestrictions, recipeTypes } from '@/utils/datasets';
+import {
+  cookingMethods,
+  cookingSkill,
+  cuisineList,
+  dietaryrestrictions,
+  LANGUAGES,
+  recipeTypes
+} from '@/utils/datasets';
 import { Divider } from '@/components/basic-elements/divider';
 import { addToCart } from '@/store/cart/actions';
 import CartIcon from '~public/icons/Shopping Cart/Line.svg';
@@ -41,6 +48,7 @@ import { RootState } from '@/store/store';
 import { useAuth } from '@/utils/Hooks';
 import { useTranslation } from 'next-i18next';
 import Head from 'next/head';
+import { useSession } from 'next-auth/react';
 
 const StyledSlider = styled(Slider)`
   display: flex;
@@ -79,9 +87,9 @@ const MyPicture = styled(ImageIcon)`
 dayjs.extend(customParseFormat);
 
 export const RecipePage = props => {
-  const { session } = useAuth();
+  const { data: session, status: loading } = useSession();
   const { t } = useTranslation('recipePage');
-  const { notFound, recipe, weekmenu } = props;
+  const { notFound, recipe, weekmenu, userLang } = props;
   const mobile = useMediaQuery('(max-width:576px)');
 
   const title = recipe?.title;
@@ -615,11 +623,23 @@ export const RecipePage = props => {
     };
 
     const Ingredient = props => {
-      const { title, quantity, unit, custom_unit } = props;
+      const { title_nl, title_en, title, quantity, unit, custom_unit, ingredient } = props;
+
+      const translatedTitleField = () => {
+        if (router.locale === 'nl') {
+          return title_nl;
+        }
+
+        if (router.locale === 'en') {
+          return title_en;
+        }
+
+        return title;
+      };
 
       return (
         <div className={s.ingredient_container}>
-          <span className={s.ingredient_name}>{title}</span>
+          <span className={s.ingredient_name}>{translatedTitleField()}</span>
           <span className={s.ingredient_amount}>
             {custom_unit?.metric_name ? (
               <abbr
