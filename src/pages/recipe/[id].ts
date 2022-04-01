@@ -3,7 +3,6 @@ import Recipe from '@/api/Recipe.js';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { RootState } from '@/store/store';
 import { getSession } from 'next-auth/react';
-import * as Sentry from '@sentry/nextjs';
 
 // page component
 import { RecipePage } from '@/components/pages/recipe/RecipePage';
@@ -29,7 +28,7 @@ export async function getServerSideProps(context) {
     return {
       props: {
         session,
-        ...(await serverSideTranslations(context.locale, ['common', 'recipePage', 'recipeClassifications'])),
+        ...(await serverSideTranslations(context.locale, ['common', 'recipePage', 'recipeClassifications', 'units'])),
         recipe: recipeResponse.data,
         topRatedRecipes: topRatedResponse.data,
         absolutePath: context.req.headers.host
@@ -37,7 +36,6 @@ export async function getServerSideProps(context) {
     };
   } catch (e) {
     console.error(e);
-    Sentry.captureException(e);
 
     return {
       props: {

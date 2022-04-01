@@ -535,7 +535,11 @@ export const RecipePage = props => {
           />
           <IconWithText
             icon={HatChefIcon}
-            text={recipeCookingSkills ? cookingSkill?.[recipeCookingSkills] : t('common:notDefinedText')}
+            text={
+              recipeCookingSkills
+                ? t(`recipeClassifications:cookingSkill.${cookingSkill?.[recipeCookingSkills]?.toLowerCase()}`)
+                : t('common:notDefinedText')
+            }
             tooltipText="Cooking Skill"
             link={`/search?cooking_skills=${recipeCookingSkills}`}
             borderColor="#F178B6"
@@ -555,7 +559,11 @@ export const RecipePage = props => {
           />
           <IconWithText
             icon={PeopleOutlineIcon}
-            text={recipeServings ? `${recipeServings} servings` : t('common:notDefinedText')}
+            text={
+              recipeServings
+                ? `${recipeServings} ${t('recipeClassifications:servings.title')}`
+                : t('common:notDefinedText')
+            }
             link={`${router.asPath}`}
             tooltipText="Servings"
             borderColor="#FFD166"
@@ -636,7 +644,7 @@ export const RecipePage = props => {
               </abbr>
             ) : (
               <span>
-                {quantity} {unit}
+                {quantity} {t(`units:${unit}`)}
               </span>
             )}
           </span>
