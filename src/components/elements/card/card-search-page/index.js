@@ -4,7 +4,7 @@ import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import { styled } from '@material-ui/core/styles';
-import { CardActionArea, Button, Typography } from '@material-ui/core';
+import { CardActionArea, Button, Typography, NoSsr } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import StopwatchIcon from '~public/icons/Stopwatch/Line.svg';
 import HatChefIcon from '~public/icons/Hat Chef/Line.svg';
@@ -81,7 +81,7 @@ const SocialBlock = ({ likes, comments_number }) => (
 );
 
 const SellingBlock = ({ isRecipeInCart, handleClickBtn, cartItemAmount, cartItemId, price }) => (
-  <>
+  <NoSsr>
     {!isRecipeInCart && (
       <Button
         className={classes.card__uploadButton}
@@ -98,7 +98,7 @@ const SellingBlock = ({ isRecipeInCart, handleClickBtn, cartItemAmount, cartItem
         <CounterButton count={cartItemAmount} id={cartItemId} />
       </div>
     )}
-  </>
+  </NoSsr>
 );
 
 const CardSearch = props => {

@@ -81,7 +81,7 @@ export const LanguageSelector = () => {
 
     i18n?.changeLanguage(event.target.value);
 
-    router.push(router.asPath, undefined, { locale: event.target.value });
+    router.push(router.asPath, undefined, { locale: event.target.value, scroll: false });
   };
 
   const getOptionList = list => {

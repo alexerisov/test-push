@@ -622,23 +622,11 @@ export const RecipePage = props => {
     };
 
     const Ingredient = props => {
-      const { title_nl, title_en, title, quantity, unit, custom_unit, ingredient } = props;
-
-      const translatedTitleField = () => {
-        if (router.locale === 'nl') {
-          return title_nl;
-        }
-
-        if (router.locale === 'en') {
-          return title_en;
-        }
-
-        return title;
-      };
+      const { title, quantity, unit, custom_unit, ingredient } = props;
 
       return (
         <div className={s.ingredient_container}>
-          <span className={s.ingredient_name}>{translatedTitleField()}</span>
+          <span className={s.ingredient_name}>{title}</span>
           <span className={s.ingredient_amount}>
             {custom_unit?.metric_name ? (
               <abbr
