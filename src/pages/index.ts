@@ -15,14 +15,15 @@ export default connect((state: RootState) => ({
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
-  setBearer(session?.jwt);
+  if (session) {
+    http.defaults.headers.common['Authorization'] = `Bearer ${session?.jwt}`;
+  }
   try {
     const weekmenu = await Recipe.getWeekmenu('');
-    const translations = await serverSideTranslations(context.locale, ['common', 'homePage']);
     return {
       props: {
         session,
-        ...translations,
+        ...(await serverSideTranslations(context.locale, ['common', 'homePage'])),
         weekmenu: weekmenu.data,
         absolutePath: context.req.headers.host
       }

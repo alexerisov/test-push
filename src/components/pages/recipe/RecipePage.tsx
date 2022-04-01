@@ -784,9 +784,6 @@ export const RecipePage = props => {
 
   const content = (
     <>
-      <Head>
-        <script async src="https://cdn.foodinfluencersunited.nl/prod.js" key="foodinfluencer-script" />
-      </Head>
       {mobile ? (
         <>
           <div className={s.layout}>

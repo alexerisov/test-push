@@ -7,6 +7,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { SearchPage } from '@/components/pages/search/SearchPage';
 import { getSession } from 'next-auth/react';
 import { setBearer } from '@/utils/setBearer';
+import http from '@/utils/http';
 
 export default connect((state: RootState) => ({
   token: state.account.hasToken,
@@ -15,7 +16,9 @@ export default connect((state: RootState) => ({
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
-  setBearer(session?.jwt);
+  if (session) {
+    http.defaults.headers.common['Authorization'] = `Bearer ${session?.jwt}`;
+  }
   try {
     const weekmenu = await Recipe.getWeekmenu('');
     return {

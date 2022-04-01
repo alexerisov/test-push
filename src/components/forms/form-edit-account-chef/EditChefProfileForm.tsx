@@ -627,13 +627,6 @@ const EditChefProfileForm: React.FC<EditChefProfileFormProps> = props => {
           <button type="submit" className={s.profile__buttonUpdate}>
             {statusSubmit}
           </button>
-          <button
-            type="button"
-            onClick={() => {
-              throw new Error('Sentry Frontend Error');
-            }}>
-            Throw error
-          </button>
           <p className={s.profile__formStatus}>{formStatus}</p>
         </div>
       </form>

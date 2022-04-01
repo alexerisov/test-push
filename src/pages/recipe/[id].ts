@@ -16,15 +16,14 @@ export default RecipePage;
 export async function getServerSideProps(context) {
   const id = context.params.id;
   const session = await getSession(context);
-  setBearer(session?.jwt);
-  let recipeResponse;
-
+  if (session) {
+    http.defaults.headers.common['Authorization'] = `Bearer ${session?.jwt}`;
+  }
+  console.log('session', session);
+  console.log('lang', session?.user?.language);
   try {
-    if (session) {
-      const recipeResponse = await Recipe.getRecipe(id, LANGUAGES[session?.user?.language]);
-    } else {
-      recipeResponse = await Recipe.getRecipe(id);
-    }
+    const recipeResponse = await Recipe.getRecipe(id, context.locale);
+    console.log('recipeResponse', recipeResponse);
     const topRatedResponse = await Recipe.getTopRatedMeals();
 
     return {

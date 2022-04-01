@@ -5,18 +5,35 @@ import { useRouter } from 'next/router';
 import LayoutPageNew from '@/components/layouts/layout-page-new';
 import { useAuth } from '@/utils/Hooks';
 import { USER_TYPES } from '~types/profile';
+import useSWR from 'swr';
+import http from '@/utils/http';
+
+const fetcher = (...args) =>
+  http
+    .get(...args)
+    .then(res => {
+      return res?.data;
+    })
+    .catch(e => {
+      console.log('error', e);
+    });
 
 export function ProfileAccountSettingsPage(props) {
   const router = useRouter();
   const { session, status: loading } = useAuth();
   const userType = session?.user.user_type;
 
-  const content =
+  const { data: profile, error: error, isValidating: isAutocompleteLoading } = useSWR(`account/me`, fetcher);
+
+  const content = profile ? (
     userType === USER_TYPES.VIEWER ? (
-      <FormEditAccountUser profile={props.profile} />
+      <FormEditAccountUser profile={profile} />
     ) : (
-      <FormEditAccountChef profile={props.profile} />
-    );
+      <FormEditAccountChef profile={profile} />
+    )
+  ) : (
+    <div>loading</div>
+  );
 
   return <LayoutPageNew content={content} />;
 }
