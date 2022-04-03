@@ -7,7 +7,6 @@ import Logo from '~public/images/Header Logo/Line.svg';
 import CloseIcon from '~public/icons/Close/Line.svg';
 import Link from 'next/link';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
-import UserIcon from '~public/icons/User/Line.svg';
 import { useRouter } from 'next/router';
 
 export const LoginDrawer = props => {
@@ -64,7 +63,7 @@ export const LoginDrawer = props => {
             </a>
           </Link>
           <IconButton onClick={handleClose}>
-            <BasicIcon icon={CloseIcon} color="#777E91" size="32px" />
+            <BasicIcon icon={CloseIcon} color="#777E91" />
           </IconButton>
         </div>
         <div className={classes.links}>

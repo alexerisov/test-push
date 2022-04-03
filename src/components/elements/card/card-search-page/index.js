@@ -4,7 +4,7 @@ import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import { styled } from '@material-ui/core/styles';
-import { CardActionArea, Button, Typography, NoSsr } from '@material-ui/core';
+import { CardActionArea, Button, NoSsr } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import StopwatchIcon from '~public/icons/Stopwatch/Line.svg';
 import HatChefIcon from '~public/icons/Hat Chef/Line.svg';
@@ -22,7 +22,6 @@ import DonutIcon from '~public/icons/Donut/Line.svg';
 
 import { PUBLISH_STATUS, APPROVED_STATUS, recipeTypes, cookingSkill as cookingSkills } from '@/utils/datasets';
 import logo from '~public/images/index/logo.svg';
-import CardControlPlay from '@/components/elements/card-control-play';
 import ChefIcon from '@/components/elements/chef-icon';
 import { numberWithCommas } from '@/utils/converter';
 import { addToCart } from '@/store/cart/actions';

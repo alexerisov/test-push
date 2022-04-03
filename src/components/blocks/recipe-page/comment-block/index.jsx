@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Button, IconButton, LinearProgress, OutlinedInput, Popover } from '@material-ui/core';
-import Pagination from '@material-ui/lab/Pagination';
-import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import 'emoji-mart/css/emoji-mart.css';
 import { Picker } from 'emoji-mart';
 
 import { modalActions } from '@/store/actions';
-import { CommentItem } from '@/components/elements/comment';
 import ArrowRightIcon from '~public/icons/Arrow Right 2/Line.svg';
 import SmileIcon from '~public/icons/Smile/Line.svg';
 import Recipe from '@/api/Recipe';

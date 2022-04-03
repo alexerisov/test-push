@@ -6,7 +6,6 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 // page component
 import { SearchPage } from '@/components/pages/search/SearchPage';
 import { getSession } from 'next-auth/react';
-import { setBearer } from '@/utils/setBearer';
 import http from '@/utils/http';
 
 export default connect((state: RootState) => ({

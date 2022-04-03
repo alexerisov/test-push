@@ -1,15 +1,12 @@
 import React from 'react';
-import { styled } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import logo from '~public/images/index/logo.svg';
 import { useRouter } from 'next/router';
 import classes from './index.module.scss';
-import { CounterButton } from '@/components/blocks/cart-page/button-counter';
-import Typography from '@material-ui/core/Typography';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart, removeFromCart } from '@/store/cart/actions';
+import { addToCart } from '@/store/cart/actions';
 import { Divider } from '@/components/basic-elements/divider';
 import CartIcon from '~public/icons/Shopping Cart/Line.svg';
 import { Button } from '@material-ui/core';

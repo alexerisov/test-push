@@ -5,11 +5,10 @@ import Fade from '@material-ui/core/Fade';
 import { useMobileDevice } from '@/customHooks/useMobileDevice';
 
 import Tooltip from '@material-ui/core/Tooltip';
-import { EmailShareButton, FacebookShareButton, PinterestShareButton, TwitterShareButton } from 'react-share';
+import { EmailShareButton, FacebookShareButton, TwitterShareButton } from 'react-share';
 
-import ShareIcon from '@material-ui/icons/Share';
 import AssignmentOutlinedIcon from '@material-ui/icons/AssignmentOutlined';
-import { EmailIcon, FacebookIcon, TwitterIcon, PinterestIcon } from 'react-share';
+import { EmailIcon, FacebookIcon, TwitterIcon } from 'react-share';
 
 import Recipe from '@/api/Recipe';
 

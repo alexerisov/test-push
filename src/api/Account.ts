@@ -1,10 +1,50 @@
+import type { AxiosResponse } from 'axios';
+import type { ChefProfile, ViewerProfile } from '~types/profile';
+
 import http from '../utils/http';
 
 interface AccountApi {
-  current: (token: string) => XMLHttpRequestResponseType;
+  login(email: string, password: string): Promise<AxiosResponse<any>>;
+  socialLogin(socialLoginData: {
+    access_token: string;
+    code: string;
+    account_type: string;
+    backend: string;
+    register: string;
+    redirect_uri: string;
+  }): Promise<AxiosResponse<any>>;
+  current(): Promise<AxiosResponse<any>>;
+  current(token: string): Promise<AxiosResponse<any>>;
+  getNotifications(): Promise<AxiosResponse<any>>;
+  deleteNotification(id: number): Promise<AxiosResponse<any>>;
+  refreshToken(refreshToken: string): Promise<AxiosResponse<any>>;
+  register(registerData: {
+    email: ViewerProfile['email'];
+    full_name: ViewerProfile['full_name'];
+    password: string;
+    user_type: ViewerProfile['user_type'];
+  }): Promise<AxiosResponse<any>>;
+  updateProfileUser(mainData: ViewerProfile, avatar: ViewerProfile['avatar']): Promise<AxiosResponse<any>>;
+  updateAccountType(
+    mainData: ChefProfile,
+    avatar: ChefProfile['avatar'],
+    role_model_images: ChefProfile['role_models']
+  ): Promise<AxiosResponse<any>>;
+  updateAccountChef(
+    mainData: ChefProfile & { role_models_to_delete: ChefProfile['role_models'] },
+    avatar: ChefProfile['avatar'],
+    role_model_images: ChefProfile['role_models']
+  ): Promise<AxiosResponse<any>>;
+  resetPassword(email: string): Promise<AxiosResponse<any>>;
+  resetPasswordCheckCode(data: { code: string }): Promise<AxiosResponse<any>>;
+  resetPasswordSetNew(data: { code: string; password: string }): Promise<AxiosResponse<any>>;
+  confirmEmail(code: string): Promise<AxiosResponse<any>>;
+  sendConfirmEmail(): Promise<AxiosResponse<any>>;
+  changePassword(password: string, new_password: string): Promise<AxiosResponse<any>>;
+  getTargetChefAccountInfo(id: number): Promise<AxiosResponse<any>>;
 }
 
-const AccountApi = {
+const AccountApi: AccountApi = {
   login: (email, password) => {
     return http.post(`token/`, { email, password });
   },

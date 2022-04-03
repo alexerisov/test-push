@@ -1,10 +1,18 @@
-import NextAuth from 'next-auth';
-
+// noinspection ES6UnusedImports
+import NextAuth, { DefaultSession } from 'next-auth';
 declare module 'next-auth' {
-  /**
-   * Returned by `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
-   */
-  interface Session {
+  interface User {
+    full_name: string;
+    email: string;
+    avatar: string;
+    language: string;
+    user_type: number;
+    pk: number;
+    access: string;
+    refresh: string;
+  }
+
+  interface Session extends DefaultSession {
     user: {
       full_name: string;
       email: string;
@@ -13,6 +21,7 @@ declare module 'next-auth' {
       user_type: number;
       pk: number;
     };
+    accessToken?: string;
   }
 
   interface Account {

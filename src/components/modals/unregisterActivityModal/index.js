@@ -1,6 +1,5 @@
 import React from 'react';
 import { LayoutModal } from '@/components/layouts';
-import { useActions } from '@/customHooks/useActions';
 import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { modalActions } from '@/store/actions';

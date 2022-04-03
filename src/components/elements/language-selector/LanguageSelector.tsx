@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'next-i18next';
 import s from './LanguageSelector.module.scss';
 
 import FlagUS from '~public/icons/flags/us.svg';
 import FlagNL from '~public/icons/flags/nl.svg';
-import { ListItemIcon, MenuItem, Select } from '@material-ui/core';
+import { MenuItem, Select } from '@material-ui/core';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import { useRouter } from 'next/router';
 import { LANGUAGES } from '@/utils/datasets';

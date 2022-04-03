@@ -6,7 +6,7 @@ import AccordionSummary from '@material-ui/core/AccordionSummary';
 import Typography from '@material-ui/core/Typography';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import CloseIconFilled from '~public/icons/Close Circle/Filled.svg';
-import { cookingMethods, dietaryrestrictions, recipeTypes, recipeTypesCount, recommendedList } from '@/utils/datasets';
+import { cookingMethods, dietaryrestrictions, recipeTypes } from '@/utils/datasets';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { USER_TYPES } from '~types/profile';
 import ArrowDownIcon from '~public/icons/Arrow Down Simple/Line.svg';
@@ -28,6 +28,15 @@ import FrenchFriesIcon from '~public/icons/French Fries/Line.svg';
 import CarrotIcon from '~public/icons/Carrot/Line.svg';
 import DonutIcon from '~public/icons/Donut/Line.svg';
 import { useRouter } from 'next/router';
+
+interface FilterAccordionProps {
+  formik: any;
+  list: any;
+  iconList: any;
+  header: any;
+  data: any;
+  formikKey: any;
+}
 
 const CssTextField = styled(OutlinedInput)({
   '& label.Mui-focused': {
@@ -181,7 +190,7 @@ const RecipeSetSelector = ({ formik, focusRef }) => {
   );
 };
 
-const FilterAccordion = ({ formik, list, iconList, header, data, formikKey }) => {
+const FilterAccordion: React.FC<FilterAccordionProps> = ({ formik, list, iconList, header, data, formikKey }) => {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const { t } = useTranslation('recipeClassifications');
 
@@ -432,69 +441,67 @@ const SearchFilter = ({ formik, session, data }) => {
   }
 
   return (
-    <React.Fragment>
-      <form tabindex="0" ref={focusRef} className={s.search__filter} onSubmit={formik.handleSubmit}>
-        {session?.user.user_type === USER_TYPES.CHEF && (
-          <>
-            <Button
-              onClick={() => router.push('/recipe/upload', undefined, { locale: router.locale })}
-              className={s.search__uploadButton}
-              variant="outlined"
-              color="primary">
-              {t('searchPage:uploadRecipeButton')}
-            </Button>
-            <div className={s.search__filter__line} />
-          </>
-        )}
+    <form tabIndex={0} ref={focusRef} className={s.search__filter} onSubmit={formik.handleSubmit}>
+      {session?.user.user_type === USER_TYPES.CHEF && (
+        <>
+          <Button
+            onClick={() => router.push('/recipe/upload', undefined, { locale: router.locale })}
+            className={s.search__uploadButton}
+            variant="outlined"
+            color="primary">
+            {t('searchPage:uploadRecipeButton')}
+          </Button>
+          <div className={s.search__filter__line} />
+        </>
+      )}
 
-        <Typography className={s.block__title}>{t('searchPage:blockTitles.sorting')}</Typography>
-        <div className={s.search__line} />
-        <RecipeSetSelector formik={formik} focusRef={focusRef} />
-        <div className={s.search__line_botMargin} />
+      <Typography className={s.block__title}>{t('searchPage:blockTitles.sorting')}</Typography>
+      <div className={s.search__line} />
+      <RecipeSetSelector formik={formik} focusRef={focusRef} />
+      <div className={s.search__line_botMargin} />
 
-        <Typography className={s.block__title}>{t('searchPage:blockTitles.filters')}</Typography>
-        <div className={s.search__line} />
-        <FilterAccordion
-          header={t('recipeClassifications:types.title')}
-          formik={formik}
-          formikKey="types"
-          list={recipeTypes}
-          iconList={recipeTypesImg}
-          data={data}
-        />
-        <div className={s.search__line_botMargin} />
+      <Typography className={s.block__title}>{t('searchPage:blockTitles.filters')}</Typography>
+      <div className={s.search__line} />
+      <FilterAccordion
+        header={t('recipeClassifications:types.title')}
+        formik={formik}
+        formikKey="types"
+        list={recipeTypes}
+        iconList={recipeTypesImg}
+        data={data}
+      />
+      <div className={s.search__line_botMargin} />
 
-        <SkillsSlider formik={formik} />
+      <SkillsSlider formik={formik} />
 
-        <div className={s.search__line_topMargin} />
+      <div className={s.search__line_topMargin} />
 
-        <FilterAccordion
-          header={t('recipeClassifications:cooking_methods.title')}
-          formik={formik}
-          formikKey="cooking_methods"
-          list={cookingMethods}
-          data={data}
-        />
+      <FilterAccordion
+        header={t('recipeClassifications:cooking_methods.title')}
+        formik={formik}
+        formikKey="cooking_methods"
+        list={cookingMethods}
+        data={data}
+      />
 
-        <div className={s.search__line} />
+      <div className={s.search__line} />
 
-        <FilterAccordion
-          header={t('recipeClassifications:diet_restrictions.title')}
-          formik={formik}
-          formikKey="diet_restrictions"
-          list={dietaryrestrictions}
-          data={data}
-        />
-        <div className={s.search__line} />
+      <FilterAccordion
+        header={t('recipeClassifications:diet_restrictions.title')}
+        formik={formik}
+        formikKey="diet_restrictions"
+        list={dietaryrestrictions}
+        data={data}
+      />
+      <div className={s.search__line} />
 
-        {Object.values(formik.values).some(el => el) && (
-          <button type="reset" onClick={handleClickClearAll} className={s.search__clearButton}>
-            <CloseIconFilled style={{ color: '#ffaa00' }} />
-            {t('searchPage:resetFilterButton')}
-          </button>
-        )}
-      </form>
-    </React.Fragment>
+      {Object.values(formik.values).some(el => el) && (
+        <button type="reset" onClick={handleClickClearAll} className={s.search__clearButton}>
+          <CloseIconFilled style={{ color: '#ffaa00' }} />
+          {t('searchPage:resetFilterButton')}
+        </button>
+      )}
+    </form>
   );
 };
 

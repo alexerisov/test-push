@@ -17,7 +17,7 @@ export const cuisineList = {
   16: 'Thai',
   17: 'Moracon',
   18: 'Turkish'
-};
+} as const;
 
 export const categoryList = {
   1: 'General',
@@ -26,7 +26,7 @@ export const categoryList = {
   4: 'Dinner',
   5: 'Fish',
   6: 'Meat'
-};
+} as const;
 
 export const recipeTypes = {
   1: 'Breakfast',
@@ -36,7 +36,7 @@ export const recipeTypes = {
   6: 'Appetizer',
   7: 'Salad',
   8: 'Bread'
-};
+} as const;
 
 export const recipeTypesCount = {
   Breakfast: 'breakfast_num',
@@ -46,20 +46,20 @@ export const recipeTypesCount = {
   Appetizer: 'appetizer_num',
   Salad: 'salad_num',
   Bread: 'bread_num'
-};
+} as const;
 
 export const recommendedList = {
   0: 'Recommended',
   1: 'Latest',
   2: 'Cheapest',
   3: 'Quickest'
-};
+} as const;
 
 export const cookingSkill = {
   1: 'Easy',
   2: 'Medium',
   3: 'Hard'
-};
+} as const;
 
 export const cookingMethods = {
   1: 'Broiling',
@@ -72,7 +72,7 @@ export const cookingMethods = {
   9: 'Steaming',
   10: 'Braising',
   11: 'Stewing'
-};
+} as const;
 
 export const cookingMethodsCount = {
   Broiling: 'broiling_num',
@@ -85,7 +85,7 @@ export const cookingMethodsCount = {
   Steaming: 'steaming_num',
   Braising: 'braising_num',
   Stewing: 'stewing_num'
-};
+} as const;
 
 export const dietaryrestrictions = {
   0: 'None',
@@ -105,7 +105,8 @@ export const dietaryrestrictions = {
   14: 'Whole 30',
   15: 'Low FODMAP',
   16: 'High FODMAP'
-};
+} as const;
+
 export const dietaryrestrictionsCount = {
   Vegan: 'vegan_num',
   Vegetarian: 'vegetarian_num',
@@ -123,7 +124,8 @@ export const dietaryrestrictionsCount = {
   'Whole 30': 'whole_30_num',
   'Low FODMAP': 'low_fodmap_num',
   'High FODMAP': 'high_fodmap_num'
-};
+} as const;
+
 export const units = {
   1: 'bag(s)',
   2: 'bottle',
@@ -176,14 +178,14 @@ export const units = {
   49: 'teaspoon(s)',
   50: 'thing(s)',
   51: 'other'
-};
+} as const;
 
 export const nutritions = {
   calories: 'Calories',
   proteins: 'Protein',
   carbohydrates: 'Carbs',
   fats: 'Fat'
-};
+} as const;
 
 export const ordering = [
   {
@@ -198,17 +200,17 @@ export const ordering = [
     valueSort: '-created_at',
     nameSort: 'New'
   }
-];
+] as const;
 
 export const USER_TYPE = {
   viewerType: 0,
   chefType: 1
-};
+} as const;
 
 export const PUBLISH_STATUS = {
   notPublished: 1,
   published: 2
-};
+} as const;
 
 export const ORDER_STATUS = {
   1: 'Not paid', // # created - initial state
@@ -217,20 +219,20 @@ export const ORDER_STATUS = {
   4: 'Ready', // # finished and ready to be delivered to the distribution team
   5: 'On the way', // # delivered to the distribution team
   6: 'Delivered'
-};
+} as const;
 
 export const APPROVED_STATUS = {
   1: 'Awaiting',
   2: 'Approved',
   3: 'Rejected'
-};
+} as const;
 
 export const SALE_STATUS = {
   4: 'Awaiting action',
   5: 'Approved for production',
   6: 'Rejected for production',
   7: 'No sale'
-};
+} as const;
 
 export const IS_APPROVED = {
   approved: 2,
@@ -248,7 +250,7 @@ export const pageNames = {
   '/my-uploads': 'My recipe',
   '/saved-recipes': 'Saved recipes',
   '/chef-pencil': "Chef's pencil"
-};
+} as const;
 
 export const absolutePaths = {
   production: 'https://eatchefs.com',
@@ -378,7 +380,7 @@ export const nameErrorRecipe = [
   { nameErrorResponse: 'cooking_methods', nameDiv: 'create-cooking-methods-select' },
   { nameErrorResponse: 'image', nameDiv: 'chef-pencil-upload-image' },
   { nameErrorResponse: 'html_content', nameDiv: 'chef-pencil-editor' }
-];
+] as const;
 
 export const nameErrorProfile = [
   { nameErrorResponse: 'full_name', nameInput: 'full_name' },
@@ -387,11 +389,11 @@ export const nameErrorProfile = [
   { nameErrorResponse: 'city', nameInput: 'city' },
   { nameErrorResponse: 'phone_number', nameInput: 'phone_number' },
   { nameErrorResponse: 'language', nameInput: 'language' }
-];
+] as const;
 
 export const LANGUAGES = {
   en: 'english',
   nl: 'dutch',
   english: 'en',
   dutch: 'nl'
-};
+} as const;

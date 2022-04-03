@@ -4,22 +4,13 @@
  * Компонент выводит ошибку, если по указанному ключу есть ошибка в общем массиве ошибок
  */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import classes from "./field-error.module.scss";
+import classes from './field-error.module.scss';
 
 export default class FieldError extends Component {
-
-  static propTypes = {
-    errors: PropTypes.object,
-    path: PropTypes.any,
-    childError: PropTypes.bool,
-  };
-
   renderItems() {
     const path = this.props.path;
     const errors = this.props.errors;
-    if (!errors && !(errors instanceof Array) &&
-      !(errors instanceof Object)) {
+    if (!errors && !(errors instanceof Array) && !(errors instanceof Object)) {
       return null;
     }
 
@@ -49,30 +40,28 @@ export default class FieldError extends Component {
           return;
         }
         if (this.isCurrentPath(errorPath, path)) {
-          items.push((
+          items.push(
             <div key={errorPath + index} className="FieldError__item">
               {message}
             </div>
-          ));
+          );
         }
       });
     });
   }
 
   isCurrentPath(errorPath, path) {
-    return (errorPath && errorPath.indexOf(path) === 0 && path.length > 0) ||
+    return (
+      (errorPath && errorPath.indexOf(path) === 0 && path.length > 0) ||
       (errorPath.length === 0 && path.length === 0) ||
-      (!errorPath && !path);
+      (!errorPath && !path)
+    );
   }
 
   render() {
     return (
       <div className={classes.FieldError}>
-        {this.props.childError &&
-          <div className={classes.FieldError__item}>
-            {this.props.children}
-          </div>
-        }
+        {this.props.childError && <div className={classes.FieldError__item}>{this.props.children}</div>}
         {this.renderItems()}
       </div>
     );

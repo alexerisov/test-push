@@ -1,17 +1,13 @@
 import React, { useState } from 'react';
 import classes from './index.module.scss';
-import { Button, FilledInput, IconButton } from '@material-ui/core';
+import { IconButton } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import Recipe from '@/api/Recipe';
-import { modalActions } from '@/store/actions';
 import TextField from '@material-ui/core/TextField';
-import Link from 'next/link';
 import { useDispatch } from 'react-redux';
-import Image from 'next/image';
 import { Autocomplete } from '@material-ui/lab';
-import SearchImage from '~public/images/index/search-block.png';
 import SearchIcon from '~public/icons/Search/Line.svg';
 import CloseIcon from '~public/icons/Close Circle/Line.svg';
 import RecipeIcon from '~public/icons/Receipt/Line.svg';

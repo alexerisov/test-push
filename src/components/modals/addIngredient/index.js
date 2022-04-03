@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { LayoutModal } from '@/components/layouts';
 import { modalActions, recipeUploadActions } from '@/store/actions';
@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import classes from './addIngredient.module.scss';
 import TextField from '@material-ui/core/TextField';
 import { units } from '@/utils/datasets';
-import { Select, MenuItem, Collapse, Dialog, FormControl } from '@material-ui/core';
+import { Select, MenuItem, Dialog } from '@material-ui/core';
 import { getNumberWithMaxDigits } from '@/utils/helpers';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import CloseIcon from '~public/icons/Close Circle/Line.svg';
@@ -21,6 +21,7 @@ import * as yup from 'yup';
 import Recipe from '@/api/Recipe';
 import { i18n, useTranslation } from 'next-i18next';
 import { filterNaNLetters } from '@/utils/filterNaNLetters';
+import log from 'loglevel';
 
 const useStyles = makeStyles(theme => ({
   textField: {
@@ -108,7 +109,7 @@ function AddIngredient(props) {
   const [shouldLoadUnits, setShouldLoadUnits] = useState();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isUnitFocused, setIsUnitFocused] = useState(false);
-
+  log.info('info');
   const formik = useFormik({
     initialValues: {
       basicIngredient: '',

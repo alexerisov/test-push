@@ -12,7 +12,6 @@ import FieldError from '@/components/elements/field-error';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 
-import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
@@ -571,8 +570,4 @@ export const ProfileBecomeHomeChefPage = props => {
   );
 
   return <LayoutPageNew content={content} />;
-};
-
-ProfileBecomeHomeChefPage.propTypes = {
-  account: PropTypes.object.isRequired
 };

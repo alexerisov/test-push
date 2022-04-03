@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useActions } from '@/customHooks/useActions';
 import { useRouter } from 'next/router';
@@ -35,7 +35,7 @@ const useStyledTooltip = makeStyles({
   }
 });
 
-export const ChefPencilPage = ({ pencilData, notFound, absolutePath }) => {
+export const ChefPencilPage: React.FC<any> = ({ pencilData, notFound, absolutePath }) => {
   const { session, status: loading } = useAuth();
   const toolTipStyles = useStyledTooltip();
 
@@ -46,8 +46,8 @@ export const ChefPencilPage = ({ pencilData, notFound, absolutePath }) => {
 
   const [isMobileOrTablet] = useMobileDevice();
   const router = useRouter();
-  const [pencil, setPencil] = useState();
-  const [pencilId, setPencilId] = useState();
+  const [pencil, setPencil] = useState<any>();
+  const [pencilId, setPencilId] = useState<string | string[]>();
   const [userId, setUserId] = useState();
   const [latestPencils, setLatestPencils] = useState();
   const [rating, setRating] = useState(null);
@@ -86,27 +86,27 @@ export const ChefPencilPage = ({ pencilData, notFound, absolutePath }) => {
     });
   }, []);
 
-  const getComments = ({ recipeId, page }) => {
+  const getComments = ({ recipeId, page }: { recipeId: number; page: number }) => {
     return ChefPencil.getComments({ recipeId, page });
   };
 
-  const uploadComment = ({ id, text }) => {
+  const uploadComment = ({ id, text }: { id: number; text: string }) => {
     return ChefPencil.uploadComments({ id, text });
   };
 
-  const uploadLike = ({ id, type }) => {
+  const uploadLike = ({ id, type }: { id: number; type: 'like' | 'dislike' }) => {
     return ChefPencil.uploadCommentsLikes({ id, type });
   };
 
-  const openRegisterPopup = name => {
+  const openRegisterPopup = (name: string) => {
     return () => {
-      open(name).then(result => {
+      open(name).then((result: any) => {
         // result when modal return promise and close
       });
     };
   };
 
-  const deletePencil = confirm => {
+  const deletePencil = (confirm: any) => {
     if (confirm) {
       ChefPencil.deletePencil(pencilId)
         .then(res => {
@@ -118,9 +118,9 @@ export const ChefPencilPage = ({ pencilData, notFound, absolutePath }) => {
     }
   };
 
-  const handleClickDelete = name => {
+  const handleClickDelete = (name: string) => {
     return () => {
-      open(name).then(result => {
+      open(name).then((result: any) => {
         deletePencil(result);
       });
     };
@@ -130,9 +130,9 @@ export const ChefPencilPage = ({ pencilData, notFound, absolutePath }) => {
     router.push(`/home-chef/${pencil?.user?.pk}`, undefined, { locale: router.locale });
   };
 
-  const handleRating = async value => {
+  const handleRating = async (value: any) => {
     if (!session) {
-      open('register').then(result => {
+      open('register').then((result: any) => {
         // result when modal return promise and close
       });
       return;
@@ -156,7 +156,7 @@ export const ChefPencilPage = ({ pencilData, notFound, absolutePath }) => {
     if (typeof window !== 'undefined') {
       if (window.history.state.GROOVE_TRACKER) {
         const url = window.history.state.GROOVE_TRACKER.referrer;
-        const page = url.slice(url.lastIndexOf('/'));
+        const page: string = url.slice(url.lastIndexOf('/'));
         if (page.includes('search')) {
           setBreadcrumbsName('Recipes');
           setBreadcrumbsLink(page);
@@ -167,7 +167,7 @@ export const ChefPencilPage = ({ pencilData, notFound, absolutePath }) => {
           setBreadcrumbsLink(page);
           return;
         }
-        if (!pageNames[page]) {
+        if (typeof page !== page) {
           setBreadcrumbsName('Home');
           setBreadcrumbsLink('/');
           return;
@@ -178,9 +178,9 @@ export const ChefPencilPage = ({ pencilData, notFound, absolutePath }) => {
     }
   }, []);
 
-  const handleClickSearch = name => {
+  const handleClickSearch = (name: string) => {
     return () => {
-      open(name).then(result => {
+      open(name).then((result: any) => {
         // result when modal return promise and close
       });
     };

@@ -10,7 +10,7 @@ import { CardActionArea } from '@material-ui/core';
 
 import logo from '~public/images/index/logo.svg';
 import classes from './index.module.scss';
-import { APPROVED_STATUS, PUBLISH_STATUS } from '@/utils/datasets';
+import { APPROVED_STATUS } from '@/utils/datasets';
 
 const StyledCardActionArea = styled(CardActionArea)({
   display: 'flex',

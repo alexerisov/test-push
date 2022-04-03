@@ -1,16 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import classes from './index.module.scss';
-import Recipe from '@/api/Recipe';
 import { Box, IconButton } from '@material-ui/core';
-import { RecipeCard } from '@/components/basic-blocks/recipe-card';
 import ArrowLeftIcon from '~public/icons/Arrow Left 2/Line.svg';
 import ArrowRightIcon from '~public/icons/Arrow Right 2/Line.svg';
-import { Carousel } from 'react-responsive-carousel';
-import { ButtonBack, ButtonNext, CarouselProvider, Slide, Slider } from 'pure-react-carousel';
+import { Slider } from 'pure-react-carousel';
 import { CardSearch } from '@/components/elements/card';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import styled from 'styled-components';
-import Cookies from 'cookies';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import { useTranslation } from 'next-i18next';
 

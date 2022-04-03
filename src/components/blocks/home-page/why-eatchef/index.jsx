@@ -1,11 +1,9 @@
 import React from 'react';
 import classes from './index.module.scss';
 import { Button, IconButton, OutlinedInput } from '@material-ui/core';
-import { ArrowRight } from '@material-ui/icons';
 import ArrowIcon from '~public/icons/Arrow Right 2/Line.svg';
-import { connect, useDispatch, useSelector } from 'react-redux';
-import { accountActions, modalActions } from '@/store/actions';
-import { useFormik } from 'formik';
+import { useDispatch } from 'react-redux';
+import { modalActions } from '@/store/actions';
 import Image from 'next/image';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import { useTranslation } from 'next-i18next';
@@ -13,7 +11,7 @@ import { useAuth } from '@/utils/Hooks';
 
 const CircleButton = () => {
   return (
-    <IconButton className={classes.signup_input_button} style={{ background: '#FFAA00', color: 'white' }} size="32px">
+    <IconButton className={classes.signup_input_button} style={{ background: '#FFAA00', color: 'white' }}>
       <ArrowIcon className={classes.signup_input_icon} />
     </IconButton>
   );

@@ -37,15 +37,3 @@ package-lock.json
 yarn.lock
 
 !/ci/stage/.client.env
-
-# Sentry
-.sentryclirc
-
-# Sentry
-.sentryclirc
-
-# Sentry
-.sentryclirc
-
-# Sentry
-.sentryclirc

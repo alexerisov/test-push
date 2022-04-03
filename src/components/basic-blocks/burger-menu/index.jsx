@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import classes from './index.module.scss';
-import styled from 'styled-components';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { Button, ListItemIcon } from '@material-ui/core';

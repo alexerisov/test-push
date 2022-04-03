@@ -1,7 +1,4 @@
-import s from '@/components/pages/search/SearchPage.module.scss';
-import CloseIcon from '~public/icons/Close Circle/Line.svg';
-import { Button, Slider } from '@material-ui/core';
-import SearchFilter from '@/components/blocks/search-page/filters-block/FiltersBlock';
+import { Slider } from '@material-ui/core';
 import React from 'react';
 import ArrowDownIcon from '~public/icons/Arrow Down Simple/Line.svg';
 import Accordion from '@material-ui/core/Accordion';

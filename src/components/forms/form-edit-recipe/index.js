@@ -26,12 +26,10 @@ import {
   cookingSkill,
   nameErrorRecipe
 } from '@/utils/datasets';
-import { isWindowExist } from '@/utils/isTypeOfWindow';
 import classes from './form-create-recipe.module.scss';
 import { CardIngredient, CardNutrition, CardImageEditRecipe } from '@/components/elements/card';
 import Recipe from '@/api/Recipe';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import PhotoCameraOutlinedIcon from '@material-ui/icons/PhotoCameraOutlined';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import { validator } from '@/utils/validator';
 import InputTime from '@/components/elements/input/inputTime';

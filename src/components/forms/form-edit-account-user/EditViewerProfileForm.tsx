@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { PropsWithChildren, useState } from 'react';
 import s from './EditViewerProfileForm.module.scss';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps, DispatchProp } from 'react-redux';
 
 import ContentLayout from '@/components/layouts/layout-profile-content';
 import { profileActions, accountActions } from '@/store/actions';
@@ -11,7 +11,6 @@ import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 import TextField from '@material-ui/core/TextField';
 import Input from '@material-ui/core/Input';
@@ -43,7 +42,7 @@ interface EditViewerProfileFormProps {
   profile: ViewerProfile;
 }
 
-const EditViewerProfileForm: React.FC<EditViewerProfileFormProps> = props => {
+const EditViewerProfileForm: React.FC<EditViewerProfileFormProps> = (props: PropsWithChildren<any> & DispatchProp) => {
   const router = useRouter();
   const { t, i18n } = useTranslation('profilePage');
 
@@ -71,8 +70,8 @@ const EditViewerProfileForm: React.FC<EditViewerProfileFormProps> = props => {
 
   const { email, full_name, phone_number, city, language, avatar, user_type } = props.profile;
 
-  const [avatarFile, setAvatarFile] = useState<URL>(avatar);
-  const [formStatus, setFormStatus] = useState<string | HTMLElement>('');
+  const [avatarFile, setAvatarFile] = useState<any>(avatar);
+  const [formStatus, setFormStatus] = useState<any>('');
   const [statusSubmit, setStatusSubmit] = useState(t('submitStatus.update'));
 
   const formik = useFormik({
@@ -82,7 +81,8 @@ const EditViewerProfileForm: React.FC<EditViewerProfileFormProps> = props => {
       phone_number: phone_number ?? '',
       city: city ?? '',
       language: language ?? '',
-      avatar: avatar
+      avatar: avatar,
+      user_type: user_type ?? 0
     },
     onSubmit: values => {
       setStatusSubmit(t('submitStatus.loading'));
@@ -107,7 +107,7 @@ const EditViewerProfileForm: React.FC<EditViewerProfileFormProps> = props => {
     }
   });
 
-  const inputRef = React.createRef();
+  const inputRef = React.createRef<HTMLInputElement>();
 
   const onClickUpload = () => {
     inputRef.current.click();
@@ -149,7 +149,7 @@ const EditViewerProfileForm: React.FC<EditViewerProfileFormProps> = props => {
             type="file"
             ref={inputRef}
             name="avatar"
-            value={formik.avatar}
+            value={formik.values.avatar}
             hidden
             onChange={event => {
               setAvatarFile(URL.createObjectURL(event.currentTarget.files[0]));

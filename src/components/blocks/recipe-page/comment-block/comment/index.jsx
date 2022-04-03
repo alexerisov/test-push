@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
-import ThumbDownOutlinedIcon from '@material-ui/icons/ThumbDownOutlined';
 
 import classes from './index.module.scss';
-import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 
 import defaultAvatar from '~public/images/index/icon_user.svg';
 import Recipe from '@/api/Recipe';

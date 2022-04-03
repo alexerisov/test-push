@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { withRouter } from 'next/router';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import Link from 'next/link';
@@ -10,7 +9,6 @@ import { CardChefPencil } from '@/components/elements/card';
 import ChefPencil from '@/api/ChefPencil';
 
 import s from './MyPencilsPage.module.scss';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import LayoutPageNew from '@/components/layouts/layout-page-new';
 
 export const MyPencilsPage = () => {

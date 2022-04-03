@@ -16,7 +16,7 @@ import HatChefIcon from '~public/icons/Hat Chef/Line.svg';
 import Order from '@/api/Order';
 import dayjs from 'dayjs';
 import Typography from '@material-ui/core/Typography';
-import { addManyToCart, clearCart, retryOrder } from '@/store/cart/actions';
+import { retryOrder } from '@/store/cart/actions';
 import LayoutPageNew from '@/components/layouts/layout-page-new';
 import { useTranslation } from 'next-i18next';
 

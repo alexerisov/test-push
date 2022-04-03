@@ -10,8 +10,8 @@ if (isWindowExist()) {
 
 const CONFIG = {
   baseUrl: process.env.BASE_URL,
-  fbClientId: process.env.fbClientId,
-  googleClientId: process.env.googleClientId,
+  FACEBOOK_CLIENT_ID: process.env.FACEBOOK_CLIENT_ID,
+  GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
   currentUrl,
   oauthRedirectUrl: `${currentUrl}/login/social/`,
   STRIPE_PUBLISH_KEY: process.env.STRIPE_PUBLISH_KEY

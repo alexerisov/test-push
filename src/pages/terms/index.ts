@@ -1,4 +1,3 @@
-import React from 'react';
 import { connect } from 'react-redux';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 

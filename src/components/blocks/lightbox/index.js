@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { IconButton, Slider, useMediaQuery } from '@material-ui/core';
 import { Carousel } from 'react-responsive-carousel';
@@ -8,7 +8,6 @@ import ArrowRightIcon from '~public/icons/Arrow Right 2/Line.svg';
 import ShareIcon from '~public/icons/Share Square/Line.svg';
 import CloseIcon from '~public/icons/Close/grey.svg';
 import VolumeIcon from '~public/icons/Volume/Line.svg';
-import SubtitlesIcon from '~public/icons/Subtitles/Line.svg';
 import BackwardIcon from '~public/icons/Backward 15 sec/Line.svg';
 import ForwardIcon from '~public/icons/Forward 15 sec/Line.svg';
 import PlayIcon from '~public/icons/Play/Filled.svg';
@@ -17,7 +16,6 @@ import FullscreenIcon from '~public/icons/Full Screen/Line.svg';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
 
 import useVideoPlayer from '@/customHooks/useVideoPlayer';
-import dayjs from 'dayjs';
 import { convertToHours } from '@/utils/converter';
 import { ButtonShare } from '@/components/elements/button';
 

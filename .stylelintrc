@@ -1,0 +1,24 @@
+{
+  extends: [
+      'stylelint-config-standard-scss',
+      'stylelint-config-prettier'
+  ],
+  custonSyntax: 'postcss-scss',
+  plugins: [
+      'stylelint-scss',
+      'stylelint-prettier'
+  ],
+  rules: {
+    indentation: 4,
+    'string-quotes': 'double'
+  },
+  overrides: [
+    {
+      files: [
+          '*.scss',
+          '**/*.scss'
+      ],
+      customSyntax: 'postcss-scss'
+    }
+  ]
+}

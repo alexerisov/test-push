@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import log from 'loglevel';
 
 // page component
 import { ProfileAccountSettingsPage } from '@/components/pages/profile/account-settings/ProfileAccountSettingsPage';
@@ -7,7 +8,6 @@ import { RootState } from '@/store/store';
 import { getSession } from 'next-auth/react';
 import Account from '@/api/Account';
 import http from '@/utils/http';
-import { getToken } from 'next-auth/jwt';
 
 export default connect((state: RootState) => ({
   account: state.account
@@ -16,11 +16,11 @@ export default connect((state: RootState) => ({
 export const getServerSideProps = async context => {
   const session = await getSession(context);
   if (session) {
-    http.defaults.headers.common['Authorization'] = `Bearer ${session?.jwt}`;
-    console.log(session);
+    http.defaults.headers.common['Authorization'] = `Bearer ${session.accessToken}`;
+    log.debug('getServerSideProps session', session);
   }
   try {
-    const profileResponse = await Account.current(session?.jwt);
+    const profileResponse = await Account.current(session.accessToken);
 
     return {
       props: {
@@ -30,7 +30,7 @@ export const getServerSideProps = async context => {
       }
     };
   } catch (e) {
-    console.error(e);
+    log.error(e);
 
     return {
       props: {

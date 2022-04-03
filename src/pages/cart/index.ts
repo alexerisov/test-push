@@ -1,18 +1,13 @@
-import { connect } from 'react-redux';
 import { withRouter } from 'next/router';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { RootState } from '@/store/store';
 
 // page component
 import { CartPage } from '@/components/pages/cart/CartPage';
+import { GetServerSideProps } from 'next';
 
-const connector = connect((state: RootState) => ({
-  account: state.account
-}))(CartPage);
+export default withRouter(CartPage);
 
-export default withRouter(connector);
-
-export async function getServerSideProps(context) {
+export const getServerSideProps: GetServerSideProps = async context => {
   try {
     return {
       props: {
@@ -29,4 +24,4 @@ export async function getServerSideProps(context) {
       }
     };
   }
-}
+};

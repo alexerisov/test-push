@@ -5,10 +5,11 @@ import Recipe from '@/api/Recipe';
 
 // page component
 import { RecipeEditPage } from '@/components/pages/recipe/editing/RecipeEditPage';
+import { GetServerSideProps } from 'next';
 
 export default connect()(RecipeEditPage);
 
-export async function getServerSideProps(context) {
+export const getServerSideProps: GetServerSideProps = async context => {
   const id = context.params.id;
 
   try {
@@ -49,4 +50,4 @@ export async function getServerSideProps(context) {
       }
     };
   }
-}
+};

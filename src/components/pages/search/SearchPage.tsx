@@ -7,7 +7,7 @@ import * as yup from 'yup';
 import { recommendedList } from '@/utils/datasets';
 
 import { modalActions } from '@/store/actions';
-import { Button, NoSsr, Slider, TextField } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import Image from 'next/image';
 
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';

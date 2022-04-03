@@ -1,48 +1,52 @@
+import type { RootState } from '@/store/store';
+
 import React, { useEffect, useState } from 'react';
 import { TabContent } from '@/components/blocks/cart-page/tab-content';
 import { Basket } from '@/components/blocks/cart-page/basket';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCart } from '@/store/cart/actions';
-import { useRouter, withRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import s from './CartPage.module.scss';
 import { IngredientsModal } from '@/components/basic-blocks/ingredients-modal';
 import { useTranslation } from 'next-i18next';
 import LayoutPageNew from '@/components/layouts/layout-page-new';
 
-const useStyles = makeStyles((theme: Theme) => ({
-  tabs: {
-    width: '100%'
-  },
-  content: {
-    display: 'grid',
-    marginBottom: '2rem;'
-  },
-  [theme.breakpoints.up('md')]: {
+const useStyles = makeStyles((theme?: Theme) =>
+  createStyles({
+    tabs: {
+      width: '100%'
+    },
     content: {
-      gridTemplateColumns: 'auto 400px',
-      columnGap: '56px'
+      display: 'grid',
+      marginBottom: '2rem;'
+    },
+    [theme.breakpoints.up('md')]: {
+      content: {
+        gridTemplateColumns: 'auto 400px',
+        columnGap: '56px'
+      }
+    },
+    [theme.breakpoints.only('sm')]: {
+      content: {
+        gridTemplateColumns: '1fr 1fr',
+        columnGap: '56px'
+      }
+    },
+    [theme.breakpoints.only('xs')]: {
+      content: {
+        gridTemplateColumns: '1fr'
+      }
     }
-  },
-  [theme.breakpoints.only('sm')]: {
-    content: {
-      gridTemplateColumns: '1fr 1fr',
-      columnGap: '56px'
-    }
-  },
-  [theme.breakpoints.only('xs')]: {
-    content: {
-      gridTemplateColumns: '1fr'
-    }
-  }
-}));
+  })
+);
 
-export const CartPage = props => {
+export const CartPage: React.FC<any> = props => {
   const { t } = useTranslation('cartPage');
   const router = useRouter();
   const dispatch = useDispatch();
   const styles = useStyles();
-  const data = useSelector(state => state.cart);
+  const data = useSelector((state: RootState) => state.cart);
   const [ingredientsModalData, setIngredientsModalData] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
 

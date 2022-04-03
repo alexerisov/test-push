@@ -14,9 +14,12 @@ import Modals from '@/components/modals';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DayjsUtils from '@date-io/dayjs';
 import type { AppProps } from 'next/app';
-import { CssBaseline, StylesProvider } from '@material-ui/core';
+import { CssBaseline } from '@material-ui/core';
 import yupSetup from '@/utils/yup';
+import { loggerSetup } from '@/utils/logger';
+
 yupSetup();
+loggerSetup();
 
 function App({ Component, pageProps }: AppProps) {
   const store = useStore(pageProps.initialReduxState);

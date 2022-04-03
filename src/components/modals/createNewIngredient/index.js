@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { LayoutModal } from '@/components/layouts';
 import { modalActions, recipeUploadActions } from '@/store/actions';
@@ -6,16 +6,12 @@ import { connect } from 'react-redux';
 import classes from './index.module.scss';
 import TextField from '@material-ui/core/TextField';
 import { units } from '@/utils/datasets';
-import { Select, MenuItem, Collapse } from '@material-ui/core';
+import { Select, MenuItem } from '@material-ui/core';
 import { getNumberWithMaxDigits } from '@/utils/helpers';
-import { BasicIcon } from '@/components/basic-elements/basic-icon';
-import CloseIcon from '~public/icons/Close Circle/Line.svg';
 import AddIcon from '@material-ui/icons/Add';
-import { Autocomplete } from '@material-ui/lab';
 
 import useSWR from 'swr';
 import http from '@/utils/http';
-import ErrorBoundary from '@/components/basic-blocks/error-boundary';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 

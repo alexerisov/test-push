@@ -1,7 +1,7 @@
 let path = require('path');
 let webpack = require('webpack');
 const { i18n } = require('./next-i18next.config');
-const { withSentryConfig } = require('@sentry/nextjs');
+const StylelintPlugin = require('stylelint-webpack-plugin');
 
 let isProduction;
 if (typeof process.env.NODE_ENV === 'undefined') {
@@ -11,13 +11,17 @@ if (typeof process.env.NODE_ENV === 'undefined') {
   isProduction = process.env.NODE_ENV === 'production';
 }
 
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: false
+});
+
 let envs = {};
 if (process.env.NODE_ENV === 'production') {
   envs = {
-    fbClientId: '161418379213740',
-    fbClientSecret: '9400ca8e8b798c1cf7dde384c4c0cbb2',
-    googleClientId: '245264013276-avgqsj1umm7sc07sk2dtdgkpmqmn0p42.apps.googleusercontent.com',
-    googleClientSecret: '27KF4-qS4BgnriYmMVfXfE56',
+    FACEBOOK_CLIENT_ID: '161418379213740',
+    FACEBOOK_CLIENT_SECRET: '9400ca8e8b798c1cf7dde384c4c0cbb2',
+    GOOGLE_CLIENT_ID: '245264013276-avgqsj1umm7sc07sk2dtdgkpmqmn0p42.apps.googleusercontent.com',
+    GOOGLE_CLIENT_SECRET: '27KF4-qS4BgnriYmMVfXfE56',
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     BASE_URL: process.env.BASE_URL,
@@ -25,10 +29,10 @@ if (process.env.NODE_ENV === 'production') {
   };
 } else if (process.env.NODE_ENV === 'stage') {
   envs = {
-    fbClientId: '161418379213740',
-    fbClientSecret: '9400ca8e8b798c1cf7dde384c4c0cbb2',
-    googleClientId: '245264013276-sbkrl06fu1e7d6m0d3724or58hvdmpej.apps.googleusercontent.com',
-    googleClientSecret: 'T31vo_Y09jfQAuw2tDlzpSml',
+    FACEBOOK_CLIENT_ID: '161418379213740',
+    FACEBOOK_CLIENT_SECRET: '9400ca8e8b798c1cf7dde384c4c0cbb2',
+    GOOGLE_CLIENT_ID: '245264013276-sbkrl06fu1e7d6m0d3724or58hvdmpej.apps.googleusercontent.com',
+    GOOGLE_CLIENT_SECRET: 'T31vo_Y09jfQAuw2tDlzpSml',
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     BASE_URL: process.env.BASE_URL,
@@ -36,10 +40,10 @@ if (process.env.NODE_ENV === 'production') {
   };
 } else {
   envs = {
-    fbClientId: '161418379213740',
-    fbClientSecret: '9400ca8e8b798c1cf7dde384c4c0cbb2',
-    googleClientId: '690315014418-ji6h0pmf1npeic8egnj3kp00sffoli1s.apps.googleusercontent.com',
-    googleClientSecret: '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',
+    FACEBOOK_CLIENT_ID: '161418379213740',
+    FACEBOOK_CLIENT_SECRET: '9400ca8e8b798c1cf7dde384c4c0cbb2',
+    GOOGLE_CLIENT_ID: '690315014418-ji6h0pmf1npeic8egnj3kp00sffoli1s.apps.googleusercontent.com',
+    GOOGLE_CLIENT_SECRET: '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',
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     BASE_URL: 'http://localhost:4096',
@@ -47,7 +51,9 @@ if (process.env.NODE_ENV === 'production') {
   };
 }
 
-const moduleExports = {
+module.exports = withBundleAnalyzer({
+  DEBUG: true,
+  productionBrowserSourceMaps: false,
   compiler: {
     styledComponents: true,
     dynamicImport: true,
@@ -55,6 +61,8 @@ const moduleExports = {
     tsx: true
   },
   swcMinify: true,
+  minify: true,
+  optimization: true,
   images: {
     disableStaticImages: true,
     domains: ['localhost', 'goodbit.dev', 'eatchefs.com']
@@ -100,6 +108,7 @@ const moduleExports = {
       }
     );
     config.plugins.push(new webpack.EnvironmentPlugin(envs));
+    config.plugins.push(new StylelintPlugin());
 
     return config;
   },
@@ -124,20 +133,5 @@ const moduleExports = {
   },
   eslint: {
     ignoreDuringBuilds: true
-  }
-};
-
-const sentryWebpackPluginOptions = {
-  token: process.env.SENTRY_AUTH_TOKEN,
-  // Additional config options for the Sentry Webpack plugin. Keep in mind that
-  // the following options are set automatically, and overriding them is not
-  // recommended:
-  //   release, url, org, project, authToken, configFile, stripPrefix,
-  //   urlPrefix, include, ignore
-
-  silent: true // Suppresses all logs
-  // For all available options, see:
-  // https://github.com/getsentry/sentry-webpack-plugin#options.
-};
-
-module.exports = withSentryConfig(moduleExports, sentryWebpackPluginOptions);
+  },
+});

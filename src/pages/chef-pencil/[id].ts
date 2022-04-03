@@ -1,20 +1,17 @@
-import Cookies from 'cookies';
 import ChefPencil from '@/api/ChefPencil.js';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 // page component
 import { ChefPencilPage } from '@/components/pages/chef-pencil/ChefPencilPage';
+import { GetServerSideProps } from 'next';
 
 export default ChefPencilPage;
 
-export async function getServerSideProps(context) {
+export const getServerSideProps: GetServerSideProps = async context => {
   const id = context.params.id;
-  const cookies = new Cookies(context.req, context.res);
-  const targetCookies = cookies.get('aucr');
-  const token = !targetCookies ? undefined : decodeURIComponent(cookies.get('aucr'));
 
   try {
-    const response = await ChefPencil.getTargetChefPencil(id, token);
+    const response = await ChefPencil.getTargetChefPencil(id);
     return {
       props: {
         ...(await serverSideTranslations(context.locale, ['common'])),
@@ -31,4 +28,4 @@ export async function getServerSideProps(context) {
       }
     };
   }
-}
+};

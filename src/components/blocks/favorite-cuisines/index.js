@@ -8,7 +8,6 @@ import TabPanel from '@/components/elements/tab-panel-cuisines';
 import styled from 'styled-components';
 import { NoSsr } from '@material-ui/core';
 
-import PropTypes from 'prop-types';
 import Recipe from '@/api/Recipe.js';
 
 const StyledTabs = styled(Tabs)`
@@ -62,12 +61,6 @@ const FavoriteCuisinesBlock = () => {
     4: 15,
     5: 17,
     6: 10
-  };
-
-  StyledTabPanel.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.any.isRequired,
-    value: PropTypes.any.isRequired
   };
 
   function a11yProps(index) {

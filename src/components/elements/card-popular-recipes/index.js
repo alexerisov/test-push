@@ -1,12 +1,9 @@
 import React from 'react';
 import classes from './index.module.scss';
-import RaitingIcon from '@/components/elements/rating-icon';
 import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import Link from 'next/link';
 import styled from 'styled-components';
 import CardMedia from '@material-ui/core/CardMedia';
-import { CardActionArea } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import logo from '~public/images/index/logo.svg';
 
