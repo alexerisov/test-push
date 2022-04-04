@@ -27,7 +27,7 @@ WORKDIR /app
 # install app dependencies
 COPY package.json ./
 COPY yarn.lock ./
-RUN yarn install
+RUN yarn install --ignore-engines
 
 # add app
 COPY . ./
