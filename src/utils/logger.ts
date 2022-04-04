@@ -25,7 +25,7 @@ export function loggerSetup() {
 function applyPrefix(logger, color) {
   prefix.apply(logger, {
     format(level, name, timestamp) {
-      return `${chalk.gray(`[${timestamp}]`)} ${colors[level.toUpperCase()](level)} ${chalk[color].bold(
+      return `${chalk.gray(`[${timestamp}]`)} ${colors[level.toUpperCase()](level)} ${color.bold(
         `${name.toUpperCase()}:`
       )}`;
     }
