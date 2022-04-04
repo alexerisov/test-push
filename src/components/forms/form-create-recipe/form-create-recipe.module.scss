@@ -1,349 +1,340 @@
-@import '~styles/variables.scss';
-@import '~styles/mixins/mixins.scss';
+@import "variables";
+@import "mixins";
 
 .wave {
-  background-image: url('/images/index/wave.svg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  width: 100%;
-  height: 1542px;
-  position: absolute;
-  top: 255px;
-  left: 0;
-  z-index: 0;
-
-  @media (max-width: 1024px) {
-    height: 983px;
-  }
-  @media (max-width: 768px) {
-    display: none;
-  }
-  @media (min-width: 360px) and (max-width: $--xs) {
-    display: block;
-    background-size: 100%;
-    background-image: url('/images/index/small-wave.svg');
-    background-repeat: round;
-    top: 186px;
+    background-image: url("/images/index/wave.svg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 1542px;
+    position: absolute;
+    top: 255px;
     left: 0;
-    height: 740px;
-  }
+    z-index: 0;
+
+    @media (max-width: 1024px) {
+        height: 983px;
+    }
+    @media (max-width: 768px) {
+        display: none;
+    }
+    @media (min-width: 360px) and (max-width: $--xs) {
+        display: block;
+        background-size: 100%;
+        background-image: url("/images/index/small-wave.svg");
+        background-repeat: round;
+        top: 186px;
+        left: 0;
+        height: 740px;
+    }
 }
 
 .createRecipeSubtitle {
-  margin: 0px;
-  font-size: 24px;
-  line-height: 29px;
-  @include fontSemiBold();
-  position: relative;
+    margin: 0;
+    font-size: 24px;
+    line-height: 29px;
+    @include fontSemiBold;
 
-  @media (max-width: $--xs) {
-    margin: 0 0 20px;
-    font-size: 20px;
-    line-height: 24px;
-  }
+    position: relative;
 
-  &_type_visibility {
-    margin-bottom: 24px;
-  }
+    @media (max-width: $--xs) {
+        margin: 0 0 20px;
+        font-size: 20px;
+        line-height: 24px;
+    }
+
+    &_type_visibility {
+        margin-bottom: 24px;
+    }
 }
 
 .createRecipeSubtitle_withoutInput {
-  margin: 0 0 20px 0;
-  font-size: 24px;
-  line-height: 29px;
-  @include fontSemiBold();
-  position: relative;
-
-  @media (max-width: $--xs) {
     margin: 0 0 20px;
-    font-size: 20px;
-    line-height: 24px;
-  }
+    font-size: 24px;
+    line-height: 29px;
+    @include fontSemiBold;
+
+    position: relative;
+
+    @media (max-width: $--xs) {
+        margin: 0 0 20px;
+        font-size: 20px;
+        line-height: 24px;
+    }
 }
 
 .createRecipeSubtitle_classifications {
-  @media (max-width: $--xs) {
-    display: none;
-  }
+    @media (max-width: $--xs) {
+        display: none;
+    }
 }
 
 .createRecipeForm {
-  display: block;
-  max-width: 1000px;
-  position: relative;
+    display: block;
+    max-width: 1000px;
+    position: relative;
 
-  &__header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    &__header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
 
-    @media (max-width: $--xs) {
-      padding: 0 0 30px;
+        @media (max-width: $--xs) {
+            padding: 0 0 30px;
+        }
+
+        &__title {
+            font-size: 30px;
+            line-height: 37px;
+            @include fontSemiBold;
+
+            @media (max-width: $--xs) {
+                font-size: 22px;
+                line-height: 27px;
+            }
+        }
+
+        &__clear {
+            color: $--color-gray16;
+            font-size: 22px;
+            line-height: 27px;
+            cursor: pointer;
+            border: none;
+            @include fontRegular;
+
+            min-width: 90px;
+
+            @media (max-width: $--xs) {
+                font-size: 16px;
+                line-height: 20px;
+                height: max-content;
+                margin-top: auto;
+            }
+
+            &:hover {
+                color: $--color-orange;
+            }
+        }
     }
 
-    &__title {
-      font-size: 30px;
-      line-height: 37px;
-      @include fontSemiBold();
+    &__wrap {
+        padding-top: 57px;
+        max-width: 850px;
+        margin: 0 auto;
 
-      @media (max-width: $--xs) {
-        font-size: 22px;
-        line-height: 27px;
-      }
+        @media (max-width: $--md) {
+            padding-top: 30px;
+        }
+
+        @media (max-width: $--xs) {
+            padding-top: 0;
+        }
     }
-
-    &__clear {
-      color: $--color-gray16;
-      font-size: 22px;
-      line-height: 27px;
-      cursor: pointer;
-      border: none;
-      @include fontRegular();
-      min-width: 90px;
-
-      @media (max-width: $--xs) {
-        font-size: 16px;
-        line-height: 20px;
-        height: max-content;
-        margin-top: auto;
-      }
-
-      &:hover {
-        color: $--color-orange;
-      }
-    }
-  }
-
-  &__wrap {
-    padding-top: 57px;
-    max-width: 850px;
-    margin: 0 auto;
-
-    @media (max-width: $--md) {
-      padding-top: 30px;
-    }
-
-    @media (max-width: $--xs) {
-      padding-top: 0;
-    }
-  }
 }
 
 .createRecipeSection {
-  padding-top: 40px;
+    padding-top: 40px;
 
-  @media (max-width: $--xs) {
-    &:first-of-type {
-      padding-top: 0;
-    }
-  }
-
-  @media (max-width: $--xs) {
-    padding-top: 25px;
-  }
-
-  &_type_cardNutrition {
-    padding-top: 15px;
-  }
-
-  &_visibility {
     @media (max-width: $--xs) {
-      padding-top: 0;
+        &:first-of-type {
+            padding-top: 0;
+        }
     }
-  }
+
+    @media (max-width: $--xs) {
+        padding-top: 25px;
+    }
+
+    &_type_cardNutrition {
+        padding-top: 15px;
+    }
+
+    &_visibility {
+        @media (max-width: $--xs) {
+            padding-top: 0;
+        }
+    }
 }
 
 .createRecipeSection__grid_type_input {
-  display: grid;
-  max-width: 700px;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 29px;
-  row-gap: 0;
+    display: grid;
+    max-width: 700px;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 29px;
+    row-gap: 0;
 
-  @media (max-width: $--xs) {
-    grid-template-columns: 1fr;
-  }
+    @media (max-width: $--xs) {
+        grid-template-columns: 1fr;
+    }
 }
 
 .createRecipeSection__grid_type_cardIngredients {
-  margin-top: 20px;
-  gap: 20px 16px;
-  margin: 20px 0;
-  display: flex;
-  flex-wrap: wrap;
+    margin-top: 20px;
+    gap: 20px 16px;
+    margin: 20px 0;
+    display: flex;
+    flex-wrap: wrap;
 
-  @media (max-width: $--xs) {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    padding: 10px 0;
-  }
+    @media (max-width: $--xs) {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding: 10px 0;
+    }
 }
 
 .createRecipeSection__grid_type_cardNutrition {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 20px 16px;
-  max-width: 1027px;
-  margin: 20px 0 40px 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px 16px;
+    max-width: 1027px;
+    margin: 20px 0 40px;
 
-  @media (max-width: $--xs) {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    margin: 0;
-    padding: 10px 0 10px 0;
-  }
+    @media (max-width: $--xs) {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        margin: 0;
+        padding: 10px 0;
+    }
 }
 
 .createRecipeSection__grid_type_cardImages {
-  position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  max-width: 800px;
-  margin-top: 48px;
-  gap: 16px;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 800px;
+    margin-top: 48px;
+    gap: 16px;
 
-  @media (max-width: $--xs) {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    padding: 10px 0 35px 0;
-    margin: 0;
-    gap: 25px;
-  }
+    @media (max-width: $--xs) {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding: 10px 0 35px;
+        margin: 0;
+        gap: 25px;
+    }
 }
 
 .createRecipeLabel {
-  display: block;
-  margin: 20px 0 10px;
-  padding: 0;
-  font-size: 22px;
-  line-height: 27px;
-  position: relative;
+    display: block;
+    margin: 20px 0 10px;
+    padding: 0;
+    font-size: 22px;
+    line-height: 27px;
+    position: relative;
 
-  @media (max-width: $--xs) {
-    font-size: 20px;
-    line-height: 24px;
-    @include fontSemiBold();
-  }
-
-  &_selects {
     @media (max-width: $--xs) {
-      margin: 0 0 16px 0;
+        font-size: 20px;
+        line-height: 24px;
+        @include fontSemiBold;
     }
-  }
+
+    &_selects {
+        @media (max-width: $--xs) {
+            margin: 0 0 16px;
+        }
+    }
 }
 
 .uploadPhotoLabel {
-  width: 181px;
-  height: 134px;
-  min-width: 181px;
-  margin: 0;
-  padding: 5px 7px;
-  font-size: 12px;
-  line-height: 16px;
-  text-align: center;
-  cursor: pointer;
-  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.08);
-  border-radius: 5px;
-  background-color: $--color-white;
-  order: -1;
+    width: 181px;
+    height: 134px;
+    min-width: 181px;
+    margin: 0;
+    padding: 5px 7px;
+    font-size: 12px;
+    line-height: 16px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 0 8px rgb(0 0 0 / 8%);
+    border-radius: 5px;
+    background-color: $--color-white;
+    order: -1;
 
-  &__logo {
-    width: 48px;
-    height: 48px;
-  }
-
-  &__text {
-    font-size: 14px;
-    line-height: 17px;
-    @include fontSemiBold();
-    color: $--color-gray19;
-    margin-top: 8px;
-  }
-
-  &__border {
-    height: 100%;
-    width: 100%;
-    border: 2px dashed #dfdfdf;
-    border-radius: 12px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    &:hover {
-      border: 2px dashed $--color-orange !important;
+    &__logo {
+        width: 48px;
+        height: 48px;
     }
-  }
+
+    &__text {
+        font-size: 14px;
+        line-height: 17px;
+        @include fontSemiBold;
+
+        color: $--color-gray19;
+        margin-top: 8px;
+    }
+
+    &__border {
+        height: 100%;
+        width: 100%;
+        border: 2px dashed #dfdfdf;
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+            border: 2px dashed $--color-orange !important;
+        }
+    }
 }
 
 .createRecipeInput_type_addImage {
-  position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
 }
 
 .createRecipeItem {
-  margin-bottom: 40px;
-
-  @media (max-width: $--xs) {
-    margin-bottom: 0;
-  }
-
-  &__title {
-    margin-bottom: 28px;
-    font-size: 26px;
+    margin-bottom: 40px;
 
     @media (max-width: $--xs) {
-      font-size: 20px;
+        margin-bottom: 0;
     }
-  }
 
-  &__inputContainer {
-    display: grid;
-    max-width: 672px;
-    gap: 16px;
-    grid-template-columns: 1fr 1fr;
+    &__title {
+        margin-bottom: 28px;
+        font-size: 26px;
 
-    @media (max-width: $--xs) {
-      grid-template-columns: 1fr;
+        @media (max-width: $--xs) {
+            font-size: 20px;
+        }
     }
-  }
+
+    &__inputContainer {
+        display: grid;
+        max-width: 672px;
+        gap: 16px;
+        grid-template-columns: 1fr 1fr;
+
+        @media (max-width: $--xs) {
+            grid-template-columns: 1fr;
+        }
+    }
 }
 
 .createRecipeItem__inputTime {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .createRecipebuttonContainer {
-  display: flex;
-  flex-direction: row;
-  gap: 11px;
-  max-width: 1080px;
-  margin: 22px 0 30px;
+    display: flex;
+    flex-direction: row;
+    gap: 11px;
+    max-width: 1080px;
+    margin: 22px 0 30px;
 
-  @media (max-width: $--xs) {
-    width: max-content;
-    margin: 22px auto 30px auto;
-  }
+    @media (max-width: $--xs) {
+        width: max-content;
+        margin: 22px auto 30px;
+    }
 }
 
 .createRecipeButton {
-  width: 146px;
-  height: 40px;
-  padding: 0;
-  color: $--color-white;
-  text-align: center;
-  cursor: pointer;
-  border: none;
-  border-radius: 3px;
-  outline: none;
-  background-color: $--color-blue;
-  transition: opacity 0.3s linear;
-
-  &_color_gray {
     width: 146px;
     height: 40px;
     padding: 0;
@@ -353,340 +344,359 @@
     border: none;
     border-radius: 3px;
     outline: none;
-    background-color: $--color-gray2;
-    transition: opacity 0.5s linear;
-  }
+    background-color: $--color-blue;
+    transition: opacity 0.3s linear;
 
-  &_color_gray:hover {
-    opacity: 0.7;
-  }
+    &_color_gray {
+        width: 146px;
+        height: 40px;
+        padding: 0;
+        color: $--color-white;
+        text-align: center;
+        cursor: pointer;
+        border: none;
+        border-radius: 3px;
+        outline: none;
+        background-color: $--color-gray2;
+        transition: opacity 0.5s linear;
+    }
 
-  &__text {
-    font-size: 20px;
-    line-height: 24px;
-    @include fontSemiBold();
-  }
+    &_color_gray:hover {
+        opacity: 0.7;
+    }
+
+    &__text {
+        font-size: 20px;
+        line-height: 24px;
+        @include fontSemiBold;
+    }
 }
 
 .createRecipeButton:hover {
-  opacity: 0.7;
+    opacity: 0.7;
 }
 
 .createRecipeButton_type_addIngredient {
-  padding: 14px 18px;
-  color: $--color-gray17;
-  text-align: center;
-  cursor: pointer;
-  opacity: 0.7;
-  background-color: $--color-white;
-  border: 1px solid $--color-gray18;
-  box-sizing: border-box;
-  border-radius: 5px;
-  width: auto !important;
-  height: 66px !important;
-
-  &__text {
-    @include fontSemiBold();
-    font-size: 14px;
-    line-height: 17px;
+    padding: 14px 18px;
+    color: $--color-gray17;
     text-align: center;
-  }
+    cursor: pointer;
+    opacity: 0.7;
+    background-color: $--color-white;
+    border: 1px solid $--color-gray18;
+    box-sizing: border-box;
+    border-radius: 5px;
+    width: auto !important;
+    height: 66px !important;
 
-  &__icon {
-    font-size: 30px;
-    line-height: 0.7;
-    text-align: center;
-  }
+    &__text {
+        @include fontSemiBold;
+
+        font-size: 14px;
+        line-height: 17px;
+        text-align: center;
+    }
+
+    &__icon {
+        font-size: 30px;
+        line-height: 0.7;
+        text-align: center;
+    }
 }
 
 .createRecipeButton_type_addIngredient:hover {
-  color: $--color-white;
-  background-color: $--color-orange;
+    color: $--color-white;
+    background-color: $--color-orange;
 }
 
 .createRecipeButton_type_addNutrition {
-  padding: 14px 18px;
-  color: $--color-gray17;
-  text-align: center;
-  cursor: pointer;
-  opacity: 0.7;
-  background-color: $--color-white;
-  border: 1px solid $--color-gray18;
-  box-sizing: border-box;
-  border-radius: 5px;
-  width: auto !important;
-  height: 66px !important;
-
-  &__text {
-    @include fontSemiBold();
-    font-size: 14px;
-    line-height: 17px;
+    padding: 14px 18px;
+    color: $--color-gray17;
     text-align: center;
-  }
+    cursor: pointer;
+    opacity: 0.7;
+    background-color: $--color-white;
+    border: 1px solid $--color-gray18;
+    box-sizing: border-box;
+    border-radius: 5px;
+    width: auto !important;
+    height: 66px !important;
 
-  &__icon {
-    font-size: 30px;
-    line-height: 0.7;
-    text-align: center;
-  }
+    &__text {
+        @include fontSemiBold;
+
+        font-size: 14px;
+        line-height: 17px;
+        text-align: center;
+    }
+
+    &__icon {
+        font-size: 30px;
+        line-height: 0.7;
+        text-align: center;
+    }
 }
 
 .createRecipeButton_type_addNutrition:hover {
-  color: $--color-white;
-  background-color: $--color-orange;
+    color: $--color-white;
+    background-color: $--color-orange;
 }
 
 .createRecipeButton_type_addStep {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 206px;
-  height: 44px;
-  margin-top: 20px;
-  font: 16px/22px 'Montserrat';
-  color: $--color-white;
-  background-color: $--color-orange;
-  text-align: center;
-  cursor: pointer;
-  border: $--color-orange 1px solid;
-  border-radius: 10px;
-  opacity: 0.7;
-
-  &__text {
-    font-size: 18px;
-    line-height: 22px;
-    @include fontSemiBold();
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 206px;
+    height: 44px;
+    margin-top: 20px;
+    font: 16px/22px Montserrat;
+    color: $--color-white;
+    background-color: $--color-orange;
     text-align: center;
-  }
+    cursor: pointer;
+    border: $--color-orange 1px solid;
+    border-radius: 10px;
+    opacity: 0.7;
 
-  &__icon {
-    margin-right: 5px;
-    font-size: 38px;
-    text-align: center;
-  }
+    &__text {
+        font-size: 18px;
+        line-height: 22px;
+        @include fontSemiBold;
+
+        text-align: center;
+    }
+
+    &__icon {
+        margin-right: 5px;
+        font-size: 38px;
+        text-align: center;
+    }
 }
 
 .createRecipeButton_type_addStep:hover {
-  color: $--color-orange;
-  background-color: $--color-white;
+    color: $--color-orange;
+    background-color: $--color-white;
 }
+
 .createRecipeItem__errorPublishStatus {
-  margin: 20px 0 0 0;
-  color: red;
+    margin: 20px 0 0;
+    color: red;
 }
 
 .createRecipeList {
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
 
-  &__item {
-    margin: 0 0 29px;
+    &__item {
+        margin: 0 0 29px;
 
-    &__button {
-      width: 26px;
-      height: 26px;
-      margin-right: 12px;
-      padding: 2px 0;
-      font: 16px/22px 'Montserrat';
-      color: $--color-orange;
-      text-align: center;
-      cursor: pointer;
-      border: $--color-orange 1px solid;
-      border-radius: 2px;
+        &__button {
+            width: 26px;
+            height: 26px;
+            margin-right: 12px;
+            padding: 2px 0;
+            font: 16px/22px Montserrat;
+            color: $--color-orange;
+            text-align: center;
+            cursor: pointer;
+            border: $--color-orange 1px solid;
+            border-radius: 2px;
+        }
     }
-  }
 
-  &__title {
-    margin-right: 20px;
-    font-size: 20px;
-    font-weight: 900;
-    line-height: 1.4;
-    word-break: break-all;
-  }
+    &__title {
+        margin-right: 20px;
+        font-size: 20px;
+        font-weight: 900;
+        line-height: 1.4;
+        word-break: break-all;
+    }
 
-  &__title_color {
-    color: $--color-orange;
-  }
+    &__title_color {
+        color: $--color-orange;
+    }
 
-  &__titleContainer {
-    display: flex;
-    margin-bottom: 10px;
-  }
+    &__titleContainer {
+        display: flex;
+        margin-bottom: 10px;
+    }
 
-  &__text {
-    font-size: 18px;
-    line-height: 1.5;
-    word-break: break-all;
-  }
+    &__text {
+        font-size: 18px;
+        line-height: 1.5;
+        word-break: break-all;
+    }
 }
 
 .uploadVideoLabel {
-  width: 283px;
-  height: 164px;
-  margin: 0;
-  padding: 0 16px;
-  font-size: 12px;
-  line-height: 16px;
-  text-align: center;
-  border-radius: 5px;
-  position: relative;
-  background-color: $--color-white;
-  padding: 6px 9px;
-  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.08);
+    width: 283px;
+    height: 164px;
+    margin: 0;
+    padding: 0 16px;
+    font-size: 12px;
+    line-height: 16px;
+    text-align: center;
+    border-radius: 5px;
+    position: relative;
+    background-color: $--color-white;
+    padding: 6px 9px;
+    box-shadow: 0 0 8px rgb(0 0 0 / 8%);
 
-  @media (max-width: $--xs) {
-    max-width: 300px;
-    max-height: 170px;
-  }
-
-  &__border {
-    height: 100%;
-    width: 100%;
-    border: 3px dashed #dfdfdf;
-    border-radius: 12px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    &:hover {
-      border: 3px dashed $--color-blue !important;
+    @media (max-width: $--xs) {
+        max-width: 300px;
+        max-height: 170px;
     }
-  }
 
-  &__dragText {
-    @include fontSemiBold();
-    color: $--color-blue-gray;
-    font-size: 18px;
-    line-height: 22px;
-    margin: 14px 0 10px 0;
-    color: #aeaeae;
-  }
+    &__border {
+        height: 100%;
+        width: 100%;
+        border: 3px dashed #dfdfdf;
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
 
-  &__browseFilesButton {
-    @include fontSemiBold();
-    font-size: 16px;
-    line-height: 18px;
-    color: #f5f6fa;
-    width: 140px;
-    height: 50px;
-    border-radius: 3px;
-    cursor: pointer;
-    border: 2px solid $--color-blue;
-    background-color: $--color-blue;
-    cursor: pointer;
-    margin: 0 0 20px;
-
-    &:hover {
-      background-color: $--color-white;
-      color: $--color-blue;
+        &:hover {
+            border: 3px dashed $--color-blue !important;
+        }
     }
-  }
+
+    &__dragText {
+        @include fontSemiBold;
+
+        color: $--color-blue-gray;
+        font-size: 18px;
+        line-height: 22px;
+        margin: 14px 0 10px;
+        color: #aeaeae;
+    }
+
+    &__browseFilesButton {
+        @include fontSemiBold;
+
+        font-size: 16px;
+        line-height: 18px;
+        color: #f5f6fa;
+        width: 140px;
+        height: 50px;
+        border-radius: 3px;
+        cursor: pointer;
+        border: 2px solid $--color-blue;
+        background-color: $--color-blue;
+        cursor: pointer;
+        margin: 0 0 20px;
+
+        &:hover {
+            background-color: $--color-white;
+            color: $--color-blue;
+        }
+    }
 }
 
 .recipe__video {
-  display: block;
-  max-width: 300px;
-  max-height: 165px;
-  min-height: 165px;
+    display: block;
+    max-width: 300px;
+    max-height: 165px;
+    min-height: 165px;
 
-  &__button {
-    width: 200px;
-    height: 40px;
-    margin: 20px 0 0 0;
-    font-size: 25px;
-    color: $--color-orange;
-    cursor: pointer;
-    border: $--color-orange 1px solid;
-    border-radius: 7px;
+    &__button {
+        width: 200px;
+        height: 40px;
+        margin: 20px 0 0;
+        font-size: 25px;
+        color: $--color-orange;
+        cursor: pointer;
+        border: $--color-orange 1px solid;
+        border-radius: 7px;
 
-    &:hover {
-      color: $--color-white;
-      background-color: $--color-orange;
+        &:hover {
+            color: $--color-white;
+            background-color: $--color-orange;
+        }
     }
-  }
 
-  &__watermark {
-    position: relative;
-    height: 160px;
+    &__watermark {
+        position: relative;
+        height: 160px;
 
-    &__icon {
-      position: absolute;
-      top: 0;
-      left: 10px;
-      width: 80px;
-      height: 70px;
-      background-image: url('/images/index/footer_logo.png');
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: 70px 50px;
-      opacity: 0.5;
+        &__icon {
+            position: absolute;
+            top: 0;
+            left: 10px;
+            width: 80px;
+            height: 70px;
+            background-image: url("/images/index/footer_logo.png");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 70px 50px;
+            opacity: 0.5;
+        }
     }
-  }
 }
 
 .createRecipeInput_type_title {
-  max-width: 583px;
+    max-width: 583px;
 }
 
 .createRecipeInput_type_description {
-  max-width: 583px;
+    max-width: 583px;
 }
 
 .createRecipeSelectArrow {
-  pointer-events: none;
-  position: absolute;
-  right: 17px;
+    pointer-events: none;
+    position: absolute;
+    right: 17px;
 }
 
 .createRecipeSection__video {
-  display: flex;
-  gap: 16px;
+    display: flex;
+    gap: 16px;
 
-  @media (max-width: 630px) {
-    flex-direction: column;
-    width: max-content;
-  }
+    @media (max-width: 630px) {
+        flex-direction: column;
+        width: max-content;
+    }
 }
 
 .createRecipeSection__videoContainer {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .buttonDelete {
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: $--color-white;
-  border: 1px solid $--color-gray18;
-  outline: none;
-  padding: 0;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: $--color-white;
+    border: 1px solid $--color-gray18;
+    outline: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  &__line {
-    width: 10px;
-    height: 2px;
-    background-color: #545454;
-    border-radius: 3px;
+    &__line {
+        width: 10px;
+        height: 2px;
+        background-color: #545454;
+        border-radius: 3px;
 
-    &:first-of-type {
-      transform: rotate(45deg);
-      position: relative;
-      bottom: -1px;
+        &:first-of-type {
+            transform: rotate(45deg);
+            position: relative;
+            bottom: -1px;
+        }
+
+        &:last-of-type {
+            transform: rotate(-45deg);
+            position: relative;
+            top: -1px;
+        }
     }
-
-    &:last-of-type {
-      transform: rotate(-45deg);
-      position: relative;
-      top: -1px;
-    }
-  }
 }

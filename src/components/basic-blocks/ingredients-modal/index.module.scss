@@ -1,77 +1,77 @@
-@import '~styles/variables.scss';
-@import '~styles/mixins/mixins.scss';
+@import "variables";
+@import "mixins";
 
 
 .modal {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
 
-  &__content {
-    position: relative;
-    width: 736px;
-    height: 648px;
-    background: #FCFCFD;
-    border: 1px solid #E6E8EC;
-    box-sizing: border-box;
-    box-shadow: 0px 64px 64px -48px rgba(15, 15, 15, 0.08);
-    border-radius: 24px;
-  }
+    &__content {
+        position: relative;
+        width: 736px;
+        height: 648px;
+        background: #FCFCFD;
+        border: 1px solid #E6E8EC;
+        box-sizing: border-box;
+        box-shadow: 0 64px 64px -48px rgb(15 15 15 / 8%);
+        border-radius: 24px;
+    }
 
-  @media (max-width: 1280px) {
+    @media (max-width: 1280px) {
 
-  }
+    }
 
-  @media (max-width: 1025px) {
+    @media (max-width: 1025px) {
 
-  }
+    }
 
-  @media (max-width: 600px) {
+    @media (max-width: 600px) {
 
-  }
+    }
 
 }
 
 .body {
-  height: 420px;
-  overflow-y: scroll;
+    height: 420px;
+    overflow-y: scroll;
 
-  &__title {
-    font-weight: 600;
-    font-size: 24px;
-    line-height: 160%;
-    letter-spacing: 0.01em;
-    color: #14181F;
-  }
+    &__title {
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 160%;
+        letter-spacing: 0.01em;
+        color: #14181F;
+    }
 
-  &::-webkit-scrollbar {
-    border-radius: 10px;
-    height: 10px;
-    width: 14px;
-  }
+    &::-webkit-scrollbar {
+        border-radius: 10px;
+        height: 10px;
+        width: 14px;
+    }
 
-  &::-webkit-scrollbar-thumb {
-    padding-right: 10px;
-    background: #FFAA00;
-    border-right: 10px transparent solid;
-    background-clip: padding-box;
-  }
+    &::-webkit-scrollbar-thumb {
+        padding-right: 10px;
+        background: #FA0;
+        border-right: 10px transparent solid;
+        background-clip: padding-box;
+    }
 
-  &::-webkit-scrollbar-track {
-    padding-right: 10px;
-    background: #FFD49E;
-    border-right: 10px transparent solid;
-    background-clip: padding-box;
-  }
+    &::-webkit-scrollbar-track {
+        padding-right: 10px;
+        background: #FFD49E;
+        border-right: 10px transparent solid;
+        background-clip: padding-box;
+    }
 
 }
 
 .title {
-  width: 546px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    width: 546px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-weight: 600 !important;
     font-size: 18px !important;
     line-height: 160% !important;
@@ -80,159 +80,162 @@
 }
 
 .image {
-  width: 54px;
-  height: 54px;
-  border-radius: 8px;
+    width: 54px;
+    height: 54px;
+    border-radius: 8px;
 }
 
 .element_container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .element_text {
-  font-style: normal;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 160%;
-  letter-spacing: 0.01em;
-  color: #566481;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 160%;
+    letter-spacing: 0.01em;
+    color: #566481;
 }
 
 .categories {
-  display: flex;
-  margin-top: 8px;
-  column-gap: 50px;
+    display: flex;
+    margin-top: 8px;
+    column-gap: 50px;
 }
 
 .ingredient {
-  &__container {
+    &__container {
+        display: flex;
+        column-gap: 32px;
+        padding: 17px 0;
+        border: 1px solid #E6E8EC;
+        border-left: none;
+        border-right: none;
+    }
+
+    &__name {
+        text-align: left;
+
+        //width: 202px;
+        flex: 1;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 160%;
+        letter-spacing: 0.01em;
+        color: #14181F;
+    }
+
+    &__amount {
+        text-align: left;
+
+        //width: 88px;
+        flex: 1;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 160%;
+        letter-spacing: 0.01em;
+        color: #AFB8CA;
+    }
+
+    &__seller {
+        text-align: left;
+
+        //width: 204px;
+        flex: 1;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 160%;
+        letter-spacing: 0.01em;
+        color: #566481;
+    }
+
+    &__price {
+        text-align: right;
+        flex: 0 1 auto;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 24px;
+        text-align: right;
+        color: #23262F;
+    }
+}
+
+.total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 432px;
+    background: #F4F5F6;
+    border-radius: 8px;
+    padding: 12px;
+
+    &__text {
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 160%;
+        letter-spacing: 0.01em;
+        color: #14181F;
+    }
+
+    &__number {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 160%;
+        text-align: right;
+        letter-spacing: 0.01em;
+        color: #14181F;
+    }
+}
+
+.close_icon {
+    position: absolute !important;
+    right: 0 !important;
+    top: 0 !important;
+    z-index: 999 !important;
+    margin: 37px !important;
+}
+
+.header__container {
     display: flex;
     column-gap: 32px;
     padding: 17px 0;
-    border: 1px solid #E6E8EC;
-    border-left: none;
-    border-right: none;
-  }
+    border: none;
+}
 
-  &__name {
-    text-align: left;
-    //width: 202px;
+.table__header {
     flex: 1;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 160%;
-    letter-spacing: 0.01em;
-    color: #14181F;
-  }
-
-  &__amount {
-    text-align: left;
-    //width: 88px;
-    flex: 1;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 160%;
-    letter-spacing: 0.01em;
-    color: #AFB8CA;
-  }
-
-  &__seller {
-    text-align: left;
-    //width: 204px;
-    flex: 1;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    font-weight: 600;
+    font-style: normal;
+    font-weight: normal;
     font-size: 14px;
     line-height: 160%;
     letter-spacing: 0.01em;
     color: #566481;
-  }
-
-  &__price {
-    text-align: right;
-    flex: 0 1 auto;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 24px;
-    text-align: right;
-    color: #23262F;
-  }
-}
-
-.total {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 432px;
-  background: #F4F5F6;
-  border-radius: 8px;
-  padding: 12px;
-
-  &__text {
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 160%;
-    letter-spacing: 0.01em;
-    color: #14181F;
-  }
-
-  &__number {
-    font-style: normal;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 160%;
-    text-align: right;
-    letter-spacing: 0.01em;
-    color: #14181F;
-  }
-}
-
-.close_icon {
-  position: absolute !important;
-  right: 0 !important;
-  top: 0 !important;
-  z-index: 999 !important;
-  margin: 37px !important;
-}
-
-.header__container {
-  display: flex;
-  column-gap: 32px;
-  padding: 17px 0;
-  border: none;
-}
-
-.table__header {
-  flex: 1;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 160%;
-  letter-spacing: 0.01em;
-  color: #566481;
-  text-align: left;
+    text-align: left;
 }
 
 .table__header__price {
-  flex: 1;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 160%;
-  letter-spacing: 0.01em;
-  color: #566481;
-  text-align: right;
+    flex: 1;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 160%;
+    letter-spacing: 0.01em;
+    color: #566481;
+    text-align: right;
 }

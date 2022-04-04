@@ -1,76 +1,76 @@
 @import "./modal";
-@import "~styles/variables";
-@import "~styles/app";
-@import "~styles/normalize";
+@import "variables";
+@import "app";
+@import "normalize";
 
-@import "~styles/mixins/mixins";
+@import "mixins";
 
 body {
     [class*="MuiButton-root"] {
-        text-transform: none;
-        box-shadow: 0 3px 6px #00000029;
-        border-radius: 5px;
-        width: 259px;
-        height: 56px;
+        width          : 259px;
+        height         : 56px;
+        text-transform : none;
+        border-radius  : 5px;
+        box-shadow     : 0 3px 6px #00000029;
 
     }
 
     [class*="MuiButton-label"] {
-        white-space: nowrap;
+        white-space : nowrap;
     }
 
     [class*="MuiRating-root"] {
-        color: $--color-orange;
+        color : $--color-orange;
     }
 
     [class*="MuiInputBase-input"] {
-        color: #6a6a6a;
+        color : #6a6a6a;
     }
 
     [class*="MuiFormLabel-root"] {
         @include fontSemiBold;
 
-        font-size: 16px;
-        color: $--color-black;
+        font-size : 16px;
+        color     : $--color-black;
     }
 
     [class*="MuiInputLabel-formControl"] {
-        transform: translate(0, 0) scale(1);
+        transform : translate(0, 0) scale(1);
     }
 
     [class*="MuiInput-underline"] {
-        border: 0;
+        border : 0;
     }
 
     [class*="MuiTab-root"] {
-        min-width: 0;
-        margin: 0 10px 0 0;
+        min-width : 0;
+        margin    : 0 10px 0 0;
     }
 
     [class*="MuiTooltip-popper"] {
-        z-index: 195;
+        z-index : 195;
     }
 
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {
-        appearance: none;
-        margin: 0;
+        margin     : 0;
+        appearance : none;
     }
 
     input[type="number"] {
-        appearance: textfield;
+        appearance : textfield;
     }
 }
 
 // CKEditor
 .ck-content {
-    min-height: 450px;
+    min-height : 450px;
 }
 
 b,
 strong {
     @include fontMedium;
 
-    font-weight: 700;
+    font-weight : 700;
 }
 

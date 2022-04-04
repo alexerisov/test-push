@@ -1,81 +1,82 @@
-@import '~styles/variables.scss';
-@import '~styles/mixins/mixins.scss';
+@import "variables";
+@import "mixins";
 
 
 .block {
-  &__title {
-    font-style: normal;
-    font-weight: 600;
-    font-size: 24px;
-    line-height: 160%;
-    letter-spacing: 0.01em;
-    color: #353E50;
-  }
+    &__title {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 160%;
+        letter-spacing: 0.01em;
+        color: #353E50;
+    }
 
-  &__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 32px;
-    margin-bottom: 24px;
-  }
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 32px;
+        margin-bottom: 24px;
+    }
 
-  &__body {
-    display: flex;
-    flex-wrap: wrap;
-    column-gap: 20px;
-  }
+    &__body {
+        display: flex;
+        flex-wrap: wrap;
+        column-gap: 20px;
+    }
 
-  @media (max-width: 1280px) {
+    @media (max-width: 1280px) {
 
-  }
+    }
 
-  @media (max-width: 1025px) {
+    @media (max-width: 1025px) {
 
-  }
+    }
 
-  @media (max-width: 600px) {
+    @media (max-width: 600px) {
 
-  }
+    }
 
 }
 
 .tabs {
-  align-items: center;
-  &__scroller {
-    display: flex;
-  }
+    align-items: center;
 
-  &__indicator {
-    display: none;
-  }
+    &__scroller {
+        display: flex;
+    }
 
-  &__container {
-  }
+    &__indicator {
+        display: none;
+    }
+
+    &__container {
+    }
 }
 
 .tab {
-  color: #566481 !important;
-  min-height: 34px !important;
-  height: 34px !important;
-  border-radius: 100px !important;
-  text-transform: capitalize !important;
-  font-style: normal !important;
-  font-weight: bold !important;
-  font-size: 14px !important;
-  line-height: 160% !important;
-  display: flex !important;
-  align-items: center !important;
-  letter-spacing: 0.01em !important;
+    color: #566481 !important;
+    min-height: 34px !important;
+    height: 34px !important;
+    border-radius: 100px !important;
+    text-transform: capitalize !important;
+    font-style: normal !important;
+    font-weight: bold !important;
+    font-size: 14px !important;
+    line-height: 160% !important;
+    display: flex !important;
+    align-items: center !important;
+    letter-spacing: 0.01em !important;
 
-  &__selected {
-    background: #14181F !important;
-    color: #FCFCFD !important;
-  }
+    &__selected {
+        background: #14181F !important;
+        color: #FCFCFD !important;
+    }
 
-  &__disabled {
-    display: none !important;
-  }
+    &__disabled {
+        display: none !important;
+    }
 }
 
 .divider {
@@ -83,5 +84,5 @@
 }
 
 .collapse {
-  width: 100%;
+    width: 100%;
 }

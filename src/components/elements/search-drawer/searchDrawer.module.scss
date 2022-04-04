@@ -1,24 +1,24 @@
-@import '~styles/variables.scss';
+@import "variables";
 
 .drawer {
-  &__toggle {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 42.2px;
-    height: 42.2px;
-    margin-left: 20px;
-    color: $--color-orange;
-    border-radius: 50%;
-    border: 1.5px solid rgba(0, 0, 0, 0.23);
-    cursor: pointer;
-  }
+    &__toggle {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 42.2px;
+        height: 42.2px;
+        margin-left: 20px;
+        color: $--color-orange;
+        border-radius: 50%;
+        border: 1.5px solid rgb(0 0 0 / 23%);
+        cursor: pointer;
+    }
 
-  &__closeIcon {
-    position: absolute;
-    z-index: 3000;
-    top: 22.5px;
-    right: 23.6px;
-    cursor: pointer;
-  }
+    &__closeIcon {
+        position: absolute;
+        z-index: 3000;
+        top: 22.5px;
+        right: 23.6px;
+        cursor: pointer;
+    }
 }

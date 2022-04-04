@@ -1,45 +1,45 @@
-@import '~styles/variables.scss';
+@import "variables";
 
 .registerSuccessTitle {
-  font-size: 24px;
-  line-height: 1.08;
-  text-align: center;
-  color: $--color-green;
-  margin: 0 0 37px;
+    font-size: 24px;
+    line-height: 1.08;
+    text-align: center;
+    color: $--color-green;
+    margin: 0 0 37px;
 }
 
 .registerSuccessTextComplete {
-  margin: 200px 0 37px;
-  font-size: 18px;
-  line-height: 1.44;
-  text-align: center;
-  color: $--color-white;
-  font-weight: bold;
+    margin: 200px 0 37px;
+    font-size: 18px;
+    line-height: 1.44;
+    text-align: center;
+    color: $--color-white;
+    font-weight: bold;
 }
 
 .registerSuccessSubTitle {
-  font-size: 18px;
-  line-height: 1.44;
-  text-align: center;
-  color: $--color-white;
-  margin: 0 0 27px;
-  font-weight: bold;
-  cursor: pointer;
+    font-size: 18px;
+    line-height: 1.44;
+    text-align: center;
+    color: $--color-white;
+    margin: 0 0 27px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 .registerSuccessSubTitle:hover {
-  color: $--color-orange;
+    color: $--color-orange;
 }
 
 .registerSuccessText {
-  font-size: 14px;
-  line-height: 1.86;
-  text-align: center;
-  color: $--color-white;
-  padding-bottom: 50px;
-  cursor: pointer;
+    font-size: 14px;
+    line-height: 1.86;
+    text-align: center;
+    color: $--color-white;
+    padding-bottom: 50px;
+    cursor: pointer;
 }
 
 .registerSuccessText:hover {
-  color: $--color-orange;
+    color: $--color-orange;
 }

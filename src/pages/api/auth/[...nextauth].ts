@@ -3,7 +3,7 @@ import FacebookProvider from 'next-auth/providers/facebook';
 import http from '@/utils/http';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { getLogger } from 'loglevel';
-import NextAuth, { Awaitable, Session } from 'next-auth';
+import NextAuth from 'next-auth';
 const log = getLogger('next-auth');
 
 interface UserResponseData {

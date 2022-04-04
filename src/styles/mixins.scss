@@ -1,0 +1,127 @@
+@import "variables";
+@import "function";
+
+@mixin font-face($font-folder, $font-family, $font-name) {
+    font-family: $font-family;
+    src: url("/fonts/" + $font-folder + "/" + $font-name + ".woff2") format("woff2"),
+        url("/fonts/" + $font-folder + "/" + $font-name + ".woff") format("woff");
+}
+
+@mixin fontMontserratSemiBold() {
+    @include font-face("Montserrat", "Montserrat-SemiBold", "Montserrat-SemiBold");
+
+    font-weight: 600;
+}
+
+@mixin fontMontserratMedium() {
+    @include font-face("Montserrat", "Montserrat-Medium", "Montserrat-Medium");
+
+    font-weight: 500;
+}
+
+@mixin fontMontserratRegular() {
+    @include font-face("Montserrat", "Montserrat", "Montserrat-Regular");
+
+    font-weight: 400;
+}
+
+@mixin fontMontserratLight() {
+    @include font-face("Montserrat", "Montserrat-Light", "Montserrat-Light");
+
+    font-weight: 300;
+}
+
+@mixin fontMontserratBold() {
+    @include font-face("Montserrat", "Montserrat-Bold", "Montserrat-Bold");
+
+    font-weight: 700;
+}
+
+@mixin fontLight($font: "Montserrat") {
+    font-family: $font sans-serif !important;
+    letter-spacing: 0.01em !important;
+    font-style: normal !important;
+    font-weight: 300 !important;
+}
+
+@mixin fontRegular($font: "Montserrat") {
+    font-family: $font sans-serif !important;
+    letter-spacing: 0.01em !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+}
+
+@mixin fontMedium($font: "Montserrat") {
+    font-family: $font sans-serif !important;
+    letter-spacing: 0.01em !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+}
+
+@mixin fontSemiBold($font: "Montserrat") {
+    font-family: $font sans-serif !important;
+    letter-spacing: 0.01em !important;
+    font-style: normal !important;
+    font-weight: 600 !important;
+}
+
+@mixin fontBold($font: "Montserrat") {
+    font-family: $font sans-serif !important;
+    letter-spacing: 0.01em !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+}
+
+@mixin no_scrollbar {
+    scrollbar-width: 0;
+    scrollbar-color: transparent transparent;
+
+    &::-webkit-scrollbar {
+        width: 0 !important;
+        height: 0 !important;
+        display: none !important;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        display: none !important;
+    }
+
+    &::-webkit-scrollbar-track {
+        display: none !important;
+    }
+}
+@mixin styledScrollbar($trackColor: lighten($--color-orange-light, 10), $thumbColor: $--color-orange,  $width: 4px) {
+    scrollbar-width: $width;
+    scrollbar-height: $width;
+    scrollbar-color: $trackColor;
+
+    /* width */
+    &::-webkit-scrollbar {
+        padding-top:$width;
+        height: $width;
+        width: $width;
+        border-radius: 2px;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+        background-color: $trackColor;
+        border-radius: 2px;
+        height: $width;
+        width: $width;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+        background-color: $thumbColor;
+        border-radius: 2px;
+        height: $width;
+        width: $width;
+
+    }
+
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+        background-color: darken($thumbColor, 5);
+    }
+}

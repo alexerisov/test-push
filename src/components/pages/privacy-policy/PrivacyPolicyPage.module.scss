@@ -1,6 +1,6 @@
-@import '~styles/variables.scss';
-@import '~styles/mixins/mixins.scss';
+@import "variables";
+@import "mixins";
 
 .container {
-  padding: 2em;
+    padding: 2em;
 }

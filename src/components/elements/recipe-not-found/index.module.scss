@@ -1,31 +1,31 @@
-@import "~styles/variables.scss";
-@import "~styles/mixins/mixins.scss";
+@import "variables";
+@import "mixins";
 
 .notFound {
-  height: calc(100vh - 120px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 30px;
-  flex-direction: column;
-  gap: 30px;
+    height: calc(100vh - 120px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    flex-direction: column;
+    gap: 30px;
 
-  &__title {
-    font-size: 45px;
+    &__title {
+        font-size: 45px;
 
-    @media (max-width: $--sm) {
-      font-size: 30px;
-    }
-  }
-
-  a {
-    color: $--color-orange;
-    @media (max-width: $--sm) {
-      font-size: 25px;
+        @media (max-width: $--sm) {
+            font-size: 30px;
+        }
     }
 
-    &:hover {
-      opacity: 0.5;
+    a {
+        color: $--color-orange;
+        @media (max-width: $--sm) {
+            font-size: 25px;
+        }
+
+        &:hover {
+            opacity: 0.5;
+        }
     }
-  }
 }

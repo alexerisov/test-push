@@ -1,60 +1,60 @@
-@import '~styles/mixins/mixins.scss';
-@import '~styles/variables.scss';
+@import "mixins";
+@import "variables";
 
 .cookiesBanner {
-  width: 80vw;
-  max-width: 1300px;
-  min-height: 100px;
-  background-color: rgb(231, 240, 253);
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  margin-right: -50%;
-  transform: translate(-50%, -50%);
-  border-radius: 10px;
-
-  @media (max-width: $--lg) {
-    width: 90vw;
-    bottom: -20px;
-  }
-
-  @media (max-width: $--sm) {
-    bottom: -100px;
-  }
-
-  @media (max-width: 450px) {
-    bottom: -160px;
-  }
-
-  &_none {
-    display: none;
-  }
-
-  &__container {
-    display: flex;
-    flex-direction: row;
-    gap: 0 40px;
-    align-items: center;
+    width: 80vw;
+    max-width: 1300px;
+    min-height: 100px;
+    background-color: rgb(231 240 253);
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
 
     @media (max-width: $--lg) {
-      gap: 0 20px;
+        width: 90vw;
+        bottom: -20px;
     }
 
     @media (max-width: $--sm) {
-      flex-direction: column;
-      gap: 30px 0;
+        bottom: -100px;
     }
-  }
 
-  &__termsLink {
-    color: $--color-orange;
-
-    &:hover {
-      opacity: 0.5;
+    @media (max-width: 450px) {
+        bottom: -160px;
     }
-  }
+
+    &_none {
+        display: none;
+    }
+
+    &__container {
+        display: flex;
+        flex-direction: row;
+        gap: 0 40px;
+        align-items: center;
+
+        @media (max-width: $--lg) {
+            gap: 0 20px;
+        }
+
+        @media (max-width: $--sm) {
+            flex-direction: column;
+            gap: 30px 0;
+        }
+    }
+
+    &__termsLink {
+        color: $--color-orange;
+
+        &:hover {
+            opacity: 0.5;
+        }
+    }
 }
 
 .alert {
-  padding: 12px !important;
+    padding: 12px !important;
 }

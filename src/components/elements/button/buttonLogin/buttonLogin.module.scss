@@ -1,45 +1,45 @@
-@import '~styles/variables.scss';
+@import "variables";
 
 .buttonLogin {
-  background: none;
-  color: $--color-white;
-  border: $--color-white solid 1px;
-  border-radius: 50px;
-  text-align: center;
-  width: 281px;
-  padding: 20px 0;
-  margin: 0 auto 20px;
-  font-size: 14px;
-  line-height: 1.29;
-  display: block;
-  transition: background-color .3s linear;
-  cursor: pointer;
+    background: none;
+    color: $--color-white;
+    border: $--color-white solid 1px;
+    border-radius: 50px;
+    text-align: center;
+    width: 281px;
+    padding: 20px 0;
+    margin: 0 auto 20px;
+    font-size: 14px;
+    line-height: 1.29;
+    display: block;
+    transition: background-color .3s linear;
+    cursor: pointer;
 }
 
 .buttonLogin:hover {
-  background-color: $--color-orange;
+    background-color: $--color-orange;
 }
 
 .buttonLogin:last-of-type {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .buttonLogin__disabled {
-  background: none;
-  color: $--color-white;
-  border: $--color-white solid 1px;
-  border-radius: 50px;
-  text-align: center;
-  width: 281px;
-  padding: 20px 0;
-  margin: 0 auto 20px;
-  font-size: 14px;
-  line-height: 1.29;
-  display: block;
-  transition: none;
-  cursor: default;
+    background: none;
+    color: $--color-white;
+    border: $--color-white solid 1px;
+    border-radius: 50px;
+    text-align: center;
+    width: 281px;
+    padding: 20px 0;
+    margin: 0 auto 20px;
+    font-size: 14px;
+    line-height: 1.29;
+    display: block;
+    transition: none;
+    cursor: default;
 }
 
 .buttonLogin__disabled:hover {
-  background-color: none;
+    background-color: none;
 }

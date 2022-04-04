@@ -1,183 +1,183 @@
-@import '~styles/variables.scss';
-@import '~styles/mixins/mixins.scss';
+@import "variables";
+@import "mixins";
 
 .dashboard {
-  padding: 40px 139px 100px 139px;
-  display: flex;
-  height: 100%;
-
-  @media (max-width: $--gx - 15px) {
-    padding: 40px 40px 100px 40px;
-  }
-
-  @media (max-width: $--lg) {
-    flex-direction: column;
-    padding: 40px 40px 100px 40px;
-  }
-
-  @media (max-width: $--xs) {
-    padding: 0 0 30px;
-  }
-
-  &__myProfile {
-    color: $--color-orange;
-  }
-
-  &__navbar {
+    padding: 40px 139px 100px;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     height: 100%;
-    width: 328.25px;
-    font-size: 20px;
+
+    @media (max-width: $--gx - 15px) {
+        padding: 40px 40px 100px;
+    }
 
     @media (max-width: $--lg) {
-      margin: 0 auto;
-      width: max-content;
-    }
-
-    &__link {
-      font-size: 20px;
-      font-weight: 300;
-      line-height: 45px;
-      color: $--color-gray6;
-    }
-
-    &__link:hover {
-      color: $--color-orange;
-    }
-
-    &__link:hover:visited {
-      color: $--color-orange;
-    }
-  }
-
-  &__buttonUploud {
-    margin: 40px 0;
-
-    @media (max-width: $--lg) {
-      margin: 40px auto;
-    }
-    @media (max-width: $--sm) {
-      font-weight: 600;
-      font-size: 16px;
-      line-height: 14.6px;
-    }
-  }
-
-  &__itemContainer {
-    margin: 40px 0 0 0;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 328px;
-
-    @media (max-width: $--lg) {
-      flex-direction: row;
-      width: auto;
-      gap: 0 40px;
+        flex-direction: column;
+        padding: 40px 40px 100px;
     }
 
     @media (max-width: $--xs) {
-      overflow: hidden;
-      box-shadow: 0 3px 6px rgb(0 0 0 / 16%);
-      border-radius: 5px;
-      padding: 20px;
-      margin: 20px 0 0 0;
-    }
-  }
-
-  &__item {
-    display: flex;
-    align-items: center;
-    height: 92px;
-    border-radius: 3px;
-    background-color: $--color-gray8;
-
-    @media (max-width: $--lg) {
-      position: relative;
-      height: 30px;
-      background-color: rgba($color: #000000, $alpha: 0);
+        padding: 0 0 30px;
     }
 
-    a {
-      padding: 34px 0 0 30px;
-      color: $--color-black;
-      height: 100%;
-      width: 100%;
-
-      @media (max-width: $--lg) {
-        padding: 0;
-      }
-
-      @media (max-width: $--xs) {
-        font-size: 16px;
-        @include fontMedium();
-      }
+    &__myProfile {
+        color: $--color-orange;
     }
 
-    &_active,
-    &:hover {
-      background-color: $--color-orange;
-
-      a {
-        color: $--color-white;
+    &__navbar {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+        width: 328.25px;
+        font-size: 20px;
 
         @media (max-width: $--lg) {
-          color: $--color-black;
+            margin: 0 auto;
+            width: max-content;
         }
-      }
 
-      @media (max-width: $--lg) {
-        background-color: rgba($color: #000000, $alpha: 0);
-      }
+        &__link {
+            font-size: 20px;
+            font-weight: 300;
+            line-height: 45px;
+            color: $--color-gray6;
+        }
+
+        &__link:hover {
+            color: $--color-orange;
+        }
+
+        &__link:hover:visited {
+            color: $--color-orange;
+        }
     }
-  }
 
-  @media (max-width: $--lg) {
-    &__item_active::before {
-      content: '';
-      border-radius: 8px;
-      width: 100%;
-      height: 7px;
-      position: absolute;
-      top: 30px;
-      background: $--color-orange 0% 0% no-repeat padding-box;
+    &__buttonUploud {
+        margin: 40px 0;
 
-      @media (max-width: $--xs) {
-        top: 45px;
-      }
+        @media (max-width: $--lg) {
+            margin: 40px auto;
+        }
+        @media (max-width: $--sm) {
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 14.6px;
+        }
     }
-  }
 
-  &__title {
-    font-size: 20px;
-    font-weight: 300;
-    line-height: 45px;
-    color: $--color-gray6;
+    &__itemContainer {
+        margin: 40px 0 0;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 328px;
+
+        @media (max-width: $--lg) {
+            flex-direction: row;
+            width: auto;
+            gap: 0 40px;
+        }
+
+        @media (max-width: $--xs) {
+            overflow: hidden;
+            box-shadow: 0 3px 6px rgb(0 0 0 / 16%);
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px 0 0;
+        }
+    }
+
+    &__item {
+        display: flex;
+        align-items: center;
+        height: 92px;
+        border-radius: 3px;
+        background-color: $--color-gray8;
+
+        @media (max-width: $--lg) {
+            position: relative;
+            height: 30px;
+            background-color: rgba($color: #000, $alpha: 0%);
+        }
+
+        a {
+            padding: 34px 0 0 30px;
+            color: $--color-black;
+            height: 100%;
+            width: 100%;
+
+            @media (max-width: $--lg) {
+                padding: 0;
+            }
+
+            @media (max-width: $--xs) {
+                font-size: 16px;
+                @include fontMedium;
+            }
+        }
+
+        &_active,
+        &:hover {
+            background-color: $--color-orange;
+
+            a {
+                color: $--color-white;
+
+                @media (max-width: $--lg) {
+                    color: $--color-black;
+                }
+            }
+
+            @media (max-width: $--lg) {
+                background-color: rgba($color: #000, $alpha: 0%);
+            }
+        }
+    }
 
     @media (max-width: $--lg) {
-      text-align: center;
+        &__item_active::before {
+            content: "";
+            border-radius: 8px;
+            width: 100%;
+            height: 7px;
+            position: absolute;
+            top: 30px;
+            background: $--color-orange 0% 0% no-repeat padding-box;
+
+            @media (max-width: $--xs) {
+                top: 45px;
+            }
+        }
     }
 
-    @media (max-width: $--xs) {
-      display: none;
-    }
-  }
+    &__title {
+        font-size: 20px;
+        font-weight: 300;
+        line-height: 45px;
+        color: $--color-gray6;
 
-  &__content {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
-    margin: 85px 0 0 33px;
+        @media (max-width: $--lg) {
+            text-align: center;
+        }
 
-    @media (max-width: $--lg) {
-      margin: 85px 0 0 0;
+        @media (max-width: $--xs) {
+            display: none;
+        }
     }
 
-    @media (max-width: $--xs) {
-      margin: 40px 0 0 0;
+    &__content {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+        margin: 85px 0 0 33px;
+
+        @media (max-width: $--lg) {
+            margin: 85px 0 0;
+        }
+
+        @media (max-width: $--xs) {
+            margin: 40px 0 0;
+        }
     }
-  }
 }

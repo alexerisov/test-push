@@ -1,8 +1,8 @@
 //colors
-$--color-white: #ffffff;
-$--color-black: #000000;
+$--color-white: #fff;
+$--color-black: #000;
 $--color-black2: #2e2e2e;
-$--color-orange: #ffaa00;
+$--color-orange: #fa0;
 $--color-gray: #707070;
 $--color-gray1: #646464;
 $--color-gray2: #b1b1b1;
@@ -15,9 +15,9 @@ $--color-gray8: #f8f8f8;
 $--color-gray-9: #dfdfdf;
 $--color-gray-10: #b8b8b8;
 $--color-gray-11: #1f1f1f;
-$--color-gray-12: rgba(116, 130, 135, 0.2);
-$--color-gray-13: rgba(31, 31, 31, 0.7);
-$--color-gray-14: hsla(0, 0%, 100%, 0.7);
+$--color-gray-12: rgb(116 130 135 / 20%);
+$--color-gray-13: rgb(31 31 31 / 70%);
+$--color-gray-14: hsl(0deg 0% 100% / 70%);
 $--color-gray15: #acacac;
 $--color-gray16: #848484;
 $--color-gray17: #6d6d6d;
@@ -30,8 +30,9 @@ $--color-orange-light: #ffd47e;
 $--color-orange-light2: #fff8ea;
 $--color-blue-gray: #555a6b;
 $--color-red1: #e7001c;
+
 /* Break-point
---------------------------*/
+-------------------------- */
 
 $--xs: 576px !default;
 $--sm: 768px !default;
@@ -39,59 +40,57 @@ $--md: 992px !default;
 $--lg: 1200px !default;
 $--gx: 1450px !default;
 $--xl: 1920px !default;
-
 $--breakpoints: (
-  'xs': (
-    max-width: $--sm - 1
-  ),
-  'sm': (
-    min-width: $--sm
-  ),
-  'md': (
-    min-width: $--md
-  ),
-  'lg': (
-    min-width: $--lg
-  ),
-  'xl': (
-    min-width: $--xl
-  )
+    "xs": (
+        max-width: $--sm - 1
+    ),
+    "sm": (
+        min-width: $--sm
+    ),
+    "md": (
+        min-width: $--md
+    ),
+    "lg": (
+        min-width: $--lg
+    ),
+    "xl": (
+        min-width: $--xl
+    )
 );
-
 $--breakpoints-spec: (
-  'xs-only': (
-    max-width: $--sm - 1
-  ),
-  'sm-and-up': (
-    min-width: $--sm
-  ),
-  'sm-only': '(min-width: #{$--sm}) and (max-width: #{$--md - 1})',
-  'sm-and-down': (
-    max-width: $--md - 1
-  ),
-  'md-and-up': (
-    min-width: $--md
-  ),
-  'md-only': '(min-width: #{$--md}) and (max-width: #{$--lg - 1})',
-  'md-and-down': (
-    max-width: $--lg - 1
-  ),
-  'lg-and-up': (
-    min-width: $--lg
-  ),
-  'lg-only': '(min-width: #{$--lg}) and (max-width: #{$--xl - 1})',
-  'lg-and-down': (
-    max-width: $--xl - 1
-  ),
-  'xl-only': (
-    min-width: $--xl
-  )
+    "xs-only": (
+        max-width: $--sm - 1
+    ),
+    "sm-and-up": (
+        min-width: $--sm
+    ),
+    "sm-only": "(min-width: #{$--sm}) and (max-width: #{$--md - 1})",
+    "sm-and-down": (
+        max-width: $--md - 1
+    ),
+    "md-and-up": (
+        min-width: $--md
+    ),
+    "md-only": "(min-width: #{$--md}) and (max-width: #{$--lg - 1})",
+    "md-and-down": (
+        max-width: $--lg - 1
+    ),
+    "lg-and-up": (
+        min-width: $--lg
+    ),
+    "lg-only": "(min-width: #{$--lg}) and (max-width: #{$--xl - 1})",
+    "lg-and-down": (
+        max-width: $--xl - 1
+    ),
+    "xl-only": (
+        min-width: $--xl
+    )
 );
 
 //colors
-$--color-white: #ffffff !default;
-$--color-black: #000000 !default;
-$--color-orange: #ffaa00 !default;
+$--color-white: #fff !default;
+$--color-black: #000 !default;
+$--color-orange: #fa0 !default;
 $--color-blue: #61acd6 !default;
 $--color-gray: #707070 !default;
 $--color-green: #9fcc29 !default;

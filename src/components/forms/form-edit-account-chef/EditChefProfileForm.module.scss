@@ -1,395 +1,403 @@
-@import '~styles/mixins/mixins.scss';
-@import '~styles/variables.scss';
+@import "mixins";
+@import "variables";
 
 .profile {
-  &__title {
-    font-size: 24px;
-    @include fontSemiBold();
-    margin: 0 0 25px 0;
-  }
-
-  &__label {
-    @include fontSemiBold();
-    font-size: 16px;
-    color: #000000;
-    margin: 0 0 10px 0;
-    display: block;
-  }
-
-  &__experience {
-    display: flex;
-    flex-direction: column;
-    gap: 20px 0;
-
-    &__delete {
-      position: absolute;
-      right: 20px;
-      top: 35%;
-      background-image: url('/images/index/icons-delete-cross.svg');
-      width: 20px;
-      height: 20px;
-      background-repeat: no-repeat;
-      background-size: 20px 20px;
-      background-position: center;
-      border: none;
-    }
-
-    &__input {
-      width: 100%;
-      border-radius: 4px;
-      border: 1px solid rgba(0, 0, 0, 0.23);
-      padding: 18.5px 14px;
-      color: $--color-gray7;
-      font-size: 17.5px;
-      position: relative;
-    }
-  }
-
-  &__upload {
-    position: relative;
-    height: 90px;
-    width: 90px;
-
-    // Don't want break markup, it is styles for label for Profil-pic.jpg
-    &Label {
-      visibility: hidden;
-
-      @media (max-width: $--lg) {
-        display: none;
-      }
-    }
-  }
-
-  &__avatarBack:before {
-    background-image: url('/images/index/pencil.svg');
-    background-position: center;
-    background-size: 26px 26px;
-    background-repeat: no-repeat;
-    content: '';
-    position: absolute;
-    background-color: #000000;
-    opacity: 0;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    border-radius: 50%;
-  }
-
-  &__avatarBack:hover:before {
-    opacity: 0.5;
-  }
-
-  &__avatarBack:hover {
-    cursor: pointer;
-  }
-
-  &__formAvatar {
-    display: grid;
-    grid-template-columns: 90px auto auto;
-    gap: 26px;
-    align-items: center;
-    padding: 0 0 50px 0;
-    margin: 0 0 50px 0;
-    border-bottom: 1px solid #dfdfdf;
-
-    @media (max-width: $--lg) {
-      display: flex;
-      justify-content: center;
-      padding: 0 0 20px 0;
-    }
-  }
-
-  &__avatar {
-    width: 100%;
-    height: 90px;
-    object-fit: cover;
-    border-radius: 50%;
-    background-color: #fff;
-  }
-
-  &__input {
-    width: 525px;
-    height: 56px;
-    padding: 0 0 0 30px;
-    border: 1px solid #dedede;
-    border-radius: 4px;
-  }
-
-  &__buttonUpdate {
-    @include fontMedium();
-    font-size: 20px;
-    justify-self: end;
-    color: $--color-blue;
-    width: 140px;
-    height: 56px;
-    border: 1px solid $--color-blue;
-    border-radius: 3px;
-    cursor: pointer;
-
-    &:hover {
-      opacity: 0.5;
-    }
-
-    &:active {
-      background-color: $--color-blue;
-      color: $--color-white;
-    }
-
-    &_place_avatar {
-      @media (max-width: $--lg) {
-        display: none;
-      }
-    }
-  }
-
-  &__data {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-
     &__title {
-      @include fontSemiBold();
-      font-size: 16px;
-      margin: 0 0 10px 0;
-    }
-  }
+        font-size: 24px;
+        @include fontSemiBold;
 
-  &__formStatus {
-    height: 20px;
-    padding: 5px 0;
-
-    &_true {
-      color: green;
+        margin: 0 0 25px;
     }
 
-    &_error {
-      color: red;
-    }
-  }
+    &__label {
+        @include fontSemiBold;
 
-  &__container {
-    &_emailAndPhone {
-      display: grid;
-      grid-template-columns: 57% 40%;
-      gap: 0 20px;
-
-      @media (max-width: $--sm) {
-        grid-template-columns: 1fr;
-        gap: 20px 0;
-      }
+        font-size: 16px;
+        color: #000;
+        margin: 0 0 10px;
+        display: block;
     }
 
-    &_addRoleModels {
-      display: flex;
-      gap: 20px 36px;
-      flex-wrap: wrap;
-    }
-
-    &_otherInformations {
-      display: flex;
-      gap: 20px 33px;
-      flex-wrap: wrap;
-    }
-  }
-
-  &__button {
-    &__addRoleModels {
-      margin: 0 9px;
-      width: 97px;
-      height: 97px;
-      border: 2px solid $--color-orange;
-      border-radius: 50%;
-      color: $--color-orange;
-      @include fontSemiBold();
-      font-size: 14px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      cursor: pointer;
-
-      span:first-of-type {
-        width: 24px;
-        height: 24px;
-        background-image: url('/images/index/icon-plus-yellow.png');
-        background-size: 24px 24px;
-        background-repeat: no-repeat;
-        background-position: center;
-      }
-
-      &:hover {
-        background-color: $--color-orange;
-        color: $--color-white;
-
-        span:first-of-type {
-          background-image: url('/images/index/icon-plus-white.png');
-        }
-      }
-    }
-
-    &__otherInformations {
-      width: 260px;
-      height: 167px;
-      border: 2px solid $--color-orange;
-      color: $--color-orange;
-      @include fontSemiBold();
-      font-size: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      padding: 0 30px;
-      border-radius: 10px;
-      cursor: pointer;
-
-      span:first-of-type {
-        width: 30px;
-        height: 30px;
-        background-image: url('/images/index/icon-plus-yellow.png');
-        background-size: 30px 30px;
-        background-repeat: no-repeat;
-        background-position: center;
-      }
-
-      &:hover {
-        background-color: $--color-orange;
-        color: $--color-white;
-
-        span:first-of-type {
-          background-image: url('/images/index/icon-plus-white.png');
-        }
-      }
-    }
-  }
-
-  &__otherInformationsCard {
-    display: flex;
-    flex-direction: column;
-    width: 480px;
-    min-height: 241px;
-    gap: 35px 0;
-    padding: 28px 20px 10px 42px;
-
-    @media (max-width: $--sm) {
-      padding: 10px 0;
-    }
-
-    &__header {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    &__content {
-      display: flex;
-      gap: 0 34px;
-
-      @media (max-width: $--sm) {
+    &__experience {
+        display: flex;
         flex-direction: column;
-      }
+        gap: 20px 0;
+
+        &__delete {
+            position: absolute;
+            right: 20px;
+            top: 35%;
+            background-image: url("/images/index/icons-delete-cross.svg");
+            width: 20px;
+            height: 20px;
+            background-repeat: no-repeat;
+            background-size: 20px 20px;
+            background-position: center;
+            border: none;
+        }
+
+        &__input {
+            width: 100%;
+            border-radius: 4px;
+            border: 1px solid rgb(0 0 0 / 23%);
+            padding: 18.5px 14px;
+            color: $--color-gray7;
+            font-size: 17.5px;
+            position: relative;
+        }
     }
 
-    &__title {
-      font-size: 22px;
-      line-height: 33px;
-      color: $--color-orange;
-      @include fontSemiBold();
+    &__upload {
+        position: relative;
+        height: 90px;
+        width: 90px;
+
+        // Don't want break markup, it is styles for label for Profil-pic.jpg
+        &Label {
+            visibility: hidden;
+
+            @media (max-width: $--lg) {
+                display: none;
+            }
+        }
     }
 
-    &__list {
-      display: flex;
-      flex-direction: column;
-      gap: 11px 0;
-
-      span:last-of-type {
-        font-size: 18px;
-        line-height: 33px;
-        @include fontMedium();
-        color: $--color-gray7;
-      }
+    &__avatarBack::before {
+        background-image: url("/images/index/pencil.svg");
+        background-position: center;
+        background-size: 26px 26px;
+        background-repeat: no-repeat;
+        content: "";
+        position: absolute;
+        background-color: #000;
+        opacity: 0;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        border-radius: 50%;
     }
 
-    &__listIndex {
-      width: 29px;
-      height: 29px;
-      border-radius: 50%;
-      background-color: $--color-orange;
-      color: $--color-white;
-      margin: 0 10px 0 0;
-      justify-content: center;
-      align-items: center;
-      display: inline-flex;
-    }
-
-    &__buttonEdit {
-      width: 26px;
-      height: 26px;
-      border: 2px solid $--color-orange;
-      margin: 0 10px 0 0;
-      background-image: url('/images/index/icons-edit-yellow.png');
-      background-repeat: no-repeat;
-      background-size: 18px 18px;
-      background-position: center;
-      cursor: pointer;
-
-      &:hover {
+    &__avatarBack:hover::before {
         opacity: 0.5;
-      }
     }
 
-    &__buttonDelete {
-      width: 26px;
-      height: 26px;
-      border: 2px solid $--color-orange;
-      background-image: url('/images/index/icons-delete-yellow.png');
-      background-repeat: no-repeat;
-      background-size: 18px 18px;
-      background-position: center;
-      cursor: pointer;
-
-      &:hover {
-        opacity: 0.5;
-      }
+    &__avatarBack:hover {
+        cursor: pointer;
     }
 
-    &__buttons {
-      display: flex;
-      margin: 0 0 0 10px;
+    &__formAvatar {
+        display: grid;
+        grid-template-columns: 90px auto auto;
+        gap: 26px;
+        align-items: center;
+        padding: 0 0 50px;
+        margin: 0 0 50px;
+        border-bottom: 1px solid #dfdfdf;
+
+        @media (max-width: $--lg) {
+            display: flex;
+            justify-content: center;
+            padding: 0 0 20px;
+        }
     }
-  }
 
-  &__iconOtherInformations {
-    width: 101px;
-    height: 101px;
-
-    @media (max-width: $--sm) {
-      margin: 0 auto 10px auto;
+    &__avatar {
+        width: 100%;
+        height: 90px;
+        object-fit: cover;
+        border-radius: 50%;
+        background-color: #fff;
     }
-  }
-
-  &__buttonAddExperience {
-    height: 50px;
-    width: 100%;
-    border: 2px solid $--color-orange;
-    border-radius: 8px;
-    color: $--color-orange;
-    font-size: 18px;
-    @include fontMedium();
-    cursor: pointer;
-  }
-
-  &__inputPhone {
-    width: 100%;
-    border-radius: 4px;
-    border: 1px solid rgba(0, 0, 0, 0.23);
-    padding: 14px;
-    position: relative;
 
     &__input {
-      border: none;
-      color: $--color-gray7;
-      font-size: 17.5px;
+        width: 525px;
+        height: 56px;
+        padding: 0 0 0 30px;
+        border: 1px solid #dedede;
+        border-radius: 4px;
     }
-  }
+
+    &__buttonUpdate {
+        @include fontMedium;
+
+        font-size: 20px;
+        justify-self: end;
+        color: $--color-blue;
+        width: 140px;
+        height: 56px;
+        border: 1px solid $--color-blue;
+        border-radius: 3px;
+        cursor: pointer;
+
+        &:hover {
+            opacity: 0.5;
+        }
+
+        &:active {
+            background-color: $--color-blue;
+            color: $--color-white;
+        }
+
+        &_place_avatar {
+            @media (max-width: $--lg) {
+                display: none;
+            }
+        }
+    }
+
+    &__data {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        &__title {
+            @include fontSemiBold;
+
+            font-size: 16px;
+            margin: 0 0 10px;
+        }
+    }
+
+    &__formStatus {
+        height: 20px;
+        padding: 5px 0;
+
+        &_true {
+            color: green;
+        }
+
+        &_error {
+            color: red;
+        }
+    }
+
+    &__container {
+        &_emailAndPhone {
+            display: grid;
+            grid-template-columns: 57% 40%;
+            gap: 0 20px;
+
+            @media (max-width: $--sm) {
+                grid-template-columns: 1fr;
+                gap: 20px 0;
+            }
+        }
+
+        &_addRoleModels {
+            display: flex;
+            gap: 20px 36px;
+            flex-wrap: wrap;
+        }
+
+        &_otherInformations {
+            display: flex;
+            gap: 20px 33px;
+            flex-wrap: wrap;
+        }
+    }
+
+    &__button {
+        &__addRoleModels {
+            margin: 0 9px;
+            width: 97px;
+            height: 97px;
+            border: 2px solid $--color-orange;
+            border-radius: 50%;
+            color: $--color-orange;
+            @include fontSemiBold;
+
+            font-size: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            cursor: pointer;
+
+            span:first-of-type {
+                width: 24px;
+                height: 24px;
+                background-image: url("/images/index/icon-plus-yellow.png");
+                background-size: 24px 24px;
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+
+            &:hover {
+                background-color: $--color-orange;
+                color: $--color-white;
+
+                span:first-of-type {
+                    background-image: url("/images/index/icon-plus-white.png");
+                }
+            }
+        }
+
+        &__otherInformations {
+            width: 260px;
+            height: 167px;
+            border: 2px solid $--color-orange;
+            color: $--color-orange;
+            @include fontSemiBold;
+
+            font-size: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 0 30px;
+            border-radius: 10px;
+            cursor: pointer;
+
+            span:first-of-type {
+                width: 30px;
+                height: 30px;
+                background-image: url("/images/index/icon-plus-yellow.png");
+                background-size: 30px 30px;
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+
+            &:hover {
+                background-color: $--color-orange;
+                color: $--color-white;
+
+                span:first-of-type {
+                    background-image: url("/images/index/icon-plus-white.png");
+                }
+            }
+        }
+    }
+
+    &__otherInformationsCard {
+        display: flex;
+        flex-direction: column;
+        width: 480px;
+        min-height: 241px;
+        gap: 35px 0;
+        padding: 28px 20px 10px 42px;
+
+        @media (max-width: $--sm) {
+            padding: 10px 0;
+        }
+
+        &__header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        &__content {
+            display: flex;
+            gap: 0 34px;
+
+            @media (max-width: $--sm) {
+                flex-direction: column;
+            }
+        }
+
+        &__title {
+            font-size: 22px;
+            line-height: 33px;
+            color: $--color-orange;
+            @include fontSemiBold;
+        }
+
+        &__list {
+            display: flex;
+            flex-direction: column;
+            gap: 11px 0;
+
+            span:last-of-type {
+                font-size: 18px;
+                line-height: 33px;
+                @include fontMedium;
+
+                color: $--color-gray7;
+            }
+        }
+
+        &__listIndex {
+            width: 29px;
+            height: 29px;
+            border-radius: 50%;
+            background-color: $--color-orange;
+            color: $--color-white;
+            margin: 0 10px 0 0;
+            justify-content: center;
+            align-items: center;
+            display: inline-flex;
+        }
+
+        &__buttonEdit {
+            width: 26px;
+            height: 26px;
+            border: 2px solid $--color-orange;
+            margin: 0 10px 0 0;
+            background-image: url("/images/index/icons-edit-yellow.png");
+            background-repeat: no-repeat;
+            background-size: 18px 18px;
+            background-position: center;
+            cursor: pointer;
+
+            &:hover {
+                opacity: 0.5;
+            }
+        }
+
+        &__buttonDelete {
+            width: 26px;
+            height: 26px;
+            border: 2px solid $--color-orange;
+            background-image: url("/images/index/icons-delete-yellow.png");
+            background-repeat: no-repeat;
+            background-size: 18px 18px;
+            background-position: center;
+            cursor: pointer;
+
+            &:hover {
+                opacity: 0.5;
+            }
+        }
+
+        &__buttons {
+            display: flex;
+            margin: 0 0 0 10px;
+        }
+    }
+
+    &__iconOtherInformations {
+        width: 101px;
+        height: 101px;
+
+        @media (max-width: $--sm) {
+            margin: 0 auto 10px;
+        }
+    }
+
+    &__buttonAddExperience {
+        height: 50px;
+        width: 100%;
+        border: 2px solid $--color-orange;
+        border-radius: 8px;
+        color: $--color-orange;
+        font-size: 18px;
+        @include fontMedium;
+
+        cursor: pointer;
+    }
+
+    &__inputPhone {
+        width: 100%;
+        border-radius: 4px;
+        border: 1px solid rgb(0 0 0 / 23%);
+        padding: 14px;
+        position: relative;
+
+        &__input {
+            border: none;
+            color: $--color-gray7;
+            font-size: 17.5px;
+        }
+    }
 }

@@ -1,6 +1,6 @@
 import React, { PropsWithChildren, useState } from 'react';
 import s from './EditViewerProfileForm.module.scss';
-import { connect, ConnectedProps, DispatchProp } from 'react-redux';
+import { connect, DispatchProp } from 'react-redux';
 
 import ContentLayout from '@/components/layouts/layout-profile-content';
 import { profileActions, accountActions } from '@/store/actions';

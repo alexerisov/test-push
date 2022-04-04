@@ -1,5 +1,5 @@
-@import "~styles/variables.scss";
-@import "~styles/mixins/mixins.scss";
+@import "variables";
+@import "mixins";
 
 .card {
     width: 338px;
@@ -35,7 +35,8 @@
     }
 
     &__title {
-        @include fontMedium();
+        @include fontMedium;
+
         max-width: 198px;
         padding: 3px 18px;
         color: $--color-black;

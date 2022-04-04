@@ -1,31 +1,33 @@
-@import '~styles/variables.scss';
-@import '~styles/mixins/mixins.scss';
+@import "variables";
+@import "mixins";
 
 .iconWrap {
-  border: 3px solid $--color-orange;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 35px;
-  height: 35px;
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
+    border: 3px solid $--color-orange;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
 }
+
 .iconWrapCommon {
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 40px;
-  height: 40px;
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  background-color: #fcfcfd;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background-color: #fcfcfd;
 }
+
 .icon {
-  width: 22px;
-  height: 18px;
+    width: 22px;
+    height: 18px;
 }

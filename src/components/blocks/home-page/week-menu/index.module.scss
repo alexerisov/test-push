@@ -1,69 +1,71 @@
-@import '~styles/variables.scss';
-@import '~styles/mixins/mixins.scss';
+@import "variables";
+@import "mixins";
 
 
 .container {
-  padding: 60px 160px !important;
-  position: relative;
+    padding: 60px 160px !important;
+    position: relative;
 
-
-  .slider {
-    &_title {
-      font-style: normal;
-      font-weight: bold;
-      font-size: 48px;
-      line-height: 140%;
-      letter-spacing: 0.01em;
-      color: #14181F;
-    }
-    &_subtitle {
-      font-style: normal;
-      font-weight: normal;
-      font-size: 24px;
-      line-height: 160%;
-      letter-spacing: 0.01em;
-      color: #566481;
-      margin-bottom: 73px;
-    }
-
-    &_arrows_container {
-      padding: inherit;
-      position: absolute;
-      inset: 0 0 auto auto;
-    }
-
-    &_body {
-      display: flex;
-      flex-direction: row;
-      overflow-x: auto;
-      column-gap: 20px;
-      padding-bottom: 10px;
-      @include styledScrollbar();
-    }
-  }
-
-  @media (max-width: 1025px) {
-    padding: 60px 80px !important;
-  }
-
-  @media (max-width: 600px) {
-    padding: 60px 32px 144px !important;
 
     .slider {
-      &_arrows_container {
-        padding-bottom: 50px;
-        inset: auto auto 0 0;
-      }
+        &_title {
+            font-style: normal;
+            font-weight: bold;
+            font-size: 48px;
+            line-height: 140%;
+            letter-spacing: 0.01em;
+            color: #14181F;
+        }
 
-      &_title {
-        font-size: 40px;
-      }
-      &_subtitle {
-        font-size: 18px;
-      }
+        &_subtitle {
+            font-style: normal;
+            font-weight: normal;
+            font-size: 24px;
+            line-height: 160%;
+            letter-spacing: 0.01em;
+            color: #566481;
+            margin-bottom: 73px;
+        }
+
+        &_arrows_container {
+            padding: inherit;
+            position: absolute;
+            inset: 0 0 auto auto;
+        }
+
+        &_body {
+            display: flex;
+            flex-direction: row;
+            overflow-x: auto;
+            column-gap: 20px;
+            padding-bottom: 10px;
+            @include styledScrollbar;
+        }
     }
 
-  }
+    @media (max-width: 1025px) {
+        padding: 60px 80px !important;
+    }
+
+    @media (max-width: 600px) {
+        padding: 60px 32px 144px !important;
+
+        .slider {
+            &_arrows_container {
+                padding-bottom: 50px;
+                inset: auto auto 0 0;
+            }
+
+            &_title {
+                font-size: 40px;
+            }
+
+            &_subtitle {
+                font-size: 18px;
+            }
+        }
+
+    }
 
 }
 

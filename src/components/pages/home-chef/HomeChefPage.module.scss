@@ -1,336 +1,342 @@
-@import "~styles/variables.scss";
-@import "~styles/mixins/mixins.scss";
+@import "variables";
+@import "mixins";
 
 .profile {
-  display: flex;
-  flex-direction: column;
-  padding: 40px 0 80px;
+    display: flex;
+    flex-direction: column;
+    padding: 40px 0 80px;
 
-  @media (max-width: $--md) {
-    padding: 20px 0;
-  }
+    @media (max-width: $--md) {
+        padding: 20px 0;
+    }
 }
 
 .content {
-  height: 500px;
+    height: 500px;
 }
 
 // Navbar
 .navbar {
-  margin-bottom: 68px;
-  font-size: 20px;
-  font-weight: 300;
-  line-height: 45px;
-
-  @media (max-width: $--md) {
-    align-self: center;
-    margin-bottom: 20px;
-  }
-
-  span {
-    color: $--color-orange;
-  }
-
-  a, a:active, a:visited {
+    margin-bottom: 68px;
     font-size: 20px;
     font-weight: 300;
     line-height: 45px;
-    color: $--color-gray6;
-  }
+
+    @media (max-width: $--md) {
+        align-self: center;
+        margin-bottom: 20px;
+    }
+
+    span {
+        color: $--color-orange;
+    }
+
+    a, a:active, a:visited {
+        font-size: 20px;
+        font-weight: 300;
+        line-height: 45px;
+        color: $--color-gray6;
+    }
 }
 
 .section {
-  margin-bottom: 40px;
+    margin-bottom: 40px;
 
-  &:last-child {
-    margin-bottom: 66px;
-  }
+    &:last-child {
+        margin-bottom: 66px;
+    }
 }
 
 .sectionTitle {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .avatar {
-  @media (max-width: $--xs) {
-    position: unset !important;
-    align-self: center;
-  }
+    @media (max-width: $--xs) {
+        position: unset !important;
+        align-self: center;
+    }
 }
 
 // Info
 .info {
-  padding-bottom: 40px;
-  margin-bottom: 40px;
-  border-bottom: 1px solid $--color-gray2;
+    padding-bottom: 40px;
+    margin-bottom: 40px;
+    border-bottom: 1px solid $--color-gray2;
 
-  @media (max-width: $--xs) {
-    display: flex;
-    flex-direction: column;
-  }
-
-  &__content {
-    display: flex;
-    padding-top: 24px;
-
-    @media (max-width: $--md) {
-      flex-direction: column;
+    @media (max-width: $--xs) {
+        display: flex;
+        flex-direction: column;
     }
-  }
+
+    &__content {
+        display: flex;
+        padding-top: 24px;
+
+        @media (max-width: $--md) {
+            flex-direction: column;
+        }
+    }
 }
 
 .info__left,
 .info__right {
-  flex: 1;
-  display: flex;
+    flex: 1;
+    display: flex;
 }
 
 .info__left {
-  flex-direction: column;
-  padding-right: 56px;
-  border-right: 1px solid $--color-gray;
+    flex-direction: column;
+    padding-right: 56px;
+    border-right: 1px solid $--color-gray;
 
-  @media (max-width: $--md) {
-    padding-right: 0;
-    width: 100%;
-    border: none;
-  }
+    @media (max-width: $--md) {
+        padding-right: 0;
+        width: 100%;
+        border: none;
+    }
 
-  &__table {
-    width: 100%;
-  }
+    &__table {
+        width: 100%;
+    }
 }
 
 .row {
-  @media (max-width: $--xs) {
-    display: grid;
-    grid-template-columns: 1fr;
-  }
+    @media (max-width: $--xs) {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
 }
 
 .info__right {
-  display: flex;
-  flex-direction: column;
-  padding-left: 56px;
+    display: flex;
+    flex-direction: column;
+    padding-left: 56px;
 
-  @media (max-width: $--md) {
-    width: 100%;
-    padding-left: 0;
-  }
+    @media (max-width: $--md) {
+        width: 100%;
+        padding-left: 0;
+    }
 }
 
 .cell {
-  max-width: 50%;
-  padding-bottom: 28px;
+    max-width: 50%;
+    padding-bottom: 28px;
 
-  @media (max-width: $--md) {
-    min-width: 100%;
-    max-width: 100%;
-  }
+    @media (max-width: $--md) {
+        min-width: 100%;
+        max-width: 100%;
+    }
 }
 
 .cell:nth-child(2n) {
-  width: 30%;
+    width: 30%;
 }
 
 .field {
-  margin-bottom: 16px;
-  @include fontMedium();
-  font-size: 20px;
-  line-height: 24px;
-  text-transform: uppercase;
+    margin-bottom: 16px;
+    @include fontMedium;
+
+    font-size: 20px;
+    line-height: 24px;
+    text-transform: uppercase;
 }
 
 .value {
-  max-width: 90%;
-  word-break: break-word;
-  @include fontMedium();
-  font-size: 18px;
-  line-height: 22px;
-  color: $--color-gray7;
+    max-width: 90%;
+    word-break: break-word;
+    @include fontMedium;
 
-  @media (max-width: $--md) {
-    max-width: 100%;
-  }
+    font-size: 18px;
+    line-height: 22px;
+    color: $--color-gray7;
+
+    @media (max-width: $--md) {
+        max-width: 100%;
+    }
 }
 
 .experience__value {
-  margin-bottom: 5px;
-  word-wrap: break-word;
+    margin-bottom: 5px;
+    word-wrap: break-word;
 }
 
 .name {
-  margin: 0 0 63px 138px;
+    margin: 0 0 63px 138px;
 
-  @media (max-width: $--xs) {
-    margin: 0;
-  }
+    @media (max-width: $--xs) {
+        margin: 0;
+    }
 
-  &__field {
-    font-size: 22px;
-    line-height: 27px;
-  }
+    &__field {
+        font-size: 22px;
+        line-height: 27px;
+    }
 
-  &__value {
-    max-width: 100%;
-    font-size: 20px;
-    line-height: 24px;
-    margin-bottom: 16px;
-  }
+    &__value {
+        max-width: 100%;
+        font-size: 20px;
+        line-height: 24px;
+        margin-bottom: 16px;
+    }
 }
 
 .bio {
-  margin-bottom: 28px;
+    margin-bottom: 28px;
 }
 
 /* Role models */
 .roleCarousel {
-  position: relative;
-  height: max-content;
-
-  &__slider {
-    max-height: max-content;
-  }
-
-  & ul {
-    width: max-content !important;
-  }
-
-  &__item {
-    padding: 0 0 10px 0;
-    margin-right: 10px !important;
-  }
-
-  &__btn {
-    position: absolute;
-    top: calc(93px / 2);
-    transform: translateY(-50%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 30px;
-    height: 30px;
-    color: #fff;
-    border-radius: 50%;
-    background-color: $--color-orange;
-    cursor: pointer;
-    opacity: 0.5;
-    border: none;
-    outline: none;
-    transition: 0.2s;
-  }
-
-  &__btn:hover {
-    width: 35px;
-    height: 35px;
-    opacity: 1;
-  }
-
-  &__btn:disabled {
-    display: none;
-  }
-
-  &__empty {
     position: relative;
-    min-width: max-content;
-  }
+    height: max-content;
 
-  &__next {
-    @extend .roleCarousel__btn;
-    right: 0;
-  }
+    &__slider {
+        max-height: max-content;
+    }
 
-  &__prev {
-    @extend .roleCarousel__btn;
-    left: 0;
-  }
+    & ul {
+        width: max-content !important;
+    }
+
+    &__item {
+        padding: 0 0 10px;
+        margin-right: 10px !important;
+    }
+
+    &__btn {
+        position: absolute;
+        top: calc(93px / 2);
+        transform: translateY(-50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        color: #fff;
+        border-radius: 50%;
+        background-color: $--color-orange;
+        cursor: pointer;
+        opacity: 0.5;
+        border: none;
+        outline: none;
+        transition: 0.2s;
+    }
+
+    &__btn:hover {
+        width: 35px;
+        height: 35px;
+        opacity: 1;
+    }
+
+    &__btn:disabled {
+        display: none;
+    }
+
+    &__empty {
+        position: relative;
+        min-width: max-content;
+    }
+
+    &__next {
+        @extend .roleCarousel__btn;
+
+        right: 0;
+    }
+
+    &__prev {
+        @extend .roleCarousel__btn;
+
+        left: 0;
+    }
 }
 
 /* My favorite dishes */
 .favDishesCarousel {
-  @extend .roleCarousel;
+    @extend .roleCarousel;
 
-  & ul {
-    padding: 5px 0 5px 2px;
-  }
+    & ul {
+        padding: 5px 0 5px 2px;
+    }
 
-  &__item {
-    min-height: max-content;
-    padding: 0 0 10px 0;
-    margin-right: 20px !important;
-  }
+    &__item {
+        min-height: max-content;
+        padding: 0 0 10px;
+        margin-right: 20px !important;
+    }
 
-  &__btn:hover {
-    width: 35px;
-    height: 35px;
-  }
+    &__btn:hover {
+        width: 35px;
+        height: 35px;
+    }
 
-  &__btn:disabled {
-    display: none;
-  }
+    &__btn:disabled {
+        display: none;
+    }
 
-  &__empty {
-    position: relative;
-  }
+    &__empty {
+        position: relative;
+    }
 
-  &__next {
-    @extend .roleCarousel__next;
-    top: 50%;
-    transform: translateY(-50%);
-    right: 10px;
-  }
+    &__next {
+        @extend .roleCarousel__next;
 
-  &__prev {
-    @extend .roleCarousel__prev;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 10px;
-  }
+        top: 50%;
+        transform: translateY(-50%);
+        right: 10px;
+    }
+
+    &__prev {
+        @extend .roleCarousel__prev;
+
+        top: 50%;
+        transform: translateY(-50%);
+        left: 10px;
+    }
 }
 
-/* Other Info*/
+/* Other Info */
 .itemsContainer {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  gap: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 40px;
 
-  &__empty {
-    margin-right: auto;
-  }
+    &__empty {
+        margin-right: auto;
+    }
 }
 
 .icon {
-  width: 14px !important;
-  height: 14px !important;
+    width: 14px !important;
+    height: 14px !important;
 }
 
 /* My recipes */
 .sectionRecipes {
-  display: flex;
-  align-items: flex-start;
-
-  &__wrapper {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+    align-items: flex-start;
 
-  &__pagination {
-    margin: 20px auto 0;
-  }
+    &__wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &__pagination {
+        margin: 20px auto 0;
+    }
 }
 
 .closed {
-  position: relative;
-  top: -2px;
-  transform: rotate(90deg);
-  cursor: pointer;
+    position: relative;
+    top: -2px;
+    transform: rotate(90deg);
+    cursor: pointer;
 }
 
 .expanded {
-  position: relative;
-  top: -2px;
-  transform: rotate(-90deg);
-  cursor: pointer;
+    position: relative;
+    top: -2px;
+    transform: rotate(-90deg);
+    cursor: pointer;
 }

@@ -1,37 +1,38 @@
-@import '~styles/normalize.scss';
-@import '~styles/mixins/mixins.scss';
-@import '~styles/variables.scss';
+@import "normalize";
+@import "mixins";
+@import "variables";
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amily=Poppins:wght@500&family=Roboto:wght@300;400;500;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amily=Poppins:wght@500&family=Roboto:wght@300;400;500;700&display=swap");
 
 
 @font-face {
-  @include fontMontserratRegular();
+    @include fontMontserratRegular;
 }
 
 @font-face {
-  @include fontMontserratLight();
+    @include fontMontserratLight;
 }
 
 @font-face {
-  @include fontMontserratSemiBold();
+    @include fontMontserratSemiBold;
 }
 
 @font-face {
-  @include fontMontserratMedium();
+    @include fontMontserratMedium;
 }
 
 @font-face {
-  font-family: DMSansBold;
-  src: local('DMSans Bold'), url('/fonts/DM_Suns/DMSans-Bold.ttf') format('ttf');
+    font-family: DMSansBold;
+    src: local("DMSans Bold"), url("/fonts/DM_Suns/DMSans-Bold.ttf") format("ttf");
 }
+
 html,
 body,
 #__next {
-  height: 100%;
-  min-height: 100vh;
-  position: relative;
-  padding: 0;
-  margin: 0;
-  font: 16px/22px 'Montserrat';
+    height: 100%;
+    min-height: 100vh;
+    position: relative;
+    padding: 0;
+    margin: 0;
+    font: 16px/22px Montserrat;
 }

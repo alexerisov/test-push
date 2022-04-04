@@ -1,15 +1,15 @@
-@import '~styles/variables.scss';
+@import "variables";
 
 .registerTitle {
-  font-size: 24px;
-  line-height: 1.08;
-  text-align: center;
-  color: $--color-blue;
-  margin: 106px 0 60px;
+    font-size: 24px;
+    line-height: 1.08;
+    text-align: center;
+    color: $--color-blue;
+    margin: 106px 0 60px;
 }
 
 .registerForm {
-  margin: 0 auto 15px;
-  display: block;
-  max-width: 281px;
+    margin: 0 auto 15px;
+    display: block;
+    max-width: 281px;
 }

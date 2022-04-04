@@ -1,75 +1,75 @@
-@import '~styles/variables.scss';
+@import "variables";
 
 .cardIngredients {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: auto;
-  height: auto;
-  max-height: max-content;
-  margin: 0;
-  padding: 14px 16px;
-  border: 1px $--color-gray18 solid;
-  border-radius: 5px;
-  background-color: $--color-white;
-  min-width: max-content;
-
-  &__title {
-    font-size: 18px;
-    line-height: 22px;
-    text-align: left;
-    font-weight: 900;
-  }
-
-  &__extra {
-    font-size: 15px;
-    line-height: 18px;
-    text-align: left;
-    overflow: hidden;
-  }
-
-  &__text {
-    font-size: 14px;
-    line-height: 17px;
-    color: $--color-gray;
-    text-align: left;
-    overflow: hidden;
-  }
-
-  &__button {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: $--color-white;
-    border: 1px solid $--color-gray18;
-    outline: none;
-    padding: 0;
-    cursor: pointer;
+    position: relative;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: center;
+    width: auto;
+    height: auto;
+    max-height: max-content;
+    margin: 0;
+    padding: 14px 16px;
+    border: 1px $--color-gray18 solid;
+    border-radius: 5px;
+    background-color: $--color-white;
+    min-width: max-content;
 
-    &__line {
-      width: 10px;
-      height: 2px;
-      background-color: #545454;
-      border-radius: 3px;
-
-      &:first-of-type {
-        transform: rotate(45deg);
-        position: relative;
-        bottom: -1px;
-      }
-
-      &:last-of-type {
-        transform: rotate(-45deg);
-        position: relative;
-        top: -1px;
-      }
+    &__title {
+        font-size: 18px;
+        line-height: 22px;
+        text-align: left;
+        font-weight: 900;
     }
-  }
+
+    &__extra {
+        font-size: 15px;
+        line-height: 18px;
+        text-align: left;
+        overflow: hidden;
+    }
+
+    &__text {
+        font-size: 14px;
+        line-height: 17px;
+        color: $--color-gray;
+        text-align: left;
+        overflow: hidden;
+    }
+
+    &__button {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: $--color-white;
+        border: 1px solid $--color-gray18;
+        outline: none;
+        padding: 0;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &__line {
+            width: 10px;
+            height: 2px;
+            background-color: #545454;
+            border-radius: 3px;
+
+            &:first-of-type {
+                transform: rotate(45deg);
+                position: relative;
+                bottom: -1px;
+            }
+
+            &:last-of-type {
+                transform: rotate(-45deg);
+                position: relative;
+                top: -1px;
+            }
+        }
+    }
 }

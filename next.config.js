@@ -108,7 +108,7 @@ module.exports = withBundleAnalyzer({
       }
     );
     config.plugins.push(new webpack.EnvironmentPlugin(envs));
-    config.plugins.push(new StylelintPlugin());
+    config.plugins.push(new StylelintPlugin({ failOnError: false, emitErrors: true, quiet: true }));
 
     return config;
   },
@@ -129,9 +129,9 @@ module.exports = withBundleAnalyzer({
   trailingSlash: false,
   webpack5: true,
   sassOptions: {
-    includePaths: [path.join(__dirname, 'styles')]
+    includePaths: [path.join(__dirname, 'src/styles')]
   },
   eslint: {
     ignoreDuringBuilds: true
-  },
+  }
 });

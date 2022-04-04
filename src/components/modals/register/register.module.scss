@@ -1,195 +1,209 @@
-@import 'src/styles/variables.scss';
-@import 'src/styles/mixins/mixins.scss';
+@import "variables";
+@import "mixins";
 
 %base_social_button {
-  @include fontBold();
-  width: auto !important;
-  border-radius: 90px !important;
-  padding: 12px 24px !important;
-  font-weight: bold !important;
-  font-size: 14px !important;
-  line-height: 160% !important;
-  color: #FCFCFD !important;
-  &:disabled {
-    opacity: .2;
-  }
+    @include fontBold;
+
+    width: auto !important;
+    border-radius: 90px !important;
+    padding: 12px 24px !important;
+    font-weight: bold !important;
+    font-size: 14px !important;
+    line-height: 160% !important;
+    color: #FCFCFD !important;
+
+    &:disabled {
+        opacity: .2;
+    }
 }
 
 .register {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 0px 92px 24px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 92px 24px;
 
 
-  &_title {
-    &_wrapper {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 24px;
+    &_title {
+        &_wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 24px;
+        }
+
+        @include fontBold;
+
+        font-weight: 600;
+        font-size: 32px;
+        line-height: 140%;
+        text-align: center;
+        letter-spacing: 0.01em;
+        color: #14181F;
+        white-space: nowrap;
     }
 
-    @include fontBold();
-    font-weight: 600;
-    font-size: 32px;
-    line-height: 140%;
-    text-align: center;
-    letter-spacing: 0.01em;
-    color: #14181F;
-    white-space: nowrap;
-  }
+    &_social {
+        &_helper_text1 {
+            padding: 24px 0 32px;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 160%;
+            text-align: center;
+            letter-spacing: 0.01em;
+            color: #566481;
+        }
 
-  &_social {
-    &_helper_text1 {
-      padding: 24px 0 32px;
-      font-style: normal;
-      font-weight: 500;
-      font-size: 14px;
-      line-height: 160%;
-      text-align: center;
-      letter-spacing: 0.01em;
-      color: #566481;
+        &_helper_text2 {
+            padding: 32px 0;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 12px;
+            line-height: 160%;
+            text-align: center;
+            letter-spacing: 0.01em;
+            color: #566481;
+        }
+
+        &_buttons_block {
+            display: flex;
+            justify-content: center;
+            flex-wrap: nowrap;
+            gap: 12px;
+        }
+
+        &_button_facebook {
+            @extend %base_social_button;
+
+            background: #3b5998 !important;
+            flex: 0 1 45%;
+        }
+
+        &_button_google {
+            @extend %base_social_button;
+
+            background: #2F80ED !important;
+            flex: 0 1 45%;
+        }
+
+        &_button_apple {
+            @extend %base_social_button;
+
+            background: #14181F !important;
+            flex: 0 1 45%;
+        }
+
     }
 
-    &_helper_text2 {
-      padding: 32px 0;
-      font-style: normal;
-      font-weight: 500;
-      font-size: 12px;
-      line-height: 160%;
-      text-align: center;
-      letter-spacing: 0.01em;
-      color: #566481;
+    &_switcher {
+        @include fontMedium;
+
+        font-size: 14px;
+        line-height: 160%;
+        text-align: center;
+        color: #353E50;
+        padding: 32px 0;
+
+        &_button {
+            @include fontBold;
+
+            font-size: 14px;
+            line-height: 160%;
+            cursor: pointer;
+            color: #FA0;
+
+            &:hover {
+                color: lighten(#FA0, 10);
+            }
+        }
     }
 
-    &_buttons_block {
-      display: flex;
-      justify-content: center;
-      flex-wrap: nowrap;
-      gap: 12px;
+    &_submit_button {
+        @include fontBold;
+
+        padding: 16px 24px !important;
+        font-size: 16px !important;
+        line-height: 160% !important;
+        color: #FCFCFD !important;
+        height: 58px !important;
+        width: 100% !important;
+        background: #FA0 !important;
+        border-radius: 90px !important;
+        box-shadow: none !important;
+        margin: 24px 0 !important;
+
+        &:disabled {
+            opacity: .5;
+        }
     }
-
-    &_button_facebook {
-      @extend %base_social_button;
-      background: #3b5998 !important;
-      flex: 0 1 45%;
-    }
-
-    &_button_google {
-      @extend %base_social_button;
-      background: #2F80ED !important;
-      flex: 0 1 45%;
-    }
-
-    &_button_apple {
-      @extend %base_social_button;
-      background: #14181F !important;
-      flex: 0 1 45%;
-    }
-
-  }
-
-  &_switcher {
-    @include fontMedium();
-    font-size: 14px;
-    line-height: 160%;
-    text-align: center;
-    color: #353E50;
-    padding: 32px 0 32px;
-
-    &_button {
-      @include fontBold();
-
-      font-size: 14px;
-      line-height: 160%;
-      cursor: pointer;
-      color: #FFAA00;
-      &:hover {
-        color: lighten(#FFAA00, 10);
-      }
-    }
-  }
-
-  &_submit_button {
-    @include fontBold();
-    padding: 16px 24px !important;
-    font-size: 16px !important;
-    line-height: 160% !important;
-    color: #FCFCFD !important;
-    height: 58px !important;
-    width: 100% !important;
-    background: #FFAA00 !important;
-    border-radius: 90px !important;
-    box-shadow: none !important;
-    margin: 24px 0 24px !important;
-    &:disabled {
-      opacity: .5;
-    }
-  }
 
 }
 
 .signup_input {
-  margin-bottom: 1em;
-  & fieldset {
-    border: 2px solid #E0E4EB !important;
-    box-sizing: border-box !important;
-    border-radius: 90px !important;
-  }
-  &:hover fieldset {
-    border-color: #AFB8CA !important;
-  }
+    margin-bottom: 1em;
 
-  & input {
-    font-style: normal;
-    color: #14181F;
-    font-size: 14px;
-    line-height: 160%;
-    font-weight: 500;
-    letter-spacing: 0.01em !important;
-  }
-
-  &_icon {
-    fill: white;
-    color: white !important;
-  }
-
-  &_button {
-    color: white !important;
-    padding: 4px !important;
-    &:disabled {
-      opacity: .5;
+    & fieldset {
+        border: 2px solid #E0E4EB !important;
+        box-sizing: border-box !important;
+        border-radius: 90px !important;
     }
-  }
+
+    &:hover fieldset {
+        border-color: #AFB8CA !important;
+    }
+
+    & input {
+        font-style: normal;
+        color: #14181F;
+        font-size: 14px;
+        line-height: 160%;
+        font-weight: 500;
+        letter-spacing: 0.01em !important;
+    }
+
+    &_icon {
+        fill: white;
+        color: white !important;
+    }
+
+    &_button {
+        color: white !important;
+        padding: 4px !important;
+
+        &:disabled {
+            opacity: .5;
+        }
+    }
 }
 
 .select {
-  &_container {
-    width: 100%;
-  }
+    &_container {
+        width: 100%;
+    }
 
 
 }
 
 .links {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  margin-bottom: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    margin-bottom: 5px;
 
-  &_text {
-    @include fontSemiBold();
-    text-decoration: none !important;
-    font-size: 14px !important;
-    line-height: 160% !important;
-    color: #AFB8CA !important;
-  }
+    &_text {
+        @include fontSemiBold;
+
+        text-decoration: none !important;
+        font-size: 14px !important;
+        line-height: 160% !important;
+        color: #AFB8CA !important;
+    }
 }
 
 @media (max-width: $--md) {
@@ -197,21 +211,21 @@
 
 @media (max-width: $--md) {
     .register {
-      padding: 92px 24px 34px;
+        padding: 92px 24px 34px;
 
-      &_title {
-        &_wrapper {
-          flex-direction: column;
+        &_title {
+            &_wrapper {
+                flex-direction: column;
+            }
         }
-      }
 
-      &_switcher {
-        padding: 32px 0 40px;
-      }
+        &_switcher {
+            padding: 32px 0 40px;
+        }
 
-      &_submit_button {
-        margin: 16px 0 0 !important;
-      }
+        &_submit_button {
+            margin: 16px 0 0 !important;
+        }
     }
 
 

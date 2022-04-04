@@ -1,4 +1,4 @@
-@import '~styles/variables.scss';
+@import "variables";
 
 .layout {
     display: flex;
@@ -8,10 +8,10 @@
     overflow: hidden;
 
     &__content {
-      width: 100%;
-      box-sizing: border-box;
-      margin-top: 88px;
-      max-width: 1440px;
+        width: 100%;
+        box-sizing: border-box;
+        margin-top: 88px;
+        max-width: 1440px;
     }
 }
 

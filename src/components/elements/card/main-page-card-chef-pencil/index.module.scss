@@ -1,92 +1,95 @@
-@import '~styles/variables.scss';
-@import '~styles/mixins/mixins.scss';
+@import "variables";
+@import "mixins";
 
 .card {
-  position: relative;
-  width: 100%;
-  min-height: 292px;
-  margin-bottom: 50px;
-  border-bottom: 1px solid #dfdfdf;
-  border-radius: 0 !important;
-  box-shadow: unset !important;
-  animation-name: fadeInOpacity;
-  animation-duration: 0.5s;
-  animation-timing-function: ease-in;
-  animation-iteration-count: 1;
-  opacity: 1;
+    position: relative;
+    width: 100%;
+    min-height: 292px;
+    margin-bottom: 50px;
+    border-bottom: 1px solid #dfdfdf;
+    border-radius: 0 !important;
+    box-shadow: unset !important;
+    animation-name: fadeInOpacity;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in;
+    animation-iteration-count: 1;
+    opacity: 1;
 
-  &:nth-child(7n) {
-    border: none;
-  }
-
-  @media (max-width: $--md) {
-    max-width: 285px;
-    border: none;
-    margin-bottom: 0;
-    overflow: hidden;
-    border-radius: 5px;
-    box-shadow: 0 0 20px #00000014 !important;
-  }
-
-  &__content {
-    display: flex;
-    align-self: flex-start;
-    flex-direction: column;
-    margin: 10px 0 0 34px;
-    font-size: 18px;
-    font-weight: 600;
-    @include fontMedium();
-    color: rgba(0, 0, 0, 0.87);
-    gap: 8px;
+    &:nth-child(7n) {
+        border: none;
+    }
 
     @media (max-width: $--md) {
-      margin: 16px 0 0 11px;
+        max-width: 285px;
+        border: none;
+        margin-bottom: 0;
+        overflow: hidden;
+        border-radius: 5px;
+        box-shadow: 0 0 20px #00000014 !important;
     }
-  }
 
-  &__media {
-    width: 338px;
-    min-height: 240px;
-    border-radius: 5px;
-    background-color: $--color-gray8;
+    &__content {
+        display: flex;
+        align-self: flex-start;
+        flex-direction: column;
+        margin: 10px 0 0 34px;
+        font-size: 18px;
+        font-weight: 600;
+        @include fontMedium;
 
-    @media (max-width: $--md) {
-      max-width: 285px;
+        color: rgb(0 0 0 / 87%);
+        gap: 8px;
+
+        @media (max-width: $--md) {
+            margin: 16px 0 0 11px;
+        }
     }
-  }
 
-  &__name {
-    font-size: 20px;
-    word-break: break-all;
-    @include fontSemiBold();
-  }
+    &__media {
+        width: 338px;
+        min-height: 240px;
+        border-radius: 5px;
+        background-color: $--color-gray8;
 
-  &__url {
-    font-size: 14px;
-    font-weight: 400;
-    color: $--color-gray2;
-  }
-
-  &__author {
-    position: absolute;
-    bottom: 10px;
-    display: flex;
-    align-items: center;
-    color: $--color-gray7;
-    @include fontSemiBold();
-    gap: 14px;
-
-    @media (max-width: $--md) {
-      position: unset;
+        @media (max-width: $--md) {
+            max-width: 285px;
+        }
     }
-  }
+
+    &__name {
+        font-size: 20px;
+        word-break: break-all;
+        @include fontSemiBold;
+    }
+
+    &__url {
+        font-size: 14px;
+        font-weight: 400;
+        color: $--color-gray2;
+    }
+
+    &__author {
+        position: absolute;
+        bottom: 10px;
+        display: flex;
+        align-items: center;
+        color: $--color-gray7;
+        @include fontSemiBold;
+
+        gap: 14px;
+
+        @media (max-width: $--md) {
+            position: unset;
+        }
+    }
 }
 
 @keyframes fadeInOpacity {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }

@@ -1,14 +1,14 @@
-@import '~styles/variables.scss';
-@import '~styles/mixins/mixins.scss';
+@import "variables";
+@import "mixins";
 
 .iconWrap {
-  position: absolute;
-  top: 60px;
-  left: 50%;
-  transform: translateX(-50%);
+    position: absolute;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .icon {
-  width: 52px;
-  height: 52px;
+    width: 52px;
+    height: 52px;
 }

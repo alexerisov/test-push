@@ -1,82 +1,83 @@
-@import '~styles/variables.scss';
-@import '~styles/mixins/mixins.scss';
+@import "variables";
+@import "mixins";
 
 
 .container {
-  padding: 40px !important;
-  position: relative;
-  background: #FFF6EB;
-  border-radius: 24px;
-  max-width: 833px;
+    padding: 40px !important;
+    position: relative;
+    background: #FFF6EB;
+    border-radius: 24px;
+    max-width: 833px;
 
-  .slider {
-    &_title {
-      font-weight: 600;
-      font-size: 24px;
-      line-height: 160%;
-      display: flex;
-      align-items: center;
-      letter-spacing: 0.01em;
-      color: #14181F;
-      margin-bottom: 22px;
-    }
-    &_subtitle {
-      font-style: normal;
-      font-weight: normal;
-      font-size: 24px;
-      line-height: 160%;
-      letter-spacing: 0.01em;
-      color: #566481;
-      margin-bottom: 73px;
-    }
-
-    &_arrows_container {
-      padding: inherit;
-      position: absolute;
-      inset: 0 0 auto auto;
-      display: flex;
-      column-gap: 8px;
-    }
-
-    &_arrows_button {
-      width: 40px;
-      height: 40px;
-      border: 2px solid #FFD49E;
-      box-sizing: border-box;
-      border-radius: 40px;
-
-      &:disabled {
-        opacity: .5 !important;
-      }
-    }
-
-    &_body {
-      display: flex;
-      flex-direction: row;
-      overflow-x: auto;
-      column-gap: 20px;
-      padding-bottom: 10px;
-      @include styledScrollbar();
-    }
-  }
-
-  @media (max-width: 1025px) {
-    max-width: 584px;
-
-  }
-
-  @media (max-width: 600px) {
-    max-width: calc(100vw - 48px);
-    padding: 24px 24px 32px;
-    margin: 40px 24px 0;
     .slider {
+        &_title {
+            font-weight: 600;
+            font-size: 24px;
+            line-height: 160%;
+            display: flex;
+            align-items: center;
+            letter-spacing: 0.01em;
+            color: #14181F;
+            margin-bottom: 22px;
+        }
 
-      &_arrows_container {
-        padding-right: 18px;
-      }
+        &_subtitle {
+            font-style: normal;
+            font-weight: normal;
+            font-size: 24px;
+            line-height: 160%;
+            letter-spacing: 0.01em;
+            color: #566481;
+            margin-bottom: 73px;
+        }
+
+        &_arrows_container {
+            padding: inherit;
+            position: absolute;
+            inset: 0 0 auto auto;
+            display: flex;
+            column-gap: 8px;
+        }
+
+        &_arrows_button {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #FFD49E;
+            box-sizing: border-box;
+            border-radius: 40px;
+
+            &:disabled {
+                opacity: .5 !important;
+            }
+        }
+
+        &_body {
+            display: flex;
+            flex-direction: row;
+            overflow-x: auto;
+            column-gap: 20px;
+            padding-bottom: 10px;
+            @include styledScrollbar;
+        }
     }
 
-  }
+    @media (max-width: 1025px) {
+        max-width: 584px;
+
+    }
+
+    @media (max-width: 600px) {
+        max-width: calc(100vw - 48px);
+        padding: 24px 24px 32px;
+        margin: 40px 24px 0;
+
+        .slider {
+            &_arrows_container {
+                padding-right: 18px;
+            }
+        }
+
+    }
 
 }
 

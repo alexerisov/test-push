@@ -1,58 +1,59 @@
-@import '~styles/variables.scss';
-@import '~styles/mixins/mixins.scss';
+@import "variables";
+@import "mixins";
 
 .search {
-  padding: 20px 235px;
-  color: $--color-gray7;
+    padding: 20px 235px;
+    color: $--color-gray7;
 
-  @media (max-width: $--md) {
-    padding: 20px 100px;
-  }
-
-  @media (max-width: $--sm) {
-    padding: 20px 50px;
-  }
-
-  @media (max-width: $--xs) {
-    padding: 20px 10px;
-  }
-
-  &__grid {
-    margin: 25px 0 0 0;
-    display: grid;
-    grid-template-columns: auto auto;
-
-    a {
-      margin: 0 15px 0 0;
+    @media (max-width: $--md) {
+        padding: 20px 100px;
     }
 
-    p:last-of-type {
-      color: $--color-orange;
-      margin: 0 0 0 6px;
+    @media (max-width: $--sm) {
+        padding: 20px 50px;
     }
-  }
 
-  &__buttonLink {
-    border: none;
-    color: $--color-orange;
-    @include fontRegular();
-    font-size: 15px;
-    cursor: pointer;
-  }
-
-  &__container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-height: 200px;
-    gap: 20px 0;
-
-    button {
-      margin-left: auto;
-
-      @media (max-width: $--sm) {
-        margin: 0 auto;
-      }
+    @media (max-width: $--xs) {
+        padding: 20px 10px;
     }
-  }
+
+    &__grid {
+        margin: 25px 0 0;
+        display: grid;
+        grid-template-columns: auto auto;
+
+        a {
+            margin: 0 15px 0 0;
+        }
+
+        p:last-of-type {
+            color: $--color-orange;
+            margin: 0 0 0 6px;
+        }
+    }
+
+    &__buttonLink {
+        border: none;
+        color: $--color-orange;
+        @include fontRegular;
+
+        font-size: 15px;
+        cursor: pointer;
+    }
+
+    &__container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 200px;
+        gap: 20px 0;
+
+        button {
+            margin-left: auto;
+
+            @media (max-width: $--sm) {
+                margin: 0 auto;
+            }
+        }
+    }
 }

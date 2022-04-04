@@ -1,73 +1,74 @@
-@import '~styles/variables.scss';
-@import '~styles/mixins/mixins.scss';
+@import "variables";
+@import "mixins";
 
 .card {
-  display: flex;
-  flex-direction: column;
-  width: 276px;
-  min-height: 117px;
-  min-width: 276px;
-
-  &__avatarContainer {
-    height: 58px;
-  }
-
-  &__avatar {
-    height: 100%;
-    border-radius: 50%;
-    width: 100%;
-    object-fit: cover;
-  }
-
-  &__background {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-    border-radius: 50%;
-    background-color: $--color-gray8;
-  }
-
-  &__logo {
-    width: 40px !important;
-    height: auto;
-  }
-
-  &__content {
-    display: grid;
-    grid-template-columns: 58px auto;
-    gap: 7px;
-    padding: 11px 10px;
-    align-items: flex-start;
-    @include fontMedium();
-    font-size: 16px;
-  }
-
-  &__column {
-    align-self: center;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-  }
+    width: 276px;
+    min-height: 117px;
+    min-width: 276px;
 
-  &__raiting {
-    margin: 8px 0 17px 0;
-  }
+    &__avatarContainer {
+        height: 58px;
+    }
 
-  p,
-  a {
-    font-weight: 600;
-  }
+    &__avatar {
+        height: 100%;
+        border-radius: 50%;
+        width: 100%;
+        object-fit: cover;
+    }
 
-  a {
-    color: $--color-orange;
-    margin-top: auto;
-  }
+    &__background {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+        border-radius: 50%;
+        background-color: $--color-gray8;
+    }
 
-  &__cta {
-    position: absolute;
-    bottom: 11px;
-    font-size: 14px;
-  }
+    &__logo {
+        width: 40px !important;
+        height: auto;
+    }
+
+    &__content {
+        display: grid;
+        grid-template-columns: 58px auto;
+        gap: 7px;
+        padding: 11px 10px;
+        align-items: flex-start;
+        @include fontMedium;
+
+        font-size: 16px;
+    }
+
+    &__column {
+        align-self: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    &__raiting {
+        margin: 8px 0 17px;
+    }
+
+    p,
+    a {
+        font-weight: 600;
+    }
+
+    a {
+        color: $--color-orange;
+        margin-top: auto;
+    }
+
+    &__cta {
+        position: absolute;
+        bottom: 11px;
+        font-size: 14px;
+    }
 }

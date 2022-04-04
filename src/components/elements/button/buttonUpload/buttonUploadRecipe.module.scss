@@ -1,12 +1,13 @@
-@import '~styles/variables.scss';
-@import "~styles/mixins/mixins.scss";
+@import "variables";
+@import "mixins";
 
 .name {
-  @include fontMedium();
-  font-size: 19px;
-  color: $--color-orange;
+    @include fontMedium;
+
+    font-size: 19px;
+    color: $--color-orange;
 }
 
 .icon {
-  margin-right: 11px;
+    margin-right: 11px;
 }

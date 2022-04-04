@@ -1,90 +1,91 @@
-@import '~styles/mixins/mixins.scss';
-@import '~styles/variables.scss';
+@import "mixins";
+@import "variables";
 
 .savedRecipes {
-  display: flex;
-  flex-direction: column;
-  padding: 40px 0 97px;
-
-  @media (max-width: $--sm) {
-    padding: 40px 0 97px;
-  }
-
-  @media (max-width: $--lg) {
-    padding: 40px 0 97px;
-  }
-
-  &__navbar {
-    margin-bottom: 40px;
-    font-size: 20px;
-    font-weight: 300;
-    line-height: 45px;
-
-    @media (max-width: $--md) {
-      text-align: center;
-      margin-bottom: 15px;
-    }
-
-    span {
-      color: $--color-orange;
-    }
-
-    a,
-    a:active,
-    a:visited {
-      font-size: 20px;
-      font-weight: 300;
-      line-height: 45px;
-      color: $--color-gray6;
-    }
-
-    &__link:hover:visited {
-      color: $--color-orange;
-    }
-  }
-
-  &__title {
-    margin-bottom: 23px;
-    font-size: 30px;
-    @include fontMedium();
-
-    @media (max-width: $--md) {
-      text-align: center;
-      margin-bottom: 15px;
-    }
-  }
-
-  &__subtitle {
-    margin-bottom: 20px;
-    font-size: 20px;
-    @include fontMedium();
-    font-weight: 700;
-
-    @media (max-width: $--md) {
-      text-align: center;
-      margin-bottom: 15px;
-    }
-  }
-
-  &__wrapper {
     display: flex;
     flex-direction: column;
-    width: 100%;
-    align-items: center;
-  }
+    padding: 40px 0 97px;
 
-  &__container {
-    display: grid;
-    grid-template-columns: repeat(3, 338px);
-    grid-gap: 34px;
-    margin: 0 auto 40px;
-
-    @media (max-width: 1366px) {
-      grid-template-columns: repeat(2, 338px);
+    @media (max-width: $--sm) {
+        padding: 40px 0 97px;
     }
 
-    @media (max-width: 875px) {
-      grid-template-columns: repeat(1, 285px);
+    @media (max-width: $--lg) {
+        padding: 40px 0 97px;
     }
-  }
+
+    &__navbar {
+        margin-bottom: 40px;
+        font-size: 20px;
+        font-weight: 300;
+        line-height: 45px;
+
+        @media (max-width: $--md) {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        span {
+            color: $--color-orange;
+        }
+
+        a,
+        a:active,
+        a:visited {
+            font-size: 20px;
+            font-weight: 300;
+            line-height: 45px;
+            color: $--color-gray6;
+        }
+
+        &__link:hover:visited {
+            color: $--color-orange;
+        }
+    }
+
+    &__title {
+        margin-bottom: 23px;
+        font-size: 30px;
+        @include fontMedium;
+
+        @media (max-width: $--md) {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+    }
+
+    &__subtitle {
+        margin-bottom: 20px;
+        font-size: 20px;
+        @include fontMedium;
+
+        font-weight: 700;
+
+        @media (max-width: $--md) {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+    }
+
+    &__wrapper {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+    }
+
+    &__container {
+        display: grid;
+        grid-template-columns: repeat(3, 338px);
+        grid-gap: 34px;
+        margin: 0 auto 40px;
+
+        @media (max-width: 1366px) {
+            grid-template-columns: repeat(2, 338px);
+        }
+
+        @media (max-width: 875px) {
+            grid-template-columns: repeat(1, 285px);
+        }
+    }
 }

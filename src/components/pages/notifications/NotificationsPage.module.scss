@@ -1,40 +1,40 @@
-@import '~styles/variables.scss';
-@import '~styles/mixins/mixins.scss';
+@import "variables";
+@import "mixins";
 
 .notifications {
-  min-height: calc(100vh - 100px);
-  padding: 50px 0;
+    min-height: calc(100vh - 100px);
+    padding: 50px 0;
 
-  @media (max-width: $--xs) {
-    padding: 20px 0;
-  }
-
-  &__title {
-    font-size: 45px;
-    line-height: 50px;
-    text-align: center;
-    margin: 0 0 30px 0;
-  }
-
-  &__content {
-    margin: 20px auto;
-    max-width: 800px;
-  }
-
-  &__contentItem {
-    margin: 40px 0;
+    @media (max-width: $--xs) {
+        padding: 20px 0;
+    }
 
     &__title {
-      text-align: center;
-      margin: 20px 0;
-      font-size: 30px;
+        font-size: 45px;
+        line-height: 50px;
+        text-align: center;
+        margin: 0 0 30px;
     }
-  }
 
-  &__noNotifications {
-    text-align: center;
-    margin: 20px 0;
-    font-size: 20px;
-    color: $--color-gray5;
-  }
+    &__content {
+        margin: 20px auto;
+        max-width: 800px;
+    }
+
+    &__contentItem {
+        margin: 40px 0;
+
+        &__title {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 30px;
+        }
+    }
+
+    &__noNotifications {
+        text-align: center;
+        margin: 20px 0;
+        font-size: 20px;
+        color: $--color-gray5;
+    }
 }

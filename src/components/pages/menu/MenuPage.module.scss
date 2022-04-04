@@ -1,93 +1,94 @@
-@import "~styles/variables.scss";
-@import "~styles/mixins/mixins.scss";
+@import "variables";
+@import "mixins";
 
 .menu {
-  position: relative;
+    position: relative;
 
-  &__wrapper {
-    width: max-content;
-    padding-top: 40px;
-    margin: 0 auto 50px auto;
+    &__wrapper {
+        width: max-content;
+        padding-top: 40px;
+        margin: 0 auto 50px;
 
-    @media (max-width: $--lg) {
-      padding-top: 0;
-    }
-  }
-
-  &__navbar {
-    font-size: 20px;
-    font-weight: 300;
-    line-height: 45px;
-    color: $--color-gray6;
-    font-size: 20px;
-
-    @media (max-width: $--lg) {
-      margin: 0 auto;
-      width: max-content;
+        @media (max-width: $--lg) {
+            padding-top: 0;
+        }
     }
 
-    span {
-      color: $--color-orange;
+    &__navbar {
+        font-size: 20px;
+        font-weight: 300;
+        line-height: 45px;
+        color: $--color-gray6;
+        font-size: 20px;
+
+        @media (max-width: $--lg) {
+            margin: 0 auto;
+            width: max-content;
+        }
+
+        span {
+            color: $--color-orange;
+        }
+
+        &__link {
+            font-size: 20px;
+            font-weight: 300;
+            line-height: 45px;
+            color: $--color-gray6;
+        }
+
+        &__link:hover {
+            color: $--color-orange;
+        }
+
+        &__link:hover:visited {
+            color: $--color-orange;
+        }
     }
 
-    &__link {
-      font-size: 20px;
-      font-weight: 300;
-      line-height: 45px;
-      color: $--color-gray6;
+    &__title {
+        color: $--color-gray3;
+        font-size: 30px;
+        @include fontSemiBold;
+
+        margin: 40px 0;
+
+        @media (max-width: $--lg) {
+            margin: 40px auto;
+            width: max-content;
+        }
     }
 
-    &__link:hover {
-      color: $--color-orange;
+    &__content {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        width: max-content;
+        margin: 0 auto;
+        gap: 17px 35px;
+
+        @media (max-width: 1030px) {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        @media (max-width: 673px) {
+            grid-template-columns: 1fr;
+        }
     }
-
-    &__link:hover:visited {
-      color: $--color-orange;
-    }
-  }
-
-  &__title {
-    color: $--color-gray3;
-    font-size: 30px;
-    @include fontSemiBold();
-    margin: 40px 0;
-
-    @media (max-width: $--lg) {
-      margin: 40px auto;
-      width: max-content;
-    }
-  }
-
-  &__content {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    width: max-content;
-    margin: 0 auto;
-    gap: 17px 35px;
-
-    @media (max-width: 1030px) {
-      grid-template-columns: 1fr 1fr;
-    }
-
-    @media (max-width: 673px) {
-      grid-template-columns: 1fr;
-    }
-  }
 }
 
 .btnSearch {
-  position: absolute;
-  top: 45px;
-  right: 0;
-  border: none;
-  margin-bottom: 3px;
-  cursor: pointer;
+    position: absolute;
+    top: 45px;
+    right: 0;
+    border: none;
+    margin-bottom: 3px;
+    cursor: pointer;
 
-  @media (max-width: $--lg) {
-    top: 0;
-  }
+    @media (max-width: $--lg) {
+        top: 0;
+    }
 
-  &__icon {
-    color: $--color-gray1;
-  }
+    &__icon {
+        color: $--color-gray1;
+    }
 }

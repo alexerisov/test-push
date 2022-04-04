@@ -1,17 +1,18 @@
-@import "~styles/variables.scss";
-@import "~styles/mixins/mixins.scss";
+@import "variables";
+@import "mixins";
 
 .cuisines {
-    @include fontRegular();
+    @include fontRegular;
+
     padding: 100px 0;
-    
+
     &__links {
         width: max-content;
         color: $--color-black;
         font: normal normal 600 20px/58px Montserrat;
         padding: 35px 25px 35px 143px;
         background: $--color-white 0% 0% no-repeat padding-box;
-        box-shadow: 0px 3px 6px #00000029;
+        box-shadow: 0 3px 6px #00000029;
         border-radius: 13px;
         display: flex;
         flex-direction: row;
@@ -19,8 +20,9 @@
     }
 
     &__title {
-        @include fontMedium();
-        padding: 38px 0 0 0;
+        @include fontMedium;
+
+        padding: 38px 0 0;
         font-size: 47px;
         line-height: 44px;
         color: $--color-gray6;
@@ -30,7 +32,7 @@
     }
 
     &__lineContainer {
-        margin: 30px 0 50px 0;
+        margin: 30px 0 50px;
         display: flex;
         align-items: center;
     }
@@ -51,7 +53,7 @@
     }
 
     &__slideButton {
-        box-shadow: 0px 3px 6px #00000029;
+        box-shadow: 0 3px 6px #00000029;
         border-radius: 13px;
         width: 80px;
         border: none;
@@ -64,15 +66,14 @@
 
         &:active, &:hover {
             .cuisines__slideButtonArrow_right, .cuisines__slideButtonArrow_left {
-                background-image: url('/images/index/slider-yellow.svg');
+                background-image: url("/images/index/slider-yellow.svg");
             }
-        }        
+        }
     }
 
     &__slideButtonArrow {
-
         &_left, &_right {
-            background-image: url('/images/index/slider-gray.svg');
+            background-image: url("/images/index/slider-gray.svg");
             background-position: center;
             background-size: 20px 20px;
             margin: 0 auto;
@@ -84,7 +85,7 @@
         &_left {
             transform: rotate(90deg);
         }
-    
+
         &_right {
             transform: rotate(-90deg);
         }
@@ -100,6 +101,6 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
-    padding: 51px 0 0 0;
+    padding: 51px 0 0;
     gap: 34px;
 }

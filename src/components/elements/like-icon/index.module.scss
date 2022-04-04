@@ -1,5 +1,5 @@
-@import "~styles/variables.scss";
-@import "~styles/mixins/mixins.scss";
+@import "variables";
+@import "mixins";
 
 .icon {
     background: $--color-gray4 0% 0% no-repeat padding-box;
@@ -14,7 +14,7 @@
     }
 
     &__like {
-        padding: 3px 0 0 0;
+        padding: 3px 0 0;
         width: 18px;
         height: 15px;
     }

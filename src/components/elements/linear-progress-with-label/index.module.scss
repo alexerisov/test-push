@@ -1,9 +1,9 @@
-@import '~styles/mixins/mixins.scss';
-@import '~styles/variables.scss';
+@import "mixins";
+@import "variables";
 
 .linearProgress {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 15px;
 }

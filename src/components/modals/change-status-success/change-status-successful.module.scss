@@ -1,44 +1,46 @@
-@import "~styles/variables.scss";
-@import "~styles/mixins/mixins.scss";
+@import "variables";
+@import "mixins";
 
 .ChangeSuccess {
-  padding: 0 35px 20px;
-  color: $--color-gray7;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 40px;
+    padding: 0 35px 20px;
+    color: $--color-gray7;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 40px;
 
-  &__title {
-    margin: 40px 0 15px;
-    @include fontSemiBold();
-    font-size: 24px;
-    color: $--color-orange;
-    line-height: 1.22;
-  }
+    &__title {
+        margin: 40px 0 15px;
+        @include fontSemiBold;
 
-  &__subtitle {
-    @include fontMedium();
-    font-size: 18px;
-    line-height: 1.22;
-  }
+        font-size: 24px;
+        color: $--color-orange;
+        line-height: 1.22;
+    }
 
-  &__button {
-    width: 144px;
-    height: 40px;
-    padding: 11px 0;
-    text-align: center;
-    border: none;
-    outline: none;
-    border-radius: 3px;
-    cursor: pointer;
-    color: $--color-white;
-    font: 16px/22px "Montserrat";
-    font-weight: 900;
-    font-size: 14px;
-    line-height: 1.29;
-    text-align: center;
-    background-color: $--color-blue;
-  }
+    &__subtitle {
+        @include fontMedium;
+
+        font-size: 18px;
+        line-height: 1.22;
+    }
+
+    &__button {
+        width: 144px;
+        height: 40px;
+        padding: 11px 0;
+        text-align: center;
+        border: none;
+        outline: none;
+        border-radius: 3px;
+        cursor: pointer;
+        color: $--color-white;
+        font: 16px/22px Montserrat;
+        font-weight: 900;
+        font-size: 14px;
+        line-height: 1.29;
+        text-align: center;
+        background-color: $--color-blue;
+    }
 }

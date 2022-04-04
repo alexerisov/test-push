@@ -1,74 +1,75 @@
-@import '~styles/variables.scss';
-@import "~styles/mixins/mixins.scss";
+@import "variables";
+@import "mixins";
 
 .card {
-  width: 338px;
-  height: 173px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-
-  @media (max-width: $--lg) {
-    width: 278px;
-    height: 143px;
-  }
-
-  &__hat {
-    position: absolute;
-    background-size: cover;
-    z-index: -5;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    background-image: url('/images/index/chef-hat.svg');
-    background-size: 190px 119px;
-    background-repeat: no-repeat;
-    background-position: bottom 32px right 70px;
-    transition: transform 0.4s;
+    width: 338px;
+    height: 173px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
 
     @media (max-width: $--lg) {
-      background-position: bottom 10px right 40px;
+        width: 278px;
+        height: 143px;
     }
 
-    &:hover {
-      transform: rotate(180deg) scale(3.5);
-    }
-  }
+    &__hat {
+        position: absolute;
+        background-size: cover;
+        z-index: -5;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background-image: url("/images/index/chef-hat.svg");
+        background-size: 190px 119px;
+        background-repeat: no-repeat;
+        background-position: bottom 32px right 70px;
+        transition: transform 0.4s;
 
-  &__images {
-    position: absolute;
-    background-size: cover;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    z-index: -2;
-    filter: blur(5px);
-  }
+        @media (max-width: $--lg) {
+            background-position: bottom 10px right 40px;
+        }
 
-  &__title {
-    @include fontSemiBold();
-    color: $--color-white;
-    font-size: 16px;
-    max-width: 100px;
-    z-index: 3;
-    height: 100%;
-    width: 100%;
-    text-align: center;
-    padding-top: 70px;
-
-    @media (max-width: $--lg) {
-      padding-top: 60px;
+        &:hover {
+            transform: rotate(180deg) scale(3.5);
+        }
     }
 
-    &:hover {
-      div {
-        transform: rotate(180deg) scale(3.5);
-      }
+    &__images {
+        position: absolute;
+        background-size: cover;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        z-index: -2;
+        filter: blur(5px);
     }
-  }
+
+    &__title {
+        @include fontSemiBold;
+
+        color: $--color-white;
+        font-size: 16px;
+        max-width: 100px;
+        z-index: 3;
+        height: 100%;
+        width: 100%;
+        text-align: center;
+        padding-top: 70px;
+
+        @media (max-width: $--lg) {
+            padding-top: 60px;
+        }
+
+        &:hover {
+            div {
+                transform: rotate(180deg) scale(3.5);
+            }
+        }
+    }
 }

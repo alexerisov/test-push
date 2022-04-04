@@ -1,20 +1,22 @@
-@import "~styles/variables.scss";
-@import "~styles/mixins/mixins.scss";
+@import "variables";
+@import "mixins";
 
 .ratedMeals {
-    @include fontRegular();
-    margin: 100px 0 80px 0;
+    @include fontRegular;
+
+    margin: 100px 0 80px;
     position: relative;
 
     @media (max-width: $--lg) {
-        margin: 20px 0 20px 0;
+        margin: 20px 0;
     }
 
     &__title {
-        padding: 38px 0 0 0;
+        padding: 38px 0 0;
         font-size: 47px;
         line-height: 44px;
-        @include fontMedium();
+        @include fontMedium;
+
         color: $--color-gray6;
         display: flex;
         flex-direction: column;
@@ -22,7 +24,8 @@
 
         h2 {
             @media (max-width: $--sm) {
-                @include fontSemiBold();
+                @include fontSemiBold;
+
                 font-size: 30px;
                 line-height: 32px;
             }
@@ -30,7 +33,7 @@
     }
 
     &__lineContainer {
-        margin: 30px 0 50px 0;
+        margin: 30px 0 50px;
         display: flex;
         align-items: center;
     }
