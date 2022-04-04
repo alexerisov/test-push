@@ -25,7 +25,7 @@ if (process.env.NODE_ENV === 'production') {
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     BASE_URL: process.env.BASE_URL,
-    DEBUG: JSON.stringify(process.env.DEBUG ?? false)
+    DEBUG: process.env.DEBUG || false
   };
 } else if (process.env.NODE_ENV === 'stage') {
   envs = {
@@ -52,7 +52,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 module.exports = withBundleAnalyzer({
-  DEBUG: true,
   productionBrowserSourceMaps: false,
   compiler: {
     styledComponents: true,
@@ -108,7 +107,7 @@ module.exports = withBundleAnalyzer({
       }
     );
     config.plugins.push(new webpack.EnvironmentPlugin(envs));
-    config.plugins.push(new StylelintPlugin({ failOnError: false, emitErrors: true, quiet: true }));
+    config.plugins.push(new StylelintPlugin({ failOnError: false, emitError: false, emitWarning: false, fix: true }));
 
     return config;
   },

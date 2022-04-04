@@ -37,7 +37,7 @@ namespace NextAuthUtils {
 }
 
 export default NextAuth({
-  debug: true,
+  debug: process.env.DEBUG,
   pages: {
     signIn: '/',
     signOut: '/',
@@ -164,25 +164,22 @@ export default NextAuth({
       return token;
     },
     async session({ session, user, token }) {
-      if (user) {
-        http.defaults.headers.common['Authorization'] = `Bearer ${token?.accessToken}`;
-        try {
-          const access = token.accessToken as string;
-          const response2 = await http.get(`account/me`, {
-            headers: {
-              Authorization: `Bearer ${access}`
-            }
-          });
-          const { full_name, email, avatar, language, user_type, pk } = response2.data as UserResponseData;
-          token.user_type = user_type;
-          session.accessToken = access;
-          session.user = { full_name, email, avatar, language, user_type, pk } as const;
-          return session;
-        } catch (error) {
-          return null;
-        }
+      http.defaults.headers.common['Authorization'] = `Bearer ${token?.accessToken}`;
+      try {
+        const access = token.accessToken as string;
+        const response2 = await http.get(`account/me`, {
+          headers: {
+            Authorization: `Bearer ${access}`
+          }
+        });
+        const { full_name, email, avatar, language, user_type, pk } = response2.data as UserResponseData;
+        token.user_type = user_type;
+        session.accessToken = access;
+        session.user = { full_name, email, avatar, language, user_type, pk } as const;
+        return session;
+      } catch (error) {
+        return null;
       }
-      return null;
     }
   }
 });

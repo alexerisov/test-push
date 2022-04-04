@@ -204,11 +204,11 @@ const CardSearch = props => {
                     {cookingTypes?.length > 0
                       ? cookingTypes
                           .map(el => {
-                            const typeName = t(`types.${recipeTypes?.[el]?.toLowerCase()}`);
+                            const typeName = t(`types.${recipeTypes[el]?.toLowerCase()}`);
                             return typeName || '一一';
                           })
                           .join(', ')
-                      : '一'}
+                      : '一一'}
                   </p>
                 </div>
               </div>

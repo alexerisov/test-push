@@ -150,7 +150,7 @@
             font-weight: 500 !important;
             overflow: hidden;
             text-overflow: ellipsis;
-            display: box;
+            display: flex;
             -webkit-line-clamp: 2; /* number of lines to show */
             line-clamp: 2;
             -webkit-box-orient: vertical;

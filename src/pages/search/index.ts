@@ -22,8 +22,8 @@ export async function getServerSideProps(context) {
     const weekmenu = await Recipe.getWeekmenu('');
     return {
       props: {
-        session,
         ...(await serverSideTranslations(context.locale, ['common', 'searchPage', 'recipeClassifications'])),
+        session,
         weekmenuWithoutFilters: weekmenu.data
       }
     };

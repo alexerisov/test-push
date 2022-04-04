@@ -15,11 +15,15 @@ const axiosLog = log.getLogger('axios');
 
 export function loggerSetup() {
   prefix.reg(log);
-  log.enableAll();
+  if (process.env.DEBUG) {
+    log.enableAll();
+    nextAuthLog.enableAll();
+    axiosLog.enableAll();
+  }
 
   applyPrefix(log, chalk.green);
-  applyPrefix(log.getLogger('next-auth'), chalk.blue);
-  applyPrefix(log.getLogger('axios'), chalk.magenta);
+  applyPrefix(nextAuthLog, chalk.blue);
+  applyPrefix(axiosLog, chalk.magenta);
 }
 
 function applyPrefix(logger, color) {
