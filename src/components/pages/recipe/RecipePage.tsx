@@ -402,7 +402,7 @@ const Classifications = ({
 
   return (
     <div className={s.classification}>
-      <h2 className={s.block_title}>{t('classifications.title')}</h2>
+      <h2 className={s.block_title}>{t('recipePage:classifications.title')}</h2>
       <div className={s.classification_icons_container}>
         <IconWithText
           icon={StopwatchIcon}
@@ -490,10 +490,10 @@ const Classifications = ({
       </div>
       <Divider />
       <div className={s.classification_calories}>
-        <CaloriesElement title={t('nutrition.calories')} value={calories ?? '—'} />
-        <CaloriesElement title={t('nutrition.protein')} value={proteins ?? '—'} />
-        <CaloriesElement title={t('nutrition.fat')} value={fats ?? '—'} />
-        <CaloriesElement title={t('nutrition.carbs')} value={carbohydrates ?? '—'} />
+        <CaloriesElement title={t('recipePage:nutrition.calories')} value={calories ?? '—'} />
+        <CaloriesElement title={t('recipePage:nutrition.protein')} value={proteins ?? '—'} />
+        <CaloriesElement title={t('recipePage:nutrition.fat')} value={fats ?? '—'} />
+        <CaloriesElement title={t('recipePage:nutrition.carbs')} value={carbohydrates ?? '—'} />
       </div>
       <Divider />
     </div>
@@ -503,10 +503,10 @@ const Classifications = ({
 const Description = ({ recipeDescription, t }) => {
   return (
     <div className={s.description}>
-      <h2 className={s.block_title}>{t('description.title')}</h2>
+      <h2 className={s.block_title}>{t('recipePage:description.title')}</h2>
       <p
         className={s.description_text}
-        dangerouslySetInnerHTML={{ __html: recipeDescription ?? t('description.emptyText') }}></p>
+        dangerouslySetInnerHTML={{ __html: recipeDescription ?? t('recipePage:description.emptyText') }}></p>
     </div>
   );
 };
@@ -527,7 +527,7 @@ const CookingSteps = ({ t, recipeCookingSteps }) => {
 
   return (
     <div className={s.cooking_steps}>
-      <h2 className={s.block_title}>{t('steps.title')}</h2>
+      <h2 className={s.block_title}>{t('recipePage:steps.title')}</h2>
       <div className={s.cooking_steps_wrapper}>
         {recipeCookingSteps?.length > 0
           ? recipeCookingSteps
@@ -535,7 +535,7 @@ const CookingSteps = ({ t, recipeCookingSteps }) => {
               .map((step, index) => (
                 <Step number={step?.num} title={step?.title} description={step?.description} key={'step' + index} />
               ))
-          : t('steps.emptyText')}
+          : t('recipePage:steps.emptyText')}
       </div>
     </div>
   );
@@ -611,11 +611,11 @@ const Ingredients = ({
         </div>
         <Collapse in={isSelected} mountOnEnter unmountOnExit>
           <p className={s.supplier_text_wrapper}>
-            <span className={s.supplier_text}>{t('ingredients.supplier.ingredients')}</span>
+            <span className={s.supplier_text}>{t('recipePage:ingredients.supplier.ingredients')}</span>
             <span className={s.supplier_value}>${Number.parseFloat(price).toFixed(2) ?? 0}</span>
           </p>
           <p className={s.supplier_text_wrapper}>
-            <span className={s.supplier_text}>{t('ingredients.supplier.delivery')}</span>
+            <span className={s.supplier_text}>{t('recipePage:ingredients.supplier.delivery')}</span>
             <span className={s.supplier_value}>{Number.parseFloat(deliveryPrice).toFixed(2)}</span>
           </p>
           <p className={s.supplier_text_wrapper}>
@@ -640,23 +640,24 @@ const Ingredients = ({
   return (
     <div className={s.ingredients}>
       <div className={s.ingredients_list}>
-        <h2 className={s.ingredients_title}>{t('ingredients.title')}</h2>
+        <h2 className={s.ingredients_title}>{t('recipePage:ingredients.title')}</h2>
         {ingredients.slice(0, 9)?.map(ingredient => <Ingredient key={ingredient.pk} {...ingredient} />) ||
-          t('ingredients.emptyText')}
+          t('recipePage:ingredients.emptyText')}
 
         {ingredients.slice(9)?.length > 0 && (
           <>
             <Collapse in={isIngredientsExpanded}>
               {ingredients.slice(8)?.map(ingredient => <Ingredient key={ingredient.pk} {...ingredient} />) ||
-                'There are no ingredients'}
+                t('recipePage:ingredients.emptyText')}
             </Collapse>
             <Button className={s.ingredients_button} onClick={viewAllHandler}>
               {!isIngredientsExpanded && (
                 <span>
-                  {'View All '} <span className={s.ingredients_button_amount}>({ingredients?.length})</span>
+                  {t('recipePage:ingredients.viewAll')}{' '}
+                  <span className={s.ingredients_button_amount}>({ingredients?.length})</span>
                 </span>
               )}
-              {isIngredientsExpanded && <span>{'View Less '}</span>}
+              {isIngredientsExpanded && <span>{t('recipePage:ingredients.viewLess')}</span>}
             </Button>
           </>
         )}
@@ -675,8 +676,8 @@ const Ingredients = ({
               onClick={onAddToCartHandler}
               className={s.ingredients_suppliers_order_button}
               endIcon={<BasicIcon icon={CartIcon} color="white" />}>
-              {!isRecipeInCart && !isRecipeNotSale && t('ingredients.cartButton.add')}
-              {isRecipeInCart && t('ingredients.cartButton.added')}
+              {!isRecipeInCart && !isRecipeNotSale && t('recipePage:ingredients.cartButton.add')}
+              {isRecipeInCart && t('recipePage:ingredients.cartButton.added')}
             </Button>
           </div>
         </>
@@ -690,9 +691,9 @@ const Comments = ({ recipeId, userId, recipeRating, isUserRecipeBuyer, isRecipeR
     <div className={s.comments}>
       <div className={s.comments_header}>
         <div className={s.comments_title_wrapper}>
-          <h2 className={s.comments_title}>{t('reviews.title')}</h2>
+          <h2 className={s.comments_title}>{t('recipePage:reviews.title')}</h2>
           <h3 className={s.comments_subtitle}>
-            {t('reviews.for')} <span className={s.comments_subtitle_bold}>{title}</span>
+            {t('recipePage:reviews.for')} <span className={s.comments_subtitle_bold}>{title}</span>
           </h3>
         </div>
         <div className={s.comments_rate_wrapper}>
