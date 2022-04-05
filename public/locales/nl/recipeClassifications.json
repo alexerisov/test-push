@@ -20,7 +20,8 @@
   },
   "cooking_time": {
     "hours": "uur",
-    "minutes": "minuten"
+    "minutes": "minuten",
+    "title": " Kooktijd"
   },
   "cuisine": {
     "american": "Amerikaans",
@@ -40,6 +41,7 @@
     "moracon": "Moracon",
     "spanish": "Spaans",
     "thai": "Thais",
+    "title": " Recept Keukens",
     "turkish": "Turks"
   },
   "diet_restrictions": {

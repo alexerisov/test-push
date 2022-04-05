@@ -204,14 +204,13 @@
     }
 
     &__tooltip__text {
-        font-family: Montserrat;
-        font-style: normal;
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 160%;
-        letter-spacing: 0.01em;
-        color: #566481;
-        text-transform: capitalize !important;
+        font-family: Montserrat !important;
+        font-style: normal !important;
+        font-weight: 500 !important;
+        font-size: 12px !important;
+        line-height: 160% !important;
+        letter-spacing: 0.01em !important;
+        text-transform: capitalize !important !important;
     }
 
     &_calories {
