@@ -5,6 +5,7 @@ import { DefaultSeo } from 'next-seo';
 import { SessionProvider } from 'next-auth/react';
 //utils
 import { appWithTranslation } from 'next-i18next';
+import nextI18NextConfig from 'next-i18next.config.js';
 import SEO from '@/next-seo.config';
 //styles
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -40,4 +41,4 @@ function App({ Component, pageProps }: AppProps) {
   );
 }
 
-export default appWithTranslation(App);
+export default appWithTranslation(App, nextI18NextConfig);

@@ -20,42 +20,6 @@ import LayoutPageNew from '@/components/layouts/layout-page-new';
 
 const zipcodeRegExp = /^\d{4}[a-zA-Z]{2}|\d{4}\s[a-zA-Z]{2}$/;
 
-const validationSchema = yup.object({
-  isZipcodeFieldFocused: yup.boolean(),
-  email: yup.string('Enter your email').emailWithoutSymbols().required('Email is required'),
-  name: yup.string('Enter your name').required('Name is required'),
-  phone: yup
-    .string()
-    .transform(value => value.replaceAll(/\s|[+]/g, ''))
-    .min(5, 'Enter correct phone number')
-    .required('Phone is required'),
-  city: yup.string('Enter your city').required('City is required'),
-  street: yup.string('Enter your street').required('Street is required'),
-  house: yup.string('Enter your house').required('House is required'),
-  flat: yup.string('Enter your flat').required('Flat is required'),
-  zipcode: yup
-    .string('Enter your zipcode')
-    .when('isZipcodeFieldFocused', {
-      is: true,
-      then: yup
-        .string()
-        .test(
-          'is-valid',
-          'We deliver only within Amsterdam area. Enter zipcode that belongs to Amsterdam',
-          async value => {
-            try {
-              const response = await Cart.validateZipcode(value);
-              return response.data.result;
-            } catch (e) {
-              console.log(e);
-              return false;
-            }
-          }
-        )
-    })
-    .required('Zipcode is required')
-});
-
 const defaultFormValues = {
   email: '',
   name: '',
@@ -124,6 +88,42 @@ export const OrderConfirmPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [formValues, setFormValues] = useState({});
   const profile = useSelector(state => state.account?.profile);
+
+  const validationSchema = yup.object({
+    isZipcodeFieldFocused: yup.boolean(),
+    email: yup.string().emailWithoutSymbols().required(t('errors:field_required.email')),
+    name: yup.string().required(t('errors:field_required.name')),
+    phone: yup
+      .string()
+      .transform(value => value.replaceAll(/\s|[+]/g, ''))
+      .min(5, t('errors:invalid.phone'))
+      .required(t('errors:field_required.phone')),
+    city: yup.string().required(t('errors:field_required.city')),
+    street: yup.string().required(t('errors:field_required.street')),
+    house: yup.string().required(t('errors:field_required.house')),
+    flat: yup.string().required(t('errors:field_required.flat')),
+    zipcode: yup
+      .string()
+      .when('isZipcodeFieldFocused', {
+        is: true,
+        then: yup
+          .string()
+          .test(
+            'is-valid',
+            'We deliver only within Amsterdam area. Enter zipcode that belongs to Amsterdam',
+            async value => {
+              try {
+                const response = await Cart.validateZipcode(value);
+                return response.data.result;
+              } catch (e) {
+                console.log(e);
+                return false;
+              }
+            }
+          )
+      })
+      .required(t('errors:field_required.zipcode'))
+  });
 
   useEffect(() => {
     dispatch(getCart());

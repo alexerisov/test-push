@@ -1,23 +1,24 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import {LayoutModal} from '@/components/layouts';
+import { LayoutModal } from '@/components/layouts';
 import { modalActions, recipeEditActions } from '@/store/actions';
 import { connect } from 'react-redux';
-import classes from "./addIngredient.module.scss";
+import classes from './addIngredient.module.scss';
 import TextField from '@material-ui/core/TextField';
 import { units } from '@/utils/datasets';
 import { Select, MenuItem } from '@material-ui/core';
-import { getNumberWithMaxDigits } from "@/utils/helpers";
+import { getNumberWithMaxDigits } from '@/utils/helpers';
+import { i18n } from 'next-i18next';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   textField: {
     '& .MuiOutlinedInput-root': {
-      borderRadius: '4px',
+      borderRadius: '4px'
     },
     '& .MuiInputBase-input': {
       height: 'auto',
-      width: 'auto',
-    },
+      width: 'auto'
+    }
   }
 }));
 
@@ -26,57 +27,61 @@ const ITEM_PADDING_TOP = 8;
 const MenuProps = {
   PaperProps: {
     style: {
-      maxHeight: ITEM_HEIGHT * 5 + ITEM_PADDING_TOP,
-    },
-  },
+      maxHeight: ITEM_HEIGHT * 5 + ITEM_PADDING_TOP
+    }
+  }
 };
 
-function EditIngredient (props) {
+function EditIngredient(props) {
   const classMarerialUi = useStyles();
   const { data } = props.recipeEdit;
   const [ingredient, setIngedient] = React.useState({
     title: '',
     quantity: '',
-    unit: '',
+    unit: ''
   });
 
   const unitsList = [];
   for (let i = 1; i < Object.keys(units).length; i++) {
-    unitsList.push(<MenuItem key={i} value={units[i]}>{units[i]}</MenuItem>);
+    unitsList.push(
+      <MenuItem key={i} value={units[i]}>
+        {units[i]}
+      </MenuItem>
+    );
   }
 
   const [error, setError] = useState(false);
 
   function onChangeField(name) {
-    return (event) => {
+    return event => {
       const newData = { ...ingredient, [name]: event.target.value };
       setIngedient(newData);
     };
   }
 
   const handleValidationOnSubmit = () => {
-    if (ingredient.title === "") {
-      setError("Name is required");
+    if (ingredient.title === '') {
+      setError(i18n?.t('errors:field_required.name'));
       return false;
     }
-    if (ingredient.quantity === "") {
-      setError("Quantity is required");
+    if (ingredient.quantity === '') {
+      setError(i18n?.t('errors:field_required.quantity'));
       return false;
     }
-    if (ingredient.unit === "") {
-      setError("Unit is required");
+    if (ingredient.unit === '') {
+      setError(i18n?.t('errors:field_required.unit'));
       return false;
     }
     if (isNaN(ingredient.quantity)) {
-      setError("Quantity should be a number");
+      setError(i18n?.t('errors:invalid.quantity'));
       return false;
     }
     if (ingredient.quantity < 0) {
-      setError("Minimum possible quantity 0");
+      setError(i18n?.t('errors:must_be_greater.name', { number: 0 }));
       return false;
     }
     if (ingredient.quantity > 99999) {
-      setError("Maximum possible quantity 99999");
+      setError(i18n?.t('errors:must_be_less.name', { number: 99999 }));
       return false;
     }
 
@@ -90,7 +95,7 @@ function EditIngredient (props) {
     };
   }
 
-  function handleAddIngredient (e) {
+  function handleAddIngredient(e) {
     e.preventDefault();
     if (!handleValidationOnSubmit()) {
       return;
@@ -106,71 +111,71 @@ function EditIngredient (props) {
   };
 
   const renderContent = () => {
-    return <div className={classes.addIngredient}>
-      <h2 className={classes.addIngredient__title}>Add More Ingredients</h2>
-      <form className={classes.addIngredient__form} onSubmit={handleAddIngredient}>
-        <div>
-          <label htmlFor="addIngredient-name" className={classes.addIngredient__label}>Name</label>
-          <TextField
-            id="addIngredient-name"
-            name="title"
-            autoFocus
-            value={ingredient.title}
-            onChange={onChangeField('title')}
-            variant="outlined"
-            fullWidth
-            className={classMarerialUi.textField}
-          />
-        </div>
-        <div className={classes.addIngredient__container}>
-          <label htmlFor="addIngredient-quantity" className={classes.addIngredient__label}>Quantity</label>
-          <TextField
-            id="addIngredient-quantity"
-            name="quantity"
-            type="number"
-            value={ingredient.quantity}
-            onChange={onChangeField('quantity')}
-            variant="outlined"
-            fullWidth
-            className={classMarerialUi.textField}
-          />
-          <label htmlFor="create-types-select" className={classes.addIngredient__label}>Unit</label>
-          <Select
-            MenuProps={MenuProps}
-            id="addIngredient-unit"
-            name="unit"
-            value={ingredient.unit}
-            onChange={onChangeField('unit')}
-            variant="outlined"
-            fullWidth
-          >{
-            unitsList
-          }
-          </Select>
-        </div>
-        <div className={classes.addIngredient__buttonContainer}>
-          <button
-            type="submit"
-            className={classes.addIngredient__button}
-          >
-            Add
-          </button>
-          {error && <p>{error}</p>}
-        </div>
-      </form>
-    </div>;
+    return (
+      <div className={classes.addIngredient}>
+        <h2 className={classes.addIngredient__title}>Add More Ingredients</h2>
+        <form className={classes.addIngredient__form} onSubmit={handleAddIngredient}>
+          <div>
+            <label htmlFor="addIngredient-name" className={classes.addIngredient__label}>
+              Name
+            </label>
+            <TextField
+              id="addIngredient-name"
+              name="title"
+              autoFocus
+              value={ingredient.title}
+              onChange={onChangeField('title')}
+              variant="outlined"
+              fullWidth
+              className={classMarerialUi.textField}
+            />
+          </div>
+          <div className={classes.addIngredient__container}>
+            <label htmlFor="addIngredient-quantity" className={classes.addIngredient__label}>
+              Quantity
+            </label>
+            <TextField
+              id="addIngredient-quantity"
+              name="quantity"
+              type="number"
+              value={ingredient.quantity}
+              onChange={onChangeField('quantity')}
+              variant="outlined"
+              fullWidth
+              className={classMarerialUi.textField}
+            />
+            <label htmlFor="create-types-select" className={classes.addIngredient__label}>
+              Unit
+            </label>
+            <Select
+              MenuProps={MenuProps}
+              id="addIngredient-unit"
+              name="unit"
+              value={ingredient.unit}
+              onChange={onChangeField('unit')}
+              variant="outlined"
+              fullWidth>
+              {unitsList}
+            </Select>
+          </div>
+          <div className={classes.addIngredient__buttonContainer}>
+            <button type="submit" className={classes.addIngredient__button}>
+              Add
+            </button>
+            {error && <p>{error}</p>}
+          </div>
+        </form>
+      </div>
+    );
   };
 
   return (
-      <LayoutModal
-        onClose={onCancel}
-        themeName="white_small"
-      >
-        {renderContent()}
-      </LayoutModal>
+    <LayoutModal onClose={onCancel} themeName="white_small">
+      {renderContent()}
+    </LayoutModal>
   );
 }
 
-export default connect((state => ({
-  recipeEdit: state.recipeEdit,
-})))(EditIngredient);
+export default connect(state => ({
+  recipeEdit: state.recipeEdit
+}))(EditIngredient);

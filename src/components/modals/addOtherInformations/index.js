@@ -8,6 +8,7 @@ import TextField from '@material-ui/core/TextField';
 
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { useTranslation } from 'next-i18next';
 
 const useStyles = makeStyles(theme => ({
   textField: {
@@ -22,14 +23,15 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function AddCookingMission(props) {
+  const { t } = useTranslation();
   const { title, nameFormik, values = null } = props;
 
   const classMarerialUi = useStyles();
 
   const validationSchema = yup.object({
-    paragraph1: yup.string('Name your email').required('Is required'),
-    paragraph2: yup.string('Name your email').required('Is required'),
-    paragraph3: yup.string('Name your email').required('Is required')
+    paragraph1: yup.string('Name your email').required(t('errors:field_required.default')),
+    paragraph2: yup.string('Name your email').required(t('errors:field_required.default')),
+    paragraph3: yup.string('Name your email').required(t('errors:field_required.default'))
   });
 
   const formik = useFormik({

@@ -53,11 +53,6 @@
                 img {
                     cursor: pointer;
                     user-select: none;
-                    user-select: none;
-                    user-select: none;
-                    user-select: none;
-                    user-select: none;
-                    user-select: none;
                 }
             }
         }
@@ -429,11 +424,6 @@
         bottom: 29px;
         cursor: pointer;
         user-select: none;
-        user-select: none;
-        user-select: none;
-        user-select: none;
-        user-select: none;
-        user-select: none;
         z-index: 500;
     }
 
@@ -526,11 +516,6 @@
         line-height: 24px !important;
         cursor: pointer !important;
         user-select: none !important;
-        user-select: none !important;
-        user-select: none !important;
-        user-select: none !important;
-        user-select: none !important;
-        user-select: none !important;
 
         &:hover fieldset {
             border-color: $--color-orange !important;
@@ -552,11 +537,6 @@
             @include fontMedium;
 
             cursor: pointer;
-            user-select: none;
-            user-select: none;
-            user-select: none;
-            user-select: none;
-            user-select: none;
             user-select: none;
             @media (max-width: $--sm) {
                 width: 311px;
@@ -580,11 +560,6 @@
             align-items: center;
             justify-content: center;
             user-select: none;
-            user-select: none;
-            user-select: none;
-            user-select: none;
-            user-select: none;
-            user-select: none;
         }
 
         &__item {
@@ -596,11 +571,6 @@
             line-height: 16px !important;
             font-family: DMSansBold, sans-serif !important;
             color: $--sc--color-neutrals4 !important;
-            user-select: none !important;
-            user-select: none !important;
-            user-select: none !important;
-            user-select: none !important;
-            user-select: none !important;
             user-select: none !important;
 
             & + & {
@@ -911,11 +881,6 @@
     @include fontMedium;
 
     cursor: pointer !important;
-    user-select: none !important;
-    user-select: none !important;
-    user-select: none !important;
-    user-select: none !important;
-    user-select: none !important;
     user-select: none !important;
 
     @media (max-width: $--xs) {

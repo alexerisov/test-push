@@ -1,0 +1,40 @@
+{
+  "field_required": {
+    "address": "Address is required",
+    "avatar": "Avatar is required",
+    "city": "City is required",
+    "default": "This field is required",
+    "description": "House is required",
+    "email": "Email is required",
+    "flat": "Flat is required",
+    "group": "Group is required",
+    "house": "House is required",
+    "ingredient": "Ingredient is required",
+    "name": "Name is required",
+    "new_password": "New password is required",
+    "password": "Password is required",
+    "phone": "Phone is required",
+    "quantity": "Quantity is required",
+    "street": "Street is required",
+    "title": "Title is required",
+    "unit": "Unit is required",
+    "zipcode": "Zipcode is required"
+  },
+  "invalid": {
+    "email": "Enter a valid email",
+    "password": "Invalid password",
+    "phone": "Enter correct phone",
+    "quantity": "Quantity should be a number"
+  },
+  "must_be_greater": {
+    "name": "Name should be of maximum {{number}}  character length",
+    "quantity": "Quantity should be greater than"
+  },
+  "must_be_less": {
+    "name": "Name should be of minimum {{number}} character length",
+    "quantity": "Quantity should be less than {{number}}"
+  },
+  "not_match": {
+    "password": "Passwords do not match"
+  }
+}

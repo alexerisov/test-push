@@ -53,11 +53,6 @@
                 img {
                     cursor: pointer;
                     user-select: none;
-                    user-select: none;
-                    user-select: none;
-                    user-select: none;
-                    user-select: none;
-                    user-select: none;
                 }
             }
         }
@@ -429,11 +424,6 @@
         bottom: 29px;
         cursor: pointer;
         user-select: none;
-        user-select: none;
-        user-select: none;
-        user-select: none;
-        user-select: none;
-        user-select: none;
         z-index: 500;
     }
 
@@ -516,11 +506,6 @@
 
         cursor: pointer;
         user-select: none;
-        user-select: none;
-        user-select: none;
-        user-select: none;
-        user-select: none;
-        user-select: none;
 
         @media (max-width: $--xs) {
             width: 311px;
@@ -538,11 +523,6 @@
             @include fontMedium;
 
             cursor: pointer;
-            user-select: none;
-            user-select: none;
-            user-select: none;
-            user-select: none;
-            user-select: none;
             user-select: none;
             @media (max-width: $--sm) {
                 width: 311px;
@@ -562,11 +542,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            user-select: none;
-            user-select: none;
-            user-select: none;
-            user-select: none;
-            user-select: none;
             user-select: none;
         }
 
@@ -591,11 +566,6 @@
             line-height: 16px;
             font-family: DMSansBold, sans-serif;
             color: $--sc--color-neutrals4;
-            user-select: none;
-            user-select: none;
-            user-select: none;
-            user-select: none;
-            user-select: none;
             user-select: none;
 
             &:hover {

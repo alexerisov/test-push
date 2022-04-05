@@ -1,6 +1,12 @@
 .menu__item {
-    display: flex;
-    column-gap: 8px;
+    column-gap: 2px;
+    padding: 8px 3px !important;
+    width: auto !important;
+}
+
+.menu__item__selected {
+    background-color: rgb(255 170 0 / 20%) !important;
+    border-radius: 10px !important;
 }
 
 .menu__icon {
@@ -9,8 +15,13 @@
 }
 
 .menu__text {
+    font-weight: 300 !important;
+    font-size: 14px !important;
+    line-height: 160% !important;
+    text-align: center !important;
+    letter-spacing: 0.01em !important;
+    color: #14181F !important;
     text-transform: uppercase;
-    font-size: 14px;
 }
 
 .select {
@@ -19,11 +30,30 @@
         outline: none !important;
     }
 
-    max-width: 70px;
+    [class*="MuiSelect-root"] {
+        padding: 0 !important;
+        position: relative;
+
+    }
+
+    width: auto !important;
     max-height: 40px;
     border: none !important;
 }
 
 .paper {
-    max-width: 90px !important;
+    padding: 5px !important;
+}
+
+.list {
+    padding: 0 !important;
+}
+
+.icon {
+    font-size: 24px !important;
+    padding: 0 !important;
+    position: absolute !important;
+    top: 2px !important;
+    right: -22px !important;
+    fill: #566481;
 }

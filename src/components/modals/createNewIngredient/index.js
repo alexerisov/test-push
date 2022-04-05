@@ -52,17 +52,6 @@ const fetcher = (...args) =>
       console.log('error', e);
     });
 
-const validationSchema = yup.object({
-  basiIngredient: yup.string().required('Ingredient is required'),
-  quantity: yup
-    .number()
-    .min(0, 'Quantity should be greater than 0')
-    .max(99999, 'Quantity should be less than 99999')
-    .required('Quantity is required'),
-  unit: yup.string().required('Unit is required'),
-  group: yup.string()
-});
-
 const defaultUnits = () => {
   const result = [];
   for (let key in units) {
@@ -93,6 +82,17 @@ function CreateNewIngredient(props) {
   const { data } = props.recipeUpload;
   const [basicIngredient, setBasicIngredient] = useState(null);
   const [shouldLoadUnits, setShouldLoadUnits] = useState();
+
+  const validationSchema = yup.object({
+    basiIngredient: yup.string().required(t('errors:field_required.ingredient')),
+    quantity: yup
+      .number()
+      .min(0, t('errors:must_be_greater.quantity', { number: 0 }))
+      .max(99999, t('errors:must_be_less.quantity', { number: 99999 }))
+      .required(t('errors:field_required.quantity')),
+    unit: yup.string().required(t('errors:field_required.unit')),
+    group: yup.string()
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -260,7 +260,7 @@ function CreateNewIngredient(props) {
                   ))
                 : defaultUnits().map(el => (
                     <MenuItem key={'default-unit' + el.pk} value={el.pk}>
-                      {el.unit}
+                      {t(`units:${el.unit}`)}
                     </MenuItem>
                   ))}
             </Select>

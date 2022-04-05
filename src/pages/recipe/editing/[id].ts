@@ -34,7 +34,9 @@ export const getServerSideProps: GetServerSideProps = async context => {
           'addIngredientModal',
           'addNutritionModal',
           'addStepModal',
-          'recipeClassifications'
+          'recipeClassifications',
+          'units',
+          'errors'
         ])),
         recipe: recipeResponse.data,
         notFound: false

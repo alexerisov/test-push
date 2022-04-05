@@ -76,11 +76,11 @@ function AddStep(props) {
 
   const handleValidationOnSubmit = () => {
     if (step.title === '') {
-      setError('Title is required');
+      setError(i18n?.t('errors:field_required.title'));
       return false;
     }
     if (step.description === '') {
-      setError('Description is required');
+      setError(i18n?.t('errors:field_required.description'));
       return false;
     }
     return true;

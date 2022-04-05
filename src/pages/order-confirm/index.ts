@@ -14,6 +14,6 @@ export default withRouter(connector);
 
 export const getServerSideProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale, ['common', 'orderConfirmPage', 'orderSummary']))
+    ...(await serverSideTranslations(locale, ['common', 'orderConfirmPage', 'orderSummary', 'errors']))
   }
 });

@@ -783,7 +783,7 @@ function FormEditRecipe(props) {
                   multiple>
                   {selectItemList(recipeTypes, 'types')}
                 </Select>
-                <FormHelperText>{error?.types ? 'This field is required' : ''}</FormHelperText>
+                <FormHelperText>{error?.types ? t('errors:field_required.default') : ''}</FormHelperText>
               </FormControl>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
                 <label
@@ -805,7 +805,7 @@ function FormEditRecipe(props) {
                   multiple>
                   {selectItemList(dietaryrestrictions, 'diet_restrictions')}
                 </Select>
-                <FormHelperText>{error?.diet_restrictions ? 'This field is required' : ''}</FormHelperText>
+                <FormHelperText>{error?.diet_restrictions ? t('errors:field_required.default') : ''}</FormHelperText>
               </FormControl>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
                 <label
@@ -827,7 +827,7 @@ function FormEditRecipe(props) {
                   multiple>
                   {selectItemList(cuisineList, 'cuisine')}
                 </Select>
-                <FormHelperText>{error?.cuisines ? 'This field is required' : ''}</FormHelperText>
+                <FormHelperText>{error?.cuisines ? t('errors:field_required.default') : ''}</FormHelperText>
               </FormControl>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
                 <label
@@ -849,7 +849,7 @@ function FormEditRecipe(props) {
                   multiple>
                   {selectItemList(cookingMethods, 'cooking_methods')}
                 </Select>
-                <FormHelperText>{error?.cooking_methods ? 'This field is required' : ''}</FormHelperText>
+                <FormHelperText>{error?.cooking_methods ? t('errors:field_required.default') : ''}</FormHelperText>
               </FormControl>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
                 <label
@@ -870,7 +870,7 @@ function FormEditRecipe(props) {
                   )}>
                   {selectItemList(cookingSkill, 'cookingSkill')}
                 </Select>
-                <FormHelperText>{error?.cooking_skills ? 'This field is required' : ''}</FormHelperText>
+                <FormHelperText>{error?.cooking_skills ? t('errors:field_required.default') : ''}</FormHelperText>
               </FormControl>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
                 <label
@@ -895,7 +895,7 @@ function FormEditRecipe(props) {
                     {'Dutch'}
                   </MenuItem>
                 </Select>
-                <FormHelperText>{error?.cooking_skills ? 'This field is required' : ''}</FormHelperText>
+                <FormHelperText>{error?.cooking_skills ? t('errors:field_required.default') : ''}</FormHelperText>
               </FormControl>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
                 <label
@@ -915,7 +915,7 @@ function FormEditRecipe(props) {
                   error={Boolean(error?.description)}
                   helperText={error?.description}
                 />
-                <FormHelperText>{error?.cooking_skills ? 'This field is required' : ''}</FormHelperText>
+                <FormHelperText>{error?.cooking_skills ? t('errors:field_required.default') : ''}</FormHelperText>
               </FormControl>
             </NoSsr>
           </div>
@@ -935,7 +935,7 @@ function FormEditRecipe(props) {
                 value={data?.publish_status}
                 onChange={onChangeFieldNumber('publish_status')}
                 error={error?.publish_status}
-                helperText={error?.publish_status ? 'This field is required' : ''}>
+                helperText={error?.publish_status ? t('errors:field_required.default') : ''}>
                 <FormControlLabel
                   value={1}
                   control={

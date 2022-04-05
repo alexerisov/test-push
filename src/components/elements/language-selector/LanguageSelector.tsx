@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useTranslation } from 'next-i18next';
 import s from './LanguageSelector.module.scss';
 
+import ArrowDownIcon from '~public/icons/Arrow Down Simple/Line.svg';
 import FlagUS from '~public/icons/flags/us.svg';
 import FlagNL from '~public/icons/flags/nl.svg';
 import { MenuItem, Select } from '@material-ui/core';
@@ -14,7 +15,6 @@ import http from '@/utils/http';
 import { useAuth } from '@/utils/Hooks';
 
 export const LanguageSelector = () => {
-  const { i18n } = useTranslation('common');
   const router = useRouter();
   const dispatch = useDispatch();
   const { session, status: loading } = useAuth();
@@ -38,18 +38,23 @@ export const LanguageSelector = () => {
 
   const [currentLanguage, setCurrentLanguage] = React.useState<string>('nl');
 
-  useEffect(async () => {
-    const storedLanguage = await JSON.parse(localStorage.getItem('language'));
-    if (storedLanguage) {
-      return onChangeSelect({ target: { value: storedLanguage } });
-    } else {
-      if (session) {
-        if (profileLanguage in LANGUAGES) {
-          return onChangeSelect({ target: { value: LANGUAGES[profileLanguage] } });
-        }
+  useEffect(() => {
+    getInitialLanguage();
+    async function getInitialLanguage() {
+      let initialLanguage;
+      const storedLanguage = await JSON.parse(localStorage.getItem('language'));
+      if (storedLanguage) {
+        initialLanguage = storedLanguage;
       } else {
-        return onChangeSelect({ target: { value: 'nl' } });
+        if (session) {
+          if (profileLanguage in LANGUAGES) {
+            initialLanguage = LANGUAGES[profileLanguage];
+          }
+        } else {
+          initialLanguage = 'nl';
+        }
       }
+      onChangeSelect({ target: { value: initialLanguage } });
     }
   }, [session]);
 
@@ -79,15 +84,17 @@ export const LanguageSelector = () => {
 
     await setCurrentLanguage(event.target.value);
 
-    i18n?.changeLanguage(event.target.value);
-
     router.push(router.asPath, undefined, { locale: event.target.value, scroll: false });
   };
 
   const getOptionList = list => {
     return list.map(el => {
       return (
-        <MenuItem key={el.value} value={el.value} className={s.menu__item}>
+        <MenuItem
+          key={el.value}
+          value={el.value}
+          classes={{ selected: s.menu__item__selected }}
+          className={s.menu__item}>
           <BasicIcon icon={el.icon} size={'24px'} viewBox={'0 0 640 480'} />
           <span className={s.menu__text}>{el.value}</span>
         </MenuItem>
@@ -106,12 +113,24 @@ export const LanguageSelector = () => {
         value={currentLanguage}
         onChange={onChangeSelect}
         className={s.select}
+        IconComponent={ArrowDownIcon}
+        classes={{ icon: s.icon }}
         renderValue={renderValue}
         variant="outlined"
         MenuProps={{
           disableScrollLock: true,
-          PaperProps: {
-            className: s.paper
+          getContentAnchorEl: null,
+          anchorOrigin: {
+            vertical: 'bottom',
+            horizontal: 'center'
+          },
+          transformOrigin: {
+            vertical: 'top',
+            horizontal: 'center'
+          },
+          classes: {
+            paper: s.paper,
+            list: s.list
           }
         }}>
         {getOptionList(languageList)}

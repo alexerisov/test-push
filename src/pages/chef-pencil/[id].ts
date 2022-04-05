@@ -14,7 +14,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
     const response = await ChefPencil.getTargetChefPencil(id);
     return {
       props: {
-        ...(await serverSideTranslations(context.locale, ['common'])),
+        ...(await serverSideTranslations(context.locale, ['common', 'errors'])),
         pencilData: response.data,
         absolutePath: context.req.headers.host
       }

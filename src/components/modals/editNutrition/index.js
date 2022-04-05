@@ -6,7 +6,8 @@ import { connect } from 'react-redux';
 import classes from './addNutrition.module.scss';
 import { TextField, FormControl, Select, MenuItem } from '@material-ui/core';
 import { nutritions } from '@/utils/datasets';
-import { getMaxQuantityOfNutrition } from "@/utils/checkTotalQuantityOfNutrition";
+import { getMaxQuantityOfNutrition } from '@/utils/checkTotalQuantityOfNutrition';
+import { i18n } from 'next-i18next';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -55,15 +56,15 @@ function EditNutrition(props) {
 
   function handleValidationOnSubmit() {
     if (nutrition.title === '') {
-      setError('Name is required');
+      setError(i18n?.t('errors:field_required.name'));
       return false;
     }
     if (nutrition.quantity === '') {
-      setError('Quantity is required');
+      setError(i18n?.t('errors:field_required.quantity'));
       return false;
     }
     if (isNaN(nutrition.quantity)) {
-      setError('Quantity should be a number');
+      setError(i18n?.t('errors:invalid.quantity'));
       return false;
     }
     if (nutrition.title === 'calories') {
@@ -72,16 +73,16 @@ function EditNutrition(props) {
         return true;
       }
       if (nutrition.quantity > 99999) {
-        setError('The maximum possible value 99999');
+        setError(i18n?.t('errors:must_be_less.quantity', { number: 99999 }));
         return false;
       }
     }
     if (nutrition.quantity > getMaxQuantityOfNutrition(nutritionData)) {
-      setError(`The maximum possible value ${getMaxQuantityOfNutrition(nutritionData)}`);
+      setError(i18n?.t('errors:must_be_less.quantity', { number: getMaxQuantityOfNutrition(nutritionData) }));
       return false;
     }
     if (nutrition.quantity < 0) {
-      setError('Minimum possible value 0');
+      setError(i18n?.t('errors:must_be_greater.quantity', { number: 0 }));
       return false;
     }
     return true;

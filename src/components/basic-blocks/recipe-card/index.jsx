@@ -57,7 +57,6 @@ export const RecipeCard = props => {
           redirectToRecipeCard(recipe.pk);
         }}
         image={image ?? logo}
-        title="img"
       />
       <CardContent className={classes.card__content}>
         <div>

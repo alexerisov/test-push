@@ -26,11 +26,11 @@ export const ProfilePasswordPage = props => {
   };
 
   const validationSchema = Yup.object().shape({
-    password: Yup.string().required('Enter your password'),
-    new_password: Yup.string().required('New password is required'),
+    password: Yup.string().required(t('errors:field_required.password')),
+    new_password: Yup.string().required(t('errors:field_required.new_password')),
     confirm_password: Yup.string().when('new_password', {
       is: val => (val && val.length > 0 ? true : false),
-      then: Yup.string().oneOf([Yup.ref('new_password')], 'Passwords do not match')
+      then: Yup.string().oneOf([Yup.ref('new_password')], t('errors:not_match.password'))
     })
   });
 
@@ -47,14 +47,14 @@ export const ProfilePasswordPage = props => {
       props
         .dispatch(restorePasswordActions.changePassword(values))
         .then(() => {
-          formik.handleReset();
+          formik.resetForm();
           setFormError('');
           handleClickPopupOpen('infoMessageModal', {
-            title: 'Password changed successfully'
+            title: t('password.successChange')
           });
         })
         .catch(error => {
-          setFormError('Invalid password');
+          setFormError(t('errors:invalid.password'));
           console.log(error);
         });
     }

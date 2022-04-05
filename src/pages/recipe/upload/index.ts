@@ -14,7 +14,9 @@ export const getServerSideProps = async ({ locale }) => ({
       'addIngredientModal',
       'addNutritionModal',
       'addStepModal',
-      'recipeClassifications'
+      'recipeClassifications',
+      'units',
+      'errors'
     ]))
   }
 });

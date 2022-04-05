@@ -823,7 +823,7 @@ function FormCreateRecipe(props) {
                   multiple>
                   {selectItemList(recipeTypes, 'types')}
                 </Select>
-                <FormHelperText>{error?.types ? 'This field is required' : ''}</FormHelperText>
+                <FormHelperText>{error?.types ? t('errors:field_required.default') : ''}</FormHelperText>
               </FormControl>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
                 <label
@@ -844,7 +844,7 @@ function FormCreateRecipe(props) {
                   multiple>
                   {selectItemList(dietaryrestrictions, 'diet_restrictions')}
                 </Select>
-                <FormHelperText>{error?.diet_restrictions ? 'This field is required' : ''}</FormHelperText>
+                <FormHelperText>{error?.diet_restrictions ? t('errors:field_required.default') : ''}</FormHelperText>
               </FormControl>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
                 <label
@@ -865,7 +865,7 @@ function FormCreateRecipe(props) {
                   multiple>
                   {selectItemList(cuisineList, 'cuisine')}
                 </Select>
-                <FormHelperText>{error?.cuisines ? 'This field is required' : ''}</FormHelperText>
+                <FormHelperText>{error?.cuisines ? t('errors:field_required.default') : ''}</FormHelperText>
               </FormControl>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
                 <label
@@ -886,7 +886,7 @@ function FormCreateRecipe(props) {
                   multiple>
                   {selectItemList(cookingMethods, 'cooking_methods')}
                 </Select>
-                <FormHelperText>{error?.cooking_methods ? 'This field is required' : ''}</FormHelperText>
+                <FormHelperText>{error?.cooking_methods ? t('errors:field_required.default') : ''}</FormHelperText>
               </FormControl>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
                 <label
@@ -906,7 +906,7 @@ function FormCreateRecipe(props) {
                   MenuProps={MenuProps}>
                   {selectItemList(cookingSkill, 'cookingSkill')}
                 </Select>
-                <FormHelperText>{error?.cooking_skills ? 'This field is required' : ''}</FormHelperText>
+                <FormHelperText>{error?.cooking_skills ? t('errors:field_required.default') : ''}</FormHelperText>
               </FormControl>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
                 <label
@@ -931,7 +931,7 @@ function FormCreateRecipe(props) {
                     {'Dutch'}
                   </MenuItem>
                 </Select>
-                <FormHelperText>{error?.cooking_skills ? 'This field is required' : ''}</FormHelperText>
+                <FormHelperText>{error?.cooking_skills ? t('errors:field_required.default') : ''}</FormHelperText>
               </FormControl>
               <FormControl variant="outlined" className={classMarerialUi.formControl}>
                 <label
@@ -951,7 +951,7 @@ function FormCreateRecipe(props) {
                   error={Boolean(error?.description)}
                   helperText={error?.description}
                 />
-                <FormHelperText>{error?.cooking_skills ? 'This field is required' : ''}</FormHelperText>
+                <FormHelperText>{error?.cooking_skills ? t('errors:field_required.default') : ''}</FormHelperText>
               </FormControl>
             </NoSsr>
           </div>
@@ -989,7 +989,7 @@ function FormCreateRecipe(props) {
               </RadioGroup>
             </NoSsr>
             {error?.publish_status && (
-              <p className={classes.createRecipeItem__errorPublishStatus}>This field is required</p>
+              <p className={classes.createRecipeItem__errorPublishStatus}>{t('errors:field_required.default')}</p>
             )}
           </div>
         </div>

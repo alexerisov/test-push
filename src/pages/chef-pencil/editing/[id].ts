@@ -9,6 +9,6 @@ export default connect()(ChefPencilEditPage);
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale, ['common']))
+    ...(await serverSideTranslations(locale, ['common', 'errors']))
   }
 });

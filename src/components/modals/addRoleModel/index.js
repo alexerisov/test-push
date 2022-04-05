@@ -5,6 +5,7 @@ import { modalActions } from '@/store/actions';
 import { connect } from 'react-redux';
 import classes from './addIngredient.module.scss';
 import TextField from '@material-ui/core/TextField';
+import { useTranslation } from 'next-i18next';
 
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -22,14 +23,15 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function AddRoleModel(props) {
+  const { t } = useTranslation();
   const classMarerialUi = useStyles();
 
   const validationSchema = yup.object({
     name: yup
-      .string('Name your email')
-      .required('Name is required')
-      .min(5, 'Name should be of minimum 5 characters length')
-      .max(100, 'Name should be of maximum 100 characters length')
+      .string()
+      .required(t('errors:field_required.name'))
+      .min(5, t('errors:must_be_greater.name', { number: 5 }))
+      .max(100, t('errors:must_be_less.name', { number: 100 }))
   });
 
   const [avatarFile, setAvatarFile] = useState();
@@ -44,7 +46,7 @@ function AddRoleModel(props) {
     validationSchema: validationSchema,
     onSubmit: values => {
       if (!values.avatar) {
-        setErrorAvatar('Avatar is required');
+        setErrorAvatar(t('errors:field_required.avatar'));
         return;
       } else {
         props.dispatch(modalActions.close(values));

@@ -10,7 +10,7 @@ const colors = {
   ERROR: chalk.red
 };
 
-const nextAuthLog = log;
+const nextAuthLog = log.getLogger('next-auth');
 const axiosLog = log.getLogger('axios');
 
 export function loggerSetup() {

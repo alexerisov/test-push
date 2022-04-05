@@ -60,21 +60,6 @@ const fetcher = (...args) =>
       console.log('error', e);
     });
 
-const validationSchema = yup.object({
-  basicIngredient: yup.string().required('Ingredient is required'),
-  quantity: yup
-    .number('Quantity should be number')
-    .min(0, 'Quantity should be greater than 0')
-    .max(99999, 'Quantity should be less than 99999')
-    .required('Quantity is required'),
-  unit: yup.string().required('Unit is required')
-});
-
-const validationSchema2 = yup.object({
-  name: yup.string().required('Name is required'),
-  group: yup.string().required('Group is required')
-});
-
 const defaultUnits = () => {
   const result = [];
   for (let key in units) {
@@ -88,7 +73,7 @@ const renderOption = (option, { selected }) => {
     return (
       <span className={classes.option} value={option.pk}>
         <AddIcon htmlColor="#ffaa00" />
-        {i18n.t('addIngredientModal:createIngredient.popupText')}
+        {i18n?.t('addIngredientModal:createIngredient.popupText')}
       </span>
     );
   }
@@ -110,6 +95,22 @@ function AddIngredient(props) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isUnitFocused, setIsUnitFocused] = useState(false);
   log.info('info');
+
+  const validationSchema = yup.object({
+    basicIngredient: yup.string().required(t('errors:field_required.ingredient')),
+    quantity: yup
+      .number()
+      .min(0, t('errors:must_be_greater.quantity', { number: 0 }))
+      .max(99999, t('errors:must_be_greater.quantity', { number: 99999 }))
+      .required(t('errors:field_required.quantity')),
+    unit: yup.string().required(t('errors:field_required.unit'))
+  });
+
+  const validationSchema2 = yup.object({
+    name: yup.string().required(t('errors:field_required.name')),
+    group: yup.string().required(t('errors:field_required.group'))
+  });
+
   const formik = useFormik({
     initialValues: {
       basicIngredient: '',
@@ -426,7 +427,7 @@ function AddIngredient(props) {
                   ))
                 : defaultUnits().map(el => (
                     <MenuItem key={'default-unit' + el.pk} value={el.pk}>
-                      {el.unit}
+                      {t(`units:${el.unit}`)}
                     </MenuItem>
                   ))}
             </Select>

@@ -366,6 +366,7 @@ const Classifications = ({
         <Tooltip
           onMouseMove={event => (positionRef.current = { x: event.clientX, y: event.clientY })}
           title={tooltipText}
+          classes={{ tooltip: s.classification__tooltip__text }}
           aria-label={`${text}-tooltip`}
           placement="top-start"
           popperRef={popperRef}
@@ -383,7 +384,7 @@ const Classifications = ({
               })
             }
           }}>
-          <span className={s.classification_text}>{text}</span>
+          <span className={s.classification__text}>{text}</span>
         </Tooltip>
       </div>
     );
@@ -406,7 +407,7 @@ const Classifications = ({
         <IconWithText
           icon={StopwatchIcon}
           text={parseTime(recipeCookingTime ?? 'N/A')}
-          tooltipText="Cooking Time"
+          tooltipText={t('recipeClassifications:cooking_time.title')}
           link={`/search?cooking_time=${recipeCookingTime}`}
           borderColor="#92A5EF"
         />
@@ -419,7 +420,7 @@ const Classifications = ({
                   .join(', ')
               : t('common:notDefinedText')
           }
-          tooltipText="Cooking Type"
+          tooltipText={t('recipeClassifications:types.title')}
           link={`/search?types=${recipeTypesList.join(',')}`}
           borderColor="#58C27D"
         />
@@ -434,7 +435,7 @@ const Classifications = ({
                   .join(', ')
               : t('common:notDefinedText')
           }
-          tooltipText="Dietary Restrictions"
+          tooltipText={t('recipeClassifications:diet_restrictions.title')}
           link={`/search?diet_restrictions=${recipeDietRestrictions.join(',')}`}
           borderColor="#FA8F54"
         />
@@ -447,7 +448,7 @@ const Classifications = ({
                   .join(', ')
               : t('common:notDefinedText')
           }
-          tooltipText="Recipe Cuisiness"
+          tooltipText={t('recipeClassifications:cuisine.title')}
           link={`/search?cuisines=${recipeCuisines.join(',')}`}
           borderColor="#8BC5E5"
         />
@@ -458,7 +459,7 @@ const Classifications = ({
               ? t(`recipeClassifications:cookingSkill.${cookingSkill?.[recipeCookingSkills]?.toLowerCase()}`)
               : t('common:notDefinedText')
           }
-          tooltipText="Cooking Skill"
+          tooltipText={t('recipeClassifications:cookingSkill.title')}
           link={`/search?cooking_skills=${recipeCookingSkills}`}
           borderColor="#F178B6"
         />
@@ -471,7 +472,7 @@ const Classifications = ({
                   .join(', ')
               : t('common:notDefinedText')
           }
-          tooltipText="Cooking Method"
+          tooltipText={t('recipeClassifications:cooking_methods.title')}
           link={`/search?cooking_methods=${recipeCookingMethods.join(',')}`}
           borderColor="#FFD166"
         />
@@ -483,7 +484,7 @@ const Classifications = ({
               : t('common:notDefinedText')
           }
           link={`${router.asPath}`}
-          tooltipText="Servings"
+          tooltipText={t('recipeClassifications:servings.title')}
           borderColor="#FFD166"
         />
       </div>
@@ -561,7 +562,7 @@ const Ingredients = ({
   };
 
   const Ingredient = props => {
-    const { title, quantity, unit, custom_unit, ingredient } = props;
+    const { title, quantity, unit, custom_unit } = props;
 
     return (
       <div className={s.ingredient_container}>
@@ -575,7 +576,7 @@ const Ingredients = ({
             </abbr>
           ) : (
             <span>
-              {quantity} {unit}
+              {quantity} {t(`units:${unit}`)}
             </span>
           )}
         </span>

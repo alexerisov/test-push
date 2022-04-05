@@ -20,6 +20,7 @@ import classes from './form-create-chef-pencil.module.scss';
 import { useActions } from '@/customHooks/useActions';
 import { categoryList } from '@/utils/datasets';
 import ChefPencil from '@/api/ChefPencil';
+import { useTranslation } from 'next-i18next';
 
 const useStyles = makeStyles({
   formControl: {
@@ -53,6 +54,7 @@ const Editor = dynamic(() => import('@/components/blocks/Editor'), {
 });
 
 function FormCreateChefPencil({ id, isEditing, initData }) {
+  const { t } = useTranslation();
   const router = useRouter();
   const dispatch = useDispatch();
   const { data, error } = useSelector(state => state.chefPencilUpload);
@@ -569,7 +571,7 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
                   multiple>
                   {selectItemList(categories)}
                 </Select>
-                <FormHelperText>{error?.categories ? 'This field is required' : ''}</FormHelperText>
+                <FormHelperText>{error?.categories ? t('errors:field_required.default') : ''}</FormHelperText>
               </FormControl>
             </div>
           </div>

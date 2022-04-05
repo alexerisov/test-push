@@ -1,7 +1,11 @@
+// types
+import type { GetServerSideProps } from 'next';
+
 import { connect } from 'react-redux';
 import { RootState } from '@/store/store';
 import Recipe from '@/api/Recipe';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import log from 'loglevel';
 
 // page component
 import { SearchPage } from '@/components/pages/search/SearchPage';
@@ -13,10 +17,10 @@ export default connect((state: RootState) => ({
   userType: state.account?.profile?.user_type
 }))(SearchPage);
 
-export async function getServerSideProps(context) {
+export const getServerSideProps: GetServerSideProps = async context => {
   const session = await getSession(context);
   if (session) {
-    http.defaults.headers.common['Authorization'] = `Bearer ${session?.jwt}`;
+    http.defaults.headers.common['Authorization'] = `Bearer ${session?.accessToken}`;
   }
   try {
     const weekmenu = await Recipe.getWeekmenu('');
@@ -24,11 +28,11 @@ export async function getServerSideProps(context) {
       props: {
         ...(await serverSideTranslations(context.locale, ['common', 'searchPage', 'recipeClassifications'])),
         session,
-        weekmenuWithoutFilters: weekmenu.data
+        weekmenuWithoutFilters: weekmenu?.data || []
       }
     };
   } catch (e) {
-    console.error(e);
+    log.error('%0', e);
 
     return {
       props: {
@@ -37,4 +41,4 @@ export async function getServerSideProps(context) {
       }
     };
   }
-}
+};

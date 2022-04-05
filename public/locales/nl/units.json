@@ -30,6 +30,7 @@
   "loaf": "brood",
   "medium head": "medium hoofd",
   "milliliters": "milliliter",
+  "other": "ander",
   "ounce(s)": "ounce(s)",
   "package": "pakket",
   "packet": "pakket",
@@ -48,6 +49,5 @@
   "stalk(s)": "stengel(s)",
   "tablespoon(s)": "eetlepel(s)",
   "teaspoon(s)": "theelepel(s)",
-  "thing(s)": "dingen)",
-  "other": "ander"
+  "thing(s)": "dingen)"
 }

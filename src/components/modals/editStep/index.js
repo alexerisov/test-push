@@ -80,7 +80,7 @@ function AddStep(props) {
       return false;
     }
     if (step.description === '') {
-      setError('Description is required');
+      setError(t('errors:field_required.description'));
       return false;
     }
     return true;

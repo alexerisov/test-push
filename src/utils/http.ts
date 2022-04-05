@@ -2,6 +2,8 @@ import axios from 'axios';
 import { getSession } from 'next-auth/react';
 import CONFIG from '@/config';
 import { getLogger } from 'loglevel';
+import { message } from 'memfs/lib/internal/errors';
+import { toJSON } from 'yaml/util';
 const log = getLogger('axios');
 
 const baseURL = process.env.SOME_API_URL || 'http://localhost:1337';
@@ -25,7 +27,7 @@ http.interceptors.response.use(
     return response;
   },
   error => {
-    log.error(error);
+    log.error('%s', { message: error.message, header: error.request._header });
   }
 );
 

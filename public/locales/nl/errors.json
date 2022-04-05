@@ -1,0 +1,40 @@
+{
+  "field_required": {
+    "address": "Adres is vereist",
+    "avatar": "Avatar is vereist",
+    "city": " Plaats is vereist",
+    "default": " Dit veld is verplicht",
+    "description": "Huis is vereist",
+    "email": "E-mail is vereist",
+    "flat": "Plat is vereist",
+    "group": "Groep is vereist",
+    "house": "Huis is verplicht",
+    "ingredient": "Ingrediënt is vereist",
+    "name": " Naam is vereist",
+    "new_password": "Nieuw wachtwoord is vereist",
+    "password": "Wachtwoord is vereist",
+    "phone": "Telefoon is vereist",
+    "quantity": "Hoeveelheid is vereist",
+    "street": "Straat is verplicht",
+    "title": "Titel is vereist",
+    "unit": " Eenheid is vereist",
+    "zipcode": "Postcode is vereist"
+  },
+  "invalid": {
+    "email": "Vul een geldig e-mailadres in",
+    "password": "Ongeldig wachtwoord",
+    "phone": "Voer de juiste telefoon in",
+    "quantity": "Hoeveelheid moet een getal zijn"
+  },
+  "must_be_greater": {
+    "name": " Naam mag maximaal {{number}} tekens lang zijn",
+    "quantity": "Hoeveelheid moet groter zijn dan"
+  },
+  "must_be_less": {
+    "name": "Naam moet minimaal {{number}} tekens lang zijn",
+    "quantity": "Hoeveelheid moet kleiner zijn dan {{number}}"
+  },
+  "not_match": {
+    "password": "Wachtwoorden komen niet overeen"
+  }
+}

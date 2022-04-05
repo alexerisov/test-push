@@ -203,6 +203,17 @@
         color: #566481;
     }
 
+    &__tooltip__text {
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 160%;
+        letter-spacing: 0.01em;
+        color: #566481;
+        text-transform: capitalize !important;
+    }
+
     &_calories {
         display: flex;
         justify-content: space-between;

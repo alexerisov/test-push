@@ -19,6 +19,7 @@ import FieldError from '@/components/elements/field-error';
 import VisibilityOffRoundedIcon from '@material-ui/icons/VisibilityOffRounded';
 import VisibilityRoundedIcon from '@material-ui/icons/VisibilityRounded';
 import { signIn } from 'next-auth/react';
+import { i18n } from 'next-i18next';
 
 function Register(props) {
   const router = useRouter();
@@ -234,7 +235,7 @@ function Register(props) {
   };
 
   const validationSchema = yup.object({
-    email: yup.string('Enter your email').emailWithoutSymbols().required('Email is required')
+    email: yup.string().emailWithoutSymbols().required(i18n?.t('errors:field_required.email'))
   });
 
   const defaultFormValues = {

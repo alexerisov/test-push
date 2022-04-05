@@ -13,7 +13,7 @@ export default connect((state: RootState) => ({
 export async function getStaticProps({ locale }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ['common', 'profilePage']))
+      ...(await serverSideTranslations(locale, ['common', 'profilePage', 'errors']))
       // Will be passed to the page component as props
     }
   };

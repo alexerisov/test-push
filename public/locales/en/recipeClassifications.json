@@ -20,7 +20,8 @@
   },
   "cooking_time": {
     "hours": "hours",
-    "minutes": "minutes"
+    "minutes": "minutes",
+    "title": "Cooking Time"
   },
   "cuisine": {
     "american": "American",
@@ -40,6 +41,7 @@
     "moracon": "Moracon",
     "spanish": "Spanish",
     "thai": "Thai",
+    "title": "Recipe Cuisiness",
     "turkish": "Turkish"
   },
   "diet_restrictions": {

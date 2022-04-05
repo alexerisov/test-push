@@ -30,6 +30,7 @@
   "loaf": "loaf",
   "medium head": "medium head",
   "milliliters": "milliliters",
+  "other": "other",
   "ounce(s)": "ounce(s)",
   "package": "package",
   "packet": "packet",
@@ -48,6 +49,5 @@
   "stalk(s)": "stalk(s)",
   "tablespoon(s)": "tablespoon(s)",
   "teaspoon(s)": "teaspoon(s)",
-  "thing(s)": "thing(s)",
-  "other": "other"
+  "thing(s)": "thing(s)"
 }

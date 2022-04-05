@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import log from 'loglevel';
 import Recipe from '@/api/Recipe';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { RootState } from '@/store/store';
@@ -14,20 +15,20 @@ export default connect((state: RootState) => ({
 export async function getServerSideProps(context) {
   const session = await getSession(context);
   if (session) {
-    http.defaults.headers.common['Authorization'] = `Bearer ${session?.jwt}`;
+    http.defaults.headers.common['Authorization'] = `Bearer ${session.accessToken}`;
   }
   try {
     const weekmenu = await Recipe.getWeekmenu('');
     return {
       props: {
-        session,
         ...(await serverSideTranslations(context.locale, ['common', 'homePage'])),
+        session,
         weekmenu: weekmenu.data,
         absolutePath: context.req.headers.host
       }
     };
   } catch (e) {
-    console.error(e);
+    log.error('%0', e);
 
     return {
       props: {

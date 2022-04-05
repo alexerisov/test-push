@@ -34,12 +34,15 @@
         }
 
         &_body {
+            padding: 5px !important;
             display: flex;
             flex-direction: row;
             overflow-x: auto;
             column-gap: 20px;
             padding-bottom: 10px;
             @include styledScrollbar;
+
+
         }
     }
 
