@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import classes from './index.module.scss';
@@ -11,8 +11,11 @@ import { Rating } from '@material-ui/lab';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import dayjs from 'dayjs';
 import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
 const relativeTime = require('dayjs/plugin/relativeTime');
 const utc = require('dayjs/plugin/utc');
+require('dayjs/locale/nl');
+require('dayjs/locale/en');
 dayjs.extend(utc);
 dayjs.extend(relativeTime);
 
@@ -32,10 +35,15 @@ const Comment = ({
   const { t } = useTranslation('recipePage');
   const mobile = useMediaQuery('(max-width: 568px)');
   const activeUserId = useSelector(state => state?.account?.profile?.pk);
+  const router = useRouter();
   const status = {
     created: 'created',
     deleted: 'deleted'
   };
+
+  useEffect(() => {
+    dayjs.locale(router.locale);
+  }, [router.locale]);
 
   const likeTypes = {
     like: 'like',

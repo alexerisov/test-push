@@ -28,7 +28,13 @@ export const getServerSideProps: GetServerSideProps = async context => {
     return {
       props: {
         session,
-        ...(await serverSideTranslations(context.locale, ['common', 'recipePage', 'recipeClassifications', 'units'])),
+        ...(await serverSideTranslations(context.locale, [
+          'common',
+          'recipePage',
+          'recipeClassifications',
+          'units',
+          'errors'
+        ])),
         recipe: recipeResponse.data,
         topRatedRecipes: topRatedResponse.data,
         absolutePath: context.req.headers.host

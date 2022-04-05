@@ -68,9 +68,9 @@ const CommentBlock = ({
     },
     validationSchema: Yup.object({
       textarea: Yup.string()
-        .min(5, 'Must be 5 characters or more')
-        .max(300, 'Must be 300 characters or less')
-        .required('Write something before submit...')
+        .min(5, t('errors:must_be_greater.quantity', { number: 5 }))
+        .max(300, t('errors:must_be_less.default', { number: 300 }))
+        .required(t('errors:field_required.comment'))
     }),
     onSubmit: values => {
       uploadComment(values);

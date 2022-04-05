@@ -1,8 +1,12 @@
 {
+  "auth": {
+    "comment": "Gelieve eerst in te loggen, daarna kunt u recepten becommentariëren!"
+  },
   "field_required": {
     "address": "Adres is vereist",
     "avatar": "Avatar is vereist",
     "city": " Plaats is vereist",
+    "comment": "Schrijf iets voordat je het verzendt...",
     "default": " Dit veld is verplicht",
     "description": "Huis is vereist",
     "email": "E-mail is vereist",
@@ -27,10 +31,12 @@
     "quantity": "Hoeveelheid moet een getal zijn"
   },
   "must_be_greater": {
+    "default": "Moet {{number}} tekens of meer bevatten",
     "name": " Naam mag maximaal {{number}} tekens lang zijn",
     "quantity": "Hoeveelheid moet groter zijn dan"
   },
   "must_be_less": {
+    "default": "Moet {{number}} tekens of minder zijn",
     "name": "Naam moet minimaal {{number}} tekens lang zijn",
     "quantity": "Hoeveelheid moet kleiner zijn dan {{number}}"
   },

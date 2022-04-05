@@ -11,6 +11,7 @@ import Recipe from '@/api/Recipe';
 import classes from './RecipeComments.module.scss';
 import { useDispatch } from 'react-redux';
 import { useAuth } from '@/utils/Hooks';
+import { useTranslation } from 'next-i18next';
 
 const ResipeComments = ({
   id,
@@ -21,14 +22,15 @@ const ResipeComments = ({
   uploadLikeHandler,
   deleteCommentHandle
 }) => {
+  const { t } = useTranslation();
   const { session, status: loading } = useAuth();
 
   const dispatch = useDispatch();
 
   const [comments, setComments] = useState();
 
-  const placeholder = 'Add your comments here...';
-  const authError = 'Please login first, then you will can comment recipes!';
+  const placeholder = t('recipePage:reviews.input.placeholder');
+  const authError = t('recipePage:reviews.input.authError');
 
   // Pagination for comments
   const itemsPerPage = 4;
@@ -41,9 +43,9 @@ const ResipeComments = ({
     },
     validationSchema: Yup.object({
       textarea: Yup.string()
-        .min(5, 'Must be 5 characters or more')
-        .max(300, 'Must be 300 characters or less')
-        .required('Write something before submit...')
+        .min(5, t('errors:must_be_greater.default', { number: 5 }))
+        .max(300, t('errors:must_be_less.default', { number: 300 }))
+        .required(t('errors:field_required.comment'))
     }),
     onSubmit: values => {
       uploadComment(values);
