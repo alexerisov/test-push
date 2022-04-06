@@ -3,7 +3,7 @@ import type { ChefProfile, ViewerProfile } from '~types/profile';
 
 import http from '../utils/http';
 
-interface AccountApi {
+interface IAccountApi {
   login(email: string, password: string): Promise<AxiosResponse<any>>;
   socialLogin(socialLoginData: {
     access_token: string;
@@ -14,7 +14,7 @@ interface AccountApi {
     redirect_uri: string;
   }): Promise<AxiosResponse<any>>;
   current(): Promise<AxiosResponse<any>>;
-  current(token: string): Promise<AxiosResponse<any>>;
+  current(token: string | null): Promise<AxiosResponse<any>>;
   getNotifications(): Promise<AxiosResponse<any>>;
   deleteNotification(id: number): Promise<AxiosResponse<any>>;
   refreshToken(refreshToken: string): Promise<AxiosResponse<any>>;
@@ -44,7 +44,7 @@ interface AccountApi {
   getTargetChefAccountInfo(id: number): Promise<AxiosResponse<any>>;
 }
 
-const AccountApi: AccountApi = {
+const AccountApi: IAccountApi = {
   login: (email, password) => {
     return http.post(`token/`, { email, password });
   },

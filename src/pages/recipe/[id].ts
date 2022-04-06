@@ -33,7 +33,8 @@ export const getServerSideProps: GetServerSideProps = async context => {
           'recipePage',
           'recipeClassifications',
           'units',
-          'errors'
+          'errors',
+          'orderSummary'
         ])),
         recipe: recipeResponse.data,
         topRatedRecipes: topRatedResponse.data,

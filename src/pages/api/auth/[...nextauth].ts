@@ -15,29 +15,38 @@ interface UserResponseData {
   pk: number;
 }
 
-namespace NextAuthUtils {
-  //todo implement refresh token logic
-  export const refreshToken = async function (refreshToken: string) {
-    try {
-      const response = await http.post(
-        // "http://localhost:8000/api/auth/token/refresh/",
-        'token/refresh',
-        {
-          refresh: refreshToken
+async function refreshAccessToken(token) {
+  try {
+    const response = await http.post(
+      `token/refresh`,
+      {
+        refresh: token.refreshToken
+      },
+      {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
         }
-      );
+      }
+    );
 
-      const { access, refresh } = response.data;
-      // still within this block, return true
-      return [access, refresh];
-    } catch {
-      return [null, null];
-    }
-  };
+    return {
+      ...token,
+      accessToken: response?.data.access,
+      expires: Date.now() + 24 * 60 * 60,
+      refreshToken: token.refreshToken
+    };
+  } catch (error) {
+    log.error(error);
+
+    return {
+      ...token,
+      error: 'RefreshAccessTokenError'
+    };
+  }
 }
 
 export default NextAuth({
-  debug: process.env.DEBUG,
+  debug: true,
   pages: {
     signIn: '/',
     signOut: '/',
@@ -118,14 +127,12 @@ export default NextAuth({
               accessToken: access,
               refreshToken: refresh
             };
-            http.defaults.headers.common['Authorization'] = `Bearer ${access}`;
-            return token;
           } catch (error) {
             return null;
           }
         }
 
-        //FACEBOOK oauthflow
+        //FACEBOOK oauth flow
         if (account?.provider === 'facebook') {
           const { access_token, idToken } = account;
           try {
@@ -144,29 +151,32 @@ export default NextAuth({
               accessToken: access,
               refreshToken: refresh
             };
-            http.defaults.headers.common['Authorization'] = `Bearer ${access}`;
-            return token;
           } catch (error) {
             return null;
           }
         }
 
+        // EMAIL and PASSWORD auth flow
         if (account.provider === 'credentials') {
           token = {
             ...token,
             accessToken: account.token.access,
             refreshToken: account.token.refresh
           };
-          http.defaults.headers.common['Authorization'] = `Bearer ${account.token.access}`;
-          return token;
         }
       }
+
+      if (Date.now() > token.accessTokenExpires) {
+        return refreshAccessToken(token);
+      }
+
+      http.defaults.headers.common['Authorization'] = `Bearer ${token.accessToken}`;
       return token;
     },
     async session({ session, user, token }) {
       http.defaults.headers.common['Authorization'] = `Bearer ${token?.accessToken}`;
       try {
-        const access = token.accessToken as string;
+        const access = token.accessToken;
         const response2 = await http.get(`account/me`, {
           headers: {
             Authorization: `Bearer ${access}`
@@ -174,12 +184,16 @@ export default NextAuth({
         });
         const { full_name, email, avatar, language, user_type, pk } = response2.data as UserResponseData;
         token.user_type = user_type;
-        session.accessToken = access;
+        session.accessToken = access as string;
         session.user = { full_name, email, avatar, language, user_type, pk } as const;
         return session;
       } catch (error) {
         return null;
       }
     }
+  },
+  events: {
+    session: message => log.debug('SESSION', message),
+    signIn: message => log.debug('SIGNIN', message)
   }
 });

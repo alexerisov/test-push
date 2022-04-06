@@ -18,12 +18,12 @@ export default connect((state: RootState) => ({
 
 export const getServerSideProps: GetServerSideProps = async context => {
   const session = await getSession(context);
+  log.debug('getServerSideProps session', session);
   if (session) {
     http.defaults.headers.common['Authorization'] = `Bearer ${session.accessToken}`;
-    log.debug('getServerSideProps session', session);
   }
   try {
-    const profileResponse = await Account.current(session.accessToken);
+    const profileResponse = await Account.current(session?.accessToken);
 
     return {
       props: {

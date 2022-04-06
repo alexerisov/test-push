@@ -1,84 +1,50 @@
 import { Session } from 'next-auth';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import useSwr, { mutate } from 'swr';
+import http from '@/utils/http';
+import log from 'loglevel';
+import { useSession } from 'next-auth/react';
 
-// ### Failed approach using useState() ###
-// export function useAuth(refreshInterval?: number): [Session, boolean] {
-//   /*
-//     custom hook that keeps the session up-to-date by refreshing it
-
-//     @param {number} refreshInterval: The refresh/polling interval in seconds. default is 20.
-//     @return {tuple} A tuple of the Session and boolean
-//   */
-//   const [session, setSession] = useState<Session>(null);
-//   const [loading, setLoading] = useState<boolean>(false);
-
-//   useEffect(() => {
-//     async function fetchSession() {
-//       let sessionData: Session = null;
-//       setLoading(true);
-
-//       const session = await getSession({});
-
-//       if (session && Object.keys(session).length > 0) {
-//         sessionData = session;
-//       }
-
-//       setSession((_) => sessionData);
-//       setLoading(false);
-//     }
-
-//     refreshInterval = refreshInterval || 20;
-
-//     fetchSession();
-//     const interval = setInterval(() => fetchSession(), refreshInterval * 1000);
-
-//     return () => clearInterval(interval);
-//   }, []);
-
-//   return [session, loading];
-// }
 const REFRESH_INTERVAL = 5 * 60; // in seconds
 const sessionUrl = '/api/auth/session';
 
-async function fetchSession(url: string) {
-  const response = await fetch(url);
+async function fetcher(url: string) {
+  try {
+    const response = await fetch(url);
+    await log.debug(response);
+    if (!response.ok) {
+      throw new Error(`Could not fetch session from ${url}`);
+    }
 
-  if (!response.ok) {
-    throw new Error(`Could not fetch session from ${url}`);
+    const session: Session = await response?.json();
+
+    if (!session || Object.keys(session).length === 0) {
+      return null;
+    }
+  } catch (e) {
+    log.error(e);
   }
-
-  const session: Session = await response.json();
-
-  if (!session || Object.keys(session).length === 0) {
-    return null;
-  }
-
-  return session;
 }
 
-// ### useSwr() approach works for now ###
 export function useAuth(refreshInterval: number = REFRESH_INTERVAL) {
-  /*
-    custom hook that keeps the session up-to-date by refreshing it
+  // const { data, error } = useSwr('/api/auth/session', fetcher, {
+  //   revalidateOnFocus: true,
+  //   revalidateOnMount: true,
+  //   revalidateOnReconnect: true
+  // });
+  //
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => mutate(sessionUrl), (refreshInterval || REFRESH_INTERVAL) * 1000);
+  //
+  //   return () => clearInterval(intervalId);
+  // }, []);
+  const { data, status } = useSession();
 
-    @param {number} refreshInterval: The refresh/polling interval in seconds. default is 5 min.
-    @return {object} An object of the Session and boolean loading value
-  */
-  const { data, error } = useSwr(sessionUrl, fetchSession, {
-    revalidateOnFocus: true,
-    revalidateOnMount: true,
-    revalidateOnReconnect: true
-  });
-
-  useEffect(() => {
-    const intervalId = setInterval(() => mutate(sessionUrl), (refreshInterval || REFRESH_INTERVAL) * 1000);
-
-    return () => clearInterval(intervalId);
-  }, []);
-
-  return {
-    session: data,
-    status: typeof data === 'undefined' && typeof error === 'undefined'
-  };
+  return useMemo(
+    () => ({
+      session: data,
+      status
+    }),
+    [status, data]
+  );
 }

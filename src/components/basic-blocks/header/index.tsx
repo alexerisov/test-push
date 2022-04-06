@@ -92,7 +92,7 @@ const Header = props => {
 
   const cartItemsAmount = useSelector((state: RootState) => state.cart.products?.length);
 
-  const isChef = session?.user.user_type === USER_TYPE.chefType;
+  const isChef = session?.user?.user_type === USER_TYPE.chefType;
 
   const burgerMenuProps = { anchorEl, setAnchorEl, isExpanded, isChef, notificationAmount };
 

@@ -620,7 +620,7 @@ const Ingredients = ({
           </p>
           <p className={s.supplier_text_wrapper}>
             <span className={s.supplier_text}>
-              <span className={s.supplier_text_total}>Total</span> (USD)
+              <span className={s.supplier_text_total}>{t('orderSummary:total')}</span> (USD)
             </span>
             <span className={s.supplier_value}>${Number.parseFloat(price + deliveryPrice).toFixed(2) ?? 0}</span>
           </p>
