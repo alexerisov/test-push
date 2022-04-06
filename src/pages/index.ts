@@ -18,12 +18,12 @@ export async function getServerSideProps(context) {
     http.defaults.headers.common['Authorization'] = `Bearer ${session.accessToken}`;
   }
   try {
-    const weekmenu = await Recipe.getWeekmenu('');
+    const topRatedResponse = await Recipe.getTopRatedMeals();
     return {
       props: {
-        ...(await serverSideTranslations(context.locale, ['common', 'homePage'])),
+        ...(await serverSideTranslations(context.locale, ['common', 'homePage', 'recipePage'])),
         session,
-        weekmenu: weekmenu.data,
+        topRatedRecipes: topRatedResponse.data,
         absolutePath: context.req.headers.host
       }
     };

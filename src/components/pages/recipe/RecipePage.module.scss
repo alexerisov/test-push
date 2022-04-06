@@ -159,14 +159,15 @@
 }
 
 .classification {
-    margin-bottom: 64px;
+    margin-bottom: 8px;
 
     &_icon_wrapper {
+        flex: 1 0 200px;
         cursor: pointer;
-        width: 50%;
         display: flex;
         align-items: center;
         column-gap: 20px;
+        max-width: 200px;
 
         &:hover {
             & * {
@@ -176,6 +177,7 @@
     }
 
     &_icon {
+        flex: 0 0 48px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -188,9 +190,10 @@
 
     &_icons_container {
         display: flex;
-        row-gap: 32px;
+        gap: 32px;
         flex-wrap: wrap;
-        padding-bottom: 64px;
+        padding-bottom: 0;
+        margin-bottom: 0;
     }
 
     &_text {
@@ -251,6 +254,7 @@
 }
 
 .description {
+    margin-top: 64px;
     margin-bottom: 64px;
 
     &_text {
@@ -514,6 +518,9 @@
 }
 
 .popular_recipes {
+    & > section {
+        padding: 60px 0 !important;
+    }
     @include bothColumns;
 }
 
@@ -661,7 +668,7 @@
 
     .classification {
         &_icons_container {
-            padding-bottom: 32px;
+            padding-bottom: 0;
         }
 
         &_calories {
@@ -682,6 +689,7 @@
         row-gap: 20px;
 
         &__content {
+            margin-top: 0;
             grid-template-columns: 1fr;
         }
 
@@ -725,7 +733,7 @@
         margin-bottom: 32px;
 
         &_icon_wrapper {
-            width: 100%;
+            //width: 100%;
         }
 
         &_icons_container {
@@ -740,6 +748,7 @@
     }
 
     .description {
+        margin-top: 0;
         margin-bottom: 32px;
     }
 

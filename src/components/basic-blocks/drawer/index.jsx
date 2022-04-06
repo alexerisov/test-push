@@ -68,10 +68,10 @@ export const LoginDrawer = props => {
         </div>
         <div className={classes.links}>
           <LinkElement path="/" text="Home" />
-          <LinkElement path="/search" text="Recipes" />
+          <LinkElement path="/search" text="Search Recipes" />
         </div>
         <div className={classes.buttons}>
-          <LoginButton />
+          {/*<LoginButton />*/}
           <GetStartedButton />
         </div>
       </div>

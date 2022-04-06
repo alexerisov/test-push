@@ -8,6 +8,7 @@ import { WhyEatchefBlock } from '@/components/blocks/home-page/why-eatchef';
 import { SearchBlock } from '@/components/blocks/home-page/search';
 import { WeekMenuBlock } from '@/components/blocks/home-page/week-menu';
 import LayoutPageNew from '@/components/layouts/layout-page-new';
+import { PopularRecipesBlock } from '@/components/blocks/recipe-page/popular-recipes';
 
 const useStyles = makeStyles({
   root: {
@@ -34,6 +35,7 @@ export const HomePage = props => {
   const [meal, setMeal] = React.useState(null);
   const [weekmenu, setWeekmenu] = React.useState(null);
   const mobile = useMediaQuery('(max-width: 768px)');
+  const topRatedRecipes = props.topRatedRecipes;
 
   React.useEffect(() => {
     setMeal(props?.mealOfTheWeek);
@@ -55,7 +57,7 @@ export const HomePage = props => {
   const content = (
     <>
       <SearchBlock />
-      <WeekMenuBlock data={props?.weekmenu} />
+      <PopularRecipesBlock data={topRatedRecipes} />
       <WhyEatchefBlock />
     </>
   );

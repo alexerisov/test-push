@@ -31,11 +31,11 @@ export const Footer = () => {
             </Link>
           </div>
           <div className={classes.links_block}>
-            <LinkElement text={t('footer.links.home')} path="/" />
-            <LinkElement text={t('footer.links.pencil')} path="/chef-pencil" />
+            {/*<LinkElement text={t('footer.links.home')} path="/" />*/}
+            {/*<LinkElement text={t('footer.links.pencil')} path="/chef-pencil" />*/}
             <LinkElement text={t('footer.links.terms')} path="/terms" />
-            <LinkElement text={t('footer.links.recipes')} path="/search" />
-            <LinkElement text={t('footer.links.inspired')} path="/search?&only_eatchefs_recipes=Y" />
+            {/*<LinkElement text={t('footer.links.recipes')} path="/search" />*/}
+            {/*<LinkElement text={t('footer.links.inspired')} path="/search?&only_eatchefs_recipes=Y" />*/}
             <LinkElement text={t('footer.links.policy')} path="/privacy-policy" />
           </div>
           <div className={classes.social_block}>

@@ -77,7 +77,7 @@ const SignUpBlock = () => {
         </div>
       )}
       {!session && <SignUpInput />}
-      {session && <UploadRecipeButton />}
+      {/*{session && <UploadRecipeButton />}*/}
     </div>
   );
 };

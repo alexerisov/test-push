@@ -44,7 +44,7 @@ const RecipesButton = () => {
   return (
     <Link href="/search">
       <Button variant="text" className={s.button_recipes}>
-        {t('header.recipesButton')}
+        {'Search Recipes'}
       </Button>
     </Link>
   );
@@ -139,19 +139,19 @@ const Header = props => {
         </Link>
         <div className={s.button_group}>
           <RecipesButton />
-          {!session && !isMobile && <LoginButton handleClick={handleClickLogin} />}
-          {session && isChef && <UploadRecipeButton />}
+          {/*{!session && !isMobile && <LoginButton handleClick={handleClickLogin} />}*/}
+          {/*{session && isChef && <UploadRecipeButton />}*/}
           {session && <CartButton />}
-          {session && (
-            <UserAvatar clickHandler={openMenuHandler} avatar={avatar} notificationAmount={notificationAmount} />
-          )}
+          {/*{session && (*/}
+          {/*  <UserAvatar clickHandler={openMenuHandler} avatar={avatar} notificationAmount={notificationAmount} />*/}
+          {/*)}*/}
 
-          {isMobile && <BurgerButton clickHandler={openMenuHandler} />}
+          <BurgerButton clickHandler={openMenuHandler} />
           <LanguageSelector />
         </div>
       </div>
-      {session && <BurgerMenu {...burgerMenuProps} />}
-      {!session && isMobile && <LoginDrawer {...drawerProps} />}
+      {!isMobile && <BurgerMenu {...burgerMenuProps} />}
+      {isMobile && <LoginDrawer {...drawerProps} />}
     </div>
   );
 };

@@ -3,7 +3,7 @@
 
 
 .container {
-    padding: 60px 0 !important;
+    padding: 60px 160px;
     position: relative;
 
 
@@ -47,11 +47,11 @@
     }
 
     @media (max-width: 1025px) {
-        padding: 60px 0 !important;
+        padding: 60px 80px;
     }
 
     @media (max-width: 600px) {
-        padding: 60px 0 144px !important;
+        padding: 60px 32px 144px;
 
 
 

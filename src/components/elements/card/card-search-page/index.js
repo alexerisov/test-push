@@ -101,7 +101,7 @@ const SellingBlock = ({ isRecipeInCart, handleClickBtn, cartItemAmount, cartItem
 );
 
 const CardSearch = props => {
-  const { recipe, disableBorder } = props;
+  const { recipe, disableBorder, forceUnsalable } = props;
   const title = recipe.title;
   const image = recipe.images?.[0]?.url;
   const name = recipe.user?.full_name;
@@ -117,7 +117,7 @@ const CardSearch = props => {
   const price = recipe.price;
   const comments_number = recipe.comments_number;
   const id = recipe.pk;
-  const unsalable = recipe.sale_status !== 5;
+  const unsalable = forceUnsalable || recipe.sale_status !== 5;
 
   const { session, status: loading } = useAuth();
   const dispatch = useDispatch();

@@ -398,12 +398,7 @@ export const SearchPage = props => {
         <div className={s.search__result}>
           {mobile && <SearchFilter formik={formik} session={session} data={countRecipesData} />}
 
-          <Weekmenu data={weekmenuRecipes} />
-
-          <div className={s.search__result__text}>
-            <CoinIcon />
-            <p>{t('orderAllIngredientsText')}</p>
-          </div>
+          {/*<Weekmenu data={weekmenuRecipes} />*/}
 
           <div className={s.search__result__container}>
             {productionRecipes?.length < 1 && (
@@ -414,7 +409,9 @@ export const SearchPage = props => {
             )}
 
             {productionRecipes?.length > 0 &&
-              productionRecipes.map((recipe, index) => <CardSearch key={`${recipe.pk}-${index}`} recipe={recipe} />)}
+              productionRecipes.map((recipe, index) => (
+                <CardSearch key={`${recipe.pk}-${index}`} recipe={recipe} forceUnsalable={true} />
+              ))}
 
             <div className={s.search__buttonViewWrap}>
               <button
@@ -431,27 +428,6 @@ export const SearchPage = props => {
                   : t('button.showMore')}
               </button>
             </div>
-          </div>
-
-          <div className={s.search__result__container}>
-            {nonProductionRecipes?.length > 0 &&
-              nonProductionRecipes.map((recipe, index) => <CardSearch key={`${recipe.pk}-${index}`} recipe={recipe} />)}
-          </div>
-
-          <div className={s.search__buttonViewWrap}>
-            <button
-              className={s.search__viewAll}
-              disabled={isLoadingMoreNonProd || isReachingEndNonProd}
-              onClick={() => {
-                setNonProductionRecipesPageSize(nonProductionRecipesPageSize + 1);
-              }}>
-              {isLoadingMoreNonProd && <Spinner />}
-              {isLoadingMoreNonProd
-                ? t('button.loading')
-                : isReachingEndNonProd
-                ? t('button.noMore')
-                : t('button.showMore')}
-            </button>
           </div>
 
           {nonProductionRecipesPageSize > 3 ? (

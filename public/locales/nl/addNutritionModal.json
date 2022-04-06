@@ -1,1 +1,1 @@
-{"addButton":"Toevoegen","name":{"label":"Naam"},"percentage":{"label":"Percentage"},"quantity":{"label":"Hoeveelheid"},"title":"Voedingswaarde toevoegen"}
+{"name":{"label":"Naam"},"title":"Voedingswaarde toevoegen","quantity":{"label":"Hoeveelheid"},"addButton":"Toevoegen","percentage":{"label":"Percentage"}}

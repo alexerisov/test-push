@@ -29,12 +29,14 @@
 
 .links_block {
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
 }
 
 .link_element {
     width: 33%;
     margin: 16px 0;
+    white-space: nowrap;
 
     a, a:visited, a:active {
         text-decoration: none;

@@ -426,39 +426,39 @@ const SearchFilter = ({ formik, session, data }) => {
           </div>
         </SwipeableDrawer>
         <div className={s.search__line_mobile} />
-        {session?.user.user_type === USER_TYPES.CHEF && (
-          <Button
-            onClick={() => router.push('/recipe/upload', undefined, { locale: router.locale })}
-            className={s.search__uploadButton}
-            variant="outlined"
-            color="primary">
-            <UploadIcon />
-            {t('searchPage:uploadRecipeButton')}
-          </Button>
-        )}
+        {/*{session?.user.user_type === USER_TYPES.CHEF && (*/}
+        {/*  <Button*/}
+        {/*    onClick={() => router.push('/recipe/upload', undefined, { locale: router.locale })}*/}
+        {/*    className={s.search__uploadButton}*/}
+        {/*    variant="outlined"*/}
+        {/*    color="primary">*/}
+        {/*    <UploadIcon />*/}
+        {/*    {t('searchPage:uploadRecipeButton')}*/}
+        {/*  </Button>*/}
+        {/*)}*/}
       </>
     );
   }
 
   return (
     <form tabIndex={0} ref={focusRef} className={s.search__filter} onSubmit={formik.handleSubmit}>
-      {session?.user.user_type === USER_TYPES.CHEF && (
-        <>
-          <Button
-            onClick={() => router.push('/recipe/upload', undefined, { locale: router.locale })}
-            className={s.search__uploadButton}
-            variant="outlined"
-            color="primary">
-            {t('searchPage:uploadRecipeButton')}
-          </Button>
-          <div className={s.search__filter__line} />
-        </>
-      )}
+      {/*{session?.user.user_type === USER_TYPES.CHEF && (*/}
+      {/*  <>*/}
+      {/*    <Button*/}
+      {/*      onClick={() => router.push('/recipe/upload', undefined, { locale: router.locale })}*/}
+      {/*      className={s.search__uploadButton}*/}
+      {/*      variant="outlined"*/}
+      {/*      color="primary">*/}
+      {/*      {t('searchPage:uploadRecipeButton')}*/}
+      {/*    </Button>*/}
+      {/*    <div className={s.search__filter__line} />*/}
+      {/*  </>*/}
+      {/*)}*/}
 
-      <Typography className={s.block__title}>{t('searchPage:blockTitles.sorting')}</Typography>
-      <div className={s.search__line} />
-      <RecipeSetSelector formik={formik} focusRef={focusRef} />
-      <div className={s.search__line_botMargin} />
+      {/*<Typography className={s.block__title}>{t('searchPage:blockTitles.sorting')}</Typography>*/}
+      {/*<div className={s.search__line} />*/}
+      {/*<RecipeSetSelector formik={formik} focusRef={focusRef} />*/}
+      {/*<div className={s.search__line_botMargin} />*/}
 
       <Typography className={s.block__title}>{t('searchPage:blockTitles.filters')}</Typography>
       <div className={s.search__line} />
@@ -470,20 +470,6 @@ const SearchFilter = ({ formik, session, data }) => {
         iconList={recipeTypesImg}
         data={data}
       />
-      <div className={s.search__line_botMargin} />
-
-      <SkillsSlider formik={formik} />
-
-      <div className={s.search__line_topMargin} />
-
-      <FilterAccordion
-        header={t('recipeClassifications:cooking_methods.title')}
-        formik={formik}
-        formikKey="cooking_methods"
-        list={cookingMethods}
-        data={data}
-      />
-
       <div className={s.search__line} />
 
       <FilterAccordion
@@ -493,6 +479,20 @@ const SearchFilter = ({ formik, session, data }) => {
         list={dietaryrestrictions}
         data={data}
       />
+
+      {/*<div className={s.search__line_topMargin} />*/}
+
+      {/*<FilterAccordion*/}
+      {/*  header={t('recipeClassifications:cooking_methods.title')}*/}
+      {/*  formik={formik}*/}
+      {/*  formikKey="cooking_methods"*/}
+      {/*  list={cookingMethods}*/}
+      {/*  data={data}*/}
+      {/*/>*/}
+
+      <div className={s.search__line_botMargin} />
+
+      <SkillsSlider formik={formik} />
       <div className={s.search__line} />
 
       {Object.values(formik.values).some(el => el) && (

@@ -402,7 +402,6 @@ const Classifications = ({
 
   return (
     <div className={s.classification}>
-      <h2 className={s.block_title}>{t('recipePage:classifications.title')}</h2>
       <div className={s.classification_icons_container}>
         <IconWithText
           icon={StopwatchIcon}
@@ -488,14 +487,7 @@ const Classifications = ({
           borderColor="#FFD166"
         />
       </div>
-      <Divider />
-      <div className={s.classification_calories}>
-        <CaloriesElement title={t('recipePage:nutrition.calories')} value={calories ?? '—'} />
-        <CaloriesElement title={t('recipePage:nutrition.protein')} value={proteins ?? '—'} />
-        <CaloriesElement title={t('recipePage:nutrition.fat')} value={fats ?? '—'} />
-        <CaloriesElement title={t('recipePage:nutrition.carbs')} value={carbohydrates ?? '—'} />
-      </div>
-      <Divider />
+      {/*<Divider />*/}
     </div>
   );
 };
@@ -889,7 +881,7 @@ export const RecipePage = props => {
                     deliveryPrice
                   }}
                 />
-                <Comments {...{ recipeId, userId, recipeRating, isUserRecipeBuyer, isRecipeRatedByUser, t, title }} />
+                {/*<Comments {...{ recipeId, userId, recipeRating, isUserRecipeBuyer, isRecipeRatedByUser, t, title }} />*/}
               </div>
             )}
             <PopularRecipes {...{ topRatedRecipes }} />
@@ -915,51 +907,59 @@ export const RecipePage = props => {
               setUserLikeUpdatedAt
             }}
           />
-          <Media {...{ mainImage, setIsLightBoxOpen, setViewAllImages, materials, viewAllImages, image, t, recipe }} />
-          {viewAllImages && <Galery {...{ recipe, setViewAllImages }} />}
-          {!viewAllImages && (
-            <div className={s.layout__content}>
-              <RelatedRecipes />
-              <div className={s.layout__content_column1}>
-                <Classifications
-                  {...{
-                    router,
-                    recipeCookingTime,
-                    recipeTypesList,
-                    t,
-                    recipeDietRestrictions,
-                    recipeCuisines,
-                    recipeCookingSkills,
-                    recipeCookingMethods,
-                    recipeServings,
-                    calories,
-                    proteins,
-                    fats,
-                    carbohydrates
-                  }}
-                />
-                <Description {...{ recipeDescription, t }} />
-                <CookingSteps {...{ t, recipeCookingSteps }} />
-                <Comments {...{ recipeId, userId, recipeRating, isUserRecipeBuyer, isRecipeRatedByUser, t, title }} />
-              </div>
-              <div className={s.layout__content_column2}>
-                <Ingredients
-                  {...{
-                    t,
-                    session,
-                    dispatch,
-                    recipeId,
-                    isRecipeInProduction,
-                    ingredients,
-                    isRecipeInCart,
-                    isRecipeNotSale,
-                    price,
-                    deliveryPrice
-                  }}
-                />
-              </div>
+          <Classifications
+            {...{
+              router,
+              recipeCookingTime,
+              recipeTypesList,
+              t,
+              recipeDietRestrictions,
+              recipeCuisines,
+              recipeCookingSkills,
+              recipeCookingMethods,
+              recipeServings,
+              calories,
+              proteins,
+              fats,
+              carbohydrates
+            }}
+          />
+          <div className={s.layout__content}>
+            <div className={s.layout__content_column1}>
+              <Media
+                {...{ mainImage, setIsLightBoxOpen, setViewAllImages, materials, viewAllImages, image, t, recipe }}
+              />
+              {viewAllImages && <Galery {...{ recipe, setViewAllImages }} />}
+              <Description {...{ recipeDescription, t }} />
             </div>
-          )}
+            <div className={s.layout__content_column2}>
+              <Ingredients
+                {...{
+                  t,
+                  session,
+                  dispatch,
+                  recipeId,
+                  isRecipeInProduction,
+                  ingredients,
+                  isRecipeInCart,
+                  isRecipeNotSale,
+                  price,
+                  deliveryPrice
+                }}
+              />
+              <CookingSteps {...{ t, recipeCookingSteps }} />
+            </div>
+          </div>
+
+          {/*{!viewAllImages && (*/}
+          {/*  <div className={s.layout__content}>*/}
+          {/*    <RelatedRecipes />*/}
+          {/*    <div className={s.layout__content_column1}>*/}
+          {/*      <Comments {...{ recipeId, userId, recipeRating, isUserRecipeBuyer, isRecipeRatedByUser, t, title }} />*/}
+          {/*    </div>*/}
+          {/*    <div className={s.layout__content_column2}></div>*/}
+          {/*  </div>*/}
+          {/*)}*/}
           <PopularRecipes {...{ topRatedRecipes }} />
         </div>
       )}

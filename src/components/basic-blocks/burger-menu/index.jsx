@@ -74,13 +74,14 @@ const BurgerMenu = props => {
         marginThreshold={0}
         open={Boolean(anchorEl)}
         onClose={handleClose}>
-        {isMobile && isChef && (
-          <MenuListItem classes={classes.menu_button_item} onClick={handleClose}>
-            <Link href="/recipe/upload">
-              <Button className={classes.header__link_place_menu_logout}>{t('header.uploadRecipeButton')}</Button>
-            </Link>
-          </MenuListItem>
-        )}
+        {/*{isMobile && isChef && (*/}
+        {/*  <MenuListItem classes={classes.menu_button_item} onClick={handleClose}>*/}
+        {/*    <Link href="/recipe/upload">*/}
+        {/*      <Button className={classes.header__link_place_menu_logout}>{t('header.uploadRecipeButton')}</Button>*/}
+        {/*    </Link>*/}
+        {/*  </MenuListItem>*/}
+        {/*)}*/}
+        <MenuListItem text={'Home'} icon={UserIcon} path="/profile/account-settings" />
         <MenuListItem text={t('header.burgerMenu.accountSettings')} icon={UserIcon} path="/profile/account-settings" />
         <MenuListItem
           text={t('header.burgerMenu.notifications')}
@@ -93,11 +94,11 @@ const BurgerMenu = props => {
         <MenuListItem text={t('header.burgerMenu.history')} icon={HistoryIcon} path="/my-orders" />
         <MenuListItem text={t('header.burgerMenu.savedRecipes')} icon={BookmarkIcon} path="/saved-recipes" />
 
-        <MenuListItem classes={classes.menu_button_item} onClick={handleClose}>
-          <Button className={classes.header__link_place_menu_logout} onClick={handleLogout}>
-            {t('header.burgerMenu.logout')}
-          </Button>
-        </MenuListItem>
+        {/*<MenuListItem classes={classes.menu_button_item} onClick={handleClose}>*/}
+        {/*  <Button className={classes.header__link_place_menu_logout} onClick={handleLogout}>*/}
+        {/*    {t('header.burgerMenu.logout')}*/}
+        {/*  </Button>*/}
+        {/*</MenuListItem>*/}
       </Menu>
     );
   };
