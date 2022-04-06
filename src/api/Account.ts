@@ -14,7 +14,7 @@ interface IAccountApi {
     redirect_uri: string;
   }): Promise<AxiosResponse<any>>;
   current(): Promise<AxiosResponse<any>>;
-  current(token: string | null): Promise<AxiosResponse<any>>;
+  current(token: string): Promise<AxiosResponse<any>>;
   getNotifications(): Promise<AxiosResponse<any>>;
   deleteNotification(id: number): Promise<AxiosResponse<any>>;
   refreshToken(refreshToken: string): Promise<AxiosResponse<any>>;

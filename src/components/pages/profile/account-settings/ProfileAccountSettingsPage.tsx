@@ -25,11 +25,11 @@ export function ProfileAccountSettingsPage(props) {
 
   const { data: profile, error: error, isValidating: isAutocompleteLoading } = useSWR(`account/me`, fetcher);
 
-  const content = props?.profile ? (
+  const content = profile ? (
     userType === USER_TYPES.VIEWER ? (
-      <FormEditAccountUser profile={props?.profile} />
+      <FormEditAccountUser profile={profile} />
     ) : (
-      <FormEditAccountChef profile={props?.profile} />
+      <FormEditAccountChef profile={profile} />
     )
   ) : (
     <div>loading</div>

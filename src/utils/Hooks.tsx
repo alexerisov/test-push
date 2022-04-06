@@ -1,50 +1,29 @@
-import { Session } from 'next-auth';
-import { useEffect, useMemo } from 'react';
-import useSwr, { mutate } from 'swr';
-import http from '@/utils/http';
+import { useMemo } from 'react';
+import useSwr from 'swr';
 import log from 'loglevel';
-import { useSession } from 'next-auth/react';
 
-const REFRESH_INTERVAL = 5 * 60; // in seconds
+const REFRESH_INTERVAL = 5 * 60 * 1000; // in seconds
 const sessionUrl = '/api/auth/session';
 
-async function fetcher(url: string) {
-  try {
-    const response = await fetch(url);
-    await log.debug(response);
-    if (!response.ok) {
-      throw new Error(`Could not fetch session from ${url}`);
-    }
-
-    const session: Session = await response?.json();
-
-    if (!session || Object.keys(session).length === 0) {
-      return null;
-    }
-  } catch (e) {
-    log.error(e);
+export async function fetchSession() {
+  const res = await fetch('/api/auth/session');
+  const session = await res.json();
+  if (Object.keys(session).length) {
+    return session;
   }
+  return null;
 }
 
+// ### useSwr() approach works for now ###
 export function useAuth(refreshInterval: number = REFRESH_INTERVAL) {
-  // const { data, error } = useSwr('/api/auth/session', fetcher, {
-  //   revalidateOnFocus: true,
-  //   revalidateOnMount: true,
-  //   revalidateOnReconnect: true
-  // });
-  //
-  // useEffect(() => {
-  //   const intervalId = setInterval(() => mutate(sessionUrl), (refreshInterval || REFRESH_INTERVAL) * 1000);
-  //
-  //   return () => clearInterval(intervalId);
-  // }, []);
-  const { data, status } = useSession();
+  const { data, error } = useSwr(sessionUrl, fetchSession, {
+    refreshInterval: refreshInterval,
+    onSuccess: data => log.debug('useAuth session fetched', { data, error }),
+    onError: err => log.error('useAuth fetch error', { error: err })
+  });
 
-  return useMemo(
-    () => ({
-      session: data,
-      status
-    }),
-    [status, data]
-  );
+  return {
+    session: data,
+    status: typeof data === 'undefined' && typeof error === 'undefined'
+  };
 }

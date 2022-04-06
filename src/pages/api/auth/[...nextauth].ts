@@ -15,38 +15,29 @@ interface UserResponseData {
   pk: number;
 }
 
-async function refreshAccessToken(token) {
-  try {
-    const response = await http.post(
-      `token/refresh`,
-      {
-        refresh: token.refreshToken
-      },
-      {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
+namespace NextAuthUtils {
+  //todo implement refresh token logic
+  export const refreshToken = async function (refreshToken: string) {
+    try {
+      const response = await http.post(
+        // "http://localhost:8000/api/auth/token/refresh/",
+        'token/refresh',
+        {
+          refresh: refreshToken
         }
-      }
-    );
+      );
 
-    return {
-      ...token,
-      accessToken: response?.data.access,
-      expires: Date.now() + 24 * 60 * 60,
-      refreshToken: token.refreshToken
-    };
-  } catch (error) {
-    log.error(error);
-
-    return {
-      ...token,
-      error: 'RefreshAccessTokenError'
-    };
-  }
+      const { access, refresh } = response.data;
+      // still within this block, return true
+      return [access, refresh];
+    } catch {
+      return [null, null];
+    }
+  };
 }
 
 export default NextAuth({
-  debug: true,
+  debug: process.env.DEBUG,
   pages: {
     signIn: '/',
     signOut: '/',
@@ -60,7 +51,7 @@ export default NextAuth({
   },
   logger: {
     error(code, metadata) {
-      log.error({ code, metadata });
+      log.trace({ code, metadata });
     },
     warn(code) {
       log.warn({ code });
@@ -127,12 +118,14 @@ export default NextAuth({
               accessToken: access,
               refreshToken: refresh
             };
+            http.defaults.headers.common['Authorization'] = `Bearer ${access}`;
+            return token;
           } catch (error) {
             return null;
           }
         }
 
-        //FACEBOOK oauth flow
+        //FACEBOOK oauthflow
         if (account?.provider === 'facebook') {
           const { access_token, idToken } = account;
           try {
@@ -151,49 +144,43 @@ export default NextAuth({
               accessToken: access,
               refreshToken: refresh
             };
+            http.defaults.headers.common['Authorization'] = `Bearer ${access}`;
+            return token;
           } catch (error) {
             return null;
           }
         }
 
-        // EMAIL and PASSWORD auth flow
         if (account.provider === 'credentials') {
           token = {
             ...token,
             accessToken: account.token.access,
             refreshToken: account.token.refresh
           };
+          http.defaults.headers.common['Authorization'] = `Bearer ${account.token.access}`;
+          return token;
         }
       }
-
-      if (Date.now() > token.accessTokenExpires) {
-        return refreshAccessToken(token);
-      }
-
-      http.defaults.headers.common['Authorization'] = `Bearer ${token.accessToken}`;
       return token;
     },
     async session({ session, user, token }) {
       http.defaults.headers.common['Authorization'] = `Bearer ${token?.accessToken}`;
       try {
-        const access = token.accessToken;
-        const response2 = await http.get(`account/me`, {
+        const access = token.accessToken as string;
+        const response = await http.get(`account/me`, {
           headers: {
             Authorization: `Bearer ${access}`
           }
         });
-        const { full_name, email, avatar, language, user_type, pk } = response2.data as UserResponseData;
+        const { full_name, email, avatar, language, user_type, pk } = response.data as UserResponseData;
         token.user_type = user_type;
-        session.accessToken = access as string;
+        session.accessToken = access;
         session.user = { full_name, email, avatar, language, user_type, pk } as const;
         return session;
       } catch (error) {
+        log.error('sessions error', error);
         return null;
       }
     }
-  },
-  events: {
-    session: message => log.debug('SESSION', message),
-    signIn: message => log.debug('SIGNIN', message)
   }
 });

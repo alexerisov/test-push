@@ -22,12 +22,12 @@ import { loggerSetup } from '@/utils/logger';
 yupSetup();
 loggerSetup();
 
-function App({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const store = useStore(pageProps.initialReduxState);
 
   return (
-    <Provider store={store}>
-      <SessionProvider session={pageProps.session} refetchInterval={300} refetchOnWindowFocus={true}>
+    <SessionProvider session={session} refetchInterval={0}>
+      <Provider store={store}>
         <CssBaseline />
         <MuiPickersUtilsProvider utils={DayjsUtils}>
           <ThemeProvider theme={theme}>
@@ -36,8 +36,8 @@ function App({ Component, pageProps }: AppProps) {
             <Modals />
           </ThemeProvider>
         </MuiPickersUtilsProvider>
-      </SessionProvider>
-    </Provider>
+      </Provider>
+    </SessionProvider>
   );
 }
 
