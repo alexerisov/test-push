@@ -22,6 +22,7 @@ import Recipe from '@/api/Recipe';
 import { i18n, useTranslation } from 'next-i18next';
 import { filterNaNLetters } from '@/utils/filterNaNLetters';
 import log from 'loglevel';
+import { useRouter } from 'next/router';
 
 const useStyles = makeStyles(theme => ({
   textField: {
@@ -94,6 +95,7 @@ function AddIngredient(props) {
   const [shouldLoadUnits, setShouldLoadUnits] = useState();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isUnitFocused, setIsUnitFocused] = useState(false);
+  const router = useRouter()();
 
   const validationSchema = yup.object({
     basicIngredient: yup.string().required(t('errors:field_required.ingredient')),
@@ -184,7 +186,7 @@ function AddIngredient(props) {
     isValidating: isAutocompleteLoading
   } = useSWR(
     formik.values?.basicIngredient?.length > 0
-      ? `/recipe/basic_ingredients?title=${formik.values.basicIngredient}`
+      ? `/recipe/basic_ingredients?title=${formik.values.basicIngredient}&lang=${router.locale}`
       : null,
     fetcher
   );
@@ -193,7 +195,7 @@ function AddIngredient(props) {
     data: basicIngredientUnits,
     error: basicIngredientUnitError,
     isValidating: isBasicIngredientUnitLoading
-  } = useSWR(shouldLoadUnits ? `/recipe/units/${basicIngredient?.pk}` : null, fetcher);
+  } = useSWR(shouldLoadUnits ? `/recipe/units/${basicIngredient?.pk}?lang=${router.locale}` : null, fetcher);
 
   const {
     data: ingredientGroups,
@@ -201,7 +203,7 @@ function AddIngredient(props) {
     isValidating: isIngredientsGroupLoading
   } = useSWR(
     isDialogOpen && formik2.values?.group?.length > 0
-      ? `/recipe/ingredient_groups?title=${formik2.values.group}`
+      ? `/recipe/ingredient_groups?title=${formik2.values.group}&lang=${router.locale}`
       : null,
     fetcher
   );

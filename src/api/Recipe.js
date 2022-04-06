@@ -128,9 +128,8 @@ export default {
     return http.get(`/recipe/pinned_meals`);
   },
 
-  getQueryResult: (search, isEatChefOnly = false) => {
-    const eatchefOnlyParams = !isEatChefOnly ? '' : '&only_eatchefs_recipes=Y';
-    return http.get(`/recipe/search_suggestions?search=${search}${eatchefOnlyParams}`);
+  getQueryResult: (search, language) => {
+    return http.get(`/recipe/search_suggestions?lang=${language}search=${search}`);
   },
 
   getSearchResult: ({

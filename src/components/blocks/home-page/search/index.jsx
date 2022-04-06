@@ -48,13 +48,13 @@ const SearchInput = () => {
     }
 
     if (!isOnlyEatchefRecipesQueryExist()) {
-      Recipe.getQueryResult(search)
+      Recipe.getQueryResult(search, router.locale)
         .then(res => setResult(res.data))
         .catch(e => {
           console.log('error', e);
         });
     } else {
-      Recipe.getQueryResult(search, true)
+      Recipe.getQueryResult(search, router.locale)
         .then(res => setResult(res.data))
         .catch(e => {
           console.log('error', e);
