@@ -86,8 +86,8 @@ export const ChefPencilPage: React.FC<any> = ({ pencilData, notFound, absolutePa
     });
   }, []);
 
-  const getComments = ({ recipeId, page }: { recipeId: number; page: number }) => {
-    return ChefPencil.getComments({ recipeId, page });
+  const getComments = ({ recipeId, page, lang }: { recipeId: number; page: number; lang: string }) => {
+    return ChefPencil.getComments({ recipeId, page, lang });
   };
 
   const uploadComment = ({ id, text }: { id: number; text: string }) => {

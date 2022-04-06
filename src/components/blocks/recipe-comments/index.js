@@ -12,6 +12,7 @@ import classes from './RecipeComments.module.scss';
 import { useDispatch } from 'react-redux';
 import { useAuth } from '@/utils/Hooks';
 import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
 
 const ResipeComments = ({
   id,
@@ -29,6 +30,7 @@ const ResipeComments = ({
 
   const [comments, setComments] = useState();
 
+  const router = useRouter();
   const placeholder = t('recipePage:reviews.input.placeholder');
   const authError = t('recipePage:reviews.input.authError');
 
@@ -63,9 +65,9 @@ const ResipeComments = ({
       let response;
 
       if (updateComments) {
-        response = await updateComments({ recipeId: id, page });
+        response = await updateComments({ recipeId: id, page, lang: router.locale });
       } else {
-        response = await Recipe.getComments({ recipeId: id, page });
+        response = await Recipe.getComments({ recipeId: id, page, lang: router.locale });
       }
 
       setNumberOfPages(countCommentsPages(response.data.count));

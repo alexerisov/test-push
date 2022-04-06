@@ -90,7 +90,7 @@ const CommentBlock = ({
       if (updateComments) {
         response = await updateComments({ recipeId: id, page });
       } else {
-        response = await Recipe.getReviewsAndComments({ recipeId: id, page });
+        response = await Recipe.getReviewsAndComments({ recipeId: id, page, lang: router.locale });
       }
 
       setNumberOfPages(countCommentsPages(response.data.count));
@@ -211,9 +211,9 @@ const CommentBlock = ({
       setIsLoadingMore(true);
       let response;
       if (updateComments) {
-        response = await updateComments({ recipeId: id, page: page + 1 });
+        response = await updateComments({ recipeId: id, page: page + 1, lang: router.locale });
       } else {
-        response = await Recipe.getReviewsAndComments({ recipeId: id, page: page + 1 });
+        response = await Recipe.getReviewsAndComments({ recipeId: id, page: page + 1, lang: router.locale });
       }
 
       setPage(page + 1);

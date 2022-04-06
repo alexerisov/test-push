@@ -214,8 +214,8 @@ export default {
     });
   },
 
-  getComments: ({ recipeId, page }) => {
-    return http.get(`/recipe/${recipeId}/comments`, {
+  getComments: ({ recipeId, page, lang }) => {
+    return http.get(`/recipe/${recipeId}/comments?lang=${lang}`, {
       params: {
         // page: `${page}`,
         page_size: 10
@@ -223,8 +223,8 @@ export default {
     });
   },
 
-  getReviews: ({ recipeId, page }) => {
-    return http.get(`/recipe/${recipeId}/reviews`, {
+  getReviews: ({ recipeId, page, lang }) => {
+    return http.get(`/recipe/${recipeId}/reviews?lang=${lang}`, {
       params: {
         // page: `${page}`,
         page_size: 10
@@ -232,8 +232,8 @@ export default {
     });
   },
 
-  getReviewsAndComments: ({ recipeId, page }) => {
-    return http.get(`/recipe/${recipeId}/comments_ext`, {
+  getReviewsAndComments: ({ recipeId, page, lang }) => {
+    return http.get(`/recipe/${recipeId}/comments_ext?lang=${lang}`, {
       params: {
         page: `${page}`,
         page_size: 4

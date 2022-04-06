@@ -105,8 +105,8 @@ export default {
     return http.get(`/chef_pencil/latest_chef_pencils`);
   },
 
-  getComments: ({ recipeId, page }) => {
-    return http.get(`/chef_pencil/${recipeId}/comments`, {
+  getComments: ({ recipeId, page, lang }) => {
+    return http.get(`/chef_pencil/${recipeId}/comments?lang=${lang}`, {
       params: {
         page: `${page}`,
         page_size: 4
