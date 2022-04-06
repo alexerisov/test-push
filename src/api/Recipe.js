@@ -129,7 +129,7 @@ export default {
   },
 
   getQueryResult: (search, language) => {
-    return http.get(`/recipe/search_suggestions?lang=${language}search=${search}`);
+    return http.get(`/recipe/search_suggestions?lang=${language}&search=${search}`);
   },
 
   getSearchResult: ({
