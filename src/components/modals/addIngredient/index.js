@@ -95,7 +95,7 @@ function AddIngredient(props) {
   const [shouldLoadUnits, setShouldLoadUnits] = useState();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isUnitFocused, setIsUnitFocused] = useState(false);
-  const router = useRouter()();
+  const router = useRouter();
 
   const validationSchema = yup.object({
     basicIngredient: yup.string().required(t('errors:field_required.ingredient')),
