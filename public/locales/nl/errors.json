@@ -42,5 +42,16 @@
   },
   "not_match": {
     "password": "Wachtwoorden komen niet overeen"
+  },
+  "responses": {
+    "User already exists.": "Gebruiker bestaat al.",
+    "Password is required": "Wachtwoord is vereist",
+    "User uuid is not valid": "Gebruiker uuid is niet geldig",
+    "Token is blacklisted": "Token staat op de zwarte lijst",
+    "Incorrect video": "Onjuiste video",
+    "Images should not be empty": "Afbeeldingen mogen niet leeg zijn",
+    "Ingredients are required": "Ingrediënten zijn vereist",
+    "BasicIngredient does not exist": "BasicIngredient bestaat niet",
+    "Unit does not exist": "Eenheid bestaat niet"
   }
 }

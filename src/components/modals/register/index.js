@@ -19,9 +19,10 @@ import FieldError from '@/components/elements/field-error';
 import VisibilityOffRoundedIcon from '@material-ui/icons/VisibilityOffRounded';
 import VisibilityRoundedIcon from '@material-ui/icons/VisibilityRounded';
 import { signIn } from 'next-auth/react';
-import { i18n } from 'next-i18next';
+import { i18n, useTranslation } from 'next-i18next';
 
 function Register(props) {
+  const { t } = useTranslation('common');
   const router = useRouter();
   const isMobile = useMediaQuery('(max-width: 768px)');
   const [isFormLogin, setIsFormLogin] = useState(true);
@@ -189,7 +190,7 @@ function Register(props) {
             onClickReturn={switchToPageChoise}
             onChange={onChangeLogin}
             data={loginData}
-            errors={loginError}
+            errors={t(`errors:responses.${loginError}`)}
             onLogin={login}
             onClickForgot={switchToPageForgot}
           />
@@ -212,7 +213,7 @@ function Register(props) {
             onRegister={register}
             onChange={onChangeRegister}
             data={registerData}
-            errors={registerError}
+            errors={t(`errors:responses.${registerError}`)}
           />
         );
       case PAGE_SELECTED_TYPES.registerSuccess:
@@ -525,7 +526,7 @@ function Register(props) {
                     </IconButton>
                   }
                   placeholder="Enter your password"
-                  error={registerError?.['password']}
+                  error={t(`errors:responses.${registerError?.['password']}`)}
                 />
               )}
               <FieldError errors={registerError} path="detail" />

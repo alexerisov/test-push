@@ -42,5 +42,16 @@
   },
   "not_match": {
     "password": "Passwords do not match"
+  },
+  "responses": {
+    "User already exists.": "User already exists.",
+    "Password is required": "Password is required",
+    "User uuid is not valid": "User uuid is not valid",
+    "Token is blacklisted": "Token is blacklisted",
+    "Incorrect video": "Incorrect video",
+    "Images should not be empty": "Images should not be empty",
+    "Ingredients are required": "Ingredients are required",
+    "BasicIngredient does not exist": "BasicIngredient does not exist",
+    "Unit does not exist": "Unit does not exist"
   }
 }

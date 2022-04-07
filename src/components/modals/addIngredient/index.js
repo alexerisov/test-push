@@ -171,10 +171,10 @@ function AddIngredient(props) {
         quantityInputRef.current.focus();
       } catch (e) {
         if (e.response.data?.title) {
-          formik2.setFieldError('name', e.response.data?.title);
+          formik2.setFieldError('name', t(`errors:responses.${e.response.data?.title}`));
         }
         if (e.response.data?.group) {
-          formik2.setFieldError('group', e.response.data?.group);
+          formik2.setFieldError('group', t(`errors:responses.${e.response.data?.group}`));
         }
       }
     }

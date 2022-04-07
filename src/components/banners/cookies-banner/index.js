@@ -7,9 +7,11 @@ import { setСonfirmBannerCoockie, getСonfirmBannerCoockie } from '@/utils/web-
 
 import { connect } from 'react-redux';
 import { useAuth } from '@/utils/Hooks';
+import { useTranslation } from 'next-i18next';
 
 const CookiesBanner = props => {
   const { session, status: loading } = useAuth();
+  const { t } = useTranslation('common');
 
   const [isVisible, setVisible] = useState(true);
 
@@ -27,16 +29,13 @@ const CookiesBanner = props => {
       <Alert severity="info" className={classes.alert}>
         <div className={classes.cookiesBanner__container}>
           <p>
-            Eatchefs and selected partners use cookies for to help out site function properly for you. In addition to
-            the operation of Eatchefs features, cookies are used for personalizing your experience and for providing
-            relevant advertising for you. By using the site, you acknowledge and consent to the use of these cookies. To
-            learn more about cookies
+            {t('cookieBanner.text')}
             <Link href="/terms">
-              <a className={classes.cookiesBanner__termsLink}> View our Terms of Use</a>
+              <a className={classes.cookiesBanner__termsLink}>{t('cookieBanner.text')}</a>
             </Link>
           </p>
           <Button variant="contained" color="primary" onClick={hideCookiesBanner}>
-            I AGREE
+            {t('cookieBanner.button')}
           </Button>
         </div>
       </Alert>
