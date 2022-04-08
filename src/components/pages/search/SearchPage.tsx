@@ -256,7 +256,7 @@ export const SearchPage = props => {
     size: nonProductionRecipesPageSize,
     setSize: setNonProductionRecipesPageSize
   } = useSWRInfinite(
-    index => ['/recipe', searchParams, { page: index + 1, page_size: 9, sale_status: 4, lang: router.locale }],
+    index => ['/recipe', searchParams, { page: index + 1, page_size: 9, sale_status: [4, 6, 7], lang: router.locale }],
     //TODO check filter by sale_status with multiple values
     recipeFetcher
   );
