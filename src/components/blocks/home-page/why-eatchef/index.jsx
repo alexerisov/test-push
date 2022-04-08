@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import { useTranslation } from 'next-i18next';
 import { useAuth } from '@/utils/Hooks';
+import { USER_TYPES } from '~types/profile';
 
 const CircleButton = () => {
   return (
@@ -77,7 +78,7 @@ const SignUpBlock = () => {
         </div>
       )}
       {!session && <SignUpInput />}
-      {session && <UploadRecipeButton />}
+      {session?.user.user_type === USER_TYPES.CHEF && <UploadRecipeButton />}
     </div>
   );
 };

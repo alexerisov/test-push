@@ -227,7 +227,10 @@ export const SearchPage = props => {
   const router = useRouter();
   const classMarerialUi = useStyles();
 
-  const { data: weekmenuData, error: weekmenuLoading } = useSWR(['/settings/weekmenus', searchParams], recipeFetcher);
+  const { data: weekmenuData, error: weekmenuLoading } = useSWR(
+    ['/settings/weekmenus', searchParams, { lang: router.locale }],
+    recipeFetcher
+  );
   const weekmenuRecipes = weekmenuData?.some(el => el.recipes?.length > 0)
     ? weekmenuData
     : props.weekmenuWithoutFilters;
@@ -238,7 +241,11 @@ export const SearchPage = props => {
     size: productionRecipesPageSize,
     setSize: setProductionRecipesPageSize
   } = useSWRInfinite(
-    index => ['/recipe', searchParams, { page: index + 1, page_size: index ? 9 : 3, sale_status: 5 }],
+    index => [
+      '/recipe',
+      searchParams,
+      { page: index + 1, page_size: index ? 9 : 3, sale_status: 5, lang: router.locale }
+    ],
     recipeFetcher
   );
   //TODO remove flexible index, fix page size to 9, and for first page create accordion
@@ -249,7 +256,7 @@ export const SearchPage = props => {
     size: nonProductionRecipesPageSize,
     setSize: setNonProductionRecipesPageSize
   } = useSWRInfinite(
-    index => ['/recipe', searchParams, { page: index + 1, page_size: 9, sale_status: 4 }],
+    index => ['/recipe', searchParams, { page: index + 1, page_size: 9, sale_status: 4, lang: router.locale }],
     //TODO check filter by sale_status with multiple values
     recipeFetcher
   );

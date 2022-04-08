@@ -31,7 +31,7 @@ const CookiesBanner = props => {
           <p>
             {t('cookieBanner.text')}
             <Link href="/terms">
-              <a className={classes.cookiesBanner__termsLink}>{t('cookieBanner.text')}</a>
+              <a className={classes.cookiesBanner__termsLink}>{t('cookieBanner.link')}</a>
             </Link>
           </p>
           <Button variant="contained" color="primary" onClick={hideCookiesBanner}>
