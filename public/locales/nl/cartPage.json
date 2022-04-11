@@ -1,1 +1,4 @@
-{"title":"Jouw winkelwagen","emptyCartText":"U heeft geen artikelen in uw winkelwagen."}
+{
+  "emptyCartText": "U heeft geen artikelen in uw winkelwagen.",
+  "title": "Jouw winkelwagen"
+}

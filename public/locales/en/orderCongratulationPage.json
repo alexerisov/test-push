@@ -1,1 +1,7 @@
-{"title":"Congratulation!","subtitle":"Your ingredients has been ordered! 🎉","deliveryDetails":"Delivery details","yourOrdersButton":"Your Orders","exploreRecipesButton":"Explore Other Recipes"}
+{
+  "deliveryDetails": "Delivery details",
+  "exploreRecipesButton": "Explore Other Recipes",
+  "subtitle": "Your ingredients has been ordered! 🎉",
+  "title": "Congratulation!",
+  "yourOrdersButton": "Your Orders"
+}

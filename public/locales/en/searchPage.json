@@ -1,1 +1,28 @@
-{"apply":"Apply","button":{"noMore":"No more recipes","loading":"Loading...","showMore":"Show more"},"showMore":"Show more","recipeSet":{"latest":"Latest","cheapest":"Cheapest","quickest":"Quickest","recommended":"Recommended"},"blockTitles":{"filters":"Filters","sorting":"Sorting"},"searchInput":{"placeholder":"What do you want to eat?"},"weekmenuTitle":"Weekmenu","advancedFilter":"Advanced filter","showMoreButton":"Show More","resetFilterButton":"Reset filter","uploadRecipeButton":"Upload Recipe","orderAllIngredientsText":"You can order all the ingredients"}
+{
+  "advancedFilter": "Advanced filter",
+  "apply": "Apply",
+  "blockTitles": {
+    "filters": "Filters",
+    "sorting": "Sorting"
+  },
+  "button": {
+    "loading": "Loading...",
+    "noMore": "No more recipes",
+    "showMore": "Show more"
+  },
+  "orderAllIngredientsText": "You can order all the ingredients",
+  "recipeSet": {
+    "cheapest": "Cheapest",
+    "latest": "Latest",
+    "quickest": "Quickest",
+    "recommended": "Recommended"
+  },
+  "resetFilterButton": "Reset filter",
+  "searchInput": {
+    "placeholder": "What do you want to eat?"
+  },
+  "showMore": "Show more",
+  "showMoreButton": "Show More",
+  "uploadRecipeButton": "Upload Recipe",
+  "weekmenuTitle": "Weekmenu"
+}

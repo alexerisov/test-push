@@ -1,1 +1,31 @@
-{"title":"Add More Ingredients","button":"Add","unitInput":{"label":"Unit"},"extraInput":{"label":"Extra information","placeholder":"Enter extra information"},"quantityInput":{"label":"Quantity"},"ingredientInput":{"label":"Ingredient","placeholder":"Please select ingredient"},"createIngredient":{"title":"Create new ingredient","button":"Create","nameInput":{"label":"Name","placeholder":"Enter ingredient name"},"popupText":"Dou you want to create new ingredient?","groupInput":{"label":"Group","placeholder":"Please select group"}}}
+{
+  "button": "Add",
+  "createIngredient": {
+    "button": "Create",
+    "groupInput": {
+      "label": "Group",
+      "placeholder": "Please select group"
+    },
+    "nameInput": {
+      "label": "Name",
+      "placeholder": "Enter ingredient name"
+    },
+    "popupText": "Dou you want to create new ingredient?",
+    "title": "Create new ingredient"
+  },
+  "extraInput": {
+    "label": "Extra information",
+    "placeholder": "Enter extra information"
+  },
+  "ingredientInput": {
+    "label": "Ingredient",
+    "placeholder": "Please select ingredient"
+  },
+  "quantityInput": {
+    "label": "Quantity"
+  },
+  "title": "Add More Ingredients",
+  "unitInput": {
+    "label": "Unit"
+  }
+}
