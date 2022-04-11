@@ -1,0 +1,34 @@
+{
+  "approved_status": {
+    "1": "In afwachting van",
+    "2": "Goedgekeurd",
+    "3": "Afgekeurd"
+  },
+  "chef_registration": "Registratie nieuwe chef-kok",
+  "create_recipe": "Je eerste recept maken?",
+  "home_chef": "Thuiskok",
+  "pencil_new_comment": "nieuwe opmerking in je Chef Pencil Record  ",
+  "pencil_published": "ingediend Gepubliceerd! Je kunt het hier bekijken",
+  "pencil_rejected": "heeft enkele opmerkingen! Controleer het hieronder:",
+  "pencil_submission": "Chef Potlood Record Inzending",
+  "pencil_submitted": "succesvol ingediend! Ons team is aan het beoordelen en we nemen zo snel mogelijk contact met je op!",
+  "recipe": "Recept",
+  "recipe_new_comment": "nieuwe opmerking in je recept",
+  "recipe_published": "ingediend Gepubliceerd! Je kunt het hier checken",
+  "recipe_rejected": "heeft enkele opmerkingen! Controleer het hieronder:",
+  "recipe_submission": "Recept inzending",
+  "recipe_submitted": "succesvol ingediend! Ons team is aan het beoordelen en we nemen zo snel mogelijk contact met je op!",
+  "sale_status": {
+    "4": "In afwachting van actie",
+    "5": "Geen uitverkoop",
+    "6": "Afgekeurd voor productie",
+    "7": "Geen uitverkoop"
+  },
+  "view_pencil": "Klik om het potlood van de chef te bekijken",
+  "view_recipe": "Klik om het recept te bekijken",
+  "viewer_registration": "Nieuwe kijkersregistratie",
+  "welcome": {
+    "chef": "Gefeliciteerd, je bent zojuist lid geworden van de Home Chef Community! Gefeliciteerd, je bent zojuist lid geworden van de Home Chef Community!",
+    "viewer": "Welkom bij EatChefs! Nu kunt u genieten van veel recepten die door ons team zijn gemaakt en"
+  }
+}

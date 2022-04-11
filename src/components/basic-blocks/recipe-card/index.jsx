@@ -13,6 +13,7 @@ import { Button } from '@material-ui/core';
 import { modalActions } from '@/store/actions';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import { useAuth } from '@/utils/Hooks';
+import Link from 'next/link';
 
 export const RecipeCard = props => {
   const { session, status: loading } = useAuth();
@@ -51,13 +52,11 @@ export const RecipeCard = props => {
 
   return (
     <Card variant="outlined" className={classes.card}>
-      <CardMedia
-        className={classes.card__media}
-        onClick={event => {
-          redirectToRecipeCard(recipe.pk);
-        }}
-        image={image ?? logo}
-      />
+      <Link href={`/recipe/${recipe.pk}`} prefetch={false}>
+        <a>
+          <CardMedia className={classes.card__media} image={image ?? logo} />
+        </a>
+      </Link>
       <CardContent className={classes.card__content}>
         <div>
           <div className={classes.card__title} onClick={() => redirectToRecipeCard(recipe?.pk)}>

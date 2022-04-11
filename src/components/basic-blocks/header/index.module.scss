@@ -1,9 +1,8 @@
-@import "variables";
-@import "mixins";
-
+@import 'variables';
+@import 'mixins';
 
 .orange_circle {
-    background: #FA0;
+    background: #fa0;
     width: 12px;
     height: 12px;
     position: absolute;
@@ -14,7 +13,7 @@
 
 .red_circle {
     border-radius: 20px;
-    background: #FF582E;
+    background: #ff582e;
     width: 16px;
     height: 16px;
     position: absolute;
@@ -24,8 +23,8 @@
 }
 
 .header {
-    background: #FCFCFD;
-    top:0;
+    background: #fcfcfd;
+    top: 0;
     left: 0;
     width: 100%;
     z-index: 200;
@@ -47,21 +46,20 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-
     }
 
     .notification_circle {
-        background: #E6001C;
+        background: #e6001c;
         border-radius: 80px;
         font-style: normal;
         font-weight: 500;
         font-size: 12px;
         line-height: 14px;
-        color: #FFF;
+        color: #fff;
     }
 
     .menu {
-        [class*="MuiPaper-root"] {
+        [class*='MuiPaper-root'] {
             margin: 80px 0 0 !important;
             padding: 16px !important;
             background: #fcfcfd !important;
@@ -103,7 +101,7 @@
 
             box-shadow: none !important;
             width: auto !important;
-            border: 2px solid #FA0 !important;
+            border: 2px solid #fa0 !important;
             box-sizing: border-box !important;
             border-radius: 90px !important;
             padding: 12px 29px !important;
@@ -113,10 +111,10 @@
             line-height: 160% !important;
             text-align: center !important;
             letter-spacing: 0.01em !important;
-            color: #353E50 !important;
+            color: #353e50 !important;
 
             &:hover {
-                background: #FFF6EB !important;
+                background: #fff6eb !important;
             }
         }
 
@@ -125,7 +123,7 @@
 
             box-shadow: none !important;
             width: auto !important;
-            border: 2px solid #E0E4EB !important;
+            border: 2px solid #e0e4eb !important;
             box-sizing: border-box !important;
             border-radius: 90px !important;
             font-weight: 600 !important;
@@ -133,7 +131,7 @@
             line-height: 160% !important;
             text-align: center !important;
             letter-spacing: 0.01em !important;
-            color: #14181F !important;
+            color: #14181f !important;
         }
 
         &_cart {
@@ -146,21 +144,19 @@
             flex: 1;
             position: relative;
         }
-
     }
 
     &__shadow {
         box-shadow: 0 0 25px rgb(10 36 88 / 25%);
     }
 
-    transition: box-shadow .1s ease-in-out;
+    transition: box-shadow 0.1s ease-in-out;
 
     @media (max-width: 1025px) {
         &_logo {
             width: 80px;
             height: 48px;
         }
-
     }
 
     @media (max-width: 600px) {
@@ -172,20 +168,15 @@
             &_recipes {
                 display: none;
             }
-
         }
     }
-
 }
 
-
 // OLD STYLES
-@import "variables";
-@import "mixins";
+@import 'variables';
+@import 'mixins';
 
 .header {
-
-
     @media (max-width: $--lg) {
         & {
             padding: 8px 25px 0;
@@ -275,7 +266,7 @@
                 font-size: 14px;
                 line-height: 16px;
                 text-align: center;
-                color: #23262F;
+                color: #23262f;
             }
         }
     }

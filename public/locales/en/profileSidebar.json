@@ -1,7 +1,1 @@
-{
-  "notifications": "Notifications",
-  "orders": "Orders",
-  "payments": "Payments",
-  "profileInfo": "Profile Info",
-  "security": "Login and security"
-}
+{"orders":"Orders","payments":"Payments","security":"Login and security","profileInfo":"Profile Info","notifications":"Notifications"}

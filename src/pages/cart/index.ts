@@ -11,7 +11,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
   try {
     return {
       props: {
-        ...(await serverSideTranslations(context.locale, ['common', 'cartPage', 'orderSummary'])),
+        ...(await serverSideTranslations(context.locale, ['common', 'cartPage', 'orderSummary', 'cart_item_recipe'])),
         absolutePath: context.req.headers.host
       }
     };

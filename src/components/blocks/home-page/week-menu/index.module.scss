@@ -1,11 +1,9 @@
-@import "variables";
-@import "mixins";
-
+@import 'variables';
+@import 'mixins';
 
 .container {
     padding: 60px 160px !important;
     position: relative;
-
 
     .slider {
         &_title {
@@ -14,7 +12,7 @@
             font-size: 48px;
             line-height: 140%;
             letter-spacing: 0.01em;
-            color: #14181F;
+            color: #14181f;
         }
 
         &_subtitle {
@@ -41,8 +39,6 @@
             column-gap: 20px;
             padding-bottom: 10px;
             @include styledScrollbar;
-
-
         }
     }
 
@@ -67,8 +63,5 @@
                 font-size: 18px;
             }
         }
-
     }
-
 }
-

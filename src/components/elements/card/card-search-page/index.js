@@ -32,6 +32,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import { useAuth } from '@/utils/Hooks';
 import { useTranslation } from 'next-i18next';
+import Link from 'next/link';
 
 const recipeTypesImg = {
   1: BurgerIcon,
@@ -54,14 +55,6 @@ const StyledCardContent = styled(CardContent)`
   padding: 16px;
   width: 100%;
 `;
-
-const StyledCardActionArea = styled(CardActionArea)({
-  flex: 1,
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'start',
-  justifyContent: 'flex-start'
-});
 
 const SocialBlock = ({ likes, comments_number }) => (
   <>
@@ -129,23 +122,6 @@ const CardSearch = props => {
     router.push(`/recipe/${id}`, undefined, { locale: router.locale });
   };
 
-  const getStatusOfCard = () => {
-    if (publishStatus === PUBLISH_STATUS.notPublished) {
-      return 'Saved';
-    }
-
-    if (reviewStatus) {
-      switch (reviewStatus) {
-        case 1:
-          return APPROVED_STATUS[1];
-        case 2:
-          return APPROVED_STATUS[2];
-        case 3:
-          return APPROVED_STATUS[3];
-      }
-    }
-  };
-
   //Cart
   const cartItem = useSelector(state => state.cart.products?.find(el => el.object.pk === id));
   const isRecipeInCart = useSelector(state => state.cart.products?.some(el => el.object_id == id));
@@ -183,50 +159,51 @@ const CardSearch = props => {
       className={`${classes.card} ${disableBorder ? classes.card_disableBorder : ''}`}
       variant="elevation"
       style={{ border: '1px red !important' }}>
-      <StyledCardActionArea onClick={() => redirectToRecipeCard(id)}>
-        <StyledCardMedia className={classes.card__media} image={image ?? logo} title="" />
-
-        {user_saved_recipe ? (
-          <SavedIcon />
-        ) : isParsed && publishStatus === PUBLISH_STATUS.published ? (
-          <ChefIcon type="common" />
-        ) : null}
-        <StyledCardContent className={classes.card__content}>
-          <div className={classes.card__wrap}>
-            <p className={classes.card__name} title={title}>
-              {title}
-            </p>
-            <div className={classes.card__labels}>
-              <div className={classes.card__label_left}>
-                <div className={classes.card__label}>
-                  <BasicIcon icon={IceCreamIcon} size="16px" />
-                  <p>
-                    {cookingTypes?.length > 0
-                      ? cookingTypes
-                          .map(el => {
-                            const typeName = t(`types.${recipeTypes[el]?.toLowerCase()}`);
-                            return typeName || '一一';
-                          })
-                          .join(', ')
-                      : '一一'}
-                  </p>
-                </div>
-              </div>
-              <div className={classes.card__label_right}>
-                <BasicIcon icon={HatChefIcon} size="16px" />
-                {cookingSkill ? t(`cookingSkill.${cookingSkills[cookingSkill]?.toLowerCase()}`) : '一一'}
+      <Link href={`/recipe/${recipe.pk}`} prefetch={false}>
+        <a>
+          <StyledCardMedia className={classes.card__media} image={image ?? logo} title="" />
+        </a>
+      </Link>
+      {user_saved_recipe ? (
+        <SavedIcon />
+      ) : isParsed && publishStatus === PUBLISH_STATUS.published ? (
+        <ChefIcon type="common" />
+      ) : null}
+      <StyledCardContent className={classes.card__content}>
+        <div className={classes.card__wrap}>
+          <p className={classes.card__name} title={title}>
+            {title}
+          </p>
+          <div className={classes.card__labels}>
+            <div className={classes.card__label_left}>
+              <div className={classes.card__label}>
+                <BasicIcon icon={IceCreamIcon} size="16px" />
+                <p>
+                  {cookingTypes?.length > 0
+                    ? cookingTypes
+                        .map(el => {
+                          const typeName = t(`types.${recipeTypes[el]?.toLowerCase()}`);
+                          return typeName || '一一';
+                        })
+                        .join(', ')
+                    : '一一'}
+                </p>
               </div>
             </div>
-
-            {unsalable ? <SocialBlock {...SocialBlockProps} /> : <SellingBlock {...SellingBlockProps} />}
-
-            <div className={classes.card__timeWrap}>
-              <BasicIcon icon={StopwatchIcon} size="12px" />
-              {cookingTime || '—:—'}
+            <div className={classes.card__label_right}>
+              <BasicIcon icon={HatChefIcon} size="16px" />
+              {cookingSkill ? t(`cookingSkill.${cookingSkills[cookingSkill]?.toLowerCase()}`) : '一一'}
             </div>
           </div>
-        </StyledCardContent>
-      </StyledCardActionArea>
+
+          {unsalable ? <SocialBlock {...SocialBlockProps} /> : <SellingBlock {...SellingBlockProps} />}
+
+          <div className={classes.card__timeWrap}>
+            <BasicIcon icon={StopwatchIcon} size="12px" />
+            {cookingTime || '—:—'}
+          </div>
+        </div>
+      </StyledCardContent>
     </Card>
   );
 };

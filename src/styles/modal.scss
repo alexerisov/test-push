@@ -1,5 +1,5 @@
-@import "variables";
-@import "mixins";
+@import 'variables';
+@import 'mixins';
 
 .LayoutModalOverflow {
     position: fixed;
@@ -35,7 +35,7 @@
     background: #000;
     margin: 0 auto;
     border-radius: 10px;
-    padding: rem(24);
+    padding: 24px;
     max-width: 800px;
     height: 600px;
 
@@ -59,7 +59,7 @@
         width: 24px;
         height: 24px;
         z-index: 999;
-        background-image: url("/images/index/icons-delete-cross-white.svg");
+        background-image: url('/images/index/icons-delete-cross-white.svg');
         background-size: 24px 24px;
         background-position: center;
         background-repeat: no-repeat;
@@ -120,7 +120,7 @@
         background: $--color-white;
 
         .LayoutModal__close {
-            background-image: url("/images/index/icons-delete-cross.svg");
+            background-image: url('/images/index/icons-delete-cross.svg');
         }
     }
 
@@ -131,7 +131,7 @@
         max-width: 544px;
         top: 50%;
         color: #000;
-        background: #FCFCFD;
+        background: #fcfcfd;
         box-shadow: 0 64px 64px -48px rgb(15 15 15 / 8%);
         border-radius: 16px;
         z-index: 999;
@@ -142,22 +142,20 @@
             top: -16px;
             width: 32px;
             height: 32px;
-            background-color: #FCFCFD;
+            background-color: #fcfcfd;
             box-shadow: 0 8px 16px -8px rgb(15 15 15 / 10%);
             border-radius: 32px;
             z-index: 999;
-            background-image: url("/images/index/icons-delete-cross-gray.svg");
+            background-image: url('/images/index/icons-delete-cross-gray.svg');
             background-size: 18px 18px;
             background-position: center;
             background-repeat: no-repeat;
-            transition: background-color .5s;
+            transition: background-color 0.5s;
 
             &:hover {
-                background-color: darken(#FCFCFD, 10);
+                background-color: darken(#fcfcfd, 10);
             }
         }
-
-
 
         @media (max-width: $--sm) {
             width: 100vw;
@@ -185,7 +183,7 @@
         color: #000;
 
         .LayoutModal__close {
-            background-image: url("/images/index/icons-delete-cross.svg");
+            background-image: url('/images/index/icons-delete-cross.svg');
         }
     }
 
@@ -201,7 +199,7 @@
         color: #000;
 
         .LayoutModal__close {
-            background-image: url("/images/index/icons-delete-cross.svg");
+            background-image: url('/images/index/icons-delete-cross.svg');
         }
     }
 
@@ -217,7 +215,7 @@
         color: #000;
 
         .LayoutModal__close {
-            background-image: url("/images/index/icons-delete-cross.svg");
+            background-image: url('/images/index/icons-delete-cross.svg');
         }
     }
 }

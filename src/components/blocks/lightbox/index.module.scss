@@ -1,5 +1,5 @@
-@import "variables";
-@import "mixins";
+@import 'variables';
+@import 'mixins';
 
 .slider {
     overflow: hidden !important;
@@ -183,7 +183,7 @@
             display: none !important;
         }
 
-        [class*="control-arrow"] {
+        [class*='control-arrow'] {
             display: none;
         }
 
@@ -207,7 +207,7 @@
             align-items: center;
 
             &__text {
-                font-family: "DM Sans", sans-serif;
+                font-family: 'DM Sans', sans-serif;
                 font-style: normal;
                 font-weight: bold;
                 font-size: 14px;
@@ -279,7 +279,7 @@
 }
 
 .currentSlide {
-    font-family: "DM Sans", sans-serif;
+    font-family: 'DM Sans', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 14px;

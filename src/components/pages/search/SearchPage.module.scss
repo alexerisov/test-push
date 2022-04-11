@@ -1,5 +1,5 @@
-@import "mixins";
-@import "variables";
+@import 'mixins';
+@import 'variables';
 
 .search {
     padding: 48px 0;
@@ -199,7 +199,7 @@
                     background-color: unset;
 
                     &::after {
-                        content: " ";
+                        content: ' ';
                         position: absolute;
                         bottom: -10px;
                         left: 0;
@@ -616,7 +616,7 @@
     }
 
     &__buttonSliderLeft {
-        background-image: url("/images/index/slider-gray.svg");
+        background-image: url('/images/index/slider-gray.svg');
         background-repeat: no-repeat;
         background-size: 30px 30px;
         border: none;
@@ -627,7 +627,7 @@
     }
 
     &__buttonSliderRight {
-        background-image: url("/images/index/slider-gray.svg");
+        background-image: url('/images/index/slider-gray.svg');
         background-repeat: no-repeat;
         background-size: 30px 30px;
         border: none;
@@ -638,7 +638,7 @@
 
     &__buttonSliderLeft:hover,
     &__buttonSliderRight:hover {
-        background-image: url("/images/index/slider-yellow.svg");
+        background-image: url('/images/index/slider-yellow.svg');
     }
 
     &__buttonSliderLeft:active,
@@ -649,7 +649,7 @@
     &__buttonSliderLeft:disabled,
     &__buttonSliderRight:disabled {
         &:hover {
-            background-image: url("/images/index/slider-gray.svg");
+            background-image: url('/images/index/slider-gray.svg');
         }
 
         opacity: 0.3;

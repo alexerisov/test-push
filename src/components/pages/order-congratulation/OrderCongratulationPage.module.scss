@@ -1,6 +1,5 @@
-@import "variables";
-@import "mixins";
-
+@import 'variables';
+@import 'mixins';
 
 .content {
     display: grid;
@@ -8,7 +7,6 @@
     grid-template-columns: 640px 400px;
     column-gap: 80px;
     margin-bottom: 2rem;
-
 
     &__column1 {
         //padding: 0 135px;
@@ -18,7 +16,6 @@
         justify-content: flex-start;
         align-items: flex-start;
     }
-
 
     &__column2 {
         order: 2;
@@ -31,7 +28,7 @@
     font-size: 40px;
     line-height: 140%;
     letter-spacing: 0.01em;
-    color: #353E50;
+    color: #353e50;
 }
 
 .subheader {
@@ -40,7 +37,6 @@
     font-size: 16px;
     line-height: 24px;
     color: #566481;
-
 }
 
 .info {
@@ -54,7 +50,7 @@
     font-size: 24px;
     line-height: 160%;
     letter-spacing: 0.01em;
-    color: #353E50;
+    color: #353e50;
     margin-bottom: 32px;
 }
 
@@ -93,7 +89,7 @@
     display: flex;
     align-items: center;
     letter-spacing: 0.01em;
-    color: #353E50;
+    color: #353e50;
 }
 
 .button_group {
@@ -109,10 +105,10 @@
     width: auto !important;
     height: 54px !important;
     text-transform: none !important;
-    border: 2px solid #E0E4EB !important;
+    border: 2px solid #e0e4eb !important;
     border-radius: 90px !important;
     background: white !important;
-    color: #353E50 !important;
+    color: #353e50 !important;
     margin: 32px 0 !important;
     font-weight: bold !important;
     font-size: 14px;
@@ -120,11 +116,9 @@
     text-align: center !important;
     letter-spacing: 0.01em !important;
 
-
     &:hover {
-        background: #D8D8D8 !important;
+        background: #d8d8d8 !important;
     }
-
 }
 
 .button__explore {
@@ -134,8 +128,8 @@
     width: auto !important;
     text-transform: none !important;
     border-radius: 90px !important;
-    background: #FA0 !important;
-    color: #FCFCFD !important;
+    background: #fa0 !important;
+    color: #fcfcfd !important;
     margin: 32px 0 !important;
     font-weight: bold !important;
     font-size: 14px;
@@ -144,11 +138,9 @@
     letter-spacing: 0.01em !important;
 
     &:hover {
-        background: #FB8C00 !important;
+        background: #fb8c00 !important;
     }
-
 }
-
 
 @media (max-width: 1025px) {
     .content {
@@ -166,7 +158,7 @@
         }
 
         &__button {
-            width: 100%
+            width: 100%;
         }
     }
 
@@ -177,6 +169,4 @@
         line-height: 140%;
         letter-spacing: 0.01em;
     }
-
-
 }

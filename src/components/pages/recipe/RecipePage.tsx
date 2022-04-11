@@ -40,6 +40,9 @@ import { recoveryLocalStorage } from '@/utils/web-storage/local';
 import { RootState } from '@/store/store';
 import { useAuth } from '@/utils/Hooks';
 import { useTranslation } from 'next-i18next';
+import Image from 'next/image';
+import log from 'loglevel';
+import { makeStyles } from '@material-ui/core/styles';
 
 const StyledSlider = styled(Slider)`
   display: flex;
@@ -76,6 +79,19 @@ const MyPicture = styled(ImageIcon)`
   background-color: #fcfcfd;
 `;
 dayjs.extend(customParseFormat);
+
+const keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+
+const triplet = (e1, e2, e3) =>
+  keyStr.charAt(e1 >> 2) +
+  keyStr.charAt(((e1 & 3) << 4) | (e2 >> 4)) +
+  keyStr.charAt(((e2 & 15) << 2) | (e3 >> 6)) +
+  keyStr.charAt(e3 & 63);
+
+const rgbDataURL = (r, g, b) =>
+  `data:image/gif;base64,R0lGODlhAQABAPAA${
+    triplet(0, r, g) + triplet(b, 255, 255)
+  }/yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==`;
 
 const Title = props => {
   const {
@@ -179,38 +195,44 @@ const Title = props => {
 };
 
 const Media = ({ mainImage, setIsLightBoxOpen, setViewAllImages, materials, viewAllImages, image, t, recipe }) => {
+  const displayImage = recipe?.video_thumbnail_url ? recipe?.video_thumbnail_url : image || '/images/index/logo.svg';
+  const styles = makeStyles(theme => ({
+    root: {
+      '&::before': {
+        content: '""',
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: 'lightgray',
+        backgroundImage: `url(${displayImage})`,
+        backgroundSize: '100% 100%',
+        backgroundRepeat: 'no-repeat',
+        filter: 'blur(10px)'
+      }
+    }
+  }))();
+
   return (
-    <div className={s.image_wrapper}>
-      {recipe?.video_url ? (
-        <>
-          <div className={s.image_wrapper_click_area} onClick={() => setIsLightBoxOpen(true)}>
-            <img
-              src={
-                typeof recipe?.video_thumbnail_url === 'object'
-                  ? JSON.stringify(recipe?.video_thumbnail_url)
-                  : recipe?.video_thumbnail_url
-              }
-              alt="Recipe Image"
-              className={s.image}
-            />
-          </div>
-          <div className={s.video__control}>
-            <IconBtn onClick={() => setIsLightBoxOpen(true)}>
-              <BasicIcon icon={PlayIcon} color={'#FFAA00'} />
-            </IconBtn>
-          </div>
-        </>
-      ) : mainImage.length > 0 ? (
-        <div className={s.image_wrapper_click_area} onClick={() => setIsLightBoxOpen(true)}>
-          <img
-            src={typeof mainImage[0] === 'object' ? mainImage[0].url : mainImage[0]}
-            alt="Recipe Image"
-            className={s.image}
-          />
-        </div>
-      ) : (
-        <div className={s.image_wrapper_click_area} onClick={() => setIsLightBoxOpen(true)}>
-          <img src={typeof image === 'object' ? JSON.stringify(image) : image} alt="Recipe Image" className={s.image} />
+    <div className={`${s.image_wrapper} ${styles.root}`}>
+      <Image
+        src={displayImage}
+        onClick={() => setIsLightBoxOpen(true)}
+        alt="Recipe Image"
+        layout="fill"
+        objectFit="contain"
+        objectPosition="center"
+        quality={100}
+        className={s.image}
+        placeholder="blur"
+        blurDataURL={rgbDataURL(200, 200, 200)}
+      />
+      {recipe?.video_url && (
+        <div className={s.video__control}>
+          <IconBtn onClick={() => setIsLightBoxOpen(true)}>
+            <BasicIcon icon={PlayIcon} color={'#FFAA00'} />
+          </IconBtn>
         </div>
       )}
       {materials.length > 1 && !viewAllImages ? (
@@ -788,7 +810,6 @@ export const RecipePage = props => {
     } else {
       setMaterials(recipe?.images);
     }
-    console.log(materials);
   }, [recipe]);
 
   useEffect(() => {

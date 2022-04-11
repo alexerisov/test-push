@@ -1,6 +1,5 @@
-@import "variables";
-@import "mixins";
-
+@import 'variables';
+@import 'mixins';
 
 .card {
     display: grid;
@@ -12,13 +11,12 @@
     animation-timing-function: ease-in;
     animation-duration: 0.5s;
     min-height: 254px;
-    background: #FCFCFD;
-    border: 1px solid #E6E8EC !important;
+    background: #fcfcfd;
+    border: 1px solid #e6e8ec !important;
     box-sizing: border-box;
     border-radius: 24px !important;
     box-shadow: none !important;
     flex-wrap: wrap !important;
-
 
     &__media {
         min-height: 100%;
@@ -29,7 +27,6 @@
     }
 
     &__content {
-
     }
 
     &__content2 {
@@ -37,14 +34,19 @@
         flex-direction: column;
     }
 
-    &__title, &_title a {
+    &__title,
+    &_title a {
         width: min-content !important;
         max-width: 180px !important;
         white-space: nowrap !important;
         overflow: hidden !important;
         text-overflow: ellipsis !important;
 
-        & a:focus, & a:hover, & a:visited, & a:link, & a:active {
+        & a:focus,
+        & a:hover,
+        & a:visited,
+        & a:link,
+        & a:active {
             color: inherit;
         }
 
@@ -56,7 +58,6 @@
     }
 
     &__author {
-
     }
 
     &__delete {
@@ -77,7 +78,7 @@
             font-size: 14px;
             line-height: 160%;
             letter-spacing: 0.01em;
-            color: #14181F;
+            color: #14181f;
             display: flex;
             align-items: center;
         }
@@ -109,7 +110,7 @@
             font-size: 14px !important;
             line-height: 160%;
             letter-spacing: 0.01em !important;
-            color: #FA0 !important;
+            color: #fa0 !important;
         }
     }
 
@@ -124,7 +125,7 @@
         font-size: 18px;
         line-height: 160%;
         letter-spacing: 0.01em;
-        color: #353E50;
+        color: #353e50;
     }
 
     @media (max-width: 1025px) {
@@ -167,17 +168,14 @@
     }
 }
 
-
 @media (max-width: 600px) {
     .card {
-        &_title, &_title a {
+        &_title,
+        &_title a {
             width: min-content !important;
             max-width: 150px !important;
         }
     }
-
-
-
 }
 
 @keyframes fadeInOpacity {

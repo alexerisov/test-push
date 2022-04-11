@@ -1,6 +1,5 @@
-@import "variables";
-@import "mixins";
-
+@import 'variables';
+@import 'mixins';
 
 .layout {
     padding: 60px 160px !important;
@@ -28,7 +27,7 @@
         font-size: 48px;
         line-height: 140%;
         letter-spacing: 0.01em;
-        color: #14181F;
+        color: #14181f;
         margin-bottom: 16px;
     }
 
@@ -54,7 +53,7 @@
         }
 
         &_badge {
-            background: #FA0;
+            background: #fa0;
             border-radius: 100px;
             padding: 2px 12px;
             margin: 0;
@@ -65,7 +64,7 @@
             line-height: 160%;
             text-align: center;
             letter-spacing: 0.01em;
-            color: #FCFCFD;
+            color: #fcfcfd;
         }
 
         &_text {
@@ -73,7 +72,7 @@
             font-size: 16px;
             line-height: 160%;
             letter-spacing: 0.01em;
-            color: #14181F;
+            color: #14181f;
         }
     }
 
@@ -81,18 +80,18 @@
         padding-left: 5px;
 
         & fieldset {
-            border: 2px solid #F4F5F6 !important;
+            border: 2px solid #f4f5f6 !important;
             box-sizing: border-box !important;
             border-radius: 90px !important;
         }
 
         &:hover fieldset {
-            border-color: #AFB8CA !important;
+            border-color: #afb8ca !important;
         }
 
         & input {
             font-style: normal;
-            color: #14181F;
+            color: #14181f;
             font-size: 14px;
             line-height: 160%;
             font-weight: 500;
@@ -115,33 +114,29 @@
         width: auto !important;
         padding: 0 24px !important;
         border-radius: 90px !important;
-        background-color: #FA0 !important;
+        background-color: #fa0 !important;
         font-style: normal !important;
         font-weight: bold !important;
         font-size: 16px !important;
         line-height: 160% !important;
         text-align: center !important;
         letter-spacing: 0.01em !important;
-        color: #FCFCFD !important;
+        color: #fcfcfd !important;
 
         &:hover {
-            background: #FB8C00 !important;
+            background: #fb8c00 !important;
         }
     }
 }
-
-
 
 @media (max-width: 1025px) {
     .layout {
         padding: 60px 80px !important;
 
         &_column1 {
-
         }
 
         &_column2 {
-
         }
 
         .three_images {
@@ -157,7 +152,6 @@
         grid-template-columns: 1fr;
 
         &_column1 {
-
         }
 
         .signup {
@@ -167,7 +161,6 @@
         }
 
         &_column2 {
-
         }
 
         .three_images {
@@ -177,6 +170,3 @@
         }
     }
 }
-
-
-

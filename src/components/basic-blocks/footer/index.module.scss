@@ -1,5 +1,5 @@
 .footer {
-    background: #1C1C1C;
+    background: #1c1c1c;
     height: 273px;
     display: flex;
     align-items: center;
@@ -36,21 +36,21 @@
     width: 33%;
     margin: 16px 0;
 
-    a, a:visited, a:active {
+    a,
+    a:visited,
+    a:active {
         text-decoration: none;
         font-style: normal;
         font-weight: 600;
         font-size: 14px;
         line-height: 160%;
         letter-spacing: 0.01em;
-        color: #FCFCFD;
-
+        color: #fcfcfd;
     }
 }
 
 .social {
     &_block {
-
     }
 
     &_title {
@@ -59,7 +59,7 @@
         font-size: 12px;
         line-height: 160%;
         letter-spacing: 0.01em;
-        color: #FCFCFD;
+        color: #fcfcfd;
     }
 
     &_icons {
@@ -82,7 +82,7 @@
     font-weight: normal;
     font-size: 12px;
     line-height: 20px;
-    color: #FCFCFD;
+    color: #fcfcfd;
     align-self: flex-start;
 }
 
@@ -92,8 +92,6 @@
         height: 45px;
     }
 }
-
-
 
 @media (max-width: 900px) {
     .footer {
@@ -109,6 +107,3 @@
         width: 50%;
     }
 }
-
-
-

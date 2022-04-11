@@ -1,5 +1,5 @@
-@import "mixins";
-@import "variables";
+@import 'mixins';
+@import 'variables';
 
 .profile {
     &__title {
@@ -33,11 +33,11 @@
     }
 
     &__avatarBack::before {
-        background-image: url("/images/index/pencil.svg");
+        background-image: url('/images/index/pencil.svg');
         background-position: center;
         background-size: 26px 26px;
         background-repeat: no-repeat;
-        content: "";
+        content: '';
         position: absolute;
         background-color: #000;
         opacity: 0;

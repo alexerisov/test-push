@@ -1,36 +1,30 @@
-@import "variables";
-@import "mixins";
-
+@import 'variables';
+@import 'mixins';
 
 .modal {
     display: flex;
     justify-content: center;
     align-items: center;
 
-
     &__content {
         position: relative;
         width: 736px;
         height: 648px;
-        background: #FCFCFD;
-        border: 1px solid #E6E8EC;
+        background: #fcfcfd;
+        border: 1px solid #e6e8ec;
         box-sizing: border-box;
         box-shadow: 0 64px 64px -48px rgb(15 15 15 / 8%);
         border-radius: 24px;
     }
 
     @media (max-width: 1280px) {
-
     }
 
     @media (max-width: 1025px) {
-
     }
 
     @media (max-width: 600px) {
-
     }
-
 }
 
 .body {
@@ -42,7 +36,7 @@
         font-size: 24px;
         line-height: 160%;
         letter-spacing: 0.01em;
-        color: #14181F;
+        color: #14181f;
     }
 
     &::-webkit-scrollbar {
@@ -53,18 +47,17 @@
 
     &::-webkit-scrollbar-thumb {
         padding-right: 10px;
-        background: #FA0;
+        background: #fa0;
         border-right: 10px transparent solid;
         background-clip: padding-box;
     }
 
     &::-webkit-scrollbar-track {
         padding-right: 10px;
-        background: #FFD49E;
+        background: #ffd49e;
         border-right: 10px transparent solid;
         background-clip: padding-box;
     }
-
 }
 
 .title {
@@ -111,7 +104,7 @@
         display: flex;
         column-gap: 32px;
         padding: 17px 0;
-        border: 1px solid #E6E8EC;
+        border: 1px solid #e6e8ec;
         border-left: none;
         border-right: none;
     }
@@ -128,7 +121,7 @@
         font-size: 14px;
         line-height: 160%;
         letter-spacing: 0.01em;
-        color: #14181F;
+        color: #14181f;
     }
 
     &__amount {
@@ -143,7 +136,7 @@
         font-size: 14px;
         line-height: 160%;
         letter-spacing: 0.01em;
-        color: #AFB8CA;
+        color: #afb8ca;
     }
 
     &__seller {
@@ -171,7 +164,7 @@
         font-size: 14px;
         line-height: 24px;
         text-align: right;
-        color: #23262F;
+        color: #23262f;
     }
 }
 
@@ -180,7 +173,7 @@
     justify-content: space-between;
     align-items: center;
     width: 432px;
-    background: #F4F5F6;
+    background: #f4f5f6;
     border-radius: 8px;
     padding: 12px;
 
@@ -189,7 +182,7 @@
         font-size: 14px;
         line-height: 160%;
         letter-spacing: 0.01em;
-        color: #14181F;
+        color: #14181f;
     }
 
     &__number {
@@ -199,7 +192,7 @@
         line-height: 160%;
         text-align: right;
         letter-spacing: 0.01em;
-        color: #14181F;
+        color: #14181f;
     }
 }
 

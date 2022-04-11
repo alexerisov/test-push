@@ -1,5 +1,5 @@
-@import "variables";
-@import "mixins";
+@import 'variables';
+@import 'mixins';
 
 .cuisines {
     @include fontRegular;
@@ -45,7 +45,7 @@
     }
 
     &__blueСircle {
-        margin: 0 0 0 5px ;
+        margin: 0 0 0 5px;
         width: 10px;
         height: 10px;
         border-radius: 24px;
@@ -64,16 +64,19 @@
             opacity: 0.6;
         }
 
-        &:active, &:hover {
-            .cuisines__slideButtonArrow_right, .cuisines__slideButtonArrow_left {
-                background-image: url("/images/index/slider-yellow.svg");
+        &:active,
+        &:hover {
+            .cuisines__slideButtonArrow_right,
+            .cuisines__slideButtonArrow_left {
+                background-image: url('/images/index/slider-yellow.svg');
             }
         }
     }
 
     &__slideButtonArrow {
-        &_left, &_right {
-            background-image: url("/images/index/slider-gray.svg");
+        &_left,
+        &_right {
+            background-image: url('/images/index/slider-gray.svg');
             background-position: center;
             background-size: 20px 20px;
             margin: 0 auto;

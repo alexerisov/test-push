@@ -1,5 +1,5 @@
-@import "variables";
-@import "mixins";
+@import 'variables';
+@import 'mixins';
 
 .card {
     width: 338px;
@@ -24,7 +24,7 @@
         right: 0;
         top: 0;
         bottom: 0;
-        background-image: url("/images/index/chef-hat.svg");
+        background-image: url('/images/index/chef-hat.svg');
         background-size: 190px 119px;
         background-repeat: no-repeat;
         background-position: bottom 32px right 70px;

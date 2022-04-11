@@ -1,17 +1,15 @@
-@import "variables";
-@import "mixins";
-
-
+@import 'variables';
+@import 'mixins';
 
 .select {
     &_menu {
         &_paper {
-            background: #FCFCFD !important;
+            background: #fcfcfd !important;
             box-shadow: 0 5px 16px rgb(69 77 84 / 8%) !important;
             border-radius: 16px !important;
             padding: 16px !important;
 
-            & [class*="MuiListItem-root"] {
+            & [class*='MuiListItem-root'] {
                 font-style: normal !important;
                 font-weight: 600 !important;
                 font-size: 14px !important;
@@ -21,19 +19,16 @@
                 color: #566481 !important;
             }
 
-            & [class*=Mui-selected] {
-                background: #FFF6EB !important;
+            & [class*='Mui-selected'] {
+                background: #fff6eb !important;
                 border-radius: 8px !important;
-                color: #FB8C00 !important;
+                color: #fb8c00 !important;
             }
         }
-
-
-
     }
 
     &_input {
-        [class*="MuiInputBase-fullWidth"] {
+        [class*='MuiInputBase-fullWidth'] {
             border-radius: 12px !important;
             border: 1px solid !important;
 
@@ -66,9 +61,8 @@
             line-height: 160%;
             display: flex;
             align-items: center;
-            color: #14181F;
+            color: #14181f;
         }
-
     }
 
     &_icon {
@@ -78,7 +72,7 @@
             justify-content: center;
             position: absolute;
             right: 5px;
-            border: 2px solid #E0E4EB !important;
+            border: 2px solid #e0e4eb !important;
             border-radius: 100px;
             width: 32px;
             height: 32px;
@@ -87,9 +81,7 @@
 }
 
 @media (max-width: 960px) {
-
 }
 
 @media (max-width: 600px) {
-
 }

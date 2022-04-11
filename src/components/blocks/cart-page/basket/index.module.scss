@@ -1,6 +1,5 @@
-@import "variables";
-@import "mixins";
-
+@import 'variables';
+@import 'mixins';
 
 .basket {
     flex: 1 !important;
@@ -8,7 +7,7 @@
     height: min-content;
     font-weight: normal;
     display: flex;
-    border: 1px solid #E6E8EC;
+    border: 1px solid #e6e8ec;
     box-shadow: 0 64px 64px -48px rgb(15 15 15 / 8%);
     border-radius: 24px;
     flex-direction: column;
@@ -20,7 +19,7 @@
         font-size: 24px;
         line-height: 160%;
         letter-spacing: 0.01em;
-        color: #14181F;
+        color: #14181f;
     }
 
     &__items_amount {
@@ -28,7 +27,7 @@
         font-size: 24px;
         line-height: 160%;
         letter-spacing: 0.01em;
-        color: #14181F;
+        color: #14181f;
         margin-bottom: 10px;
     }
 
@@ -48,7 +47,7 @@
     }
 
     &__total {
-        background: #F4F5F6;
+        background: #f4f5f6;
         border-radius: 8px;
         margin: 0 -12px;
         padding: 0 12px;
@@ -61,21 +60,18 @@
         line-height: 160%;
         text-align: right;
         letter-spacing: 0.01em;
-        color: #14181F;
+        color: #14181f;
     }
 
     &__summary_count {
-        color: #AFB8CA;
+        color: #afb8ca;
         margin-right: 5px;
     }
-
-
-
 }
 
 .button {
     width: 100% !important;
-    background: #FA0 !important;
+    background: #fa0 !important;
     border-radius: 90px !important;
     margin: 24px 0 !important;
     font-weight: bold !important;
@@ -83,21 +79,19 @@
     line-height: 60% !important;
     text-align: center !important;
     letter-spacing: 0.01em !important;
-    color: #FCFCFD !important;
+    color: #fcfcfd !important;
 
     &:hover {
-        background-color: #FB8C00 !important;
+        background-color: #fb8c00 !important;
     }
 }
 
 .divider {
     border: none;
     height: 1px;
-    background: #E6E8EC;
+    background: #e6e8ec;
     margin: 24px 0;
 }
-
-
 
 @media (max-width: 600px) {
     .basket {

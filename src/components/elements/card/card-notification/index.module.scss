@@ -1,5 +1,5 @@
-@import "variables";
-@import "mixins";
+@import 'variables';
+@import 'mixins';
 
 .card {
     width: 100%;
@@ -53,7 +53,7 @@
         position: absolute;
         right: 20px;
         top: 45%;
-        background-image: url("/images/index/icons-delete-cross.svg");
+        background-image: url('/images/index/icons-delete-cross.svg');
         width: 20px;
         height: 20px;
         background-repeat: no-repeat;

@@ -1,4 +1,4 @@
-@import "config";
+@import 'config';
 
 @function selector-to-string($selector) {
     $selector: inspect($selector);
@@ -19,7 +19,7 @@
 @function contain-when-flag($selector) {
     $selector: selector-to-string($selector);
 
-    @if str-index($selector, "." + $state-prefix) {
+    @if str-index($selector, '.' + $state-prefix) {
         @return true;
     } @else {
         @return false;
@@ -29,7 +29,7 @@
 @function contain-pseudo-class($selector) {
     $selector: selector-to-string($selector);
 
-    @if str-index($selector, ":") {
+    @if str-index($selector, ':') {
         @return true;
     } @else {
         @return false;
@@ -37,5 +37,6 @@
 }
 
 @function hit-all-special-nest-rule($selector) {
-    @return contains-modifier($selector) or contain-when-flag($selector) or contain-pseudo-class($selector);
+    @return contains-modifier($selector) or contain-when-flag($selector) or
+        contain-pseudo-class($selector);
 }

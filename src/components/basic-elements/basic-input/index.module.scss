@@ -1,4 +1,3 @@
-
 .input {
     & button {
         width: 25px !important;
@@ -11,42 +10,41 @@
     margin-bottom: 22px;
 
     & fieldset {
-        border: 2px solid #E0E4EB;
+        border: 2px solid #e0e4eb;
         border-radius: 12px !important;
     }
 
     &:hover fieldset {
-        border-color: #AFB8CA !important;
+        border-color: #afb8ca !important;
     }
 
     & input {
         font-style: normal;
-        color: #14181F;
+        color: #14181f;
         font-size: 14px;
         line-height: 160%;
         font-weight: 500;
         letter-spacing: 0.01em !important;
     }
-
 }
 
 .focused {
     & fieldset {
-        border-color: #FA0 !important;
+        border-color: #fa0 !important;
     }
 
     &:hover fieldset {
-        border-color: #FA0 !important;
+        border-color: #fa0 !important;
     }
 }
 
 .error {
     & fieldset {
-        border-color: #FF582E !important;
+        border-color: #ff582e !important;
     }
 
     &:hover fieldset {
-        border-color: #FF582E !important;
+        border-color: #ff582e !important;
     }
 
     margin-bottom: 0 !important;
@@ -54,15 +52,13 @@
 
 .success {
     & fieldset {
-        border-color: #15C145 !important;
+        border-color: #15c145 !important;
     }
 
     &:hover fieldset {
-        border-color: #15C145 !important;
+        border-color: #15c145 !important;
     }
-
 }
-
 
 .label {
     font-style: normal;
@@ -70,15 +66,13 @@
     font-size: 12px !important;
     line-height: 160% !important;
     letter-spacing: 0.01em;
-    color: #AFB8CA !important;
+    color: #afb8ca !important;
 }
-
 
 @media (max-width: 600px) {
     .input {
         &_container {
             flex: 1 1 100% !important;
         }
-
     }
 }

@@ -1,6 +1,5 @@
-@import "variables";
-@import "mixins";
-
+@import 'variables';
+@import 'mixins';
 
 .block {
     &__title {
@@ -9,7 +8,7 @@
         font-size: 24px;
         line-height: 160%;
         letter-spacing: 0.01em;
-        color: #353E50;
+        color: #353e50;
     }
 
     &__header {
@@ -27,17 +26,13 @@
     }
 
     @media (max-width: 1280px) {
-
     }
 
     @media (max-width: 1025px) {
-
     }
 
     @media (max-width: 600px) {
-
     }
-
 }
 
 .tabs {
@@ -70,8 +65,8 @@
     letter-spacing: 0.01em !important;
 
     &__selected {
-        background: #14181F !important;
-        color: #FCFCFD !important;
+        background: #14181f !important;
+        color: #fcfcfd !important;
     }
 
     &__disabled {
@@ -80,7 +75,6 @@
 }
 
 .divider {
-
 }
 
 .collapse {

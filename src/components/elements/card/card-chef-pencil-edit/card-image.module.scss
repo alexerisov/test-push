@@ -1,4 +1,4 @@
-@import "variables";
+@import 'variables';
 
 .cardImage {
     position: relative;
@@ -38,7 +38,7 @@
         letter-spacing: 1px;
         border-radius: 5px 5px 0 0;
         background-color: $--color-orange;
-        content: "Cover";
+        content: 'Cover';
         box-sizing: border-box;
     }
 

@@ -1,5 +1,5 @@
-@import "variables";
-@import "mixins";
+@import 'variables';
+@import 'mixins';
 
 .ratedMeals {
     @include fontRegular;
@@ -51,7 +51,7 @@
     }
 
     &__blueСircle {
-        margin: 0 0 0 5px ;
+        margin: 0 0 0 5px;
         width: 10px;
         height: 10px;
         border-radius: 24px;
@@ -109,7 +109,7 @@
 .button_type_lineShort {
     width: 12px;
     height: 9px;
-    margin: 0 ;
+    margin: 0;
     padding: 0;
     border: none;
     outline: none;

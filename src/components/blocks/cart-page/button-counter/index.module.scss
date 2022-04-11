@@ -1,6 +1,5 @@
-@import "variables";
-@import "mixins";
-
+@import 'variables';
+@import 'mixins';
 
 .container {
     display: flex;
@@ -8,13 +7,13 @@
     align-items: center;
     width: 128px !important;
     height: 42px !important;
-    border: 1px solid #DCDCDC;
+    border: 1px solid #dcdcdc;
     border-radius: 21px;
     font-variant-numeric: tabular-nums;
 
     &__input {
         flex: 1;
-        font-family: "Gotham Pro", sans-serif !important;
+        font-family: 'Gotham Pro', sans-serif !important;
         font-style: normal !important;
         font-weight: 600 !important;
         font-size: 16px !important;
@@ -29,4 +28,3 @@
         height: 42px !important;
     }
 }
-

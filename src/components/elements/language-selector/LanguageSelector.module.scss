@@ -20,20 +20,19 @@
     line-height: 160% !important;
     text-align: center !important;
     letter-spacing: 0.01em !important;
-    color: #14181F !important;
+    color: #14181f !important;
     text-transform: uppercase;
 }
 
 .select {
-    & fieldset{
+    & fieldset {
         border: none !important;
         outline: none !important;
     }
 
-    [class*="MuiSelect-root"] {
+    [class*='MuiSelect-root'] {
         padding: 0 !important;
         position: relative;
-
     }
 
     width: auto !important;

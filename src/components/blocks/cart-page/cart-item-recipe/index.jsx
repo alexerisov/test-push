@@ -16,6 +16,7 @@ import { Button, IconButton } from '@material-ui/core';
 import { cookingSkill, recipeTypes } from '@/utils/datasets';
 import Link from 'next/link';
 import { CartContext } from '@/components/pages/cart/CartPage';
+import { useTranslation } from 'next-i18next';
 
 const StyledCardMedia = styled(CardMedia)`
   .MuiCardMedia-root {
@@ -24,6 +25,7 @@ const StyledCardMedia = styled(CardMedia)`
 `;
 
 export const CartItemRecipe = props => {
+  const { t } = useTranslation('cart_item_recipe');
   const { cartItemId, cartItemAmount, recipe } = props;
   const title = recipe.title;
   const image = recipe.images?.[0]?.url;
@@ -78,7 +80,7 @@ export const CartItemRecipe = props => {
               {recipe.ingredients?.map(ingredient => ingredient.title)?.join(', ') || 'Not defined'}
             </div>
             <Button onClick={viewAllHandler} className={classes.card__ingredients__button} variant="text">
-              View All
+              {t('view_all')}
             </Button>
           </div>
           <div className={classes.card__price_container}>

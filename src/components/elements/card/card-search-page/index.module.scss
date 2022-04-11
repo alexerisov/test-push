@@ -1,5 +1,5 @@
-@import "variables";
-@import "mixins";
+@import 'variables';
+@import 'mixins';
 
 .card {
     position: relative;
@@ -64,7 +64,7 @@
             &::before {
                 position: absolute;
                 display: block;
-                content: "";
+                content: '';
                 left: 50%;
                 transform: translate(-50%, -50%);
                 top: 50%;
@@ -86,7 +86,7 @@
             &::before {
                 position: absolute;
                 display: block;
-                content: "";
+                content: '';
                 left: 8px;
                 top: 11px;
                 background-color: #777e91;
@@ -101,7 +101,7 @@
             &::after {
                 position: absolute;
                 display: block;
-                content: "";
+                content: '';
                 left: 13px;
                 top: 6px;
                 background-color: #777e91;
@@ -211,7 +211,7 @@
         align-items: center !important;
         justify-content: center !important;
         width: 100% !important;
-        background: #FFF6EB !important;
+        background: #fff6eb !important;
         border-radius: 90px !important;
         border-width: 2px !important;
         font-size: 14px !important;

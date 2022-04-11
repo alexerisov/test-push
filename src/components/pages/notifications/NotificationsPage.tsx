@@ -4,8 +4,10 @@ import Account from '@/api/Account';
 import { CardNotification } from '@/components/elements/card';
 import LayoutPageNew from '@/components/layouts/layout-page-new';
 import { useAuth } from '@/utils/Hooks';
+import { useTranslation } from 'next-i18next';
 
 export const NotificationsPage = props => {
+  const { t } = useTranslation('notifications_page');
   const { session, status: loading } = useAuth();
   useEffect(() => {
     if (session) {
@@ -44,7 +46,7 @@ export const NotificationsPage = props => {
       <h1 className={s.notifications__title}>Notifications</h1>
       <div className={s.notifications__content}>
         <div className={s.notifications__contentItem}>
-          <h2 className={s.notifications__contentItem__title}>Today</h2>
+          <h2 className={s.notifications__contentItem__title}>{t('earlier_title')}</h2>
           {nowNotificationList.length !== 0 ? (
             nowNotificationList.map((item, index) => {
               return (
@@ -63,7 +65,7 @@ export const NotificationsPage = props => {
           )}
         </div>
         <div className={s.notifications__contentItem}>
-          <h2 className={s.notifications__contentItem__title}>Earlier</h2>
+          <h2 className={s.notifications__contentItem__title}>{t('earlier_title')}</h2>
           {oldNotificationList.length !== 0 ? (
             oldNotificationList.map((item, index) => {
               return (

@@ -1,6 +1,5 @@
-@import "variables";
-@import "mixins";
-
+@import 'variables';
+@import 'mixins';
 
 .container {
     display: flex;
@@ -9,9 +8,8 @@
     justify-content: center;
     align-items: center;
     height: 92px;
-    background: #ECECEC;
+    background: #ececec;
     border-radius: 0 0 5px 5px;
-
 
     & .label {
         margin: 4px 0;
@@ -19,11 +17,11 @@
     }
 
     & .input {
-        & [class*="MuiInput-underline"]::before {
+        & [class*='MuiInput-underline']::before {
             border: none !important;
         }
 
-        & [class*="MuiInput-input"] {
+        & [class*='MuiInput-input'] {
             width: 186px;
             height: 34px;
             font-size: 18px;
@@ -38,4 +36,3 @@
         }
     }
 }
-

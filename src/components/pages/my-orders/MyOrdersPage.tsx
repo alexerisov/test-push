@@ -181,9 +181,10 @@ export const MyOrdersPage = props => {
   const [orders, setOrders] = useState();
   const historyOrders = orders?.results?.filter(order => order?.status === 6);
   const activeOrders = orders?.results?.filter(order => order?.status !== 6);
+  const router = useRouter();
 
   useEffect(async () => {
-    const response = await Order.getOrderList();
+    const response = await Order.getOrderList(router.locale);
     setOrders(response.data);
   }, []);
 

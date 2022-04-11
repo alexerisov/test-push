@@ -1,85 +1,85 @@
-@import "mixins";
+@import 'mixins';
 
 .comment {
-    position      : relative;
-    display       : flex;
-    padding       : 24px 0 34px;
-    border-bottom : 1px solid $--color-gray-9;
+    position: relative;
+    display: flex;
+    padding: 24px 0 34px;
+    border-bottom: 1px solid $--color-gray-9;
 
     &__avatar {
-        align-self    : flex-start;
-        width         : 50px;
-        height        : 50px;
-        margin-right  : 30px;
-        border-radius : 50%;
-        object-fit    : cover;
+        align-self: flex-start;
+        width: 50px;
+        height: 50px;
+        margin-right: 30px;
+        border-radius: 50%;
+        object-fit: cover;
     }
 
     &__body {
-        font-size : 18px;
+        font-size: 18px;
         @include fontRegular;
 
-        max-width : 632px;
+        max-width: 632px;
     }
 
     &__username {
-        font-size     : 20px;
+        font-size: 20px;
         @include fontMedium;
 
-        line-height   : 24px;
-        margin-bottom : 10px;
+        line-height: 24px;
+        margin-bottom: 10px;
 
-        @media (max-width : $--xs) {
-            display     : flex;
-            align-items : center;
+        @media (max-width: $--xs) {
+            display: flex;
+            align-items: center;
         }
     }
 
     &__text {
-        margin-bottom : 16px;
-        word-break    : break-all;
+        margin-bottom: 16px;
+        word-break: break-all;
     }
 
     &__likes {
-        display : flex;
+        display: flex;
     }
 
     &__like {
-        display      : flex;
-        align-items  : center;
-        margin-right : 42px;
+        display: flex;
+        align-items: center;
+        margin-right: 42px;
 
         &__icon {
-            margin-right : 12px;
-            cursor       : pointer;
-            color        : $--color-gray1;
+            margin-right: 12px;
+            cursor: pointer;
+            color: $--color-gray1;
         }
 
         &__icon:hover {
-            color : black;
+            color: black;
         }
     }
 
     &__like:last-child {
-        margin-right : 0;
+        margin-right: 0;
     }
 
     &__delete {
-        position   : absolute;
-        top        : 24px;
-        right      : 10px;
-        cursor     : pointer;
-        transition : opacity 0.3s !important;
-        transform  : rotate(45deg);
-        opacity    : 0.2;
-        color      : inherit;
+        position: absolute;
+        top: 24px;
+        right: 10px;
+        cursor: pointer;
+        transition: opacity 0.3s !important;
+        transform: rotate(45deg);
+        opacity: 0.2;
+        color: inherit;
 
         &:hover {
-            transform : rotate(45deg) scale(1.2);
+            transform: rotate(45deg) scale(1.2);
         }
     }
 
     &:hover .comment__delete {
-        opacity : 0.8;
+        opacity: 0.8;
     }
 }

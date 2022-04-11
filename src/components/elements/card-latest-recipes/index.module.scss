@@ -1,5 +1,5 @@
-@import "variables";
-@import "mixins";
+@import 'variables';
+@import 'mixins';
 
 .card {
     width: 338px;
@@ -62,7 +62,7 @@
         border-radius: 50%;
         background-color: rgba($color: #000, $alpha: 35%);
         border: none;
-        background-image: url("/images/index/icon-favorite.png");
+        background-image: url('/images/index/icon-favorite.png');
         background-size: 25px 25px;
         background-position: center;
         background-repeat: no-repeat;
@@ -82,7 +82,7 @@
         border-radius: 50%;
         background-color: rgba($color: #000, $alpha: 35%);
         border: none;
-        background-image: url("/images/index/icon-delete-file.png");
+        background-image: url('/images/index/icon-delete-file.png');
         background-size: 25px 25px;
         background-position: center;
         background-repeat: no-repeat;

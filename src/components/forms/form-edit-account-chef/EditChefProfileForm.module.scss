@@ -1,5 +1,5 @@
-@import "mixins";
-@import "variables";
+@import 'mixins';
+@import 'variables';
 
 .profile {
     &__title {
@@ -27,7 +27,7 @@
             position: absolute;
             right: 20px;
             top: 35%;
-            background-image: url("/images/index/icons-delete-cross.svg");
+            background-image: url('/images/index/icons-delete-cross.svg');
             width: 20px;
             height: 20px;
             background-repeat: no-repeat;
@@ -63,11 +63,11 @@
     }
 
     &__avatarBack::before {
-        background-image: url("/images/index/pencil.svg");
+        background-image: url('/images/index/pencil.svg');
         background-position: center;
         background-size: 26px 26px;
         background-repeat: no-repeat;
-        content: "";
+        content: '';
         position: absolute;
         background-color: #000;
         opacity: 0;
@@ -217,7 +217,7 @@
             span:first-of-type {
                 width: 24px;
                 height: 24px;
-                background-image: url("/images/index/icon-plus-yellow.png");
+                background-image: url('/images/index/icon-plus-yellow.png');
                 background-size: 24px 24px;
                 background-repeat: no-repeat;
                 background-position: center;
@@ -228,7 +228,7 @@
                 color: $--color-white;
 
                 span:first-of-type {
-                    background-image: url("/images/index/icon-plus-white.png");
+                    background-image: url('/images/index/icon-plus-white.png');
                 }
             }
         }
@@ -252,7 +252,7 @@
             span:first-of-type {
                 width: 30px;
                 height: 30px;
-                background-image: url("/images/index/icon-plus-yellow.png");
+                background-image: url('/images/index/icon-plus-yellow.png');
                 background-size: 30px 30px;
                 background-repeat: no-repeat;
                 background-position: center;
@@ -263,7 +263,7 @@
                 color: $--color-white;
 
                 span:first-of-type {
-                    background-image: url("/images/index/icon-plus-white.png");
+                    background-image: url('/images/index/icon-plus-white.png');
                 }
             }
         }
@@ -334,7 +334,7 @@
             height: 26px;
             border: 2px solid $--color-orange;
             margin: 0 10px 0 0;
-            background-image: url("/images/index/icons-edit-yellow.png");
+            background-image: url('/images/index/icons-edit-yellow.png');
             background-repeat: no-repeat;
             background-size: 18px 18px;
             background-position: center;
@@ -349,7 +349,7 @@
             width: 26px;
             height: 26px;
             border: 2px solid $--color-orange;
-            background-image: url("/images/index/icons-delete-yellow.png");
+            background-image: url('/images/index/icons-delete-yellow.png');
             background-repeat: no-repeat;
             background-size: 18px 18px;
             background-position: center;

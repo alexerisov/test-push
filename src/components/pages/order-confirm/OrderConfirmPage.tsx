@@ -188,10 +188,10 @@ export const OrderConfirmPage = () => {
   let content = (
     <div className={s.content}>
       <div className="col1">
-        <div className={s.content__title}>Confirm and Pay</div>
+        <div className={s.content__title}>{t('title')}</div>
         <Divider m="48px 0" />
         <form onSubmit={formik.handleSubmit}>
-          <InputsBlock title="Your details">
+          <InputsBlock title={t('yourDetails')}>
             <BasicInput formik={formik} label="Email" name="email" placeholder="youremail@gmail.net" />
             <BasicInput
               formik={formik}

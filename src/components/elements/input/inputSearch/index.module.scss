@@ -1,5 +1,5 @@
-@import "variables";
-@import "mixins";
+@import 'variables';
+@import 'mixins';
 
 .search {
     flex: 1;
@@ -48,6 +48,5 @@
         position: absolute;
         top: 0;
         right: 14px;
-
     }
 }

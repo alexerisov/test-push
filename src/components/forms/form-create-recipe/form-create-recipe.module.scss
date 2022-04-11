@@ -1,8 +1,8 @@
-@import "variables";
-@import "mixins";
+@import 'variables';
+@import 'mixins';
 
 .wave {
-    background-image: url("/images/index/wave.svg");
+    background-image: url('/images/index/wave.svg');
     background-size: cover;
     background-repeat: no-repeat;
     width: 100%;
@@ -21,7 +21,7 @@
     @media (min-width: 360px) and (max-width: $--xs) {
         display: block;
         background-size: 100%;
-        background-image: url("/images/index/small-wave.svg");
+        background-image: url('/images/index/small-wave.svg');
         background-repeat: round;
         top: 186px;
         left: 0;
@@ -627,7 +627,7 @@
             left: 10px;
             width: 80px;
             height: 70px;
-            background-image: url("/images/index/footer_logo.png");
+            background-image: url('/images/index/footer_logo.png');
             background-repeat: no-repeat;
             background-position: center;
             background-size: 70px 50px;

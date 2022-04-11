@@ -172,7 +172,10 @@ const SearchInput = ({ formik }) => {
               variant="filled"
               InputProps={{
                 ...params.InputProps,
-                classes: { root: s.search_input, focused: s.search_input_focused },
+                classes: {
+                  root: s.search_input,
+                  focused: s.search_input_focused
+                },
                 disableUnderline: true
               }}
               onFocus={() => setIsSearchFocused(true)}

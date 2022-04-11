@@ -1,27 +1,28 @@
 {
-  extends: [
-      'stylelint-config-standard-scss',
-      'stylelint-config-prettier'
+  "extends": [
+      "stylelint-config-standard-scss",
+      "stylelint-config-prettier"
   ],
-  custonSyntax: 'postcss-scss',
-  plugins: [
-      'stylelint-scss',
-      'stylelint-prettier'
+  "customSyntax": "postcss-scss",
+  "plugins": [
+      "stylelint-scss",
+      "stylelint-prettier"
   ],
-  rules: {
-    indentation: 4,
-    'string-quotes': 'double',
-    'selector-type-case': "lower",
-    'selector-class-pattern': "[a-z][a-z_]*",
-    'selector-id-pattern': false,
+  "rules": {
+    "indentation": 4,
+    "string-quotes": "single",
+    "selector-type-case": "lower",
+    "selector-class-pattern": "[a-z][a-z_]*",
+    "selector-id-pattern": null,
+    "no-empty-source": null
   },
-  overrides: [
+  "overrides": [
     {
-      files: [
-          '*.scss',
-          '**/*.scss'
+      "files": [
+          "*.scss",
+          "**/*.scss"
       ],
-      customSyntax: 'postcss-scss'
+      "customSyntax": "postcss-scss"
     }
   ]
 }

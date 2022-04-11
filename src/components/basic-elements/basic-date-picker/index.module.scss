@@ -1,4 +1,3 @@
-
 .root {
     & label {
         font-style: normal;
@@ -6,13 +5,13 @@
         font-size: 14px !important;
         line-height: 160% !important;
         letter-spacing: 0.01em;
-        color: #AFB8CA !important;
+        color: #afb8ca !important;
     }
 }
 
 .input {
     border-radius: 12px !important;
-    background: #F4F5F6 !important;
+    background: #f4f5f6 !important;
 
     //& fieldset {
     //  border: 2px solid #E0E4EB;
@@ -20,7 +19,7 @@
     //}
     &__opened {
         border-radius: 12px !important;
-        background: #FFF6EB !important;
+        background: #fff6eb !important;
     }
 
     //
@@ -30,10 +29,6 @@
         font-weight: 500 !important;
         font-size: 16px !important;
         line-height: 24px !important;
-        color: #353E50 !important;
+        color: #353e50 !important;
     }
-
 }
-
-
-

@@ -1,4 +1,4 @@
-@import "mixins";
+@import 'mixins';
 
 .comments {
     display: flex;
@@ -58,7 +58,7 @@
         color: $--color-gray-10;
         font-size: 20px;
         resize: none;
-        border: 1px solid #E0E4EB;
+        border: 1px solid #e0e4eb;
         box-sizing: border-box;
         border-radius: 16px !important;
 
@@ -70,11 +70,11 @@
         &__button {
             width: auto !important;
             box-shadow: none !important;
-            background: #FA0 !important;
+            background: #fa0 !important;
             border-radius: 90px !important;
 
             &:disabled {
-                opacity: .5 !important;
+                opacity: 0.5 !important;
             }
 
             &__label {
@@ -84,7 +84,7 @@
                 font-size: 14px !important;
                 line-height: 160% !important;
                 letter-spacing: 0.01em !important;
-                color: #F4F5F6 !important;
+                color: #f4f5f6 !important;
             }
         }
     }
@@ -139,7 +139,7 @@
         display: flex;
         align-items: center;
         letter-spacing: 0.01em;
-        color: #14181F;
+        color: #14181f;
         white-space: nowrap;
     }
 
@@ -163,18 +163,18 @@
     &_line {
         flex: 1 1 max-content;
 
-        &_root{
+        &_root {
             height: 6px !important;
         }
 
         &_colorPrimary {
-            background: #F4F5F6 !important;
+            background: #f4f5f6 !important;
             mix-blend-mode: normal !important;
             border-radius: 4px !important;
         }
 
         &_bar {
-            background-color: #15C145 !important;
+            background-color: #15c145 !important;
         }
     }
 
@@ -189,7 +189,7 @@
         font-size: 14px;
         line-height: 160%;
         letter-spacing: 0.01em;
-        color: #14181F;
+        color: #14181f;
         font-variant-numeric: tabular-nums;
     }
 }
@@ -203,14 +203,14 @@
     &_button {
         padding: 16px 24px !important;
         height: 54px !important;
-        border: 2px solid #E6E8EC !important;
+        border: 2px solid #e6e8ec !important;
         box-sizing: border-box !important;
         border-radius: 90px !important;
         font-size: 14px !important;
         font-style: normal !important;
         font-weight: bold !important;
         line-height: 160% !important;
-        color: #353E50 !important;
+        color: #353e50 !important;
         box-shadow: none !important;
         margin-top: 48px !important;
     }
@@ -236,11 +236,9 @@
         &_line {
             flex: 1;
             max-width: 280px;
-
         }
 
         &_average {
-
         }
     }
 }

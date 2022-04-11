@@ -1,5 +1,5 @@
-@import "variables";
-@import "mixins";
+@import 'variables';
+@import 'mixins';
 
 .tab_ingredients {
     display: flex;
@@ -32,7 +32,7 @@
         padding: 12px 24px !important;
 
         &:hover {
-            opacity: .8 !important;
+            opacity: 0.8 !important;
         }
     }
 

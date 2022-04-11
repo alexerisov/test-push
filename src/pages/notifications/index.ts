@@ -11,6 +11,6 @@ export default connect((state: RootState) => ({
 
 export const getServerSideProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale, ['common']))
+    ...(await serverSideTranslations(locale, ['common', 'notifications_page', 'notifications']))
   }
 });

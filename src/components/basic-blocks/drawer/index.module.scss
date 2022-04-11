@@ -1,5 +1,5 @@
-@import "variables";
-@import "mixins";
+@import 'variables';
+@import 'mixins';
 
 %disable_globals {
     box-shadow: none !important;
@@ -49,7 +49,7 @@
         font-size: 24px;
         line-height: 160%;
         letter-spacing: 0.01em;
-        color: #777E91;
+        color: #777e91;
         border-left: 4px solid transparent;
     }
 
@@ -60,10 +60,9 @@
         font-size: 24px;
         line-height: 160%;
         letter-spacing: 0.01em;
-        color: #23262F;
-        border-left: 4px solid #FA0;
+        color: #23262f;
+        border-left: 4px solid #fa0;
     }
-
 }
 
 .buttons {
@@ -79,7 +78,7 @@
 
     box-shadow: none !important;
     width: auto !important;
-    border: 2px solid #FA0 !important;
+    border: 2px solid #fa0 !important;
     box-sizing: border-box !important;
     border-radius: 90px !important;
     padding: 12px 29px !important;
@@ -89,10 +88,10 @@
     line-height: 160% !important;
     text-align: center !important;
     letter-spacing: 0.01em !important;
-    color: #353E50 !important;
+    color: #353e50 !important;
 
     &:hover {
-        background: #FFF6EB !important;
+        background: #fff6eb !important;
     }
 }
 
@@ -103,8 +102,8 @@
     width: auto !important;
     text-transform: none !important;
     border-radius: 90px !important;
-    background: #FA0 !important;
-    color: #FCFCFD !important;
+    background: #fa0 !important;
+    color: #fcfcfd !important;
     margin: 32px 0 !important;
     font-weight: bold !important;
     font-size: 14px;
@@ -113,6 +112,6 @@
     letter-spacing: 0.01em !important;
 
     &:hover {
-        background: #FB8C00 !important;
+        background: #fb8c00 !important;
     }
 }

@@ -1,5 +1,5 @@
-@import "mixins";
-@import "variables";
+@import 'mixins';
+@import 'variables';
 
 .search {
     padding: 48px 0;
@@ -199,7 +199,7 @@
                     background-color: unset;
 
                     &::after {
-                        content: " ";
+                        content: ' ';
                         position: absolute;
                         bottom: -10px;
                         left: 0;
@@ -554,7 +554,7 @@
         &__circle {
             top: 8px !important;
             font-size: 32px !important;
-            border: 2px solid #E6E8EC;
+            border: 2px solid #e6e8ec;
             border-radius: 100px;
             display: flex;
             align-items: center;
@@ -608,17 +608,17 @@
         }
 
         &:hover {
-            opacity: .8;
+            opacity: 0.8;
         }
     }
 
     &__applyBtn {
         width: 100%;
         height: 58px;
-        border: 2px solid #E6E8EC;
+        border: 2px solid #e6e8ec;
         box-sizing: border-box;
         border-radius: 16px;
-        color: #23262F;
+        color: #23262f;
         font-size: 16px;
         line-height: 160%;
         @include fontBold;
@@ -635,19 +635,19 @@
         border: none;
         box-sizing: border-box;
         border-radius: 16px;
-        color: #848F9A;
+        color: #848f9a;
         font-size: 16px;
         line-height: 160%;
         @include fontBold;
 
         svg {
             font-size: 16px;
-            fill:  #848F9A;;
+            fill: #848f9a;
         }
     }
 
     &__buttonSliderLeft {
-        background-image: url("/images/index/slider-gray.svg");
+        background-image: url('/images/index/slider-gray.svg');
         background-repeat: no-repeat;
         background-size: 30px 30px;
         border: none;
@@ -658,7 +658,7 @@
     }
 
     &__buttonSliderRight {
-        background-image: url("/images/index/slider-gray.svg");
+        background-image: url('/images/index/slider-gray.svg');
         background-repeat: no-repeat;
         background-size: 30px 30px;
         border: none;
@@ -669,7 +669,7 @@
 
     &__buttonSliderLeft:hover,
     &__buttonSliderRight:hover {
-        background-image: url("/images/index/slider-yellow.svg");
+        background-image: url('/images/index/slider-yellow.svg');
     }
 
     &__buttonSliderLeft:active,
@@ -680,7 +680,7 @@
     &__buttonSliderLeft:disabled,
     &__buttonSliderRight:disabled {
         &:hover {
-            background-image: url("/images/index/slider-gray.svg");
+            background-image: url('/images/index/slider-gray.svg');
         }
 
         opacity: 0.3;
@@ -947,9 +947,9 @@
     border: none;
     font-size: 24px !important;
     line-height: 120% !important;
-    color: #23262F;
+    color: #23262f;
     text-transform: capitalize;
-    @include fontMedium("Poppins");
+    @include fontMedium('Poppins');
 
     svg {
         font-size: 40px;
