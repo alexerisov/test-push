@@ -656,7 +656,7 @@ const Ingredients = ({
       return dispatch(modalActions.open('register'));
     }
 
-    dispatch(addToCart(recipeId));
+    dispatch(addToCart(recipeId, router.locale));
   };
 
   return (

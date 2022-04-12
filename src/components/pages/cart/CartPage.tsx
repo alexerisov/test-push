@@ -51,7 +51,7 @@ export const CartPage: React.FC<any> = props => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    dispatch(getCart());
+    dispatch(getCart(router.locale));
   }, []);
 
   const openModalHandler = () => {

@@ -34,7 +34,7 @@ export const CartItemRecipe = props => {
   const dispatch = useDispatch();
   const context = React.useContext(CartContext);
   const onDeleteHandler = () => {
-    dispatch(removeFromCart(cartItemId));
+    dispatch(removeFromCart(cartItemId, router.locale));
   };
 
   const viewAllHandler = () => {

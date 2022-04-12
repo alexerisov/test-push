@@ -47,7 +47,7 @@ export const RecipeCard = props => {
       return dispatch(modalActions.open('register'));
     }
 
-    dispatch(addToCart(recipe?.pk));
+    dispatch(addToCart(recipe?.pk, router.locale));
   };
 
   return (

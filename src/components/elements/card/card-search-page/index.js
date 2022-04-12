@@ -138,7 +138,7 @@ const CardSearch = props => {
       return dispatch(modalActions.open('register'));
     }
 
-    dispatch(addToCart(id));
+    dispatch(addToCart(id, router.locale));
   };
 
   const SocialBlockProps = {

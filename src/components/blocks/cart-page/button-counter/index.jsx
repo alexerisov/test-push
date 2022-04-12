@@ -6,18 +6,20 @@ import classes from './index.module.scss';
 import Typography from '@material-ui/core/Typography';
 import { useDispatch } from 'react-redux';
 import { updateCartItem } from '@/store/cart/actions';
+import { useRouter } from 'next/router';
 
 export const CounterButton = props => {
   const { id, count = 0 } = props;
   // const [count, setCount] = React.useState(1);
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const handleIncrement = () => {
-    dispatch(updateCartItem(id, count + 1));
+    dispatch(updateCartItem(id, count + 1, router.locale));
   };
 
   const handleDecrement = () => {
-    dispatch(updateCartItem(id, count - 1));
+    dispatch(updateCartItem(id, count - 1, router.locale));
   };
 
   const CountButton = props => (

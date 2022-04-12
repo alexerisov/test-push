@@ -26,7 +26,7 @@ export const setCart = data => {
   return { type: types.SET_CART, payload: data };
 };
 
-export const getCart = () => {
+export const getCart = lang => {
   return async dispatch => {
     dispatch({ type: types.GET_CART_REQUESTED });
 
@@ -38,7 +38,7 @@ export const getCart = () => {
       const cartList = await response.data.results;
       const productsData = await Promise.all(
         cartList.map(async item => {
-          let itemResponse = await Recipe.getRecipe(item.object_id);
+          let itemResponse = await Recipe.getRecipe(item.object_id, lang);
           return { ...item, object: itemResponse.data };
         })
       );
@@ -52,14 +52,14 @@ export const getCart = () => {
   };
 };
 
-export const addToCart = itemId => {
+export const addToCart = (itemId, lang) => {
   return async dispatch => {
     dispatch({ type: types.ADD_TO_CART_REQUESTED });
 
     try {
       const response = await Cart.addItem('recipe', itemId);
       dispatch({ type: types.ADD_TO_CART_SUCCESS });
-      dispatch(getCart());
+      dispatch(getCart(lang));
     } catch (e) {
       console.error(e);
       dispatch({ type: types.ADD_TO_CART_FAILED, payload: e });
@@ -74,7 +74,7 @@ export const removeFromCart = itemCartId => {
     try {
       const response = await Cart.deleteItem(itemCartId);
       dispatch({ type: types.REMOVE_FROM_CART_SUCCESS });
-      dispatch(getCart());
+      dispatch(getCart(lang));
     } catch (e) {
       console.error(e);
       dispatch({ type: types.REMOVE_FROM_CART_FAILED, payload: e });
@@ -114,7 +114,7 @@ export const clearCart = () => {
   };
 };
 
-export const addManyToCart = itemIdArray => {
+export const addManyToCart = (itemIdArray, lang) => {
   return async dispatch => {
     dispatch({ type: types.ADD_TO_CART_REQUESTED });
 
@@ -125,7 +125,7 @@ export const addManyToCart = itemIdArray => {
         })
       );
       dispatch({ type: types.ADD_TO_CART_SUCCESS });
-      dispatch(getCart());
+      dispatch(getCart(lang));
     } catch (e) {
       console.error(e);
       dispatch({ type: types.ADD_TO_CART_FAILED, payload: e });

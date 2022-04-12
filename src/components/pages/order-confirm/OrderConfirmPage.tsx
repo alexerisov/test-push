@@ -126,7 +126,7 @@ export const OrderConfirmPage = () => {
   });
 
   useEffect(() => {
-    dispatch(getCart());
+    dispatch(getCart(router.locale));
   }, []);
 
   useEffect(async () => {

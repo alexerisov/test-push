@@ -100,7 +100,7 @@ const Header = props => {
 
   useEffect(() => {
     if (session) {
-      return cartItemsAmount ?? props.dispatch(getCart());
+      return cartItemsAmount ?? props.dispatch(getCart(router.locale));
     }
   }, [session]);
 
