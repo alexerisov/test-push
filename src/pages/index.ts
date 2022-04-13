@@ -21,7 +21,7 @@ export async function getServerSideProps(context) {
     const weekmenu = await Recipe.getWeekmenu('');
     return {
       props: {
-        ...(await serverSideTranslations(context.locale, ['common', 'homePage'])),
+        ...(await serverSideTranslations(context.locale, ['common', 'homePage', 'recipeClassifications'])),
         session,
         weekmenu: weekmenu.data,
         absolutePath: context.req.headers.host

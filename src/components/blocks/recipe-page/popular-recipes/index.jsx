@@ -43,7 +43,7 @@ const RecipeSlider = props => {
           {recipes
             .filter(el => el?.pk)
             .map((recipe, index) => (
-              <CardSearch key={`${recipe.pk}-${index}`} recipe={recipe} />
+              <CardSearch key={`${recipe.pk}-${index}`} recipe={recipe} forceUnsalable={true} />
             ))}
         </>
       )}

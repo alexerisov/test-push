@@ -230,10 +230,14 @@ export const SearchPage = props => {
   const router = useRouter();
   const classMarerialUi = useStyles();
 
-  const { data: weekmenuData, error: weekmenuLoading } = useSWR(
-    ['/settings/weekmenus', searchParams, { lang: router.locale }],
-    recipeFetcher
-  );
+  const {
+    data: weekmenuData,
+    error: weekmenuError,
+    isValidating: isWeekmenuLoading
+  } = useSWR(['/settings/weekmenus', searchParams, { lang: router.locale }, router.locale], recipeFetcher, {
+    revalidateOnFocus: false,
+    revalidateOnMount: false
+  });
   const weekmenuRecipes = weekmenuData?.some(el => el.recipes?.length > 0)
     ? weekmenuData
     : props.weekmenuWithoutFilters;
@@ -294,7 +298,7 @@ export const SearchPage = props => {
     ? nonProductionRecipesData[nonProductionRecipesData.length - 1]
     : null;
 
-  const [open, setOpen] = useState(productionRecipesData);
+  const [open, setOpen] = useState<boolean>(false);
 
   const handleTooltipClose = () => {
     setOpen(false);
@@ -408,7 +412,7 @@ export const SearchPage = props => {
         <div className={s.search__result}>
           {mobile && <SearchFilter formik={formik} session={session} data={countRecipesData} />}
 
-          <Weekmenu data={weekmenuRecipes} />
+          <Weekmenu loading={isWeekmenuLoading} data={weekmenuRecipes} />
 
           <div className={s.search__result__text}>
             <CoinIcon />
@@ -424,7 +428,9 @@ export const SearchPage = props => {
             )}
 
             {productionRecipes?.length > 0 &&
-              productionRecipes.map((recipe, index) => <CardSearch key={`${recipe.pk}-${index}`} recipe={recipe} />)}
+              productionRecipes.map((recipe, index) => (
+                <CardSearch key={`${recipe.pk}-${index}`} recipe={recipe} forceUnsalable={false} />
+              ))}
 
             <div className={s.search__buttonViewWrap}>
               <button
@@ -445,7 +451,9 @@ export const SearchPage = props => {
 
           <div className={s.search__result__container}>
             {nonProductionRecipes?.length > 0 &&
-              nonProductionRecipes.map((recipe, index) => <CardSearch key={`${recipe.pk}-${index}`} recipe={recipe} />)}
+              nonProductionRecipes.map((recipe, index) => (
+                <CardSearch key={`${recipe.pk}-${index}`} recipe={recipe} forceUnsalable={true} />
+              ))}
           </div>
 
           <div className={s.search__buttonViewWrap}>
