@@ -65,7 +65,7 @@ module.exports = withBundleAnalyzer({
   optimization: true,
   images: {
     disableStaticImages: true,
-    domains: ['localhost', 'goodbit.dev', 'eatchefs.com']
+    domains: ['localhost', 'goodbit.dev', 'eatchefs.com', 'storage.googleapis.com']
   },
   typescript: {
     ignoreBuildErrors: true

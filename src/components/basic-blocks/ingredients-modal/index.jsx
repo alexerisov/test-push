@@ -2,7 +2,7 @@ import React from 'react';
 import classes from './index.module.scss';
 import { Box, Fade, IconButton, Modal } from '@material-ui/core';
 import IceCreamIcon from '~public/icons/Ice Cream/Line.svg';
-import { cookingSkill, recipeTypes } from '@/utils/datasets';
+import { COOKING_SKILLS, recipeTypes } from '@/utils/datasets';
 import HatChefIcon from '~public/icons/Hat Chef/Line.svg';
 import Backdrop from '@material-ui/core/Backdrop';
 import Typography from '@material-ui/core/Typography';
@@ -92,7 +92,7 @@ export const IngredientsModal = props => {
                 </div>
                 <div className={classes.element_container}>
                   <HatChefIcon style={{ marginRight: 10 }} />
-                  <div className={classes.element_text}>{cookingSkill?.[recipeCookingSkills] || 'Not defined'}</div>
+                  <div className={classes.element_text}>{COOKING_SKILLS?.[recipeCookingSkills] || 'Not defined'}</div>
                 </div>
               </div>
             </Box>

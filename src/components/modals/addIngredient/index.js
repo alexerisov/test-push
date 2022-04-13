@@ -5,7 +5,7 @@ import { modalActions, recipeUploadActions } from '@/store/actions';
 import { connect } from 'react-redux';
 import classes from './addIngredient.module.scss';
 import TextField from '@material-ui/core/TextField';
-import { units } from '@/utils/datasets';
+import { UNITS } from '@/utils/datasets';
 import { Select, MenuItem, Dialog } from '@material-ui/core';
 import { getNumberWithMaxDigits } from '@/utils/helpers';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
@@ -63,8 +63,8 @@ const fetcher = (...args) =>
 
 const defaultUnits = () => {
   const result = [];
-  for (let key in units) {
-    result.push({ pk: key, unit: units[key] });
+  for (let key in UNITS) {
+    result.push({ pk: key, unit: UNITS[key] });
   }
   return result;
 };

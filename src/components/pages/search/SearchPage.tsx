@@ -4,7 +4,7 @@ import s from './SearchPage.module.scss';
 import { useRouter } from 'next/router';
 import Recipe from '@/api/Recipe.js';
 import * as yup from 'yup';
-import { recommendedList } from '@/utils/datasets';
+import { RECIPE_SETS } from '@/utils/datasets';
 
 import { modalActions } from '@/store/actions';
 import { TextField } from '@material-ui/core';
@@ -367,15 +367,15 @@ export const SearchPage = props => {
     formik.handleSubmit();
   };
 
-  const recommendedListMap = Object.keys(recommendedList).map((el, ind) => (
+  const recommendedListMap = Object.keys(RECIPE_SETS).map((el, ind) => (
     <li
       className={s.search__dropdown__item}
       key={`r${ind}`}
       onClick={() => {
-        formik.setFieldValue('recipe_set', `${recommendedList[el]}`.toLowerCase());
+        formik.setFieldValue('recipe_set', `${RECIPE_SETS[el]}`.toLowerCase());
         formik.handleSubmit();
       }}>
-      {recommendedList[el]}
+      {RECIPE_SETS[el]}
     </li>
   ));
 

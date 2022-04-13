@@ -5,7 +5,7 @@ import { modalActions, recipeEditActions } from '@/store/actions';
 import { connect } from 'react-redux';
 import classes from './addIngredient.module.scss';
 import TextField from '@material-ui/core/TextField';
-import { units } from '@/utils/datasets';
+import { UNITS } from '@/utils/datasets';
 import { Select, MenuItem } from '@material-ui/core';
 import { getNumberWithMaxDigits } from '@/utils/helpers';
 import { i18n } from 'next-i18next';
@@ -42,10 +42,10 @@ function EditIngredient(props) {
   });
 
   const unitsList = [];
-  for (let i = 1; i < Object.keys(units).length; i++) {
+  for (let i = 1; i < Object.keys(UNITS).length; i++) {
     unitsList.push(
-      <MenuItem key={i} value={units[i]}>
-        {units[i]}
+      <MenuItem key={i} value={UNITS[i]}>
+        {UNITS[i]}
       </MenuItem>
     );
   }

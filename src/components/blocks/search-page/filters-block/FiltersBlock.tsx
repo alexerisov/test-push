@@ -6,7 +6,7 @@ import AccordionSummary from '@material-ui/core/AccordionSummary';
 import Typography from '@material-ui/core/Typography';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import CloseIconFilled from '~public/icons/Close Circle/Filled.svg';
-import { cookingMethods, dietaryrestrictions, recipeTypes } from '@/utils/datasets';
+import { COOKING_METHODS, COOKING_SKILLS, DIETARY_RESTRICTIONS, recipeTypes } from '@/utils/datasets';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { USER_TYPES } from '~types/profile';
 import ArrowDownIcon from '~public/icons/Arrow Down Simple/Line.svg';
@@ -28,6 +28,7 @@ import FrenchFriesIcon from '~public/icons/French Fries/Line.svg';
 import CarrotIcon from '~public/icons/Carrot/Line.svg';
 import DonutIcon from '~public/icons/Donut/Line.svg';
 import { useRouter } from 'next/router';
+import log from 'loglevel';
 
 interface FilterAccordionProps {
   formik: any;
@@ -177,9 +178,6 @@ const RecipeSetSelector = ({ formik, focusRef }) => {
       <MenuItem className={s.search__dropdown__item} key="reccommended" value={0}>
         {t('recipeSet.recommended')}
       </MenuItem>
-      <MenuItem className={s.search__dropdown__item} key="cheapest" value={1}>
-        {t('recipeSet.cheapest')}
-      </MenuItem>
       <MenuItem className={s.search__dropdown__item} key="latest" value={2}>
         {t('recipeSet.latest')}
       </MenuItem>
@@ -260,7 +258,7 @@ const FilterAccordion: React.FC<FilterAccordionProps> = ({ formik, list, iconLis
                     className={`${s.label} ${isActive && s.search__filter__subLabel_active}`}
                     htmlFor={`${header}-${el}`}>
                     {label}
-                    <span className={s.count}>{data?.[countKey]}</span>
+                    <span className={s.count}>{data?.counts?.[countKey]}</span>
                   </label>
                 </div>
               );
@@ -299,7 +297,7 @@ const SkillsSlider = ({ formik }) => {
 
   return (
     <React.Fragment>
-      <Typography className={s.search__filter__title}>{t('cookingSkill.title')}</Typography>
+      <Typography className={s.search__filter__title}>{t('cooking_skills.title')}</Typography>
       <MySlider
         defaultValue={2}
         min={1}
@@ -312,13 +310,13 @@ const SkillsSlider = ({ formik }) => {
       />
       <div className={s.search__cookingSkills}>
         <button className={s.search__cookingSkills__firstItem} onClick={handleChangeRange('Easy')}>
-          {t('cookingSkill.easy')}
+          {t('cooking_skills.easy')}
         </button>
         <button className={s.search__cookingSkills__secondItem} onClick={handleChangeRange('Medium')}>
-          {t('cookingSkill.medium')}
+          {t('cooking_skills.medium')}
         </button>
         <button className={s.search__cookingSkills__thirdItem} onClick={handleChangeRange('Complex')}>
-          {t('cookingSkill.hard')}
+          {t('cooking_skills.hard')}
         </button>
       </div>
     </React.Fragment>
@@ -390,7 +388,7 @@ const SearchFilter = ({ formik, session, data }) => {
               header={t('recipeClassifications:cooking_methods.title')}
               formik={formik}
               formikKey="cooking_methods"
-              list={cookingMethods}
+              list={COOKING_METHODS}
               data={data}
             />
             <div className={s.search__line} />
@@ -398,7 +396,7 @@ const SearchFilter = ({ formik, session, data }) => {
               header={t('recipeClassifications:diet_restrictions.title')}
               formik={formik}
               formikKey="diet_restrictions"
-              list={dietaryrestrictions}
+              list={DIETARY_RESTRICTIONS}
               data={data}
             />
             <div className={s.search__line} />
@@ -470,17 +468,23 @@ const SearchFilter = ({ formik, session, data }) => {
         iconList={recipeTypesImg}
         data={data}
       />
-      <div className={s.search__line_botMargin} />
+      <div className={s.search__line} />
 
-      <SkillsSlider formik={formik} />
+      <FilterAccordion
+        header={t('recipeClassifications:cooking_skills.title')}
+        formik={formik}
+        formikKey="cooking_skills"
+        list={COOKING_SKILLS}
+        data={data}
+      />
 
-      <div className={s.search__line_topMargin} />
+      <div className={s.search__line} />
 
       <FilterAccordion
         header={t('recipeClassifications:cooking_methods.title')}
         formik={formik}
         formikKey="cooking_methods"
-        list={cookingMethods}
+        list={COOKING_METHODS}
         data={data}
       />
 
@@ -490,7 +494,7 @@ const SearchFilter = ({ formik, session, data }) => {
         header={t('recipeClassifications:diet_restrictions.title')}
         formik={formik}
         formikKey="diet_restrictions"
-        list={dietaryrestrictions}
+        list={DIETARY_RESTRICTIONS}
         data={data}
       />
       <div className={s.search__line} />

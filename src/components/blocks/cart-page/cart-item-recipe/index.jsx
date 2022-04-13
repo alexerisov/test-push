@@ -13,7 +13,7 @@ import IceCreamIcon from '~public/icons/Ice Cream/Line.svg';
 import HatChefIcon from '~public/icons/Hat Chef/Line.svg';
 import { Divider } from '@/components/basic-elements/divider';
 import { Button, IconButton } from '@material-ui/core';
-import { cookingSkill, recipeTypes } from '@/utils/datasets';
+import { COOKING_SKILLS, recipeTypes } from '@/utils/datasets';
 import Link from 'next/link';
 import { CartContext } from '@/components/pages/cart/CartPage';
 import { useTranslation } from 'next-i18next';
@@ -68,7 +68,7 @@ export const CartItemRecipe = props => {
             </div>
             <div className={classes.element_container}>
               <HatChefIcon style={{ marginRight: 10 }} />
-              <div className={classes.element_text}>{cookingSkill?.[recipe.cooking_skills] || 'Not defined'}</div>
+              <div className={classes.element_text}>{COOKING_SKILLS?.[recipe.cooking_skills] || 'Not defined'}</div>
             </div>
           </div>
         </div>

@@ -22,7 +22,7 @@ import { Avatar, Button, Collapse, IconButton, Radio, Tooltip, useMediaQuery } f
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 
-import { cookingMethods, cookingSkill, cuisineList, dietaryrestrictions, recipeTypes } from '@/utils/datasets';
+import { COOKING_METHODS, COOKING_SKILLS, CUISINES, DIETARY_RESTRICTIONS, recipeTypes } from '@/utils/datasets';
 import { Divider } from '@/components/basic-elements/divider';
 import { addToCart } from '@/store/cart/actions';
 import CartIcon from '~public/icons/Shopping Cart/Line.svg';
@@ -452,7 +452,7 @@ const Classifications = ({
             recipeDietRestrictions?.length > 0
               ? recipeDietRestrictions
                   .map(item =>
-                    t(`recipeClassifications:diet_restrictions.${dietaryrestrictions?.[item]?.toLowerCase()}`)
+                    t(`recipeClassifications:diet_restrictions.${DIETARY_RESTRICTIONS?.[item]?.toLowerCase()}`)
                   )
                   .join(', ')
               : t('common:notDefinedText')
@@ -466,7 +466,7 @@ const Classifications = ({
           text={
             recipeCuisines?.length > 0
               ? recipeCuisines
-                  .map(item => t(`recipeClassifications:cuisine.${cuisineList?.[item]?.toLowerCase()}`))
+                  .map(item => t(`recipeClassifications:cuisine.${CUISINES?.[item]?.toLowerCase()}`))
                   .join(', ')
               : t('common:notDefinedText')
           }
@@ -478,10 +478,10 @@ const Classifications = ({
           icon={HatChefIcon}
           text={
             recipeCookingSkills
-              ? t(`recipeClassifications:cookingSkill.${cookingSkill?.[recipeCookingSkills]?.toLowerCase()}`)
+              ? t(`recipeClassifications:cooking_skills.${COOKING_SKILLS?.[recipeCookingSkills]?.toLowerCase()}`)
               : t('common:notDefinedText')
           }
-          tooltipText={t('recipeClassifications:cookingSkill.title')}
+          tooltipText={t('recipeClassifications:cooking_skills.title')}
           link={`/search?cooking_skills=${recipeCookingSkills}`}
           borderColor="#F178B6"
         />
@@ -490,7 +490,7 @@ const Classifications = ({
           text={
             recipeCookingMethods?.length > 0
               ? recipeCookingMethods
-                  .map(item => t(`recipeClassifications:cooking_methods.${cookingMethods?.[item]?.toLowerCase()}`))
+                  .map(item => t(`recipeClassifications:cooking_methods.${COOKING_METHODS?.[item]?.toLowerCase()}`))
                   .join(', ')
               : t('common:notDefinedText')
           }

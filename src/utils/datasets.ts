@@ -1,6 +1,6 @@
 import { i18n } from 'next-i18next';
 
-export const cuisineList = {
+export const CUISINES = {
   1: 'American',
   2: 'Chinese',
   3: 'Continental',
@@ -50,20 +50,20 @@ export const recipeTypesCount = {
   Bread: 'bread_num'
 } as const;
 
-export const recommendedList = {
+export const RECIPE_SETS = {
   0: 'Recommended',
   1: 'Latest',
   2: 'Cheapest',
   3: 'Quickest'
 } as const;
 
-export const cookingSkill = {
+export const COOKING_SKILLS = {
   1: 'Easy',
   2: 'Medium',
   3: 'Hard'
 } as const;
 
-export const cookingMethods = {
+export const COOKING_METHODS = {
   1: 'Broiling',
   2: 'Grilling',
   3: 'Roasting',
@@ -76,7 +76,7 @@ export const cookingMethods = {
   11: 'Stewing'
 } as const;
 
-export const cookingMethodsCount = {
+export const COOKING_METHODS_COUNTS = {
   Broiling: 'broiling_num',
   Grilling: 'grilling_num',
   Roasting: 'roasting_num',
@@ -89,7 +89,7 @@ export const cookingMethodsCount = {
   Stewing: 'stewing_num'
 } as const;
 
-export const dietaryrestrictions = {
+export const DIETARY_RESTRICTIONS = {
   0: 'None',
   1: 'Vegan',
   2: 'Vegetarian',
@@ -109,7 +109,7 @@ export const dietaryrestrictions = {
   16: 'High FODMAP'
 } as const;
 
-export const dietaryrestrictionsCount = {
+export const DIETARY_RESTRICTIONS_COUNTS = {
   Vegan: 'vegan_num',
   Vegetarian: 'vegetarian_num',
   Pescetarian: 'pescetarian_num',
@@ -128,7 +128,7 @@ export const dietaryrestrictionsCount = {
   'High FODMAP': 'high_fodmap_num'
 } as const;
 
-export const units = {
+export const UNITS = {
   1: 'bag(s)',
   2: 'bottle',
   3: 'box(es)',
@@ -182,7 +182,7 @@ export const units = {
   51: 'other'
 } as const;
 
-export const nutritions = {
+export const NUTRITIONS = {
   calories: 'Calories',
   proteins: 'Protein',
   carbohydrates: 'Carbs',

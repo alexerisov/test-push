@@ -19,11 +19,11 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FieldError from '../../elements/field-error';
 import {
-  cuisineList,
+  CUISINES,
   recipeTypes,
-  cookingMethods,
-  dietaryrestrictions,
-  cookingSkill,
+  COOKING_METHODS,
+  DIETARY_RESTRICTIONS,
+  COOKING_SKILLS,
   nameErrorRecipe
 } from '@/utils/datasets';
 import classes from './form-create-recipe.module.scss';
@@ -803,7 +803,7 @@ function FormEditRecipe(props) {
                     <img src={'/images/index/Polygon6.png'} className={classes.createRecipeSelectArrow} />
                   )}
                   multiple>
-                  {selectItemList(dietaryrestrictions, 'diet_restrictions')}
+                  {selectItemList(DIETARY_RESTRICTIONS, 'diet_restrictions')}
                 </Select>
                 <FormHelperText>{error?.diet_restrictions ? t('errors:field_required.default') : ''}</FormHelperText>
               </FormControl>
@@ -825,7 +825,7 @@ function FormEditRecipe(props) {
                     <img src={'/images/index/Polygon6.png'} className={classes.createRecipeSelectArrow} />
                   )}
                   multiple>
-                  {selectItemList(cuisineList, 'cuisine')}
+                  {selectItemList(CUISINES, 'cuisine')}
                 </Select>
                 <FormHelperText>{error?.cuisines ? t('errors:field_required.default') : ''}</FormHelperText>
               </FormControl>
@@ -847,7 +847,7 @@ function FormEditRecipe(props) {
                     <img src={'/images/index/Polygon6.png'} className={classes.createRecipeSelectArrow} />
                   )}
                   multiple>
-                  {selectItemList(cookingMethods, 'cooking_methods')}
+                  {selectItemList(COOKING_METHODS, 'cooking_methods')}
                 </Select>
                 <FormHelperText>{error?.cooking_methods ? t('errors:field_required.default') : ''}</FormHelperText>
               </FormControl>
@@ -868,7 +868,7 @@ function FormEditRecipe(props) {
                   IconComponent={() => (
                     <img src={'/images/index/Polygon6.png'} className={classes.createRecipeSelectArrow} />
                   )}>
-                  {selectItemList(cookingSkill, 'cookingSkill')}
+                  {selectItemList(COOKING_SKILLS, 'cooking_skills')}
                 </Select>
                 <FormHelperText>{error?.cooking_skills ? t('errors:field_required.default') : ''}</FormHelperText>
               </FormControl>

@@ -5,7 +5,7 @@ import { modalActions, recipeEditActions } from '@/store/actions';
 import { connect } from 'react-redux';
 import classes from './addNutrition.module.scss';
 import { TextField, FormControl, Select, MenuItem } from '@material-ui/core';
-import { nutritions } from '@/utils/datasets';
+import { NUTRITIONS } from '@/utils/datasets';
 import { getMaxQuantityOfNutrition } from '@/utils/checkTotalQuantityOfNutrition';
 import { i18n } from 'next-i18next';
 
@@ -112,10 +112,10 @@ function EditNutrition(props) {
               Name
             </label>
             <Select id="addNutrition-quantity" value={nutrition.title} onChange={onChangeField('title')} fullWidth>
-              {!data?.calories ? <MenuItem value="calories">{nutritions.calories}</MenuItem> : null}
-              {!data?.proteins ? <MenuItem value="proteins">{nutritions.proteins}</MenuItem> : null}
-              {!data?.carbohydrates ? <MenuItem value="carbohydrates">{nutritions.carbohydrates}</MenuItem> : null}
-              {!data?.fats ? <MenuItem value="fats">{nutritions.fats}</MenuItem> : null}
+              {!data?.calories ? <MenuItem value="calories">{NUTRITIONS.calories}</MenuItem> : null}
+              {!data?.proteins ? <MenuItem value="proteins">{NUTRITIONS.proteins}</MenuItem> : null}
+              {!data?.carbohydrates ? <MenuItem value="carbohydrates">{NUTRITIONS.carbohydrates}</MenuItem> : null}
+              {!data?.fats ? <MenuItem value="fats">{NUTRITIONS.fats}</MenuItem> : null}
             </Select>
           </FormControl>
           <div>
