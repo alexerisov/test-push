@@ -1,7 +1,6 @@
-import { useMemo } from 'react';
 import useSwr from 'swr';
-import log from 'loglevel';
-
+import { getLogger } from 'loglevel';
+const log = getLogger('next-auth');
 const REFRESH_INTERVAL = 5 * 60 * 1000; // in seconds
 const sessionUrl = '/api/auth/session';
 
@@ -18,7 +17,7 @@ export async function fetchSession() {
 export function useAuth(refreshInterval: number = REFRESH_INTERVAL) {
   const { data, error } = useSwr(sessionUrl, fetchSession, {
     refreshInterval: refreshInterval,
-    onSuccess: data => log.debug('useAuth session fetched', { data, error }),
+    onSuccess: data => log.debug({ message: 'session fetched', data, error }),
     onError: err => log.error('useAuth fetch error', { error: err })
   });
 

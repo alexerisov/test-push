@@ -141,8 +141,8 @@ const Title = props => {
           recoveryLocalStorage.deleteDateOfUserRecipeLike(recipeId);
         } else if (res.data.like_status === 'created') {
           setIsRecipeLiked(true);
-          setUserLikeUpdatedAt(res.data.created_at);
-          recoveryLocalStorage.setDateOfUserRecipeLike(recipeId, res.data.created_at);
+          // setUserLikeUpdatedAt(res.data.created_at);
+          // recoveryLocalStorage.setDateOfUserRecipeLike(recipeId, res.data.created_at);
         }
       })
       .catch(err => console.log(err));
@@ -155,7 +155,7 @@ const Title = props => {
 
     recipeSavedId ? handleDeleteRecipeFromSaved() : handleSaveRecipe();
   };
-
+  log.info('liked', isRecipeLiked);
   return (
     <div className={s.title}>
       <div className={s.title_back_button}>{'<'}</div>
@@ -169,9 +169,8 @@ const Title = props => {
             <IconButton onClick={onClickLikeHandler} className={s.button}>
               <BasicIcon icon={LikeIcon} color={isRecipeLiked ? '#FF582E' : '#353E50'} />
             </IconButton>
-            {likesNumber +
-              isRecipeLiked -
-              Number(Boolean((Date.parse(userLikeUpdatedAt) || null) > Date.parse(likesNumberUpdatedAt)))}
+            {likesNumber + isRecipeLiked}
+            {/*Number(Boolean((Date.parse(userLikeUpdatedAt) || null) > Date.parse(likesNumberUpdatedAt)))}*/}
           </div>
           <Divider vertical width="1px" height="24px" />
 
