@@ -464,7 +464,7 @@ const SearchFilter = ({ formik, session, data }) => {
         header={t('recipeClassifications:types.title')}
         formik={formik}
         formikKey="types"
-        list={recipeTypes}
+        list={RECIPE_TYPES}
         iconList={recipeTypesImg}
         data={data}
       />

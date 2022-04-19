@@ -11,7 +11,7 @@ import WalletIcon from '~public/icons/Wallet/Line.svg';
 import CheckIcon from '~public/icons/Check/Line.svg';
 import { ProfileMenu } from '@/components/basic-blocks/profile-menu';
 import IceCreamIcon from '~public/icons/Ice Cream/Line.svg';
-import { COOKING_SKILLS, ORDER_STATUS, recipeTypes } from '@/utils/datasets';
+import { COOKING_SKILLS, ORDER_STATUS, RECIPE_TYPES } from '@/utils/datasets';
 import HatChefIcon from '~public/icons/Hat Chef/Line.svg';
 import Order from '@/api/Order';
 import dayjs from 'dayjs';
@@ -42,7 +42,7 @@ const ProductCategories = props => {
       <div className={s.categories_container}>
         <IceCreamIcon style={{ marginRight: 10 }} />
         <span className={s.element_text}>
-          {recipeTypesList?.length > 0 ? recipeTypesList.map(item => recipeTypes?.[item] + ' ') : t('notDefinedText')}
+          {recipeTypesList?.length > 0 ? recipeTypesList.map(item => RECIPE_TYPES?.[item] + ' ') : t('notDefinedText')}
         </span>
       </div>
       <div className={s.categories_container}>
