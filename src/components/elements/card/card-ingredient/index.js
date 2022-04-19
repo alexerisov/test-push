@@ -12,7 +12,7 @@ const CardIngredient = props => {
       <h2 className={classes.cardIngredients__title}>{title}</h2>
       <h3 className={classes.cardIngredients__extra}>{extraInfo}</h3>
       <p className={classes.cardIngredients__text}>
-        {quantity} {unit}
+        {parseFloat(quantity).toFixed(2)} {unit}
       </p>
       <button type="button" className={classes.cardIngredients__button} onClick={handleDelete}>
         <div>

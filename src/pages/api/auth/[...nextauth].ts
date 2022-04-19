@@ -51,7 +51,7 @@ export default NextAuth({
   },
   logger: {
     error(code, metadata) {
-      log.trace({ code, metadata });
+      log.error({ code, metadata });
     },
     warn(code) {
       log.warn({ code });

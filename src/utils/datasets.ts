@@ -21,7 +21,7 @@ export const CUISINES = {
   18: 'Turkish'
 } as const;
 
-export const categoryList = {
+export const CATEGORIES = {
   1: 'General',
   2: 'Second',
   3: 'Breakfast',
@@ -30,7 +30,7 @@ export const categoryList = {
   6: 'Meat'
 } as const;
 
-export const recipeTypes = {
+export const RECIPE_TYPES = {
   1: 'Breakfast',
   2: 'Lunch',
   3: 'Dinner',
@@ -40,7 +40,7 @@ export const recipeTypes = {
   8: 'Bread'
 } as const;
 
-export const recipeTypesCount = {
+export const RECIPE_TYPES_COUNTS = {
   Breakfast: 'breakfast_num',
   Lunch: 'lunch_num',
   Dinner: 'dinner_num',

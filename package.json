@@ -52,6 +52,7 @@
     "file-loader": "^6.2.0",
     "formik": "^2.2.9",
     "fscreen": "^1.2.0",
+    "he": "^1.2.0",
     "jsonwebtoken": "^8.5.1",
     "loglevel": "^1.8.0",
     "loglevel-plugin-prefix": "^0.8.4",

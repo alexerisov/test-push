@@ -54,6 +54,7 @@ if (process.env.NODE_ENV === 'production') {
 module.exports = withBundleAnalyzer({
   productionBrowserSourceMaps: false,
   compiler: {
+    dynamicImports: true,
     removeConsole: process.env.NODE_ENV === 'production',
     styledComponents: true,
     dynamicImport: true,

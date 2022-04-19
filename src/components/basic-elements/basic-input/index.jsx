@@ -1,11 +1,11 @@
 import React from 'react';
 import classes from './index.module.scss';
-import { IconButton, InputAdornment, InputLabel, TextField } from '@material-ui/core';
+import { IconButton, InputAdornment, InputLabel, NoSsr, TextField } from '@material-ui/core';
 import SuccessIcon from '~public/images/index/icons-complete.svg';
 import ClearIcon from '~public/icons/Close Circle/Filled.svg';
 import dynamic from 'next/dynamic';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
-const MuiPhoneNumber = dynamic(import('material-ui-phone-number'), { ssr: false });
+const MuiPhoneNumber = dynamic(() => import('material-ui-phone-number'), { ssr: false });
 
 export const BasicInput = props => {
   const {
@@ -94,32 +94,34 @@ export const BasicInput = props => {
         />
       )}
       {phone && (
-        <MuiPhoneNumber
-          disableAreaCodes
-          autoFormat
-          data-cy="phone"
-          defaultCountry={'nl'}
-          value={formik.values[name]}
-          id={name}
-          name={name}
-          placeholder={placeholder}
-          onBlur={formik.handleBlur}
-          onChange={value => formik.setFieldValue(name, value)}
-          error={formik.touched[name] && Boolean(formik.errors[name])}
-          helperText={formik.touched[name] && formik.errors[name]}
-          InputProps={{
-            classes: {
-              root: classes.input,
-              error: classes.error,
-              focused: defineFocusedStyle()
-            },
-            disableUnderline: false,
-            endAdornment: <InputAdornment position="end">{defineAdornment()}</InputAdornment>
-          }}
-          variant="outlined"
-          disabled={disabled}
-          fullWidth
-        />
+        <NoSsr>
+          <MuiPhoneNumber
+            disableAreaCodes
+            autoFormat
+            data-cy="phone"
+            defaultCountry={'nl'}
+            value={formik.values[name]}
+            id={name}
+            name={name}
+            placeholder={placeholder}
+            onBlur={formik.handleBlur}
+            onChange={value => formik.setFieldValue(name, value)}
+            error={formik.touched[name] && Boolean(formik.errors[name])}
+            helperText={formik.touched[name] && formik.errors[name]}
+            InputProps={{
+              classes: {
+                root: classes.input,
+                error: classes.error,
+                focused: defineFocusedStyle()
+              },
+              disableUnderline: false,
+              endAdornment: <InputAdornment position="end">{defineAdornment()}</InputAdornment>
+            }}
+            variant="outlined"
+            disabled={disabled}
+            fullWidth
+          />
+        </NoSsr>
       )}
     </div>
   );

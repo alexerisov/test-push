@@ -20,7 +20,7 @@ import FrenchFriesIcon from '~public/icons/French Fries/Line.svg';
 import CarrotIcon from '~public/icons/Carrot/Line.svg';
 import DonutIcon from '~public/icons/Donut/Line.svg';
 
-import { PUBLISH_STATUS, APPROVED_STATUS, recipeTypes, COOKING_SKILLS as cookingSkills } from '@/utils/datasets';
+import { PUBLISH_STATUS, APPROVED_STATUS, RECIPE_TYPES, COOKING_SKILLS as cookingSkills } from '@/utils/datasets';
 import logo from '~public/images/index/logo.svg';
 import ChefIcon from '@/components/elements/chef-icon';
 import { numberWithCommas } from '@/utils/converter';
@@ -33,6 +33,8 @@ import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import { useAuth } from '@/utils/Hooks';
 import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
+import dayjs from 'dayjs';
+import he from 'he';
 
 const recipeTypesImg = {
   1: BurgerIcon,
@@ -95,7 +97,7 @@ const SellingBlock = ({ isRecipeInCart, handleClickBtn, cartItemAmount, cartItem
 
 const CardSearch = props => {
   const { recipe, disableBorder, forceUnsalable } = props;
-  const title = recipe.title;
+  const title = he.decode(recipe.title);
   const image = recipe.images?.[0]?.url;
   const name = recipe.user?.full_name;
   const city = recipe.user?.city;
@@ -182,7 +184,7 @@ const CardSearch = props => {
                   {cookingTypes?.length > 0
                     ? cookingTypes
                         .map(el => {
-                          return recipeTypes?.[el] ? t(`types.${recipeTypes[el]?.toLowerCase()}`) : '一一';
+                          return RECIPE_TYPES?.[el] ? t(`types.${RECIPE_TYPES[el]?.toLowerCase()}`) : '一一';
                         })
                         .join(', ')
                     : '一一'}
@@ -199,7 +201,7 @@ const CardSearch = props => {
 
           <div className={classes.card__timeWrap}>
             <BasicIcon icon={StopwatchIcon} size="12px" />
-            {cookingTime || '—:—'}
+            {dayjs(cookingTime, 'HH:mm').format('HH:mm') || '—:—'}
           </div>
         </div>
       </StyledCardContent>

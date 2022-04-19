@@ -6,6 +6,9 @@ import RecipeNotFound from '@/components/elements/recipe-not-found';
 import { NextSeo } from 'next-seo';
 import LayoutPageNew from '@/components/layouts/layout-page-new';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
+import he from 'he';
+
+import TransitEnterexitIcon from '@material-ui/icons/TransitEnterexit';
 import ShareIcon from '~public/icons/Share Square/Line.svg';
 import LikeIcon from '~public/icons/Like/Line.svg';
 import StarIcon from '~public/icons/Star/Line.svg';
@@ -22,7 +25,7 @@ import { Avatar, Button, Collapse, IconButton, Radio, Tooltip, useMediaQuery } f
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 
-import { COOKING_METHODS, COOKING_SKILLS, CUISINES, DIETARY_RESTRICTIONS, recipeTypes } from '@/utils/datasets';
+import { COOKING_METHODS, COOKING_SKILLS, CUISINES, DIETARY_RESTRICTIONS, RECIPE_TYPES } from '@/utils/datasets';
 import { Divider } from '@/components/basic-elements/divider';
 import { addToCart } from '@/store/cart/actions';
 import CartIcon from '~public/icons/Shopping Cart/Line.svg';
@@ -40,9 +43,8 @@ import { recoveryLocalStorage } from '@/utils/web-storage/local';
 import { RootState } from '@/store/store';
 import { useAuth } from '@/utils/Hooks';
 import { useTranslation } from 'next-i18next';
-import Image from 'next/image';
-import log from 'loglevel';
 import { makeStyles } from '@material-ui/core/styles';
+import Image from 'next/image';
 
 const StyledSlider = styled(Slider)`
   display: flex;
@@ -155,7 +157,7 @@ const Title = props => {
 
     recipeSavedId ? handleDeleteRecipeFromSaved() : handleSaveRecipe();
   };
-  log.info('liked', isRecipeLiked);
+
   return (
     <div className={s.title}>
       <div className={s.title_back_button}>{'<'}</div>
@@ -425,96 +427,103 @@ const Classifications = ({
     <div className={s.classification}>
       <h2 className={s.block_title}>{t('recipePage:classifications.title')}</h2>
       <div className={s.classification_icons_container}>
-        <IconWithText
-          icon={StopwatchIcon}
-          text={parseTime(recipeCookingTime ?? 'N/A')}
-          tooltipText={t('recipeClassifications:cooking_time.title')}
-          link={`/search?cooking_time=${recipeCookingTime}`}
-          borderColor="#92A5EF"
-        />
-        <IconWithText
-          icon={SoupIcon}
-          text={
-            recipeTypesList?.length > 0
-              ? recipeTypesList
-                  .map(item => t(`recipeClassifications:types.${recipeTypes?.[item]?.toLowerCase()}`))
-                  .join(', ')
-              : t('common:notDefinedText')
-          }
-          tooltipText={t('recipeClassifications:types.title')}
-          link={`/search?types=${recipeTypesList.join(',')}`}
-          borderColor="#58C27D"
-        />
-        <IconWithText
-          icon={ServingPlateIcon}
-          text={
-            recipeDietRestrictions?.length > 0
-              ? recipeDietRestrictions
-                  .map(item =>
-                    t(`recipeClassifications:diet_restrictions.${DIETARY_RESTRICTIONS?.[item]?.toLowerCase()}`)
-                  )
-                  .join(', ')
-              : t('common:notDefinedText')
-          }
-          tooltipText={t('recipeClassifications:diet_restrictions.title')}
-          link={`/search?diet_restrictions=${recipeDietRestrictions.join(',')}`}
-          borderColor="#FA8F54"
-        />
-        <IconWithText
-          icon={ForkAndKnifeIcon}
-          text={
-            recipeCuisines?.length > 0
-              ? recipeCuisines
-                  .map(item => t(`recipeClassifications:cuisine.${CUISINES?.[item]?.toLowerCase()}`))
-                  .join(', ')
-              : t('common:notDefinedText')
-          }
-          tooltipText={t('recipeClassifications:cuisine.title')}
-          link={`/search?cuisines=${recipeCuisines.join(',')}`}
-          borderColor="#8BC5E5"
-        />
-        <IconWithText
-          icon={HatChefIcon}
-          text={
-            recipeCookingSkills
-              ? t(`recipeClassifications:cooking_skills.${COOKING_SKILLS?.[recipeCookingSkills]?.toLowerCase()}`)
-              : t('common:notDefinedText')
-          }
-          tooltipText={t('recipeClassifications:cooking_skills.title')}
-          link={`/search?cooking_skills=${recipeCookingSkills}`}
-          borderColor="#F178B6"
-        />
-        <IconWithText
-          icon={SaltShakerIcon}
-          text={
-            recipeCookingMethods?.length > 0
-              ? recipeCookingMethods
-                  .map(item => t(`recipeClassifications:cooking_methods.${COOKING_METHODS?.[item]?.toLowerCase()}`))
-                  .join(', ')
-              : t('common:notDefinedText')
-          }
-          tooltipText={t('recipeClassifications:cooking_methods.title')}
-          link={`/search?cooking_methods=${recipeCookingMethods.join(',')}`}
-          borderColor="#FFD166"
-        />
-        <IconWithText
-          icon={PeopleOutlineIcon}
-          text={
-            recipeServings
-              ? `${recipeServings} ${t('recipeClassifications:servings.title')}`
-              : t('common:notDefinedText')
-          }
-          link={`${router.asPath}`}
-          tooltipText={t('recipeClassifications:servings.title')}
-          borderColor="#FFD166"
-        />
-      </div>
-      <Divider />
-      <div className={s.classification_calories}>
-        <CaloriesElement title={t('recipePage:nutrition.calories')} value={calories ?? '—'} />
-        <CaloriesElement title={t('recipePage:nutrition.protein')} value={proteins ?? '—'} />
-        <CaloriesElement title={t('recipePage:nutrition.fat')} value={fats ?? '—'} />
-        <CaloriesElement title={t('recipePage:nutrition.carbs')} value={carbohydrates ?? '—'} />
+        {Boolean(recipeCookingTime) && (
+          <IconWithText
+            icon={StopwatchIcon}
+            text={parseTime(recipeCookingTime ?? 'N/A')}
+            tooltipText={t('recipeClassifications:cooking_time.title')}
+            link={`/search?cooking_time=${recipeCookingTime}`}
+            borderColor="#92A5EF"
+          />
+        )}
+        {recipeTypesList?.length > 0 && (
+          <IconWithText
+            icon={SoupIcon}
+            text={
+              recipeTypesList?.length > 0
+                ? recipeTypesList
+                    .map(item => t(`recipeClassifications:types.${RECIPE_TYPES?.[item]?.toLowerCase()}`))
+                    .join(', ')
+                : t('common:notDefinedText')
+            }
+            tooltipText={t('recipeClassifications:types.title')}
+            link={`/search?types=${recipeTypesList.join(',')}`}
+            borderColor="#58C27D"
+          />
+        )}
+        {recipeDietRestrictions?.length > 0 && (
+          <IconWithText
+            icon={ServingPlateIcon}
+            text={
+              recipeDietRestrictions?.length > 0
+                ? recipeDietRestrictions
+                    .map(item =>
+                      t(`recipeClassifications:diet_restrictions.${DIETARY_RESTRICTIONS?.[item]?.toLowerCase()}`)
+                    )
+                    .join(', ')
+                : t('common:notDefinedText')
+            }
+            tooltipText={t('recipeClassifications:diet_restrictions.title')}
+            link={`/search?diet_restrictions=${recipeDietRestrictions.join(',')}`}
+            borderColor="#FA8F54"
+          />
+        )}
+        {recipeCuisines?.length > 0 && (
+          <IconWithText
+            icon={ForkAndKnifeIcon}
+            text={
+              recipeCuisines?.length > 0
+                ? recipeCuisines
+                    .map(item => t(`recipeClassifications:cuisine.${CUISINES?.[item]?.toLowerCase()}`))
+                    .join(', ')
+                : t('common:notDefinedText')
+            }
+            tooltipText={t('recipeClassifications:cuisine.title')}
+            link={`/search?cuisines=${recipeCuisines.join(',')}`}
+            borderColor="#8BC5E5"
+          />
+        )}
+        {Boolean(recipeCookingSkills) && (
+          <IconWithText
+            icon={HatChefIcon}
+            text={
+              recipeCookingSkills
+                ? t(`recipeClassifications:cooking_skills.${COOKING_SKILLS?.[recipeCookingSkills]?.toLowerCase()}`)
+                : t('common:notDefinedText')
+            }
+            tooltipText={t('recipeClassifications:cooking_skills.title')}
+            link={`/search?cooking_skills=${recipeCookingSkills}`}
+            borderColor="#F178B6"
+          />
+        )}
+        {recipeCookingMethods?.length > 0 && (
+          <IconWithText
+            icon={SaltShakerIcon}
+            text={
+              recipeCookingMethods?.length > 0
+                ? recipeCookingMethods
+                    .map(item => t(`recipeClassifications:cooking_methods.${COOKING_METHODS?.[item]?.toLowerCase()}`))
+                    .join(', ')
+                : t('common:notDefinedText')
+            }
+            tooltipText={t('recipeClassifications:cooking_methods.title')}
+            link={`/search?cooking_methods=${recipeCookingMethods.join(',')}`}
+            borderColor="#FFD166"
+          />
+        )}
+        {Boolean(recipeServings) && (
+          <IconWithText
+            icon={PeopleOutlineIcon}
+            text={
+              recipeServings
+                ? `${recipeServings} ${t('recipeClassifications:servings.title')}`
+                : t('common:notDefinedText')
+            }
+            link={`${router.asPath}`}
+            tooltipText={t('recipeClassifications:servings.title')}
+            borderColor="#FFD166"
+          />
+        )}
       </div>
       <Divider />
     </div>
@@ -592,12 +601,12 @@ const Ingredients = ({
           {custom_unit?.metric_name ? (
             <abbr
               style={{ cursor: 'help' }}
-              title={`${quantity * custom_unit?.metric_value} ${custom_unit?.metric_unit}`}>
-              {quantity} {custom_unit?.metric_name}
+              title={`${parseFloat(quantity.toFixed(2)) * custom_unit?.metric_value} ${custom_unit?.metric_unit}`}>
+              {parseFloat(quantity).toFixed(2)} {custom_unit?.metric_name}
             </abbr>
           ) : (
             <span>
-              {quantity} {t(`units:${unit}`)}
+              {parseFloat(quantity.toFixed(2))} {t(`units:${unit}`)}
             </span>
           )}
         </span>

@@ -2,7 +2,8 @@ import reducer from '../../utils/reducer';
 import { types } from './actions.js';
 import { AuthCookieStorage } from '@/utils/web-storage/cookie';
 
-const { token, refresh } = AuthCookieStorage.auth;
+const token = AuthCookieStorage?.auth?.token;
+const refresh = AuthCookieStorage?.auth?.refresh;
 
 const initState = {
   profile: null,

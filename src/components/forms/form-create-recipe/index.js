@@ -23,7 +23,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import FieldError from '../../elements/field-error';
 import {
   CUISINES,
-  recipeTypes,
+  RECIPE_TYPES,
   COOKING_METHODS,
   DIETARY_RESTRICTIONS,
   COOKING_SKILLS,
@@ -821,7 +821,7 @@ function FormCreateRecipe(props) {
                     <img src={'/images/index/Polygon6.png'} className={classes.createRecipeSelectArrow} />
                   )}
                   multiple>
-                  {selectItemList(recipeTypes, 'types')}
+                  {selectItemList(RECIPE_TYPES, 'types')}
                 </Select>
                 <FormHelperText>{error?.types ? t('errors:field_required.default') : ''}</FormHelperText>
               </FormControl>

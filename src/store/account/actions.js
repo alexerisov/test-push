@@ -41,7 +41,8 @@ export default {
     return async dispatch => {
       dispatch({ type: types.REMIND });
 
-      const { token, refresh } = AuthCookieStorage.auth;
+      const token = AuthCookieStorage?.auth?.token;
+      const refresh = AuthCookieStorage?.auth?.refresh;
 
       if (token && refresh) {
         try {

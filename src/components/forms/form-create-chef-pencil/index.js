@@ -18,7 +18,7 @@ import { nameErrorRecipe } from '@/utils/datasets';
 import PhotoCameraOutlinedIcon from '@material-ui/icons/PhotoCameraOutlined';
 import classes from './form-create-chef-pencil.module.scss';
 import { useActions } from '@/customHooks/useActions';
-import { categoryList } from '@/utils/datasets';
+import { CATEGORIES } from '@/utils/datasets';
 import ChefPencil from '@/api/ChefPencil';
 import { useTranslation } from 'next-i18next';
 
@@ -512,7 +512,7 @@ function FormCreateChefPencil({ id, isEditing, initData }) {
     }
   };
 
-  const selectItemList = (list = categoryList) => {
+  const selectItemList = (list = CATEGORIES) => {
     let itemList = [];
     for (let key in list) {
       itemList.push(

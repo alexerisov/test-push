@@ -6,7 +6,7 @@ import AccordionSummary from '@material-ui/core/AccordionSummary';
 import Typography from '@material-ui/core/Typography';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import CloseIconFilled from '~public/icons/Close Circle/Filled.svg';
-import { COOKING_METHODS, COOKING_SKILLS, DIETARY_RESTRICTIONS, recipeTypes } from '@/utils/datasets';
+import { COOKING_METHODS, DIETARY_RESTRICTIONS, RECIPE_TYPES, COOKING_SKILLS } from '@/utils/datasets';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { USER_TYPES } from '~types/profile';
 import ArrowDownIcon from '~public/icons/Arrow Down Simple/Line.svg';
@@ -377,7 +377,7 @@ const SearchFilter = ({ formik, session, data }) => {
               header={t('recipeClassifications:types.title')}
               formik={formik}
               formikKey="types"
-              list={recipeTypes}
+              list={RECIPE_TYPES}
               iconList={recipeTypesImg}
               data={data}
             />
