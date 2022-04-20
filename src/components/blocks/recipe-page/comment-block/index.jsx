@@ -323,7 +323,7 @@ const CommentBlock = ({
           value={formik.values.textarea}
           fullWidth
           endAdornment={
-            <>
+            <div className={classes.buttons__wrapper}>
               <IconButton onClick={handleSmileClick}>
                 <BasicIcon icon={SmileIcon} color="#566481" />
               </IconButton>
@@ -356,7 +356,7 @@ const CommentBlock = ({
                 color="primary">
                 {t('reviews.postButton')}
               </Button>
-            </>
+            </div>
           }
         />
 

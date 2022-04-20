@@ -216,6 +216,11 @@
     }
 }
 
+.buttons__wrapper {
+    display: flex;
+    column-gap: 16px !important;
+}
+
 @media (max-width: 1025px) {
     .rating {
         &_body {

@@ -8,6 +8,18 @@
     column-gap: 80px;
     margin-bottom: 2rem;
 
+    @media (max-width: 1440px) {
+        padding: 60px 160px 0;
+    }
+
+    @media (max-width: 760px) {
+        padding: 32px 80px;
+    }
+
+    @media (max-width: 673px) {
+        padding: 16px 32px;
+    }
+
     &__column1 {
         //padding: 0 135px;
         flex: 1;

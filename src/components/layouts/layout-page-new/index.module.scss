@@ -12,17 +12,5 @@
         box-sizing: border-box;
         margin-top: 88px;
         max-width: 1440px;
-
-        @media (max-width: 1440px) {
-            padding: 0 2em;
-        }
-
-        @media (max-width: 760px) {
-            padding: 0 1em;
-        }
-
-        @media (max-width: 673px) {
-            padding: 0 1em;
-        }
     }
 }

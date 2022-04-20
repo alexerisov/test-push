@@ -70,7 +70,7 @@ export const CartPage: React.FC<any> = props => {
   };
 
   let content = (
-    <div className={styles.tabs}>
+    <div className={`${styles.tabs} ${s.container}`}>
       <div className={s.header}>{t('title')}</div>
       <div className={styles.content}>
         <CartContext.Provider value={{ setIngredientsModalData, openModalHandler }}>
