@@ -100,3 +100,22 @@
         align-self: center;
     }
 }
+
+.uploadButton {
+    border-radius: 90px !important;
+    border-width: 2px !important;
+    font-size: 14px !important;
+    line-height: 16px !important;
+    color: $--sc--color-neutrals2 !important;
+    font-weight: 700 !important;
+    font-family: Montserrat, Montserrat-Bold, Montserrat-Bold, sans-serif !important;
+
+    svg {
+        font-size: 16px;
+        margin-right: 14px;
+    }
+
+    @media (max-width: $--sm) {
+        width: 311px !important;
+    }
+}

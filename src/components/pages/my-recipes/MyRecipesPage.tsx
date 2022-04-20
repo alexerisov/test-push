@@ -10,8 +10,12 @@ import Recipe from '@/api/Recipe';
 
 import s from './MyRecipesPage.module.scss';
 import LayoutPageNew from '@/components/layouts/layout-page-new';
+import UploadIcon from '~public/icons/File Upload/Shape.svg';
+import { Button } from '@material-ui/core';
+import { useTranslation } from 'next-i18next';
 
 export const MyRecipesPage = () => {
+  const { t } = useTranslation('searchPage');
   const matches = useMediaQuery('(max-width: 767.95px)');
   const [uploadRecipes, setUploadRecipes] = useState();
 
@@ -52,7 +56,10 @@ export const MyRecipesPage = () => {
       <div className={s.uploads__header}>
         <h2 className={s.uploads__title}>My Recipes</h2>
 
-        <ButtonUpload link="/recipe/upload" linkText="Upload your recipe" />
+        <Button href="'/recipe/upload'" className={s.uploadButton} variant="outlined" color="primary">
+          <UploadIcon />
+          {t('searchPage:uploadRecipeButton')}
+        </Button>
       </div>
 
       <div className={s.uploads__recipes}>

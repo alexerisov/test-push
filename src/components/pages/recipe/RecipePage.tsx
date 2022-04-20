@@ -759,7 +759,7 @@ export const RecipePage = props => {
   const { notFound, recipe, weekmenu, userLang } = props;
   const mobile = useMediaQuery('(max-width:576px)');
 
-  const title = recipe?.title;
+  const title = he.decode(recipe?.title);
 
   const image = recipe?.images?.[0]?.url;
   const imagesWithoutMain = recipe?.images?.filter(el => el.main_image === false);
@@ -824,11 +824,6 @@ export const RecipePage = props => {
     const date = recoveryLocalStorage.getDateOfUserRecipeLike(recipeId);
     setUserLikeUpdatedAt(date);
   }, [recipeId]);
-
-  useEffect(() => {
-    setIsRecipeLiked(recipe?.user_liked);
-    setLikesNumber(recipe?.likes_number);
-  }, [recipe?.user_liked, recipeId]);
 
   const [isLightBoxOpen, setIsLightBoxOpen] = useState(false);
 

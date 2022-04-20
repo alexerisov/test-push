@@ -6,8 +6,8 @@
     width: 12px;
     height: 12px;
     position: absolute;
-    right: 3px;
-    top: 3px;
+    right: -8px;
+    top: -8px;
     border-radius: 20px;
 }
 
@@ -132,6 +132,8 @@
             text-align: center !important;
             letter-spacing: 0.01em !important;
             color: #14181f !important;
+            padding: 0 16px !important;
+            height: 46px !important;
         }
 
         &_cart {

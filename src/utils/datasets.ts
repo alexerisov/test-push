@@ -265,77 +265,71 @@ export const notificationTypesText = {
     if (payload.user_type === USER_TYPE.chefType) {
       let link = `/recipe/upload`;
       return {
-        text: `<p>${i18n.t('notifications:welcome.chef')} <a href=${link}>${i18n.t(
-          'notifications:create_recipe'
-        )}</a></p>`
+        text: `<p>Congratulations you just joined the Home Chef Community! Congratulations you just joined the Home Chef Community! <a href=${link}>Create your first recipe?</a></p>`
       };
     } else {
       let link = `/search`;
       return {
-        text: `<p>${i18n.t('notifications:welcome.viewer')}</p><a href=${link}>${i18n.t('notifications:home_chef')}</a>`
+        text: `<p>Welcome to EatChefs! Now you can enjoy a lot of recipes created by our team and</p><a href=${link}>Home Chef</a>`
       };
     }
   },
   2: payload => {
     let link = `/recipe/${payload?.id}`;
     return {
-      text: `<p><a href=${link}>${payload?.title}</a> ${i18n.t('notifications:recipe_submitted')}</p>`
+      text: `<p><a href=${link}>${payload?.title}</a> submitted successfully! Our team is reviewing and we will get back to you soon!</p>`
     };
   },
   3: payload => {
     if (payload?.status === IS_APPROVED.approved) {
       let link = `/recipe/${payload?.id}`;
       return {
-        text: `<p><a href=${link}>${payload?.title}</a> ${i18n.t('notifications:recipe_published')}</p>`
+        text: `<p><a href=${link}>${payload?.title}</a> submitted Published! You can check it here</p>`
       };
     }
     if (payload?.status === IS_APPROVED.rejected) {
       let link = `/recipe/editing/${payload?.id}`;
       return {
-        text: `<p><a href=${link}>${payload?.title}</a> ${i18n.t('notifications:recipe_rejected')} ${
-          payload.rejection_reason
-        }</p>`
+        text: `<p><a href=${link}>${payload?.title}</a> has some remarks! Please check it below: ${payload.rejection_reason}</p>`
       };
     }
   },
   4: payload => {
     let link = `/recipe/${payload?.id}`;
     return {
-      text: `<p>${i18n.t('notifications:view_recipe')} <a href=${link}>${payload?.title}</a></p>`
+      text: `<p>Click to view the recipe <a href=${link}>${payload?.title}</a></p>`
     };
   },
   5: payload => {
     let link = `/chef_pencil/${payload?.id}`;
     return {
-      text: `<p><a href=${link}>${payload?.title}</a> ${i18n.t('notifications:pencil_submitted')}</p>`
+      text: `<p><a href=${link}>${payload?.title}</a> submitted successfully! Our team is reviewing and we will get back to you soon!</p>`
     };
   },
   6: payload => {
     if (payload?.status === IS_APPROVED.approved) {
       let link = `/chef_pencil/${payload?.id}`;
       return {
-        text: `<p><a href=${link}>${payload?.title}</a> ${i18n.t('notifications:pencil_published')}</p>`
+        text: `<p><a href=${link}>${payload?.title}</a> submitted Published! You can check it here</p>`
       };
     }
     if (payload?.status === IS_APPROVED.rejected) {
       let link = `/chef_pencil/editing/${payload?.id}`;
       return {
-        text: `<p><a href=${link}>${payload?.title}</a> ${i18n.t('notifications:pencil_rejected')} ${
-          payload?.rejection_reason
-        }</p>`
+        text: `<p><a href=${link}>${payload?.title}</a> has some remarks! Please check it below: ${payload?.rejection_reason}</p>`
       };
     }
   },
   7: payload => {
     let link = `/chef_pencil/${payload?.id}`;
     return {
-      text: `<p>${i18n.t('notifications:view_pencil')} <a href=${link}>${payload?.title}</a></p>`
+      text: `<p>Click to view the chef pencil <a href=${link}>${payload?.title}</a></p>`
     };
   },
   8: payload => {
     let link = `/recipe/${payload?.id}`;
     return {
-      text: `<p>${i18n.t('notifications:view_recipe')} <a href=${link}>${payload?.title}</a></p>`
+      text: `<p>Click to view the recipe <a href=${link}>${payload?.title}</a></p>`
     };
   }
 };
@@ -343,31 +337,31 @@ export const notificationTypesText = {
 export const notificationTypesTitle = {
   1: payload => {
     if (payload?.user_type === USER_TYPE.chefType) {
-      return i18n.t('notifications:chef_registration');
+      return 'New Chef Registration';
     } else {
-      return i18n.t('notifications:viewer_registration');
+      return 'New Customer Registration';
     }
   },
   2: () => {
-    return i18n.t('notifications:recipe_submission');
+    return 'Recipe Submission';
   },
   3: payload => {
-    return i18n.t('notifications:recipe') + t(`notifications:approved_status.${payload?.status}`);
+    return `Recipe ${APPROVED_STATUS[payload?.status]}`;
   },
   4: payload => {
-    return `${payload.count} ${i18n.t('notifications:recipe_new_comment')}`;
+    return `${payload.count} new comment in your recipe`;
   },
   5: () => {
-    return i18n.t('notifications:pencil_submission');
+    return 'Chef Pencil Record Submission';
   },
   6: payload => {
-    return i18n.t('notifications:pencil') + t(`notifications:approved_status.${payload?.status}`);
+    return `Chef Pencil ${APPROVED_STATUS[payload?.status]}`;
   },
   7: payload => {
-    return `${payload.count} ${i18n.t('notifications:pencil_new_comment')}`;
+    return `${payload.count} new comment in your Chef Pencil Record`;
   },
   8: payload => {
-    return i18n.t('notifications:recipe') + t(`notifications:sale_status.${payload?.sale_status}`);
+    return `Recipe ${SALE_STATUS[payload?.sale_status]}`;
   }
 };
 

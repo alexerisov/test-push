@@ -59,8 +59,8 @@ export const OrderCongratulationPage = () => {
             text={`${t('orderInfo:date')}:`}
             value={dayjs(order?.delivery_date).format('D MMM, YYYY')}
           />
-          <TextWithIcon icon={RecipeIcon} text={`${t('orderInfo:paymentMethod')}:`} value={'$' + order?.total_price} />
-          <TextWithIcon icon={WalletIcon} text={`${t('orderInfo:status')}:`} value="Tikkie" />
+          <TextWithIcon icon={RecipeIcon} text={`${t('orderInfo:total')}:`} value={'$' + order?.total_price} />
+          <TextWithIcon icon={WalletIcon} text={`${t('orderInfo:paymentMethod')}:`} value="Tikkie" />
           <div className={s.button_group}>
             <Button onClick={ordersButtonHandler} className={s.button__orders}>
               {t('orderCongratulationPage:yourOrdersButton')}

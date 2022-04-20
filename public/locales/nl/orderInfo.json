@@ -1,1 +1,1 @@
-{"date":"Datum","total":"Totaal","status":"Toestand","bookingCode":"Boekingscode","paymentMethod":"Betalingswijze"}
+{"bookingCode":"Boekingscode","date":"Datum","paymentMethod":"Betalingswijze","status":"Toestand","total":"Totaal"}

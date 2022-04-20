@@ -6,6 +6,6 @@ export default withRouter(MyRecipesPage);
 
 export const getServerSideProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale, ['common']))
+    ...(await serverSideTranslations(locale, ['common', 'searchPage']))
   }
 });

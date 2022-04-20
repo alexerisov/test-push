@@ -428,7 +428,7 @@ function AddIngredient(props) {
                   ))
                 : defaultUnits().map(el => (
                     <MenuItem key={'default-unit' + el.pk} value={el.pk}>
-                      {t(`units:${el.unit}`)}
+                      {t(`units:${el.unit}`.replace(' ', '_'))}
                     </MenuItem>
                   ))}
             </Select>

@@ -80,7 +80,7 @@ export const CartItemRecipe = props => {
               {recipe.ingredients?.map(ingredient => ingredient.title)?.join(', ') || 'Not defined'}
             </div>
             <Button onClick={viewAllHandler} className={classes.card__ingredients__button} variant="text">
-              {t('view_all')}
+              {t('cartPage:view_all')}
             </Button>
           </div>
           <div className={classes.card__price_container}>

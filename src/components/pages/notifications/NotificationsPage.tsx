@@ -5,6 +5,7 @@ import { CardNotification } from '@/components/elements/card';
 import LayoutPageNew from '@/components/layouts/layout-page-new';
 import { useAuth } from '@/utils/Hooks';
 import { useTranslation } from 'next-i18next';
+import { NoSsr } from '@material-ui/core';
 
 export const NotificationsPage = props => {
   const { t } = useTranslation('notifications_page');
@@ -50,14 +51,16 @@ export const NotificationsPage = props => {
           {nowNotificationList.length !== 0 ? (
             nowNotificationList.map((item, index) => {
               return (
-                <CardNotification
-                  key={item.id}
-                  payload={item.payload}
-                  data={item.created_at}
-                  code={item.code}
-                  id={item.id}
-                  onDelete={handleNotificationDelete}
-                />
+                <NoSsr>
+                  <CardNotification
+                    key={item.id}
+                    payload={item.payload}
+                    data={item.created_at}
+                    code={item.code}
+                    id={item.id}
+                    onDelete={handleNotificationDelete}
+                  />
+                </NoSsr>
               );
             })
           ) : (

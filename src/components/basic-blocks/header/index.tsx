@@ -62,11 +62,9 @@ const LoginButton = ({ handleClick }) => {
 const UploadRecipeButton = () => {
   const { t } = useTranslation('common');
   return (
-    <Link href="/recipe/upload">
-      <Button variant="outlined" className={s.button_upload}>
-        {t('header.uploadRecipeButton')}
-      </Button>
-    </Link>
+    <Button variant="outlined" href="/recipe/upload" className={s.button_upload}>
+      {t('header.uploadRecipeButton')}
+    </Button>
   );
 };
 

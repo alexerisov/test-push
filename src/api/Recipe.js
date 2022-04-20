@@ -193,7 +193,7 @@ export default {
   },
 
   getRecipe: (id, lang) => {
-    if (lang) {
+    if (lang !== undefined) {
       return http.get(`/recipe/${id}`, { params: { lang: lang } });
     }
     return http.get(`/recipe/${id}`);

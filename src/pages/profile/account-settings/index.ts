@@ -26,7 +26,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
   try {
     return {
       props: {
-        ...(await serverSideTranslations(context.locale, ['common', 'profilePage'])),
+        ...(await serverSideTranslations(context.locale, ['common', 'profilePage', 'errors'])),
         session,
         profile: profileResponse?.data
       }
