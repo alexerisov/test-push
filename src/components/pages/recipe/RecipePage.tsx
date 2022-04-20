@@ -8,7 +8,6 @@ import LayoutPageNew from '@/components/layouts/layout-page-new';
 import { BasicIcon } from '@/components/basic-elements/basic-icon';
 import he from 'he';
 
-import TransitEnterexitIcon from '@material-ui/icons/TransitEnterexit';
 import ShareIcon from '~public/icons/Share Square/Line.svg';
 import LikeIcon from '~public/icons/Like/Line.svg';
 import StarIcon from '~public/icons/Star/Line.svg';
