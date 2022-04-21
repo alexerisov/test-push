@@ -23,7 +23,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
   if (session) {
     http.defaults.headers.common['Authorization'] = `Bearer ${session?.accessToken}`;
   }
-
+  console.log('context', context);
   try {
     const weekmenu = await Recipe.getWeekmenu('');
 

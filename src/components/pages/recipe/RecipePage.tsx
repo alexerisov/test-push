@@ -44,6 +44,7 @@ import { useAuth } from '@/utils/Hooks';
 import { useTranslation } from 'next-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import Image from 'next/image';
+import log from 'loglevel';
 
 const StyledSlider = styled(Slider)`
   display: flex;
@@ -109,7 +110,8 @@ const Title = props => {
     setIsRecipeLiked,
     recipeImage,
     recipeDescription,
-    setUserLikeUpdatedAt
+    setUserLikeUpdatedAt,
+    host
   } = props;
   const { session } = useAuth();
   const dispatch = useDispatch();
@@ -179,7 +181,7 @@ const Title = props => {
             id={recipeId}
             photo={recipeImage}
             description={recipeDescription}
-            currentUrl={`${props?.absolutePath}/recipe/${recipeId}`}>
+            currentUrl={`${host}/recipe/${recipeId}`}>
             <IconButton className={s.button}>
               <BasicIcon icon={ShareIcon} color="#353E50" />
             </IconButton>
@@ -755,7 +757,7 @@ const PopularRecipes = ({ topRatedRecipes }) => {
 export const RecipePage = props => {
   const { session, status: loading } = useAuth();
   const { t } = useTranslation('recipePage');
-  const { notFound, recipe, weekmenu, userLang } = props;
+  const { notFound, recipe, host } = props;
   const mobile = useMediaQuery('(max-width:576px)');
 
   const title = he.decode(recipe?.title);
@@ -863,7 +865,8 @@ export const RecipePage = props => {
                 setIsRecipeLiked,
                 recipeImage,
                 recipeDescription,
-                setUserLikeUpdatedAt
+                setUserLikeUpdatedAt,
+                host
               }}
             />
           </div>
@@ -935,7 +938,8 @@ export const RecipePage = props => {
               setIsRecipeLiked,
               recipeImage,
               recipeDescription,
-              setUserLikeUpdatedAt
+              setUserLikeUpdatedAt,
+              host
             }}
           />
           <Media {...{ mainImage, setIsLightBoxOpen, setViewAllImages, materials, viewAllImages, image, t, recipe }} />

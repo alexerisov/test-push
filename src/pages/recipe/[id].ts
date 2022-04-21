@@ -22,7 +22,6 @@ export const getServerSideProps: GetServerSideProps = async context => {
   log.debug('lang', session?.user?.language);
   try {
     const recipeResponse = await Recipe.getRecipe(id, context.locale);
-    log.debug('recipeResponse', recipeResponse);
     const topRatedResponse = await Recipe.getTopRatedMeals();
 
     return {
@@ -38,7 +37,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
         ])),
         recipe: recipeResponse.data,
         topRatedRecipes: topRatedResponse.data,
-        absolutePath: context.req.headers.host
+        host: context.req.headers.host
       }
     };
   } catch (e) {
