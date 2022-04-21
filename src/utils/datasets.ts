@@ -399,3 +399,5 @@ export const LANGUAGES = {
   english: 'en',
   dutch: 'nl'
 } as const;
+
+export const ALLOWED_FILTERS = ['cooking_skills', 'cooking_methods', 'recipe_set', 'types', 'diet_restrictions'];

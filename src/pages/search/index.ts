@@ -11,6 +11,7 @@ import log from 'loglevel';
 import { SearchPage } from '@/components/pages/search/SearchPage';
 import { getSession } from 'next-auth/react';
 import http from '@/utils/http';
+import getInitialFilters from '@/utils/getInitialFilters';
 
 export default connect((state: RootState) => ({
   token: state.account.hasToken,
@@ -22,11 +23,14 @@ export const getServerSideProps: GetServerSideProps = async context => {
   if (session) {
     http.defaults.headers.common['Authorization'] = `Bearer ${session?.accessToken}`;
   }
+
   try {
     const weekmenu = await Recipe.getWeekmenu('');
+
     return {
       props: {
         ...(await serverSideTranslations(context.locale, ['common', 'searchPage', 'recipeClassifications'])),
+        initialFilters: getInitialFilters(context),
         session,
         weekmenuWithoutFilters: weekmenu?.data || []
       }

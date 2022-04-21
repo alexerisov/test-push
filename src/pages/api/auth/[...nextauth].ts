@@ -50,9 +50,9 @@ export default NextAuth({
     maxAge: 24 * 60 * 60 // 24 hours
   },
   logger: {
-    error(code, metadata) {
-      log.error({ code, metadata });
-    },
+    // error(code, metadata) {
+    //   log.error({ code, metadata });
+    // },
     warn(code) {
       log.warn({ code });
     },

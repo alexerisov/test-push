@@ -189,14 +189,32 @@ const RecipeSetSelector = ({ formik, focusRef }) => {
 };
 
 const FilterAccordion: React.FC<FilterAccordionProps> = ({ formik, list, iconList, header, data, formikKey }) => {
-  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const [isExpanded, setIsExpanded] = useState<boolean>(Boolean(formik.initialValues[formikKey]));
   const { t } = useTranslation('recipeClassifications');
 
   const getInitialValues = () => {
     const initialValues = {};
+    // if (formikKey === 'types') {
+    //   log.info('accordion', formik.initialValues[formikKey]);
+    // }
+
     Object.keys(list).map(el => {
-      initialValues[el] = false;
+      if (formikKey === 'types') {
+        log.info('condition', {
+          el,
+          array: formik.initialValues[formikKey],
+          condition: Boolean(formik.initialValues[formikKey]?.includes(el))
+        });
+      }
+
+      if (formik.initialValues?.[formikKey]?.includes(el)) {
+        initialValues[el] = true;
+        // setIsExpanded(true);
+      } else initialValues[el] = false;
     });
+    if (formikKey === 'types') {
+      log.info(formikKey, initialValues);
+    }
     return initialValues;
   };
 
@@ -239,7 +257,7 @@ const FilterAccordion: React.FC<FilterAccordionProps> = ({ formik, list, iconLis
               const countKey = `${list[el]?.toLowerCase()}_num`;
               const label = t(`${formikKey}.${list[el]?.toLowerCase()}`);
               return (
-                <div className={s.checkbox__wrapper}>
+                <div className={s.checkbox__wrapper} key={`${header}-${el}`}>
                   <NoSsr>
                     <Checkbox
                       className={s.checkbox}

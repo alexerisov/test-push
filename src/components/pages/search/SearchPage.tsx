@@ -46,6 +46,7 @@ import useSWRInfinite from 'swr/infinite';
 import { CardSearch } from '@/components/elements/card';
 import { Spinner } from '@/components/elements';
 import useSWR from 'swr';
+import log from 'loglevel';
 
 const useStyles = makeStyles(theme => ({
   selectEmpty: {
@@ -307,7 +308,7 @@ export const SearchPage = props => {
   const handleTooltipOpen = () => {
     setOpen(true);
   };
-
+  log.info('initial', props.initialFilters);
   const formik = useFormik({
     initialValues: {
       diet_restrictions: null,
@@ -315,9 +316,10 @@ export const SearchPage = props => {
       cooking_skills: null,
       types: null,
       title: null,
-      recipe_set: 0
+      recipe_set: 0,
+      ...props.initialFilters
     },
-    enableReinitialize: true,
+    // enableReinitialize: true,
     onSubmit: (values: any) => {
       const parsedValues = {};
       Object.entries(values).map(([key, value]: any) => {
