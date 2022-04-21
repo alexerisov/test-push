@@ -17,8 +17,8 @@ export function loggerSetup() {
   prefix.reg(log);
   if (process.env.DEBUG) {
     log.enableAll();
-    nextAuthLog.enableAll();
-    axiosLog.enableAll();
+    nextAuthLog.setLevel('error');
+    axiosLog.setLevel('error');
   }
 
   applyPrefix(log, chalk.green);

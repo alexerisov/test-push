@@ -168,8 +168,8 @@ export default {
     return http.get(`/recipe/top_rated_meals`);
   },
 
-  getWeekmenu: search => {
-    return http.get(`/settings/weekmenus?${search}`);
+  getWeekmenu: params => {
+    return http.get(`/settings/weekmenus`, { params });
   },
 
   getFavoriteCuisines: id => {
@@ -349,6 +349,12 @@ export default {
     return http.post(`/recipe/basic_ingredients`, {
       title,
       group
+    });
+  },
+
+  getRecipes: params => {
+    return http.get('/recipe', {
+      params
     });
   }
 };

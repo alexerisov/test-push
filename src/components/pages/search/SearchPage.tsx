@@ -45,8 +45,9 @@ import http from '@/utils/http';
 import useSWRInfinite from 'swr/infinite';
 import { CardSearch } from '@/components/elements/card';
 import { Spinner } from '@/components/elements';
-import useSWR from 'swr';
+import useSWR, { SWRConfig } from 'swr';
 import log from 'loglevel';
+import parseSearchParams from '@/utils/parseSearchParams';
 
 const useStyles = makeStyles(theme => ({
   selectEmpty: {
@@ -94,7 +95,7 @@ const SearchInput = ({ formik }) => {
 
   const localFormik = useFormik({
     initialValues: {
-      search: ''
+      search: formik.initialValues.title || ''
     },
     validationSchema: validationSchema,
     onSubmit: values => {
@@ -237,7 +238,8 @@ export const SearchPage = props => {
     isValidating: isWeekmenuLoading
   } = useSWR(['/settings/weekmenus', searchParams, { lang: router.locale }, router.locale], recipeFetcher, {
     revalidateOnFocus: false,
-    revalidateOnMount: false
+    revalidateOnMount: false,
+    fallbackData: props.fallback.weekmenu
   });
   const weekmenuRecipes = weekmenuData?.some(el => el.recipes?.length > 0)
     ? weekmenuData
@@ -254,7 +256,8 @@ export const SearchPage = props => {
       searchParams,
       { page: index + 1, page_size: index ? 9 : 3, sale_status: 5, lang: router.locale }
     ],
-    recipeFetcher
+    recipeFetcher,
+    { fallbackData: props.fallback.productionRecipes }
   );
   //TODO remove flexible index, fix page size to 9, and for first page create accordion
 
@@ -266,7 +269,10 @@ export const SearchPage = props => {
   } = useSWRInfinite(
     index => ['/recipe', searchParams, { page: index + 1, page_size: 9, sale_status: [4, 6, 7], lang: router.locale }],
     //TODO check filter by sale_status with multiple values
-    recipeFetcher
+    recipeFetcher,
+    {
+      fallbackData: props.fallback.nonProductionRecipes
+    }
   );
 
   const isLoadingInitialData = !productionRecipesData && !isProductionRecipesLoading;
@@ -308,7 +314,6 @@ export const SearchPage = props => {
   const handleTooltipOpen = () => {
     setOpen(true);
   };
-  log.info('initial', props.initialFilters);
   const formik = useFormik({
     initialValues: {
       diet_restrictions: null,
@@ -319,14 +324,8 @@ export const SearchPage = props => {
       recipe_set: 0,
       ...props.initialFilters
     },
-    // enableReinitialize: true,
     onSubmit: (values: any) => {
-      const parsedValues = {};
-      Object.entries(values).map(([key, value]: any) => {
-        if (value) {
-          parsedValues[key] = value.toString();
-        }
-      });
+      const parsedValues = parseSearchParams(values);
       setSearchParams(parsedValues);
       router.push({ pathname: '/search', query: parsedValues }, undefined, { shallow: true });
     }

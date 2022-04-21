@@ -194,27 +194,11 @@ const FilterAccordion: React.FC<FilterAccordionProps> = ({ formik, list, iconLis
 
   const getInitialValues = () => {
     const initialValues = {};
-    // if (formikKey === 'types') {
-    //   log.info('accordion', formik.initialValues[formikKey]);
-    // }
-
     Object.keys(list).map(el => {
-      if (formikKey === 'types') {
-        log.info('condition', {
-          el,
-          array: formik.initialValues[formikKey],
-          condition: Boolean(formik.initialValues[formikKey]?.includes(el))
-        });
-      }
-
       if (formik.initialValues?.[formikKey]?.includes(el)) {
         initialValues[el] = true;
-        // setIsExpanded(true);
       } else initialValues[el] = false;
     });
-    if (formikKey === 'types') {
-      log.info(formikKey, initialValues);
-    }
     return initialValues;
   };
 

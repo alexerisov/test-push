@@ -400,4 +400,11 @@ export const LANGUAGES = {
   dutch: 'nl'
 } as const;
 
-export const ALLOWED_FILTERS = ['cooking_skills', 'cooking_methods', 'recipe_set', 'types', 'diet_restrictions'];
+export const ALLOWED_FILTERS = [
+  'cooking_skills',
+  'cooking_methods',
+  'recipe_set',
+  'types',
+  'diet_restrictions',
+  'title'
+];
