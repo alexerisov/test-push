@@ -438,6 +438,7 @@
     box-sizing: border-box;
     border-radius: 5px;
     width: auto !important;
+    min-width: 66px !important;
     height: 66px !important;
 
     &__text {
@@ -472,6 +473,7 @@
     border-radius: 5px;
     width: auto !important;
     height: 66px !important;
+    min-width: 66px !important;
 
     &__text {
         @include fontSemiBold;
