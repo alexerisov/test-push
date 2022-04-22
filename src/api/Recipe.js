@@ -164,8 +164,8 @@ export default {
     });
   },
 
-  getTopRatedMeals: () => {
-    return http.get(`/recipe/top_rated_meals`);
+  getTopRatedMeals: lang => {
+    return http.get(`/recipe/top_rated_meals`, { params: { lang } });
   },
 
   getWeekmenu: params => {

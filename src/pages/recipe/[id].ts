@@ -22,7 +22,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
   log.debug('lang', session?.user?.language);
   try {
     const recipeResponse = await Recipe.getRecipe(id, context.locale);
-    const topRatedResponse = await Recipe.getTopRatedMeals();
+    const topRatedResponse = await Recipe.getTopRatedMeals(context.locale);
 
     return {
       props: {

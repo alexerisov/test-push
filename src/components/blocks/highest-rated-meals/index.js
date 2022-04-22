@@ -4,9 +4,11 @@ import CardHighestMeals from '@/components/elements/card-highest-meals';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import Recipe from '@/api/Recipe.js';
+import { useRouter } from 'next/router';
 
 const HighestRatedMealsBlock = () => {
   const titleElement = useRef();
+  const router = useRouter();
 
   const CARDS_QUANTITY = 6;
   const POSITION = {
@@ -23,7 +25,7 @@ const HighestRatedMealsBlock = () => {
   const [step3, setStep3] = useState(false);
 
   useEffect(() => {
-    Recipe.getTopRatedMeals().then(data => {
+    Recipe.getTopRatedMeals(router.locale).then(data => {
       setRecipes(data.data);
     });
   }, []);

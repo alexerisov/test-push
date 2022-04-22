@@ -141,7 +141,7 @@ const Title = props => {
       .then(res => {
         if (res.data.like_status === 'deleted') {
           setIsRecipeLiked(false);
-          recoveryLocalStorage.deleteDateOfUserRecipeLike(recipeId);
+          // recoveryLocalStorage.deleteDateOfUserRecipeLike(recipeId);
         } else if (res.data.like_status === 'created') {
           setIsRecipeLiked(true);
           // setUserLikeUpdatedAt(res.data.created_at);
@@ -801,7 +801,7 @@ export const RecipePage = props => {
 
   const isRecipeInCart = useSelector((state: RootState) => state.cart.products?.some(el => el.object_id == recipe?.pk));
   const isRecipeNotSale = recipe?.price === 0 || recipe?.sale_status !== 5;
-
+  log.info({ likes: recipe?.likes_number });
   const userId = session?.user.pk;
   const [recipeSavedId, setRecipeSavedId] = useState(recipe?.user_saved_recipe);
   const [isRecipeLiked, setIsRecipeLiked] = useState(recipe?.user_liked);
@@ -821,10 +821,10 @@ export const RecipePage = props => {
     }
   }, [recipe]);
 
-  useEffect(() => {
-    const date = recoveryLocalStorage.getDateOfUserRecipeLike(recipeId);
-    setUserLikeUpdatedAt(date);
-  }, [recipeId]);
+  // useEffect(() => {
+  //   const date = recoveryLocalStorage.getDateOfUserRecipeLike(recipeId);
+  //   setUserLikeUpdatedAt(date);
+  // }, [recipeId]);
 
   const [isLightBoxOpen, setIsLightBoxOpen] = useState(false);
 
