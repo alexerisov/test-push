@@ -238,7 +238,7 @@ const FilterAccordion: React.FC<FilterAccordionProps> = ({ formik, list, iconLis
             {Object.keys(list).map(el => {
               const Icon = iconList?.[el];
               const isActive = localFormik.values[el];
-              const countKey = `${list[el]?.toLowerCase()}_num`;
+              const countKey = `${list[el]?.toLowerCase().replace(' ', '_')}_num`;
               const label = t(`${formikKey}.${list[el]?.toLowerCase()}`);
               return (
                 <div className={s.checkbox__wrapper} key={`${header}-${el}`}>
@@ -260,7 +260,7 @@ const FilterAccordion: React.FC<FilterAccordionProps> = ({ formik, list, iconLis
                     className={`${s.label} ${isActive && s.search__filter__subLabel_active}`}
                     htmlFor={`${header}-${el}`}>
                     {label}
-                    <span className={s.count}>{data?.counts?.[countKey]}</span>
+                    <span className={s.count}>{data?.counts?.[countKey] || 0}</span>
                   </label>
                 </div>
               );
@@ -383,9 +383,17 @@ const SearchFilter = ({ formik, session, data }) => {
               iconList={recipeTypesImg}
               data={data}
             />
-            <div className={s.search__line_botMargin} />
-            <SkillsSlider formik={formik} />
-            <div className={s.search__line_topMargin} />
+            <div className={s.search__line} />
+
+            <FilterAccordion
+              header={t('recipeClassifications:cooking_skills.title')}
+              formik={formik}
+              formikKey="cooking_skills"
+              list={COOKING_SKILLS}
+              data={data}
+            />
+
+            <div className={s.search__line} />
             <FilterAccordion
               header={t('recipeClassifications:cooking_methods.title')}
               formik={formik}
