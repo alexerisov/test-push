@@ -1,1 +1,31 @@
-{"title":"Voeg meer ingrediënten toe","button":"Toevoegen","unitInput":{"label":"Eenheid"},"extraInput":{"label":"Extra Informatie","placeholder":"Extra informatie"},"quantityInput":{"label":"Hoeveelheid"},"ingredientInput":{"label":"Ingrediënt","placeholder":"Selecteer ingrediënt"},"createIngredient":{"title":"Nieuw ingrediënt maken","button":"Creëren","nameInput":{"label":"Naam","placeholder":"Voer de naam van het ingrediënt in"},"popupText":"Wil je een nieuw ingrediënt creëren?","groupInput":{"label":"Groep","placeholder":"Selecteer een groep"}}}
+{
+  "button": "Toevoegen",
+  "createIngredient": {
+    "button": "Creëren",
+    "groupInput": {
+      "label": "Groep",
+      "placeholder": "Selecteer een groep"
+    },
+    "nameInput": {
+      "label": "Naam",
+      "placeholder": "Voer de naam van het ingrediënt in"
+    },
+    "popupText": "Wil je een nieuw ingrediënt creëren?",
+    "title": "Nieuw ingrediënt maken"
+  },
+  "extraInput": {
+    "label": "Extra Informatie",
+    "placeholder": "Extra informatie"
+  },
+  "ingredientInput": {
+    "label": "Ingrediënt",
+    "placeholder": "Selecteer ingrediënt"
+  },
+  "quantityInput": {
+    "label": "Hoeveelheid"
+  },
+  "title": "Voeg meer ingrediënten toe",
+  "unitInput": {
+    "label": "Eenheid"
+  }
+}

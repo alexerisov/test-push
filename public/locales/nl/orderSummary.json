@@ -1,1 +1,7 @@
-{"title":"Overzicht Van De Bestelling","total":"Totaal","delivery":"Levering","subtitle":"Maaltijden","buttonText":"Volgorde"}
+{
+  "buttonText": "Volgorde",
+  "delivery": "Levering",
+  "subtitle": "Maaltijden",
+  "title": "Overzicht Van De Bestelling",
+  "total": "Totaal"
+}

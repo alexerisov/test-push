@@ -1,1 +1,6 @@
-{"title":"Bestellingen","emptyHistoryText":"U heeft nog geen bestellingen afgeleverd","activeOrdersTitle":"Actief","historyOrdersTitle":"Geschiedenis"}
+{
+  "activeOrdersTitle": "Actief",
+  "emptyHistoryText": "U heeft nog geen bestellingen afgeleverd",
+  "historyOrdersTitle": "Geschiedenis",
+  "title": "Bestellingen"
+}

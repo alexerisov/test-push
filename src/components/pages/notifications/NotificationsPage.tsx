@@ -44,7 +44,7 @@ export const NotificationsPage = props => {
 
   const content = (
     <div className={s.notifications}>
-      <h1 className={s.notifications__title}>Notifications</h1>
+      <h1 className={s.notifications__title}>{t('title')}</h1>
       <div className={s.notifications__content}>
         <div className={s.notifications__contentItem}>
           <h2 className={s.notifications__contentItem__title}>{t('earlier_title')}</h2>
@@ -64,7 +64,7 @@ export const NotificationsPage = props => {
               );
             })
           ) : (
-            <p className={s.notifications__noNotifications}>No new notifications.</p>
+            <p className={s.notifications__noNotifications}>{t('no_new')}</p>
           )}
         </div>
         <div className={s.notifications__contentItem}>
@@ -83,7 +83,7 @@ export const NotificationsPage = props => {
               );
             })
           ) : (
-            <p className={s.notifications__noNotifications}>No old notifications.</p>
+            <p className={s.notifications__noNotifications}>{t('no_old')}</p>
           )}
         </div>
       </div>

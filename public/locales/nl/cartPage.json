@@ -1,1 +1,6 @@
-{"title":"Jouw winkelwagen","view_all":"Bekijk alles","clear_all":"Wis alles","emptyCartText":"U heeft geen artikelen in uw winkelwagen."}
+{
+  "clear_all": "Wis alles",
+  "emptyCartText": "U heeft geen artikelen in uw winkelwagen.",
+  "title": "Jouw winkelwagen",
+  "view_all": "Bekijk alles"
+}

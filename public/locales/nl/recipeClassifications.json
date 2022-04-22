@@ -1,10 +1,4 @@
 {
-  "cooking_skills": {
-    "easy": "Eenvoudig",
-    "hard": "Moeilijk",
-    "medium": "Medium",
-    "title": "Kook Vaardigheden"
-  },
   "cooking_methods": {
     "baking": "Bakken",
     "boiling": "Kokend",
@@ -17,6 +11,12 @@
     "steaming": "Stomen",
     "stewing": "Stoven",
     "title": "Kookmethodes"
+  },
+  "cooking_skills": {
+    "easy": "Eenvoudig",
+    "hard": "Moeilijk",
+    "medium": "Medium",
+    "title": "Kook Vaardigheden"
   },
   "cooking_time": {
     "hours": "uur",

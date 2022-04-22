@@ -1,1 +1,7 @@
-{"title":"Gefeliciteerd!","subtitle":"Je ingrediënten zijn besteld! 🎉","deliveryDetails":"Verzendgegevens","yourOrdersButton":"Uw bestellingen","exploreRecipesButton":"Ontdek andere recepten"}
+{
+  "deliveryDetails": "Verzendgegevens",
+  "exploreRecipesButton": "Ontdek andere recepten",
+  "subtitle": "Je ingrediënten zijn besteld! 🎉",
+  "title": "Gefeliciteerd!",
+  "yourOrdersButton": "Uw bestellingen"
+}

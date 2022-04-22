@@ -1,10 +1,4 @@
 {
-  "cooking_skills": {
-    "easy": "Easy",
-    "hard": "Hard",
-    "medium": "Medium",
-    "title": "Cooking Skills"
-  },
   "cooking_methods": {
     "baking": "Baking",
     "boiling": "Boiling",
@@ -17,6 +11,12 @@
     "steaming": "Steaming",
     "stewing": "Stewing",
     "title": "Cooking Methods"
+  },
+  "cooking_skills": {
+    "easy": "Easy",
+    "hard": "Hard",
+    "medium": "Medium",
+    "title": "Cooking Skills"
   },
   "cooking_time": {
     "hours": "hours",

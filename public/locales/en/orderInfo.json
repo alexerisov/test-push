@@ -1,1 +1,7 @@
-{"date":"Date","total":"Total","status":"Status","bookingCode":"Booking Code","paymentMethod":"Payment Method"}
+{
+  "bookingCode": "Booking Code",
+  "date": "Date",
+  "paymentMethod": "Payment Method",
+  "status": "Status",
+  "total": "Total"
+}
