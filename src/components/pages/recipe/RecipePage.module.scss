@@ -184,7 +184,9 @@
         border: 2px solid #92a5ef;
         box-sizing: border-box;
         border-radius: 40px;
-        width: 48px;
+        min-width: 48px;
+        min-width: 48px;
+        height: 48px;
         height: 48px;
     }
 
@@ -213,6 +215,13 @@
         line-height: 160% !important;
         letter-spacing: 0.01em !important;
         text-transform: capitalize !important !important;
+    }
+
+    &__tooltip__wrapper {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
     }
 
     &_calories {

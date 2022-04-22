@@ -18,7 +18,7 @@ export async function getServerSideProps(context) {
     http.defaults.headers.common['Authorization'] = `Bearer ${session.accessToken}`;
   }
   try {
-    const weekmenu = await Recipe.getWeekmenu();
+    const weekmenu = await Recipe.getWeekmenu({ lang: context.locale });
     return {
       props: {
         ...(await serverSideTranslations(context.locale, ['common', 'homePage', 'recipeClassifications'])),

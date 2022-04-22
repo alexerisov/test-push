@@ -384,9 +384,6 @@ const Classifications = ({
         onMouseMove={e => setPosition({ x: e.pageX, y: e.pageY })}
         className={s.classification_icon_wrapper}
         onClick={classificationClickHandler}>
-        <span style={{ borderColor }} className={s.classification_icon}>
-          <BasicIcon icon={icon} color="#353E50" />
-        </span>
         <Tooltip
           onMouseMove={event => (positionRef.current = { x: event.clientX, y: event.clientY })}
           title={tooltipText}
@@ -408,7 +405,12 @@ const Classifications = ({
               })
             }
           }}>
-          <span className={s.classification__text}>{text}</span>
+          <div className={s.classification_icon_wrapper}>
+            <span style={{ borderColor }} className={s.classification_icon}>
+              <BasicIcon icon={icon} color="#353E50" />
+            </span>
+            <span className={s.classification__text}>{text}</span>
+          </div>
         </Tooltip>
       </div>
     );
