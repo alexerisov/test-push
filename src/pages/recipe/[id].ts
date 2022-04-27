@@ -18,8 +18,6 @@ export const getServerSideProps: GetServerSideProps = async context => {
   if (session) {
     http.defaults.headers.common['Authorization'] = `Bearer ${session?.accessToken}`;
   }
-  log.debug('session', session);
-  log.debug('lang', session?.user?.language);
   try {
     const recipeResponse = await Recipe.getRecipe(id, context.locale);
     const topRatedResponse = await Recipe.getTopRatedMeals(context.locale);
@@ -35,8 +33,8 @@ export const getServerSideProps: GetServerSideProps = async context => {
           'errors',
           'orderSummary'
         ])),
-        recipe: recipeResponse.data,
-        topRatedRecipes: topRatedResponse.data,
+        recipe: recipeResponse?.data,
+        topRatedRecipes: topRatedResponse?.data,
         host: context.req.headers.host
       }
     };
