@@ -37,7 +37,7 @@ namespace NextAuthUtils {
 }
 
 export default NextAuth({
-  debug: process.env.DEBUG,
+  debug: false,
   pages: {
     signIn: '/',
     signOut: '/',
@@ -50,9 +50,9 @@ export default NextAuth({
     maxAge: 24 * 60 * 60 // 24 hours
   },
   logger: {
-    // error(code, metadata) {
-    //   log.error({ code, metadata });
-    // },
+    error(code, metadata) {
+      log.error({ code, metadata });
+    },
     warn(code) {
       log.warn({ code });
     },
@@ -178,7 +178,7 @@ export default NextAuth({
         session.user = { full_name, email, avatar, language, user_type, pk } as const;
         return session;
       } catch (error) {
-        log.error('sessions error', error);
+        // log.error('sessions error', error);
         return null;
       }
     }

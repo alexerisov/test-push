@@ -45,6 +45,7 @@ import { useTranslation } from 'next-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import Image from 'next/image';
 import log from 'loglevel';
+import CONFIG from '@/config';
 
 const StyledSlider = styled(Slider)`
   display: flex;
@@ -110,8 +111,7 @@ const Title = props => {
     setIsRecipeLiked,
     recipeImage,
     recipeDescription,
-    setUserLikeUpdatedAt,
-    host
+    setUserLikeUpdatedAt
   } = props;
   const { session } = useAuth();
   const dispatch = useDispatch();
@@ -181,7 +181,7 @@ const Title = props => {
             id={recipeId}
             photo={recipeImage}
             description={recipeDescription}
-            currentUrl={`${host}/recipe/${recipeId}`}>
+            currentUrl={`${CONFIG.currentUrl}/recipe/${recipeId}`}>
             <IconButton className={s.button}>
               <BasicIcon icon={ShareIcon} color="#353E50" />
             </IconButton>
@@ -757,9 +757,14 @@ const PopularRecipes = ({ topRatedRecipes }) => {
 };
 
 export const RecipePage = props => {
+  const router = useRouter();
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
+
   const { session, status: loading } = useAuth();
   const { t } = useTranslation('recipePage');
-  const { notFound, recipe, host } = props;
+  const { notFound, recipe } = props;
   const mobile = useMediaQuery('(max-width:576px)');
 
   const title = he.decode(recipe?.title);
@@ -812,7 +817,7 @@ export const RecipePage = props => {
 
   const [viewAllImages, setViewAllImages] = useState(false);
   const dispatch = useDispatch();
-  const router = useRouter();
+
   const [materials, setMaterials] = useState([]);
 
   useEffect(() => {
@@ -867,8 +872,7 @@ export const RecipePage = props => {
                 setIsRecipeLiked,
                 recipeImage,
                 recipeDescription,
-                setUserLikeUpdatedAt,
-                host
+                setUserLikeUpdatedAt
               }}
             />
           </div>
@@ -940,8 +944,7 @@ export const RecipePage = props => {
               setIsRecipeLiked,
               recipeImage,
               recipeDescription,
-              setUserLikeUpdatedAt,
-              host
+              setUserLikeUpdatedAt
             }}
           />
           <Media {...{ mainImage, setIsLightBoxOpen, setViewAllImages, materials, viewAllImages, image, t, recipe }} />

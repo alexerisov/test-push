@@ -1,5 +1,5 @@
 // type
-import type { GetServerSideProps } from 'next';
+import type { GetServerSideProps, GetStaticProps } from 'next';
 
 import Recipe from '@/api/Recipe.js';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -12,8 +12,12 @@ import { RecipePage } from '@/components/pages/recipe/RecipePage';
 
 export default RecipePage;
 
-export const getServerSideProps: GetServerSideProps = async context => {
-  const id = context.params.id;
+export async function getStaticPaths() {
+  return { paths: [], fallback: true };
+}
+
+export const getStaticProps: GetStaticProps = async context => {
+  const id = context.params?.id;
   const session = await getSession(context);
   if (session) {
     http.defaults.headers.common['Authorization'] = `Bearer ${session?.accessToken}`;
@@ -21,30 +25,27 @@ export const getServerSideProps: GetServerSideProps = async context => {
   try {
     const recipeResponse = await Recipe.getRecipe(id, context.locale);
     const topRatedResponse = await Recipe.getTopRatedMeals(context.locale);
-
-    return {
-      props: {
-        session,
-        ...(await serverSideTranslations(context.locale, [
-          'common',
-          'recipePage',
-          'recipeClassifications',
-          'units',
-          'errors',
-          'orderSummary'
-        ])),
-        recipe: recipeResponse?.data,
-        topRatedRecipes: topRatedResponse?.data,
-        host: context.req.headers.host
-      }
-    };
+    log.info({ recipeResponse, topRatedResponse });
+    return recipeResponse && topRatedResponse
+      ? {
+          props: {
+            session,
+            ...(await serverSideTranslations(context.locale, [
+              'common',
+              'recipePage',
+              'recipeClassifications',
+              'units',
+              'errors',
+              'orderSummary'
+            ])),
+            recipe: recipeResponse?.data || null,
+            topRatedRecipes: topRatedResponse?.data || null
+          }
+        }
+      : { notFound: true };
   } catch (e) {
-    log.error(e);
+    log.error('error');
 
-    return {
-      props: {
-        notFound: true
-      }
-    };
+    return { notFound: true };
   }
 };

@@ -7,7 +7,6 @@ module.exports = {
     languages: ['en', 'nl'],
     language: 'nl',
     defaultLanguage: 'nl',
-    languages: ['en', 'nl'],
     localeDetection: true,
     objectNotation: true
   }

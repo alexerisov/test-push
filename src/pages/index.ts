@@ -12,7 +12,7 @@ export default connect((state: RootState) => ({
   profile: state.profile
 }))(HomePage);
 
-export async function getServerSideProps(context) {
+export async function getStaticProps(context) {
   const session = await getSession(context);
   if (session) {
     http.defaults.headers.common['Authorization'] = `Bearer ${session.accessToken}`;
@@ -23,8 +23,7 @@ export async function getServerSideProps(context) {
       props: {
         ...(await serverSideTranslations(context.locale, ['common', 'homePage', 'recipeClassifications'])),
         session,
-        weekmenu: weekmenu.data,
-        absolutePath: context.req.headers.host
+        weekmenu: weekmenu.data
       }
     };
   } catch (e) {

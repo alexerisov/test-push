@@ -1,5 +1,5 @@
 // types
-import type { GetServerSideProps } from 'next';
+import type { GetServerSideProps, GetStaticProps } from 'next';
 
 import { connect } from 'react-redux';
 import { RootState } from '@/store/store';
@@ -19,7 +19,7 @@ export default connect((state: RootState) => ({
   userType: state.account?.profile?.user_type
 }))(SearchPage);
 
-export const getServerSideProps: GetServerSideProps = async context => {
+export const getStaticProps: GetStaticProps = async context => {
   const session = await getSession(context);
   if (session) {
     http.defaults.headers.common['Authorization'] = `Bearer ${session?.accessToken}`;
