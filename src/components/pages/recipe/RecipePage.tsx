@@ -46,6 +46,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Image from 'next/image';
 import log from 'loglevel';
 import CONFIG from '@/config';
+import { RecipePageSkeleton } from '@/components/pages/recipe/RecipePageSkeleton';
 
 const StyledSlider = styled(Slider)`
   display: flex;
@@ -759,7 +760,7 @@ const PopularRecipes = ({ topRatedRecipes }) => {
 export const RecipePage = props => {
   const router = useRouter();
   if (router.isFallback) {
-    return <div>Loading...</div>;
+    return <RecipePageSkeleton {...props} />;
   }
 
   const { session, status: loading } = useAuth();

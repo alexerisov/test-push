@@ -63,6 +63,7 @@
     "next-seo": "latest",
     "pure-react-carousel": "^1.27.6",
     "react": "latest",
+    "react-content-loader": "^6.2.0",
     "react-dom": "latest",
     "react-facebook-login": "^4.1.1",
     "react-google-login": "^5.2.2",
