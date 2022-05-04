@@ -26,23 +26,21 @@ export const getStaticProps: GetStaticProps = async context => {
     const recipeResponse = await Recipe.getRecipe(id, context.locale);
     const topRatedResponse = await Recipe.getTopRatedMeals(context.locale);
     log.info({ recipeResponse, topRatedResponse });
-    return recipeResponse && topRatedResponse
-      ? {
-          props: {
-            session,
-            ...(await serverSideTranslations(context.locale, [
-              'common',
-              'recipePage',
-              'recipeClassifications',
-              'units',
-              'errors',
-              'orderSummary'
-            ])),
-            recipe: recipeResponse?.data || null,
-            topRatedRecipes: topRatedResponse?.data || null
-          }
-        }
-      : { notFound: true };
+    return {
+      props: {
+        session,
+        ...(await serverSideTranslations(context.locale, [
+          'common',
+          'recipePage',
+          'recipeClassifications',
+          'units',
+          'errors',
+          'orderSummary'
+        ])),
+        recipe: recipeResponse?.data || null,
+        topRatedRecipes: topRatedResponse?.data || null
+      }
+    };
   } catch (e) {
     log.error('error');
 
