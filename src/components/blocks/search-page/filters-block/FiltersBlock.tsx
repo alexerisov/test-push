@@ -148,16 +148,27 @@ const RecipeSetSelector = ({ formik, focusRef }) => {
     }
   };
 
+  const scrollClose = () => {
+    setIsActive(false);
+  };
+
   return (
     <Select
       id="recipe-set-selector"
       name="recipe_set"
       label={false}
+      open={isActive}
       input={<CssTextField classes={{ input: s.search__input }} notched={false} label={false} />}
       variant="outlined"
       IconComponent={StyledArrowDownIcon}
-      onOpen={handleOpen}
-      onClose={handleClose}
+      onOpen={() => {
+        window.addEventListener('scroll', scrollClose, { passive: true });
+        handleOpen();
+      }}
+      onClose={() => {
+        window.removeEventListener('scroll', scrollClose);
+        handleClose();
+      }}
       className={s.search__dropdown}
       classes={{ icon: s.search__dropdown__circle }}
       MenuProps={{
