@@ -2,11 +2,7 @@ import axios from 'axios';
 import { getSession } from 'next-auth/react';
 import CONFIG from '@/config';
 import { getLogger } from 'loglevel';
-import { message } from 'memfs/lib/internal/errors';
-import { toJSON } from 'yaml/util';
 const log = getLogger('axios');
-
-const baseURL = process.env.SOME_API_URL || 'http://localhost:1337';
 
 const defaultOptions = {
   baseURL: CONFIG.baseUrl
@@ -27,7 +23,17 @@ http.interceptors.response.use(
     return response;
   },
   error => {
-    log.error('%s', { message: error.message, header: error.request._header });
+    log.error({
+      status: error.response?.status,
+      message: error.response?.statusText,
+      config: {
+        url: error.response?.config?.url,
+        method: error.response?.config?.method,
+        data: error.response?.config?.data,
+        headers: error.response?.config?.headers
+      },
+      data: error.response?.data
+    });
   }
 );
 

@@ -15,25 +15,26 @@ interface UserResponseData {
   pk: number;
 }
 
-namespace NextAuthUtils {
-  //todo implement refresh token logic
-  export const refreshToken = async function (refreshToken: string) {
-    try {
-      const response = await http.post(
-        // "http://localhost:8000/api/auth/token/refresh/",
-        'token/refresh',
-        {
-          refresh: refreshToken
-        }
-      );
+async function refreshToken(token) {
+  try {
+    const response = await http.post('token/refresh', {
+      refresh: refreshToken
+    });
 
-      const { access, refresh } = response.data;
-      // still within this block, return true
-      return [access, refresh];
-    } catch {
-      return [null, null];
-    }
-  };
+    const refreshedTokens = await response?.data;
+
+    return {
+      ...token,
+      accessToken: refreshedTokens.access
+    };
+  } catch (error) {
+    console.log(error);
+
+    return {
+      ...token,
+      error: 'RefreshAccessTokenError'
+    };
+  }
 }
 
 export default NextAuth({
@@ -78,7 +79,7 @@ export default NextAuth({
       async authorize(credentials, req) {
         const response = await http.post(`token/`, { email: credentials?.email, password: credentials?.password });
 
-        return response.data;
+        return response?.data;
       }
     })
   ],
@@ -103,23 +104,28 @@ export default NextAuth({
         if (account?.provider === 'google') {
           const { access_token, idToken } = account;
           try {
+            log.info({ account });
             const response = await http.get(`token/social`, {
               params: {
                 access_token: access_token,
                 backend: 'google-oauth2',
-                register: isNewUser
+                register: isNewUser ?? true
               }
             });
 
-            const { access, refresh } = response.data;
+            const tokens = response?.data;
 
             token = {
               ...token,
-              accessToken: access,
-              refreshToken: refresh
+              accessToken: tokens?.access,
+              refreshToken: tokens?.refresh
             };
-            http.defaults.headers.common['Authorization'] = `Bearer ${access}`;
-            return token;
+            http.defaults.headers.common['Authorization'] = `Bearer ${tokens?.access}`;
+            if (Date.now() < token.accessTokenExpires) {
+              return token;
+            }
+
+            return refreshToken(token);
           } catch (error) {
             return null;
           }
@@ -133,19 +139,23 @@ export default NextAuth({
               params: {
                 access_token: access_token,
                 backend: 'facebook',
-                register: isNewUser
+                register: isNewUser ?? true
               }
             });
 
-            const { access, refresh } = response.data;
+            const tokens = response?.data;
 
             token = {
               ...token,
-              accessToken: access,
-              refreshToken: refresh
+              accessToken: tokens?.access,
+              refreshToken: tokens?.refresh
             };
-            http.defaults.headers.common['Authorization'] = `Bearer ${access}`;
-            return token;
+            http.defaults.headers.common['Authorization'] = `Bearer ${tokens?.access}`;
+            if (Date.now() < token.accessTokenExpires) {
+              return token;
+            }
+
+            return refreshToken(token);
           } catch (error) {
             return null;
           }
@@ -158,7 +168,11 @@ export default NextAuth({
             refreshToken: account.token.refresh
           };
           http.defaults.headers.common['Authorization'] = `Bearer ${account.token.access}`;
-          return token;
+          if (Date.now() < token.accessTokenExpires) {
+            return token;
+          }
+
+          return refreshToken(token);
         }
       }
       return token;
@@ -172,13 +186,13 @@ export default NextAuth({
             Authorization: `Bearer ${access}`
           }
         });
-        const { full_name, email, avatar, language, user_type, pk } = response.data as UserResponseData;
+        const { full_name, email, avatar, language, user_type, pk } = response?.data as UserResponseData;
         token.user_type = user_type;
         session.accessToken = access;
         session.user = { full_name, email, avatar, language, user_type, pk } as const;
         return session;
       } catch (error) {
-        // log.error('sessions error', error);
+        log.error('sessions error', error);
         return null;
       }
     }
