@@ -48,6 +48,7 @@ import { Spinner } from '@/components/elements';
 import useSWR, { SWRConfig } from 'swr';
 import log from 'loglevel';
 import parseSearchParams from '@/utils/parseSearchParams';
+import getInitialFilters from '@/utils/getInitialFilters';
 
 const useStyles = makeStyles(theme => ({
   selectEmpty: {
@@ -322,7 +323,7 @@ export const SearchPage = props => {
       types: null,
       title: null,
       recipe_set: 0,
-      ...props.initialFilters
+      ...getInitialFilters(router)
     },
     onSubmit: (values: any) => {
       const parsedValues = parseSearchParams(values);
