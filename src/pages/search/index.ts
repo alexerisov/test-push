@@ -58,7 +58,8 @@ export const getStaticProps: GetStaticProps = async context => {
           nonProductionRecipes: nonProductionRecipes?.data.results,
           weekmenu: weekmenu?.data || []
         }
-      }
+      },
+      revalidate: 10
     };
   } catch (e) {
     log.error('%0', e);

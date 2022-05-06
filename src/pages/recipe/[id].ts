@@ -25,7 +25,6 @@ export const getStaticProps: GetStaticProps = async context => {
   try {
     const recipeResponse = await Recipe.getRecipe(id, context.locale);
     const topRatedResponse = await Recipe.getTopRatedMeals(context.locale);
-    log.info({ recipeResponse, topRatedResponse });
     return {
       props: {
         session,
@@ -39,7 +38,8 @@ export const getStaticProps: GetStaticProps = async context => {
         ])),
         recipe: recipeResponse?.data || null,
         topRatedRecipes: topRatedResponse?.data || null
-      }
+      },
+      revalidate: 5
     };
   } catch (e) {
     log.error('error');

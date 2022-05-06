@@ -24,7 +24,8 @@ export async function getStaticProps(context) {
         ...(await serverSideTranslations(context.locale, ['common', 'homePage', 'recipeClassifications'])),
         session,
         weekmenu: weekmenu.data
-      }
+      },
+      revalidate: 10
     };
   } catch (e) {
     log.error('%0', e);
